@@ -22,39 +22,6 @@
 		address="${dubbo.registry.address}" id="slpRegistry" />
 	<dubbo:consumer timeout="${dubbo.provider.timeout}" />
 
-	<context:component-scan base-package="com.ai.slp" />
-
-	<dubbo:reference id="iNormProductSV" interface="com.ai.slp.product.api.normproduct.interfaces.INormProductSV"
-					 registry="slpRegistry"/>
-	<!-- 属性管理 -->
-	<dubbo:reference id="iAttrAndValDefSV" interface="com.ai.slp.product.api.productcat.interfaces.IAttrAndValDefSV"
-					 registry="slpRegistry"/>
-	<!-- 商品类目 -->
-	<dubbo:reference id="iProductCatSV" interface="com.ai.slp.product.api.productcat.interfaces.IProductCatSV"
-					 registry="slpRegistry"/>
-	<!-- 商品管理 -->
-	<dubbo:reference id="iProductManagerSV" interface="com.ai.slp.product.api.product.interfaces.IProductManagerSV"
-					 registry="slpRegistry"/>
-	<!-- 商品服务 -->
-	<dubbo:reference id="iProductSV" interface="com.ai.slp.product.api.product.interfaces.IProductSV"
-					 registry="slpRegistry"/>
-	<!-- 公共缓存 -->
-	<dubbo:reference id="iCacheSV" interface="com.ai.platform.common.api.cache.interfaces.ICacheSV"
-					 registry="slpRegistry"/>
-	<!-- 组织机构用户 -->
-	<dubbo:reference id="iUcKeyInfoSV" interface="com.ai.slp.user.api.keyinfo.interfaces.IUcKeyInfoSV"
-					 registry="slpRegistry"/>
-	<!-- 库存服务 -->
-	<dubbo:reference id="iStorageSV" interface="com.ai.slp.product.api.storage.interfaces.IStorageSV"
-					 registry="slpRegistry"/>
-	<!-- 用户查询服务 -->
-	<dubbo:reference id="iSysUserQuerySV" interface="com.ai.platform.common.api.sysuser.interfaces.ISysUserQuerySV"
-					 registry="slpRegistry"/>
-	<!-- 仓库管理服务 -->
-	<dubbo:reference id="iRouteProdSupplyManageSV" interface="com.ai.slp.route.api.routeprodsupplymanage.interfaces.IRouteProdSupplyManageSV"
-					 registry="slpRegistry"/>
-	<!-- 商品评价 -->
-	<dubbo:reference id="iProdCommentManagerSV" interface="com.ai.slp.product.api.productcomment.interfaces.IProdCommentManagerSV"
-					 registry="slpRegistry"/>
+	<context:component-scan base-package="com.ai.yc.protal.web" />
 
 </beans>
