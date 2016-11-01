@@ -46,7 +46,6 @@
 	    	 $("#bss").click(function(){
 	    		 var mtstr = $("#selectid").val();
 	    		 var myAudio = document.getElementById('audio1');
-	    		tts();
 		    	  if(myAudio.paused){
 	 		        	var itostr = $.trim($("#ito").val());
 	 		        	if(itostr != null){
@@ -67,19 +66,7 @@
 	    	 });
 	    });
 	    
-	    function tts(){
-	    	 $.ajax({   
- 			    url:'<%=request.getContextPath()%>/Hcicloud/text2audio',   
- 			    type:'get',   
- 			    data: 'lan=zh&text=11',   
- 			    async : false, //默认为true 异步   
- 			    error:function(){   
- 			       alert('error');   
- 			    },   
- 			    success:function(data){   
- 			    }
- 		});
-	    }
+	  
     </script>
 </head>
 <body>
