@@ -9,7 +9,7 @@
 </head>
 <body>	
 	<!--面包屑导航-->
-	<jsp:include page="../../inc/topMenu.jsp"/>
+	<%@ include file="/inc/topMenu.jsp" %>
 		<!--主体-->
 		<div class="placeorder-container">
 		<div class="placeorder-wrapper">

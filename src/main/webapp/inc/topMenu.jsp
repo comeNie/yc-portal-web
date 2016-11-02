@@ -33,7 +33,8 @@
 <div class="placeorder-subnav-big">
     <div class="placeorder-subnav">
         <ul>
-            <li class="logo"><a href="#"><img src="images/logo1.png" /></a></li>
+            <li class="logo"><a href="#">
+                <img src="${pageContext.request.contextPath}/resources/template/images/logo1.png" /></a></li>
             <li class="right">
                 <p><a href="#">首页</a></p>
                 <p><a href="#">笔译</a></p>
