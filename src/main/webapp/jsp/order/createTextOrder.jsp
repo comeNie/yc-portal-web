@@ -11,7 +11,7 @@
 	<!--面包屑导航-->
 	<%@ include file="/inc/topMenu.jsp" %>
 		<!--主体-->
-		<div class="placeorder-container">
+		<div class="placeorder-container" id="textOrderPage">
 		<div class="placeorder-wrapper">
 			<!--步骤-->
 			<div class="place-bj">
@@ -181,8 +181,21 @@
  				<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="提 交 翻 译">
  				<p><input type="checkbox" class="radio" checked="">阅读并同意<a href="#">《译云翻译协议》</a></p>
  			</div>
-			
 		</div>
 		</div>
+		
+		<!-- 联系人 -->
+		<%@ include file="/jsp/order/orderContact.jsp" %>
+		
 </body>
+<script type="text/javascript">
+	(function () {
+		var pager;
+		seajs.use(['app/order/createTextOrder','app/util/center-hind'], function(createTextOrderPage,centerHind) {
+			pager = new createTextOrderPage({element : document.body});
+			pager.render();
+			new centerHind({element : document.body}).render();
+		});
+	})();
+</script>
 </html>

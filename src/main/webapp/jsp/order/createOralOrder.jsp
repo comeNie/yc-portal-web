@@ -11,7 +11,7 @@
 	<!--面包屑导航-->
 	<%@ include file="/inc/topMenu.jsp" %>
 		<!--主体-->
-		<div class="placeorder-container">
+		<div class="placeorder-container" id="oralOrderPage">
 		<div class="placeorder-wrapper">
 			<!--步骤-->
 			<div class="place-bj">
@@ -153,5 +153,18 @@
 			
 		</div>
 		</div>
+		
+		<!-- 联系人 -->
+		<%@ include file="/jsp/order/orderContact.jsp" %>
 </body>
+<script type="text/javascript">
+	(function () {
+		var pager;
+		seajs.use(['app/order/createOralOrder','app/util/center-hind'], function(createOralOrderPage,centerHind) {
+			pager = new createOralOrderPage({element : document.body});
+			pager.render();
+			new centerHind({element : document.body}).render();
+		});
+	})();
+</script>
 </html>
