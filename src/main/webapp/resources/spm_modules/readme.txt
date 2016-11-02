@@ -15,11 +15,11 @@ buildscript {
 }
 
 dependencies {
-	jsCommonLibs 'com.ai.opt.uniframe:opt-jscommon-libs:1.0-SNAPSHOT'
+	jsCommonLibs 'com.ai.opt.uniframe:yc-jscommon-libs:1.0-SNAPSHOT'
 	.....其它配置
 }
 
-def getJsCommonLibs=task("getJsCommonLibs",type:com.ai.runner.gradle.plugin.jar.APIJarProcessTask){
+def getYcJsCommonLibs=task("getJsCommonLibs",type:com.ai.runner.gradle.plugin.jar.APIJarProcessTask){
 	jarPaths=configurations.jsCommonLibs.files.asType(List)
     destinationDir file("src/main/webapp/resources/spm_modules") //这里面的路径建议保持默认
 }
