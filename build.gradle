@@ -17,7 +17,6 @@ configurations.all {
 configurations {
     optUedTemplate
     jsCommonLibs
-    
 }
 // 设置 maven 库地址
 repositories {
