@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/order")
 public class OrderController {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
-    @Autowired
-    ResWebBundle rb;
+//    @Autowired
+//    ResWebBundle rb;
 
     /**
      * 显示文本类下单页面
