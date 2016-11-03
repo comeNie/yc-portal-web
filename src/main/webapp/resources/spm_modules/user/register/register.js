@@ -10,7 +10,8 @@ define("user/register/register",function(require, exports, module){
 		/*事件代理*/
     	events: {
 			"click #refreshVerificationCode":"_refreshVerificationCode",
-			"click #change_register_type":"_changeRegisterType"
+			"click #change_register_type":"_changeRegisterType",
+			"click #regsiterBtn":"_submitRegsiter"
             },
             /*重写父类*/
         	setup: function () {
@@ -51,9 +52,47 @@ define("user/register/register",function(require, exports, module){
         		_img.attr("src",url);
         		
         	},
+        	/*展示校验信息*/
+        	_showCheckMsg:function(msg){
+        		$("#regsiterMsg").html(msg)
+        	},
+        	/*校验注册*/
+        	_checkRegsiter:function(){
+        		var register_type = $("#change_register_type").attr("register_type");
+        		if("phone"==register_type){//手机注册
+        			
+        		}else if("email"==register_type){//邮箱注册
+        		  var email = $("#email");
+        		  if(!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test(email.val())){
+        			 this._showCheckMsg('请输入正确的邮箱');
+        			 email.focus();
+        			 return false;	
+        		  }
+        		}
+        		//密码校验
+        		var password = $("#password");
+        		if(!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/.test(password.val())){
+        			 this._showCheckMsg('请输入6—16位数字和字母组合密码');
+        			 password.focus();
+        			 return false;		
+        		}
+        		//确认密码
+        		var confirmPassword = $("#confirmPassword");
+        		if(confirmPassword.val()!=password.val()){
+        			this._showCheckMsg('确认密码不一致');
+        			confirmPassword.focus();
+       			    return false;	
+        		}
+        		return true;
+        	},
+        	/*提交注册*/
+        	_submitRegsiter:function(){
+        		var falg = this._checkRegsiter();
+        		alert(falg);
+        	},
         	/*校验密码*/
         	_checkPassword:function(){
-        		// /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,18}$/.test(password);
+        		// ;
         	} 
 	});
 	module.exports = registerPager;
