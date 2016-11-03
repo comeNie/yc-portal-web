@@ -15,19 +15,19 @@
 	<div class="login-big">
 		<div class="login-headr">
 			<p>
-				<img src="${uedroot}/imageslogin-logo.png" />
+				<img src="${uedroot}/images/login-logo.png" />
 			</p>
 			<p class="word">账号注册</p>
 		</div>
 		<div class="login-wrapper">
 			<div class="login-left">
-				<img src="${uedroot}/imageslogin-bj.png">
+				<img src="${uedroot}/images/login-bj.png">
 			</div>
 			<div class="register-right radius">
 
 				<div class="verification">
 					<ul>
-						<li><img src="${uedroot}/imagesrech-win.png" /></li>
+						<li><img src="${uedroot}/images/rech-win.png" /></li>
 						<li class="word">已成功发送邮件至y*****t@163.com</li>
 						<li>验证邮件24小时内有效，请尽快登录您的邮箱<a href="#">点击验证链接</a>完成验证
 						</li>

@@ -15,13 +15,13 @@
 	<div class="login-big">
 		<div class="login-headr">
 			<p>
-				<img src="${_base}/resources/template/images/login-logo.png" />
+				<img src="${uedroot}/images/login-logo.png" />
 			</p>
 			<p class="word">账号注册</p>
 		</div>
 		<div class="login-wrapper">
 			<div class="login-left">
-				<img src="${_base}/resources/template/images/login-bj.png">
+				<img src="${uedroot}/images/login-bj.png">
 			</div>
 			<div class="register-right radius">
 				<div class="login-title">注册</div>
