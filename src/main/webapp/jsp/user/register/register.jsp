@@ -8,7 +8,7 @@
 	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>邮箱注册</title>
 <%@ include file="/inc/inc.jsp"%>
-<link href="${_base}/resources/template/css/modular/login-regsiter.css"
+<link href="${uedroot}/css/modular/login-regsiter.css"
 	rel="stylesheet" type="text/css" />
 </head>
 <body class="login-body">
@@ -63,11 +63,11 @@
 						<li>
 							<p class="word">验证码:</p>
 							<p>
-								<input type="text" class="int-text int-in-280 radius">
+								<input id="verifyCodeImg" maxlength="4" type="text" class="int-text int-in-280 radius">
 							</p>
 							<p class="img">
 								<img id="refreshVerificationCode"
-									src="${_base}/reg/imageVerifyCode" height="44">
+									src="${_base}/reg/imageVerifyCode" height="44" style="cursor:pointer">
 							</p>
 						</li>
                         <li id="li_register_phone_code_container">
@@ -78,13 +78,13 @@
                         
 						<li class="alink">
 							<p class="ml-100">
-								<input type="checkbox" class="radio" checked="">
+								<input id="agreement" type="checkbox" class="radio" checked="checked">
 							</p>
 							<p>
-								我已阅读并同意<a href="#">《译云用户协议》</a>
+								我已阅读并同意<a href="javascript:void(0);">《译云用户协议》</a>
 							</p>
 							<p class="right">
-								<a href="#">已有账户，直接登录</a>
+								<a href="javascript:void(0);">已有账户，直接登录</a>
 							</p>
 						</li>
 						<li class="ml-100"><input id="regsiterBtn" type="button"

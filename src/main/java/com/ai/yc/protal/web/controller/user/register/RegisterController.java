@@ -11,8 +11,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.opt.sdk.components.mcs.MCSClientFactory;
+import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
+import com.ai.paas.ipaas.util.StringUtil;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.utils.VerifyUtil;
@@ -55,5 +60,30 @@ public class RegisterController {
 		} catch (IOException e) {
 			LOG.error("生成图片验证码错误：" + e);
 		}
+	}
+
+	/**
+	 * 获取注册验证码
+	 */
+	@RequestMapping("/checkImageVerifyCode")
+	@ResponseBody
+	public ResponseData<Boolean> checkImageVerifyCode(
+			HttpServletRequest request, HttpServletResponse response) {
+		ResponseData<Boolean> result = null;
+		ICacheClient cacheClient = MCSClientFactory
+				.getCacheClient(Register.CACHE_NAMESPACE);
+		String cacheKey = PictureVerify.VERIFY_IMAGE_KEY
+				+ request.getSession().getId();
+		String code = cacheClient.get(cacheKey);
+		String imgCode = request.getParameter("imgCode");
+		Boolean isRight = false;
+		String msg ="验证码错误";
+		if (!StringUtil.isBlank(code) && !StringUtil.isBlank(imgCode)
+				&& imgCode.equalsIgnoreCase(code)) {
+			isRight = true;
+			msg ="验证码正确";
+		}
+		result = new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg, isRight);
+		return result;
 	}
 }

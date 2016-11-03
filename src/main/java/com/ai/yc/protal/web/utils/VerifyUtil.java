@@ -14,7 +14,10 @@ import com.ai.opt.sdk.components.mcs.MCSClientFactory;
 import com.ai.opt.sdk.util.RandomUtil;
 import com.ai.paas.ipaas.ccs.IConfigClient;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
+import com.ai.paas.ipaas.util.StringUtil;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
+import com.ai.yc.protal.web.constants.Constants.Register;
+import com.alibaba.fastjson.JSONObject;
 
 public class VerifyUtil {
 	private static final Logger LOGGER = LoggerFactory.getLogger(VerifyUtil.class);
@@ -38,10 +41,18 @@ public class VerifyUtil {
 		String verifyCode = RandomUtil.randomString(PictureVerify.VERIFY_SIZE);
 		// 将认证码存入缓存
 		try{
-		   /* ICacheClient cacheClient = MCSClientFactory.getCacheClient(namespace);
+		    ICacheClient cacheClient = MCSClientFactory.getCacheClient(namespace);
 	        IConfigClient defaultConfigClient = CCSClientFactory.getDefaultConfigClient();
-	        String overTimeStr = defaultConfigClient.get(PictureVerify.VERIFY_OVERTIME_KEY);
-	        cacheClient.setex(cacheKey, Integer.valueOf(overTimeStr), verifyCode);*/
+	        String info = defaultConfigClient.get(Register.VERIFICATION_CCS_NAMESPACE);
+	        String overTimeStr =PictureVerify.DEFAULT_VERIFY_OVERTIME;
+			if(!StringUtil.isBlank(info)){
+				JSONObject json = JSONObject.parseObject(info);
+				if(json!=null && json.containsKey(PictureVerify.VERIFY_OVERTIME_KEY)){
+					overTimeStr = json.getString(PictureVerify.VERIFY_OVERTIME_KEY);
+				}
+			}
+	        cacheClient.setex(cacheKey, Integer.valueOf(overTimeStr), verifyCode);
+	        if(LOGGER.isDebugEnabled())
 	        LOGGER.debug("cacheKey=" + cacheKey + ",verifyCode=" + verifyCode);
 	        // 将认证码显示到图象中
 	        g.setColor(new Color(0x10a2fb));
