@@ -13,15 +13,15 @@
         <ul>
             <li class="left"><i class="icon-volume-off"></i><A href="#">网站公告栏，通知网站各种事件</A></li>
             <li class="right">
-                <p><a href="#">登陆</a><a href="#" class="blue">免费注册</a></p>
-                <p><a href="${_base}/customer/order/list/view">我的订单</a></p>
-                <p><a href="#">我是客户</a></p>
-                <p><a href="#">我是服务商</a></p>
-                <p class="none-border"><i class="icon iconfont">&#xe60b;</i><a href="#">手机版</a></p>
+                <p><a href="#"><spring:message code="topMenue.Login"/></a><a href="#" class="blue"><spring:message code="topMenue.Regist"/></a></p>
+                <p><a href="${_base}/customer/order/list/view"><spring:message code="topMenue.myOrder"/></a></p>
+                <p><a href="#"><spring:message code="topMenue.Customers"/></a></p>
+                <p><a href="#"><spring:message code="topMenue.Suppliers"/></a></p>
+                <p class="none-border"><i class="icon iconfont">&#xe60b;</i><a href="#"><spring:message code="topMenue.Mobile"/></a></p>
                 <p class="none-border none-top">
                     <select class="select select-topmini none-select ash-select">
-                        <option>简体中文</option>
-                        <option>ENGLISH</option>
+                        <option><spring:message code="topMenue.lanOptChinese"/></option>
+                        <option><spring:message code="topMenue.lanOptEnglish"/></option>
                     </select>
                     <i class="icon-caret-down"></i>
                 </p>
@@ -36,14 +36,14 @@
             <li class="logo"><a href="${_base}">
                 <img src="${pageContext.request.contextPath}/resources/template/images/logo1.png" /></a></li>
             <li class="right">
-                <p><a href="#">首页</a></p>
-                <p><a href="#">笔译</a></p>
-                <p><a href="#">口译</a></p>
-                <p><a href="#">服务</a></p>
-                <p><a href="#">APP</a></p>
-                <p><a href="#">字幕通</a></p>
-                <p><a href="#">译库网页翻译</a></p>
-                <p><a href="#">社区</a></p>
+                <p><a href="#"><spring:message code="topMenue.home"/></a></p>
+                <p><a href="#"><spring:message code="topMenue.written"/></a></p>
+                <p><a href="#"><spring:message code="topMenue.oral"/></a></p>
+                <p><a href="#"><spring:message code="topMenue.Services"/></a></p>
+                <p><a href="#"><spring:message code="topMenue.APP"/></a></p>
+                <p><a href="#"><spring:message code="topMenue.YeeCaption"/></a></p>
+                <p><a href="#"><spring:message code="topMenue.YeeWeb"/></a></p>
+                <p><a href="#"><spring:message code="topMenue.Club"/></a></p>
             </li>
         </ul>
     </div>

@@ -20,7 +20,7 @@
 			 		<div class="place-step-none adopt-blue-bj">
 			 			<ul>
 			 				<li class="circle"><i class="icon iconfont">&#xe60f;</i></li>
-			 				<li class="word">翻译内容</li>
+			 				<li class="word"><spring:message code="order.translateLan"/></li>
 			 			</ul>
 			 			<p class="line"></p>
 			 		</div>
@@ -28,7 +28,7 @@
 			 		<div class="place-step-none adopt-ash-bj">
 			 			<ul>
 			 				<li class="circle"><i class="icon iconfont">&#xe60d;</i></li>
-			 				<li class="word">填写联系方式</li>
+			 				<li class="word"><spring:message code="order.contact"/></li>
 			 			</ul>
 			 			<p class="line"></p>
 			 		</div>
@@ -36,7 +36,7 @@
 			 		<div class="place-step-none adopt-ash-bj">
 			 			<ul>
 			 				<li class="circle"><i class="icon iconfont">&#xe608;</i></li>
-			 				<li class="word">支付</li>
+			 				<li class="word"><spring:message code="order.payment"/></li>
 			 			</ul>
 			 			<p class="line"></p>
 			 		</div>
@@ -46,12 +46,12 @@
 			<!--白色背景-->
 			<div class="white-bj">
 				<div class="right-list-title pl-20 none-border">
-  					<p>翻译主题</p>
+  					<p><spring:message code="order.SubjectTrans"/></p>
   				</div>
   				<div class="oral-form">
   					<ul>
   						<li>
-  							<p><input type="text" class="int-text int-100 radius" placeholder="请用一句话描述您的翻译需求"></p>
+  							<p><input type="text" class="int-text int-100 radius" placeholder="<spring:message code="order.descTransRequire"/>"></p>
   						</li>
   					
   					</ul>
@@ -60,7 +60,7 @@
 			<!--白色背景-->
 			<div class="white-bj pb-0" >
 				<div class="right-list-title pl-20 none-border">
-  					<p>翻译主题</p>
+  					<p><spring:message code="order.payment"/></p>
   				</div>
   				<div class="form-lable form-pt-0">
   				<ul>
@@ -93,7 +93,7 @@
   				</ul>
   			</div>
   			<div class="right-list-title pl-20 none-border">
-  					<p>口译类型</p>
+  					<p><spring:message code="order.InterpretationType"/></p>
   				</div>
   				<div class="form-lable form-pt-0">
   				<ul>
@@ -118,37 +118,37 @@
 				<div class="selection-select single-select">
 					<ul class="mb-40">
 						<li class="none-ml">
-							<p class="word">开始时间</p>
+							<p class="word"><spring:message code="order.StartingTime"/></p>
 							<p><select class="select select-250 radius"></select></p>
 						</li>
 						<li>
-							<p class="word">结束时间</p>
+							<p class="word"><spring:message code="order.EngdingTime"/></p>
 							<p><select class="select select-250 radius"></select></p>
 						</li>
 						<li>
-							<p class="word">会议地点</p>
+							<p class="word"><spring:message code="order.Place"/></p>
 							<p><input type="text" class="int-text int-in-250 radius" placeholder="北京"></p>
 						</li>
 						<li>
-							<p class="word">会场数量</p>
-							<p><input type="text" class="int-text int-in-250 radius" placeholder="请输入会场数量"></p>
+							<p class="word"><spring:message code="order.MeetingAmount"/></p>
+							<p><input type="text" class="int-text int-in-250 radius" placeholder="<spring:message code="order.MeetingAmountInfo"/>"></p>
 						</li>
 					</ul>
 					<ul>
 						<li class="none-ml">
-							<p class="word">译员数量</p>
-							<p><input type="text" class="int-text int-in-250 radius" placeholder="请输入译员数量"></p>
+							<p class="word"><spring:message code="order.interpreterNum"/></p>
+							<p><input type="text" class="int-text int-in-250 radius" placeholder="<spring:message code="order.interpreterNumInfo"/>"></p>
 						</li>
 						<li>
-							<p class="word">译员性别</p>
+							<p class="word"><spring:message code="order.Gender"/></p>
 							<p><select class="select select-250 radius"></select></p>
 						</li>
 					</ul>
 				</div>
   			</div>	
 			<div class="recharge-btn order-btn placeorder-btn ml-0">
- 				<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="提 交 翻 译">
- 				<p><input type="checkbox" class="radio" checked="">阅读并同意<a href="#">《译云翻译协议》</a></p>
+ 				<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="order.subTranslation"/>">
+ 				<p><input type="checkbox" class="radio" checked=""><spring:message code="order.Agreement"/><a href="#"><spring:message code="order.AgreementInfo"/></a></p>
  			</div>
 			
 		</div>
