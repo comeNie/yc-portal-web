@@ -19,9 +19,11 @@
 	<!-- 消费方 -->
 	<dubbo:application name="${dubbo.appname}" />
 	<dubbo:registry protocol="${dubbo.registry.protocol}"
-		address="${dubbo.registry.address}" id="slpRegistry" />
+		address="${dubbo.registry.address}" id="ycRegistry" />
 	<dubbo:consumer timeout="${dubbo.provider.timeout}" />
 
-	<context:component-scan base-package="com.ai.yc.protal.web" />
+	<!-- 订单信息 -->
+	<dubbo:reference id="iOrderSubmissionSV" registry="ycRegistry"
+					 interface="com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV" />
 
 </beans>
