@@ -75,7 +75,10 @@ dependencies {
     compile 'com.ai.opt.uni.session:opt-uni-session:2.0-SNAPSHOT'
     compile 'com.ai.opt.sso.client:opt-sso-client:1.0.2-SNAPSHOT'
 
-    
+    //订单下单
+    compile 'com.ai.yc.order:ordersubmission:1.0-SNAPSHOT'
+    //订单查询
+    compile 'com.ai.yc.order:orderquery:1.0-SNAPSHOT'
 
     testCompile(
             "org.springframework:spring-test:4.1.7.RELEASE",
