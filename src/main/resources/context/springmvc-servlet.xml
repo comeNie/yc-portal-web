@@ -34,5 +34,5 @@
         <property name="maxUploadSize" value="10485760000"></property>
         <property name="maxInMemorySize" value="40960"></property>
     </bean>
-    
+    <import resource="classpath:i18n/context/springmvc-locale.xml"/>
 </beans>
