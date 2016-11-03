@@ -14,7 +14,7 @@
             <li class="left"><i class="icon-volume-off"></i><A href="#">网站公告栏，通知网站各种事件</A></li>
             <li class="right">
                 <p><a href="#">登陆</a><a href="#" class="blue">免费注册</a></p>
-                <p><a href="#">我的订单</a></p>
+                <p><a href="${_base}/customer/order/list/view">我的订单</a></p>
                 <p><a href="#">我是客户</a></p>
                 <p><a href="#">我是服务商</a></p>
                 <p class="none-border"><i class="icon iconfont">&#xe60b;</i><a href="#">手机版</a></p>
@@ -33,7 +33,7 @@
 <div class="placeorder-subnav-big">
     <div class="placeorder-subnav">
         <ul>
-            <li class="logo"><a href="#">
+            <li class="logo"><a href="${_base}">
                 <img src="${pageContext.request.contextPath}/resources/template/images/logo1.png" /></a></li>
             <li class="right">
                 <p><a href="#">首页</a></p>

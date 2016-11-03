@@ -74,6 +74,8 @@ dependencies {
     compile 'com.ai.opt.uni.session:opt-uni-session:2.0-SNAPSHOT'
     compile 'com.ai.opt.sso.client:opt-sso-client:1.0.2-SNAPSHOT'
 
+    //公共缓存
+    compile 'com.ai.platform.common:cachekey:1.0-SNAPSHOT'
     //订单下单
     compile 'com.ai.yc.order:ordersubmission:1.0-SNAPSHOT'
     //订单查询

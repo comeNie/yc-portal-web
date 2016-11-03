@@ -4,7 +4,8 @@
 <jsp:include page="/inc/inc.jsp"/>
 	<div class="header-big">
   	<div class="cloud-header">
-  		<div class="logo"><a href="#"><img src="${uedroot}/images/logo.png" /></a></div>
+  		<div class="logo"><a href="${pageContext.request.contextPath}">
+			<img src="${uedroot}/images/logo.png" /></a></div>
   		<!--导航-->
   		<div class="cloud-nav">
   			<ul>
