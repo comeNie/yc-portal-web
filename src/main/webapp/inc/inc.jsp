@@ -18,6 +18,7 @@
     request.setAttribute("ssoLoginUrl", ssoLoginUrl);
 %>
 <c:set var="uedroot" value="${pageContext.request.contextPath}/resources/template"/>
+<c:set var="uedroot" value="${pageContext.request.contextPath}/resources/template"/>
 <!-- <link rel="stylesheet" type="text/css" href="${_base}/resources/slpmall/styles/bootstrap.css"> -->
 <link rel="stylesheet" type="text/css" href="${spmRes}/optDialog/css/ui-dialog.css"/>
 

@@ -18,11 +18,10 @@ configurations {
     optUedTemplate
     jsCommonLibs
 }
-// 设置 maven 库地址
-repositories {
-    maven { url "http://10.1.228.199:18081/nexus/content/groups/public" }
-}
 
+repositories {
+    maven { url "http://10.1.228.199:18081/nexus/content/groups/public/" }
+}
 buildscript{
     repositories {
         maven { url "http://10.1.228.199:18081/nexus/content/groups/public/" }
