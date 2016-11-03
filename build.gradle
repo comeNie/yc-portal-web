@@ -75,7 +75,8 @@ dependencies {
     compile 'com.ai.opt.uni.session:opt-uni-session:2.0-SNAPSHOT'
     compile 'com.ai.opt.sso.client:opt-sso-client:1.0.2-SNAPSHOT'
 
-    
+    compile 'com.ai:dubbo-ext:0.3.1' //用于调用dubbo服务使用，如果不调用则可以不引入  
+	compile "com.ai:ipaas-i18n-spring:0.3.1"  
 
     testCompile(
             "org.springframework:spring-test:4.1.7.RELEASE",
