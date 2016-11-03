@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="_base" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,12 +8,6 @@
 	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>邮箱注册</title>
 <%@ include file="/inc/inc.jsp"%>
-<link href="${_base}/resources/template/css/bootstrap/font-awesome.css"
-	rel="stylesheet" type="text/css">
-<link href="${_base}/resources/template/css/iconfont.css"
-	rel="stylesheet" type="text/css">
-<link href="${_base}/resources/template/css/modular/global.css"
-	rel="stylesheet" type="text/css" />
 <link href="${_base}/resources/template/css/modular/login-regsiter.css"
 	rel="stylesheet" type="text/css" />
 </head>
