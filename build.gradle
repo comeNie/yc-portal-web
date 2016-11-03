@@ -18,11 +18,10 @@ configurations {
     optUedTemplate
     jsCommonLibs
 }
-// 设置 maven 库地址
-repositories {
-    maven { url "http://10.1.228.199:18081/nexus/content/groups/public" }
-}
 
+repositories {
+    maven { url "http://10.1.228.199:18081/nexus/content/groups/public/" }
+}
 buildscript{
     repositories {
         maven { url "http://10.1.228.199:18081/nexus/content/groups/public/" }
@@ -75,8 +74,17 @@ dependencies {
     compile 'com.ai.opt.uni.session:opt-uni-session:2.0-SNAPSHOT'
     compile 'com.ai.opt.sso.client:opt-sso-client:1.0.2-SNAPSHOT'
 
+
     compile 'com.ai:dubbo-ext:0.3.1' //用于调用dubbo服务使用，如果不调用则可以不引入  
 	compile "com.ai:ipaas-i18n-spring:0.3.1"  
+
+    //公共缓存
+    compile 'com.ai.platform.common:cachekey:1.0-SNAPSHOT'
+    //订单下单
+    compile 'com.ai.yc.order:ordersubmission:1.0-SNAPSHOT'
+    //订单查询
+    compile 'com.ai.yc.order:orderquery:1.0-SNAPSHOT'
+
 
     testCompile(
             "org.springframework:spring-test:4.1.7.RELEASE",

@@ -18,12 +18,14 @@
     request.setAttribute("ssoLoginUrl", ssoLoginUrl);
 %>
 <c:set var="uedroot" value="${pageContext.request.contextPath}/resources/template"/>
+<c:set var="uedroot" value="${pageContext.request.contextPath}/resources/template"/>
 <!-- <link rel="stylesheet" type="text/css" href="${_base}/resources/slpmall/styles/bootstrap.css"> -->
 <link rel="stylesheet" type="text/css" href="${spmRes}/optDialog/css/ui-dialog.css"/>
 
 <link href="${uedroot}/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
 <link href="${uedroot}/css/iconfont.css" rel="stylesheet" type="text/css">
 <link href="${uedroot}/css/modular/global.css" rel="stylesheet" type="text/css"/>
+<link href="${uedroot}/css/modular/frame.css" rel="stylesheet" type="text/css"/>
 <link href="${uedroot}/css/modular/headr-footer.css" rel="stylesheet" type="text/css"/>
 <link href="${uedroot}/css/modular/modular.css" rel="stylesheet" type="text/css"/>
 <script>

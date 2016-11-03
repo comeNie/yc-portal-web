@@ -1,103 +1,91 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <!--左侧菜单-->
-    <div id="nav-col">
-    <section id="col-left" class="col-left-nano">
-        <div id="col-left-inner" class="col-left-nano-content">
-            <div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar-nav">
-                <ul class="nav nav-pills nav-stacked">
-                    <li class="active"><a href="#"><i class="fa fa-home"></i><span>系统控制台</span>
-                        <!--<span class="label label-info label-circle pull-right">28</span>--></a></li>
-                    <li>
-                        <a href="#" class="dropdown-toggle">
-                            <i class="fa fa-shopping-cart"></i><span>类目属性管理</span>
-                            <i class="fa fa-chevron-circle-right drop-icon"></i>
-                        </a>
-                        <!--二级菜单-->
-                        <ul class="submenu">
-                            <li><a href="${_base}/attr/attrList" target="mainFrame">属性及属性值管理</a></li>
-                            <li><a href="${_base}/cat/query/" target="mainFrame">类目管理</a></li>
-                            <%-- <li><a href="${_base}/cat/edit/addview/" target="mainFrame">类目添加</a></li> --%>
-                        </ul>
-                        <!--二级菜单结束-->
-                    </li>
-                    <li>
-                        <a href="#" class="dropdown-toggle">
-                            <i class="fa fa-inbox"></i>
-                            <span>商品管理</span>
-                            <i class="fa fa-chevron-circle-right drop-icon"></i>
-                        </a>
-                        <!--二级菜单-->
-                        <ul class="submenu">
-                            <li><a href="${_base}/normprodedit/add" target="mainFrame">新增商品</a></li>
-                            <li><a href="${_base}/normprodquery/list" target="mainFrame">商品列表</a></li>
-                        </ul>
-                        <!--二级菜单结束-->
-                    </li>
-                    <li>
-                        <a href="#" class="dropdown-toggle">
-                            <i class="fa fa-paste"></i>
-                            <span>库存管理</span>
-                            <i class="fa fa-chevron-circle-right drop-icon"></i>
-                        </a>
-                        <!--二级菜单-->
-                        <ul class="submenu">
-                            <li><a href="${_base}/storage/list" target="mainFrame">商品列表</a></li>
-                        </ul>
-                        <!--二级菜单结束-->
-                    </li>
-                    <li>
-                        <a href="#" class="dropdown-toggle">
-                            <i class="fa fa-usd"></i>
-                            <span>定价管理</span><i class="fa fa-chevron-circle-right drop-icon"></i>
-                        </a>
-                        <!--二级菜单-->
-                        <ul class="submenu">
-                            <li><a href="${_base}/marketpricequery/list" target="mainFrame">市场价管理</a></li>
-                            <li><a href="${_base}/costprice/list" target="mainFrame">成本价管理</a></li>
-                            <li><a href="${_base}/saleprice/query/" target="mainFrame">销售价管理</a></li>
-                        </ul>
-                        <!--二级菜单结束-->
-                    </li>
-                    <li>
-                        <a href="#" class="dropdown-toggle">
-                            <i class="fa fa-usd"></i>
-                            <span>商品设置管理</span><i class="fa fa-chevron-circle-right drop-icon"></i>
-                        </a>
-                        <!--二级菜单-->
-                        <ul class="submenu">
-                            <li><a href="${_base}/prodquery/add" target="mainFrame">待编辑列表</a></li>
-                            <li><a href="${_base}/prodquery/stayUp" target="mainFrame">待上架列表</a></li>
-                            <li><a href="${_base}/prodquery/insale" target="mainFrame">售中列表</a></li>
-                            <%-- <li><a href="${_base}/prodquery/scrap" target="mainFrame">已废弃列表</a></li> --%>
-                            <%-- <li><a href="${_base}/prodquery/audit" target="mainFrame">商品审核</a></li> --%>
-                        </ul>
-                        <!--二级菜单结束-->
-                    </li>
-                    <li>
-                        <a href="#" class="dropdown-toggle">
-                            <i class="fa fa-usd"></i>
-                            <span>商品审核管理</span><i class="fa fa-chevron-circle-right drop-icon"></i>
-                        </a>
-                        <!--二级菜单-->
-                        <ul class="submenu">
-                            <li><a href="${_base}/prodquery/audit" target="mainFrame">商品列表</a></li>
-                        </ul>
-                        <!--二级菜单结束-->
-                    </li>
-                    <li>
-                        <a href="#" class="dropdown-toggle">
-                            <i class="fa fa-usd"></i>
-                            <span>商品评价管理</span><i class="fa fa-chevron-circle-right drop-icon"></i>
-                        </a>
-                        <!--二级菜单-->
-                        <ul class="submenu">
-                            <li><a href="${_base}/productcomment/list" target="mainFrame">评价列表</a></li>
-                        </ul>
-                        <!--二级菜单结束-->
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    </div>
-    <!--/左侧菜单结束-->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="uedroot" value="${pageContext.request.contextPath}/resources/template"/>
+<link rel="stylesheet" type="text/css" href="${spmRes}/optDialog/css/ui-dialog.css"/>
+<jsp:include page="/inc/inc.jsp"/>
+   <!--二级主体-->
+  <!--外侧背景-->
+  	<!--左侧菜单-->
+  	<div class="left-subnav">
+  		<div class="left-title">
+  			<ul>
+  				<li class="user"><img src="${uedroot}/images/icon.jpg" /></li>
+  				<li class="word">
+  					<p>大脸盼爱大脸</p>
+  					<p class="vip1"></p>
+  				</li>
+  			</ul>
+  		</div>
+  		<div class="left-list">
+  			<ul>
+  				<li class="current">
+  					<a href="我的订单-下过订单.html">
+  					<span><i class="icon iconfont">&#xe600;</i></span>
+  					<span>我的首页</span>
+  					</a>
+  				</li>
+  				<li>
+  					<a href="我的订单.html">
+  					<span><i class="icon iconfont">&#xe601;</i></span>
+  					<span>我的订单</span>
+  					</a>
+  				</li>
+  				<li>
+  					<a href="我的账户.html">
+  					<span><i class="icon iconfont">&#xe602;</i></span>
+  					<span>我的账户</span>
+  					</a>
+  				</li>
+  				<li>
+  					<a href="优惠卷.html">
+  					<span><i class="icon iconfont">&#xe603;</i></span>
+  					<span>优惠券</span>
+  					</a>
+  				</li>
+  				<li>
+  					<a href="我的级别.html">
+  					<span><i class="icon iconfont">&#xe604;</i></span>
+  					<span>我的级别</span>
+  					</a>
+  				</li>
+  				<li>
+  					<a href="我的积分.html">
+  					<span><i class="icon iconfont">&#xe605;</i></span>
+  					<span>我的积分</span>
+  					</a>
+  				</li>
+  				<li>
+  					<a href="发票管理.html">
+  					<span><i class="icon iconfont">&#xe606;</i></span>
+  					<span>发票管理</span>
+  					</a>
+  				</li>
+  				<li>
+  					<a href="企业中心.html">
+  					<span><i class="icon iconfont">&#xe607;</i></span>
+  					<span>企业中心</span>
+  					</a>
+  				</li>
+  				<li>
+  					<a href="个人信息.html">
+  					<span><i class="icon iconfont">&#xe60c;</i></span>
+  					<span>个人信息</span>
+  					</a>
+  				</li>
+  				<li>
+  					<a href="安全设置.html">
+  					<span><i class="icon iconfont">&#xe609;</i></span>
+  					<span>安全设置</span>
+  					</a>
+  				</li>
+  			</ul>
+  		</div>
+  		<div class="left-phone">
+  			<p><i class="icon iconfont">&#xe60d;</i></p>
+  			<p class="phone-word">
+  				<span>早9:00-晚7:00</span>
+  				<span class="red">400-119-8080</span>
+  			</p>
+  		</div>
+  		<div class="left-tplist"><a href="#"><img src="${uedroot}/images/to.jpg" /></a><i class="icon-remove-circle"></i></div>
+  	</div>
