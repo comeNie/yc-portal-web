@@ -8,7 +8,7 @@ public final class Constants {
 		private Register() {
 		}
 		 /** 缓存命名空间 */
-        public static final String CACHE_NAMESPACE = "com.ai.opt.uac.register.cache";
+        public static final String CACHE_NAMESPACE = "com.ai.yc.protal.web.register.cache";
 	}
 
 	public static final class PictureVerify {

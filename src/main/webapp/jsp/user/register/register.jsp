@@ -27,12 +27,13 @@
 				<div class="login-title">注册</div>
 				<div class="login-form-title">
 					<ul>
-						<label class="ml-70">请输入正确的邮箱格式</label>
+						<label class="ml-70" id="regsiterMsg"></label>
 						<p class="right">
 							<a id="change_register_type" href="javascript:void(0);" register_type="phone"><i class="icon iconfont">&#xe614;</i>邮箱注册</a>
 						</p>
 					</ul>
 				</div>
+				 <form id="regsiterForm" method="post" >
 				<div class="regsiter-form">
 					<ul>
 					    <li id="li_register_phone_container">
@@ -44,19 +45,19 @@
 						<li id="li_register_email_container" style="display: none;">
 							<p class="word">邮箱:</p>
 							<p>
-								<input type="text" class="int-text int-in-big radius">
+								<input id="email" maxlength="100" name="email" type="text" class="int-text int-in-big radius">
 							</p>
 						</li>
 						<li>
 							<p class="word">密码:</p>
 							<p>
-								<input type="password" class="int-text int-in-big radius">
+								<input id="password" maxlength="16" name="password" type="password" class="int-text int-in-big radius">
 							</p>
 						</li>
 						<li>
 							<p class="word">确认密码:</p>
 							<p>
-								<input type="password" class="int-text int-in-big radius">
+								<input id="confirmPassword" maxlength="16"  name="confirmPassword" type="password" class="int-text int-in-big radius">
 							</p>
 						</li>
 						<li>
@@ -86,13 +87,13 @@
 								<a href="#">已有账户，直接登录</a>
 							</p>
 						</li>
-						<li class="ml-100"><input type="button"
+						<li class="ml-100"><input id="regsiterBtn" type="button"
 							class="btn btn-blue btn-415 radius20" value="立即注册"></li>
 
 
 					</ul>
 				</div>
-
+               </form>
 			</div>
 		</div>
 
