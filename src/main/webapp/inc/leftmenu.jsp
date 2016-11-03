@@ -5,9 +5,6 @@
 <jsp:include page="/inc/inc.jsp"/>
    <!--二级主体-->
   <!--外侧背景-->
-  <div class="cloud-container">
-  <!--内侧内容区域-->
-  <div class="cloud-wrapper">
   	<!--左侧菜单-->
   	<div class="left-subnav">
   		<div class="left-title">
@@ -91,6 +88,4 @@
   			</p>
   		</div>
   		<div class="left-tplist"><a href="#"><img src="${uedroot}/images/to.jpg" /></a><i class="icon-remove-circle"></i></div>
-  	</div>
-  	</div>
   	</div>
