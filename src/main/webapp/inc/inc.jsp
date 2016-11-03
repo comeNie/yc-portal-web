@@ -17,7 +17,7 @@
     String ssoLoginUrl=SSOClientUtil.getCasServerLoginUrlRuntime(request);
     request.setAttribute("ssoLoginUrl", ssoLoginUrl);
 %>
-<c:set var="uedroot" value="${pageContext.request.contextPath}/resources/template/default"/>
+<c:set var="uedroot" value="${pageContext.request.contextPath}/resources/template"/>
 <script>
     var _base = "${_base}";
     var _spm_res = "${spmRes}";
