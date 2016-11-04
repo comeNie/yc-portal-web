@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ai.opt.sdk.components.ccs.CCSClientFactory;
+import com.ai.opt.sdk.components.mail.EmailFactory;
+import com.ai.opt.sdk.components.mail.EmailTemplateUtil;
 import com.ai.opt.sdk.components.mcs.MCSClientFactory;
 import com.ai.opt.sdk.util.RandomUtil;
 import com.ai.paas.ipaas.ccs.IConfigClient;
@@ -17,6 +19,7 @@ import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.paas.ipaas.util.StringUtil;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
+import com.ai.yc.protal.web.model.mail.SendEmailRequest;
 import com.alibaba.fastjson.JSONObject;
 
 public class VerifyUtil {
@@ -84,7 +87,23 @@ public class VerifyUtil {
 		}
 		 return image;
 	}
-
+	/**
+	 * 发送邮件
+	 * 
+	 * @param emailRequest
+	 * @return
+	 */
+	public static boolean sendEmail(SendEmailRequest emailRequest) {
+		boolean success = true;
+		String htmlcontext = EmailTemplateUtil.buildHtmlTextFromTemplate(emailRequest.getTemplateRUL(), emailRequest.getData());
+		try {
+			EmailFactory.SendEmail(emailRequest.getTomails(), emailRequest.getCcmails(), emailRequest.getSubject(), htmlcontext);
+		} catch (Exception e) {
+			success = false;
+			LOGGER.error(e.getMessage(),e);
+		}
+		return success;
+	}
 
 
 }

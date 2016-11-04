@@ -39,7 +39,7 @@
 					    <li id="li_register_phone_container">
 								<p class="word">手机号:</p>
 								<p><select class="select select-in radius"><option>86+ 中国</option></select></p>
-								<p class="ml-20"><input type="text" class="int-text int-in-bi radius"></p>
+								<p class="ml-20"><input id="phone" maxlength="11" type="text" class="int-text int-in-bi radius"></p>
 							</li>
 					    
 						<li id="li_register_email_container" style="display: none;">

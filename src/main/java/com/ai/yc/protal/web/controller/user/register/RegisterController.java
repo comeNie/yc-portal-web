@@ -20,6 +20,7 @@ import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.paas.ipaas.util.StringUtil;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
+import com.ai.yc.protal.web.model.mail.SendEmailRequest;
 import com.ai.yc.protal.web.utils.VerifyUtil;
 
 /**
@@ -63,27 +64,65 @@ public class RegisterController {
 	}
 
 	/**
-	 * 获取注册验证码
+	 * 校验注册验证码
 	 */
 	@RequestMapping("/checkImageVerifyCode")
 	@ResponseBody
 	public ResponseData<Boolean> checkImageVerifyCode(
-			HttpServletRequest request, HttpServletResponse response) {
-		ResponseData<Boolean> result = null;
-		ICacheClient cacheClient = MCSClientFactory
-				.getCacheClient(Register.CACHE_NAMESPACE);
-		String cacheKey = PictureVerify.VERIFY_IMAGE_KEY
-				+ request.getSession().getId();
-		String code = cacheClient.get(cacheKey);
-		String imgCode = request.getParameter("imgCode");
-		Boolean isRight = false;
-		String msg ="验证码错误";
-		if (!StringUtil.isBlank(code) && !StringUtil.isBlank(imgCode)
-				&& imgCode.equalsIgnoreCase(code)) {
-			isRight = true;
-			msg ="验证码正确";
+			HttpServletRequest request) {
+		try {
+			ICacheClient cacheClient = MCSClientFactory
+					.getCacheClient(Register.CACHE_NAMESPACE);
+			String cacheKey = PictureVerify.VERIFY_IMAGE_KEY
+					+ request.getSession().getId();
+			String code = cacheClient.get(cacheKey);
+			String imgCode = request.getParameter("imgCode");
+			Boolean isRight = false;
+			String msg ="验证码错误";
+			if (!StringUtil.isBlank(code) && !StringUtil.isBlank(imgCode)
+					&& imgCode.equalsIgnoreCase(code)) {
+				isRight = true;
+				msg ="验证码正确";
+			}
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg, isRight);
+			
+		} catch (Exception e) {
+			LOG.error(e.getMessage(),e);
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_FAILURE, "验证码校验失败");
 		}
-		result = new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg, isRight);
-		return result;
+	}
+	/**
+	 * 校验邮箱或手机
+	 */
+	@RequestMapping("/checkPhoneOrEmail")
+	@ResponseBody
+	public ResponseData<Boolean> checkPhoneOrEmail(
+			HttpServletRequest request) {
+		try {
+			String checkType = request.getParameter("checkType");
+			String checkVal = request.getParameter("checkVal");
+			Boolean canUse = false;
+			String msg ="此邮箱已注册";
+			if("email".equals(checkType)){//邮箱校验
+				canUse = false;
+			}if("phone".equals(checkType)){//手机校验
+				msg ="此手机已注册";
+				canUse = false;
+			}
+			
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg, canUse);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(),e);
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_FAILURE, "校验失败");
+		}
+	}
+	private void sendMail(){
+		String[] data = new String[] { };
+		SendEmailRequest emailRequest = new SendEmailRequest();
+		emailRequest.setSubject("");
+		emailRequest.setTemplateRUL("");
+		//emailRequest.setTomails("");
+		emailRequest.setData(data);
+		VerifyUtil.sendEmail(emailRequest);
 	}
 }

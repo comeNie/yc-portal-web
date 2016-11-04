@@ -24,7 +24,9 @@ define(
 							"click #refreshVerificationCode" : "_refreshVerificationCode",
 							"click #change_register_type" : "_changeRegisterType",
 							"blur #verifyCodeImg":"_checkImageCode",
-							"click #regsiterBtn" : "_submitRegsiter"
+							"click #regsiterBtn" : "_submitRegsiter",
+							"blur #phone":"_checkPhoneOrEmail",
+							"blur #email":"_checkPhoneOrEmail"
 						},
 						/* 重写父类 */
 						setup : function() {
@@ -156,6 +158,33 @@ define(
 								success: function (json) {
 									if(!json.data){
 										imgCode.focus();
+										_this._showCheckMsg(json.statusInfo);
+									}
+								}
+							});
+						},
+						/*异步校验邮箱或手机*/
+						_checkPhoneOrEmail:function(){
+							var register_type = $("#change_register_type").attr("register_type");
+							var checkVal = $("#phone").val();
+							var checkType = "phone";
+							if("email"==register_type){//邮箱校验
+								checkVal = $("#email").val();
+								checkType = "email";
+							}
+							
+							if($.trim(checkVal).length<5){
+								return;
+							}
+							var _this =this;
+							ajaxController.ajax({
+								type: "post",
+								processing: false,
+								message: "保存中，请等待...",
+								url: _base + "/reg/checkPhoneOrEmail",
+								data: {'checkType': checkType,"checkVal":checkVal},
+								success: function (json) {
+									if(!json.data){
 										_this._showCheckMsg(json.statusInfo);
 									}
 								}
