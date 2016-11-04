@@ -6,12 +6,14 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>口译下单页</title>
 	<%@ include file="/inc/inc.jsp" %>
+	<script src="${_base}/resources/spm_modules/my97DatePicker/WdatePicker.js"></script>
 </head>
 <body>	
 	<!--面包屑导航-->
 	<%@ include file="/inc/topMenu.jsp" %>
 		<!--主体-->
-		<div class="placeorder-container" id="oralOrderPage">
+		<form id="oralOrderForm" valid="true">
+		<div class="placeorder-container" id="oralOrderPage" >
 		<div class="placeorder-wrapper">
 			<!--步骤-->
 			<div class="place-bj">
@@ -51,7 +53,7 @@
   				<div class="oral-form">
   					<ul>
   						<li>
-  							<p><input type="text" class="int-text int-100 radius" placeholder="<spring:message code="order.descTransRequire"/>"></p>
+  							<p><input id="transSubject" name="transSubject" maxlength="15" type="text" class="int-text int-100 radius" placeholder="<spring:message code="order.descTransRequire"/>"></p>
   						</li>
   					
   					</ul>
@@ -60,35 +62,17 @@
 			<!--白色背景-->
 			<div class="white-bj pb-0" >
 				<div class="right-list-title pl-20 none-border">
-  					<p><spring:message code="order.payment"/></p>
+  					<p><spring:message code="order.translateLan"/></p>
   				</div>
   				<div class="form-lable form-pt-0">
   				<ul>
   					<li>
-  						<p>
-  							<span><input type="checkbox" class="radio" checked=""></span>
-  							<span>中英</span>
-  						</p>
-  						<p>
-  							<span><input type="checkbox" class="radio"></span>
-  							<span>中日</span>
-  						</p>
-  						<p>
-  							<span><input type="checkbox" class="radio" checked=""></span>
-  							<span>中俄</span>
-  						</p>
-  						<p>
-  							<span><input type="checkbox" class="radio"></span>
-  							<span>中法</span>
-  						</p>
-  						<p>
-  							<span><input type="checkbox" class="radio"></span>
-  							<span>中西</span>
-  						</p>
-  						<p>
-  							<span><input type="checkbox" class="radio"></span>
-  							<span>中韩</span>
-  						</p>
+  						<c:forEach items="${duadList}" var="duad">
+	  						<p>
+	  							<span><input name="duad" type="checkbox" class="radio" checked=""></span>
+	  							<span name="${duad.duadId}">${duad.sourceLanguage}${duad.targetLanguage}</span>
+	  						</p>
+						</c:forEach>
   					</li>
   				</ul>
   			</div>
@@ -99,15 +83,15 @@
   				<ul>
   					<li>
   						<p>
-  							<span><input type="checkbox" class="radio" checked=""></span>
+  							<span><input name="interpretationType" type="checkbox" class="radio" checked=""></span>
   							<span>陪同翻译</span>
   						</p>
   						<p>
-  							<span><input type="checkbox" class="radio"></span>
+  							<span><input name="interpretationType" type="checkbox" class="radio"></span>
   							<span>交替传译</span>
   						</p>
   						<p>
-  							<span><input type="checkbox" class="radio" checked=""></span>
+  							<span><input name="interpretationType" type="checkbox" class="radio" checked=""></span>
   							<span>同声传译</span>
   						</p>
   					</li>
@@ -119,51 +103,61 @@
 					<ul class="mb-40">
 						<li class="none-ml">
 							<p class="word"><spring:message code="order.StartingTime"/></p>
-							<p><select class="select select-250 radius"></select></p>
+							<p><input id="begin_time" name="begin_time" type="text" class="int-text int-in-250 radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'%y-%M-%d %\H:\%m:%s',maxDate:'#F{$dp.$D(\'end_time\')}'})"/></p>
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.EngdingTime"/></p>
-							<p><select class="select select-250 radius"></select></p>
+							<p><input id="end_time" name="end_time" type="text" class="int-text int-in-250 radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'begin_time\')}'})"/></p>
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.Place"/></p>
-							<p><input type="text" class="int-text int-in-250 radius" placeholder="北京"></p>
+							<p><select id="place" name="place" class="select select-250 radius">
+								<option value="bj">北京</option>
+								<option value="other">京外城市</option>
+								<option value="abroad">国外</option>
+							</select></p>
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.MeetingAmount"/></p>
-							<p><input type="text" class="int-text int-in-250 radius" placeholder="<spring:message code="order.MeetingAmountInfo"/>"></p>
+							<p><input id="meetingAmount" name="meetingAmount" type="text" class="int-text int-in-250 radius" placeholder="<spring:message code="order.MeetingAmountInfo"/>"></p>
 						</li>
 					</ul>
 					<ul>
 						<li class="none-ml">
 							<p class="word"><spring:message code="order.interpreterNum"/></p>
-							<p><input type="text" class="int-text int-in-250 radius" placeholder="<spring:message code="order.interpreterNumInfo"/>"></p>
+							<p><input id="interpreterNum" name="interpreterNum" type="text" class="int-text int-in-250 radius" placeholder="<spring:message code="order.interpreterNumInfo"/>"></p>
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.Gender"/></p>
-							<p><select class="select select-250 radius"></select></p>
+							<p>
+								<select class="select select-250 radius">
+									<option>不限</option>
+									<option>男</option>
+									<option>女</option>
+								</select>
+							</p>
 						</li>
 					</ul>
 				</div>
   			</div>	
 			<div class="recharge-btn order-btn placeorder-btn ml-0">
  				<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="order.subTranslation"/>">
- 				<p><input type="checkbox" class="radio" checked=""><spring:message code="order.Agreement"/><a href="#"><spring:message code="order.AgreementInfo"/></a></p>
+ 				<p><input name="isAgree" type="checkbox" class="radio" checked=""><spring:message code="order.Agreement"/><a href="#"><spring:message code="order.AgreementInfo"/></a></p>
  			</div>
 			
 		</div>
 		</div>
 		
 		<!-- 联系人 -->
-		<%@ include file="/jsp/order/orderContact.jsp" %>
+		<%@ include file="/jsp/order/oralOrderContact.jsp" %>
+		</form>
 </body>
 <script type="text/javascript">
 	(function () {
 		var pager;
-		seajs.use(['app/order/createOralOrder','app/util/center-hind'], function(createOralOrderPage,centerHind) {
+		seajs.use('app/jsp/order/createOralOrder', function(createOralOrderPage) {
 			pager = new createOralOrderPage({element : document.body});
 			pager.render();
-			new centerHind({element : document.body}).render();
 		});
 	})();
 </script>

@@ -100,7 +100,7 @@
 
 	<div class="recharge-btn order-btn placeorder-btn">
 			<input type="button" id="toCreateOrder" class="btn btn-yellow btn-xxxlarge radius10" value="<spring:message code="order.Back"/>">
-			<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="order.SubmitOrder"/>">
+			<input type="button" id="submitOrder" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="order.SubmitOrder"/>">
 		</div>
 	
 </div>
