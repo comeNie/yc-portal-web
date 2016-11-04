@@ -11,8 +11,8 @@
   		<!--导航-->
   		<div class="cloud-nav">
   			<ul>
-  				<li class="current"><a href="#">我是客户</a></li>
-  				<li><a href="#">我是服务方</a></li>
+  				<li class="current"><a href="#"><spring:message code="user.topMenu.iClient"/></a></li>
+  				<li><a href="#"><spring:message code="user.topMenu.iLsp"/></a></li>
   			</ul>
   		</div>
   		<!--导航-->
@@ -29,12 +29,12 @@
   				</li>
   				<li class="nav-icon"><a href="#"><i class="icon iconfont">&#xe60b;</i></a></li>
   				<li class="nav-icon mt-2"><a href="#"><i class="icon iconfont">&#xe60a;</i><span class="message">3</span></a></li>
-  				<li class="user"><a href="#" class="yonh">爱大脸大脸<i class="icon-caret-down"></i></a>
+  				<li class="user"><a href="javaScript:void(0)" class="yonh">爱大脸大脸<i class="icon-caret-down"></i></a>
   					<div class="show">
   						<ul>
-  							<li><i class="icon-user"></i><a href="#">个人信息</a></li>
-  							<li><i class="icon-lock"></i><a href="#">安全设置</a></li>
-  							<li><i class="icon-off"></i><a href="#">退出</a></li>
+  							<li><i class="icon-user"></i><a href="#"><spring:message code="user.topMenu.perProfile"/></a></li>
+  							<li><i class="icon-lock"></i><a href="#"><spring:message code="user.topMenu.secSetting"/></a></li>
+  							<li><i class="icon-off"></i><a href="#"><spring:message code="user.topMenu.exit"/></a></li>
   						</ul>
   					</div>
   				</li>
