@@ -1,11 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page import="java.util.Locale"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="uedroot" value="${pageContext.request.contextPath}/resources/template"/>
-<jsp:include page="/inc/inc.jsp"/>
 	<div class="header-big">
   	<div class="cloud-header">
-  		<div class="logo"><a href="${pageContext.request.contextPath}">
-			<img src="${uedroot}/images/logo.png" /></a></div>
+  		<div class="logo">
+			<a href="${pageContext.request.contextPath}">
+			<img src="${pageContext.request.contextPath}/resources/template/images/logo<%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"_en":""%>.png" />
+			</a>
+		</div>
   		<!--导航-->
   		<div class="cloud-nav">
   			<ul>
@@ -17,10 +19,12 @@
   		<div class="cloud-breadcrumb">
   			<ul>
   				<li>
-  					<select class="select select-topmini none-select">
-  					<option>简体中文</option>
-  					<option>ENGLISH</option>
-  					</select>
+					<select class="select select-topmini none-select">
+						<option value="<%= Locale.SIMPLIFIED_CHINESE%>">简体中文</option>
+						<option value="<%= Locale.US%>"
+								<%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"selected":""%>
+						>ENGLISH</option>
+					</select>
   					<i class="icon-caret-down"></i>
   				</li>
   				<li class="nav-icon"><a href="#"><i class="icon iconfont">&#xe60b;</i></a></li>

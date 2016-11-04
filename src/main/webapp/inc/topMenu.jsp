@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
   通用页头
 --%>
+<%@page import="java.util.Locale"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!--面包屑导航-->
 <div class="placeorder-breadcrumb-big">
@@ -20,8 +21,10 @@
                 <p class="none-border"><i class="icon iconfont">&#xe60b;</i><a href="#"><spring:message code="topMenue.Mobile"/></a></p>
                 <p class="none-border none-top">
                     <select class="select select-topmini none-select ash-select">
-                        <option><spring:message code="topMenue.lanOptChinese"/></option>
-                        <option><spring:message code="topMenue.lanOptEnglish"/></option>
+                        <option value="<%= Locale.SIMPLIFIED_CHINESE%>">简体中文</option>
+                        <option value="<%= Locale.US%>"
+                                <%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"selected":""%>
+                        >ENGLISH</option>
                     </select>
                     <i class="icon-caret-down"></i>
                 </p>
@@ -34,7 +37,7 @@
     <div class="placeorder-subnav">
         <ul>
             <li class="logo"><a href="${_base}">
-                <img src="${pageContext.request.contextPath}/resources/template/images/logo1.png" /></a></li>
+                <img src="${pageContext.request.contextPath}/resources/template/images/logo1<%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"_en":""%>.png" /></a></li>
             <li class="right">
                 <p><a href="#"><spring:message code="topMenue.home"/></a></p>
                 <p><a href="#"><spring:message code="topMenue.written"/></a></p>
