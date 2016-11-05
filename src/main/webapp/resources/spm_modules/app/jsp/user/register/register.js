@@ -1,5 +1,5 @@
 define(
-		"user/register/register",
+		"app/jsp/user/register/register",
 		function(require, exports, module) {
 			var $ = require('jquery'), Widget = require('arale-widget/1.2.0/widget'), Dialog = require("optDialog/src/dialog"), AjaxController = require('opt-ajax/1.0.0/index');
 			// 实例化AJAX控制处理对象

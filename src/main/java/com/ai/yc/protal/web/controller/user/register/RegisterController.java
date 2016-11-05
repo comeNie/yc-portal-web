@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +21,7 @@ import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.components.mcs.MCSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.paas.ipaas.util.StringUtil;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
@@ -42,9 +44,12 @@ import com.ai.yc.user.api.userservice.param.YCInsertUserResponse;
 public class RegisterController {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(RegisterController.class);
+	@Autowired
+	ResWebBundle rb;
 	private static final String REGISTER = "user/register/register";
 	private static final String EMAIL = "user/register/sendMail";
 	private static final String SUCCESS = "user/register/success";
+
 	@RequestMapping("/toRegister")
 	public ModelAndView toRegister() {
 		if (LOG.isDebugEnabled()) {
@@ -82,8 +87,6 @@ public class RegisterController {
 		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 				"注册失败", false);
 	}
-
-	
 
 	/**
 	 * 获取注册验证码
@@ -159,7 +162,7 @@ public class RegisterController {
 					"校验失败");
 		}
 	}
-	
+
 	@RequestMapping("/toEmail")
 	public ModelAndView toEmail(@RequestParam("email") String email) {
 		if (LOG.isDebugEnabled()) {
@@ -169,20 +172,23 @@ public class RegisterController {
 		modelView.addObject("email", email);
 		return modelView;
 	}
+
 	@RequestMapping("/toSuccess")
 	public ModelAndView toSuccess(HttpServletRequest request) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("-------进入注册成功-------");
 		}
 		ModelAndView modelView = new ModelAndView(SUCCESS);
-		
+
 		return modelView;
 	}
+
 	private void sendRegisterEmaial(InsertYCUserRequest req) {
 		if (!StringUtil.isBlank(req.getEmail())) {// 手机为空
 			SendEmailRequest emailRequest = new SendEmailRequest();
 			emailRequest.setTomails(new String[] { req.getEmail() });
-			emailRequest.setData(new String[] {"zhangsan","111111","22222"});
+			emailRequest
+					.setData(new String[] { "zhangsan", "111111", "22222" });
 			emailRequest
 					.setTemplateRUL("email/template/uac-updatephone-mail.xml");
 			emailRequest.setSubject("注册成功");

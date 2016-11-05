@@ -141,7 +141,7 @@
 <script type="text/javascript">
 	var pager;
 	(function() {
-		seajs.use('user/register/register', function(registerPager) {
+		seajs.use('app/jsp/user/register/register', function(registerPager) {
 			pager = new registerPager({
 				element : document.body
 			});
