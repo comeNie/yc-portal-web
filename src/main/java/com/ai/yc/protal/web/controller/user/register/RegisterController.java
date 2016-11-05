@@ -2,6 +2,7 @@ package com.ai.yc.protal.web.controller.user.register;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Locale;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -204,8 +205,15 @@ public class RegisterController {
 			emailRequest.setTomails(new String[] { req.getEmail() });
 			emailRequest
 					.setData(new String[] { "zhangsan", "111111", "22222" });
+			Locale locale =rb.getDefaultLocale();
+			String _template ="";
+			if(Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())){
+				_template =Register.REGISTER_EMAIL_ZH_CN_TEMPLATE;
+			}else if(Locale.US.toString().equals(locale.toString())){
+				_template =Register.REGISTER_EMAIL_EN_US_TEMPLATE;
+			}
 			emailRequest
-					.setTemplateRUL("email/template/uac-updatephone-mail.xml");
+					.setTemplateRUL(_template);
 			emailRequest.setSubject("注册成功");
 			VerifyUtil.sendEmail(emailRequest);
 		}
