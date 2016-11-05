@@ -138,6 +138,7 @@
 
 	</div>
 </body>
+<%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
 	var pager;
 	(function() {

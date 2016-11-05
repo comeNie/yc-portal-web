@@ -41,6 +41,7 @@
 
 	</div>
 </body>
+<%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
 	var hash = {
 		'qq.com' : 'http://mail.qq.com',
