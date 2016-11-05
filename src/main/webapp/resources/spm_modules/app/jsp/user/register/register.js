@@ -1,5 +1,5 @@
 define(
-		"user/register/register",
+		"app/jsp/user/register/register",
 		function(require, exports, module) {
 			var $ = require('jquery'), Widget = require('arale-widget/1.2.0/widget'), Dialog = require("optDialog/src/dialog"), AjaxController = require('opt-ajax/1.0.0/index');
 			// 实例化AJAX控制处理对象
@@ -138,8 +138,52 @@ define(
 						},
 						/* 提交注册 */
 						_submitRegsiter : function() {
+							var regsiterBtn = $("#regsiterBtn");
+							if(regsiterBtn.hasClass("biu-btn")){
+								return;
+							}
 							var falg = this._checkRegsiter();
-							alert(falg);
+							if(falg){
+								var _this =this;
+								var sendData = {};
+								var a = $("#regsiterForm").serializeArray();
+								$.each(a, function () {
+								if (sendData[this.name] !== undefined) {
+								if (!sendData[this.name].push) {
+								sendData[this.name] = [sendData[this.name]];
+								}
+								sendData[this.name].push(this.value || '');
+								} else {
+								sendData[this.name] = this.value || '';
+								}
+								});
+								var register_type = $("#change_register_type").attr("register_type");
+								if ("phone" == register_type) {
+									sendData.email='';
+								} else if ("email" == register_type) {
+									sendData.phone='';
+								}
+								regsiterBtn.removeClass("btn-blue").addClass("biu-btn").attr("style","color:#fff;");
+								ajaxController.ajax({
+									type: "post",
+									processing: false,
+									message: "保存中，请等待...",
+									url: _base + "/reg/submitRegister",
+									data: sendData,
+									success: function (json) {
+										regsiterBtn.removeClass("biu-btn").addClass("btn-blue");
+										if(!json.data){
+											_this._showCheckMsg(json.statusInfo);
+										}else{
+											 if ("email" == register_type) {
+												 location.href= _base + "/reg/toEmail?email="+sendData.email;
+											 }else{
+												 location.href= _base + "/reg/toSuccess"; 
+											 }
+										}
+									}
+								});
+							}
 						},
 						/*异步校验图形验证码*/
 						_checkImageCode:function(){
