@@ -17,7 +17,6 @@ import com.ai.yc.order.api.ordersubmission.param.OrderSubmissionResponse;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.alibaba.fastjson.JSONObject;
-import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
 
 import java.util.ArrayList;
 import java.util.List;
