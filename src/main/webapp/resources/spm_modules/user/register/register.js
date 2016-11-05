@@ -138,6 +138,10 @@ define(
 						},
 						/* 提交注册 */
 						_submitRegsiter : function() {
+							var regsiterBtn = $("#regsiterBtn");
+							if(regsiterBtn.hasClass("biu-btn")){
+								return;
+							}
 							var falg = this._checkRegsiter();
 							if(falg){
 								var _this =this;
@@ -159,6 +163,7 @@ define(
 								} else if ("email" == register_type) {
 									sendData.phone='';
 								}
+								regsiterBtn.removeClass("btn-blue").addClass("biu-btn").attr("style","color:#fff;");
 								ajaxController.ajax({
 									type: "post",
 									processing: false,
@@ -166,6 +171,7 @@ define(
 									url: _base + "/reg/submitRegister",
 									data: sendData,
 									success: function (json) {
+										regsiterBtn.removeClass("biu-btn").addClass("btn-blue");
 										if(!json.data){
 											_this._showCheckMsg(json.statusInfo);
 										}else{
