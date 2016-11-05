@@ -36,7 +36,7 @@
 						<p class="right">
 							<a id="change_register_type" href="javascript:void(0);"
 								register_type="phone"><i class="icon iconfont">&#xe614;</i>
-							<spring:message code="ycregister.register.email" /></a>
+								<spring:message code="ycregister.register.email" /></a>
 						</p>
 					</ul>
 				</div>
@@ -126,10 +126,9 @@
 								</p>
 							</li>
 							<li class="ml-100"><input id="regsiterBtn" type="button"
-								class="btn btn-blue btn-415 radius20" value="立即注册"></li>
+								class="btn btn-blue btn-415 radius20" value="<spring:message code="ycregister.registerNow" />"></li>
 
-
-						</ul>
+</ul>
 					</div>
 				</form>
 			</div>
@@ -138,7 +137,6 @@
 
 	</div>
 </body>
-<%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
 	var pager;
 	(function() {
@@ -149,6 +147,19 @@
 			pager.render();
 		});
 	})();
+	var registerMsg = {
+		"email_empty" : '<spring:message code="ycregisterMsg.accountEmpty" />',
+		"email_error" : '<spring:message code="ycregisterMsg.accountError" />',
+		"password_empty" : '<spring:message code="ycregisterMsg.passwordEmpty" />',
+		"password_error" : '<spring:message code="ycregisterMsg.passwordError" />',
+		"confirm_password_empty" : '<spring:message code="ycregisterMsg.passwordEmpty" />',
+		"confirm_password_error" : '<spring:message code="ycregisterMsg.confirmPasswordError" />',
+		"verify_code_img_empty" : '<spring:message code="ycregisterMsg.verificationCodeEmpty" />',
+		"verify_code_img_error" : '<spring:message code="ycregisterMsg.verificationCodeError" />',
+		"agreement" : '<spring:message code="ycregisterMsg.agreement" />',
+		"phone_registered" : '<spring:message code="ycregister.register.phone" />',
+		"email_registered" : '<spring:message code="ycregister.register.email" />'
+	};
 </script>
 
 </html>
