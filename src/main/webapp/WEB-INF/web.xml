@@ -49,7 +49,7 @@
     </filter>
     <filter-mapping>
         <filter-name>sessionFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/XXX</url-pattern>
     </filter-mapping>
     <!-- 单点登录 -->
     <!--

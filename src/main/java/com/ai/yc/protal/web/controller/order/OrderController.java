@@ -77,8 +77,10 @@ public class OrderController {
         SysDuad sysDuad = new SysDuad();
         sysDuad.setDuadId("1");
         sysDuad.setLanguage("zh");
+
         sysDuad.setSourceCn("英文");
         sysDuad.setTargetCn("中文");
+
         sysDuad.setCurrency("rmb");
         sysDuad.setOrdinary("100");
         sysDuad.setOrdinaryUrgent("150");
@@ -92,6 +94,7 @@ public class OrderController {
         SysDomain sysDomain = new SysDomain();
         sysDomain.setDomainId("1");
         sysDomain.setDomainCn("医学");
+
         sysDomain.setLanguage("zh");
         domainList.add(sysDomain);
         domainList.add(sysDomain);
@@ -99,7 +102,9 @@ public class OrderController {
         SysPurpose sysPurpose = new SysPurpose();
         sysPurpose.setPurposeId("1");
         sysPurpose.setLanguage("zh");
+
         sysPurpose.setPurposeCn("专业论文");
+
         purposeList.add(sysPurpose);
         purposeList.add(sysPurpose);
         
@@ -133,8 +138,10 @@ public class OrderController {
         sysDuad.setDuadId("1");
         sysDuad.setLanguage("zh");
         sysDuad.setOrderType("2"); //口译类型
+
         sysDuad.setSourceCn("英文");
         sysDuad.setTargetCn("中文");
+
         sysDuad.setCurrency("rmb");
         duadList.add(sysDuad);
         duadList.add(sysDuad);

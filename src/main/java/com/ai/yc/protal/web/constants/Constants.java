@@ -1,9 +1,14 @@
 package com.ai.yc.protal.web.constants;
 
 public final class Constants {
+	
 	private Constants() {
 	}
 
+	public static final java.lang.String SUCCESS_CODE = "000000";
+	
+    public static final String ERROR_CODE = "111111";
+	
 	public static final class Register {
 		private Register() {
 		}
