@@ -86,8 +86,8 @@
         <div class="translate-file">
             <ul>
                 <li>
-                    <p><input type="button" class="btn btn-blue btn-trans radius2" value="上传文档"><input type="file"  class="pop-file"></p>
-                    <p>（支持5000字以内的.doc（X）.TXT文件）</p>
+                    <%--<p><input type="button" class="btn btn-blue btn-trans radius2" value="上传文档"><input type="file"  class="pop-file"></p>
+                    <p>（支持5000字以内的.doc（X）.TXT文件）</p>--%>
                 </li>
                 <li class="right"><input type="button" class="btn border-blue btn-trans-b radius2" value="人工翻译"></li>
             </ul>
