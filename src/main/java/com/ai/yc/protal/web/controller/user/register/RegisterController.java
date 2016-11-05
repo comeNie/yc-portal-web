@@ -27,6 +27,7 @@ import com.ai.paas.ipaas.util.StringUtil;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
+import com.ai.yc.protal.web.utils.MD5Util;
 import com.ai.yc.protal.web.utils.VerifyUtil;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.InsertYCUserRequest;
@@ -77,17 +78,29 @@ public class RegisterController {
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 					rb.getMessage("ycregisterMsg.passwordEmpty"), false);
 		}
-		// 用户名 手机 邮箱校验 昵称 校验
-		YCInsertUserResponse res = DubboConsumerFactory.getService(
-				IYCUserServiceSV.class).insertYCUser(req);
-		ResponseHeader resHeader = res == null ? null : res.getResponseHeader();
-		if (res != null && resHeader != null && resHeader.isSuccess()) {
-			sendRegisterEmaial(req);
+		try {
+			// 用户名 手机 邮箱校验 昵称 校验
+			YCInsertUserResponse res = DubboConsumerFactory.getService(
+					IYCUserServiceSV.class).insertYCUser(req);
+			ResponseHeader resHeader = res == null ? null : res
+					.getResponseHeader();
+			String msg = "";
+			if (resHeader != null)
+				msg = resHeader.getResultMessage();
+
+			if (resHeader != null && resHeader.isSuccess()) {
+				sendRegisterEmaial(req);
+				return new ResponseData<Boolean>(
+						ResponseData.AJAX_STATUS_SUCCESS, msg, true);
+			}
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
-					"注册成功", true);
+					msg, false);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_FAILURE,
+					"error", false);
 		}
-		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
-				"注册失败", false);
+
 	}
 
 	/**
@@ -203,18 +216,19 @@ public class RegisterController {
 		String phone = request.getParameter("phone");
 		if (!StringUtil.isBlank(phone)) {
 			req.setMobilePhone(phone);
-			req.setNickname(phone);
+			req.setUserName(phone);
 			req.setLoginway("2");
 		}
 		String email = request.getParameter("email");
 		if (!StringUtil.isBlank(email)) {
 			req.setEmail(email);
-			req.setNickname(email);
+			req.setUserName(email);
 			req.setLoginway("1");
 		}
+		req.setNickname("译粉");
 		String password = request.getParameter("password");
 		if (!StringUtil.isBlank(password)) {
-			req.setPassword(password);
+			req.setPassword(MD5Util.MD5(password));
 		}
 		req.setRegip("0");
 		return req;
