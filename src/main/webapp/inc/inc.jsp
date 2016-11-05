@@ -12,7 +12,6 @@
     response.setHeader("Pragma", "No-cache");
 %>
 <!-- <link rel="stylesheet" type="text/css" href="${_base}/resources/slpmall/styles/bootstrap.css"> -->
-<link rel="stylesheet" type="text/css" href="${spmRes}/optDialog/css/ui-dialog.css"/>
 
 <link href="${uedroot}/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
 <link href="${uedroot}/css/iconfont.css" rel="stylesheet" type="text/css">
