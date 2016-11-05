@@ -63,7 +63,7 @@ public class RegisterController {
 			return result;
 		}
 		InsertYCUserRequest req = bulidRegisterParam(request);
-		if (StringUtil.isBlank(req.getPhone())
+		if (StringUtil.isBlank(req.getMobilePhone())
 				&& StringUtil.isBlank(req.getEmail())) {// 手机邮箱均为空
 
 		}
@@ -194,18 +194,21 @@ public class RegisterController {
 		InsertYCUserRequest req = new InsertYCUserRequest();
 		String phone = request.getParameter("phone");
 		if (!StringUtil.isBlank(phone)) {
-			req.setPhone(phone);
+			req.setMobilePhone(phone);
 			req.setNickname(phone);
+			req.setLoginway("2");
 		}
 		String email = request.getParameter("email");
 		if (!StringUtil.isBlank(email)) {
 			req.setEmail(email);
 			req.setNickname(email);
+			req.setLoginway("1");
 		}
 		String password = request.getParameter("password");
 		if (!StringUtil.isBlank(password)) {
 			req.setPassword(password);
 		}
+		req.setRegip("0");
 		return req;
 	}
 }
