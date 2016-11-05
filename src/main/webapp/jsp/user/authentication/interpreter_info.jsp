@@ -107,16 +107,17 @@
   	</div>
   </div>
   </div>
-<script type="text/javascript">
-		var pager;
-		(function() {
-			seajs.use('app/user/interpreter/interpreterInfo',function(InterPreterInfoPager) {
-						pager = new InterPreterInfoPager({
-							element : document.body
-						});
-						pager.render();
-					});
-		})();
-	</script>
 </body>
+<%@ include file="/inc/incJs.jsp" %>
+<script type="text/javascript">
+	var pager;
+	(function() {
+		seajs.use('app/user/interpreter/interpreterInfo',function(InterPreterInfoPager) {
+			pager = new InterPreterInfoPager({
+				element : document.body
+			});
+			pager.render();
+		});
+	})();
+</script>
 </html>
