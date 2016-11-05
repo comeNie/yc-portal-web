@@ -70,10 +70,12 @@ public class RegisterController {
 		InsertYCUserRequest req = bulidRegisterParam(request);
 		if (StringUtil.isBlank(req.getMobilePhone())
 				&& StringUtil.isBlank(req.getEmail())) {// 手机邮箱均为空
-
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
+					rb.getMessage("ycregisterMsg.accountEmpty"), false);
 		}
-		if (StringUtil.isBlank(req.getPassword())) {// 手机为空
-
+		if (StringUtil.isBlank(req.getPassword())) {// 密码为空
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
+					rb.getMessage("ycregisterMsg.passwordEmpty"), false);
 		}
 		// 用户名 手机 邮箱校验 昵称 校验
 		YCInsertUserResponse res = DubboConsumerFactory.getService(
@@ -119,11 +121,11 @@ public class RegisterController {
 			String code = cacheClient.get(cacheKey);
 			String imgCode = request.getParameter("imgCode");
 			Boolean isRight = false;
-			String msg = "验证码错误";
+			String msg = rb.getMessage("ycregisterMsg.verificationCodeError");
 			if (!StringUtil.isBlank(code) && !StringUtil.isBlank(imgCode)
 					&& imgCode.equalsIgnoreCase(code)) {
 				isRight = true;
-				msg = "验证码正确";
+				msg = "ok";
 			}
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 					msg, isRight);
@@ -131,7 +133,7 @@ public class RegisterController {
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_FAILURE,
-					"验证码校验失败");
+					"");
 		}
 	}
 
