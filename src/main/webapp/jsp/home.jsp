@@ -17,13 +17,18 @@
 <!--index nav-->
 <div class="index-nav">
     <ul>
-        <li><img src="${uedroot}/images/index-logo.png" /></li>
+        <li><img src="${uedroot}/images/index-logo<%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"_en":""%>.png" /></li>
         <li class="right">
-            <p><a href="#" class="current">首页</a></p>
-            <p><a href="#">笔译</a></p>
-            <p><a href="#">口译</a></p>
-            <p><a href="#">服务</a></p>
-            <p><a href="#">APP</a></p>
+            <!-- 首页 -->
+            <p><a href="${_base}" class="current"><spring:message code="home.nav.bar.home"></spring:message></a></p>
+            <%--笔译--%>
+            <p><a href="#"><spring:message code="home.nav.bar.written"/></a></p>
+            <%--口译--%>
+            <p><a href="#"><spring:message code="home.nav.bar.oral"/></a></p>
+            <%--服务--%>
+            <p><a href="#"><spring:message code="home.nav.bar.services"/></a></p>
+            <%--APP--%>
+            <p><a href="#"><spring:message code="home.nav.bar.app"/></a></p>
         </li>
     </ul>
 </div>
@@ -203,27 +208,32 @@
                 <li>
                     <p class="icon-a"></p>
                     <p class="shuz timer" id="count-number" data-to="${homeData.lgdataNum}" data-speed="4500"></p>
-                    <p class="word">语料</p>
+                    <%--语料--%>
+                    <p class="word"><spring:message code="home.foot.tips.corpus"/></p>
                 </li>
                 <li>
                     <p class="icon-b"></p>
                     <p class="shuz timer" id="count-number" data-to="${homeData.customNum}" data-speed="4500"></p>
-                    <p class="word">客户</p>
+                    <p class="word"><spring:message code="home.foot.tips.customer"/></p>
+                    <%--客户--%>
                 </li>
                 <li>
                     <p class="icon-c"></p>
                     <p class="shuz timer" id="count-number" data-to="${homeData.interpreterNum}" data-speed="4500"></p>
-                    <p class="word">译员</p>
+                    <p class="word"><spring:message code="home.foot.tips.interpreter"/></p>
+                    <%--译员--%>
                 </li>
                 <li>
                     <p class="icon-d"></p>
                     <p class="shuz timer" id="count-number" data-to="${homeData.orderNum}" data-speed="4500"></p>
-                    <p class="word">订单</p>
+                    <p class="word"><spring:message code="home.foot.tips.order"/></p>
+                    <%--订单--%>
                 </li>
                 <li class="non-ml">
                     <p class="icon-e"></p>
                     <p class="shuz timer" id="count-number" data-to="${homeData.languageNum}" data-speed="4500"></p>
-                    <p class="word">语种</p>
+                    <p class="word"><spring:message code="home.foot.tips.language"/></p>
+                    <%--语种--%>
                 </li>
             </ul>
         </div>
