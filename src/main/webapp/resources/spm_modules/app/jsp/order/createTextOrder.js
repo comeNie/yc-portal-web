@@ -205,10 +205,10 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			$("#transGrade ul").each(function () {
 				$(this).click(function () {
 					$(this).children('label').remove();
-					$(this).addClass("none-ml current");
+					$(this).addClass("current");
 					$(this).append('<label><i class="icon iconfont">&#xe617;</i></label>');
 					
-					$($(this).siblings()).removeClass("none-ml current");
+					$($(this).siblings()).removeClass("current");
 					$($(this).siblings()).children('label').remove();
 				});
 			}) 
