@@ -1,8 +1,8 @@
 package com.ai.yc.protal.web.controller;
 
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
-import com.ai.platform.common.api.cachekey.key.CacheKey;
-import com.ai.platform.common.api.cachekey.model.HomeDataConfig;
+import com.ai.yc.common.api.cachekey.key.CacheKey;
+import com.ai.yc.common.api.cachekey.model.HomeDataConfig;
 import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
