@@ -6,7 +6,6 @@
   通用js引入.
 --%>
 <%@page import="com.ai.opt.sso.client.filter.SSOClientUtil"%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="_base" value="${pageContext.request.contextPath}"/>
 <c:set var="_slpres" value="${_base}/resources/local"/>

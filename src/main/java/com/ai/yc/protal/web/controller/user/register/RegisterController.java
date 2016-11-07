@@ -2,6 +2,9 @@ package com.ai.yc.protal.web.controller.user.register;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.components.mcs.MCSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
@@ -24,13 +29,23 @@ import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.paas.ipaas.util.StringUtil;
+import com.ai.platform.common.api.country.interfaces.IGnCountrySV;
+import com.ai.platform.common.api.country.param.CountryRequest;
+import com.ai.platform.common.api.country.param.CountryResponse;
+import com.ai.platform.common.api.country.param.CountryVo;
+import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
+import com.ai.yc.protal.web.utils.MD5Util;
 import com.ai.yc.protal.web.utils.VerifyUtil;
+import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
+import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
+import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckEmailRequest;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.InsertYCUserRequest;
 import com.ai.yc.user.api.userservice.param.YCInsertUserResponse;
+import com.alibaba.fastjson.JSON;
 
 /**
  * 译云注册Controller <br>
@@ -59,6 +74,39 @@ public class RegisterController {
 		return modelView;
 	}
 
+	@RequestMapping("/loadCountry")
+	@ResponseBody
+	public ResponseData<List<CountryVo>> loadCountry() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("-------加载国家-------");
+		}
+		CountryResponse res = null;
+		String msg = "ok";
+		/*try {
+			res = DubboConsumerFactory.getService(IGnCountrySV.class)
+					.queryCountry(new CountryRequest());
+		} catch (Exception e) {
+			msg = "error";
+			LOG.error(e.getMessage(), e);
+			return new ResponseData<List<CountryVo>>(
+					ResponseData.AJAX_STATUS_FAILURE, msg);
+		}*/
+		List<CountryVo> result = new ArrayList<>();
+		for(int i=0;i<3;i++){
+			CountryVo vo = new CountryVo();
+			vo.setCountryNameCn("中国大陆");
+			vo.setCountryNameEn("China");
+			vo.setCountryCode("86");
+			result.add(vo);
+		}
+		if (res != null && res.getResponseHeader() != null
+				&& res.getResponseHeader().isSuccess()) {
+			result = res.getResult();
+		}
+		return new ResponseData<List<CountryVo>>(
+				ResponseData.AJAX_STATUS_SUCCESS, msg, result);
+	}
+
 	@RequestMapping(value = "/submitRegister", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseData<Boolean> submitRegister(HttpServletRequest request) {
@@ -77,17 +125,29 @@ public class RegisterController {
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 					rb.getMessage("ycregisterMsg.passwordEmpty"), false);
 		}
-		// 用户名 手机 邮箱校验 昵称 校验
-		YCInsertUserResponse res = DubboConsumerFactory.getService(
-				IYCUserServiceSV.class).insertYCUser(req);
-		ResponseHeader resHeader = res == null ? null : res.getResponseHeader();
-		if (res != null && resHeader != null && resHeader.isSuccess()) {
-			sendRegisterEmaial(req);
+		try {
+			// 用户名 手机 邮箱校验 昵称 校验
+			YCInsertUserResponse res = DubboConsumerFactory.getService(
+					IYCUserServiceSV.class).insertYCUser(req);
+			ResponseHeader resHeader = res == null ? null : res
+					.getResponseHeader();
+			String msg = "";
+			if (resHeader != null)
+				msg = resHeader.getResultMessage();
+
+			if (resHeader != null && resHeader.isSuccess()) {
+				sendRegisterEmaial(req);
+				return new ResponseData<Boolean>(
+						ResponseData.AJAX_STATUS_SUCCESS, msg, true);
+			}
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
-					"注册成功", true);
+					msg, false);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_FAILURE,
+					"error", false);
 		}
-		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
-				"注册失败", false);
+
 	}
 
 	/**
@@ -146,22 +206,14 @@ public class RegisterController {
 		try {
 			String checkType = request.getParameter("checkType");
 			String checkVal = request.getParameter("checkVal");
-			Boolean canUse = false;
 			String msg = "此邮箱已注册";
-			if ("email".equals(checkType)) {// 邮箱校验
-				canUse = false;
-			}
-			if ("phone".equals(checkType)) {// 手机校验
-				msg = "此手机已注册";
-				canUse = false;
-			}
-
+			Boolean canUse = checkPhoneOrEmail(checkType, checkVal);
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 					msg, canUse);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_FAILURE,
-					"校验失败");
+					"error");
 		}
 	}
 
@@ -185,14 +237,43 @@ public class RegisterController {
 		return modelView;
 	}
 
+	/**
+	 * 校验手机或邮箱可用
+	 */
+	private Boolean checkPhoneOrEmail(String checkType, String checkVal) {
+		Boolean canUse = false;
+		if ("email".equals(checkType)) {// 邮箱校验
+			UcMembersCheckEmailRequest emailReq = new UcMembersCheckEmailRequest();
+			emailReq.setEmail(checkVal);
+			emailReq.setTenantId(Constants.DEFAULT_TENANT_ID);
+			UcMembersResponse res = DubboConsumerFactory.getService(
+					IUcMembersSV.class).ucCheckeEmail(emailReq);
+			LOG.info("校验邮箱返回：" + JSON.toJSONString(res));
+			if (res != null && res.getResponseHeader() != null
+					&& res.getResponseHeader().isSuccess()) {
+				res.getResponseHeader().getResultCode();
+			}
+		}
+		if ("phone".equals(checkType)) {// 手机校验
+			canUse = false;
+		}
+		return canUse;
+	}
+
 	private void sendRegisterEmaial(InsertYCUserRequest req) {
 		if (!StringUtil.isBlank(req.getEmail())) {// 手机为空
 			SendEmailRequest emailRequest = new SendEmailRequest();
 			emailRequest.setTomails(new String[] { req.getEmail() });
 			emailRequest
 					.setData(new String[] { "zhangsan", "111111", "22222" });
-			emailRequest
-					.setTemplateRUL("email/template/uac-updatephone-mail.xml");
+			Locale locale = rb.getDefaultLocale();
+			String _template = "";
+			if (Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())) {
+				_template = Register.REGISTER_EMAIL_ZH_CN_TEMPLATE;
+			} else if (Locale.US.toString().equals(locale.toString())) {
+				_template = Register.REGISTER_EMAIL_EN_US_TEMPLATE;
+			}
+			emailRequest.setTemplateRUL(_template);
 			emailRequest.setSubject("注册成功");
 			VerifyUtil.sendEmail(emailRequest);
 		}
@@ -203,18 +284,19 @@ public class RegisterController {
 		String phone = request.getParameter("phone");
 		if (!StringUtil.isBlank(phone)) {
 			req.setMobilePhone(phone);
-			req.setNickname(phone);
+			req.setUserName(phone);
 			req.setLoginway("2");
 		}
 		String email = request.getParameter("email");
 		if (!StringUtil.isBlank(email)) {
 			req.setEmail(email);
-			req.setNickname(email);
+			req.setUserName(email);
 			req.setLoginway("1");
 		}
+		req.setNickname("译粉");
 		String password = request.getParameter("password");
 		if (!StringUtil.isBlank(password)) {
-			req.setPassword(password);
+			req.setPassword(MD5Util.MD5(password));
 		}
 		req.setRegip("0");
 		return req;
