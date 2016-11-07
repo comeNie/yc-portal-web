@@ -202,27 +202,27 @@
             <ul>
                 <li>
                     <p class="icon-a"></p>
-                    <p class="shuz timer" id="count-number" data-to="26783912" data-speed="4500"></p>
+                    <p class="shuz timer" id="count-number" data-to="${homeData.lgdataNum}" data-speed="4500"></p>
                     <p class="word">语料</p>
                 </li>
                 <li>
                     <p class="icon-b"></p>
-                    <p class="shuz timer" id="count-number" data-to="543891" data-speed="4500"></p>
+                    <p class="shuz timer" id="count-number" data-to="${homeData.customNum}" data-speed="4500"></p>
                     <p class="word">客户</p>
                 </li>
                 <li>
                     <p class="icon-c"></p>
-                    <p class="shuz timer" id="count-number" data-to="78239" data-speed="4500"></p>
+                    <p class="shuz timer" id="count-number" data-to="${homeData.interpreterNum}" data-speed="4500"></p>
                     <p class="word">译员</p>
                 </li>
                 <li>
                     <p class="icon-d"></p>
-                    <p class="shuz timer" id="count-number" data-to="673892" data-speed="4500"></p>
+                    <p class="shuz timer" id="count-number" data-to="${homeData.orderNum}" data-speed="4500"></p>
                     <p class="word">订单</p>
                 </li>
                 <li class="non-ml">
                     <p class="icon-e"></p>
-                    <p class="shuz timer" id="count-number" data-to="60" data-speed="4500"></p>
+                    <p class="shuz timer" id="count-number" data-to="${homeData.languageNum}" data-speed="4500"></p>
                     <p class="word">语种</p>
                 </li>
             </ul>

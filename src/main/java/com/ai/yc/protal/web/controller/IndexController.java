@@ -1,6 +1,12 @@
 package com.ai.yc.protal.web.controller;
 
+import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
+import com.ai.platform.common.api.cachekey.key.CacheKey;
+import com.ai.platform.common.api.cachekey.model.HomeDataConfig;
+import com.ai.yc.protal.web.utils.AiPassUitl;
+import com.alibaba.fastjson.JSON;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -14,7 +20,19 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/home")
-    public String indexView(){
+    public String indexView(Model uiModel){
+        //获取基础数据
+        ICacheClient cacheClient = AiPassUitl.getCacheClient();
+        String homeDataStr = cacheClient.get(CacheKey.HOME_DATA_CONFIG_KEY);
+        //TODO... 模拟数据
+//        HomeDataConfig homeDataCon = JSON.parseObject(homeDataStr,HomeDataConfig.class);
+        HomeDataConfig homeDataCon = new HomeDataConfig();
+        homeDataCon.setCustomNum("54900");//客户
+        homeDataCon.setLgdataNum("26783000");//语料
+        homeDataCon.setOrderNum("600892");//订单数量
+        homeDataCon.setInterpreterNum("78239");//译员数量
+        homeDataCon.setLanguageNum("60");//语种
+        uiModel.addAttribute("homeData",homeDataCon);
         return "/home";
     }
 }
