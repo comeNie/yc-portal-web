@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page import="java.util.Locale"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,13 +59,13 @@
 		  					 	<option value="${duad.duadId}"  currency="${duad.currency}" 
 								ordinary="${duad.ordinary}"  ordinaryUrgent="${duad.ordinaryUrgent}" 
 								professional="${duad.professional}"  professionalUrgent="${duad.professionalUrgent}"  
-								publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}"
+								publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}" 
 								sourceEn="${duad.sourceEn}" duadId="${duad.duadId}">
 									<c:choose>
 										<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${duad.sourceCn}→${duad.targetCn}</c:when>
 										<c:otherwise>${duad.sourceEn}→${duad.targetEn}</c:otherwise>
 									</c:choose>
-
+									
 								</option>
 							</c:if>
 						</c:forEach>
@@ -94,7 +94,7 @@
 							<p><spring:message code="order.stanInstruction"/></p>
 						</li>
 						<li>
-							<p><span id="stanPrice">150</span><spring:message code="order.thousandWords"/></p>
+							<p><span id="stanPrice"></span><spring:message code="order.thousandWords"/></p>
 							<p class="ml-30"><span>1</span>次免费修改</p>
 						</li>
 						<li class="green-li">
@@ -120,7 +120,7 @@
 							<p><spring:message code="order.proInstruction"/></p>
 						</li>
 						<li>
-							<p><span id="proPrice">150</span><spring:message code="order.thousandWords"/></p>
+							<p><span id="proPrice"></span><spring:message code="order.thousandWords"/></p>
 							<p class="ml-30"><span>1</span>次免费修改</p>
 						</li>
 						<li class="green-li">
@@ -145,7 +145,7 @@
 							<p><spring:message code="order.pubInstruction"/></p>
 						</li>
 						<li>
-							<p><span id="pubPrice">150</span><spring:message code="order.thousandWords"/></p>
+							<p><span id="pubPrice"></span><spring:message code="order.thousandWords"/></p>
 							<p class="ml-30"><span>1</span>次免费修改</p>
 						</li>
 						<li class="green-li">
@@ -170,8 +170,7 @@
 							<p>
 								<select id="selectPurpose" name="selectPurpose" class="select select-medium radius">
 									<c:forEach items="${purposeList}" var="purpose">
-										<option value="${purpose.purposeId}"
-												<c:if test="${purpose.purposeId == selPurpose}">selected</c:if>>
+										<option value="${purpose.purposeId}">
 											<c:choose>
 												<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${purpose.purposeCn}</c:when>
 												<c:otherwise>${purpose.purposeEn}</c:otherwise>
@@ -217,7 +216,7 @@
   				</div>
   				<div class="urgent">
   					<ul>
-  						<li><span>1500</span><spring:message code="order.hourThousandWords"/></li>
+  						<li><span id="speedValue"></span><spring:message code="order.hourThousandWords"/></li>
   						<li class="mt-10">
   							<p><input type="checkbox" checked=""  class="radio" id="urgentOrder"><spring:message code="order.urgentOrder"/></p>
   							<p class="word ml-20"><spring:message code="order.urgentOrderInfo"/></p>

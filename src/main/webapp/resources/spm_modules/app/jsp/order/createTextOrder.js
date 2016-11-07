@@ -27,7 +27,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			"click #urgentOrder":"_transPrice",
 			"change #selectDuad":"_transPrice",
 			"click #saveContact":"_saveContact",
-			"click #editContactDiv":"_editContactDiv"
+			"click #editContact":"_editContactDiv"
            	},
             
     	//重写父类
@@ -187,9 +187,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				},
 				success: function (data) {
 					if ("1" === data.statusCode) {
-						//alert("保存成功");
-						//保存成功,回退到进入的列表页
-//						window.history.go(-1)
+						if(baseInfo.translateType == 1) {
+							window.location.href =  _base + "/order/payOrder";
+						} else {
+							
+						}
+						
 					}
 				}
 			});
@@ -200,24 +203,30 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			$("#contactPage").hide();
 		},
 		
-		//翻译等级改变
+		//翻译等级改变，翻译速度改变
 		_transGrade:function() {
+			var _this = this;
 			$("#transGrade ul").each(function () {
 				$(this).click(function () {
+					
+				
 					$(this).children('label').remove();
 					$(this).addClass("none-ml current");
 					$(this).append('<label><i class="icon iconfont">&#xe617;</i></label>');
 					
 					$($(this).siblings()).removeClass("none-ml current");
 					$($(this).siblings()).children('label').remove();
+					
+					_this._getSpeed();
 				});
 			}) 
 		},
 		
-		//翻译级别改变，价格改变
+		//语言对改变，价格改变,翻译速度改变
 		_transPrice:function() {
+			var _this = this;
 			var selected = $("#selectDuad").find("option:selected");
-			var currency = selected.attr("currency");
+			var currency;
 			var ordinary = selected.attr("ordinary");
 			var ordinaryUrgent = selected.attr("ordinaryUrgent");
 			var professional = selected.attr("professional");
@@ -225,7 +234,13 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			var publish = selected.attr("publish");
 			var publishUrgent = selected.attr("publishUrgent");
 			
-			if ( $("#urgentOrder").is(':checked') ) {
+			if (currentLan.indexOf("zh") >= 0) {
+				currency = "元";
+			} else {
+				currency = "$";
+			}
+			
+			if ($("#urgentOrder").is(':checked') ) {
 				$("#stanPrice").html(ordinaryUrgent + currency);
 				$("#proPrice").html(professionalUrgent + currency);
 				$("#pubPrice").html(publishUrgent + currency);
@@ -233,6 +248,36 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				$("#stanPrice").html(ordinary + currency);
 				$("#proPrice").html(professional + currency);
 				$("#pubPrice").html(publish + currency);
+			}
+			
+			this._getSpeed();
+		},
+		
+		//获取翻译速度价格
+		_getSpeed:function() {
+			var ordSpeed = 500;
+			var ordSpeedUrgent = 1000;
+			var proSpeed = 300;
+			var proSpeedUrgent = 500;
+			var pubSpeed = 250;
+			var pubSpeedUrgent = 300;
+			
+			if ($("#urgentOrder").is(':checked')) {
+				if($(".none-ml.current").attr('name') == 0) {
+					$("#speedValue").html(ordSpeedUrgent);
+				} else if($(".none-ml.current").attr('name') == 1) {
+					$("#speedValue").html(proSpeedUrgent);
+				} else {
+					$("#speedValue").html(pubSpeedUrgent);
+				}
+			} else {
+				if($(".none-ml.current").attr('name') == 0) {
+					$("#speedValue").html(ordSpeed);
+				} else if($(".none-ml.current").attr('name') == 1) {
+					$("#speedValue").html(proSpeed);
+				} else {
+					$("#speedValue").html(pubSpeed);
+				}
 			}
 		},
 		

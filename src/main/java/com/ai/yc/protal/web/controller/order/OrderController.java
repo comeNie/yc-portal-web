@@ -11,6 +11,7 @@ import com.ai.platform.common.api.cachekey.key.CacheKey;
 import com.ai.platform.common.api.cachekey.model.SysDomain;
 import com.ai.platform.common.api.cachekey.model.SysDuad;
 import com.ai.platform.common.api.cachekey.model.SysPurpose;
+import com.ai.yc.order.api.autooffer.interfaces.IQueryAutoOfferSV;
 import com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV;
 import com.ai.yc.order.api.ordersubmission.param.BaseInfo;
 import com.ai.yc.order.api.ordersubmission.param.ContactInfo;
@@ -168,6 +169,30 @@ public class OrderController {
         return "order/createOralOrder";
     }
     
+    /**
+     * 支付页面
+     * @return
+     */
+    @RequestMapping("/payOrder")
+    public String createTextView(){
+        return "order/payOrder";
+    }
+    
+    /**
+     * 系统自动报价
+     * @return
+     */
+    @RequestMapping(value = "/queryAutoOffer",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseData<String> queryAutoOffer(HttpServletRequest request){
+        ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+//        try {
+//            IQueryAutoOfferSV iQueryAutoOfferSV = DubboConsumerFactory.getService(IQueryAutoOfferSV.class);
+//        } catch(Exception e) {
+//            
+//        }
+        return resData;
+    }
 
     /**
      * 提交订单
@@ -181,6 +206,7 @@ public class OrderController {
         String contactInfoStr = request.getParameter("contactInfo");
         String productInfoStr = request.getParameter("productInfo");
         String baseInfoStr = request.getParameter("baseInfo");
+        //TODO 判断登录
 
         OrderSubmissionRequest subReq = new OrderSubmissionRequest();
         subReq.setBaseInfo(JSON.parseObject(baseInfoStr, BaseInfo.class));

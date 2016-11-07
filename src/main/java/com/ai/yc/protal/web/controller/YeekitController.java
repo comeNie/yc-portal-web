@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ai.yc.protal.web.utils.HttpUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.yc.order.api.ordersubmission.param.OrderSubmissionResponse;
 import com.ai.yc.protal.web.common.InvokeResult;
 import com.ai.yc.protal.web.exception.HttpStatusException;
 import com.alibaba.fastjson.JSON;
@@ -79,5 +80,35 @@ public class YeekitController {
         }
       
         return true;
+    }
+    
+    /**
+     * 机器翻译语言检测
+     * @param text 文本
+     * @return 
+     * @author mimw
+     */
+    @ResponseBody
+    @RequestMapping(value = "/translateLan")  
+    public ResponseData<String> translateLan(String text) {  
+        ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        String lan = "en";
+        try {
+            String resultStr = HttpUtil.doPost(TRANSLAN_URL, text);
+            
+            JSONObject translated = JSON.parseObject(resultStr);
+           
+            if (!translated.getInteger("errorCode").equals(0)) {
+                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"");
+            }
+            lan = translated.getString("result");
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+           // resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"");
+            //TODO 地址不通 弄个假数据
+        }
+      
+        resData.setData(lan);
+        return resData;
     }
 }

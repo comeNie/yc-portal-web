@@ -82,6 +82,8 @@ dependencies {
     compile 'com.ai.platform.common:cachekey:1.0-SNAPSHOT'
     //订单下单
     compile 'com.ai.yc.order:ordersubmission:1.0-SNAPSHOT'
+    //系统自动报价查询
+    compile 'com.ai.yc.order:autooffer:1.0-SNAPSHOT'
 
     //订单查询
     compile 'com.ai.yc.order:orderquery:1.0-SNAPSHOT'

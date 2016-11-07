@@ -25,7 +25,7 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 			"click #submitOrder": "_addOralOrder",
 			"click #toCreateOrder":"_toCreateOrder",
 			"click #saveContact":"_saveContact",
-			"click #editContactDiv":"_editContactDiv"
+			"click #editContact":"_editContactDiv"
             },
             
     	//重写父类
