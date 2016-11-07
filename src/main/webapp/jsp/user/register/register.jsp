@@ -51,7 +51,7 @@
 									<select id="country" class="select select-in radius"></select>
 								</p>
 								<p class="ml-20">
-									<input id="phone" maxlength="11" type="text"
+									<input id="phone" name="phone" maxlength="100" type="text"
 										class="int-text int-in-bi radius">
 								</p>
 							</li>
@@ -106,7 +106,7 @@
 									<input type="text" class="int-text int-in-280 radius">
 								</p>
 								<p>
-									<input type="button" class="btn btn-green btn-280 radius ml-20"
+									<input id="send_dynamicode_btn" type="button" class="btn btn-green btn-280 radius ml-20"
 										value="<spring:message code="ycregister.getDynamiCode"/>">
 								</p>
 							</li>
@@ -148,8 +148,8 @@
 		});
 	})();
 	var registerMsg = {
-		"email_empty" : '<spring:message code="ycregisterMsg.accountEmpty" />',
-		"email_error" : '<spring:message code="ycregisterMsg.accountError" />',
+		"account_empty" : '<spring:message code="ycregisterMsg.accountEmpty" />',
+		"account_error" : '<spring:message code="ycregisterMsg.accountError" />',
 		"password_empty" : '<spring:message code="ycregisterMsg.passwordEmpty" />',
 		"password_error" : '<spring:message code="ycregisterMsg.passwordError" />',
 		"confirm_password_empty" : '<spring:message code="ycregisterMsg.passwordEmpty" />',
@@ -158,7 +158,8 @@
 		"verify_code_img_error" : '<spring:message code="ycregisterMsg.verificationCodeError" />',
 		"agreement" : '<spring:message code="ycregisterMsg.agreement" />',
 		"phone_registered" : '<spring:message code="ycregister.register.phone" />',
-		"email_registered" : '<spring:message code="ycregister.register.email" />'
+		"email_registered" : '<spring:message code="ycregister.register.email" />',
+		"getDynamiCode":'<spring:message code="ycregister.getDynamiCode"/>'
 	};
 </script>
 
