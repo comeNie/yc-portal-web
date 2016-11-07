@@ -13,7 +13,7 @@
 <!--面包屑导航-->
 <%@ include file="/inc/topHead.jsp" %>
 <!--banner-->
-<div class="banner"></div>
+<div class="banner<%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"-en":""%>"></div>
 <!--index nav-->
 <div class="index-nav">
     <ul>
@@ -62,7 +62,9 @@
                         <option value="法语">法语</option>
                     </select>
                 </li>
-                <li><input type="button"  class="btn btn-blue trans-btn-zh radius2" value="翻译"></li>
+                <%--翻译--%>
+                <li><input type="button"  class="btn btn-blue trans-btn-zh radius2"
+                           value="<spring:message code="home.interpret_btn"/>"></li>
             </ul>
         </div>
         <!--翻译主体-->
