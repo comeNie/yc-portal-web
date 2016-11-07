@@ -33,6 +33,7 @@ import com.ai.platform.common.api.country.interfaces.IGnCountrySV;
 import com.ai.platform.common.api.country.param.CountryRequest;
 import com.ai.platform.common.api.country.param.CountryResponse;
 import com.ai.platform.common.api.country.param.CountryVo;
+import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
@@ -244,7 +245,7 @@ public class RegisterController {
 		if ("email".equals(checkType)) {// 邮箱校验
 			UcMembersCheckEmailRequest emailReq = new UcMembersCheckEmailRequest();
 			emailReq.setEmail(checkVal);
-			emailReq.setTenantId("yc");
+			emailReq.setTenantId(Constants.DEFAULT_TENANT_ID);
 			UcMembersResponse res = DubboConsumerFactory.getService(
 					IUcMembersSV.class).ucCheckeEmail(emailReq);
 			LOG.info("校验邮箱返回：" + JSON.toJSONString(res));
