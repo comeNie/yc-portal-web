@@ -57,11 +57,15 @@
 		  					 	<option value="${duad.duadId}"  currency="${duad.currency}" 
 								ordinary="${duad.ordinary}"  ordinaryUrgent="${duad.ordinaryUrgent}" 
 								professional="${duad.professional}"  professionalUrgent="${duad.professionalUrgent}"  
-								publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}" >
-									${duad.sourceLanguage}→${duad.targetLanguage}
+								publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}" 
+								sourceEn="${duad.sourceEn}" duadId="${duad.duadId}">
+									<c:choose>
+										<c:when test="${fn:contains(currentLan, 'zh')}">${duad.sourceCn}→${duad.targetCn}</c:when>
+										<c:otherwise>${duad.sourceEn}→${duad.targetEn}</c:otherwise>
+									</c:choose>
+									
 								</option>
 							</c:if>
-							
 						</c:forEach>
   					</select>
   				</div>
@@ -162,9 +166,14 @@
 						<li class="none-ml">
 							<p class="word"><spring:message code="order.purpose"/></p>
 							<p>
-								<select class="select select-medium radius">
+								<select id="selectPurpose" name="selectPurpose" class="select select-medium radius">
 									<c:forEach items="${purposeList}" var="purpose">
-										<option value="${purpose.purposeId}">${purpose.purposeName}</option>
+										<option value="${purpose.purposeId}">
+											<c:choose>
+												<c:when test="${fn:contains(currentLan, 'zh')}">${purpose.purposeCn}</c:when>
+												<c:otherwise>${purpose.purposeEn}</c:otherwise>
+											</c:choose>
+										</option>
 									</c:forEach>
 								</select>
 							</p>
@@ -172,9 +181,14 @@
 						<li>
 							<p class="word"><spring:message code="order.Fields"/></p>
 							<p>
-								<select class="select select-medium radius">
+								<select id="selectDomain" name="selectDomain" class="select select-medium radius">
 									<c:forEach items="${domainList}" var="domain">
-										<option value="${domain.domainId}">${domain.domainName}</option>
+										<option value="${domain.domainId}">
+											<c:choose>
+												<c:when test="${fn:contains(currentLan, 'zh')}">${domain.domainCn}</c:when>
+												<c:otherwise>${domain.domainEn}</c:otherwise>
+											</c:choose>
+										</option>
 									</c:forEach>
 								</select>
 							</p>

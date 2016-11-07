@@ -64,14 +64,23 @@
 				<div class="right-list-title pl-20 none-border">
   					<p><spring:message code="order.translateLan"/></p>
   				</div>
-  				<div class="form-lable form-pt-0">
+  				<div class="form-lable form-pt-0" lan="${currentLan}">
   				<ul>
   					<li>
   						<c:forEach items="${duadList}" var="duad">
+  						<c:if test="${duad.orderType == 2}">
 	  						<p>
 	  							<span><input name="duad" type="checkbox" class="radio" checked=""></span>
-	  							<span name="${duad.duadId}">${duad.sourceLanguage}${duad.targetLanguage}</span>
+		  							<c:choose>
+			  							<c:when test="${fn:contains(currentLan, 'zh')}">
+			  								<span name="${duad.duadId}">${duad.sourceCn}${duad.targetCn}</span>
+			  							</c:when>
+			  							<c:otherwise> 
+			  								<span name="${duad.duadId}">${duad.sourceEn}${duad.targetEn}</span>
+			  							</c:otherwise>
+		  							</c:choose>
 	  						</p>
+	  					</c:if>
 						</c:forEach>
   					</li>
   				</ul>

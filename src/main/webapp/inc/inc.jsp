@@ -12,6 +12,9 @@
     response.setHeader("Cache-Control", "no-cache");
     response.setDateHeader("Expires", 0);
     response.setHeader("Pragma", "No-cache");
+    
+    String currentLan = request.getLocale().getLanguage();
+    request.setAttribute("currentLan", currentLan);
 
     String slp_uac_host=SSOClientUtil.getCasServerUrlPrefixRuntime(request);
     request.setAttribute("slp_uac_host", slp_uac_host);

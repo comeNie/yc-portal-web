@@ -56,9 +56,9 @@ public class OrderController {
         List<SysDomain> domainList = new ArrayList<SysDomain>();
         List<SysPurpose> purposeList = new ArrayList<SysPurpose>();
         //TODO ：服务不可用，暂时关闭
-        /*String duadStr,domainStr,purposeStr;
+        String duadStr,domainStr,purposeStr;
          //获取cache客户端
-       ICacheClient iCacheClient = AiPassUitl.getCacheClient();
+       /*ICacheClient iCacheClient = AiPassUitl.getCacheClient();
        
        if (rb.getDefaultLocale().getLanguage().equals(Locale.SIMPLIFIED_CHINESE)) {
             duadStr = iCacheClient.get(CacheKey.CN_DUAD_KEY);
@@ -74,12 +74,15 @@ public class OrderController {
         domainList = JSONObject.parseArray(domainStr, SysDomain.class);
         purposeList = JSONObject.parseArray(purposeStr, SysPurpose.class);
         */
+        
         //模拟数据
         SysDuad sysDuad = new SysDuad();
         sysDuad.setDuadId("1");
         sysDuad.setLanguage("zh");
-        sysDuad.setSourceLanguage("英文");
-        sysDuad.setTargetLanguage("中文");
+        sysDuad.setSourceCn("中文");
+        sysDuad.setSourceEn("zh");
+        sysDuad.setTargetCn("英文");
+        sysDuad.setTargetEn("en");
         sysDuad.setCurrency("rmb");
         sysDuad.setOrdinary("100");
         sysDuad.setOrdinaryUrgent("150");
@@ -92,7 +95,8 @@ public class OrderController {
         
         SysDomain sysDomain = new SysDomain();
         sysDomain.setDomainId("1");
-        sysDomain.setDomainName("医学");
+        sysDomain.setDomainCn("医学");
+        sysDomain.setDomainEn("yixue");
         sysDomain.setLanguage("zh");
         domainList.add(sysDomain);
         domainList.add(sysDomain);
@@ -100,14 +104,14 @@ public class OrderController {
         SysPurpose sysPurpose = new SysPurpose();
         sysPurpose.setPurposeId("1");
         sysPurpose.setLanguage("zh");
-        sysPurpose.setPurposeName("专业论文");
+        sysPurpose.setPurposeCn("专业论文");
+        sysPurpose.setPurposeEn("zhuanYeLunWen");
         purposeList.add(sysPurpose);
         purposeList.add(sysPurpose);
         
         request.setAttribute("duadList", duadList);
         request.setAttribute("domainList", domainList);
         request.setAttribute("purposeList", purposeList);
-        
         return "order/createTextOrder";
     }
 
@@ -134,8 +138,11 @@ public class OrderController {
         sysDuad.setDuadId("1");
         sysDuad.setLanguage("zh");
         sysDuad.setOrderType("2"); //口译类型
-        sysDuad.setSourceLanguage("英文");
-        sysDuad.setTargetLanguage("中文");
+        sysDuad.setLanguage("zh");
+        sysDuad.setSourceCn("中文");
+        sysDuad.setSourceEn("zh");
+        sysDuad.setTargetCn("英文");
+        sysDuad.setTargetEn("en");
         sysDuad.setCurrency("rmb");
         duadList.add(sysDuad);
         duadList.add(sysDuad);
@@ -151,8 +158,14 @@ public class OrderController {
      */
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseData<String> submitOrder(){
+    public ResponseData<String> submitOrder(HttpServletRequest request){
         ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        String feeInfoStr = request.getParameter("feeInfo");
+        String contactInfoStr = request.getParameter("contactInfo");
+        String productInfoStr = request.getParameter("productInfo");
+        request.getParameter("baseInfo");
+        
+        LOGGER.info(JSONObject.toJSONString(subReq));
         /*try {
             IOrderSubmissionSV orderSubmissionSV = DubboConsumerFactory.getService(IOrderSubmissionSV.class);
             OrderSubmissionRequest subReq = new OrderSubmissionRequest();

@@ -37,18 +37,28 @@
 		<div class="right-list-title pl-20 none-border">
 					<p><spring:message code="order.ContactInfo"/></p>
 				</div>
-				<div class="oral-form">
+				<div class="oral-form" id="saveContactDiv">
 					<ul>
 						<li>
-							<p><input type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterName"/>"></p>
-							<p><select class="select int-in radius"></select></p>
-							<p><input type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterPhone"/>"></p>
-							<p class="mr-0"><input type="text" class="int-text int-large-mail radius" placeholder="<spring:message code="order.EnterEmail"/>"></p>
+							<p><input id="contactName" name="contactName" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterName"/>"></p>
+							<p><select id="globalRome" name="globalRome" class="select int-in radius"><option>86</option><option>87</option></select></p>
+							<p><input id="phoneNum" name="phoneNum" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterPhone"/>"></p>
+							<p class="mr-0"><input id="email" name="email" type="text" class="int-text int-large-mail radius" placeholder="<spring:message code="order.EnterEmail"/>"></p>
 						</li>
-						<li class="right-btn"><input type="button" class="btn radius20 border-blue btn-80" value="<spring:message code="order.Save"/>"></li>
+						<li class="right-btn"><input id="saveContact" type="button" class="btn radius20 border-blue btn-80" value="<spring:message code="order.Save"/>"></li>
 						
 					</ul>
 				</div>
+				<div class="oral-form" id="editContactDiv" style="display: none;">
+  					<ul>
+  						<li>
+  							<p></p>
+  							<p></p>
+  							<p></p>
+  						</li>
+  						<li class="right"><a href="#" id="editContact"><i class="icon-edit"></i></a></li>
+  					</ul>
+  				</div>
 	</div>
 	<!--白色背景-->
 	<div class="white-bj">
@@ -56,7 +66,7 @@
 				<p><spring:message code="order.ConfirmOrderInfo"/></p>
 			</div>
 			<div class="right-list-table">
-				<table class="table table-th-color">
+				<table id="textOrderTable" class="table table-th-color">
                   <thead>
                      <tr>
                           <th><spring:message code="order.Subject"/></th>
@@ -68,11 +78,11 @@
              		</thead>
              		<tbody>
 				<tr>
-                          <td>我要翻译一段话，不超过15……</td>
-                          <td>中文→西班牙语</td>
-                          <td>医药化工</td>
-                          <td>合同文书</td>
-                          <td>专业级</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
 				 </tr>
 		    </tbody>
           	</table>
