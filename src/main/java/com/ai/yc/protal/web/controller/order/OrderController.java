@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,7 +50,7 @@ public class OrderController {
      * @return
      */
     @RequestMapping("/create/text")
-    public String createTextView(HttpServletRequest request){
+    public String createTextView(Model uiModel,String selPurpose){
         
         List<SysDuad> duadList = new ArrayList<SysDuad>();
         List<SysDomain> domainList = new ArrayList<SysDomain>();
@@ -102,15 +103,21 @@ public class OrderController {
         SysPurpose sysPurpose = new SysPurpose();
         sysPurpose.setPurposeId("1");
         sysPurpose.setLanguage("zh");
-
         sysPurpose.setPurposeCn("专业论文");
+        sysPurpose.setPurposeId("2");
+        sysPurpose.setLanguage("zh");
+        sysPurpose.setPurposeCn("简历");
+        sysPurpose.setPurposeId("3");
+        sysPurpose.setLanguage("zh");
+        sysPurpose.setPurposeCn("产品说明");
 
         purposeList.add(sysPurpose);
         purposeList.add(sysPurpose);
-        
-        request.setAttribute("duadList", duadList);
-        request.setAttribute("domainList", domainList);
-        request.setAttribute("purposeList", purposeList);
+
+        uiModel.addAttribute("duadList", duadList);
+        uiModel.addAttribute("domainList", domainList);
+        uiModel.addAttribute("purposeList", purposeList);
+        uiModel.addAttribute("selPurpose",selPurpose);
         
         return "order/createTextOrder";
     }
@@ -120,7 +127,7 @@ public class OrderController {
      * @return
      */
     @RequestMapping("/create/oral")
-    public String createOralView(HttpServletRequest request){
+    public String createOralView(Model uiModel){
         List<SysDuad> duadList = new ArrayList<SysDuad>();
         String duadStr;
         
@@ -146,7 +153,7 @@ public class OrderController {
         duadList.add(sysDuad);
         duadList.add(sysDuad);
         
-        request.setAttribute("duadList", duadList);
+        uiModel.addAttribute("duadList", duadList);
         return "order/createOralOrder";
     }
     

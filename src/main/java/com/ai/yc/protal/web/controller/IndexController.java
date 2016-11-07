@@ -35,4 +35,22 @@ public class IndexController {
         uiModel.addAttribute("homeData",homeDataCon);
         return "/home";
     }
+
+    /**
+     * 笔译订单
+     * @return
+     */
+    @RequestMapping("/written")
+    public String writtenView(){
+        return "forward:/order/create/text";
+    }
+
+    /**
+     * 口译订单
+     * @return
+     */
+    @RequestMapping("/oral")
+    public String oralView(){
+        return "forward:/order/create/oral";
+    }
 }

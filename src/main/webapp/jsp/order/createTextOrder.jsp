@@ -165,7 +165,8 @@
 							<p>
 								<select class="select select-medium radius">
 									<c:forEach items="${purposeList}" var="purpose">
-										<option value="${purpose.purposeId}">${purpose.purposeName}</option>
+										<option value="${purpose.purposeId}"
+										<c:if test="${purpose.purposeId == selPurpose}">selected</c:if>>${purpose.purposeName}</option>
 									</c:forEach>
 								</select>
 							</p>

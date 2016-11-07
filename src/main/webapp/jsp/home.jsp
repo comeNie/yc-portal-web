@@ -22,13 +22,13 @@
             <!-- 首页 -->
             <p><a href="${_base}" class="current"><spring:message code="home.nav.bar.home"></spring:message></a></p>
             <%--笔译--%>
-            <p><a href="#"><spring:message code="home.nav.bar.written"/></a></p>
+            <p><a href="${_base}/written"><spring:message code="home.nav.bar.written"/></a></p>
             <%--口译--%>
-            <p><a href="#"><spring:message code="home.nav.bar.oral"/></a></p>
+            <p><a href="${_base}/oral"><spring:message code="home.nav.bar.oral"/></a></p>
             <%--服务--%>
-            <p><a href="#"><spring:message code="home.nav.bar.services"/></a></p>
+            <p><a href="${_base}/service"><spring:message code="home.nav.bar.services"/></a></p>
             <%--APP--%>
-            <p><a href="#"><spring:message code="home.nav.bar.app"/></a></p>
+            <p><a href="${_base}/findyee"><spring:message code="home.nav.bar.app"/></a></p>
         </li>
     </ul>
 </div>
@@ -113,15 +113,15 @@
                             <%--提供各种论文、稿件的翻译、审校、排版等服务，不满意免费修改--%>
                         <span><spring:message code="home.paper_translation_content_tips"/></span>
                             <%--立即下单--%>
-                        <span><input type="button" class="btn btn-blue place-btn radius20"
+                        <span><input type="button" class="btn btn-blue place-btn radius20" purpose="1"
                                      value="<spring:message code="home.manual_order_now_btn"/>"></span>
                     </div>
-                    <div class="caption">
+                    <div class="caption" purpose="1">
                         <%--翻译论文、稿件--%>
                         <p class="title"><spring:message code="home.paper_translation_tips"/></p>
                         <p class="exp-icon1"></p>
                         <%--立即下单--%>
-                        <p><input type="button" class="btn border-blue place-btn-none radius20"
+                        <p><input type="button" class="btn border-blue place-btn-none radius20" purpose="1"
                                   value="<spring:message code="home.manual_order_now_btn"/>"></p>
                     </div>
                 </div>
@@ -135,15 +135,15 @@
                             <%--按模板填写简历内容，简单、便捷、译审结合，不满意免费修改--%>
                         <span><spring:message code="home.resume_translation_content_tips"/></span>
                         <%--立即下单--%>
-                        <span><input type="button" class="btn btn-blue place-btn radius20"
+                        <span><input type="button" class="btn btn-blue place-btn radius20" purpose="2"
                                      value="<spring:message code="home.manual_order_now_btn"/>"></span>
                     </div>
-                    <div class="caption">
+                    <div class="caption" purpose="2">
                         <%--翻译中英文简历--%>
                         <p class="title"><spring:message code="home.resume_translation_tips"/></p>
                         <p class="exp-icon2"></p>
                         <%--立即下单--%>
-                        <p><input type="button" class="btn border-blue place-btn-none radius20"
+                        <p><input type="button" class="btn border-blue place-btn-none radius20" purpose="2"
                                   value="<spring:message code="home.manual_order_now_btn"/>"></p>
                     </div>
                 </div>
@@ -157,15 +157,15 @@
                             <%--提供最快速最精准的翻译服务，译员时刻待命，立等可取--%>
                         <span><spring:message code="home.manual_translation_content_tips"/></span>
                         <%--立即下单--%>
-                        <span><input type="button" class="btn btn-blue place-btn radius20"
+                        <span><input type="button" class="btn btn-blue place-btn radius20" purpose="3"
                                      value="<spring:message code="home.manual_order_now_btn"/>"></span>
                     </div>
-                    <div class="caption">
+                    <div class="caption" purpose="3">
                         <%--翻译产品说明--%>
                         <p class="title"><spring:message code="home.manual_translation_tips"/></p>
                         <p class="exp-icon3"></p>
                         <%--立即下单--%>
-                        <p><input type="button" class="btn border-blue place-btn-none radius20"
+                        <p><input type="button" class="btn border-blue place-btn-none radius20" purpose="3"
                                   value="<spring:message code="home.manual_order_now_btn"/>"></p>
                     </div>
                 </div>
@@ -179,15 +179,15 @@
                             <%--提供身份证、护照、驾照等证件的翻译服务，可加盖公章--%>
                             <span><spring:message code="home.certificate_translation_content_tips"/></span>
                         <%--立即下单--%>
-                        <span><input type="button" class="btn btn-blue place-btn radius20"
+                        <span><input type="button" class="btn btn-blue place-btn radius20" purpose="5"
                                      value="<spring:message code="home.manual_order_now_btn"/>"></span>
                     </div>
-                    <div class="caption">
+                    <div class="caption" purpose="5">
                         <%--翻译各种证件--%>
                         <p class="title"><spring:message code="home.certificate_translation_tips"/></p>
                         <p class="exp-icon4"></p>
                         <%--立即下单--%>
-                        <p><input type="button" class="btn border-blue place-btn-none radius20"
+                        <p><input type="button" class="btn border-blue place-btn-none radius20" purpose="5"
                                   value="<spring:message code="home.manual_order_now_btn"/>"></p>
                     </div>
                 </div>
@@ -198,7 +198,9 @@
     <!--广告-->
     <div class="banner-wapper">
         <div class="banner-sm">
-            <a href="javascript:"><img src="${uedroot}/images/banner-sm.jpg" /></a>
+            <a href="${_base}/oral">
+                <img src="${uedroot}/images/banner-sm<%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"_en":""%>.jpg" />
+            </a>
         </div>
         <div class="banner-hover">
             <p><i class="icon-angle-down"></i></p>
@@ -284,6 +286,12 @@
 <script type="text/javascript" src="${uedroot}/scripts/modular/digital-scroll.js"></script>
 <script type="text/javascript">
     (function () {
+        <%-- 笔译下单 --%>
+        $('.item2').delegate('div.caption','click',function(){
+            //用途编码
+            var purpose = $(this).attr('purpose');
+            window.location.href="${_base}/order/create/text?selPurpose="+purpose;
+        });
         var pager;
         seajs.use('app/jsp/home', function(homePage) {
             pager = new homePage({element : document.body});
