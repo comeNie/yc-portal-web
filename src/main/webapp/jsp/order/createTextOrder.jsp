@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>  
+<%@page import="java.util.Locale"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,17 +53,21 @@
   					<p><spring:message code="order.translateLan"/></p>
   				</div>
   				<div class="placeorder-translate">
-  					<select class="select select-large" id="selectDuad">
+  					<select class="select select-large" id="selectDuad" name="<%=response.getLocale()%>">
   						<c:forEach items="${duadList}" var="duad">
 	  						<c:if test="${duad.orderType != 2}">
 		  					 	<option value="${duad.duadId}"  currency="${duad.currency}" 
 								ordinary="${duad.ordinary}"  ordinaryUrgent="${duad.ordinaryUrgent}" 
 								professional="${duad.professional}"  professionalUrgent="${duad.professionalUrgent}"  
-								publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}" >
-									${duad.sourceLanguage}→${duad.targetLanguage}
+								publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}"
+								sourceEn="${duad.sourceEn}" duadId="${duad.duadId}">
+									<c:choose>
+										<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${duad.sourceCn}→${duad.targetCn}</c:when>
+										<c:otherwise>${duad.sourceEn}→${duad.targetEn}</c:otherwise>
+									</c:choose>
+
 								</option>
 							</c:if>
-							
 						</c:forEach>
   					</select>
   				</div>
@@ -163,8 +168,14 @@
 						<li class="none-ml">
 							<p class="word"><spring:message code="order.purpose"/></p>
 							<p>
-								<select class="select select-medium radius">
+								<select id="selectPurpose" name="selectPurpose" class="select select-medium radius">
 									<c:forEach items="${purposeList}" var="purpose">
+										<option value="${purpose.purposeId}">
+											<c:choose>
+												<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${purpose.purposeCn}</c:when>
+												<c:otherwise>${purpose.purposeEn}</c:otherwise>
+											</c:choose>
+										</option>
 										<option value="${purpose.purposeId}"
 										<c:if test="${purpose.purposeId == selPurpose}">selected</c:if>>${purpose.purposeName}</option>
 									</c:forEach>
@@ -174,9 +185,14 @@
 						<li>
 							<p class="word"><spring:message code="order.Fields"/></p>
 							<p>
-								<select class="select select-medium radius">
+								<select id="selectDomain" name="selectDomain" class="select select-medium radius">
 									<c:forEach items="${domainList}" var="domain">
-										<option value="${domain.domainId}">${domain.domainName}</option>
+										<option value="${domain.domainId}">
+											<c:choose>
+												<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${domain.domainCn}</c:when>
+												<c:otherwise>${domain.domainEn}</c:otherwise>
+											</c:choose>
+										</option>
 									</c:forEach>
 								</select>
 							</p>

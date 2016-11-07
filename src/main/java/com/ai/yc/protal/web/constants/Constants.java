@@ -8,6 +8,7 @@ public final class Constants {
 	public static final java.lang.String SUCCESS_CODE = "000000";
 	
     public static final String ERROR_CODE = "111111";
+    public static final  String DEFAULT_TENANT_ID  ="yeecloud";
 	
 	public static final class Register {
 		private Register() {
@@ -16,6 +17,10 @@ public final class Constants {
         public static final String VERIFICATION_CCS_NAMESPACE = "/com/ai/opt/verification-code-config";
 		 /** 缓存命名空间 */
         public static final String CACHE_NAMESPACE = "com.ai.yc.protal.web.register.cache";
+        /** 注册邮件中文模版 */
+        public static final String REGISTER_EMAIL_ZH_CN_TEMPLATE ="email/template/yc-register_zh_cn-mail.xml";
+        /** 注册邮件英文模版 */
+        public static final String REGISTER_EMAIL_EN_US_TEMPLATE ="email/template/yc-register_en_us-mail.xml";
 	}
 
 	public static final class PictureVerify {

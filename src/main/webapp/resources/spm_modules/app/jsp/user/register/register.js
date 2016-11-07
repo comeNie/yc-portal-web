@@ -135,9 +135,9 @@ define(
 								var _this =this;
 								var register_type = $("#change_register_type").attr("register_type");
 								if ("phone" == register_type) {
-									sendData.email='';
+									$("#email").val("");
 								} else if ("email" == register_type) {
-									sendData.phone='';
+									$("#phone").val("");
 								}
 								regsiterBtn.removeClass("btn-blue").addClass("biu-btn").attr("style","color:#fff;");
 								ajaxController.ajax({
@@ -152,7 +152,7 @@ define(
 											_this._showCheckMsg(json.statusInfo);
 										}else{
 											 if ("email" == register_type) {
-												 location.href= _base + "/reg/toEmail?email="+sendData.email;
+												 location.href= _base + "/reg/toEmail?email="+$("#email").val();
 											 }else{
 												 location.href= _base + "/reg/toSuccess"; 
 											 }

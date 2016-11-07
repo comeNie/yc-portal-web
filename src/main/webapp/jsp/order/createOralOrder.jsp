@@ -69,10 +69,20 @@
   				<ul>
   					<li>
   						<c:forEach items="${duadList}" var="duad">
+  						<c:if test="${duad.orderType == 2}">
 	  						<p>
-	  							<span><input name="duad" type="checkbox" class="radio" checked=""></span>
-	  							<span name="${duad.duadId}">${duad.sourceLanguage}${duad.targetLanguage}</span>
+	  							<c:choose>
+		  							<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">
+		  								<span><input name="duad" type="checkbox" class="radio" checked="" value="${duad.sourceCn}${duad.targetCn}"></span>
+		  								<span name="${duad.duadId}">${duad.sourceCn}${duad.targetCn}</span>
+		  							</c:when>
+		  							<c:otherwise> 
+		  								<span><input name="duad" type="checkbox" class="radio" checked="" value="${duad.sourceEn}${duad.targetEn}"></span>
+		  								<span name="${duad.duadId}">${duad.sourceEn}${duad.targetEn}</span>
+		  							</c:otherwise>
+	  							</c:choose>
 	  						</p>
+	  					</c:if>
 						</c:forEach>
   					</li>
   				</ul>
@@ -84,15 +94,15 @@
   				<ul>
   					<li>
   						<p>
-  							<span><input name="interpretationType" type="checkbox" class="radio" checked=""></span>
+  							<span><input name="interpretationType" type="checkbox" class="radio" checked="" value="陪同翻译"></span>
   							<span>陪同翻译</span>
   						</p>
   						<p>
-  							<span><input name="interpretationType" type="checkbox" class="radio"></span>
+  							<span><input name="interpretationType" type="checkbox" class="radio" value="交替传译"></span>
   							<span>交替传译</span>
   						</p>
   						<p>
-  							<span><input name="interpretationType" type="checkbox" class="radio" checked=""></span>
+  							<span><input name="interpretationType" type="checkbox" class="radio" checked="" value="同声传译"></span>
   							<span>同声传译</span>
   						</p>
   					</li>
@@ -131,10 +141,10 @@
 						<li>
 							<p class="word"><spring:message code="order.Gender"/></p>
 							<p>
-								<select class="select select-250 radius">
-									<option>不限</option>
-									<option>男</option>
-									<option>女</option>
+								<select id="gender" name="gender" class="select select-250 radius">
+									<option value="2">不限</option>
+									<option value="0">男</option>
+									<option value="1">女</option>
 								</select>
 							</p>
 						</li>

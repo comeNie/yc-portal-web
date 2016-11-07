@@ -28,7 +28,7 @@
 				<div class="verification">
 					<ul>
 						<li><img src="${uedroot}/images/rech-win.png" /></li>
-						<li class="word">已成功发送邮件至${email}</li>
+						<li class="word">注册成功，已成功发送邮件至${email}</li>
 						<li>验证邮件24小时内有效，请尽快登录您的邮箱<a id="goEmail"
 							href="javascript:void(0);">点击验证链接</a>完成验证
 						</li>

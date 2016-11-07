@@ -6,7 +6,6 @@
   通用js引入.
 --%>
 <%@page import="com.ai.opt.sso.client.filter.SSOClientUtil"%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="_base" value="${pageContext.request.contextPath}"/>
 <c:set var="_slpres" value="${_base}/resources/local"/>
@@ -25,6 +24,7 @@
     var slp_uac_host="${slp_uac_host}";
     var ssoLoginUrl="${ssoLoginUrl}";
     var uedroot="${uedroot}";
+    var currentLan = "<%=response.getLocale()%>";
 </script>
 <script src="${_base}/resources/spm_modules/jquery/1.9.1/jquery.min.js"></script>
 <script src="${_base}/resources/spm_modules/seajs/2.3.0/dist/sea.js"></script>

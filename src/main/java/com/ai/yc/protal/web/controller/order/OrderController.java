@@ -12,11 +12,17 @@ import com.ai.platform.common.api.cachekey.model.SysDomain;
 import com.ai.platform.common.api.cachekey.model.SysDuad;
 import com.ai.platform.common.api.cachekey.model.SysPurpose;
 import com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV;
+import com.ai.yc.order.api.ordersubmission.param.BaseInfo;
+import com.ai.yc.order.api.ordersubmission.param.ContactInfo;
+import com.ai.yc.order.api.ordersubmission.param.FeeInfo;
 import com.ai.yc.order.api.ordersubmission.param.OrderSubmissionRequest;
 import com.ai.yc.order.api.ordersubmission.param.OrderSubmissionResponse;
+import com.ai.yc.order.api.ordersubmission.param.ProductInfo;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.utils.AiPassUitl;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +62,9 @@ public class OrderController {
         List<SysDomain> domainList = new ArrayList<SysDomain>();
         List<SysPurpose> purposeList = new ArrayList<SysPurpose>();
         //TODO ：服务不可用，暂时关闭
-        /*String duadStr,domainStr,purposeStr;
+        String duadStr,domainStr,purposeStr;
          //获取cache客户端
-       ICacheClient iCacheClient = AiPassUitl.getCacheClient();
+       /*ICacheClient iCacheClient = AiPassUitl.getCacheClient();
        
        if (rb.getDefaultLocale().getLanguage().equals(Locale.SIMPLIFIED_CHINESE)) {
             duadStr = iCacheClient.get(CacheKey.CN_DUAD_KEY);
@@ -74,14 +80,15 @@ public class OrderController {
         domainList = JSONObject.parseArray(domainStr, SysDomain.class);
         purposeList = JSONObject.parseArray(purposeStr, SysPurpose.class);
         */
+
         //模拟数据
         SysDuad sysDuad = new SysDuad();
         sysDuad.setDuadId("1");
         sysDuad.setLanguage("zh");
-
-        sysDuad.setSourceCn("英文");
-        sysDuad.setTargetCn("中文");
-
+        sysDuad.setSourceCn("中文");
+        sysDuad.setSourceEn("zh");
+        sysDuad.setTargetCn("英文");
+        sysDuad.setTargetEn("en");
         sysDuad.setCurrency("rmb");
         sysDuad.setOrdinary("100");
         sysDuad.setOrdinaryUrgent("150");
@@ -95,7 +102,7 @@ public class OrderController {
         SysDomain sysDomain = new SysDomain();
         sysDomain.setDomainId("1");
         sysDomain.setDomainCn("医学");
-
+        sysDomain.setDomainEn("yixue");
         sysDomain.setLanguage("zh");
         domainList.add(sysDomain);
         domainList.add(sysDomain);
@@ -104,6 +111,7 @@ public class OrderController {
         sysPurpose.setPurposeId("1");
         sysPurpose.setLanguage("zh");
         sysPurpose.setPurposeCn("专业论文");
+        sysPurpose.setPurposeEn("zhuanYeLunWen");
         sysPurpose.setPurposeId("2");
         sysPurpose.setLanguage("zh");
         sysPurpose.setPurposeCn("简历");
@@ -113,12 +121,16 @@ public class OrderController {
 
         purposeList.add(sysPurpose);
         purposeList.add(sysPurpose);
+        
+        request.setAttribute("duadList", duadList);
+        request.setAttribute("domainList", domainList);
+        request.setAttribute("purposeList", purposeList);
 
         uiModel.addAttribute("duadList", duadList);
         uiModel.addAttribute("domainList", domainList);
         uiModel.addAttribute("purposeList", purposeList);
         uiModel.addAttribute("selPurpose",selPurpose);
-        
+
         return "order/createTextOrder";
     }
 
@@ -145,10 +157,11 @@ public class OrderController {
         sysDuad.setDuadId("1");
         sysDuad.setLanguage("zh");
         sysDuad.setOrderType("2"); //口译类型
-
-        sysDuad.setSourceCn("英文");
-        sysDuad.setTargetCn("中文");
-
+        sysDuad.setLanguage("zh");
+        sysDuad.setSourceCn("中文");
+        sysDuad.setSourceEn("zh");
+        sysDuad.setTargetCn("英文");
+        sysDuad.setTargetEn("en");
         sysDuad.setCurrency("rmb");
         duadList.add(sysDuad);
         duadList.add(sysDuad);
@@ -164,8 +177,20 @@ public class OrderController {
      */
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseData<String> submitOrder(){
+    public ResponseData<String> submitOrder(HttpServletRequest request){
         ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        String feeInfoStr = request.getParameter("feeInfo");
+        String contactInfoStr = request.getParameter("contactInfo");
+        String productInfoStr = request.getParameter("productInfo");
+        String baseInfoStr = request.getParameter("baseInfo");
+
+        OrderSubmissionRequest subReq = new OrderSubmissionRequest();
+        subReq.setBaseInfo(JSON.parseObject(baseInfoStr, BaseInfo.class));
+        subReq.setProductInfo(JSON.parseObject(productInfoStr, ProductInfo.class));
+        subReq.setContactInfo(JSON.parseObject(contactInfoStr, ContactInfo.class));
+        subReq.setFeeInfo(JSON.parseObject(feeInfoStr, FeeInfo.class));
+
+        LOGGER.info(JSONObject.toJSONString(subReq));
         /*try {
             IOrderSubmissionSV orderSubmissionSV = DubboConsumerFactory.getService(IOrderSubmissionSV.class);
             OrderSubmissionRequest subReq = new OrderSubmissionRequest();
@@ -179,6 +204,7 @@ public class OrderController {
             LOGGER.error("提交订单失败:",e);
             resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,rb.getMessage(""));
         }*/
+
         //TODO... 虚拟数据
         OrderSubmissionResponse subRes = new OrderSubmissionResponse();
         resData.setData(subRes.getOrderId()+"");//返回订单信息

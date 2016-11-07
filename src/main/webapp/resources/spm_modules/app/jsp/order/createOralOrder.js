@@ -22,12 +22,18 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
     	//事件代理
     	events: {
 			"click #recharge-popo":"_addOralOrderTemp",
-			"click #toCreateOrder":"_toCreateOrder"
+			"click #submitOrder": "_addOralOrder",
+			"click #toCreateOrder":"_toCreateOrder",
+			"click #saveContact":"_saveContact",
+			"click #editContactDiv":"_editContactDiv"
             },
             
     	//重写父类
     	setup: function () {
     		textOrderAddPager.superclass.setup.call(this);
+    		
+    		this._globalRome();
+    		
 			var formValidator=this._initValidate();
 			$(":input").bind("focusout",function(){
 				formValidator.element(this);
@@ -39,8 +45,7 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
     			rules: {
     				transSubject: {
     					required:true,
-    					maxlength:15,
-    					commonText:true
+    					maxlength:15
     					},
     					duad: 'required',
     					interpretationType: 'required',
@@ -67,6 +72,17 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
         				},
         				isAgree: {
         					required: true,
+        				},
+        				contactName: {
+        					required:true,
+        					maxlength:15
+        				},
+        				phoneNum: {
+        					required:true,
+        				},
+        				email: {
+        					required:true,
+        					email:true
         				}
     			},
     			messages: {
@@ -100,6 +116,16 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
     				},
     				isAgree: {
     					required: "请阅读并同意翻译协议",
+    				},
+    				contactName: {
+    					required: "请输入姓名",
+    				},
+    				phoneNum: {
+    					required:"请输入手机号",
+    				},
+    				email: {
+    					required:"请输入邮箱",
+    					email:"请输入正确的邮箱"
     				}
     			}
     		});
@@ -118,12 +144,137 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 			}
 			
 			$("#oralOrderPage").hide();
+			
+			var tableFirstLine = $("#oralOrderTable tbody tr").eq(0).find("td")
+			tableFirstLine.eq(0).html($("#transSubject").val());
+			
+			var duadList =[];    
+			$('input[name="duad"]:checked').each(function(){    
+				duadList.push($(this).val()+" ");    
+			});
+			tableFirstLine.eq(1).html(duadList);
+			
+			var interpretationTypeList = [];
+			$('input[name="interpretationType"]:checked').each(function(){    
+				interpretationTypeList.push($(this).val()+" ");    
+			});  
+			tableFirstLine.eq(2).html(interpretationTypeList);
+			tableFirstLine.eq(3).html($("#begin_time").val());
+			tableFirstLine.eq(4).html($("#end_time").val());
+			tableFirstLine.eq(5).html($("#place").val());
+			tableFirstLine.eq(6).html($("#meetingAmount").val());
+			
 			$("#contactPage").show();
 		},
 		
+		//提交文本订单
+        _addOralOrder:function(){
+        	var _this= this;
+        	var formValidator=_this._initValidate();
+			formValidator.form();
+			if(!$("#oralOrderForm").valid()){
+				//alert('验证不通过！！！！！');
+				return;
+			}
+			
+			var baseInfo = {};
+			//baseInfo.chlId=""后台写
+			//baseInfo.orderType
+			baseInfo.busiType = 1;
+			baseInfo.translateType = "2"; //2：口译翻译"
+			baseInfo.translateName = $("#transSubject").val();
+			//baseInfo.orderLevel =??
+			baseInfo.subFlag = "1"; // "0：系统自动报价 1：人工报价"
+			//baseInfo.userType
+			baseInfo.userId = "userid";
+			baseInfo.corporaId = "corporaId";
+			
+			var productInfo = {};
+			productInfo.meetingSum = $("#meetingAmount").val();
+			productInfo.interperGen = $("#gender").find("option:selected").val(); 
+			productInfo.meetingAddress = $("#place").find("option:selected").val(); 
+			productInfo.interperSum = $("#interpreterNum").val(); 
+			productInfo.startTime = new Date($("#begin_time").val()).getTime(); 
+			productInfo.endTime = new Date($("#end_time").val()).getTime(); 
+			
+			var duadList =[];    
+			$('input[name="duad"]:checked').each(function(){   
+				var tempObj = {};
+				tempObj.languagePairId =$(this).attr("name");
+				//languagePairName =
+				//languageNameEn =
+				duadList.push(tempObj);    
+			});
+			productInfo.languagePairInfoList = duadList;
+			
+			if ( $("#urgentOrder").is(':checked') ) {
+				productInfo.isUrgent = "1";
+			}
+			
+			var contactInfo = {};
+			contactInfo.contactName =  $("#editContactDiv").find('p').eq(0).html();
+			contactInfo.contactTel  =  $("#editContactDiv").find('p').eq(1).html();
+			contactInfo.contactEmail  =  $("#editContactDiv").find('p').eq(2).html();
+			
+			var feeInfo = {};
+			feeInfo.totalFee = 100;
+			feeInfo.currencyUnit = $("#selectDuad").find("option:selected").attr("currency");
+			
+			ajaxController.ajax({
+				type: "post",
+				processing: true,
+				message: "保存中，请等待...",
+				url: _base + "/order/save",
+				data: {
+					baseInfo: JSON.stringify(baseInfo),
+					productInfo: JSON.stringify(productInfo),
+					contactInfo: JSON.stringify(contactInfo),
+					feeInfo: JSON.stringify(feeInfo)
+				},
+				success: function (data) {
+					if ("1" === data.statusCode) {
+						//alert("保存成功");
+						//保存成功,回退到进入的列表页
+//						window.history.go(-1)
+					}
+				}
+			});
+        },
+        
 		_toCreateOrder:function(){
 			$("#oralOrderPage").show();
 			$("#contactPage").hide();
+		},
+		
+		_saveContact:function() {
+			$("#saveContactDiv").hide();
+			
+			$("#editContactDiv").find('p').eq(0).html($("#saveContactDiv").find('input').eq(0).val());
+			$("#editContactDiv").find('p').eq(1).html("+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val());
+			$("#editContactDiv").find('p').eq(2).html($("#saveContactDiv").find('input').eq(2).val());
+			
+			$("#editContactDiv").show();
+		},
+		
+		_editContactDiv:function() {
+			$("#saveContactDiv").show();
+			$("#editContactDiv").hide();
+		},
+		
+		_globalRome:function() {
+			$.getJSON(_base + "/resources/spm_modules/app/jsp/order/globalRome.json",function(data){
+				$.each(data.row,function(rowIndex,row){
+					var selObj = $("#globalRome");
+					var text;
+					if (currentLan.indexOf("zh") >= 0) {
+						text = row["COUNTRY_NAME_CN"];
+					} else {
+						text = row["COUNTRY_NAME_EN"];
+					}
+					
+					selObj.append("<option value='"+row["COUNTRY_CODE"]+"'>"+text+"   +"+row["COUNTRY_CODE"]+"</option>");
+				});
+			});
 		}
     });
     
