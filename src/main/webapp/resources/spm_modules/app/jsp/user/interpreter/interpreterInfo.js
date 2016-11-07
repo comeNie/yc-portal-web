@@ -39,7 +39,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     	events: {
 			//保存数据
     		"click [id='saveButton']":"_saveInterpreterInfo",
-    		
+    		"blur [id='nickname']":"_checkNickNameValue",
         },
         //重写父类
     	setup: function () {
@@ -53,20 +53,24 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     	    var formValidator=this._initValidate();
 			formValidator.form();
 			var uploadImgFlag = $("#uploadImgFlag").val();
+			var nickNameFlag = $("#nickNameFlag").val();
 			if(!$("#dataForm").valid()){
 				return false;
 			}else{
-				if(uploadImgFlag!="1"){
-					return false;
-				}else{
-					//$("#dataForm").submit();
+				this._checkNickNameValue();
+				if(nickNameFlag!="0"){
 					ajaxController.ajax({
 						type:"post",
 	    				url:_base+"/interpreter/saveInfo",
-	    				dataType: "json",
-	    				contentType:"application/json",
 	    				data:{
-	    					userName: $("#userName").val()
+	    					userId:"000000000000003081",
+	    					userName:$("#userName").val(),
+							fullName:$("#fullName").val(),
+							nickname:$("#nickname").val(),
+							sex:$("input[name='sex']").val(),
+							birthdayTmp:$("#startTime").val(),
+							qq:$("#qq").val(),
+							portraitId:$("#portraitId").val(),
 	    				},
 	    		        success: function(data) {
 	    		        	if(data.responseHeader.resultCode=="111111"){
@@ -82,6 +86,33 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 	    				});
 				}
 			}
+		},
+		_checkNickNameValue:function(){
+			ajaxController.ajax({
+				type:"post",
+				url:_base+"/interpreter/checkNickName",
+				data:{
+					userId:"000000000000003081",
+					nickName:$("#nickname").val()
+				},
+		        success: function(data) {
+		        	 var jsonData = JSON.parse(data);
+		        	if(jsonData.responseHeader.resultCode=="111111"){
+		        		$("#nickNameErrMsg").show();
+		        		$("#nickNameText").show();
+		        		$("#nickNameText").text("昵称名称已被注册");
+		        		$("#nickNameFlag").val("0");
+		        		return false;
+		        	}else if(jsonData.responseHeader.resultCode=="000000"){
+		        		$("#nickNameErrMsg").hide();
+		        		$("#nickNameText").hide();
+		        		$("#nickNameFlag").val("1");
+		        	}
+		          },
+				error: function(error) {
+						alert("error:"+ error);
+					}
+				});
 		},
     	_initValidate:function(){
     		var formValidator=$("#dataForm").validate({
@@ -102,7 +133,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     			    	required:false,
     					maxlength:50,
     			    },
-    			    QQ:{
+    			    qq:{
     			    	required:false,
     					maxlength:10,
     					digits:true,
@@ -133,6 +164,10 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     				idno:{
     					required: true,
     					idcard: true
+    				},
+    				address:{
+    					required:false,
+    					maxlength:100,
     				}
     			},
     			messages: {
@@ -148,9 +183,12 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     				fullName:{
     					maxlength:"最大长度不能超过{0}",
     				},
-    				QQ:{
+    				qq:{
     					digits: "只能输入数字",
     					maxlength:"最大长度不能超过{0}"
+    				},
+    				address:{
+    					maxlength:"最大长度不能超过{0}",
     				},
     				startDate:{
     					required: "请输入开始日期"     						
@@ -197,6 +235,7 @@ function uploadImg11(uploadImgFile){
         	 var jsonData = JSON.parse(data);
         	if(jsonData.isTrue==true){
         		document.getElementById("portraitFileId").src=jsonData.url;
+        		$("#portraitId").val(jsonData.idpsId);
         	 }
          },
          error: function (data, status, e) {  

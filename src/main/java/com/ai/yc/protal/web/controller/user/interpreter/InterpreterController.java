@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,13 +18,16 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.components.idps.IDPSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.DateUtil;
 import com.ai.opt.sdk.util.UUIDUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.image.IImageClient;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
+import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
 import com.ai.yc.user.api.userservice.param.UpdateYCUserRequest;
 import com.ai.yc.user.api.userservice.param.YCUpdateUserResponse;
+import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
 import com.alibaba.fastjson.JSON;
 
 @RequestMapping("/interpreter")
@@ -33,8 +37,19 @@ public class InterpreterController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(InterpreterController.class);
 	
 	@RequestMapping("/interpreterInfoPager")
-	public ModelAndView toInterpreterBaseInfo(){
-		return new ModelAndView("/user/authentication/interpreter_info");
+	public ModelAndView toInterpreterBaseInfo(String userId){
+		IYCUserServiceSV ucUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
+		SearchYCUserRequest userRequest = new SearchYCUserRequest();
+		userRequest.setUserId("000000000000003081");
+		YCUserInfoResponse response = ucUserServiceSV.searchYCUserInfo(userRequest);
+		Map<String, Object> model = new HashMap<String, Object>();
+		String idpsns = "yc-portal-web";
+		IImageClient im = IDPSClientFactory.getImageClient(idpsns);
+		String url = im.getImageUrl(response.getPortraitId(), ".jpg", "100x100");
+		model.put("interpreterInfo", response);
+		model.put("birthday", DateUtil.getDateString(response.getBirthday(),"yyyy-MM-dd"));
+		model.put("portraitId", url);
+		return new ModelAndView("/user/authentication/interpreter_info",model);
 	}
 	
 	
@@ -49,9 +64,9 @@ public class InterpreterController {
         try{
         	IImageClient im = IDPSClientFactory.getImageClient(idpsns);
         	String idpsId = im.upLoadImage(multiFile.getBytes(), UUIDUtil.genId32() + ".png");
-        	String url = im.getImageUrl(idpsId, ".jpg", "80x80");
+        	String url = im.getImageUrl(idpsId, ".jpg", "100x100");
     		map.put("isTrue", true);
-    		map.put("dssId", idpsId);
+    		map.put("idpsId", idpsId);
     		map.put("url", url);
         }catch(Exception e){
         	 LOGGER.error("上传失败");
@@ -60,13 +75,44 @@ public class InterpreterController {
         return JSON.toJSONString(map);
        }
 	
+	@RequestMapping("/checkNickName")
+	@ResponseBody
+	 public String checkNickName(HttpServletRequest request,@RequestParam("userId") String userId,@RequestParam("nickName") String nickName){
+		ResponseData<String> responseData = null;
+        ResponseHeader header = null;
+        try{
+        	IYCUserServiceSV ucUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
+        	YCUserInfoResponse userInfoResponse = ucUserServiceSV.searchUserInfoByNickName(nickName);
+        	if(userInfoResponse!=null){
+        		/**
+        		 * 查出来的昵称和前台传过来的一样，表示已经注册过
+        		 */
+        		if(userInfoResponse.getUserId()!=null&&!userId.equals(userInfoResponse.getUserId())&&userInfoResponse.getNickname().equals(nickName)){
+        			 header = new ResponseHeader(false, Constants.ERROR_CODE, "失败");
+                     responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "失败", null);
+                     responseData.setResponseHeader(header);
+        		}else{
+        			 header = new ResponseHeader(true, Constants.SUCCESS_CODE, "成功");
+                     responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "成功", null);
+                     responseData.setResponseHeader(header); 
+        		}
+        	}
+        }catch(Exception e){
+        	e.printStackTrace();
+        }
+        return JSON.toJSONString(responseData);
+	}
+	
+	
 	@RequestMapping("/saveInfo")
 	@ResponseBody
 	 public ResponseData<String> saveInfo(HttpServletRequest request,UpdateYCUserRequest ucUserRequest){
 		ResponseData<String> responseData = null;
         ResponseHeader header = null;
-        ucUserRequest.setUserId("000000000000003061");
         try{
+        	if(request.getParameter("birthdayTmp")!=null){
+        		ucUserRequest.setBirthday(DateUtil.getTimestamp(request.getParameter("birthdayTmp")));
+        	}
 			IYCUserServiceSV ucUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
 			YCUpdateUserResponse response = ucUserServiceSV.updateYCUserInfo(ucUserRequest);
 			 if (response != null&&response.getResponseHeader().getResultCode().equals(Constants.SUCCESS_CODE)) {
