@@ -53,6 +53,7 @@
   					<p><spring:message code="order.translateLan"/></p>
   				</div>
   				<div class="placeorder-translate">
+
   					<select class="select select-large" id="selectDuad" name="<%=response.getLocale()%>">
   						<c:forEach items="${duadList}" var="duad">
 	  						<c:if test="${duad.orderType != 2}">

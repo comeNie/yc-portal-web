@@ -8,7 +8,7 @@ $(document).ready(function(){
 $(function () {
     $(".banner-hover p").click(function () {
 		$(this).children('i').toggleClass(" icon-angle-down   icon-angle-up");
-		$(this).parents().parent().children('.banner-sm').slideToggle(100);
+		$(this).parents().parent().children('.banner-sm').slideToggle(50);
     });
 });	
 //图标遮罩
