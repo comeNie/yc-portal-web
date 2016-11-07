@@ -48,8 +48,7 @@
 									<spring:message code="ycregister.phone" />
 								</p>
 								<p>
-									<select class="select select-in radius"><option>86+
-											中国</option></select>
+									<select id="country" class="select select-in radius"></select>
 								</p>
 								<p class="ml-20">
 									<input id="phone" maxlength="11" type="text"
