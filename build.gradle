@@ -75,11 +75,8 @@ dependencies {
     compile 'com.ai.opt.sso.client:opt-sso-client:1.0.2-SNAPSHOT'
 
 
-    compile 'com.ai:dubbo-ext:0.3.1' //用于调用dubbo服务使用，如果不调用则可以不引入  
-	compile "com.ai:ipaas-i18n-spring:0.3.1"  
-
     //公共缓存
-    compile 'com.ai.platform.common:cachekey:1.0-SNAPSHOT'
+    compile 'com.ai.yc.common:cachekey:1.0-SNAPSHOT'
     //订单下单
     compile 'com.ai.yc.order:ordersubmission:1.0-SNAPSHOT'
     //系统自动报价查询
@@ -91,7 +88,7 @@ dependencies {
 	compile 'com.ai.yc.user:userservice:1.0-SNAPSHOT'
     
 	compile 'com.ai.yc.ucenter:members:1.0-SNAPSHOT'
-	compile 'com.ai.platform.common:country:1.0-SNAPSHOT'
+	compile 'com.ai.yc.common:country:1.0-SNAPSHOT'
 
     testCompile(
             "org.springframework:spring-test:4.1.7.RELEASE",
