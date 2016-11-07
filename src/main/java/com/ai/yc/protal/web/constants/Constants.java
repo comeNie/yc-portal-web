@@ -35,5 +35,17 @@ public final class Constants {
 		/** 图片验证码长度 */
 		public static final int VERIFY_SIZE = 4;
 	}
+	public final class PhoneVerify {
+		private PhoneVerify() {
+		}
 
+		/** 手机验证码长度 */
+		public static final int VERIFY_SIZE = 6;
+		/** 手机验证码长度 */
+		public static final  String REGISTER_VERIFY_PHONE_KEY="register_verify_phone_key";
+		/** 短信验证码超时时间key */
+		public static final String VERIFY_OVERTIME_KEY = "picture_verifycode_overtime";
+		/** 短信验证码默认超时时候 */
+		public static final String DEFAULT_VERIFY_OVERTIME = "1800";
+	}
 }

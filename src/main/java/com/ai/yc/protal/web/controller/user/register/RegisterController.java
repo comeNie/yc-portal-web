@@ -20,20 +20,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ai.opt.base.exception.BusinessException;
-import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.components.mcs.MCSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.RandomUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.paas.ipaas.util.StringUtil;
-import com.ai.platform.common.api.country.interfaces.IGnCountrySV;
-import com.ai.platform.common.api.country.param.CountryRequest;
 import com.ai.platform.common.api.country.param.CountryResponse;
 import com.ai.platform.common.api.country.param.CountryVo;
 import com.ai.yc.protal.web.constants.Constants;
+import com.ai.yc.protal.web.constants.Constants.PhoneVerify;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
@@ -97,6 +95,7 @@ public class RegisterController {
 			vo.setCountryNameCn("中国大陆");
 			vo.setCountryNameEn("China");
 			vo.setCountryCode("86");
+			vo.setRegularExpression("^(86){0,1}1\\d{10}$");
 			result.add(vo);
 		}
 		if (res != null && res.getResponseHeader() != null
@@ -154,7 +153,7 @@ public class RegisterController {
 	 * 获取注册验证码
 	 */
 	@RequestMapping("/imageVerifyCode")
-	public void getImageVerifyCode(HttpServletRequest request,
+	public void imageVerifyCode(HttpServletRequest request,
 			HttpServletResponse response) {
 		String cacheKey = PictureVerify.VERIFY_IMAGE_KEY
 				+ request.getSession().getId();
@@ -166,7 +165,17 @@ public class RegisterController {
 			LOG.error("生成图片验证码错误：" + e);
 		}
 	}
-
+	/**
+	 * 获取注册验证码
+	 */
+	@RequestMapping("/smsCode")
+	@ResponseBody
+	public ResponseData<Boolean> smsCode(HttpServletRequest request,
+			HttpServletResponse response) {
+		String phone = request.getParameter("phone");
+		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,"ok", true);
+		
+	}
 	/**
 	 * 校验注册验证码
 	 */
