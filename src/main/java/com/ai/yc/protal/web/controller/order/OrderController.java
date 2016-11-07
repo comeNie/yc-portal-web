@@ -170,15 +170,6 @@ public class OrderController {
     }
     
     /**
-     * 支付页面
-     * @return
-     */
-    @RequestMapping("/payOrder")
-    public String createTextView(){
-        return "order/payOrder";
-    }
-    
-    /**
      * 系统自动报价
      * @return
      */

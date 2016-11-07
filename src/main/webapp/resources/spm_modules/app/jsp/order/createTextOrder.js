@@ -188,7 +188,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				success: function (data) {
 					if ("1" === data.statusCode) {
 						if(baseInfo.translateType == 1) {
-							window.location.href =  _base + "/order/payOrder";
+							window.location.href =  _base + "/p/customer/order/payOrder";
 						} else {
 							
 						}

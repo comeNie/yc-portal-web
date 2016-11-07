@@ -49,10 +49,9 @@
     </filter>
     <filter-mapping>
         <filter-name>sessionFilter</filter-name>
-        <url-pattern>/XXX</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
     <!-- 单点登录 -->
-    <!--
     <filter>
         <filter-name>ssoProxyFilter</filter-name>
         <filter-class>com.ai.opt.sso.client.filter.FilterChainProxy</filter-class>
@@ -63,9 +62,8 @@
     </filter>
     <filter-mapping>
         <filter-name>ssoProxyFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/p/*</url-pattern>
     </filter-mapping>
-    -->
 
     <servlet>
         <servlet-name>springmvc</servlet-name>

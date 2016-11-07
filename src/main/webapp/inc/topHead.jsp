@@ -14,7 +14,8 @@
             <%--<li class="left"><i class="icon-volume-off"></i><A href="#">网站公告栏，通知网站各种事件</A></li>--%>
             <li class="right">
                 <p><a href="#"><spring:message code="topMenue.Login"/></a><a href="#" class="blue"><spring:message code="topMenue.Regist"/></a></p>
-                <p><a href="${_base}/customer/order/list/view"><spring:message code="topMenue.myOrder"/></a></p>
+                <%--我的订单--%>
+                <p><a href="${_base}/p/customer/order/list/view"><spring:message code="topMenue.myOrder"/></a></p>
                 <p><a href="#"><spring:message code="topMenue.Customers"/></a></p>
                 <p><a href="#"><spring:message code="topMenue.Suppliers"/></a></p>
                 <p class="none-border"><i class="icon iconfont">&#xe60b;</i><a href="#"><spring:message code="topMenue.Mobile"/></a></p>
