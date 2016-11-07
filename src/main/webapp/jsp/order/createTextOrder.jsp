@@ -170,14 +170,13 @@
 							<p>
 								<select id="selectPurpose" name="selectPurpose" class="select select-medium radius">
 									<c:forEach items="${purposeList}" var="purpose">
-										<option value="${purpose.purposeId}">
+										<option value="${purpose.purposeId}"
+												<c:if test="${purpose.purposeId == selPurpose}">selected</c:if>>
 											<c:choose>
 												<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${purpose.purposeCn}</c:when>
 												<c:otherwise>${purpose.purposeEn}</c:otherwise>
 											</c:choose>
 										</option>
-										<option value="${purpose.purposeId}"
-										<c:if test="${purpose.purposeId == selPurpose}">selected</c:if>>${purpose.purposeName}</option>
 									</c:forEach>
 								</select>
 							</p>

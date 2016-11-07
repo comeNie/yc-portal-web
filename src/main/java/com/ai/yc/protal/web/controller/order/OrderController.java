@@ -115,16 +115,14 @@ public class OrderController {
         sysPurpose.setPurposeId("2");
         sysPurpose.setLanguage("zh");
         sysPurpose.setPurposeCn("简历");
+        sysPurpose.setPurposeEn("zhuanYeLunWen");
         sysPurpose.setPurposeId("3");
         sysPurpose.setLanguage("zh");
         sysPurpose.setPurposeCn("产品说明");
+        sysPurpose.setPurposeEn("zhuanYeLunWen");
 
         purposeList.add(sysPurpose);
         purposeList.add(sysPurpose);
-        
-        request.setAttribute("duadList", duadList);
-        request.setAttribute("domainList", domainList);
-        request.setAttribute("purposeList", purposeList);
 
         uiModel.addAttribute("duadList", duadList);
         uiModel.addAttribute("domainList", domainList);
