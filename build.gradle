@@ -59,7 +59,7 @@ dependencies {
     compile	'org.apache.commons:commons-email:1.4'
     compile 'org.apache.commons:commons-compress:1.9'
     compile 'joda-time:joda-time:2.9.4'
-
+	
 	optUedTemplate 'com.ai.opt.uniframe:yc-ued-template:1.0-SNAPSHOT'
 	jsCommonLibs 'com.ai.opt.uniframe:yc-jscommon-libs:1.0-SNAPSHOT'
 	
@@ -82,8 +82,13 @@ dependencies {
     compile 'com.ai.platform.common:cachekey:1.0-SNAPSHOT'
     //订单下单
     compile 'com.ai.yc.order:ordersubmission:1.0-SNAPSHOT'
+
     //订单查询
     compile 'com.ai.yc.order:orderquery:1.0-SNAPSHOT'
+	//注册
+	compile 'com.ai.yc.user:userservice:1.0-SNAPSHOT'
+    
+	compile 'com.ai.yc.ucenter:members:1.0-SNAPSHOT'
 
 
     testCompile(

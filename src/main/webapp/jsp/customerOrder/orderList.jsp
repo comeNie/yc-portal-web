@@ -1111,4 +1111,5 @@
 <script type="text/javascript" src="scripts/modular/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="scripts/modular/frame.js"></script>
 </body>
+<%@ include file="/inc/incJs.jsp" %>
 </html>

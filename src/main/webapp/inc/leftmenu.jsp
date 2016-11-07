@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="uedroot" value="${pageContext.request.contextPath}/resources/template"/>
-<link rel="stylesheet" type="text/css" href="${spmRes}/optDialog/css/ui-dialog.css"/>
 <jsp:include page="/inc/inc.jsp"/>
    <!--二级主体-->
   <!--外侧背景-->

@@ -12,7 +12,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
     
-    var currentLan = "${currentLan}";
     var textOrderAddPager = Widget.extend({
     	Implements:CountWordsUtil,
     	//属性，使用时由类的构造函数传入
@@ -36,6 +35,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     		textOrderAddPager.superclass.setup.call(this);
 			this._transGrade();
 			this._transPrice();
+			this._globalRome();
 		
 			var formValidator=this._initValidate();
 			$(":input").bind("focusout",function(){
@@ -134,11 +134,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			
 			var baseInfo = {};
 			//baseInfo.chlId=""后台写
+			//baseInfo.orderType
 			baseInfo.busiType = 1;
-			baseInfo.translateType = 0; //0：快速翻译 1：文档翻译
+			baseInfo.translateType = "0"; //0：快速翻译 1：文档翻译
 			baseInfo.translateName = $("#translateContent").val().substring(0,15);
 			//baseInfo.orderLevel =??
-			baseInfo.subFlag = 0; // "0：系统自动报价 1：人工报价"
+			baseInfo.subFlag = "0"; // "0：系统自动报价 1：人工报价"
 			//baseInfo.userType
 			baseInfo.userId = "userid";
 			baseInfo.corporaId = "corporaId";
@@ -153,7 +154,15 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			}
 			//productInfo.needTranslateInfo??
 			productInfo.translateInfo = $("#translateContent").val();
-			//productInfo.languagePairInfoList = [$("#selectDuad").find("option:selected").attr("duadId")];
+			var duadList =[];    
+			$('input[name="duad"]:checked').each(function(){   
+				var tempObj = {};
+				tempObj.languagePairId =$(this).attr("name");
+				//languagePairName =
+				//languageNameEn =
+				duadList.push(tempObj);    
+			});
+			productInfo.languagePairInfoList = duadList;
 			//productInfo.translateLevelInfoList = []
 			
 			var contactInfo = {};
@@ -231,7 +240,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			$("#saveContactDiv").hide();
 			
 			$("#editContactDiv").find('p').eq(0).html($("#saveContactDiv").find('input').eq(0).val());
-			$("#editContactDiv").find('p').eq(1).html($("#saveContactDiv").find('option:selected').text()+$("#saveContactDiv").find('input').eq(1).val());
+			$("#editContactDiv").find('p').eq(1).html("+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val());
 			$("#editContactDiv").find('p').eq(2).html($("#saveContactDiv").find('input').eq(2).val());
 			
 			$("#editContactDiv").show();
@@ -240,6 +249,22 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		_editContactDiv:function() {
 			$("#saveContactDiv").show();
 			$("#editContactDiv").hide();
+		},
+		
+		_globalRome:function() {
+			$.getJSON(_base + "/resources/spm_modules/app/jsp/order/globalRome.json",function(data){
+				$.each(data.row,function(rowIndex,row){
+					var selObj = $("#globalRome");
+					var text;
+					if (currentLan.indexOf("zh") >= 0) {
+						text = row["COUNTRY_NAME_CN"];
+					} else {
+						text = row["COUNTRY_NAME_EN"];
+					}
+					
+					selObj.append("<option value='"+row["COUNTRY_CODE"]+"'>"+text+"   +"+row["COUNTRY_CODE"]+"</option>");
+				});
+			});
 		}
 		
     });

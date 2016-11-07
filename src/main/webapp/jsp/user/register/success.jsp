@@ -32,4 +32,5 @@
 			
 		</div>
 </body>
+<%@ include file="/inc/incJs.jsp" %>
 </html>

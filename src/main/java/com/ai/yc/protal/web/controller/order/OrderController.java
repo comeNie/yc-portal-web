@@ -12,10 +12,15 @@ import com.ai.platform.common.api.cachekey.model.SysDomain;
 import com.ai.platform.common.api.cachekey.model.SysDuad;
 import com.ai.platform.common.api.cachekey.model.SysPurpose;
 import com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV;
+import com.ai.yc.order.api.ordersubmission.param.BaseInfo;
+import com.ai.yc.order.api.ordersubmission.param.ContactInfo;
+import com.ai.yc.order.api.ordersubmission.param.FeeInfo;
 import com.ai.yc.order.api.ordersubmission.param.OrderSubmissionRequest;
 import com.ai.yc.order.api.ordersubmission.param.OrderSubmissionResponse;
+import com.ai.yc.order.api.ordersubmission.param.ProductInfo;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.utils.AiPassUitl;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
 
@@ -163,7 +168,13 @@ public class OrderController {
         String feeInfoStr = request.getParameter("feeInfo");
         String contactInfoStr = request.getParameter("contactInfo");
         String productInfoStr = request.getParameter("productInfo");
-        request.getParameter("baseInfo");
+        String baseInfoStr = request.getParameter("baseInfo");
+        
+        OrderSubmissionRequest subReq = new OrderSubmissionRequest();
+        subReq.setBaseInfo(JSON.parseObject(baseInfoStr, BaseInfo.class));
+        subReq.setProductInfo(JSON.parseObject(productInfoStr, ProductInfo.class));
+        subReq.setContactInfo(JSON.parseObject(contactInfoStr, ContactInfo.class));
+        subReq.setFeeInfo(JSON.parseObject(feeInfoStr, FeeInfo.class));
         
         LOGGER.info(JSONObject.toJSONString(subReq));
         /*try {

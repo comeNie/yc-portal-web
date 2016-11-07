@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page import="java.util.Locale"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>  
 <!DOCTYPE html>
 <html>
@@ -10,6 +11,7 @@
 </head>
 <body>	
 	<!--面包屑导航-->
+	<%@ include file="/inc/topHead.jsp" %>
 	<%@ include file="/inc/topMenu.jsp" %>
 		<!--主体-->
 		<form id="textOrderForm" valid="true">
@@ -51,7 +53,7 @@
   					<p><spring:message code="order.translateLan"/></p>
   				</div>
   				<div class="placeorder-translate">
-  					<select class="select select-large" id="selectDuad">
+  					<select class="select select-large" id="selectDuad" name="<%=response.getLocale()%>">
   						<c:forEach items="${duadList}" var="duad">
 	  						<c:if test="${duad.orderType != 2}">
 		  					 	<option value="${duad.duadId}"  currency="${duad.currency}" 
@@ -60,7 +62,7 @@
 								publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}" 
 								sourceEn="${duad.sourceEn}" duadId="${duad.duadId}">
 									<c:choose>
-										<c:when test="${fn:contains(currentLan, 'zh')}">${duad.sourceCn}→${duad.targetCn}</c:when>
+										<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${duad.sourceCn}→${duad.targetCn}</c:when>
 										<c:otherwise>${duad.sourceEn}→${duad.targetEn}</c:otherwise>
 									</c:choose>
 									
@@ -170,7 +172,7 @@
 									<c:forEach items="${purposeList}" var="purpose">
 										<option value="${purpose.purposeId}">
 											<c:choose>
-												<c:when test="${fn:contains(currentLan, 'zh')}">${purpose.purposeCn}</c:when>
+												<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${purpose.purposeCn}</c:when>
 												<c:otherwise>${purpose.purposeEn}</c:otherwise>
 											</c:choose>
 										</option>
@@ -185,7 +187,7 @@
 									<c:forEach items="${domainList}" var="domain">
 										<option value="${domain.domainId}">
 											<c:choose>
-												<c:when test="${fn:contains(currentLan, 'zh')}">${domain.domainCn}</c:when>
+												<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${domain.domainCn}</c:when>
 												<c:otherwise>${domain.domainEn}</c:otherwise>
 											</c:choose>
 										</option>
@@ -233,6 +235,7 @@
 		<%@ include file="/jsp/order/textOrderContact.jsp" %>
 		</form>
 </body>
+<%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
 	(function () {
 		var pager;

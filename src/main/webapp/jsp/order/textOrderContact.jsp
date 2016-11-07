@@ -41,7 +41,7 @@
 					<ul>
 						<li>
 							<p><input id="contactName" name="contactName" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterName"/>"></p>
-							<p><select id="globalRome" name="globalRome" class="select int-in radius"><option>86</option><option>87</option></select></p>
+							<p><select id="globalRome" name="globalRome" class="select int-in radius"></select></p>
 							<p><input id="phoneNum" name="phoneNum" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterPhone"/>"></p>
 							<p class="mr-0"><input id="email" name="email" type="text" class="int-text int-large-mail radius" placeholder="<spring:message code="order.EnterEmail"/>"></p>
 						</li>
