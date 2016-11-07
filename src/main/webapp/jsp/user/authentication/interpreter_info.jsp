@@ -40,7 +40,7 @@
   					<li class="toux">
   						<p class="word">头像:</p>
   						<p class="portrait">
-  							<img src="${uedroot}/images/icon1.jpg" id="portraitFileId" />
+  							<img src="${portraitId}" id="portraitFileId" />
   							<div class="portrait-file">
   								<a href="#">修改头像</a>
   								<input type="file"  class="file-opacity" id="uploadImg" name="uploadImg" onchange="uploadImg11('uploadImg')"/>
@@ -54,26 +54,43 @@
   					</li>
   					<li>
   						<p class="word">姓名:</p>
-  						<p><input type="text" class="int-text int-xlarge radius" name="fullname"/></p>
+  						<p><input type="text" class="int-text int-xlarge radius" name="fullName" id="fullName" /></p>
   					</li>
   					<li>
   						<p class="word"><b>*</b>昵称:</p>
-  						<p><input type="text" class="int-text int-xlarge radius" name="nickname"/></p>
+  						<p><input type="text" class="int-text int-xlarge radius" name="nickname" id="nickname" value="${interpreterInfo.nickname}"/>
+  						</p>
+  						<label id="nickNameErrMsg" style="display: none;"><span  id="nickNameText"></span></label>
   					</li>
   					<li>
   						<p class="word">性别:</p>
-  						<p>
-  							<span><input type="radio" name="sex" class="radio" checked="checked" value="0"/></span>
-  							<span>男</span>
-  						</p>
-  						<p>
-  							<span><input type="radio" name="sex" class="radio" value="1"/></span>
-  							<span>女</span>
-  						</p>
+  						<c:if test="${interpreterInfo.sex==0}">
+	  						<p>
+	  							<span><input type="radio" name="sex" class="radio" checked="checked" value="0"/></span>
+	  							<span>男</span>
+	  						</p>
+	  						<p>
+	  							<span><input type="radio" name="sex" class="radio" value="1"/></span>
+	  							<span>女</span>
+	  						</p>
+  						</c:if>
+  						<c:if test="${interpreterInfo.sex==1}">
+	  						<p>
+	  							<span><input type="radio" name="sex" class="radio"  value="0"/></span>
+	  							<span>男</span>
+	  						</p>
+	  						<p>
+	  							<span><input type="radio" name="sex" class="radio" checked="checked" value="1"/></span>
+	  							<span>女</span>
+	  						</p>
+  						</c:if>
   					</li>
   					<li>
   						<p class="word">生日:</p>
-  						<p><input type="text" class="int-text int-xlarge radius" readonly="readonly" name="birthday"/><i class="icon-calendar"></i></p>
+  						<p>																					
+  							<input type="text" class="int-text int-xlarge radius" readonly="readonly" name="birthday" value="${birthday}" id="startTime"/>
+							<span class="time"> <i class="fa  fa-calendar" ></i></span>
+  						</p>
   					</li>
   					<li>
   						<p class="word">邮箱:</p>
@@ -87,7 +104,7 @@
   					</li>
   					<li>
   						<p class="word">QQ:</p>
-  						<p><input type="text" class="int-text int-xlarge radius" name="qq"/></p>
+  						<p><input type="text" class="int-text int-xlarge radius" name="qq" id="qq"/></p>
   					</li>
   					<li>
   						<p class="word">地址:</p>
@@ -96,13 +113,15 @@
   						<p>省</p>
   						<p><select class="select select-in-small"></select></p>
   						<p>市</p>
-  						<p><input type="text" class="int-text int-in-bi radius"/></p>
+  						<p><input type="text" class="int-text int-in-bi radius" id="address" name="address"/></p>
   					</li>
   				</ul>
   			</div>
   			<div class="recharge-btn order-btn">
  				<input type="button" class="btn btn-green btn-xxxlarge radius10" id="saveButton"  value="保 存">
- 				<input type="hidden" id="uploadImgFlag" value="1"/>
+ 				<input type="hidden" id="uploadImgFlag" value="0"/>
+ 				<input type="hidden" id="nickNameFlag" value="0"/>
+ 				<input type="hidden" id="portraitId" name="portraitId"/>
  			</div>
  			</form>
   		</div>	
@@ -113,6 +132,13 @@
 <script type="text/javascript">
 	var pager;
 	(function() {
+		<%-- 展示日历 --%>
+		$('#dataForm').delegate('.fa-calendar','click',function(){
+			var calInput = $(this).parent().prev();
+			var timeId = calInput.attr('id');
+			console.log("click calendar "+timeId);
+			WdatePicker({el:timeId,readOnly:true});
+		});
 		seajs.use('app/jsp/user/interpreter/interpreterInfo',function(InterPreterInfoPager) {
 					pager = new InterPreterInfoPager({
 						element : document.body
