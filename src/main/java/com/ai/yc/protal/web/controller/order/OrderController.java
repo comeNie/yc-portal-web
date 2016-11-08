@@ -12,6 +12,8 @@ import com.ai.yc.common.api.cachekey.model.SysDomain;
 import com.ai.yc.common.api.cachekey.model.SysDuad;
 import com.ai.yc.common.api.cachekey.model.SysPurpose;
 import com.ai.yc.order.api.autooffer.interfaces.IQueryAutoOfferSV;
+import com.ai.yc.order.api.autooffer.param.QueryAutoOfferReq;
+import com.ai.yc.order.api.autooffer.param.QueryAutoOfferRes;
 import com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV;
 import com.ai.yc.order.api.ordersubmission.param.BaseInfo;
 import com.ai.yc.order.api.ordersubmission.param.ContactInfo;
@@ -24,6 +26,7 @@ import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -176,11 +179,23 @@ public class OrderController {
     @ResponseBody
     public ResponseData<String> queryAutoOffer(HttpServletRequest request){
         ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-//        try {
-//            IQueryAutoOfferSV iQueryAutoOfferSV = DubboConsumerFactory.getService(IQueryAutoOfferSV.class);
-//        } catch(Exception e) {
-//            
-//        }
+        LOGGER.info(request.getParameter("reqParams"));
+        /*try {
+            IQueryAutoOfferSV iQueryAutoOfferSV = DubboConsumerFactory.getService(IQueryAutoOfferSV.class);
+            QueryAutoOfferReq offerInfo =  JSON.parseObject(request.getParameter("reqParams"), QueryAutoOfferReq.class);;
+            QueryAutoOfferRes offerRes = iQueryAutoOfferSV.queryAutoOffer(offerInfo);
+            ResponseHeader resHeader = offerRes==null? null:offerRes.getResponseHeader();
+            //如果返回值为空,或返回信息中包含错误信息,则抛出异常
+            if (offerRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
+                throw new Exception("返回信息错误");
+            }
+        } catch(Exception e) {
+            LOGGER.error("系统自动报价:",e);
+            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,rb.getMessage(""));
+        }*/
+        QueryAutoOfferRes offerRes = new QueryAutoOfferRes();
+        offerRes.setCurrencyUnit("1");//币种 1：RMB 2：$
+        offerRes.setPrice(new BigDecimal(100.22));
         return resData;
     }
 

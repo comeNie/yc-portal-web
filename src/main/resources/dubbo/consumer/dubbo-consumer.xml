@@ -28,5 +28,9 @@
 	<!-- 注册 -->
 	<dubbo:reference id="iYCUserServiceSV" registry="ycRegistry"
 		interface="com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV" />
-
+<!-- IUcMembersSV -->
+	<dubbo:reference id="iUcMembersSV" registry="ycRegistry"
+		interface="com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV" />
+	<dubbo:reference id="iGnCountrySV" registry="ycRegistry"
+		interface="com.ai.yc.common.api.country.interfaces.IGnCountrySV" />
 </beans>

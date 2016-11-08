@@ -55,6 +55,7 @@
   					<ul>
   						<li>
   							<p><input id="transSubject" name="transSubject" maxlength="15" type="text" class="int-text int-100 radius" placeholder="<spring:message code="order.descTransRequire"/>"></p>
+  							<label></label>
   						</li>
   					
   					</ul>
@@ -84,6 +85,7 @@
 	  						</p>
 	  					</c:if>
 						</c:forEach>
+						
   					</li>
   				</ul>
   			</div>
@@ -106,6 +108,7 @@
   							<span>同声传译</span>
   						</p>
   					</li>
+  					<label class="x-label"></label>
   				</ul>
   			</div>
 			</div>
@@ -115,10 +118,12 @@
 						<li class="none-ml">
 							<p class="word"><spring:message code="order.StartingTime"/></p>
 							<p><input id="begin_time" name="begin_time" type="text" class="int-text int-in-250 radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'%y-%M-%d %\H:\%m:%s',maxDate:'#F{$dp.$D(\'end_time\')}'})"/></p>
+							<label</label>
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.EngdingTime"/></p>
 							<p><input id="end_time" name="end_time" type="text" class="int-text int-in-250 radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'begin_time\')}'})"/></p>
+							<label></label>
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.Place"/></p>
@@ -131,12 +136,14 @@
 						<li>
 							<p class="word"><spring:message code="order.MeetingAmount"/></p>
 							<p><input id="meetingAmount" name="meetingAmount" type="text" class="int-text int-in-250 radius" placeholder="<spring:message code="order.MeetingAmountInfo"/>"></p>
+							<label></label>
 						</li>
 					</ul>
 					<ul>
 						<li class="none-ml">
 							<p class="word"><spring:message code="order.interpreterNum"/></p>
 							<p><input id="interpreterNum" name="interpreterNum" type="text" class="int-text int-in-250 radius" placeholder="<spring:message code="order.interpreterNumInfo"/>"></p>
+							<label></label>
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.Gender"/></p>

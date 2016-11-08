@@ -272,6 +272,7 @@
 .selection-level ul .green-li p i{font-size:12px;margin-right:20px;color:#43d4b0}
 .selection-level  .current label{position:absolute;right:-6px;top:-14px;z-index: 99;color:#2865e6;font-size:18px}
 .selection-level .current{-webkit-box-shadow: #3292f8 0px 0px 8px;-moz-box-shadow: #3292f8 0px 0px 8px;box-shadow: #3292f8 0px 0px 8px;}
+.selection-level label{position:absolute;right:0;top:0;background: url(../../images/icon-big.png) no-repeat left -2189px;width:23px;height:23px;}
 .selection-select{width:100%;float:left}
 .selection-select ul{width:100%;float:left}
 .selection-select ul li{width:190px;float:left;margin-left:30px;position:relative;}

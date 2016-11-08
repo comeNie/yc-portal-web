@@ -53,9 +53,8 @@
   					<p><spring:message code="order.translateLan"/></p>
   				</div>
   				<div class="placeorder-translate">
-
-  					<select class="select select-large" id="selectDuad" name="<%=response.getLocale()%>">
-  						<c:forEach items="${duadList}" var="duad">
+	  				<select id="selectDuad" name="<%=response.getLocale()%>" tabindex="5" class="dropdown" data-settings='{"cutOff": 12}'>
+						<c:forEach items="${duadList}" var="duad">
 	  						<c:if test="${duad.orderType != 2}">
 		  					 	<option value="${duad.duadId}"  currency="${duad.currency}" 
 								ordinary="${duad.ordinary}"  ordinaryUrgent="${duad.ordinaryUrgent}" 
@@ -70,19 +69,50 @@
 								</option>
 							</c:if>
 						</c:forEach>
-  					</select>
+					</select>
+	  				<!--  <label>请输入翻译内容</label> -->
   				</div>
 			</div>
 			<!--白色背景-->
 			<div class="white-bj">
 				<div class="right-list-title pb-20 pl-20 none-border">
-  					<p><spring:message code="order.translateContent"/></p>
+  					<p>翻译内容</p>
   				</div>
-  				<div class="translate-int radius">
+  				<div class="translate-int radius" id="fy1">
   					<p><textarea id="translateContent" name="translateContent" class="int-text textarea-xlarge-100 radius"></textarea></p>
-  					<p class="right"><input type="button" class="btn border-blue radius20 btn-80" value="<spring:message code="order.uploadDoc"/>"></p>
-  				</div>	
-			</div>
+  					<p class="right"><input type="button" class="btn border-blue radius20 btn-80" value="上传文档"  id="fy-btn"></p>
+  					<label></label>		
+  				</div>
+  				<div class="translate-int radius bj-ash" id="fy2">
+  					<div class="attachment">
+  						<ul>
+  							<li class="word">我要翻译的文档xxxxx.doc</li>
+  							<li>
+  								<p class="ash-bj"><span style="width:70%;"></span></p>
+  								<p>64%</p>
+  							</li>
+  							<li class="right"><i class="icon iconfont">&#xe618;</i></li>
+  						</ul>
+  						<ul>
+  							<li class="word">我要翻译的文档xxxxx.doc</li>
+  							<li>
+  								<p class="ash-bj"><span style="width:70%;"></span></p>
+  								<p>64%</p>
+  							</li>
+  							<li class="right"><i class="icon iconfont">&#xe618;</i></li>
+  						</ul>
+  					</div>
+  					<div class="attachment-btn">
+  						<ul>
+  							<li class="pp"><input type="button" class="btn border-green btn-large radius20" value="文档上传"><input type="file" class="att-file"></p></li>
+  							<li class="word">将文件拖拽至此区域可上传</lil>
+  						</ul>
+  					</div>
+  					<div class="shur-btn">
+  						<p class="right mr-0"><input type="button" class="btn border-blue radius20 btn-80 " value="输入文字"  id="fy-btn1"></p>
+  					</div>
+  				</div>
+  			</div>
 			<!--白色背景-->
 			<div class="white-bj">
 				<div class="selection-level mt-20" id="transGrade">
@@ -198,17 +228,17 @@
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.addedSer"/></p>
-							<p><select class="select select-medium radius"><option>排版</option></select></p>
+							<p><select id="selectAddedSer" class="select select-medium radius" disabled><option>无排版</option><option>排版</option></select></p>
 						</li>
 						<li class="width-large">
 							<p class="word"><spring:message code="order.formatConv"/></p>
 							<p>
-								<select class="select select-medium radius">
+								<select id="selectFormatConv" class="select select-medium radius" disabled>
 									<option><spring:message code="order.formatConv"/></option>
 									<option><spring:message code="order.noFormatConv"/></option>
 								</select>
 							</p>
-							<p class="ml-20"><input type="text" class="int-text int-in-bi radius"></p>
+							<p class="ml-20"><input id="inputFormatConv" style="display: none" type="text" class="int-text int-in-bi radius"></p>
 						</li>
 					</ul>
 				</div>
@@ -237,6 +267,8 @@
 		</form>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
+<script type="text/javascript" src="${_base}/resources/template/scripts/modular/drop-down.js"></script>
+<script type="text/javascript" src="${_base}/resources/template/scripts/modular/frame.js"></script>	
 <script type="text/javascript">
 	(function () {
 		var pager;
