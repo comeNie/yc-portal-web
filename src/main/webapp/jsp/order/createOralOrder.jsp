@@ -72,20 +72,18 @@
   						<c:forEach items="${duadList}" var="duad">
   						<c:if test="${duad.orderType == 2}">
 	  						<p>
+								<span><input name="duad" type="checkbox" class="radio" value="${duad.duadId}"></span>
 	  							<c:choose>
 		  							<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">
-		  								<span><input name="duad" type="checkbox" class="radio" checked="" value="${duad.sourceCn}${duad.targetCn}"></span>
 		  								<span name="${duad.duadId}">${duad.sourceCn}${duad.targetCn}</span>
 		  							</c:when>
-		  							<c:otherwise> 
-		  								<span><input name="duad" type="checkbox" class="radio" checked="" value="${duad.sourceEn}${duad.targetEn}"></span>
+		  							<c:otherwise>
 		  								<span name="${duad.duadId}">${duad.sourceEn}${duad.targetEn}</span>
 		  							</c:otherwise>
 	  							</c:choose>
 	  						</p>
 	  					</c:if>
 						</c:forEach>
-						
   					</li>
   				</ul>
   			</div>
@@ -96,7 +94,7 @@
   				<ul>
   					<li>
   						<p>
-  							<span><input name="interpretationType" type="checkbox" class="radio" checked="" value="陪同翻译"></span>
+  							<span><input name="interpretationType" type="checkbox" class="radio" value="陪同翻译"></span>
   							<span>陪同翻译</span>
   						</p>
   						<p>
@@ -104,7 +102,7 @@
   							<span>交替传译</span>
   						</p>
   						<p>
-  							<span><input name="interpretationType" type="checkbox" class="radio" checked="" value="同声传译"></span>
+  							<span><input name="interpretationType" type="checkbox" class="radio" value="同声传译"></span>
   							<span>同声传译</span>
   						</p>
   					</li>

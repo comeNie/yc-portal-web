@@ -148,7 +148,7 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
     		return formValidator;
         },
             
-    	//提交文本订单
+    	//提交口译订单
         _addOralOrderTemp:function(){
         	var _this= this;
         	var formValidator=_this._initValidate();

@@ -85,6 +85,7 @@ public class OrderController {
         */
 
         //模拟数据
+        //语言对
         SysDuad sysDuad = new SysDuad();
         sysDuad.setDuadId("1");
         sysDuad.setLanguage("zh");
@@ -92,16 +93,30 @@ public class OrderController {
         sysDuad.setSourceEn("zh");
         sysDuad.setTargetCn("英文");
         sysDuad.setTargetEn("en");
-        sysDuad.setCurrency("rmb");
+        sysDuad.setCurrency("1");
         sysDuad.setOrdinary("100");
         sysDuad.setOrdinaryUrgent("150");
         sysDuad.setProfessional("200");
         sysDuad.setProfessionalUrgent("250");
         sysDuad.setPublish("300");
         sysDuad.setPublishUrgent("350");
+        SysDuad sysDuad1 = new SysDuad();
+        sysDuad1.setDuadId("1");
+        sysDuad1.setLanguage("zh");
+        sysDuad1.setSourceCn("中文2");
+        sysDuad1.setSourceEn("zh");
+        sysDuad1.setTargetCn("英文3");
+        sysDuad1.setTargetEn("en");
+        sysDuad1.setCurrency("1");
+        sysDuad1.setOrdinary("100");
+        sysDuad1.setOrdinaryUrgent("150");
+        sysDuad1.setProfessional("200");
+        sysDuad1.setProfessionalUrgent("250");
+        sysDuad1.setPublish("300");
+        sysDuad1.setPublishUrgent("350");
         duadList.add(sysDuad);
-        duadList.add(sysDuad);
-        
+        duadList.add(sysDuad1);
+        //领域
         SysDomain sysDomain = new SysDomain();
         sysDomain.setDomainId("1");
         sysDomain.setDomainCn("医学");
@@ -109,7 +124,7 @@ public class OrderController {
         sysDomain.setLanguage("zh");
         domainList.add(sysDomain);
         domainList.add(sysDomain);
-        
+        //用途
         SysPurpose sysPurpose = new SysPurpose();
         sysPurpose.setPurposeId("1");
         sysPurpose.setLanguage("zh");

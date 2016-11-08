@@ -140,7 +140,7 @@
 							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
 							<p><spring:message code="order.stanInfo3"/></p>
 						</li>
-						<label><i class="icon iconfont">&#xe617;</i></label>
+						<label></label>
 					</ul>
 					<ul name="1">
 						<li class="blue">
