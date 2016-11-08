@@ -10,8 +10,8 @@ import javax.servlet.http.HttpSession;
 /**
  * Created by jackieliu on 16/7/8.
  */
-public class AdminUtil {
-    private AdminUtil() {
+public class UserUtil {
+    private UserUtil() {
 		// TODO Auto-generated constructor stub
 	}
 
