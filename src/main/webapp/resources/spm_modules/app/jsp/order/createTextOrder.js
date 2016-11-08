@@ -214,7 +214,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				
 					$(this).children('label').remove();
 					$(this).addClass("current");
-					$(this).append('<label><i class="icon iconfont">&#xe617;</i></label>');
+					$(this).append('<label></label>');
 					
 					$($(this).siblings()).removeClass("current");
 					$($(this).siblings()).children('label').remove();
