@@ -258,9 +258,9 @@ public class RegisterController {
 			UcMembersResponse res = DubboConsumerFactory.getService(
 					IUcMembersSV.class).ucCheckeEmail(emailReq);
 			LOG.info("校验邮箱返回：" + JSON.toJSONString(res));
-			if (res != null && res.getResponseHeader() != null
-					&& res.getResponseHeader().isSuccess()) {
-				res.getResponseHeader().getResultCode();
+			if (res != null && res.getMessage() != null
+					&&  res.getMessage().isSuccess()) {
+				res.getCode().getCode();
 			}
 		}
 		if ("phone".equals(checkType)) {// 手机校验
