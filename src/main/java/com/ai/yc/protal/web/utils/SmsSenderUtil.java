@@ -9,7 +9,7 @@ import com.order.cc.sms.entity.Message;
 import com.order.cc.sms.entity.Messages;
 
 public class SmsSenderUtil {
-	public static void sendMessage(String telephone,String text){
+	public static boolean sendMessage(String telephone,String text){
 		SmsSender sender=new SmsSender();
 		Head head=new Head();
 		head.setRequestType("SEND");
@@ -47,14 +47,19 @@ public class SmsSenderUtil {
 		f.setBody(body);
 		f.setHead(head);
 		sender.setFocusSms(f);
+		boolean flag = false;
 		try {
 			FocusSms focus=sender.send(AccessType.HTTP_TYPE);
 			if(focus.getHead().getResult()){
+				flag = true;
 				System.out.println(focus.getHead().getErrorCode());
 				System.out.println(focus.getHead().getErrorMessage());
+			}else{
+				flag = false;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
+		return flag;
 	}
 }
