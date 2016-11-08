@@ -2,7 +2,7 @@ define(
 		"app/jsp/user/register/register",
 		function(require, exports, module) {
 			var smsObj; // timer变量，控制时间
-			var count = 5; // 间隔函数，1秒执行
+			var count = 120; // 间隔函数
 			var curCount;// 当前剩余秒数
 			var $ = require('jquery'), Widget = require('arale-widget/1.2.0/widget'), Dialog = require("optDialog/src/dialog"), AjaxController = require('opt-ajax/1.0.0/index');
 			// 实例化AJAX控制处理对象
