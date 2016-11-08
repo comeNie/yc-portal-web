@@ -15,6 +15,7 @@
             <%--<li class="left"><i class="icon-volume-off"></i><A href="#">网站公告栏，通知网站各种事件</A></li>--%>
             <li class="right">
                 <p>
+                    <%--登录用户信息--%>
                     <c:set var="loginUser" value="${sessionScope.user_session_key}"/>
                     <c:choose>
                         <c:when test="${loginUser !=null}">${loginUser.username}
