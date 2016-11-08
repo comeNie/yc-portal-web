@@ -131,6 +131,10 @@ $(function(){
   $("#fy2").hide();
   $("#fy1").show();
   });
+  $("#back-btn").click(function(){
+  $("#back-pass").hide();
+  $("#back-pass1").show();
+  });
 });
 
 //设置密码 table

@@ -417,6 +417,7 @@ pre ol.linenums li {
 .int-in-big{width:425px;height:44px;padding:0 0 0 20px;line-height:44px;}
 .int-in-280{width:280px;height:44px;padding:0 0 0 20px;line-height:44px;}
 .border-sma{border:1px solid #39d5b0}
+.border-sma:hover{border:1px solid #39d5b0}
 /**禁用**/
 .input-disabled{cursor:not-allowed;background:#eee;}
 .input-disabled:hover{border:1px solid #c7c7c7;}
