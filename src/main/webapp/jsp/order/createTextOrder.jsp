@@ -53,8 +53,14 @@
   					<p><spring:message code="order.translateLan"/></p>
   				</div>
   				<div class="placeorder-translate">
+<<<<<<< HEAD
 	  				<select id="selectDuad" name="<%=response.getLocale()%>" tabindex="5" class="dropdown" data-settings='{"cutOff": 12}'>
 						<c:forEach items="${duadList}" var="duad">
+=======
+
+  					<select class="select select-large" id="selectDuad" name="<%=response.getLocale()%>">
+  						<c:forEach items="${duadList}" var="duad">
+>>>>>>> branch 'master' of https://github.com/AI-OPT/yc-portal-web.git
 	  						<c:if test="${duad.orderType != 2}">
 		  					 	<option value="${duad.duadId}"  currency="${duad.currency}" 
 								ordinary="${duad.ordinary}"  ordinaryUrgent="${duad.ordinaryUrgent}" 

@@ -7,10 +7,10 @@ import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
-import com.ai.platform.common.api.cachekey.key.CacheKey;
-import com.ai.platform.common.api.cachekey.model.SysDomain;
-import com.ai.platform.common.api.cachekey.model.SysDuad;
-import com.ai.platform.common.api.cachekey.model.SysPurpose;
+import com.ai.yc.common.api.cachekey.key.CacheKey;
+import com.ai.yc.common.api.cachekey.model.SysDomain;
+import com.ai.yc.common.api.cachekey.model.SysDuad;
+import com.ai.yc.common.api.cachekey.model.SysPurpose;
 import com.ai.yc.order.api.autooffer.interfaces.IQueryAutoOfferSV;
 import com.ai.yc.order.api.autooffer.param.QueryAutoOfferReq;
 import com.ai.yc.order.api.autooffer.param.QueryAutoOfferRes;
@@ -25,7 +25,6 @@ import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -170,15 +169,6 @@ public class OrderController {
         
         uiModel.addAttribute("duadList", duadList);
         return "order/createOralOrder";
-    }
-    
-    /**
-     * 支付页面
-     * @return
-     */
-    @RequestMapping("/payOrder")
-    public String createTextView(){
-        return "order/payOrder";
     }
     
     /**

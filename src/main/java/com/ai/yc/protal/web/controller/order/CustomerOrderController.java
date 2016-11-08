@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by liutong on 16/11/3.
  */
 @Controller
-@RequestMapping("/customer/order")
+@RequestMapping("/p/customer/order")
 public class CustomerOrderController {
 
     /**
@@ -18,5 +18,14 @@ public class CustomerOrderController {
     @RequestMapping("/list/view")
     public String orderListView(){
         return "customerOrder/orderList";
+    }
+
+    /**
+     * 支付页面
+     * @return
+     */
+    @RequestMapping("/payOrder")
+    public String createTextView(){
+        return "order/payOrder";
     }
 }

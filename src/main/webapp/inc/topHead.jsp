@@ -7,14 +7,27 @@
 --%>
 <%@page import="java.util.Locale"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!--面包屑导航-->
 <div class="placeorder-breadcrumb-big">
     <div class="placeorder-breadcrumb">
         <ul>
             <%--<li class="left"><i class="icon-volume-off"></i><A href="#">网站公告栏，通知网站各种事件</A></li>--%>
             <li class="right">
-                <p><a href="#"><spring:message code="topMenue.Login"/></a><a href="#" class="blue"><spring:message code="topMenue.Regist"/></a></p>
-                <p><a href="${_base}/customer/order/list/view"><spring:message code="topMenue.myOrder"/></a></p>
+                <p>
+                    <c:set var="loginUser" value="${sessionScope.user_session_key}"/>
+                    <c:choose>
+                        <c:when test="${loginUser !=null}">${loginUser.username}
+                            <%--退出--%>
+                            <a href="#"><spring:message code="user.topMenu.exit"/></a>
+                        </c:when>
+                        <c:otherwise><a href="#"><spring:message code="topMenue.Login"/></a>
+                            <a href="#" class="blue"><spring:message code="topMenue.Regist"/></a>
+                        </c:otherwise>
+                    </c:choose>
+                    </p>
+                <%--我的订单--%>
+                <p><a href="${_base}/p/customer/order/list/view"><spring:message code="topMenue.myOrder"/></a></p>
                 <p><a href="#"><spring:message code="topMenue.Customers"/></a></p>
                 <p><a href="#"><spring:message code="topMenue.Suppliers"/></a></p>
                 <p class="none-border"><i class="icon iconfont">&#xe60b;</i><a href="#"><spring:message code="topMenue.Mobile"/></a></p>

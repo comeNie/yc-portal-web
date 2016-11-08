@@ -1,10 +1,11 @@
 package com.ai.yc.protal.web.controller;
 
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
-import com.ai.platform.common.api.cachekey.key.CacheKey;
-import com.ai.platform.common.api.cachekey.model.HomeDataConfig;
+import com.ai.yc.common.api.cachekey.key.CacheKey;
+import com.ai.yc.common.api.cachekey.model.HomeDataConfig;
 import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +26,10 @@ public class IndexController {
         ICacheClient cacheClient = AiPassUitl.getCacheClient();
         String homeDataStr = cacheClient.get(CacheKey.HOME_DATA_CONFIG_KEY);
         //TODO... 模拟数据
-//        HomeDataConfig homeDataCon = JSON.parseObject(homeDataStr,HomeDataConfig.class);
         HomeDataConfig homeDataCon = new HomeDataConfig();
+        if (StringUtils.isNotBlank(homeDataStr)) {
+            homeDataCon = JSON.parseObject(homeDataStr, HomeDataConfig.class);
+        }
         homeDataCon.setCustomNum("54900");//客户
         homeDataCon.setLgdataNum("26783000");//语料
         homeDataCon.setOrderNum("600892");//订单数量

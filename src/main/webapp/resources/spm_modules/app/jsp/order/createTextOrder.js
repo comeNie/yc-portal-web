@@ -6,7 +6,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     require("jsviews/jsrender.min");
 
     require("jquery-validation/1.15.1/jquery.validate");
-	require("app/util/aiopt-validate-ext");
+	//require("app/util/aiopt-validate-ext");
     var CountWordsUtil = require("app/util/countWords");
     
     //实例化AJAX控制处理对象
@@ -190,7 +190,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				success: function (data) {
 					if ("1" === data.statusCode) {
 						if(baseInfo.translateType == 1) {
-							window.location.href =  _base + "/order/payOrder";
+							window.location.href =  _base + "/p/customer/order/payOrder";
 						} else {
 							
 						}
