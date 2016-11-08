@@ -27,7 +27,9 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			"click #urgentOrder":"_transPrice",
 			"change #selectDuad":"_transPrice",
 			"click #saveContact":"_saveContact",
-			"click #editContact":"_editContactDiv"
+			"click #editContact":"_editContactDiv",
+			"click #fy-btn": "_uploadFile",
+			"click #fy-btn1": "_inputText"
            	},
             
     	//重写父类
@@ -255,12 +257,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		
 		//获取翻译速度价格
 		_getSpeed:function() {
-			var ordSpeed = 500;
-			var ordSpeedUrgent = 1000;
-			var proSpeed = 300;
-			var proSpeedUrgent = 500;
-			var pubSpeed = 250;
-			var pubSpeedUrgent = 300;
+			var ordSpeed = 2;
+			var ordSpeedUrgent = 1;
+			var proSpeed = 3;
+			var proSpeedUrgent = 2;
+			var pubSpeed = 4;
+			var pubSpeedUrgent = 3;
 			
 			if ($("#urgentOrder").is(':checked')) {
 				if($(".none-ml.current").attr('name') == 0) {
@@ -310,6 +312,20 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 					selObj.append("<option value='"+row["COUNTRY_CODE"]+"'>"+text+"   +"+row["COUNTRY_CODE"]+"</option>");
 				});
 			});
+		},
+		
+		//文字输入，js控制
+		_inputText:function() {
+			$("#selectAddedSer").attr("disabled",true);
+			$("#selectFormatConv").attr("disabled",true);
+			$("#inputFormatConv").hide();
+		},
+	
+		//上传文档，js控制
+		_uploadFile:function() {
+			$("#selectAddedSer").attr("disabled",false);
+			$("#selectFormatConv").attr("disabled",false);
+			$("#inputFormatConv").show();
 		}
 		
     });
