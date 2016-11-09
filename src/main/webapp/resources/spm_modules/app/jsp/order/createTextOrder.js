@@ -13,7 +13,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     var ajaxController = new AjaxController();
     
     var textOrderAddPager = Widget.extend({
-    	Implements:CountWordsUtil,
+
     	//属性，使用时由类的构造函数传入
     	attrs: {
     		clickId:""
@@ -141,6 +141,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			}
 			
 			//计算字数
+			var transContent = $("#translateContent").val();
 			var totalWords = CountWordsUtil.count($("#translateContent").val());
 			
 			var baseInfo = {};

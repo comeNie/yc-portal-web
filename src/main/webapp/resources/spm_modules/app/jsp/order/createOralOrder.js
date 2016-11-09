@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 define('app/jsp/order/createOralOrder', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
