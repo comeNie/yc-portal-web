@@ -12,6 +12,21 @@ public final class Constants {
 	//订单文档存储
 	public static final String IPAAS_ORDER_FILE_DSS = "order-file-dss";
 
+	/** 邮箱可重复发送时间 配置key */
+	public static final String SEND_VERIFY_MAX_TIME_KEY = "/email_verifycode_send_maxtime";
+	  /** IP发送邮件次数key */
+    public static final String CACHE_KEY_IP_SEND_EMAIL_NUM = "band-email-ip-send-email-num";
+    /** 邮件验证码超时时间 配置key */
+	public static final String VERIFY_OVERTIME_KEY = "/email_verifycode_overtime";
+	/** 缓存命名空间*/
+    public static final String CACHE_NAMESPACE = "com.ai.yc.user.email.cache";
+    /** ip可重复发送次数保存时间  配置key */
+    public static final String IP_SEND_OVERTIME_KEY = "/email_ip_send_overtime";
+    /** ip可重复发送次数 配置key */
+    public static final String SEND_VERIFY_IP_MAX_NO_KEY = "/email_send_ip_maxno";
+    /** 修改邮箱发送手机次数key */
+    public static final String CACHE_KEY_UPDATE_SEND_EMAIL_NUM = "band-email-update-send-phone-num";
+	
 	public static final class Register {
 		private Register() {
 		}
