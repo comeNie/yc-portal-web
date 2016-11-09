@@ -51,8 +51,6 @@ public final class Constants {
 		private PictureVerify() {
 		}
 
-		/** 图片验证码超时时间 */
-		public static final String DEFAULT_VERIFY_OVERTIME = "3600";
 		/** 图片验证码超时时间key */
 		public static final String VERIFY_OVERTIME_KEY = "picture_verifycode_overtime";
 		/** 图片验证码key */

@@ -45,14 +45,9 @@ public class VerifyUtil {
 		try {
 			ICacheClient cacheClient = MCSClientFactory
 					.getCacheClient(namespace);
-			String overTimeStr = PictureVerify.DEFAULT_VERIFY_OVERTIME;
 			JSONObject config = AiPassUitl.getVerificationCodeConfig();
-			if (config != null
-					&& config.containsKey(PictureVerify.VERIFY_OVERTIME_KEY)) {
-				overTimeStr = config.getString(PictureVerify.VERIFY_OVERTIME_KEY);
-			}
-
-			cacheClient.setex(cacheKey, Integer.valueOf(overTimeStr),
+			int overTime = config.getIntValue(PictureVerify.VERIFY_OVERTIME_KEY);
+			cacheClient.setex(cacheKey, overTime,
 					verifyCode);
 			if (LOGGER.isDebugEnabled())
 				LOGGER.debug("cacheKey=" + cacheKey + ",verifyCode="
