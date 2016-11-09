@@ -4,8 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>口译下单页</title>
-	<%@ include file="/inc/inc.jsp" %>
+    <%@ include file="/inc/inc.jsp" %>
+    <title><spring:message code="order.oralTittle"/></title>
+	
 	<script src="${_base}/resources/spm_modules/my97DatePicker/WdatePicker.js"></script>
 </head>
 <body>	
@@ -72,12 +73,12 @@
   						<c:forEach items="${duadList}" var="duad">
   						<c:if test="${duad.orderType == 2}">
 	  						<p>
-								<span><input name="duad" type="checkbox" class="radio" value="${duad.duadId}"></span>
+	  							<span><input name="duad" type="checkbox" class="radio" value="${duad.duadId}"></span>
 	  							<c:choose>
 		  							<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">
 		  								<span name="${duad.duadId}">${duad.sourceCn}${duad.targetCn}</span>
 		  							</c:when>
-		  							<c:otherwise>
+		  							<c:otherwise> 
 		  								<span name="${duad.duadId}">${duad.sourceEn}${duad.targetEn}</span>
 		  							</c:otherwise>
 	  							</c:choose>
@@ -94,16 +95,19 @@
   				<ul>
   					<li>
   						<p>
-  							<span><input name="interpretationType" type="checkbox" class="radio" value="陪同翻译"></span>
-  							<span>陪同翻译</span>
+  							<!-- 陪同翻译 -->
+  							<span><input name="interpretationType" type="checkbox" class="radio"  value="0"></span>
+  							<span><spring:message code="order.interpretationType1"/></span>
   						</p>
   						<p>
-  							<span><input name="interpretationType" type="checkbox" class="radio" value="交替传译"></span>
-  							<span>交替传译</span>
+  							<!-- 交替传译 -->
+  							<span><input name="interpretationType" type="checkbox" class="radio" value="1"></span>
+  							<span><spring:message code="order.interpretationType2"/></span>
   						</p>
   						<p>
-  							<span><input name="interpretationType" type="checkbox" class="radio" value="同声传译"></span>
-  							<span>同声传译</span>
+  							<!-- 同声传译  -->
+  							<span><input name="interpretationType" type="checkbox" class="radio" value="2"></span>
+  							<span><spring:message code="order.interpretationType3"/></span>
   						</p>
   					</li>
   					<label class="x-label"></label>
@@ -115,20 +119,21 @@
 					<ul class="mb-40">
 						<li class="none-ml">
 							<p class="word"><spring:message code="order.StartingTime"/></p>
-							<p><input id="begin_time" name="begin_time" type="text" class="int-text int-in-250 radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'%y-%M-%d %\H:\%m:%s',maxDate:'#F{$dp.$D(\'end_time\')}'})"/></p>
+							<p><input id="begin_time" name="begin_time" type="text" class="int-text int-in-250 radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'%y-%M-%d %\H:\%m:%s',maxDate:'#F{$dp.$D(\'end_time\')}'})" readonly="readonly"/></p>
 							<label</label>
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.EngdingTime"/></p>
-							<p><input id="end_time" name="end_time" type="text" class="int-text int-in-250 radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'begin_time\')}'})"/></p>
+							<p><input id="end_time" name="end_time" type="text" class="int-text int-in-250 radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'begin_time\')}'})" readonly="readonly"/></p>
 							<label></label>
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.Place"/></p>
+							<!-- 北京 京外城市 国外 -->
 							<p><select id="place" name="place" class="select select-250 radius">
-								<option value="bj">北京</option>
-								<option value="other">京外城市</option>
-								<option value="abroad">国外</option>
+								<option value="bj"><spring:message code="order.place1"/></option>
+								<option value="other"><spring:message code="order.place2"/></option>
+								<option value="abroad"><spring:message code="order.place3"/></option>
 							</select></p>
 						</li>
 						<li>
@@ -147,9 +152,9 @@
 							<p class="word"><spring:message code="order.Gender"/></p>
 							<p>
 								<select id="gender" name="gender" class="select select-250 radius">
-									<option value="2">不限</option>
-									<option value="0">男</option>
-									<option value="1">女</option>
+									<option value="2"><spring:message code="order.sex1"/></option>
+									<option value="0"><spring:message code="order.sex2"/></option>
+									<option value="1"><spring:message code="order.sex3"/></option>
 								</select>
 							</p>
 						</li>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 define('app/jsp/order/createOralOrder', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
@@ -25,7 +26,8 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 			"click #submitOrder": "_addOralOrder",
 			"click #toCreateOrder":"_toCreateOrder",
 			"click #saveContact":"_saveContact",
-			"click #editContact":"_editContactDiv"
+			"click #editContact":"_editContactDiv",
+			"click #globalRome": "_setPattern",
             },
             
     	//重写父类
@@ -56,7 +58,11 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 				unhighlight: function(element, errorClass) {
 					
 				} ,
-				errorClass:"x-label",	
+				errorClass:"x-label",
+				showErrors:function(errorMap,errorList) {
+					$('ul li p label').remove()//删除所有隐藏的li p label标签
+					this.defaultShowErrors();
+				},
     			rules: {
     				transSubject: {
     					required:true,
@@ -137,6 +143,7 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
     				},
     				phoneNum: {
     					required:"请输入手机号",
+    					pattern: "请输入正确的手机号"
     				},
     				email: {
     					required:"请输入邮箱",
@@ -148,7 +155,7 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
     		return formValidator;
         },
             
-    	//提交口译订单
+    	//提交文本订单
         _addOralOrderTemp:function(){
         	var _this= this;
         	var formValidator=_this._initValidate();
@@ -165,18 +172,18 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 			
 			var duadList =[];    
 			$('input[name="duad"]:checked').each(function(){    
-				duadList.push($(this).val()+" ");    
+				duadList.push($(this).parent().next().html()+" ");    
 			});
 			tableFirstLine.eq(1).html(duadList);
 			
 			var interpretationTypeList = [];
 			$('input[name="interpretationType"]:checked').each(function(){    
-				interpretationTypeList.push($(this).val()+" ");    
+				interpretationTypeList.push($(this).parent().next().html()+" ");    
 			});  
 			tableFirstLine.eq(2).html(interpretationTypeList);
 			tableFirstLine.eq(3).html($("#begin_time").val());
 			tableFirstLine.eq(4).html($("#end_time").val());
-			tableFirstLine.eq(5).html($("#place").val());
+			tableFirstLine.eq(5).html($("#place").find("option:selected").text());
 			tableFirstLine.eq(6).html($("#meetingAmount").val());
 			
 			$("#contactPage").show();
@@ -212,10 +219,18 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 			productInfo.startTime = new Date($("#begin_time").val()).getTime(); 
 			productInfo.endTime = new Date($("#end_time").val()).getTime(); 
 			
+			var translateLevelInfoList = [];
+			$('input[name="interpretationType"]:checked').each(function(){   
+				var tempObj = {};
+				tempObj.translateLevel =$(this).val();
+				translateLevelInfoList.push(tempObj);    
+			});
+			productInfo.translateLevelInfoList = translateLevelInfoList;
+			
 			var duadList =[];    
 			$('input[name="duad"]:checked').each(function(){   
 				var tempObj = {};
-				tempObj.languagePairId =$(this).attr("name");
+				tempObj.languagePairId =$(this).val();
 				//languagePairName =
 				//languageNameEn =
 				duadList.push(tempObj);    
@@ -230,6 +245,11 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 			contactInfo.contactName =  $("#editContactDiv").find('p').eq(0).html();
 			contactInfo.contactTel  =  $("#editContactDiv").find('p').eq(1).html();
 			contactInfo.contactEmail  =  $("#editContactDiv").find('p').eq(2).html();
+			
+			contactInfo.contactName=$("#saveContactDiv").find('input').eq(0).val();
+	    	contactInfo.contactTel="+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val();
+			contactInfo.contactEmail=$("#saveContactDiv").find('input').eq(2).val();
+			
 			
 			var feeInfo = {};
 			feeInfo.totalFee = 100;
@@ -287,9 +307,15 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 						text = row["COUNTRY_NAME_EN"];
 					}
 					
-					selObj.append("<option value='"+row["COUNTRY_CODE"]+"'>"+text+"   +"+row["COUNTRY_CODE"]+"</option>");
+					selObj.append("<option value='"+row["COUNTRY_CODE"]+"' exp='" +row["REGULAR_EXPRESSION"]+"'>"+text+"   +"+row["COUNTRY_CODE"]+"</option>");
 				});
 			});
+		},
+		
+		//根据国家设置号码匹配规则
+		_setPattern:function() {
+			var pattern = $("#saveContactDiv").find('option:selected').attr('exp');
+			$("#phoneNum").attr('pattern',pattern);
 		}
     });
     

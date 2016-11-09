@@ -26,12 +26,19 @@ import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.jni.Local;
 import org.slf4j.Logger;
@@ -41,7 +48,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 /**
  * 通用订单
@@ -192,8 +203,8 @@ public class OrderController {
      */
     @RequestMapping(value = "/queryAutoOffer",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseData<String> queryAutoOffer(HttpServletRequest request){
-        ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+    public ResponseData<QueryAutoOfferRes> queryAutoOffer(HttpServletRequest request){
+        ResponseData<QueryAutoOfferRes> resData = new ResponseData<QueryAutoOfferRes>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         LOGGER.info(request.getParameter("reqParams"));
         /*try {
             IQueryAutoOfferSV iQueryAutoOfferSV = DubboConsumerFactory.getService(IQueryAutoOfferSV.class);
@@ -211,6 +222,7 @@ public class OrderController {
         QueryAutoOfferRes offerRes = new QueryAutoOfferRes();
         offerRes.setCurrencyUnit("1");//币种 1：RMB 2：$
         offerRes.setPrice(new BigDecimal(100.22));
+        resData.setData(offerRes);
         return resData;
     }
 
@@ -253,5 +265,49 @@ public class OrderController {
         OrderSubmissionResponse subRes = new OrderSubmissionResponse();
         resData.setData(subRes.getOrderId()+"");//返回订单信息
         return resData;
+    }
+    
+    @RequestMapping("/uploadFile")
+    public void  uploadHeadPic(HttpServletRequest request,
+            HttpServletResponse response)
+            throws IllegalStateException, IOException {
+        LOGGER.info("文件上传");
+        String uid=request.getParameter("uid");//获取uid
+        String pid=request.getParameter("pid");//获取jsp id参数
+        System.out.println(uid);
+        System.out.println(pid);
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
+                request.getSession().getServletContext());
+        if (multipartResolver.isMultipart(request)) {
+            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+            Iterator<String> iter = multiRequest.getFileNames();
+            while (iter.hasNext()) {
+                // int pre = (int) System.currentTimeMillis();//开始时时间
+                MultipartFile file = multiRequest.getFile(iter.next());
+                if (file != null) {
+                    String myFileName = file.getOriginalFilename();
+                    if (myFileName.trim() != "") {
+                        String fileName = file.getOriginalFilename();
+                        String fileExt = fileName.substring(
+                                fileName.lastIndexOf(".") + 1).toLowerCase();
+                        SimpleDateFormat df = new SimpleDateFormat(
+                                "yyyyMMddHHmmss");
+                        String newFileName = df.format(new Date());
+                        String fileNames = newFileName
+                                + new Random().nextInt(1000) + "." + fileExt;
+                         String path = "E:/" + fileNames;//上传路径
+                        // String path =
+                        // request.getSession().getServletContext()
+                        // .getRealPath("/resources/contractImgs")
+                        // + "/" + fileNames;
+                        File localFile = new File(path);
+                        if (!localFile.exists()) {// 如果文件夹不存在，自动创建
+                            localFile.mkdirs();
+                        }
+                        file.transferTo(localFile);
+                    }
+                }
+            }
+        }
     }
 }

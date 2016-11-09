@@ -29,7 +29,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			"click #saveContact":"_saveContact",
 			"click #editContact":"_editContactDiv",
 			"click #fy-btn": "_uploadFile",
-			"click #fy-btn1": "_inputText"
+			"click #fy-btn1": "_inputText",
+			"click #globalRome": "_setPattern",
            	},
             
     	//重写父类
@@ -38,6 +39,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			this._transGrade();
 			this._transPrice();
 			this._globalRome();
+			this._initPage();
 		
 			var formValidator=this._initValidate();
 			$(":input").bind("focusout",function(){
@@ -47,6 +49,10 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
         
         _initValidate:function(){
         	var formValidator=$("#textOrderForm").validate({
+        		showErrors:function(errorMap,errorList) {
+					$('ul li p label').remove()//删除所有隐藏的li p label标签
+					this.defaultShowErrors();
+				},
     			rules: {
     				translateContent: {
     					required:true,
@@ -90,6 +96,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     				},
     				phoneNum: {
     					required:"请输入手机号",
+    					pattern: "请输入正确的手机号"
     				},
     				email: {
     					required:"请输入邮箱",
@@ -110,6 +117,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				//alert('验证不通过！！！！！');
 				return;
 			}
+			
+			this._queryAutoOffer();
 			
 			var tableFirstLine = $("#textOrderTable tbody tr").eq(0).find("td")
 			tableFirstLine.eq(0).html($("#translateContent").val().substring(0,15));
@@ -138,7 +147,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			//baseInfo.chlId=""后台写
 			//baseInfo.orderType
 			baseInfo.busiType = 1;
-			baseInfo.translateType = "0"; //0：快速翻译 1：文档翻译
+			baseInfo.translateType = "0"; //0：快速翻译 1：文档翻译 缺判断
 			baseInfo.translateName = $("#translateContent").val().substring(0,15);
 			//baseInfo.orderLevel =??
 			baseInfo.subFlag = "0"; // "0：系统自动报价 1：人工报价"
@@ -168,9 +177,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			//productInfo.translateLevelInfoList = []
 			
 			var contactInfo = {};
-			contactInfo.contactName =  $("#editContactDiv").find('p').eq(0).html();
-			contactInfo.contactTel  =  $("#editContactDiv").find('p').eq(1).html();
-			contactInfo.contactEmail  =  $("#editContactDiv").find('p').eq(2).html();
+//			contactInfo.contactName =  $("#editContactDiv").find('p').eq(0).html();
+//			contactInfo.contactTel  =  $("#editContactDiv").find('p').eq(1).html();
+//			contactInfo.contactEmail  =  $("#editContactDiv").find('p').eq(2).html();
+			contactInfo.contactName=$("#saveContactDiv").find('input').eq(0).val();
+		    contactInfo.contactName="+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val();
+			contactInfo.contactName=$("#saveContactDiv").find('input').eq(2).val();
 			
 			var feeInfo = {};
 			feeInfo.totalFee = 100;
@@ -200,6 +212,44 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			});
 		},
 		
+		//查询报价
+		_queryAutoOffer:function() {
+			var req={};
+			req.wordNum = CountWordsUtil.count($("#translateContent").val());
+		    req.duadId = $("#selectDuad").find("option:selected").val();
+		    req.purposeId = $("#selectPurpose").find("option:selected").val();
+		    
+		    if($(".none-ml.current").attr('name') == 0) {
+		    	req.translateLevel = "100210";
+			} else if($(".none-ml.current").attr('name') == 1) {
+				req.translateLevel = "100220";
+			} else {
+				req.translateLevel = "100230";
+			}
+	    	if ( $("#urgentOrder").is(':checked') ) 
+	    		req.isUrgent  = "1";
+			else 
+				req.isUrgent  = "0";
+		    
+			ajaxController.ajax({
+				type: "post",
+				url: _base + "/order/queryAutoOffer",
+				data: {
+					reqParams: JSON.stringify(req),
+				},
+				success: function (data) {
+					if ("1" === data.statusCode) {
+						var unit;
+						if (data.data.currencyUnit === "1")
+							unit = "元";
+						else
+							unit = "$";
+						$("#price").html("<span>"+ data.data.price +"</span>"+ unit);
+					}
+				}
+			});
+		},
+		
 		_toCreateOrder:function(){
 			$("#textOrderPage").show();
 			$("#contactPage").hide();
@@ -224,8 +274,17 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			}) 
 		},
 		
+		//初始化页面后做的操作
+		_initPage:function() {
+			//改变上传div高度
+			$("#selectFile").children("div:last").css("height", '70px');
+			$("#fy2").hide();
+			
+		},
+		
 		//语言对改变，价格改变,翻译速度改变
 		_transPrice:function() {
+			
 			var _this = this;
 			var selected = $("#selectDuad").find("option:selected");
 			var currency;
@@ -239,17 +298,17 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			if (currentLan.indexOf("zh") >= 0) {
 				currency = "元";
 			} else {
-				currency = "$";
+				currency = "美元";
 			}
 			
 			if ($("#urgentOrder").is(':checked') ) {
-				$("#stanPrice").html(ordinaryUrgent + currency);
-				$("#proPrice").html(professionalUrgent + currency);
-				$("#pubPrice").html(publishUrgent + currency);
+				$("#stanPrice").html(professionalUrgent).after(currency);
+				$("#proPrice").html(professionalUrgent).after(currency);
+				$("#pubPrice").html(publishUrgent).after(currency);
 			} else {
-				$("#stanPrice").html(ordinary + currency);
-				$("#proPrice").html(professional + currency);
-				$("#pubPrice").html(publish + currency);
+				$("#stanPrice").html(ordinary).after(currency);
+				$("#proPrice").html(professional).after(currency);
+				$("#pubPrice").html(publish).after(currency);
 			}
 			
 			this._getSpeed();
@@ -309,7 +368,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 						text = row["COUNTRY_NAME_EN"];
 					}
 					
-					selObj.append("<option value='"+row["COUNTRY_CODE"]+"'>"+text+"   +"+row["COUNTRY_CODE"]+"</option>");
+					selObj.append("<option value='"+row["COUNTRY_CODE"]+"' exp='" +row["REGULAR_EXPRESSION"]+"'>"+text+"   +"+row["COUNTRY_CODE"]+"</option>");
 				});
 			});
 		},
@@ -326,6 +385,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			$("#selectAddedSer").attr("disabled",false);
 			$("#selectFormatConv").attr("disabled",false);
 			$("#inputFormatConv").show();
+		},
+		
+		//根据国家设置号码匹配规则
+		_setPattern:function() {
+			var pattern = $("#saveContactDiv").find('option:selected').attr('exp');
+			$("#phoneNum").attr('pattern',pattern);
 		}
 		
     });

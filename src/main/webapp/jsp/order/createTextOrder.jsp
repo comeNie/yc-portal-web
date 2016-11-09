@@ -8,6 +8,7 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>翻译下单页</title>
 	<%@ include file="/inc/inc.jsp" %>
+	<link rel="stylesheet" type="text/css" href="${_base}/resources/spm_modules/webuploader/webuploader.css">
 </head>
 <body>	
 	<!--面包屑导航-->
@@ -80,10 +81,11 @@
   				</div>
   				<div class="translate-int radius" id="fy1">
   					<p><textarea id="translateContent" name="translateContent" class="int-text textarea-xlarge-100 radius"></textarea></p>
-  					<p class="right"><input type="button" class="btn border-blue radius20 btn-80" value="上传文档"  id="fy-btn"></p>
+  					<!-- 上传文档btn -->
+  					<p class="right"><input type="button" class="btn border-blue radius20 btn-80" value="<spring:message code="order.uploadDoc"/>"  id="fy-btn"></p>
   					<label></label>		
   				</div>
-  				<div class="translate-int radius bj-ash" id="fy2">
+  				<div class="translate-int radius bj-ash" id="fy2" style="display: block;">
   					<div class="attachment">
   						<ul>
   							<li class="word">我要翻译的文档xxxxx.doc</li>
@@ -104,8 +106,18 @@
   					</div>
   					<div class="attachment-btn">
   						<ul>
-  							<li class="pp"><input type="button" class="btn border-green btn-large radius20" value="文档上传"><input type="file" class="att-file"></p></li>
-  							<li class="word">将文件拖拽至此区域可上传</lil>
+  							<!-- 上传文档 -->
+  							<li class="pp">
+  							<!--
+  							<input id="uploadFile" type="button" class="btn border-green btn-large radius20" value="<spring:message code="order.uploadDoc"/>">
+  							   -->
+  							   <div class="btns"  >
+  							   <div id="selectFile" >选择文件</div>
+           					 </div>
+  							<!--<input id="uploadAll" type="file" class="att-file">  -->
+  							</p></li>
+  							<!-- 将文件拖拽至此区域可上传 -->
+  							<li class="word"><spring:message code="order.dragFileInfo"/></lil>
   						</ul>
   					</div>
   					<div class="shur-btn">
@@ -116,6 +128,7 @@
 			<!--白色背景-->
 			<div class="white-bj">
 				<div class="selection-level mt-20" id="transGrade">
+					<!-- 翻译级别 3种 -->
 					<ul class="none-ml current" name="0">
 						<li class="blue">
 							<p><spring:message code="order.Standard"/></p>
@@ -126,7 +139,7 @@
 						</li>
 						<li>
 							<p><span id="stanPrice"></span><spring:message code="order.thousandWords"/></p>
-							<p class="ml-30"><span>1</span>次免费修改</p>
+							<p class="ml-30"><span>1</span><spring:message code="order.freeChanges"/></p>
 						</li>
 						<li class="green-li">
 							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
@@ -152,7 +165,7 @@
 						</li>
 						<li>
 							<p><span id="proPrice"></span><spring:message code="order.thousandWords"/></p>
-							<p class="ml-30"><span>1</span>次免费修改</p>
+							<p class="ml-30"><span>1</span><spring:message code="order.freeChanges"/></p>
 						</li>
 						<li class="green-li">
 							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
@@ -177,7 +190,7 @@
 						</li>
 						<li>
 							<p><span id="pubPrice"></span><spring:message code="order.thousandWords"/></p>
-							<p class="ml-30"><span>1</span>次免费修改</p>
+							<p class="ml-30"><span>1</span><spring:message code="order.freeChanges"/></p>
 						</li>
 						<li class="green-li">
 							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
@@ -228,7 +241,12 @@
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.addedSer"/></p>
-							<p><select id="selectAddedSer" class="select select-medium radius" disabled><option>无排版</option><option>排版</option></select></p>
+							<p>
+							<!-- 排版 无排版 -->
+							<select id="selectAddedSer" class="select select-medium radius" disabled>
+								<option><spring:message code="order.layout"/></option><option><spring:message code="order.noLayout"/></option>
+							</select>
+							</p>
 						</li>
 						<li class="width-large">
 							<p class="word"><spring:message code="order.formatConv"/></p>
@@ -269,13 +287,22 @@
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript" src="${_base}/resources/template/scripts/modular/drop-down.js"></script>
 <script type="text/javascript" src="${_base}/resources/template/scripts/modular/frame.js"></script>	
+<script type="text/javascript" src="${_base}/resources/spm_modules/webuploader/webuploader.js"></script>
+<script type="text/javascript" src="${_base}/resources/spm_modules/app/jsp/order/upload.js"></script>
 <script type="text/javascript">
 	(function () {
 		var pager;
-		seajs.use('app/jsp/order/createTextOrder', function(createTextOrderPage) {
+		//seajs.use('app/jsp/order/uploadFile');
+		seajs.use(['app/jsp/order/createTextOrder'], function(createTextOrderPage) {
 			pager = new createTextOrderPage({element : document.body});
 			pager.render();
+			
+			//new uploadFile({element : document.body}).render();
 		});
+		
+		
+		//$("#selectFile1").children("div:last").css("height", '58px');
 	})();
+	
 </script>
 </html>
