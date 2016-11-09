@@ -162,7 +162,7 @@ public class RegisterController {
 				msg = resHeader.getResultMessage();
 
 			if (resHeader != null && resHeader.isSuccess()) {
-				sendRegisterEmaial(req);
+				sendRegisterEmaial(req.getEmail());
 				return new ResponseData<Boolean>(
 						ResponseData.AJAX_STATUS_SUCCESS, msg, true);
 			}
@@ -222,7 +222,7 @@ public class RegisterController {
 					"超过20次", false);
 		}
 		String randomStr = RandomUtil.randomNum(6);
-		boolean sendOk = SmsSenderUtil.sendMessage(phone, "随机数为：" + randomStr);
+		boolean sendOk = true;//SmsSenderUtil.sendMessage(phone, "随机数为：" + randomStr);
 		if (sendOk) {
 			// 最多发送次数超时时间
 			int overTimeCount = config
@@ -354,14 +354,17 @@ public class RegisterController {
 		}
 		return false;
 	}
-
+	@RequestMapping("test")
+	public String test(){
+    	return EMAIL;
+    }
 	/**
 	 * 发送验证邮件
 	 */
-	private void sendRegisterEmaial(InsertYCUserRequest req) {
-		if (!StringUtil.isBlank(req.getEmail())) {// 手机为空
+	private boolean sendRegisterEmaial(String email) {
+		if (!StringUtil.isBlank(email)) {
 			SendEmailRequest emailRequest = new SendEmailRequest();
-			emailRequest.setTomails(new String[] { req.getEmail() });
+			emailRequest.setTomails(new String[] {email});
 			emailRequest
 					.setData(new String[] { "zhangsan", "111111", "22222" });
 			Locale locale = rb.getDefaultLocale();
@@ -373,8 +376,9 @@ public class RegisterController {
 			}
 			emailRequest.setTemplateRUL(_template);
 			emailRequest.setSubject("注册成功");
-			VerifyUtil.sendEmail(emailRequest);
+		return VerifyUtil.sendEmail(emailRequest);
 		}
+		return false;
 	}
 
 	/**

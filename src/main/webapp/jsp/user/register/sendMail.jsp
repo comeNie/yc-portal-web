@@ -17,7 +17,7 @@
 			<p>
 				<img src="${uedroot}/images/login-logo.png" />
 			</p>
-			<p class="word">账号注册</p>
+			<p class="word"><spring:message code="ycregister.register" /></p>
 		</div>
 		<div class="login-wrapper">
 			<div class="login-left">
@@ -28,9 +28,8 @@
 				<div class="verification">
 					<ul>
 						<li><img src="${uedroot}/images/rech-win.png" /></li>
-						<li class="word">注册成功，已成功发送邮件至${email}</li>
-						<li>验证邮件24小时内有效，请尽快登录您的邮箱<a id="goEmail"
-							href="javascript:void(0);">点击验证链接</a>完成验证
+						<li class="word"><spring:message code="ycregister.registerMailSuccessMsg1" />${email}</li>
+						<li><spring:message code="ycregister.registerMailSuccessMsg2" />
 						</li>
 					</ul>
 				</div>
