@@ -9,11 +9,17 @@ import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ai.opt.base.vo.ResponseHeader;
+import com.ai.opt.sdk.components.ccs.CCSClientFactory;
 import com.ai.opt.sdk.components.mail.EmailFactory;
 import com.ai.opt.sdk.components.mail.EmailTemplateUtil;
 import com.ai.opt.sdk.components.mcs.MCSClientFactory;
 import com.ai.opt.sdk.util.RandomUtil;
+import com.ai.opt.sdk.util.StringUtil;
+import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.paas.ipaas.ccs.IConfigClient;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
+import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
 import com.alibaba.fastjson.JSONObject;
@@ -92,7 +98,7 @@ public class VerifyUtil {
 	public static boolean sendEmail(SendEmailRequest emailRequest) {
 		boolean success = true;
 		String htmlcontext = EmailTemplateUtil.buildHtmlTextFromTemplate(
-				emailRequest.getTemplateRUL(), emailRequest.getData());
+				emailRequest.getTemplateURL(), emailRequest.getData());
 		try {
 			EmailFactory.SendEmail(emailRequest.getTomails(),
 					emailRequest.getCcmails(), emailRequest.getSubject(),
@@ -103,5 +109,49 @@ public class VerifyUtil {
 		}
 		return success;
 	}
+
+	/**
+     * 检查ip发送邮箱验证码次数是否超限
+     * 
+     * @param namespace
+     * @param key
+     * @return
+     */
+    public static ResponseData<String> checkIPSendEmailCount(String namespace, String key) {
+        ResponseData<String> responseData = null;
+        ResponseHeader header = null;
+        ICacheClient cacheClient = MCSClientFactory.getCacheClient(namespace);
+        String countStr = cacheClient.get(key);
+        //IConfigCenterClient configCenterClient = ConfigCenterFactory.getConfigCenterClient();
+        IConfigClient configCenterClient = CCSClientFactory.getDefaultConfigClient();
+        //限制时间
+        try{
+            String overTime = configCenterClient.get(Constants.IP_SEND_OVERTIME_KEY);
+            if (!StringUtil.isBlank(countStr)) {
+                String maxNoStr = configCenterClient.get(Constants.SEND_VERIFY_IP_MAX_NO_KEY);
+                int maxNo = Integer.valueOf(maxNoStr);
+                int count = Integer.valueOf(countStr);
+                count++;
+                if (count > maxNo) {
+                    String message = "频繁发送邮箱，已被禁止" + Integer.valueOf(overTime) / 60 + "分钟";
+                    responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, message);
+                    header = new ResponseHeader(false, Constants.ERROR_CODE, message);
+                    responseData.setResponseHeader(header);
+                    return responseData;
+                }else{
+                    cacheClient.setex(key, Integer.valueOf(overTime), Integer.toString(count));
+                }
+            }else{
+                cacheClient.setex(key, Integer.valueOf(overTime), "1");
+            }
+            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, null);
+            header = new ResponseHeader(true, Constants.ERROR_CODE, null);
+            responseData.setResponseHeader(header);
+            return responseData;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+         return responseData;
+    }
 
 }
