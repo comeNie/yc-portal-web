@@ -264,7 +264,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				
 					$(this).children('label').remove();
 					$(this).addClass("current");
-					$(this).append('<label><i class="icon iconfont">&#xe617;</i></label>');
+					$(this).append('<label></label>');
 					
 					$($(this).siblings()).removeClass("current");
 					$($(this).siblings()).children('label').remove();
@@ -296,19 +296,19 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			var publishUrgent = selected.attr("publishUrgent");
 			
 			if (currentLan.indexOf("zh") >= 0) {
-				currency = "元/千字";
+				currency = "元";
 			} else {
-				currency = "$ per thousand words";
+				currency = "美元";
 			}
 			
 			if ($("#urgentOrder").is(':checked') ) {
-				$("#stanPrice").html('<span id="stanPrice">'+professionalUrgent+'</span>'+currency);
-				$("#proPrice").html('<span id="stanPrice">'+professionalUrgent+'</span>' + currency);
-				$("#pubPrice").html('<span id="stanPrice">'+publishUrgent+'</span>'+ currency);
+				$("#stanPrice").html(professionalUrgent).after(currency);
+				$("#proPrice").html(professionalUrgent).after(currency);
+				$("#pubPrice").html(publishUrgent).after(currency);
 			} else {
-				$("#stanPrice").html('<span id="stanPrice">'+ordinary+'</span>'+currency);
-				$("#proPrice").html('<span id="stanPrice">'+professional+'</span>' + currency);
-				$("#pubPrice").html('<span id="stanPrice">'+publish+'</span>'+ currency);
+				$("#stanPrice").html(ordinary).after(currency);
+				$("#proPrice").html(professional).after(currency);
+				$("#pubPrice").html(publish).after(currency);
 			}
 			
 			this._getSpeed();

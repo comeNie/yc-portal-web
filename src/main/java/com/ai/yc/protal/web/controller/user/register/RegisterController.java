@@ -2,7 +2,6 @@ package com.ai.yc.protal.web.controller.user.register;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,27 +22,33 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.components.mcs.MCSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.RandomUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.paas.ipaas.util.StringUtil;
+import com.ai.yc.common.api.country.interfaces.IGnCountrySV;
+import com.ai.yc.common.api.country.param.CountryRequest;
 import com.ai.yc.common.api.country.param.CountryResponse;
 import com.ai.yc.common.api.country.param.CountryVo;
 import com.ai.yc.protal.web.constants.Constants;
-import com.ai.yc.protal.web.constants.Constants.PhoneVerify;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
+import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.ai.yc.protal.web.utils.MD5Util;
+import com.ai.yc.protal.web.utils.SmsSenderUtil;
 import com.ai.yc.protal.web.utils.VerifyUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
 import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckEmailRequest;
+import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckeMobileRequest;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.InsertYCUserRequest;
 import com.ai.yc.user.api.userservice.param.YCInsertUserResponse;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 译云注册Controller <br>
@@ -72,15 +77,27 @@ public class RegisterController {
 		return modelView;
 	}
 
+	/**
+	 * 加载国家
+	 */
 	@RequestMapping("/loadCountry")
 	@ResponseBody
 	public ResponseData<List<CountryVo>> loadCountry() {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("-------加载国家-------");
 		}
-		CountryResponse res = null;
 		String msg = "ok";
-		/*try {
+		List<CountryVo> result = null;
+		ICacheClient iCacheClient = AiPassUitl.getCacheClient();
+		String countryList = iCacheClient
+				.get(Register.REGISTER_COUNTRY_LIST_KEY);
+		if (!StringUtil.isBlank(countryList)) {
+			result = JSON.parseArray(countryList, CountryVo.class);
+			return new ResponseData<List<CountryVo>>(
+					ResponseData.AJAX_STATUS_SUCCESS, msg, result);
+		}
+		CountryResponse res = null;
+		try {
 			res = DubboConsumerFactory.getService(IGnCountrySV.class)
 					.queryCountry(new CountryRequest());
 		} catch (Exception e) {
@@ -88,24 +105,23 @@ public class RegisterController {
 			LOG.error(e.getMessage(), e);
 			return new ResponseData<List<CountryVo>>(
 					ResponseData.AJAX_STATUS_FAILURE, msg);
-		}*/
-		List<CountryVo> result = new ArrayList<>();
-		for(int i=0;i<3;i++){
-			CountryVo vo = new CountryVo();
-			vo.setCountryNameCn("中国大陆");
-			vo.setCountryNameEn("China");
-			vo.setCountryCode("86");
-			vo.setRegularExpression("^(86){0,1}1\\d{10}$");
-			result.add(vo);
 		}
 		if (res != null && res.getResponseHeader() != null
 				&& res.getResponseHeader().isSuccess()) {
 			result = res.getResult();
 		}
+		if (!CollectionUtil.isEmpty(result)) {
+			iCacheClient.setex(Register.REGISTER_COUNTRY_LIST_KEY,
+					Register.REGISTER_COUNTRY_LIST_KEY_OVERTIME,
+					JSON.toJSONString(result));
+		}
 		return new ResponseData<List<CountryVo>>(
 				ResponseData.AJAX_STATUS_SUCCESS, msg, result);
 	}
 
+	/**
+	 * 提交注册
+	 */
 	@RequestMapping(value = "/submitRegister", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseData<Boolean> submitRegister(HttpServletRequest request) {
@@ -123,6 +139,17 @@ public class RegisterController {
 		if (StringUtil.isBlank(req.getPassword())) {// 密码为空
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 					rb.getMessage("ycregisterMsg.passwordEmpty"), false);
+		}
+		if (!StringUtil.isBlank(req.getMobilePhone())
+				&& !checkPhoneOrEmail(Register.CHECK_TYPE_PHONE,
+						req.getMobilePhone())) {
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
+					"帐号已存在", false);
+		}
+		if (!StringUtil.isBlank(req.getEmail())
+				&& !checkPhoneOrEmail(Register.CHECK_TYPE_EMAIL, req.getEmail())) {
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
+					"帐号已存在", false);
 		}
 		try {
 			// 用户名 手机 邮箱校验 昵称 校验
@@ -165,6 +192,7 @@ public class RegisterController {
 			LOG.error("生成图片验证码错误：" + e);
 		}
 	}
+
 	/**
 	 * 获取注册验证码
 	 */
@@ -173,9 +201,49 @@ public class RegisterController {
 	public ResponseData<Boolean> smsCode(HttpServletRequest request,
 			HttpServletResponse response) {
 		String phone = request.getParameter("phone");
-		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,"ok", true);
-		
+		ICacheClient iCacheClient = AiPassUitl.getCacheClient();
+		// 发送次数count key
+		String sendCountKey = Register.REGISTER_SEND_PHONE_CODE_COUNT_KEY
+				+ phone;
+
+		JSONObject config = AiPassUitl.getVerificationCodeConfig();
+		// 最多发送次数 key
+		int maxCount = config
+				.getIntValue(Register.REGISTER_SEND_PHONE_CODE_MAX_COUNT_KEY);
+		// 当前发送次数
+		Integer nowCount = 0;
+		String sendCount = iCacheClient.get(sendCountKey);
+		if (!StringUtil.isBlank(sendCount)) {
+			nowCount = Integer.parseInt(sendCount);
+		}
+
+		if (nowCount > maxCount) {
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
+					"超过20次", false);
+		}
+		String randomStr = RandomUtil.randomNum(6);
+		boolean sendOk = SmsSenderUtil.sendMessage(phone, "随机数为：" + randomStr);
+		if (sendOk) {
+			// 最多发送次数超时时间
+			int overTimeCount = config
+					.getIntValue(Register.REGISTER_SEND_PHONE_CODE_MAX_COUNT_OVERTIME_KEY);
+			nowCount = nowCount + 1;
+			iCacheClient.setex(sendCountKey, overTimeCount,
+					String.valueOf(nowCount));
+			// 手机验证码超时时间
+			int overTime = config
+					.getIntValue(Register.REGISTER_PHONE_CODE_OVERTIME_KEY);
+			// 手机验证码 key
+			String phoneCodeKey = Register.REGISTER_SEND_PHONE_CODE_KEY + phone;
+			iCacheClient.setex(phoneCodeKey, overTime, randomStr);
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
+					"发送成功", true);
+		}
+		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
+				"发送失败", false);
+
 	}
+
 	/**
 	 * 校验注册验证码
 	 */
@@ -215,7 +283,7 @@ public class RegisterController {
 		try {
 			String checkType = request.getParameter("checkType");
 			String checkVal = request.getParameter("checkVal");
-			String msg = "此邮箱已注册";
+			String msg = "帐号已存在";
 			Boolean canUse = checkPhoneOrEmail(checkType, checkVal);
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 					msg, canUse);
@@ -226,6 +294,9 @@ public class RegisterController {
 		}
 	}
 
+	/**
+	 * 进入邮箱
+	 */
 	@RequestMapping("/toEmail")
 	public ModelAndView toEmail(@RequestParam("email") String email) {
 		if (LOG.isDebugEnabled()) {
@@ -236,6 +307,9 @@ public class RegisterController {
 		return modelView;
 	}
 
+	/**
+	 * 注册成功
+	 */
 	@RequestMapping("/toSuccess")
 	public ModelAndView toSuccess(HttpServletRequest request) {
 		if (LOG.isDebugEnabled()) {
@@ -250,25 +324,40 @@ public class RegisterController {
 	 * 校验手机或邮箱可用
 	 */
 	private Boolean checkPhoneOrEmail(String checkType, String checkVal) {
-		Boolean canUse = false;
-		if ("email".equals(checkType)) {// 邮箱校验
-			UcMembersCheckEmailRequest emailReq = new UcMembersCheckEmailRequest();
-			emailReq.setEmail(checkVal);
-			emailReq.setTenantId(Constants.DEFAULT_TENANT_ID);
-			UcMembersResponse res = DubboConsumerFactory.getService(
-					IUcMembersSV.class).ucCheckeEmail(emailReq);
-			LOG.info("校验邮箱返回：" + JSON.toJSONString(res));
-			if (res != null && res.getMessage() != null
-					&&  res.getMessage().isSuccess()) {
-				res.getCode().getCode();
+		UcMembersResponse res = null;
+		try {
+			IUcMembersSV sv = DubboConsumerFactory
+					.getService(IUcMembersSV.class);
+			if (Register.CHECK_TYPE_EMAIL.equals(checkType)) {// 邮箱校验
+				UcMembersCheckEmailRequest emailReq = new UcMembersCheckEmailRequest();
+				emailReq.setEmail(checkVal);
+				emailReq.setTenantId(Constants.DEFAULT_TENANT_ID);
+				res = sv.ucCheckeEmail(emailReq);
+				LOG.info("校验邮箱返回：" + JSON.toJSONString(res));
+			}
+			if (Register.CHECK_TYPE_PHONE.equals(checkType)) {// 手机校验
+				UcMembersCheckeMobileRequest phoneReq = new UcMembersCheckeMobileRequest();
+				phoneReq.setTenantId(Constants.DEFAULT_TENANT_ID);
+				phoneReq.setMobilephone(checkVal);
+				res = sv.ucCheckeMobilephone(phoneReq);
+				LOG.info("校验手机返回：" + JSON.toJSONString(res));
+			}
+		} catch (Exception e) {
+			LOG.info(e.getMessage(), e);
+		}
+		if (res != null && res.getMessage() != null
+				&& res.getMessage().isSuccess() && res.getCode() != null
+				&& res.getCode().getCode() != null) {
+			if (Register.CHECK_TYPE_SUCCESS.equals(res.getCode().getCode())) {
+				return true;
 			}
 		}
-		if ("phone".equals(checkType)) {// 手机校验
-			canUse = false;
-		}
-		return canUse;
+		return false;
 	}
 
+	/**
+	 * 发送验证邮件
+	 */
 	private void sendRegisterEmaial(InsertYCUserRequest req) {
 		if (!StringUtil.isBlank(req.getEmail())) {// 手机为空
 			SendEmailRequest emailRequest = new SendEmailRequest();
@@ -288,6 +377,9 @@ public class RegisterController {
 		}
 	}
 
+	/**
+	 * 构造注册参数
+	 */
 	private InsertYCUserRequest bulidRegisterParam(HttpServletRequest request) {
 		InsertYCUserRequest req = new InsertYCUserRequest();
 		String phone = request.getParameter("phone");
@@ -302,7 +394,7 @@ public class RegisterController {
 			req.setUserName(email);
 			req.setLoginway("1");
 		}
-		req.setNickname("译粉");
+		req.setNickname("译粉" + RandomUtil.randomNum(8));
 		String password = request.getParameter("password");
 		if (!StringUtil.isBlank(password)) {
 			req.setPassword(MD5Util.MD5(password));
