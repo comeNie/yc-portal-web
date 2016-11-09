@@ -43,24 +43,29 @@
         <div class="translate-title">
             <ul>
                 <li>
-                    <select tabindex="5" class="dropdown" id="showa" data-settings='{"cutOff": 12}'>
+                    <select tabindex="5" class="dropdown" id="showa" data-settings='{"cutOff": 100}'>
                         <option value="auto">自动检测</option>
                         <option value="zh">中文简体</option>
-                        <option value="pt">葡萄牙语</option>
                         <option value="en">英语</option>
-                        <option value="ru">俄语</option>
                         <option value="fr">法语</option>
+                        <option value="de">德语</option>
+                        <option value="pt">葡萄牙语</option>
+                        <option value="pl">波兰语</option>
+                        <option value="fi">芬兰语</option>
+                        <option value="es">西班牙语</option>
                     </select>
                 </li>
                 <li class="change"><a href="#"><i class="icon-exchange"></i></a></li>
                 <li>
                     <select tabindex="5" class="dropdown" id="showb" data-settings='{"cutOff": 12}'>
-                        <option value="auto">自动检测</option>
                         <option value="zh">中文简体</option>
-                        <option value="pt">葡萄牙语</option>
                         <option value="en">英语</option>
-                        <option value="ru">俄语</option>
                         <option value="fr">法语</option>
+                        <option value="de">德语</option>
+                        <option value="pt">葡萄牙语</option>
+                        <option value="pl">波兰语</option>
+                        <option value="fi">芬兰语</option>
+                        <option value="es">西班牙语</option>
                     </select>
                 </li>
                 <%--翻译--%>

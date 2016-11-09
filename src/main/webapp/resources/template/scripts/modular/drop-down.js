@@ -92,6 +92,8 @@
 					break;
 				};
 			};
+			if (window.console)
+				console.log("the max height:"+self.maxHeight);
 
 			if(self.isTouch && self.nativeTouch){
 				self.bindTouchHandlers();
