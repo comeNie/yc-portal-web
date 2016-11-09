@@ -389,16 +389,16 @@ public class RegisterController {
 		String phone = request.getParameter("phone");
 		if (!StringUtil.isBlank(phone)) {
 			req.setMobilePhone(phone);
-			req.setUserName(phone);
 			req.setLoginway("2");
+			req.setOperationcode(request.getParameter("smsCode"));
 		}
 		String email = request.getParameter("email");
 		if (!StringUtil.isBlank(email)) {
 			req.setEmail(email);
-			req.setUserName(email);
 			req.setLoginway("1");
 		}
-		req.setNickname("译粉" + RandomUtil.randomNum(8));
+		req.setUserName("yiyun"+RandomUtil.randomNum(10));
+		req.setNickname("译粉_" + RandomUtil.randomNum(8));
 		String password = request.getParameter("password");
 		if (!StringUtil.isBlank(password)) {
 			req.setPassword(MD5Util.MD5(password));
