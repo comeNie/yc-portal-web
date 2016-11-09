@@ -42,7 +42,7 @@
 						<li>
 							<p><input id="contactName" name="contactName" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterName"/>"></p>
 							<p><select id="globalRome" name="globalRome" class="select int-in radius"></select></p>
-							<p><input id="phoneNum" name="phoneNum" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterPhone"/>"></p>
+							<p><input id="phoneNum" name="phoneNum" pattern="^(86){0,1}1\\d{10}$" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterPhone"/>"></p>
 							<p class="mr-0"><input id="email" name="email" type="text" class="int-text int-large-mail radius" placeholder="<spring:message code="order.EnterEmail"/>"></p>
 						</li>
 						<li class="right-btn"><input id="saveContact" type="button" class="btn radius20 border-blue btn-80" value="<spring:message code="order.Save"/>"></li>
@@ -96,12 +96,13 @@
 				<!--白色背景-->
 	<div class="white-bj">
 	<div class="right-list-title pb-10 none-border">
-				<p>总价</p>
+				<!-- 总价 -->
+				<p><spring:message code="order.TotalPirce"/></p>
 			</div>
 			<div class="oral-form">
 					<ul>
 						<li>
-							<p>请耐心等待报价</p>
+							<p><spring:message code="order.waitPrice"/></p>
 						</li>	
 					</ul>
 				</div>

@@ -4,6 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+     <METAHTTP-EQUIV="Pragma"CONTENT="no-cache">
+	<METAHTTP-EQUIV="Cache-Control"CONTENT="no-cache">
+	<METAHTTP-EQUIV="Expires"CONTENT="0">
     <title>首页</title>
     <%@ include file="/inc/inc.jsp" %>
     <link href="${uedroot}/css/modular/index.css" rel="stylesheet" type="text/css"/>
@@ -41,43 +44,45 @@
             <ul>
                 <li>
                     <select tabindex="5" class="dropdown" id="showa" data-settings='{"cutOff": 12}'>
-                        <option value="" class="label">自动检测</option>
-                        <option value="自动检测">自动检测</option>
-                        <option value="中文简体">中文简体</option>
-                        <option value="葡萄牙语">葡萄牙语</option>
-                        <option value="英语">英语</option>
-                        <option value="俄语">俄语</option>
-                        <option value="法语">法语</option>
+                        <option value="auto">自动检测</option>
+                        <option value="zh">中文简体</option>
+                        <option value="pt">葡萄牙语</option>
+                        <option value="en">英语</option>
+                        <option value="ru">俄语</option>
+                        <option value="fr">法语</option>
                     </select>
                 </li>
                 <li class="change"><a href="#"><i class="icon-exchange"></i></a></li>
                 <li>
                     <select tabindex="5" class="dropdown" id="showb" data-settings='{"cutOff": 12}'>
-                        <option value="" class="label">自动检测</option>
-                        <option value="自动检测">自动检测</option>
-                        <option value="中文简体">中文简体</option>
-                        <option value="葡萄牙语">葡萄牙语</option>
-                        <option value="英语">英语</option>
-                        <option value="俄语">俄语</option>
-                        <option value="法语">法语</option>
+                        <option value="auto">自动检测</option>
+                        <option value="zh">中文简体</option>
+                        <option value="pt">葡萄牙语</option>
+                        <option value="en">英语</option>
+                        <option value="ru">俄语</option>
+                        <option value="fr">法语</option>
                     </select>
                 </li>
                 <%--翻译--%>
-                <li><input type="button"  class="btn btn-blue trans-btn-zh radius2"
+                <li><input id="trante" type="button"  class="btn btn-blue trans-btn-zh radius2"
                            value="<spring:message code="home.interpret_btn"/>"></li>
             </ul>
         </div>
         <!--翻译主体-->
         <div class="translate-wapper">
             <div class="before-translation">
-                <textarea  class="int-before" id="int-before"></textarea>
+                <textarea class="int-before" id="int-before"></textarea>
             </div>
             <div class="before-translation ml-20">
-                <textarea  class="int-post"></textarea>
+                <textarea  class="int-post"  id="transRes" readonly="readonly"></textarea>
                 <div class="post-cion">
+               		<!-- 播放器 -->
+                	<audio src="" controls="controls" id="audioPlay" hidden>
+						Your browser does not support the audio tag.
+					</audio>
                     <p>
-                        <a href="#" class="ord-icon"><i class="icon iconfont">&#xe62e;</i></a>
-                        <a href="#" class="radio-icon"><i class="icon iconfont">&#xe61b;</i></a>
+                        <a id="copyText" href="#" class="ord-icon" data-clipboard-target="transRes"><i class="icon iconfont">&#xe62e;</i></a>
+                        <a id="playControl" href="#" class="radio-icon"><i class="icon iconfont">&#xe61b;</i></a>
                         <a href="#" class="stars-icon"><i class="icon iconfont">&#xe754;</i></a>
                     </p>
                     <p class="right">
@@ -284,6 +289,7 @@
 <script type="text/javascript" src="${uedroot}/scripts/modular/drop-down.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/index.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/digital-scroll.js"></script>
+<script type="text/javascript" src="${_base}/resources/spm_modules/zeroclipboard/ZeroClipboard.min.js"></script>  
 <script type="text/javascript">
     (function () {
         <%-- 笔译下单 --%>
@@ -298,5 +304,15 @@
             pager.render();
         });
     })();
+    
+	// 定义一个新的复制对象  
+    var clip = new ZeroClipboard( document.getElementById("copyText"), {  
+      moviePath: "ZeroClipboard.swf"  
+    });  
+      
+    // 复制内容到剪贴板成功后的操作  
+    clip.on( 'complete', function(client, args) {  
+      // alert("复制成功，复制内容为："+ args.text);  
+    } );  
 </script>
 </html>
