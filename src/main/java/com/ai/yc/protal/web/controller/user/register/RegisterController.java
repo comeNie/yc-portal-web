@@ -374,7 +374,7 @@ public class RegisterController {
 			} else if (Locale.US.toString().equals(locale.toString())) {
 				_template = Register.REGISTER_EMAIL_EN_US_TEMPLATE;
 			}
-			emailRequest.setTemplateRUL(_template);
+			emailRequest.setTemplateURL(_template);
 			emailRequest.setSubject("注册成功");
 		return VerifyUtil.sendEmail(emailRequest);
 		}
