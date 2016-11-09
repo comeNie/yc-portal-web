@@ -9,6 +9,8 @@ public final class Constants {
 
 	public static final String ERROR_CODE = "111111";
 	public static final String DEFAULT_TENANT_ID = "yeecloud";
+	//订单文档存储
+	public static final String IPAAS_ORDER_FILE_DSS = "order-file-dss";
 
 	public static final class Register {
 		private Register() {
