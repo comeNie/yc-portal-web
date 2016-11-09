@@ -38,7 +38,6 @@ import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
 import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.ai.yc.protal.web.utils.MD5Util;
-import com.ai.yc.protal.web.utils.SmsSenderUtil;
 import com.ai.yc.protal.web.utils.VerifyUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
@@ -48,7 +47,6 @@ import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.InsertYCUserRequest;
 import com.ai.yc.user.api.userservice.param.YCInsertUserResponse;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 
 /**
  * 译云注册Controller <br>
@@ -193,56 +191,7 @@ public class RegisterController {
 		}
 	}
 
-	/**
-	 * 获取注册验证码
-	 */
-	@RequestMapping("/smsCode")
-	@ResponseBody
-	public ResponseData<Boolean> smsCode(HttpServletRequest request,
-			HttpServletResponse response) {
-		String phone = request.getParameter("phone");
-		ICacheClient iCacheClient = AiPassUitl.getCacheClient();
-		// 发送次数count key
-		String sendCountKey = Register.REGISTER_SEND_PHONE_CODE_COUNT_KEY
-				+ phone;
-
-		JSONObject config = AiPassUitl.getVerificationCodeConfig();
-		// 最多发送次数 key
-		int maxCount = config
-				.getIntValue(Register.REGISTER_SEND_PHONE_CODE_MAX_COUNT_KEY);
-		// 当前发送次数
-		Integer nowCount = 0;
-		String sendCount = iCacheClient.get(sendCountKey);
-		if (!StringUtil.isBlank(sendCount)) {
-			nowCount = Integer.parseInt(sendCount);
-		}
-
-		if (nowCount > maxCount) {
-			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
-					"超过20次", false);
-		}
-		String randomStr = RandomUtil.randomNum(6);
-		boolean sendOk = true;//SmsSenderUtil.sendMessage(phone, "随机数为：" + randomStr);
-		if (sendOk) {
-			// 最多发送次数超时时间
-			int overTimeCount = config
-					.getIntValue(Register.REGISTER_SEND_PHONE_CODE_MAX_COUNT_OVERTIME_KEY);
-			nowCount = nowCount + 1;
-			iCacheClient.setex(sendCountKey, overTimeCount,
-					String.valueOf(nowCount));
-			// 手机验证码超时时间
-			int overTime = config
-					.getIntValue(Register.REGISTER_PHONE_CODE_OVERTIME_KEY);
-			// 手机验证码 key
-			String phoneCodeKey = Register.REGISTER_SEND_PHONE_CODE_KEY + phone;
-			iCacheClient.setex(phoneCodeKey, overTime, randomStr);
-			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
-					"发送成功", true);
-		}
-		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
-				"发送失败", false);
-
-	}
+	
 
 	/**
 	 * 校验注册验证码

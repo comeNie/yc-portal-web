@@ -49,19 +49,7 @@ public final class Constants {
 		public static final String REGISTER_COUNTRY_LIST_KEY = "register_country_list_key";
 		/** 注册国家缓存超时时间 */
 		public static final int REGISTER_COUNTRY_LIST_KEY_OVERTIME = 5 * 60;
-		/** 注册手机验证码key */
-		public static final String REGISTER_SEND_PHONE_CODE_KEY = "register_send_phone_code_";
-		/** 注册手机验证码次数key */
-		public static final String REGISTER_SEND_PHONE_CODE_COUNT_KEY = "register_send_phone_code_count_";
 		
-		/** 注册手机验证码最大次数超时时间key */
-		public static final String REGISTER_SEND_PHONE_CODE_MAX_COUNT_OVERTIME_KEY = "register_phone_code_count_overtime";
-	
-		/** 注册手机验证码最多次数key */
-		public static final String REGISTER_SEND_PHONE_CODE_MAX_COUNT_KEY = "register_phone_code_max_count";
-		
-		/** 注册手机验证码key */
-		public static final String REGISTER_PHONE_CODE_OVERTIME_KEY = "register_phone_code_overtime";
 	}
 
 	public static final class PictureVerify {
@@ -79,14 +67,28 @@ public final class Constants {
 	public final class PhoneVerify {
 		private PhoneVerify() {
 		}
-
 		/** 手机验证码长度 */
 		public static final int VERIFY_SIZE = 6;
-		/** 手机验证码长度 */
-		public static final String REGISTER_VERIFY_PHONE_KEY = "register_verify_phone_key";
-		/** 短信验证码超时时间key */
-		public static final String VERIFY_OVERTIME_KEY = "picture_verifycode_overtime";
-		/** 短信验证码默认超时时候 */
-		public static final String DEFAULT_VERIFY_OVERTIME = "1800";
+		/** 注册手机验证码key */
+		public static final String REGISTER_PHONE_CODE = "register_phone_code";
+		/** 注册手机验证码超时时间 */
+		public static final String REGISTER_PHONE_CODE_OVERTIME = "register_phone_code_overtime";
+		/** 注册手机验证码当前发送次数key */
+		public static final String REGISTER_PHONE_CODE_COUNT = "register_phone_code_count";
+		/** 注册手机验证码最多次数key */
+		public static final String REGISTER_PHONE_CODE_MAX_COUNT = "register_phone_code_max_count";
+		/** 注册手机验证码最大次数超时时间key */
+		public static final String REGISTER_PHONE_CODE_MAX_COUNT_OVERTIME = "register_phone_code_max_count_overtime";
+		
+		/** 资料修改手机验证码key */
+		public static final String UPDATE_DATA_PHONE_CODE = "update_data_phone_code";
+		/** 资料修改手机验证码超时时间 */
+		public static final String UPDATE_DATA_PHONE_CODE_OVERTIME = "update_data_phone_code_overtime";
+		/** 资料修改手机验证码当前发送次数key */
+		public static final String UPDATE_DATA_PHONE_CODE_COUNT = "update_data_phone_code_count";
+		/** 资料修改手机验证码最多次数key */
+		public static final String UPDATE_DATA_PHONE_CODE_MAX_COUNT = "update_data_phone_code_max_count";
+		/** 资料修改手机验证码最大次数超时时间key */
+		public static final String UPDATE_DATA_PHONE_CODE_MAX_COUNT_OVERTIME = "update_data_phone_code_max_count_overtime";
 	}
 }
