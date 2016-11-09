@@ -33,4 +33,6 @@
 		interface="com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV" />
 	<dubbo:reference id="iGnCountrySV" registry="ycRegistry"
 		interface="com.ai.yc.common.api.country.interfaces.IGnCountrySV" />
+	<dubbo:reference id="iOrderQuerySV" registry="ycRegistry"
+		interface="com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV" />
 </beans>
