@@ -1,10 +1,12 @@
 package com.ai.yc.protal.web.controller;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,16 +29,16 @@ import com.alibaba.fastjson.JSONObject;
 public class YeekitController {
     private static final Logger LOGGER = LoggerFactory.getLogger(YeekitController.class);
 
-    @Value("${yeekit.translate.url}")
-    private String SERVER_URL;
+//    @Value("${yeekit.translate.url}")
+    private String SERVER_URL="http://api.yeekit.com/dotranslate.php";
 
     //语言检测
-    @Value("${yee.detection.url}")
-    private String TRANSLAN_URL;
-    @Value("${yeekit.translate.appkid}")
-    private String APP_KID;
-    @Value("${yeekit.translate.appkey}")
-    private String APP_KEY;
+//    @Value("${yee.detection.url}")
+    private String TRANSLAN_URL="http://translateport.yeekit.com:9006/detection";
+//    @Value("${yeekit.translate.appkid}")
+    private String APP_KID = "58105e00cabc3";
+//    @Value("${yeekit.translate.appkey}")
+    private String APP_KEY = "53eeb0bb6c1b613ab361a4f8057b2bd9";
     
    
 
@@ -45,6 +47,7 @@ public class YeekitController {
     public InvokeResult mt(String from, String to, String text) {  
         Map<String,String> result = new HashMap<>();
         try {
+            verifyTranslateLan(from,text);
             Map<String,Object> postParams = new HashMap<>();
             postParams.put("from",from);//源语言
             postParams.put("to",to);//目标语言
@@ -52,11 +55,16 @@ public class YeekitController {
             postParams.put("app_key",APP_KEY);//授权APP KEY
             postParams.put("text", URLEncoder.encode(text,"UTF-8"));//待翻译文本,UTF-8编码
             String resultStr = HttpUtil.doPost(SERVER_URL,postParams);
-            JSONObject translated0 = JSON.parseObject(resultStr)
-                    .getJSONArray("translation").getJSONObject(0).getJSONArray("translated").getJSONObject(0);
-
-            result.put("srcTokenized",translated0.getString("src-tokenized").replaceAll("\\s*", ""));
-            result.put("text",translated0.getString("text").replaceAll("\\s*", ""));
+            JSONArray translateds = JSON.parseObject(resultStr)
+                    .getJSONArray("translation")
+                    .getJSONObject(0).getJSONArray("translated");
+            StringBuffer sb = new StringBuffer();
+            for (int i=0;i<translateds.size();i++) {
+                JSONObject jsonObject = translateds.getJSONObject(i);
+                sb.append(jsonObject.getString("text").replaceAll("\\s*", ""));
+            }
+            LOGGER.info("response:\r\n"+sb.toString());
+            result.put("text",URLDecoder.decode(sb.toString(),"UTF-8"));
         } catch (IOException e) {
             e.printStackTrace();
             return InvokeResult.failure("失败");
@@ -82,7 +90,7 @@ public class YeekitController {
             String resultStr = HttpUtil.doPost(TRANSLAN_URL, text);
             
             JSONObject translated = JSON.parseObject(resultStr);
-           
+            LOGGER.info(translated.toJSONString());
             if (translated.getString("result").equalsIgnoreCase(lan)) {
                 return false;
             }

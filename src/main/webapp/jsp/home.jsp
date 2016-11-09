@@ -44,28 +44,45 @@
             <ul>
                 <li>
                     <select tabindex="5" class="dropdown" id="showa" data-settings='{"cutOff": 100}'>
-                        <option value="auto">自动检测</option>
-                        <option value="zh">中文简体</option>
-                        <option value="en">英语</option>
-                        <option value="fr">法语</option>
-                        <option value="de">德语</option>
-                        <option value="pt">葡萄牙语</option>
-                        <option value="pl">波兰语</option>
-                        <option value="fi">芬兰语</option>
-                        <option value="es">西班牙语</option>
+                        <%--自动检测--%>
+                        <option value="auto"><spring:message code="home.trans_language_auto"/></option>
+                            <%--中文简体--%>
+                            <option value="zh"><spring:message code="home.trans_language_zh"/></option>
+                            <%--英语--%>
+                            <option value="en"><spring:message code="home.trans_language_en"/></option>
+                            <%--法语--%>
+                            <option value="fr"><spring:message code="home.trans_language_fr"/></option>
+                            <%--德语--%>
+                            <option value="de"><spring:message code="home.trans_language_de"/></option>
+                            <%--葡萄牙语--%>
+                            <option value="pt"><spring:message code="home.trans_language_pt"/></option>
+                            <%--波兰语--%>
+                            <option value="pl"><spring:message code="home.trans_language_pl"/></option>
+                            <%--芬兰语--%>
+                            <option value="fi"><spring:message code="home.trans_language_fi"/></option>
+                            <%--西班牙语--%>
+                            <option value="es"><spring:message code="home.trans_language_es"/></option>
                     </select>
                 </li>
                 <li class="change"><a href="#"><i class="icon-exchange"></i></a></li>
                 <li>
                     <select tabindex="5" class="dropdown" id="showb" data-settings='{"cutOff": 12}'>
-                        <option value="zh">中文简体</option>
-                        <option value="en">英语</option>
-                        <option value="fr">法语</option>
-                        <option value="de">德语</option>
-                        <option value="pt">葡萄牙语</option>
-                        <option value="pl">波兰语</option>
-                        <option value="fi">芬兰语</option>
-                        <option value="es">西班牙语</option>
+                        <%--中文简体--%>
+                        <option value="zh"><spring:message code="home.trans_language_zh"/></option>
+                        <%--英语--%>
+                        <option value="en"><spring:message code="home.trans_language_en"/></option>
+                        <%--法语--%>
+                        <option value="fr"><spring:message code="home.trans_language_fr"/></option>
+                        <%--德语--%>
+                        <option value="de"><spring:message code="home.trans_language_de"/></option>
+                        <%--葡萄牙语--%>
+                        <option value="pt"><spring:message code="home.trans_language_pt"/></option>
+                        <%--波兰语--%>
+                        <option value="pl"><spring:message code="home.trans_language_pl"/></option>
+                        <%--芬兰语--%>
+                        <option value="fi"><spring:message code="home.trans_language_fi"/></option>
+                        <%--西班牙语--%>
+                        <option value="es"><spring:message code="home.trans_language_es"/></option>
                     </select>
                 </li>
                 <%--翻译--%>
