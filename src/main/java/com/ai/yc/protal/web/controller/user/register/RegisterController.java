@@ -162,7 +162,7 @@ public class RegisterController {
 				msg = resHeader.getResultMessage();
 
 			if (resHeader != null && resHeader.isSuccess()) {
-				sendRegisterEmaial(req);
+				sendRegisterEmaial(req.getEmail());
 				return new ResponseData<Boolean>(
 						ResponseData.AJAX_STATUS_SUCCESS, msg, true);
 			}
@@ -222,7 +222,7 @@ public class RegisterController {
 					"超过20次", false);
 		}
 		String randomStr = RandomUtil.randomNum(6);
-		boolean sendOk = SmsSenderUtil.sendMessage(phone, "随机数为：" + randomStr);
+		boolean sendOk = true;//SmsSenderUtil.sendMessage(phone, "随机数为：" + randomStr);
 		if (sendOk) {
 			// 最多发送次数超时时间
 			int overTimeCount = config
@@ -354,14 +354,17 @@ public class RegisterController {
 		}
 		return false;
 	}
-
+	@RequestMapping("test")
+	public String test(){
+    	return EMAIL;
+    }
 	/**
 	 * 发送验证邮件
 	 */
-	private void sendRegisterEmaial(InsertYCUserRequest req) {
-		if (!StringUtil.isBlank(req.getEmail())) {// 手机为空
+	private boolean sendRegisterEmaial(String email) {
+		if (!StringUtil.isBlank(email)) {
 			SendEmailRequest emailRequest = new SendEmailRequest();
-			emailRequest.setTomails(new String[] { req.getEmail() });
+			emailRequest.setTomails(new String[] {email});
 			emailRequest
 					.setData(new String[] { "zhangsan", "111111", "22222" });
 			Locale locale = rb.getDefaultLocale();
@@ -373,8 +376,9 @@ public class RegisterController {
 			}
 			emailRequest.setTemplateRUL(_template);
 			emailRequest.setSubject("注册成功");
-			VerifyUtil.sendEmail(emailRequest);
+		return VerifyUtil.sendEmail(emailRequest);
 		}
+		return false;
 	}
 
 	/**
@@ -385,16 +389,16 @@ public class RegisterController {
 		String phone = request.getParameter("phone");
 		if (!StringUtil.isBlank(phone)) {
 			req.setMobilePhone(phone);
-			req.setUserName(phone);
 			req.setLoginway("2");
+			req.setOperationcode(request.getParameter("smsCode"));
 		}
 		String email = request.getParameter("email");
 		if (!StringUtil.isBlank(email)) {
 			req.setEmail(email);
-			req.setUserName(email);
 			req.setLoginway("1");
 		}
-		req.setNickname("译粉" + RandomUtil.randomNum(8));
+		req.setUserName("yiyun"+RandomUtil.randomNum(10));
+		req.setNickname("译粉_" + RandomUtil.randomNum(8));
 		String password = request.getParameter("password");
 		if (!StringUtil.isBlank(password)) {
 			req.setPassword(MD5Util.MD5(password));

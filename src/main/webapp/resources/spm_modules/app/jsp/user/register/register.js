@@ -105,13 +105,13 @@ define(
 							var phoneVal = phone.val();
 							if ($.trim(phoneVal) == "") {
 								this._showCheckMsg(registerMsg.account_empty);
-								phone.focus();
+								//phone.focus();
 								return false;
 							}
 							reg = eval('/' + reg + '/');
 							if (!reg.test(phoneVal)) {
 								this._showCheckMsg(registerMsg.account_error);
-								phone.focus();
+								//phone.focus();
 								return false;
 							}
 							return true;
@@ -122,13 +122,13 @@ define(
 							var emailVal = email.val();
 							if ($.trim(emailVal) == "") {
 								this._showCheckMsg(registerMsg.account_empty);
-								email.focus();
+								//email.focus();
 								return false;
 							}
 							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
 									.test(emailVal)) {
 								this._showCheckMsg(registerMsg.account_error);
-								email.focus();
+								//email.focus();
 								return false;
 							}
 							return true;
@@ -151,14 +151,14 @@ define(
 							var passwordVal = password.val();
 							if ($.trim(passwordVal) == "") {
 								this._showCheckMsg(registerMsg.password_empty);
-								password.focus();
+								//password.focus();
 								return false;
 							}
 
 							if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
 									.test(passwordVal)) {
 								this._showCheckMsg(registerMsg.password_error);
-								password.focus();
+								//password.focus();
 								return false;
 							}
 							// 确认密码
@@ -167,13 +167,13 @@ define(
 							if ($.trim(confirmPasswordVal) == "") {
 								this
 										._showCheckMsg(registerMsg.confirm_password_empty);
-								confirmPassword.focus();
+								//confirmPassword.focus();
 								return false;
 							}
 							if (confirmPasswordVal != passwordVal) {
 								this
 										._showCheckMsg(registerMsg.confirm_password_error);
-								confirmPassword.focus();
+								//confirmPassword.focus();
 								return false;
 							}
 							var verifyCodeImg = $("#verifyCodeImg");
@@ -181,7 +181,15 @@ define(
 							if ($.trim(verifyCodeImgVal) == "") {
 								this
 										._showCheckMsg(registerMsg.verify_code_img_empty);
-								verifyCodeImg.focus();
+								//verifyCodeImg.focus();
+								return false;
+							}
+							var smsCode = $("#smsCode");
+							var smsCodeVal = smsCode.val();
+							if ($.trim(smsCodeVal) == "") {
+								this
+										._showCheckMsg(registerMsg.sms_code_empty);
+								//smsCode.focus();
 								return false;
 							}
 							if ($("[id='agreement']:checked").length < 1) {
@@ -257,7 +265,7 @@ define(
 								},
 								success : function(json) {
 									if (!json.data) {
-										imgCode.focus();
+										//imgCode.focus();
 										_this._showCheckMsg(json.statusInfo);
 									}
 								}
@@ -319,16 +327,18 @@ define(
 												'phone' : $("#phone").val()
 											},
 											success : function(json) {
-												btn.val(
-														curCount + " s")
-														.removeClass(
-																"btn-green")
-														.addClass("biu-btn")
-														.attr("style",
-																"color:#fff;");
-												smsObj = window.setInterval(
-														_this.startSmsTime,
-														1000); // 启动计时器，1秒执行一次
+												if(json.statusCode=="1" && json.data){
+													btn.val(
+															curCount + " s")
+															.removeClass(
+																	"btn-green")
+															.addClass("biu-btn")
+															.attr("style",
+																	"color:#fff;");
+													smsObj = window.setInterval(
+															_this.startSmsTime,
+															1000); // 启动计时器，1秒执行一次
+												}
 											}
 										});
 							}
