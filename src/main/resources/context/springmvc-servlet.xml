@@ -15,7 +15,7 @@
         <context:include-filter expression="org.springframework.stereotype.Controller"
                                 type="annotation" />
     </context:component-scan>
-	
+
 	<!-- 默认的注解映射的支持 -->
 	<mvc:annotation-driven />
 	
