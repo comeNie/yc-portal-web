@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-     <METAHTTP-EQUIV="Pragma"CONTENT="no-cache">
+    <METAHTTP-EQUIV="Pragma"CONTENT="no-cache" />
 	<METAHTTP-EQUIV="Cache-Control"CONTENT="no-cache">
 	<METAHTTP-EQUIV="Expires"CONTENT="0">
     <title>首页</title>
@@ -81,13 +81,14 @@
 						Your browser does not support the audio tag.
 					</audio>
                     <p>
-                        <a id="copyText" href="#" class="ord-icon" data-clipboard-target="transRes"><i class="icon iconfont">&#xe62e;</i></a>
-                        <a id="playControl" href="#" class="radio-icon"><i class="icon iconfont">&#xe61b;</i></a>
-                        <a href="#" class="stars-icon"><i class="icon iconfont">&#xe754;</i></a>
+                        <a id="copyText" href="javaScript:void(0)" class="ord-icon" data-clipboard-target="transRes"><i class="icon iconfont">&#xe62e;</i></a>
+                        <a id="playControl" href="javaScript:void(0)" class="radio-icon"><i class="icon iconfont">&#xe61b;</i></a>
+                        <a href="javaScript:void(0)" class="stars-icon"><i class="icon iconfont">&#xe754;</i></a>
                     </p>
                     <p class="right">
-                        <a href="#" class="edit-icon">
+                        <a href="javaScript:void(0)" class="edit-icon">
                             <span><i class="icon iconfont">&#xe62a;</i></span>
+                            <%--翻译有误--%>
                             <span><spring:message code="home.translation_error_btn"/>?</span>
                         </a>
                     </p>
@@ -101,8 +102,11 @@
                     <%--<p><input type="button" class="btn btn-blue btn-trans radius2" value="上传文档"><input type="file"  class="pop-file"></p>
                     <p>（支持5000字以内的.doc（X）.TXT文件）</p>--%>
                 </li>
-                <li class="right"><input type="button" class="btn border-blue btn-trans-b radius2"
-                                         value="<spring:message code="home.human_translation_btn"/>"></li>
+                <li class="right">
+                    <%--人工翻译--%>
+                    <input id="humanTranBtn" type="button" class="btn border-blue btn-trans-b radius2"
+                                         value="<spring:message code="home.human_translation_btn"/>">
+                </li>
             </ul>
         </div>
     </div>
