@@ -73,11 +73,13 @@ public class UserCommonController {
 		req.setMaxCountKey(maxCountKey);
 		req.setMaxCountOverTimeKey(maxCountOverTimeKey);
 		req.setNowCountKey(nowCountKey);
-		return sendSms(req);
+		String randomStr = RandomUtil.randomNum(6);
+		req.setContent("短信验证码:"+randomStr);
+		return sendSms(req,randomStr);
 
 	}
 
-	private ResponseData<Boolean> sendSms(SmsRequest req) {
+	private ResponseData<Boolean> sendSms(SmsRequest req,String randomStr) {
 		ICacheClient iCacheClient = AiPassUitl.getCacheClient();
 		JSONObject config = AiPassUitl.getVerificationCodeConfig();
 		// 最多发送次数 key
@@ -93,9 +95,8 @@ public class UserCommonController {
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 					"超过" + maxCount + "次", false);
 		}
-		String randomStr = RandomUtil.randomNum(6);
-		boolean sendOk = true;// SmsSenderUtil.sendMessage(phone, "随机数为：" +
-								// randomStr);
+		
+		boolean sendOk = true;// SmsSenderUtil.sendMessage(phone, req.getContent());
 		if (sendOk) {
 			// 最多发送次数超时时间
 			int maxOverTimeCount = config.getIntValue(req
