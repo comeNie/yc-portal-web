@@ -14,7 +14,7 @@ public class SendEmailRequest {
 	/** 邮件内容参数(必填)*/
 	private String[] data;
 	/** 模板路径(必填)*/
-	private String templateRUL;
+	private String templateURL;
 	
 	public String[] getTomails() {
 		return tomails;
@@ -40,12 +40,12 @@ public class SendEmailRequest {
 	public void setData(String[] data) {
 		this.data = data;
 	}
-
-	public String getTemplateRUL() {
-		return templateRUL;
+	public String getTemplateURL() {
+		return templateURL;
+	}
+	public void setTemplateURL(String templateURL) {
+		this.templateURL = templateURL;
 	}
 
-	public void setTemplateRUL(String templateRUL) {
-		this.templateRUL = templateRUL;
-	}
+	
 }
