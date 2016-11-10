@@ -23,6 +23,7 @@ import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.ccs.IConfigClient;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.yc.protal.web.constants.Constants;
+import com.ai.yc.protal.web.constants.Constants.PhoneVerify;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
@@ -196,6 +197,13 @@ public class VerifyUtil {
 		return isRight;
 	}
 
+	/**
+	 * 校验图片验证码
+	 * 
+	 * @param request
+	 * @param errorMsg
+	 * @return
+	 */
 	public static ResponseData<Boolean> checkImageVerifyCode(
 			HttpServletRequest request, String errorMsg) {
 		try {
@@ -216,6 +224,12 @@ public class VerifyUtil {
 		}
 	}
 
+	/**
+	 * 请求生成code
+	 * 
+	 * @param req
+	 * @return
+	 */
 	public static Object[] getUcenterOperationCode(
 			UcMembersGetOperationcodeRequest req) {
 		boolean isOk = false;
@@ -233,8 +247,54 @@ public class VerifyUtil {
 				code = String.valueOf(res.getOperationcode());
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			msg = "Ucenter Error";
 		}
 		return new Object[] { isOk, msg, code };
+	}
+
+	/**
+	 * 校验短信验证码
+	 * @param phone
+	 * @param type
+	 * @param ckValue
+	 * @return
+	 */
+	public static boolean checkSmsCode(String phone, String type, String ckValue) {
+		String codeKey = null;
+		boolean isRight = false;
+		if (PhoneVerify.PHONE_CODE_REGISTER_OPERATION.equals(type)) {// 注册
+			codeKey = PhoneVerify.REGISTER_PHONE_CODE + phone;
+		} else if (PhoneVerify.PHONE_CODE_UPDATE_DATA_OPERATION.equals(type)) {// 修改资料
+			codeKey = PhoneVerify.UPDATE_DATA_PHONE_CODE + phone;
+		}
+		if (StringUtil.isBlank(type)) {
+			ICacheClient iCacheClient = AiPassUitl.getCacheClient();
+			String code = iCacheClient.get(codeKey);
+			if (!StringUtil.isBlank(code) && !StringUtil.isBlank(ckValue)
+					&& ckValue.equalsIgnoreCase(code)) {
+				isRight = true;
+			}
+		}
+		return isRight;
+	}
+
+	/**
+	 * 清除手机验证码
+	 * 
+	 * @param phone
+	 * @param type
+	 */
+	public static void removePhoneCode(String phone, String type) {
+		String codeKey = "";
+		if (PhoneVerify.PHONE_CODE_REGISTER_OPERATION.equals(type)) {// 注册
+			codeKey = PhoneVerify.REGISTER_PHONE_CODE + phone;
+		} else if (PhoneVerify.PHONE_CODE_UPDATE_DATA_OPERATION.equals(type)) {// 修改资料
+			codeKey = PhoneVerify.UPDATE_DATA_PHONE_CODE + phone;
+		}
+		if (StringUtil.isBlank(codeKey)) {
+			ICacheClient iCacheClient = AiPassUitl.getCacheClient();
+			iCacheClient.del(codeKey);
+		}
 	}
 }

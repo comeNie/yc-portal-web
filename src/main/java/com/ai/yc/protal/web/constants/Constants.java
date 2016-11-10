@@ -70,6 +70,11 @@ public final class Constants {
 
 		/** 手机验证码长度 */
 		public static final int VERIFY_SIZE = 6;
+		
+		/** 手机验证码注册操作 */
+		public static final String  PHONE_CODE_REGISTER_OPERATION = "1";
+		/** 手机验证码修改资料操作 */
+		public static final String  PHONE_CODE_UPDATE_DATA_OPERATION = "2";
 		/** 注册手机验证码key */
 		public static final String REGISTER_PHONE_CODE = "register_phone_code";
 		/** 注册手机验证码超时时间 */

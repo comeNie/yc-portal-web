@@ -18,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.RandomUtil;
@@ -34,13 +33,10 @@ import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.PhoneVerify;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
-import com.ai.yc.protal.web.constants.Constants.UcenterOperation;
 import com.ai.yc.protal.web.model.sms.SmsRequest;
 import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.ai.yc.protal.web.utils.VerifyUtil;
-import com.ai.yc.ucenter.api.members.interfaces.IUcMembersOperationSV;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeRequest;
-import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeResponse;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
@@ -152,15 +148,15 @@ public class UserCommonController {
 		/** 当前发送次数key **/
 		String nowCountKey = null;
 		if (StringUtil.isBlank(type)) {
-			type = "1";
+			type = PhoneVerify.PHONE_CODE_REGISTER_OPERATION;
 		}
-		if ("1".equals(type)) {// 注册
+		if (PhoneVerify.PHONE_CODE_REGISTER_OPERATION.equals(type)) {// 注册
 			codeKey = PhoneVerify.REGISTER_PHONE_CODE + phone;
 			codeOverTimeKey = PhoneVerify.REGISTER_PHONE_CODE_OVERTIME;
 			nowCountKey = PhoneVerify.REGISTER_PHONE_CODE_COUNT + phone;
 			maxCountKey = PhoneVerify.REGISTER_PHONE_CODE_MAX_COUNT;
 			maxCountOverTimeKey = PhoneVerify.REGISTER_PHONE_CODE_MAX_COUNT_OVERTIME;
-		} else if ("2".equals(type)) {// 修改资料
+		} else if (PhoneVerify.PHONE_CODE_UPDATE_DATA_OPERATION.equals(type)) {// 修改资料
 			codeKey = PhoneVerify.UPDATE_DATA_PHONE_CODE + phone;
 			codeOverTimeKey = PhoneVerify.UPDATE_DATA_PHONE_CODE_OVERTIME;
 			nowCountKey = PhoneVerify.UPDATE_DATA_PHONE_CODE_COUNT + phone;
@@ -176,6 +172,25 @@ public class UserCommonController {
 		req.setContent("短信验证码:" + randomStr);
 		return sendSms(req, randomStr);
 
+	}
+
+	/**
+	 * 校验短信验证码
+	 */
+	@RequestMapping("/checkSmsCode")
+	@ResponseBody
+	public ResponseData<Boolean> checkSmsCode(HttpServletRequest request,
+			HttpServletResponse response) {
+		String phone = request.getParameter("phone");
+		String type = request.getParameter("type");
+		String ckValue = request.getParameter("code");
+		boolean isOk = VerifyUtil.checkSmsCode( phone,  type, ckValue);
+		String msg ="ok";
+		if(!isOk){
+			msg ="验证码错误";
+		}
+		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
+				msg, isOk);
 	}
 
 	private ResponseData<Boolean> sendSms(SmsRequest req, String randomStr) {
@@ -233,14 +248,14 @@ public class UserCommonController {
 		if (!StringUtil.isBlank(userinfo)) {
 			req.setUserinfo(userinfo);
 		}
-		Object[] result =VerifyUtil.getUcenterOperationCode(req);
-		String code ="";
+		Object[] result = VerifyUtil.getUcenterOperationCode(req);
+		String code = "";
 		boolean isOk = (boolean) result[0];
 		String msg = "ok";
-		if(!CollectionUtil.isEmpty(result)&&result.length>2){
-			code=result[2]+"";
+		if (!CollectionUtil.isEmpty(result) && result.length > 2) {
+			code = result[2] + "";
 		}
-		return  new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
-				msg, isOk);
+		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg,
+				isOk);
 	}
 }
