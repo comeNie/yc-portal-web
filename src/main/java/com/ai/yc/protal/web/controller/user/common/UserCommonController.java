@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.RandomUtil;
@@ -29,12 +30,17 @@ import com.ai.yc.common.api.country.interfaces.IGnCountrySV;
 import com.ai.yc.common.api.country.param.CountryRequest;
 import com.ai.yc.common.api.country.param.CountryResponse;
 import com.ai.yc.common.api.country.param.CountryVo;
+import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.PhoneVerify;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
+import com.ai.yc.protal.web.constants.Constants.UcenterOperation;
 import com.ai.yc.protal.web.model.sms.SmsRequest;
 import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.ai.yc.protal.web.utils.VerifyUtil;
+import com.ai.yc.ucenter.api.members.interfaces.IUcMembersOperationSV;
+import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeRequest;
+import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeResponse;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
@@ -94,6 +100,7 @@ public class UserCommonController {
 		return new ResponseData<List<CountryVo>>(
 				ResponseData.AJAX_STATUS_SUCCESS, msg, result);
 	}
+
 	/**
 	 * 获取图片验证码
 	 */
@@ -110,6 +117,7 @@ public class UserCommonController {
 			LOG.error("生成图片验证码错误：" + e);
 		}
 	}
+
 	/**
 	 * 校验图片证码
 	 */
@@ -117,7 +125,8 @@ public class UserCommonController {
 	@ResponseBody
 	public ResponseData<Boolean> checkImageVerifyCode(HttpServletRequest request) {
 		String msg = rb.getMessage("ycregisterMsg.verificationCodeError");
-		ResponseData<Boolean> result = VerifyUtil.checkImageVerifyCode(request,msg);
+		ResponseData<Boolean> result = VerifyUtil.checkImageVerifyCode(request,
+				msg);
 		return result;
 	}
 
@@ -142,8 +151,8 @@ public class UserCommonController {
 		String maxCountOverTimeKey = null;
 		/** 当前发送次数key **/
 		String nowCountKey = null;
-		if(StringUtil.isBlank(type)){
-			type="1";
+		if (StringUtil.isBlank(type)) {
+			type = "1";
 		}
 		if ("1".equals(type)) {// 注册
 			codeKey = PhoneVerify.REGISTER_PHONE_CODE + phone;
@@ -204,15 +213,36 @@ public class UserCommonController {
 		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 				"发送失败", false);
 	}
+
 	/**
 	 * 调用ucenter生成操作码
 	 */
 	@RequestMapping("/getUcenterOperationCode")
 	@ResponseBody
-	public ResponseData<Boolean> getUcenterOperationCode(HttpServletRequest request) {
-		String type =request.getParameter("type");
-		if("1".equals(type)){//邮箱注册操作码
-			
+	public ResponseData<Boolean> getUcenterOperationCode(
+			HttpServletRequest request) {
+		String operationtype = request.getParameter("type");
+		String uid = request.getParameter("uid");
+		String userinfo = request.getParameter("userinfo");// 移动电话/邮箱
+		UcMembersGetOperationcodeRequest req = new UcMembersGetOperationcodeRequest();
+		req.setTenantId(Constants.DEFAULT_TENANT_ID);
+		req.setOperationtype(operationtype);
+		if (!StringUtil.isBlank(uid)) {
+			req.setUid(Integer.parseInt(uid));
+		}
+		if (!StringUtil.isBlank(userinfo)) {
+			req.setUserinfo(userinfo);
+		}
+		UcMembersGetOperationcodeResponse res = DubboConsumerFactory
+				.getService(IUcMembersOperationSV.class)
+				.ucGetOperationcode(req);
+		boolean isOk = false;
+		String code=null;
+		if (res != null && res.getMessage() != null
+				&& res.getMessage().isSuccess() && res.getCode() != null
+				&& res.getCode().getCode()==1) {
+			isOk = true;
+			code = String.valueOf(res.getOperationcode());
 		}
 		return null;
 	}

@@ -193,10 +193,8 @@ public class RegisterController {
 		}
 		if (res != null && res.getMessage() != null
 				&& res.getMessage().isSuccess() && res.getCode() != null
-				&& res.getCode().getCode() != null) {
-			if (Register.CHECK_TYPE_SUCCESS.equals(res.getCode().getCode())) {
-				return true;
-			}
+				&& res.getCode().getCode()==1) {
+			return true;
 		}
 		return false;
 	}
