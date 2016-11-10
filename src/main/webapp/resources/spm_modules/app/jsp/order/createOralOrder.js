@@ -199,18 +199,33 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 			}
 			
 			var baseInfo = {};
-			//baseInfo.chlId=""后台写
-			//baseInfo.orderType
+			var productInfo = {};
+			var contactInfo = {};
+			var feeInfo = {};
+			if (currentLan.indexOf("zh") >= 0) { 
+				baseInfo.orderType = "0";
+				baseInfo.flag = "0";
+				baseInfo.chlId = "0";
+			}else {
+				baseInfo.orderType = "1";
+				baseInfo.flag = "1";//业务标识 0:国内业务 1：国际业务 ??
+				baseInfo.chlId = "1";
+			}
+			
+			baseInfo.orderType = "1"; //??
 			baseInfo.busiType = 1;
+		
 			baseInfo.translateType = "2"; //2：口译翻译"
 			baseInfo.translateName = $("#transSubject").val();
-			//baseInfo.orderLevel =??
+			baseInfo.orderLevel = "1"; //??
 			baseInfo.subFlag = "1"; // "0：系统自动报价 1：人工报价"
-			//baseInfo.userType
-			baseInfo.userId = "userid";
-			baseInfo.corporaId = "corporaId";
+			baseInfo.userType = "10"; //"10：个人 11：企业 12：代理人 "??
+			baseInfo.userId = "10086";
+			//baseInfo.corporaId
+			//baseInfo.accountId
+			var today = new Date();
+			baseInfo.timeZone = 'GMT+'+today.stdTimezoneOffset()/60;
 			
-			var productInfo = {};
 			productInfo.meetingSum = $("#meetingAmount").val();
 			productInfo.interperGen = $("#gender").find("option:selected").val(); 
 			productInfo.meetingAddress = $("#place").find("option:selected").val(); 
@@ -236,23 +251,21 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 			});
 			productInfo.languagePairInfoList = duadList;
 			
-			if ( $("#urgentOrder").is(':checked') ) {
-				productInfo.isUrgent = "1";
-			}
+			if ( $("#urgentOrder").is(':checked') ) 
+				productInfo.isUrgent = "Y";
+			else
+				productInfo.isUrgent = "N";
 			
-			var contactInfo = {};
-			contactInfo.contactName =  $("#editContactDiv").find('p').eq(0).html();
-			contactInfo.contactTel  =  $("#editContactDiv").find('p').eq(1).html();
-			contactInfo.contactEmail  =  $("#editContactDiv").find('p').eq(2).html();
-			
+//			contactInfo.contactName =  $("#editContactDiv").find('p').eq(0).html();
+//			contactInfo.contactTel  =  $("#editContactDiv").find('p').eq(1).html();
+//			contactInfo.contactEmail  =  $("#editContactDiv").find('p').eq(2).html();
 			contactInfo.contactName=$("#saveContactDiv").find('input').eq(0).val();
 	    	contactInfo.contactTel="+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val();
 			contactInfo.contactEmail=$("#saveContactDiv").find('input').eq(2).val();
 			
-			
 			var feeInfo = {};
 			feeInfo.totalFee = 100;
-			feeInfo.currencyUnit = $("#selectDuad").find("option:selected").attr("currency");
+			feeInfo.currencyUnit = $("#selectDuad").find("option:selected").val();
 			
 			ajaxController.ajax({
 				type: "post",
@@ -266,10 +279,10 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 					feeInfo: JSON.stringify(feeInfo)
 				},
 				success: function (data) {
-					if ("1" === data.statusCode) {
-						//alert("保存成功");
-						//保存成功,回退到进入的列表页
-//						window.history.go(-1)
+					if ("OK" === data.statusInfo) {
+						//跳到待报价页面，暂缺
+					} else { //用户未登陆
+						window.location.href = _base + "/p/order/orderSubmit?orderType=oral";
 					}
 				}
 			});

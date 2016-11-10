@@ -269,12 +269,7 @@ public class VerifyUtil {
 			codeKey = PhoneVerify.UPDATE_DATA_PHONE_CODE + phone;
 		}
 		if (!StringUtil.isBlank(type)) {
-			ICacheClient iCacheClient = AiPassUitl.getCacheClient();
-			String code = iCacheClient.get(codeKey);
-			if (!StringUtil.isBlank(code) && !StringUtil.isBlank(ckValue)
-					&& ckValue.equalsIgnoreCase(code)) {
-				isRight = true;
-			}
+			isRight =checkRedisValue(codeKey,ckValue);
 		}
 		return isRight;
 	}
@@ -296,5 +291,21 @@ public class VerifyUtil {
 			ICacheClient iCacheClient = AiPassUitl.getCacheClient();
 			iCacheClient.del(codeKey);
 		}
+	}
+	/**
+	 * 校验缓存值
+	 * @param key
+	 * @param ckValue
+	 * @return
+	 */
+	public static boolean checkRedisValue(String key,String ckValue){
+		ICacheClient iCacheClient = AiPassUitl.getCacheClient();
+		String code = iCacheClient.get(key);
+		boolean isOk = false;
+		if (!StringUtil.isBlank(code) && !StringUtil.isBlank(ckValue)
+				&& ckValue.equalsIgnoreCase(code)) {
+			isOk = true;
+		}
+		return isOk;
 	}
 }

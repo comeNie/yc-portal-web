@@ -27,7 +27,7 @@ minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin'>�
 					<span
 						style='font-family:宋体;mso-ascii-font-family:Cambria;
 mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
-minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin'><a href="http://localhost:8080/portal-web/reg/emailActivate?code={2}">点击激活帐号</a></span>
+minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin'><a href="http://localhost:8080/portal-web/reg/emailActivate?code={1}&amp;uid={2}">{1}点击激活帐号</a></span>
 				</p>
 				<p>
 					<span>
