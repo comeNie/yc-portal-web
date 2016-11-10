@@ -73,9 +73,9 @@ public class YeekitService {
      * @param text
      * @return
      */
-    public String detection(String text){
+    public String detection(String text) throws UnsupportedEncodingException {
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("text",text);
+        params.put("text",URLEncoder.encode(text,"UTF-8"));
         String resultStr = HttpUtil.doGet(TRANSLAN_URL, params);
         LOGGER.info("detection result:{}",resultStr);
         JSONObject translated = JSON.parseObject(resultStr);
