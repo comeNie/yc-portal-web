@@ -25,7 +25,8 @@ public class CustomerOrderController {
      * @return
      */
     @RequestMapping("/payOrder")
-    public String createTextView(){
+    public String createTextView(String orderId){
+        //获取订单价格,币种
         return "order/payOrder";
     }
 }

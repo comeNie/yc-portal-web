@@ -310,4 +310,17 @@ public class OrderController {
             }
         }
     }
+
+    /**
+     * 订单支付结果
+     * @return
+     */
+    @RequestMapping("/payResult")
+    public String orderPayResult(Model uiModel){
+        //订单号
+        uiModel.addAttribute("orderId","23423");
+        //支付结果
+        uiModel.addAttribute("payResult","1");
+        return "order/orderPayResult";
+    }
 }
