@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import com.ai.paas.ipaas.ccs.IConfigClient;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
+import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
 import com.alibaba.fastjson.JSONObject;
 
@@ -153,5 +156,44 @@ public class VerifyUtil {
         }
          return responseData;
     }
+    /**
+     * 校验图片验证码
+     * @param namespace
+     * @param cacheKey
+     * @param ckValue
+     * @return
+     */
+    public static boolean checkImageVerifyCode(String namespace,String cacheKey,String ckValue){
+    	Boolean isRight = false;
+    	try {
+			ICacheClient cacheClient = MCSClientFactory
+					.getCacheClient(namespace);
+			String code = cacheClient.get(cacheKey);
+			if (!StringUtil.isBlank(code) && !StringUtil.isBlank(ckValue)
+					&& ckValue.equalsIgnoreCase(code)) {
+				isRight = true;
+			}
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+    	return isRight;
+    }
 
+	public static ResponseData<Boolean> checkImageVerifyCode(HttpServletRequest request,String errorMsg) {
+		try {
+			String cacheKey = PictureVerify.VERIFY_IMAGE_KEY
+					+ request.getSession().getId();
+			String imgCode = request.getParameter("imgCode");
+			Boolean isRight =checkImageVerifyCode(Register.CACHE_NAMESPACE, cacheKey, imgCode);
+			if(isRight){
+				errorMsg="ok";
+			}
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
+					errorMsg, isRight);
+
+		} catch (Exception e) {
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_FAILURE,
+					"error");
+		}
+	}
 }
