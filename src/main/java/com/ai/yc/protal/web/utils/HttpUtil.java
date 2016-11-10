@@ -85,8 +85,8 @@ public class HttpUtil {
      * @param url
      * @return
      */
-    public static String doGet(String url) {
-        return doGet(url, new HashMap<String, Object>());
+    public static String doGet(CloseableHttpClient httpClient,String url) {
+        return doGet(httpClient,url, new HashMap<String, Object>());
     }
 
     /**
@@ -95,7 +95,7 @@ public class HttpUtil {
      * @param params
      * @return
      */
-    public static String doGet(String url, Map<String, Object> params) {
+    public static String doGet(CloseableHttpClient httpClient,String url, Map<String, Object> params) {
         String apiUrl = url;
         StringBuffer param = new StringBuffer();
         int i = 0;
@@ -109,10 +109,9 @@ public class HttpUtil {
         }
         apiUrl += param;
         String result = null;
-        HttpClient httpclient = new DefaultHttpClient();
         try {
             HttpGet httpPost = new HttpGet(apiUrl);
-            HttpResponse response = httpclient.execute(httpPost);
+            HttpResponse response = httpClient.execute(httpPost);
             int statusCode = response.getStatusLine().getStatusCode();
 
             System.out.println("执行状态码 : " + statusCode);
@@ -133,8 +132,8 @@ public class HttpUtil {
      * @param apiUrl
      * @return
      */
-    public static String doPost(String apiUrl) throws IOException, HttpStatusException {
-        return doPost(apiUrl, new HashMap<String, Object>());
+    public static String doPost(CloseableHttpClient httpClient,String apiUrl) throws IOException, HttpStatusException {
+        return doPost(httpClient,apiUrl, new HashMap<String, Object>());
     }
 
     /**
@@ -143,10 +142,10 @@ public class HttpUtil {
      * @param params 参数map
      * @return
      */
-    public static String doPost(String apiUrl, Map<String, Object> params) throws IOException, HttpStatusException {
+    public static String doPost(CloseableHttpClient httpClient,String apiUrl, Map<String, Object> params)
+            throws IOException, HttpStatusException {
         long startTime = System.currentTimeMillis();
         LOGGER.info("开始HttpUtil.post ,当前时间戳:{}",startTime);
-        CloseableHttpClient httpClient = HttpClients.createDefault();
         String httpStr = null;
         HttpPost httpPost = new HttpPost(apiUrl);
         CloseableHttpResponse response = null;
@@ -196,8 +195,7 @@ public class HttpUtil {
      * @param json json对象
      * @return
      */
-    public static String doPost(String apiUrl, Object json) {
-        CloseableHttpClient httpClient = HttpClients.createDefault();
+    public static String doPost(CloseableHttpClient httpClient,String apiUrl, Object json) {
         String httpStr = null;
         HttpPost httpPost = new HttpPost(apiUrl);
         CloseableHttpResponse response = null;
