@@ -105,7 +105,7 @@ public class RegisterController {
 				msg = resHeader.getResultMessage();
 
 			if (resHeader != null && resHeader.isSuccess()) {
-				sendRegisterEmaial(req.getEmail());
+				sendRegisterEmaial(res.getUserId(),req.getEmail());
 				return new ResponseData<Boolean>(
 						ResponseData.AJAX_STATUS_SUCCESS, msg, true);
 			}
@@ -206,7 +206,7 @@ public class RegisterController {
 	/**
 	 * 发送验证邮件
 	 */
-	private boolean sendRegisterEmaial(String email) {
+	private boolean sendRegisterEmaial(String userId,String email) {
 		if (!StringUtil.isBlank(email)) {
 			SendEmailRequest emailRequest = new SendEmailRequest();
 			emailRequest.setTomails(new String[] {email});

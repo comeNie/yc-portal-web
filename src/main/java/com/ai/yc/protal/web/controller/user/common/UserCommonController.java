@@ -233,7 +233,14 @@ public class UserCommonController {
 		if (!StringUtil.isBlank(userinfo)) {
 			req.setUserinfo(userinfo);
 		}
-		VerifyUtil.getUcenterOperationCode(req);
-		return null;
+		Object[] result =VerifyUtil.getUcenterOperationCode(req);
+		String code ="";
+		boolean isOk = (boolean) result[0];
+		String msg = "ok";
+		if(!CollectionUtil.isEmpty(result)&&result.length>2){
+			code=result[2]+"";
+		}
+		return  new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
+				msg, isOk);
 	}
 }
