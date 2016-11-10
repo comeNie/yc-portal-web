@@ -16,6 +16,7 @@ import com.ai.opt.sdk.components.ccs.CCSClientFactory;
 import com.ai.opt.sdk.components.mail.EmailFactory;
 import com.ai.opt.sdk.components.mail.EmailTemplateUtil;
 import com.ai.opt.sdk.components.mcs.MCSClientFactory;
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.RandomUtil;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
@@ -25,6 +26,9 @@ import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
+import com.ai.yc.ucenter.api.members.interfaces.IUcMembersOperationSV;
+import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeRequest;
+import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeResponse;
 import com.alibaba.fastjson.JSONObject;
 
 public class VerifyUtil {
@@ -55,9 +59,9 @@ public class VerifyUtil {
 			ICacheClient cacheClient = MCSClientFactory
 					.getCacheClient(namespace);
 			JSONObject config = AiPassUitl.getVerificationCodeConfig();
-			int overTime = config.getIntValue(PictureVerify.VERIFY_OVERTIME_KEY);
-			cacheClient.setex(cacheKey, overTime,
-					verifyCode);
+			int overTime = config
+					.getIntValue(PictureVerify.VERIFY_OVERTIME_KEY);
+			cacheClient.setex(cacheKey, overTime, verifyCode);
 			if (LOGGER.isDebugEnabled())
 				LOGGER.debug("cacheKey=" + cacheKey + ",verifyCode="
 						+ verifyCode);
@@ -114,58 +118,71 @@ public class VerifyUtil {
 	}
 
 	/**
-     * 检查ip发送邮箱验证码次数是否超限
-     * 
-     * @param namespace
-     * @param key
-     * @return
-     */
-    public static ResponseData<String> checkIPSendEmailCount(String namespace, String key) {
-        ResponseData<String> responseData = null;
-        ResponseHeader header = null;
-        ICacheClient cacheClient = MCSClientFactory.getCacheClient(namespace);
-        String countStr = cacheClient.get(key);
-        //IConfigCenterClient configCenterClient = ConfigCenterFactory.getConfigCenterClient();
-        IConfigClient configCenterClient = CCSClientFactory.getDefaultConfigClient();
-        //限制时间
-        try{
-            String overTime = configCenterClient.get(Constants.IP_SEND_OVERTIME_KEY);
-            if (!StringUtil.isBlank(countStr)) {
-                String maxNoStr = configCenterClient.get(Constants.SEND_VERIFY_IP_MAX_NO_KEY);
-                int maxNo = Integer.valueOf(maxNoStr);
-                int count = Integer.valueOf(countStr);
-                count++;
-                if (count > maxNo) {
-                    String message = "频繁发送邮箱，已被禁止" + Integer.valueOf(overTime) / 60 + "分钟";
-                    responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, message);
-                    header = new ResponseHeader(false, Constants.ERROR_CODE, message);
-                    responseData.setResponseHeader(header);
-                    return responseData;
-                }else{
-                    cacheClient.setex(key, Integer.valueOf(overTime), Integer.toString(count));
-                }
-            }else{
-                cacheClient.setex(key, Integer.valueOf(overTime), "1");
-            }
-            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, null);
-            header = new ResponseHeader(true, Constants.ERROR_CODE, null);
-            responseData.setResponseHeader(header);
-            return responseData;
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-         return responseData;
-    }
-    /**
-     * 校验图片验证码
-     * @param namespace
-     * @param cacheKey
-     * @param ckValue
-     * @return
-     */
-    public static boolean checkImageVerifyCode(String namespace,String cacheKey,String ckValue){
-    	Boolean isRight = false;
-    	try {
+	 * 检查ip发送邮箱验证码次数是否超限
+	 * 
+	 * @param namespace
+	 * @param key
+	 * @return
+	 */
+	public static ResponseData<String> checkIPSendEmailCount(String namespace,
+			String key) {
+		ResponseData<String> responseData = null;
+		ResponseHeader header = null;
+		ICacheClient cacheClient = MCSClientFactory.getCacheClient(namespace);
+		String countStr = cacheClient.get(key);
+		// IConfigCenterClient configCenterClient =
+		// ConfigCenterFactory.getConfigCenterClient();
+		IConfigClient configCenterClient = CCSClientFactory
+				.getDefaultConfigClient();
+		// 限制时间
+		try {
+			String overTime = configCenterClient
+					.get(Constants.IP_SEND_OVERTIME_KEY);
+			if (!StringUtil.isBlank(countStr)) {
+				String maxNoStr = configCenterClient
+						.get(Constants.SEND_VERIFY_IP_MAX_NO_KEY);
+				int maxNo = Integer.valueOf(maxNoStr);
+				int count = Integer.valueOf(countStr);
+				count++;
+				if (count > maxNo) {
+					String message = "频繁发送邮箱，已被禁止" + Integer.valueOf(overTime)
+							/ 60 + "分钟";
+					responseData = new ResponseData<String>(
+							ResponseData.AJAX_STATUS_SUCCESS, message);
+					header = new ResponseHeader(false, Constants.ERROR_CODE,
+							message);
+					responseData.setResponseHeader(header);
+					return responseData;
+				} else {
+					cacheClient.setex(key, Integer.valueOf(overTime),
+							Integer.toString(count));
+				}
+			} else {
+				cacheClient.setex(key, Integer.valueOf(overTime), "1");
+			}
+			responseData = new ResponseData<String>(
+					ResponseData.AJAX_STATUS_SUCCESS, null);
+			header = new ResponseHeader(true, Constants.ERROR_CODE, null);
+			responseData.setResponseHeader(header);
+			return responseData;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return responseData;
+	}
+
+	/**
+	 * 校验图片验证码
+	 * 
+	 * @param namespace
+	 * @param cacheKey
+	 * @param ckValue
+	 * @return
+	 */
+	public static boolean checkImageVerifyCode(String namespace,
+			String cacheKey, String ckValue) {
+		Boolean isRight = false;
+		try {
 			ICacheClient cacheClient = MCSClientFactory
 					.getCacheClient(namespace);
 			String code = cacheClient.get(cacheKey);
@@ -176,17 +193,19 @@ public class VerifyUtil {
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}
-    	return isRight;
-    }
+		return isRight;
+	}
 
-	public static ResponseData<Boolean> checkImageVerifyCode(HttpServletRequest request,String errorMsg) {
+	public static ResponseData<Boolean> checkImageVerifyCode(
+			HttpServletRequest request, String errorMsg) {
 		try {
 			String cacheKey = PictureVerify.VERIFY_IMAGE_KEY
 					+ request.getSession().getId();
 			String imgCode = request.getParameter("imgCode");
-			Boolean isRight =checkImageVerifyCode(Register.CACHE_NAMESPACE, cacheKey, imgCode);
-			if(isRight){
-				errorMsg="ok";
+			Boolean isRight = checkImageVerifyCode(Register.CACHE_NAMESPACE,
+					cacheKey, imgCode);
+			if (isRight) {
+				errorMsg = "ok";
 			}
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 					errorMsg, isRight);
@@ -195,5 +214,27 @@ public class VerifyUtil {
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_FAILURE,
 					"error");
 		}
+	}
+
+	public static Object[] getUcenterOperationCode(
+			UcMembersGetOperationcodeRequest req) {
+		boolean isOk = false;
+		String msg = "ok";
+		String code = "";
+		try {
+			UcMembersGetOperationcodeResponse res = DubboConsumerFactory
+					.getService(IUcMembersOperationSV.class)
+					.ucGetOperationcode(req);
+			if (res != null && res.getMessage() != null
+					&& res.getMessage().isSuccess() && res.getCode() != null
+					&& res.getCode().getCodeNumber() != null
+					&& res.getCode().getCodeNumber() == 1) {
+				isOk = true;
+				code = String.valueOf(res.getOperationcode());
+			}
+		} catch (Exception e) {
+			msg = "Ucenter Error";
+		}
+		return new Object[] { isOk, msg, code };
 	}
 }

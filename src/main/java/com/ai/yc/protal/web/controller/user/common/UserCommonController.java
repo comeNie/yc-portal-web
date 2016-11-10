@@ -233,17 +233,7 @@ public class UserCommonController {
 		if (!StringUtil.isBlank(userinfo)) {
 			req.setUserinfo(userinfo);
 		}
-		UcMembersGetOperationcodeResponse res = DubboConsumerFactory
-				.getService(IUcMembersOperationSV.class)
-				.ucGetOperationcode(req);
-		boolean isOk = false;
-		String code=null;
-		if (res != null && res.getMessage() != null
-				&& res.getMessage().isSuccess() && res.getCode() != null
-				&& res.getCode().getCode()==1) {
-			isOk = true;
-			code = String.valueOf(res.getOperationcode());
-		}
+		VerifyUtil.getUcenterOperationCode(req);
 		return null;
 	}
 }
