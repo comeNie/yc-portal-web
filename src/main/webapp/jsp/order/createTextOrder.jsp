@@ -54,14 +54,18 @@
   					<p><spring:message code="order.translateLan"/></p>
   				</div>
   				<div class="placeorder-translate">
-	  				<select id="selectDuad" name="<%=response.getLocale()%>" tabindex="5" class="dropdown" data-settings='{"cutOff": 12}' yu="${sessionScope.orderInfo.productInfo.languagePairInfoList[0]}">
+	  				<select id="selectDuad" t="${sessionScope.orderInfo.productInfo.translateInfo}" name="<%=response.getLocale()%>" tabindex="5" class="dropdown" data-settings='{"cutOff": 12}' >
 						<c:forEach items="${duadList}" var="duad">
 	  						<c:if test="${duad.orderType != 2}">
 		  					 	<option value="${duad.duadId}"  currency="${duad.currency}" 
 								ordinary="${duad.ordinary}"  ordinaryUrgent="${duad.ordinaryUrgent}" 
 								professional="${duad.professional}"  professionalUrgent="${duad.professionalUrgent}"  
 								publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}" 
-								sourceEn="${duad.sourceEn}" duadId="${duad.duadId}">
+								sourceEn="${duad.sourceEn}" duadId="${duad.duadId}"
+								<c:if test="${sessionScope.orderInfo.productInfo.languagePairInfoList[0].languagePairId==duad.duadId}">
+									 selected = "selected"
+								</c:if>
+								>
 									<c:choose>
 										<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${duad.sourceCn}→${duad.targetCn}</c:when>
 										<c:otherwise>${duad.sourceEn}→${duad.targetEn}</c:otherwise>
@@ -80,7 +84,10 @@
   					<p>翻译内容</p>
   				</div>
   				<div class="translate-int radius" id="fy1">
-  					<p><textarea id="translateContent" name="translateContent" class="int-text textarea-xlarge-100 radius"></textarea></p>
+  					<p>
+  					<!--  翻译内容--> 
+  					<textarea id="translateContent" name="translateContent" class="int-text textarea-xlarge-100 radius">
+  					${sessionScope.orderInfo.productInfo.translateInfo}</textarea></p>
   					<!-- 上传文档btn -->
   					<p class="right"><input type="button" class="btn border-blue radius20 btn-80" value="<spring:message code="order.uploadDoc"/>"  id="fy-btn"></p>
   					<label></label>		

@@ -6,13 +6,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     require("jsviews/jsrender.min");
 
     require("jquery-validation/1.15.1/jquery.validate");
-	//require("app/util/aiopt-validate-ext");
+	require("app/util/aiopt-validate-ext");
     var CountWordsUtil = require("app/util/countWords");
     var CommonMethodUtil = require("app/util/commonMethod");
     
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
-    var index = 1; //第一次进入页面
     var textOrderAddPager = Widget.extend({
     	//属性，使用时由类的构造函数传入
     	attrs: {
@@ -36,15 +35,16 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     	//重写父类
     	setup: function () {
     		textOrderAddPager.superclass.setup.call(this);
-			this._transGrade();
-			this._transPrice();
-			this._globalRome();
-			this._initPage();
-		
+			
 			var formValidator=this._initValidate();
 			$(":input").bind("focusout",function(){
 				formValidator.element(this);
 			});
+			
+			this._transGrade();
+			this._transPrice();
+			this._globalRome();
+			this._initPage();
 			
 			var flag = CommonMethodUtil.getQueryString("flag");
 			if(flag == 'submit') { //如果类型是提交，调到提交订单页面
@@ -54,7 +54,22 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
         
         _initValidate:function(){
         	var formValidator=$("#textOrderForm").validate({
-        		showErrors:function(errorMap,errorList) {
+        		errorPlacement: function(error, element) {
+					if (element.is(":checkbox")) {
+						error.appendTo(element.parent().parent().parent());
+					} else {
+						error.insertAfter(element);
+					}
+						
+				},
+				highlight: function(element, errorClass) {
+					
+				}, 
+				unhighlight: function(element, errorClass) {
+					
+				} ,
+				errorClass:"x-label",
+				showErrors:function(errorMap,errorList) {
 					$('ul li p label').remove()//删除所有隐藏的li p label标签
 					this.defaultShowErrors();
 				},
@@ -252,7 +267,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 							//文档翻译，跳到待报价页面，暂缺
 						}
 					} else { //用户未登陆
-						window.location.href = _base + "/p/order/textOrderSubmit?falg=submit";
+						window.location.href = _base + "/p/order/orderSubmit?orderType=text";
 					}
 				}
 			});

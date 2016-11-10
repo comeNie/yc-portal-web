@@ -279,10 +279,10 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 					feeInfo: JSON.stringify(feeInfo)
 				},
 				success: function (data) {
-					if ("1" === data.statusCode) {
-						//alert("保存成功");
-						//保存成功,回退到进入的列表页
-//						window.history.go(-1)
+					if ("OK" === data.statusInfo) {
+						//跳到待报价页面，暂缺
+					} else { //用户未登陆
+						window.location.href = _base + "/p/order/orderSubmit?orderType=oral";
 					}
 				}
 			});

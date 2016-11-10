@@ -76,7 +76,7 @@
   					<li class="red"><i class="icon-remove-sign"></i></li>
   					<li class="word">登录密码</li>
   					<li>请设置密码，用于系统登录等操作</li>
-  					<li class="right"><a href="#">设置</a></li>
+  					<li class="right"><a href="${_base}/p/security/updatePassword">设置</a></li>
   				</ul>
   				<ul>
   					<li class="red"><i class="icon-remove-sign"></i></li>

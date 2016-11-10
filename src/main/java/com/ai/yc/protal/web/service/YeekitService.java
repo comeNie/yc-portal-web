@@ -57,6 +57,7 @@ public class YeekitService {
         postParams.put("app_key", APP_KEY);// 授权APP KEY
         postParams.put("text", URLEncoder.encode(text, "UTF-8"));// 待翻译文本,UTF-8编码
         String resultStr = HttpUtil.doPost(SERVER_URL, postParams);
+        LOGGER.info("dotranslate result:{}",resultStr);
         JSONArray translateds = JSON.parseObject(resultStr).getJSONArray("translation")
                 .getJSONObject(0).getJSONArray("translated");
         StringBuffer sb = new StringBuffer();
@@ -73,8 +74,11 @@ public class YeekitService {
      * @param text
      * @return
      */
-    public String detection(String text){
-        String resultStr = HttpUtil.doPost(TRANSLAN_URL, text);
+    public String detection(String text) throws UnsupportedEncodingException {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("text",URLEncoder.encode(text,"UTF-8"));
+        String resultStr = HttpUtil.doGet(TRANSLAN_URL, params);
+        LOGGER.info("detection result:{}",resultStr);
         JSONObject translated = JSON.parseObject(resultStr);
         //返回失败信息
         if (!translated.getInteger("errorCode").equals(0)) {
