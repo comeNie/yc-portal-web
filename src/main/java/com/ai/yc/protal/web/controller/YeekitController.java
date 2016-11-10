@@ -78,8 +78,7 @@ public class YeekitController {
             lan = yeekitService.detection(text);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-           // resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"");
-            //TODO 地址不通 弄个假数据
+            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"");
         }
       
         resData.setData(lan);

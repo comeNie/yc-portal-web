@@ -6,8 +6,10 @@ import com.ai.yc.protal.web.utils.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,8 @@ public class YeekitService {
     private String APP_KID;
     @Value("${yeekit.translate.appkey}")
     private String APP_KEY ;
+    @Autowired
+    private CloseableHttpClient client;
     /**
      * 语言检查出现错误
      */
@@ -56,7 +60,7 @@ public class YeekitService {
         postParams.put("app_kid", APP_KID);// 授权APP ID
         postParams.put("app_key", APP_KEY);// 授权APP KEY
         postParams.put("text", URLEncoder.encode(text, "UTF-8"));// 待翻译文本,UTF-8编码
-        String resultStr = HttpUtil.doPost(SERVER_URL, postParams);
+        String resultStr = HttpUtil.doPost(client,SERVER_URL, postParams);
         LOGGER.info("dotranslate result:{}",resultStr);
         JSONArray translateds = JSON.parseObject(resultStr).getJSONArray("translation")
                 .getJSONObject(0).getJSONArray("translated");
@@ -77,7 +81,7 @@ public class YeekitService {
     public String detection(String text) throws UnsupportedEncodingException {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("text",URLEncoder.encode(text,"UTF-8"));
-        String resultStr = HttpUtil.doGet(TRANSLAN_URL, params);
+        String resultStr = HttpUtil.doGet(client,TRANSLAN_URL, params);
         LOGGER.info("detection result:{}",resultStr);
         JSONObject translated = JSON.parseObject(resultStr);
         //返回失败信息

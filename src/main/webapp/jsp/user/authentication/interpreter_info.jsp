@@ -38,81 +38,91 @@
   			<div class="form-lable">
   				<ul>
   					<li class="toux">
-  						<p class="word">头像:</p>
+  						<p class="word">
+  							<spring:message code="interpreter.portrait" />
+  						</p>
   						<p class="portrait">
   							<img src="${portraitId}" id="portraitFileId" />
   							<div class="portrait-file">
-  								<a href="#">修改头像</a>
+  								<a href="#"><spring:message code="interpreter.updatePortrait" /></a>
   								<input type="file"  class="file-opacity" id="uploadImg" name="uploadImg" onchange="uploadImg11('uploadImg')"/>
   							</div>
   						</p>
   						<label id="uploadImgErrMsg" style="display: none;"><span class="ash" id="uploadImgText"></span></label>
   					</li>
   					<li>
-  						<p class="word"><b>*</b>用户名:</p>
+  						<p class="word"><b>*</b>
+							<spring:message code="interpreter.userName" />
+						</p>
   						<p><input type="text" class="int-text int-xlarge radius" id="userName"  name="userName" placeholder="请输入用户名"/></p>
   					</li>
   					<li>
-  						<p class="word">姓名:</p>
+  						<p class="word">
+  							<spring:message code="interpreter.fullName" />
+  						</p>
   						<p><input type="text" class="int-text int-xlarge radius" name="fullName" id="fullName" /></p>
   					</li>
   					<li>
-  						<p class="word"><b>*</b>昵称:</p>
+  						<p class="word"><b>*</b>
+  							<spring:message code="interpreter.nickName" />
+  						</p>
   						<p><input type="text" class="int-text int-xlarge radius" name="nickname" id="nickname" value="${interpreterInfo.nickname}"/>
   						</p>
   						<label id="nickNameErrMsg" style="display: none;"><span  id="nickNameText"></span></label>
   					</li>
   					<li>
-  						<p class="word">性别:</p>
+  						<p class="word">
+  							<spring:message code="interpreter.sex" />
+  						</p>
   						<c:if test="${interpreterInfo.sex==0}">
 	  						<p>
 	  							<span><input type="radio" name="sex" class="radio" checked="checked" value="0"/></span>
-	  							<span>男</span>
+	  							<span><spring:message code="interpreter.sex.man" /></span>
 	  						</p>
 	  						<p>
 	  							<span><input type="radio" name="sex" class="radio" value="1"/></span>
-	  							<span>女</span>
+	  							<span><span><spring:message code="interpreter.sex.women" /></span></span>
 	  						</p>
   						</c:if>
   						<c:if test="${interpreterInfo.sex==1}">
 	  						<p>
 	  							<span><input type="radio" name="sex" class="radio"  value="0"/></span>
-	  							<span>男</span>
+	  							<span><spring:message code="interpreter.sex.man" /></span>
 	  						</p>
 	  						<p>
 	  							<span><input type="radio" name="sex" class="radio" checked="checked" value="1"/></span>
-	  							<span>女</span>
+	  							<span><spring:message code="interpreter.sex.women" /></span>
 	  						</p>
   						</c:if>
   					</li>
   					<li>
-  						<p class="word">生日:</p>
+  						<p class="word"><spring:message code="interpreter.birthday" /></p>
   						<p>																					
   							<input type="text" class="int-text int-xlarge radius" readonly="readonly" name="birthday" value="${birthday}" id="startTime"/>
 							<span class="time"> <i class="fa  fa-calendar" ></i></span>
   						</p>
   					</li>
   					<li>
-  						<p class="word">邮箱:</p>
+  						<p class="word"><spring:message code="interpreter.email" /></p>
   						<p  class="rightword">ceshi@gtcom.com.cn</p>
-  						<p><a href="#">修改</a></p>
+  						<p><a href="#"><spring:message code="interpreter.update" /></a></p>
   					</li>
   					<li>
-  						<p class="word">手机:</p>
+  						<p class="word"><spring:message code="interpreter.mobilePhone" /></p>
   						<p  class="rightword">需到安全中心进行绑111定</p>
-  						<p><a href="#">设置</a></p>
+  						<p><a href="#"><spring:message code="interpreter.setting" /></a></p>
   					</li>
   					<li>
   						<p class="word">QQ:</p>
   						<p><input type="text" class="int-text int-xlarge radius" name="qq" id="qq"/></p>
   					</li>
   					<li>
-  						<p class="word">地址:</p>
+  						<p class="word"><spring:message code="interpreter.address" /></p>
   						<p><select class="select select-in-small"></select></p>
   						<p><select class="select select-in-small"></select></p>
-  						<p>省</p>
+  						<p><spring:message code="interpreter.address" /></p>
   						<p><select class="select select-in-small"></select></p>
-  						<p>市</p>
+  						<p><spring:message code="interpreter.cnCity" /></p>
   						<p><input type="text" class="int-text int-in-bi radius" id="address" name="address"/></p>
   					</li>
   				</ul>

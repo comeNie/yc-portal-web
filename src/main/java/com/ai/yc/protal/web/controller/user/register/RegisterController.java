@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.RandomUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
@@ -25,12 +24,14 @@ import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.constants.Constants.UcenterOperation;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
-import com.ai.yc.protal.web.utils.MD5Util;
+import com.ai.yc.protal.web.utils.PasswordMD5Util.Md5Utils;
 import com.ai.yc.protal.web.utils.VerifyUtil;
+import com.ai.yc.ucenter.api.members.interfaces.IUcMembersOperationSV;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
 import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckEmailRequest;
 import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckeMobileRequest;
+import com.ai.yc.ucenter.api.members.param.opera.UcMembersActiveRequest;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeRequest;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.InsertYCUserRequest;
@@ -54,6 +55,7 @@ public class RegisterController {
 	private static final String REGISTER = "user/register/register";
 	private static final String EMAIL = "user/register/sendMail";
 	private static final String SUCCESS = "user/register/success";
+	private static final String ERROR = "user/register/failure";
 
 	@RequestMapping("/toRegister")
 	public ModelAndView toRegister() {
@@ -108,7 +110,7 @@ public class RegisterController {
 				msg = resHeader.getResultMessage();
 
 			if (resHeader != null && resHeader.isSuccess()) {
-				sendRegisterEmaial(res.getUserId(), req.getEmail());
+				sendRegisterEmaial(res.getUserId(), req.getEmail(),res.getOperationcode());
 				return new ResponseData<Boolean>(
 						ResponseData.AJAX_STATUS_SUCCESS, msg, true);
 			}
@@ -116,7 +118,7 @@ public class RegisterController {
 					msg, false);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
-			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_FAILURE,
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 					"error", false);
 		}
 
@@ -202,56 +204,47 @@ public class RegisterController {
 		return false;
 	}
 	@RequestMapping("emailActivate")
-	public String emailActivate() {
-		return EMAIL;
+	public String emailActivate(HttpServletRequest request,@RequestParam int uid,@RequestParam String code) {
+		UcMembersActiveRequest req = new UcMembersActiveRequest();
+		req.setUid(uid);
+		req.setOperationcode(code);
+		req.setOperationtype(UcenterOperation.OPERATION_TYPE_EMAIL_ACTIVATE);
+		UcMembersResponse res =DubboConsumerFactory.getService(IUcMembersOperationSV.class).ucActiveMember(req);
+		if (res != null && res.getMessage() != null
+				&& res.getMessage().isSuccess() && res.getCode() != null
+				&& res.getCode().getCodeNumber() != null
+				&& res.getCode().getCodeNumber() == 1) {
+			return SUCCESS;
+		}
+		LOG.info("邮箱激活返回参数："+JSON.toJSONString(res));
+		return ERROR;
 	}
 	@RequestMapping("test")
-	@ResponseBody
+	
 	public String test() {
-		UcMembersGetOperationcodeRequest req = new UcMembersGetOperationcodeRequest();
-		req.setTenantId(Constants.DEFAULT_TENANT_ID);
-		req.setOperationtype(UcenterOperation.OPERATION_TYPE_EMAIL_ACTIVATE);
-		req.setUid(100058);
-		req.setUserinfo("1820025657@qq.com");
-		Object[] result =VerifyUtil.getUcenterOperationCode(req);
-		return JSON.toJSONString(result);
+		return ERROR;
 	}
 
 	/**
 	 * 发送验证邮件
 	 */
-	private boolean sendRegisterEmaial(String userId, String email) {
+	private boolean sendRegisterEmaial(String userId, String email,String code) {
 		if (!StringUtil.isBlank(email)) {
-			UcMembersGetOperationcodeRequest req = new UcMembersGetOperationcodeRequest();
-			req.setTenantId(Constants.DEFAULT_TENANT_ID);
-			req.setUid(Integer.parseInt(userId));
-			req.setUserinfo(email);
-			req.setOperationtype(UcenterOperation.OPERATION_TYPE_EMAIL_ACTIVATE);
-			Object[] result = VerifyUtil.getUcenterOperationCode(req);
-			String code = "";
-			boolean isOk = (boolean) result[0];
-			String msg = "ok";
-			if (!CollectionUtil.isEmpty(result) && result.length > 2) {
-				code = result[2] + "";
-			}
-			if (isOk) {
-				SendEmailRequest emailRequest = new SendEmailRequest();
-				emailRequest.setTomails(new String[] { email });
-				emailRequest.setData(new String[] { "zhangsan", code});
-				Locale locale = rb.getDefaultLocale();
-				String _template = "";
-				if (Locale.SIMPLIFIED_CHINESE.toString().equals(
-						locale.toString())) {
-					_template = Register.REGISTER_EMAIL_ZH_CN_TEMPLATE;
-				} else if (Locale.US.toString().equals(locale.toString())) {
-					_template = Register.REGISTER_EMAIL_EN_US_TEMPLATE;
-				}
-				emailRequest.setTemplateURL(_template);
-				emailRequest.setSubject("注册成功");
-				VerifyUtil.sendEmail(emailRequest);
-			}
 
-			return true;
+			SendEmailRequest emailRequest = new SendEmailRequest();
+			emailRequest.setTomails(new String[] { email });
+			emailRequest.setData(new String[] { "zhangsan", code,userId});
+			Locale locale = rb.getDefaultLocale();
+			String _template = "";
+			if (Locale.SIMPLIFIED_CHINESE.toString().equals(
+					locale.toString())) {
+				_template = Register.REGISTER_EMAIL_ZH_CN_TEMPLATE;
+			} else if (Locale.US.toString().equals(locale.toString())) {
+				_template = Register.REGISTER_EMAIL_EN_US_TEMPLATE;
+			}
+			emailRequest.setTemplateURL(_template);
+			emailRequest.setSubject("注册成功");
+			return VerifyUtil.sendEmail(emailRequest);
 		}
 		return false;
 	}
@@ -276,7 +269,7 @@ public class RegisterController {
 		req.setNickname("译粉_" + RandomUtil.randomNum(8));
 		String password = request.getParameter("password");
 		if (!StringUtil.isBlank(password)) {
-			req.setPassword(MD5Util.MD5(password));
+			req.setPassword(Md5Utils.md5(password));
 		}
 		req.setRegip("0");
 		return req;
