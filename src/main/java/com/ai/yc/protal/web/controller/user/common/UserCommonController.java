@@ -204,4 +204,16 @@ public class UserCommonController {
 		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 				"发送失败", false);
 	}
+	/**
+	 * 调用ucenter生成操作码
+	 */
+	@RequestMapping("/getUcenterOperationCode")
+	@ResponseBody
+	public ResponseData<Boolean> getUcenterOperationCode(HttpServletRequest request) {
+		String type =request.getParameter("type");
+		if("1".equals(type)){//邮箱注册操作码
+			
+		}
+		return null;
+	}
 }
