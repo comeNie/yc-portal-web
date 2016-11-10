@@ -57,6 +57,7 @@ public class YeekitService {
         postParams.put("app_key", APP_KEY);// 授权APP KEY
         postParams.put("text", URLEncoder.encode(text, "UTF-8"));// 待翻译文本,UTF-8编码
         String resultStr = HttpUtil.doPost(SERVER_URL, postParams);
+        LOGGER.info("dotranslate result:{}",resultStr);
         JSONArray translateds = JSON.parseObject(resultStr).getJSONArray("translation")
                 .getJSONObject(0).getJSONArray("translated");
         StringBuffer sb = new StringBuffer();
