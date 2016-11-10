@@ -4,9 +4,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <METAHTTP-EQUIV="Pragma"CONTENT="no-cache" />
-	<METAHTTP-EQUIV="Cache-Control"CONTENT="no-cache">
-	<METAHTTP-EQUIV="Expires"CONTENT="0">
     <title>首页</title>
     <%@ include file="/inc/inc.jsp" %>
     <link href="${uedroot}/css/modular/index.css" rel="stylesheet" type="text/css"/>
@@ -105,7 +102,7 @@
                     <p>
                         <a id="copyText" href="javaScript:void(0)" class="ord-icon" data-clipboard-target="transRes"><i class="icon iconfont">&#xe62e;</i></a>
                         <a id="playControl" href="javaScript:void(0)" class="radio-icon"><i class="icon iconfont">&#xe61b;</i></a>
-                        <a href="javaScript:void(0)" class="stars-icon"><i class="icon iconfont">&#xe754;</i></a>
+                        <%--<a href="javaScript:void(0)" class="stars-icon"><i class="icon iconfont">&#xe754;</i></a>--%>
                     </p>
                     <p class="right">
                         <a href="javaScript:void(0)" class="edit-icon">
