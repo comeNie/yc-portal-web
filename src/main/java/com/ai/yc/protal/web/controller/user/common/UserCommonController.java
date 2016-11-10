@@ -296,7 +296,8 @@ public class UserCommonController {
 		   int overTime = config.getIntValue(EmailVerify.EMAIL_VERIFICATION_OVER_TIME);
            AiPassUitl.getCacheClient().setex(key, overTime, randomStr);
 		}
-		return null;
+		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, "ok",
+				isOk);
 	}
 	/**
 	 * 校验邮件验证码
