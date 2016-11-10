@@ -36,8 +36,9 @@
 					if($option.is(':selected')){
 						self.selected = {
 							index: i,
-							title: $option.text()
-						}
+							title: $option.text(),
+							value: $option.val()
+						};
 						self.focusIndex = i;
 					};
 					if($option.hasClass('label') && i == 0){
@@ -56,7 +57,8 @@
 				if(!self.selected){
 					self.selected = {
 						index: 0,
-						title: self.$options.eq(0).text()
+						title: self.$options.eq(0).text(),
+						value: self.$options.eq(0).val()
 					}
 					self.focusIndex = 0;
 				};
@@ -70,7 +72,7 @@
 				disabledClass = self.disabled ? ' disabled' : '';
 			
 			self.$container = self.$select.wrap('<div class="'+self.wrapperClass+touchClass+disabledClass+'"><span class="old"/></div>').parent().parent();
-			self.$active = $('<span class="selected">'+self.selected.title+'</span>').appendTo(self.$container);
+			self.$active = $('<span value="'+self.selected.value+'" class="selected">'+self.selected.title+'</span>').appendTo(self.$container);
 			self.$carat = $('<span class="carat"/>').appendTo(self.$container);
 			self.$scrollWrapper = $('<div><ul/></div>').appendTo(self.$container);
 			self.$dropDown = self.$scrollWrapper.find('ul');
@@ -90,6 +92,8 @@
 					break;
 				};
 			};
+			if (window.console)
+				console.log("the max height:"+self.maxHeight);
 
 			if(self.isTouch && self.nativeTouch){
 				self.bindTouchHandlers();
@@ -110,6 +114,7 @@
 						value = $selected.val();
 						
 					self.$active.text(title);
+
 					if(typeof self.onChange === 'function'){
 						self.onChange.call(self.$select[0],{
 							title: title, 
@@ -306,6 +311,8 @@
 				selectIndex = self.hasLabel ? index + 1 : index;
 			self.$items.removeClass('active').eq(index).addClass('active');
 			self.$active.text(option.title);
+			self.$active.attr("value",option.value);
+			//console.log('value='+option.value+', self.$active.val='+self.$active.val());
 			self.$select
 				.find('option')
 				.removeAttr('selected')
@@ -316,7 +323,8 @@
 				
 			self.selected = {
 				index: index,
-				title: option.title
+				title: option.title,
+				value: option.value
 			};
 			self.focusIndex = i;
 			if(typeof self.onChange === 'function'){

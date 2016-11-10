@@ -94,7 +94,7 @@
 								</p>
 								<p class="img">
 									<img id="refreshVerificationCode"
-										src="${_base}/reg/imageVerifyCode" height="44"
+										src="${_base}/userCommon/imageVerifyCode" height="44"
 										style="cursor: pointer">
 								</p>
 							</li>
@@ -103,7 +103,7 @@
 									<spring:message code="ycregister.dynamiCode" />
 								</p>
 								<p>
-									<input type="text" class="int-text int-in-280 radius">
+									<input id="smsCode" name="smsCode" maxlength="6" type="text" class="int-text int-in-280 radius">
 								</p>
 								<p>
 									<input id="send_dynamicode_btn" type="button" class="btn btn-green btn-280 radius ml-20"
@@ -159,7 +159,8 @@
 		"agreement" : '<spring:message code="ycregisterMsg.agreement" />',
 		"phone_registered" : '<spring:message code="ycregister.register.phone" />',
 		"email_registered" : '<spring:message code="ycregister.register.email" />',
-		"getDynamiCode":'<spring:message code="ycregister.getDynamiCode"/>'
+		"sms_code_empty":'<spring:message code="ycregisterMsg.smsEmpty"/>',
+		"sms_code_error":'<spring:message code="ycregisterMsg.smsError"/>'
 	};
 </script>
 

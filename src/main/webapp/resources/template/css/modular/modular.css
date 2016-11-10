@@ -27,7 +27,7 @@
 .right-title-left-word .word-li li{float:left;margin-right:20px;}
 .right-title-left-word .word-li li p{float:left;margin-right:6px;}
 .right-title-left-word .word-li li .red{color:#fe6b6b;}
-.right-title-right{width:400px;float:left;margin:35px 0 0 70px;}
+.right-title-right{float:right;margin:35px 0 0 70px;}
 .right-title-right p{width:90px;display:inline-block;text-align:center;}
 .right-title-right p span{width:100%;float:left;text-align:center;line-height:25px;}
 .right-title-right p span a {color:#9ba3af;}
@@ -107,8 +107,10 @@
 .no-order{width:750px;margin:0 auto;}
 .no-order ul{width:100%;float:left;margin-top:30px;}
 .no-order ul li{float:left;font-size:18px;color:#2c3e50;line-height:48px;}
+.no-order-cl ul li{line-height:22px;}
 .no-order ul .right{float:right}
 .no-order ul .mt-t50{margin-top:80px;}
+.no-order ul .mt-t500{margin-top:50px;}
 .no-step{width:100%;text-align: center;float:left;margin-top:80px;}
 /**我的订单**/
 .oder-table{width:100%;float:left;border-bottom:1px solid #e3e6ed;padding-bottom:18px;}
@@ -408,3 +410,8 @@
 #next3{display:none;}
 #next5{display:none;}
 #next6{display:none;}
+
+/****/
+.table tr .fy-sm{width:230px;overflow:hidden;text-overflow: ellipsis; white-space: nowrap;}
+.renz-list{width:100%;float:left;text-align:center;margin-top:40px;font-size:14px;color:#6a6c6f;}
+.renz-list a{color:#2361ea;font-size:14px;}

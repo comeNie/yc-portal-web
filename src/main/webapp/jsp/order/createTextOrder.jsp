@@ -121,7 +121,7 @@
 							<p><spring:message code="order.stanInstruction"/></p>
 						</li>
 						<li>
-							<p><span id="stanPrice"></span><spring:message code="order.thousandWords"/></p>
+							<p><span id="stanPrice"></span><a></a><spring:message code="order.thousandWords"/></p>
 							<p class="ml-30"><span>1</span><spring:message code="order.freeChanges"/></p>
 						</li>
 						<li class="green-li">
@@ -147,7 +147,7 @@
 							<p><spring:message code="order.proInstruction"/></p>
 						</li>
 						<li>
-							<p><span id="proPrice"></span><spring:message code="order.thousandWords"/></p>
+							<p><span id="proPrice"></span><a></a><spring:message code="order.thousandWords"/></p>
 							<p class="ml-30"><span>1</span><spring:message code="order.freeChanges"/></p>
 						</li>
 						<li class="green-li">
@@ -172,7 +172,7 @@
 							<p><spring:message code="order.pubInstruction"/></p>
 						</li>
 						<li>
-							<p><span id="pubPrice"></span><spring:message code="order.thousandWords"/></p>
+							<p><span id="pubPrice"></span><a></a><spring:message code="order.thousandWords"/></p>
 							<p class="ml-30"><span>1</span><spring:message code="order.freeChanges"/></p>
 						</li>
 						<li class="green-li">

@@ -12,7 +12,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
-    
+    var index = 1; //第一次进入页面
     var textOrderAddPager = Widget.extend({
     	//属性，使用时由类的构造函数传入
     	attrs: {
@@ -25,7 +25,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			"click #submitOrder":"_addTextOrder",
 			"click #toCreateOrder":"_toCreateOrder",
 			"click #urgentOrder":"_transPrice",
-			"change #selectDuad":"_transPrice",
+			"click .dropdown":"_transPrice",
 			"click #saveContact":"_saveContact",
 			"click #editContact":"_editContactDiv",
 			"click #fy-btn": "_uploadFile",
@@ -146,6 +146,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			}
 			
 			//计算字数
+			var transContent = $("#translateContent").val();
 			var totalWords = CountWordsUtil.count($("#translateContent").val());
 			
 			var baseInfo = {};
@@ -205,19 +206,18 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				productInfo.isUrgent = "Y";
 			else 
 				productInfo.isUrgent = "N";
+				
 			var duadList =[];    
-			$('input[name="duad"]:checked').each(function(){   
-				var tempObj = {};
-				tempObj.languagePairId =$(this).attr("name");
-				//languagePairName =
-				//languageNameEn =
-				duadList.push(tempObj);    
-			});
+			var tempLanPairObj = {};
+			tempLanPairObj.languagePairId = $(".dropdown .selected").attr('value');
+			tempLanPairObj.languagePairName =  $(".dropdown .selected").text();
+			tempLanPairObj.languageNameEn = currentLan.indexOf("zh") >= 0 ? 'zh':'en';
+			duadList.push(tempLanPairObj);
 			productInfo.languagePairInfoList = duadList;
 			
 			var translateLevelInfoList=[];
 			var tempTranlevObj={};
-			tempTranlevObj.translateLevel = $(".none-ml.current").attr('name');;
+			tempTranlevObj.translateLevel = $(".none-ml.current").attr('name');
 			translateLevelInfoList.push(tempTranlevObj);
 			
 			productInfo.translateLevelInfoList = translateLevelInfoList;
@@ -330,33 +330,44 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		
 		//语言对改变，价格改变,翻译速度改变
 		_transPrice:function() {
-			
 			var _this = this;
-			var selected = $("#selectDuad").find("option:selected");
-			var currency;
-			var ordinary = selected.attr("ordinary");
-			var ordinaryUrgent = selected.attr("ordinaryUrgent");
-			var professional = selected.attr("professional");
-			var professionalUrgent = selected.attr("professionalUrgent");
-			var publish = selected.attr("publish");
-			var publishUrgent = selected.attr("publishUrgent");
 			
-			if (currentLan.indexOf("zh") >= 0) {
-				currency = "元";
-			} else {
-				currency = "美元";
-			}
-			
-			if ($("#urgentOrder").is(':checked') ) {
-				$("#stanPrice").html(professionalUrgent).after(currency);
-				$("#proPrice").html(professionalUrgent).after(currency);
-				$("#pubPrice").html(publishUrgent).after(currency);
-			} else {
-				$("#stanPrice").html(ordinary).after(currency);
-				$("#proPrice").html(professional).after(currency);
-				$("#pubPrice").html(publish).after(currency);
-			}
-			
+        	$("#selectDuad").find('option').each(function() {
+        		var val = $(this).val();
+        		if (val ==  $(".dropdown .selected").attr('value')) {
+        			var selected = $(this);
+
+        			var currency;
+        			var ordinary = selected.attr("ordinary");
+        			var ordinaryUrgent = selected.attr("ordinaryUrgent");
+        			var professional = selected.attr("professional");
+        			var professionalUrgent = selected.attr("professionalUrgent");
+        			var publish = selected.attr("publish");
+        			var publishUrgent = selected.attr("publishUrgent");
+        			
+        			if (currentLan.indexOf("zh") >= 0) {
+        				currency = "元";
+        			} else {
+        				currency = "美元";
+        			}
+        			
+        			if ($("#urgentOrder").is(':checked') ) {
+        				$("#stanPrice").html(professionalUrgent).after(currency);
+        				$("#proPrice").html(professionalUrgent);
+        				$("#pubPrice").html(publishUrgent);
+        			} else {
+        				$("#stanPrice").html(ordinary);
+        				$("#proPrice").html(professional);
+        				$("#pubPrice").html(publish);
+        			}
+        			
+        			$("#stanPrice").next('a').html(currency);
+    				$("#proPrice").next('a').html(currency);
+    				$("#pubPrice").next('a').html(currency);
+        		
+        		}
+            });
+		
 			this._getSpeed();
 		},
 		

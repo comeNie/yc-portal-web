@@ -3,8 +3,12 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
     <display-name>portal-web</display-name>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:context/core-context.xml</param-value>
+    </context-param>
     <listener>
-        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <!-- 编码过滤器 -->
     <filter>
@@ -26,11 +30,7 @@
     <!-- 安全过滤器-->
     <filter>
         <filter-name>xss-firewall</filter-name>
-        <filter-class>com.ai.net.xss.filter.XSSFilter</filter-class>
-        <init-param>
-            <param-name>ignorePath</param-name>
-            <param-value>/prodedit/save</param-value>
-        </init-param>
+        <filter-class>com.ai.net.xss.filter.XSSFilter</filter-class>ß
     </filter>
    
     <filter-mapping>

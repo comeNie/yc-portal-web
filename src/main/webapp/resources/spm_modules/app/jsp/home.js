@@ -25,13 +25,18 @@ define('app/jsp/home', function (require, exports, module) {
             "click #trante": "_mt",
             "click #playControl": "_text2audio",
             "focus #int-before": "_verifyTranslateLan"
+			"click #humanTranBtn":"_goTextOrder"
         },
 
         //重写父类
         setup: function () {
             homePage.superclass.setup.call(this);
         },
-       
+		//人工翻译,跳转到笔译订单
+       	_goTextOrder:function(){
+			window.location.href=_base+"/written";
+		},
+
         //翻译
         _mt:function() {
         	var from;
@@ -65,6 +70,7 @@ define('app/jsp/home', function (require, exports, module) {
         //文本转音频
         _text2audio:function() {
         	var to;
+			//获取目标语言编码
         	$("#showb option").each(function() {
         		if ($(this).text() == $(".dropdown .selected").eq(1).html())
         			to = $(this).val();
