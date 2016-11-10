@@ -54,16 +54,20 @@
                     <c:choose>
                         <c:when test="${payResult == '1'}">
                             <li><img src="${uedroot}/images/rech-win.png" /></li>
-                            <li class="word">充值成功</li>
+                            <%--支付成功--%>
+                            <li class="word"><spring:message code="order.pay.result.success"/></li>
                         </c:when>
                         <c:otherwise>
                             <li><img src="${uedroot}/images/rech-fail.png" /></li>
-                            <li class="word">充值失败</li>
+                            <%--充值失败--%>
+                            <li class="word"><spring:message code="order.pay.result.fail"/></li>
                         </c:otherwise>
                     </c:choose>
                     <li class="list mt-50">
-                        <p>请您牢记充值单号： <a href="#">${orderId}</a>,您可以在“<a href="${_base}/p/customer/order/list/view">我的订单</a>”中查看您的充值信息</p>
-                        <p>若有任何疑问，欢迎致电咨询：400-119-8080</p>
+                        <%--您的订单号： 5000020965 ,您可以在“我的订单”中查看您的订单信息，--%>
+                        <p><spring:message code="order.pay.result.tag.front"/><a href="${_base}/p/customer/order/${orderId}">${orderId}</a><spring:message code="order.pay.result.tag.back"/></p>
+                            <%--若有任何疑问，欢迎致电咨询：400-119-8080--%>
+                            <p><spring:message code="order.pay.result.tag.phone"/></p>
                     </li>
                 </ul>
             </div>
