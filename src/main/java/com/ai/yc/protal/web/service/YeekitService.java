@@ -75,6 +75,7 @@ public class YeekitService {
      */
     public String detection(String text){
         String resultStr = HttpUtil.doPost(TRANSLAN_URL, text);
+        LOGGER.info("detection result:{}",resultStr);
         JSONObject translated = JSON.parseObject(resultStr);
         //返回失败信息
         if (!translated.getInteger("errorCode").equals(0)) {
