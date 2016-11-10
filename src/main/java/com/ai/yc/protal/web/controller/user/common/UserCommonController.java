@@ -184,13 +184,13 @@ public class UserCommonController {
 		String phone = request.getParameter("phone");
 		String type = request.getParameter("type");
 		String ckValue = request.getParameter("code");
-		boolean isOk = VerifyUtil.checkSmsCode( phone,  type, ckValue);
-		String msg ="ok";
-		if(!isOk){
-			msg ="验证码错误";
+		boolean isOk = VerifyUtil.checkSmsCode(phone, type, ckValue);
+		String msg = "ok";
+		if (!isOk) {
+			msg = rb.getMessage("ycregisterMsg.verificationCodeError");
 		}
-		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
-				msg, isOk);
+		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg,
+				isOk);
 	}
 
 	private ResponseData<Boolean> sendSms(SmsRequest req, String randomStr) {
@@ -204,10 +204,12 @@ public class UserCommonController {
 		if (!StringUtil.isBlank(sendCount)) {
 			nowCount = Integer.parseInt(sendCount);
 		}
-
+		String msg =rb.getMessage("ycregisterMsg.sendSmsError");
 		if (nowCount > maxCount) {
+			msg = rb.getMessage(
+					"ycregisterMsg.verificationCodeCountError", new Object[]{maxCount});
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
-					"超过" + maxCount + "次", false);
+					msg, false);
 		}
 
 		boolean sendOk = true;// SmsSenderUtil.sendMessage(phone,
@@ -222,11 +224,11 @@ public class UserCommonController {
 			// 手机验证码超时时间
 			int overTime = config.getIntValue(req.getCodeOverTimeKey());
 			iCacheClient.setex(req.getCodeKey(), overTime, randomStr);
-			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
-					"发送成功", true);
+			msg = rb.getMessage("ycregisterMsg.sendSmsSuccess");
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,msg, true);
 		}
 		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
-				"发送失败", false);
+				msg, false);
 	}
 
 	/**

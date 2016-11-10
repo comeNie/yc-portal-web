@@ -339,6 +339,8 @@ define(
 													smsObj = window.setInterval(
 															_this.startSmsTime,
 															1000); // 启动计时器，1秒执行一次
+												}else{
+													_this._showCheckMsg(json.statusInfo);
 												}
 											}
 										});

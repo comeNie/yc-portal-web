@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
+<title></title>
 <%@ include file="/inc/inc.jsp"%>
 </head>
 <body>
@@ -51,7 +51,7 @@
 		<div class="cloud-wrapper">
 			<!--左侧菜单-->
 			<div class="left-subnav">
-				<jsp:include page="/inc/leftmenu.jsp" />	
+				<jsp:include page="/inc/leftmenu.jsp" />
 			</div>
 			<!--右侧内容-->
 			<!--右侧大块-->
@@ -61,7 +61,7 @@
 				<!--右侧第二块-->
 				<div class="right-list mt-0">
 					<div class="right-list-title pb-10 pl-20">
-						<p>设置登录密码（设置支付密码）</p>
+						<p>设置登录密码</p>
 					</div>
 					<!--充值-->
 					<div class="recharge mt-30">
@@ -107,7 +107,7 @@
 									<ul>
 										<li>
 											<p class="word">已绑定手机:</p>
-											<p>138****1234</p>
+											<p>${user.mobile}</p>
 										</li>
 										<li>
 											<p class="word">动态码:</p>
@@ -253,7 +253,7 @@
 									<ul>
 										<li>
 											<p class="word">已绑定邮箱:</p>
-											<p>154560204@qq.com</p>
+											<p>${user.email}</p>
 										</li>
 										<li>
 											<p class="word">动态码:</p>
@@ -374,11 +374,13 @@
 		</div>
 
 	</div>
-	<script type="text/javascript"
-		src="../scripts/modular/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="../scripts/modular/frame.js"></script>
-	<script type="text/javascript" src="../scripts/modular/eject.js"></script>
-
 </body>
 <%@ include file="/inc/incJs.jsp"%>
+<script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
+<script type="text/javascript" src="${uedroot}/scripts/modular/eject.js"></script>
+
+<script type="text/javascript">
+	var phone = "${user.mobile}";
+	var email = "${user.email}";
+</script>
 </html>
