@@ -32,7 +32,7 @@
   				</li>
   				<li class="nav-icon"><a href="#"><i class="icon iconfont">&#xe60b;</i></a></li>
   				<li class="nav-icon mt-2"><a href="#"><i class="icon iconfont">&#xe60a;</i><span class="message">3</span></a></li>
-  				<li class="user"><a href="#" class="yonh">爱大脸大脸<i class="icon-caret-down"></i></a>
+  				<li class="user"><a href="#" class="yonh">${userinfo.nickname}<i class="icon-caret-down"></i></a>
   					<div class="show">
   						<ul>
   							<li><i class="icon-user"></i><a href="#">个人信息</a></li>
@@ -61,13 +61,18 @@
 	
   		<!--右侧第二块-->
   		<div class="right-list mt-0">
-  			<div class="security-title">
-  				<div class="security-chart"><img src="${uedroot}/images/anq.jpg" /></div>
-  				<div class="security-word">
+  			<div id="sec-level" class="security-title">
+  			
+  				<div class="security-chart">
+  					<!-- <img  src="${uedroot}/images/anq.jpg" /> -->
+  					<div id="indicatorContainer"></div>
+  				</div>
+  				
+  				<div  id="sec-level-info"  class="security-word">
   					<ul>
-  						<li>您的账号安全级别</li>
-  						<li class="red">高危账号</li>
-  						<li class="ash">请保持手机、邮箱正常使用，如果停用，请及时修改</li>
+  						<li >您的账号安全级别</li>
+  						<li id="sec-level-info-account-level" class="red">高危账号</li>
+  						<li id="sec-level-info-account-warn" class="ash">请保持手机、邮箱正常使用，如果停用，请及时修改</li>
   					</ul>
   				</div>
   			</div>
@@ -106,4 +111,40 @@
   		
   </div>
 </body>
+
+<%@ include file="/inc/incJs.jsp" %>
+
+<script src="${_base}/resources/spm_modules/radia/radialIndicator.js"></script>
+
+<script type="text/javascript">
+	var pager;
+	(function() {
+		seajs.use('app/jsp/user/securitycener/securitycener', function(secPager) {
+			pager = new secPager({
+				element : document.body
+			});
+			pager.render();
+		});
+	})();
+	
+	var securitylevel = "${securitylevel}";
+	
+	$(document).ready(function(){
+		var accLevelInfo = $('#sec-level-info-account-level');
+		if(parseInt(securitylevel) < 60)
+			{accLevelInfo.html("高危账号");}
+		if(parseInt(securitylevel) >= 60 && parseInt(securitylevel) < 100)
+			{accLevelInfo.html("有一定风险");}
+		if(parseInt(securitylevel) == 100)
+			{accLevelInfo.html("您的帐号很安全");}
+		
+		// 环形
+		$('#indicatorContainer').radialIndicator({
+				radius : 100
+		});
+		var radialObj = $('#indicatorContainer').data('radialIndicator');
+		radialObj.animate(parseInt(securitylevel));
+	});
+</script>
+   
 </html>
