@@ -8,12 +8,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     require("jquery-validation/1.15.1/jquery.validate");
 	//require("app/util/aiopt-validate-ext");
     var CountWordsUtil = require("app/util/countWords");
+    var CommonMethodUtil = require("app/util/commonMethod");
     
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
     
     var textOrderAddPager = Widget.extend({
-    	Implements:CountWordsUtil,
     	//属性，使用时由类的构造函数传入
     	attrs: {
     		clickId:""
@@ -45,6 +45,11 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			$(":input").bind("focusout",function(){
 				formValidator.element(this);
 			});
+			
+			var flag = CommonMethodUtil.getQueryString("flag");
+			if(flag == 'submit') { //如果类型是提交，调到提交订单页面
+				this._addTextOrderTemp();
+			} 
     	},
         
         _initValidate:function(){
@@ -144,27 +149,62 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			var totalWords = CountWordsUtil.count($("#translateContent").val());
 			
 			var baseInfo = {};
-			//baseInfo.chlId=""后台写
-			//baseInfo.orderType
-			baseInfo.busiType = 1;
-			baseInfo.translateType = "0"; //0：快速翻译 1：文档翻译 缺判断
-			baseInfo.translateName = $("#translateContent").val().substring(0,15);
-			//baseInfo.orderLevel =??
-			baseInfo.subFlag = "0"; // "0：系统自动报价 1：人工报价"
-			//baseInfo.userType
-			baseInfo.userId = "userid";
-			baseInfo.corporaId = "corporaId";
-			
 			var productInfo = {};
-			productInfo.translateSum = totalWords;
-			productInfo.useCode = "";
-			productInfo.fieldCode = "";
-			productInfo.isSetType = "1"
-			if ( $("#urgentOrder").is(':checked') ) {
-				productInfo.isUrgent = "1";
+			var contactInfo = {};
+			var feeInfo = {};
+			if (currentLan.indexOf("zh") >= 0) { 
+				baseInfo.orderType = "0";
+				baseInfo.flag = "0";
+				baseInfo.chlId = "0";
+			}else {
+				baseInfo.orderType = "1";
+				baseInfo.flag = "1";//业务标识 0:国内业务 1：国际业务 ??
+				baseInfo.chlId = "1";
 			}
-			//productInfo.needTranslateInfo??
-			productInfo.translateInfo = $("#translateContent").val();
+			
+			baseInfo.orderType = "1"; //??
+			baseInfo.busiType = 1;
+			if($("li[fileid]").length > 0) {
+				baseInfo.translateType = "1"
+				
+				var fileInfoList = [];
+				//判断是文档翻译
+				$("li[fileid]").each(function(){   
+					var tempObj = {};
+					tempObj.fileName = $(this).text();
+					tempObj.fileSaveId = $(this).attr("fileid");
+					fileInfoList.push(tempObj);    
+				});
+				productInfo.fileInfoList = fileInfoList;
+				
+				baseInfo.subFlag = "1";
+				productInfo.needTranslateInfo = JSON.stringify(fileInfoList);
+				productInfo.translateInfo = JSON.stringify(fileInfoList);
+				baseInfo.translateName = $("#fileList").find('li:first').text().substring(0,15);
+			} else {
+				baseInfo.translateType = "0"; //0：快速翻译 1：文档翻译 
+				baseInfo.subFlag = "0"; // "0：系统自动报价 1：人工报价"
+				productInfo.needTranslateInfo = $("#translateContent").val();
+				productInfo.translateInfo = $("#translateContent").val();
+				baseInfo.translateName = $("#translateContent").val().substring(0,15);
+			}
+			baseInfo.orderLevel = "1";
+			baseInfo.userType = "10"; //"10：个人 11：企业 12：代理人 "??
+			baseInfo.userId = "10086";
+			//baseInfo.corporaId
+			//baseInfo.accountId
+				
+			var today = new Date();
+			baseInfo.timeZone = 'GMT+'+(0 - today.stdTimezoneOffset()/60);
+			
+			productInfo.translateSum = totalWords;
+			productInfo.useCode = "222";
+			productInfo.fieldCode = "222";
+			productInfo.isSetType = "1"
+			if ( $("#urgentOrder").is(':checked') )
+				productInfo.isUrgent = "Y";
+			else 
+				productInfo.isUrgent = "N";
 			var duadList =[];    
 			$('input[name="duad"]:checked').each(function(){   
 				var tempObj = {};
@@ -174,19 +214,23 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				duadList.push(tempObj);    
 			});
 			productInfo.languagePairInfoList = duadList;
-			//productInfo.translateLevelInfoList = []
 			
-			var contactInfo = {};
+			var translateLevelInfoList=[];
+			var tempTranlevObj={};
+			tempTranlevObj.translateLevel = $(".none-ml.current").attr('name');;
+			translateLevelInfoList.push(tempTranlevObj);
+			
+			productInfo.translateLevelInfoList = translateLevelInfoList;
+			
 //			contactInfo.contactName =  $("#editContactDiv").find('p').eq(0).html();
 //			contactInfo.contactTel  =  $("#editContactDiv").find('p').eq(1).html();
 //			contactInfo.contactEmail  =  $("#editContactDiv").find('p').eq(2).html();
 			contactInfo.contactName=$("#saveContactDiv").find('input').eq(0).val();
-		    contactInfo.contactName="+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val();
-			contactInfo.contactName=$("#saveContactDiv").find('input').eq(2).val();
+		    contactInfo.contactTel="+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val();
+			contactInfo.contactEmail=$("#saveContactDiv").find('input').eq(2).val();
 			
-			var feeInfo = {};
 			feeInfo.totalFee = 100;
-			feeInfo.currencyUnit = $("#selectDuad").find("option:selected").attr("currency");
+			feeInfo.currencyUnit = $("#selectDuad").find("option:selected").val();
 			
 			ajaxController.ajax({
 				type: "post",
@@ -200,13 +244,15 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 					feeInfo: JSON.stringify(feeInfo)
 				},
 				success: function (data) {
-					if ("1" === data.statusCode) {
-						if(baseInfo.translateType == 1) {
-							window.location.href =  _base + "/p/customer/order/payOrder";
+					if ("OK" === data.statusInfo) {
+						if(baseInfo.translateType == 0) { //文字翻译
+							window.location.href =  _base + "/p/customer/order/payOrder?orderId="+data.data;
 						} else {
 							
+							//文档翻译，跳到待报价页面，暂缺
 						}
-						
+					} else { //用户未登陆
+						window.location.href = _base + "/p/order/textOrderSubmit?falg=submit";
 					}
 				}
 			});
@@ -214,18 +260,18 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		
 		//查询报价
 		_queryAutoOffer:function() {
+			if($("li[fileid]").length > 0) {
+				$("#price").html("<span>请耐心等待报价！</span>");
+				return;
+			}
+			
 			var req={};
 			req.wordNum = CountWordsUtil.count($("#translateContent").val());
 		    req.duadId = $("#selectDuad").find("option:selected").val();
 		    req.purposeId = $("#selectPurpose").find("option:selected").val();
 		    
-		    if($(".none-ml.current").attr('name') == 0) {
-		    	req.translateLevel = "100210";
-			} else if($(".none-ml.current").attr('name') == 1) {
-				req.translateLevel = "100220";
-			} else {
-				req.translateLevel = "100230";
-			}
+		    req.translateLevel = $(".none-ml.current").attr('name');
+		   
 	    	if ( $("#urgentOrder").is(':checked') ) 
 	    		req.isUrgent  = "1";
 			else 

@@ -2,9 +2,11 @@ package com.ai.yc.protal.web.controller.order;
 
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.vo.ResponseHeader;
+import com.ai.opt.sdk.components.dss.DSSClientFactory;
 import com.ai.opt.sdk.components.mcs.MCSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.paas.ipaas.dss.base.interfaces.IDSSClient;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.yc.common.api.cachekey.key.CacheKey;
@@ -21,25 +23,31 @@ import com.ai.yc.order.api.ordersubmission.param.FeeInfo;
 import com.ai.yc.order.api.ordersubmission.param.OrderSubmissionRequest;
 import com.ai.yc.order.api.ordersubmission.param.OrderSubmissionResponse;
 import com.ai.yc.order.api.ordersubmission.param.ProductInfo;
+import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.utils.AiPassUitl;
+import com.ai.yc.protal.web.utils.UserUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.jni.Local;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -238,76 +246,79 @@ public class OrderController {
         String contactInfoStr = request.getParameter("contactInfo");
         String productInfoStr = request.getParameter("productInfo");
         String baseInfoStr = request.getParameter("baseInfo");
-        //TODO 判断登录
-
+        
         OrderSubmissionRequest subReq = new OrderSubmissionRequest();
         subReq.setBaseInfo(JSON.parseObject(baseInfoStr, BaseInfo.class));
+        subReq.getBaseInfo().setOrderTime(new Timestamp(System.currentTimeMillis()));
         subReq.setProductInfo(JSON.parseObject(productInfoStr, ProductInfo.class));
         subReq.setContactInfo(JSON.parseObject(contactInfoStr, ContactInfo.class));
         subReq.setFeeInfo(JSON.parseObject(feeInfoStr, FeeInfo.class));
+        
+        //判断登录
+        String userId = UserUtil.getUserId();
+        if (StringUtils.isEmpty(userId)) {
+            request.getSession().setAttribute("orderInfo", subReq);
+            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "NOLOGIN");
+            return resData;
+        } else {
+            subReq.getBaseInfo().setUserId(userId);
+        }
 
         LOGGER.info(JSONObject.toJSONString(subReq));
-        /*try {
+        try {
             IOrderSubmissionSV orderSubmissionSV = DubboConsumerFactory.getService(IOrderSubmissionSV.class);
-            OrderSubmissionRequest subReq = new OrderSubmissionRequest();
             OrderSubmissionResponse subRes = orderSubmissionSV.orderSubmission(subReq);
             ResponseHeader resHeader = subRes==null?null:subRes.getResponseHeader();
+            LOGGER.info(JSONObject.toJSONString(subRes));
             //如果返回值为空,或返回信息中包含错误信息,则抛出异常
             if (subRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-
+                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,rb.getMessage(""));
+            } else {
+                resData.setData(subRes.getOrderId()+"");//返回订单信息
             }
+            
         }catch (BusinessException e){
             LOGGER.error("提交订单失败:",e);
             resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,rb.getMessage(""));
-        }*/
+        }
 
         //TODO... 虚拟数据
-        OrderSubmissionResponse subRes = new OrderSubmissionResponse();
-        resData.setData(subRes.getOrderId()+"");//返回订单信息
+       // OrderSubmissionResponse subRes = new OrderSubmissionResponse();
         return resData;
     }
     
+    /**
+     * 目前是单文件上传，返回文件id
+     * @param request
+     * @throws IllegalStateException
+     * @throws IOException
+     * @author mimw
+     */
     @RequestMapping("/uploadFile")
-    public void  uploadHeadPic(HttpServletRequest request,
-            HttpServletResponse response)
-            throws IllegalStateException, IOException {
+    @ResponseBody
+    public ResponseData<String> uploadFile(HttpServletRequest request) throws IOException{
+        ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        
         LOGGER.info("文件上传");
-        String uid=request.getParameter("uid");//获取uid
-        String pid=request.getParameter("pid");//获取jsp id参数
-        System.out.println(uid);
-        System.out.println(pid);
-        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
-                request.getSession().getServletContext());
-        if (multipartResolver.isMultipart(request)) {
-            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-            Iterator<String> iter = multiRequest.getFileNames();
-            while (iter.hasNext()) {
-                // int pre = (int) System.currentTimeMillis();//开始时时间
-                MultipartFile file = multiRequest.getFile(iter.next());
-                if (file != null) {
-                    String myFileName = file.getOriginalFilename();
-                    if (myFileName.trim() != "") {
-                        String fileName = file.getOriginalFilename();
-                        String fileExt = fileName.substring(
-                                fileName.lastIndexOf(".") + 1).toLowerCase();
-                        SimpleDateFormat df = new SimpleDateFormat(
-                                "yyyyMMddHHmmss");
-                        String newFileName = df.format(new Date());
-                        String fileNames = newFileName
-                                + new Random().nextInt(1000) + "." + fileExt;
-                         String path = "E:/" + fileNames;//上传路径
-                        // String path =
-                        // request.getSession().getServletContext()
-                        // .getRealPath("/resources/contractImgs")
-                        // + "/" + fileNames;
-                        File localFile = new File(path);
-                        if (!localFile.exists()) {// 如果文件夹不存在，自动创建
-                            localFile.mkdirs();
-                        }
-                        file.transferTo(localFile);
-                    }
-                }
-            }
+        IDSSClient client = DSSClientFactory.getDSSClient(Constants.IPAAS_ORDER_FILE_DSS);
+        //文件上传的请求
+        MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest) request;
+        //获取请求的参数
+        Map<String, MultipartFile> fileMap = mRequest.getFileMap();
+        String fileId = ""; 
+        Iterator<Map.Entry<String, MultipartFile>> it = fileMap.entrySet().iterator();
+        while(it.hasNext()){
+             Map.Entry<String, MultipartFile> entry = it.next();
+             MultipartFile mFile = entry.getValue();
+            
+             if(mFile.getSize() != 0 && !"".equals(mFile.getName())){
+                 fileId = client.save(mFile.getBytes(), mFile.getOriginalFilename());
+                 LOGGER.info( mFile.getOriginalFilename() + mFile.getSize() + fileId);
+             }
         }
+        
+        resData.setData(fileId);
+        return resData;
     }
+    
 }

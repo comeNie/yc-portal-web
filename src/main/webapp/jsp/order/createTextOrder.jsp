@@ -54,7 +54,7 @@
   					<p><spring:message code="order.translateLan"/></p>
   				</div>
   				<div class="placeorder-translate">
-	  				<select id="selectDuad" name="<%=response.getLocale()%>" tabindex="5" class="dropdown" data-settings='{"cutOff": 12}'>
+	  				<select id="selectDuad" name="<%=response.getLocale()%>" tabindex="5" class="dropdown" data-settings='{"cutOff": 12}' yu="${sessionScope.orderInfo.productInfo.languagePairInfoList[0]}">
 						<c:forEach items="${duadList}" var="duad">
 	  						<c:if test="${duad.orderType != 2}">
 		  					 	<option value="${duad.duadId}"  currency="${duad.currency}" 
@@ -86,23 +86,8 @@
   					<label></label>		
   				</div>
   				<div class="translate-int radius bj-ash" id="fy2" style="display: block;">
-  					<div class="attachment">
-  						<ul>
-  							<li class="word">我要翻译的文档xxxxx.doc</li>
-  							<li>
-  								<p class="ash-bj"><span style="width:70%;"></span></p>
-  								<p>64%</p>
-  							</li>
-  							<li class="right"><i class="icon iconfont">&#xe618;</i></li>
-  						</ul>
-  						<ul>
-  							<li class="word">我要翻译的文档xxxxx.doc</li>
-  							<li>
-  								<p class="ash-bj"><span style="width:70%;"></span></p>
-  								<p>64%</p>
-  							</li>
-  							<li class="right"><i class="icon iconfont">&#xe618;</i></li>
-  						</ul>
+  					<!--文件列表  -->
+  					<div class="attachment" id="fileList">
   					</div>
   					<div class="attachment-btn">
   						<ul>
@@ -111,13 +96,11 @@
   							<!--
   							<input id="uploadFile" type="button" class="btn border-green btn-large radius20" value="<spring:message code="order.uploadDoc"/>">
   							   -->
-  							   <div class="btns"  >
-  							   <div id="selectFile" >选择文件</div>
-           					 </div>
+  							 	<div id="selectFile" >选择文件</div>
   							<!--<input id="uploadAll" type="file" class="att-file">  -->
   							</p></li>
   							<!-- 将文件拖拽至此区域可上传 -->
-  							<li class="word"><spring:message code="order.dragFileInfo"/></lil>
+  							<li class="word"> <div><spring:message code="order.dragFileInfo"/></div></lil>
   						</ul>
   					</div>
   					<div class="shur-btn">
@@ -129,7 +112,7 @@
 			<div class="white-bj">
 				<div class="selection-level mt-20" id="transGrade">
 					<!-- 翻译级别 3种 -->
-					<ul class="none-ml current" name="0">
+					<ul class="none-ml current" name="100210">
 						<li class="blue">
 							<p><spring:message code="order.Standard"/></p>
 							<p><i class="icon-star-empty"></i></p>
@@ -155,7 +138,7 @@
 						</li>
 						<label></label>
 					</ul>
-					<ul name="1">
+					<ul name="100220">
 						<li class="blue">
 							<p><spring:message code="order.Professional"/></p>
 							<p><i class="icon-star-empty"></i><i class="icon-star-empty"></i></p>
@@ -180,7 +163,7 @@
 							<p><spring:message code="order.proInfo3"/></p>
 						</li>
 					</ul>
-					<ul name="2">
+					<ul name="100230">
 						<li class="blue">
 							<p><spring:message code="order.Publishing"/></p>
 							<p><i class="icon-star-empty"></i><i class="icon-star-empty"></i><i class="icon-star-empty"></i></p>
@@ -267,7 +250,7 @@
   					<ul>
   						<li><span id="speedValue"></span><spring:message code="order.hourThousandWords"/></li>
   						<li class="mt-10">
-  							<p><input type="checkbox" checked=""  class="radio" id="urgentOrder"><spring:message code="order.urgentOrder"/></p>
+  							<p><input type="checkbox"  class="radio" id="urgentOrder"><spring:message code="order.urgentOrder"/></p>
   							<p class="word ml-20"><spring:message code="order.urgentOrderInfo"/></p>
   						</li>
   					</ul>
@@ -300,9 +283,21 @@
 			//new uploadFile({element : document.body}).render();
 		});
 		
+		 $('.attachment').delegate('ul li i','click',function(){
+			 $(this).parent().parent('ul').hide();
+		 });
+		 /***
+		$(".attachment ul li i").click(function () {
+			$(this).parent().parent('ul').hide();
+			});
+		$("i[name='delFile']").click(function () {
+			$(this).parent().parent('ul').hide();
+			});
+		*****/
 		
 		//$("#selectFile1").children("div:last").css("height", '58px');
 	})();
 	
+
 </script>
 </html>

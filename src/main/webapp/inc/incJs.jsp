@@ -25,6 +25,16 @@
     var ssoLoginUrl="${ssoLoginUrl}";
     var uedroot="${uedroot}";
     var currentLan = "<%=response.getLocale()%>";
+    
+    Date.prototype.stdTimezoneOffset = function() {
+        var jan = new Date(this.getFullYear(), 0, 1);
+        var jul = new Date(this.getFullYear(), 6, 1);
+        return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+        }
+
+    Date.prototype.dst = function() {
+        return this.getTimezoneOffset() < this.stdTimezoneOffset();
+    }
 </script>
 <script src="${_base}/resources/spm_modules/jquery/1.9.1/jquery.min.js"></script>
 <script src="${_base}/resources/spm_modules/seajs/2.3.0/dist/sea.js"></script>

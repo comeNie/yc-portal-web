@@ -163,8 +163,3 @@ $(function () {
 $(".attachment  ul:last").css("border-bottom","none");
 });
 //翻译下单关闭附件
-$(function(){
-$(".attachment ul li i").click(function () {
-	$(this).parent().parent('ul').hide();
-	});
-	}); 
