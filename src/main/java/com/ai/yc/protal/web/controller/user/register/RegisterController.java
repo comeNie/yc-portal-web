@@ -27,10 +27,12 @@ import com.ai.yc.protal.web.constants.Constants.UcenterOperation;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
 import com.ai.yc.protal.web.utils.MD5Util;
 import com.ai.yc.protal.web.utils.VerifyUtil;
+import com.ai.yc.ucenter.api.members.interfaces.IUcMembersOperationSV;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
 import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckEmailRequest;
 import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckeMobileRequest;
+import com.ai.yc.ucenter.api.members.param.opera.UcMembersActiveRequest;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeRequest;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.InsertYCUserRequest;
@@ -54,6 +56,7 @@ public class RegisterController {
 	private static final String REGISTER = "user/register/register";
 	private static final String EMAIL = "user/register/sendMail";
 	private static final String SUCCESS = "user/register/success";
+	private static final String ERROR = "user/register/failure";
 
 	@RequestMapping("/toRegister")
 	public ModelAndView toRegister() {
@@ -203,7 +206,19 @@ public class RegisterController {
 	}
 	@RequestMapping("emailActivate")
 	public String emailActivate() {
-		return EMAIL;
+		UcMembersActiveRequest req = new UcMembersActiveRequest();
+		req.setUid(1);
+		req.setOperationcode("2222");
+		req.setOperationtype(UcenterOperation.OPERATION_TYPE_EMAIL_ACTIVATE);
+		UcMembersResponse res =DubboConsumerFactory.getService(IUcMembersOperationSV.class).ucActiveMember(req);
+		if (res != null && res.getMessage() != null
+				&& res.getMessage().isSuccess() && res.getCode() != null
+				&& res.getCode().getCodeNumber() != null
+				&& res.getCode().getCodeNumber() == 1) {
+			return SUCCESS;
+		}
+		LOG.info("邮箱激活返回参数："+JSON.toJSONString(res));
+		return ERROR;
 	}
 	@RequestMapping("test")
 	@ResponseBody

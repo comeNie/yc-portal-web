@@ -6,6 +6,7 @@ package com.ai.yc.protal.web.controller.user.common;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -30,9 +31,11 @@ import com.ai.yc.common.api.country.param.CountryRequest;
 import com.ai.yc.common.api.country.param.CountryResponse;
 import com.ai.yc.common.api.country.param.CountryVo;
 import com.ai.yc.protal.web.constants.Constants;
+import com.ai.yc.protal.web.constants.Constants.EmailVerify;
 import com.ai.yc.protal.web.constants.Constants.PhoneVerify;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
+import com.ai.yc.protal.web.model.mail.SendEmailRequest;
 import com.ai.yc.protal.web.model.sms.SmsRequest;
 import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.ai.yc.protal.web.utils.VerifyUtil;
@@ -204,10 +207,10 @@ public class UserCommonController {
 		if (!StringUtil.isBlank(sendCount)) {
 			nowCount = Integer.parseInt(sendCount);
 		}
-		String msg =rb.getMessage("ycregisterMsg.sendSmsError");
+		String msg = rb.getMessage("ycregisterMsg.sendSmsError");
 		if (nowCount > maxCount) {
-			msg = rb.getMessage(
-					"ycregisterMsg.verificationCodeCountError", new Object[]{maxCount});
+			msg = rb.getMessage("ycregisterMsg.verificationCodeCountError",
+					new Object[] { maxCount });
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 					msg, false);
 		}
@@ -225,10 +228,11 @@ public class UserCommonController {
 			int overTime = config.getIntValue(req.getCodeOverTimeKey());
 			iCacheClient.setex(req.getCodeKey(), overTime, randomStr);
 			msg = rb.getMessage("ycregisterMsg.sendSmsSuccess");
-			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,msg, true);
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
+					msg, true);
 		}
-		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
-				msg, false);
+		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg,
+				false);
 	}
 
 	/**
@@ -256,6 +260,57 @@ public class UserCommonController {
 		String msg = "ok";
 		if (!CollectionUtil.isEmpty(result) && result.length > 2) {
 			code = result[2] + "";
+		}
+		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg,
+				isOk);
+	}
+
+	/**
+	 * 发送邮件
+	 */
+	@RequestMapping("/sendEmail")
+	@ResponseBody
+	public ResponseData<Boolean> sendEmail(HttpServletRequest request) {
+		String email = request.getParameter("email");
+		String operation = request.getParameter("operation");
+		SendEmailRequest emailRequest = new SendEmailRequest();
+		emailRequest.setTomails(new String[] { email });
+		String randomStr = RandomUtil.randomNum(6);
+		emailRequest.setData(new String[] { "zhangsan", randomStr });
+		Locale locale = rb.getDefaultLocale();
+		String _template = "";
+		String _subject = "";
+		if (Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())) {
+			_template = Register.REGISTER_EMAIL_ZH_CN_TEMPLATE;
+			_subject = "中文主题";
+		} else if (Locale.US.toString().equals(locale.toString())) {
+			_template = Register.REGISTER_EMAIL_EN_US_TEMPLATE;
+			_subject = "英文主题";
+		}
+		emailRequest.setTemplateURL(_template);
+		emailRequest.setSubject(_subject);
+		boolean isOk = VerifyUtil.sendEmail(emailRequest);
+		if (isOk) {
+		   String key = EmailVerify.EMAIL_VERIFICATION_CODE+email;
+		   JSONObject config = AiPassUitl.getVerificationCodeConfig();
+		   int overTime = config.getIntValue(EmailVerify.EMAIL_VERIFICATION_OVER_TIME);
+           AiPassUitl.getCacheClient().setex(key, overTime, randomStr);
+		}
+		return null;
+	}
+	/**
+	 * 校验邮件验证码
+	 */
+	@RequestMapping("/checkEmailCode")
+	@ResponseBody
+	public ResponseData<Boolean> checkEmailCode(HttpServletRequest request) {
+		String email = request.getParameter("email");
+		String ckValue = request.getParameter("code");
+		String codeKey = EmailVerify.EMAIL_VERIFICATION_CODE+email;
+		boolean isOk = VerifyUtil.checkRedisValue(codeKey, ckValue);
+		String msg = "ok";
+		if (!isOk) {
+			msg = rb.getMessage("ycregisterMsg.verificationCodeError");
 		}
 		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg,
 				isOk);

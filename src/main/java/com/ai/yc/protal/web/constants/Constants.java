@@ -130,4 +130,12 @@ public final class Constants {
         public static final String BAAS_PT_INDEX_URL_KEY = "/baas_pt_index_url";
         public static final String INDEX_URL_KEY = "/slp_mall_web_index_url";
     }
+	public final class EmailVerify {
+		private EmailVerify() {
+		}
+		/** 邮箱验证码key */
+		public static final String EMAIL_VERIFICATION_CODE = "email_verification_code";
+		/** 邮箱验证码超时时间 */
+		public static final String EMAIL_VERIFICATION_OVER_TIME = "email_verification_code_over_time";
+	}
 }
