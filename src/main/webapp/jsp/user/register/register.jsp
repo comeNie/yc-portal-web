@@ -94,7 +94,7 @@
 								</p>
 								<p class="img">
 									<img id="refreshVerificationCode"
-										src="${_base}/reg/imageVerifyCode" height="44"
+										src="${_base}/userCommon/imageVerifyCode" height="44"
 										style="cursor: pointer">
 								</p>
 							</li>

@@ -32,7 +32,7 @@ define(
 								type : "post",
 								processing : false,
 								message : "保存中，请等待...",
-								url : _base + "/reg/loadCountry",
+								url : _base + "/userCommon/loadCountry",
 								data : {},
 								success : function(json) {
 									var data = json.data;
@@ -259,7 +259,7 @@ define(
 								type : "post",
 								processing : false,
 								message : "保存中，请等待...",
-								url : _base + "/reg/checkImageVerifyCode",
+								url : _base + "/userCommon/checkImageVerifyCode",
 								data : {
 									'imgCode' : imgCodeVal
 								},
@@ -322,9 +322,10 @@ define(
 											type : "post",
 											processing : false,
 											message : "保存中，请等待...",
-											url : _base + "/reg/smsCode",
+											url : _base + "/userCommon/sendSmsCode",
 											data : {
-												'phone' : $("#phone").val()
+												'phone' : $("#phone").val(),
+												'type':'1'
 											},
 											success : function(json) {
 												if(json.statusCode=="1" && json.data){

@@ -1,13 +1,8 @@
 package com.ai.yc.protal.web.controller.user.register;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.List;
 import java.util.Locale;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,23 +15,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.opt.base.vo.ResponseHeader;
-import com.ai.opt.sdk.components.mcs.MCSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.RandomUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
-import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.paas.ipaas.util.StringUtil;
-import com.ai.yc.common.api.country.interfaces.IGnCountrySV;
-import com.ai.yc.common.api.country.param.CountryRequest;
-import com.ai.yc.common.api.country.param.CountryResponse;
-import com.ai.yc.common.api.country.param.CountryVo;
 import com.ai.yc.protal.web.constants.Constants;
-import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
-import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.ai.yc.protal.web.utils.MD5Util;
 import com.ai.yc.protal.web.utils.VerifyUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
@@ -75,47 +61,6 @@ public class RegisterController {
 		return modelView;
 	}
 
-	/**
-	 * 加载国家
-	 */
-	@RequestMapping("/loadCountry")
-	@ResponseBody
-	public ResponseData<List<CountryVo>> loadCountry() {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("-------加载国家-------");
-		}
-		String msg = "ok";
-		List<CountryVo> result = null;
-		ICacheClient iCacheClient = AiPassUitl.getCacheClient();
-		String countryList = iCacheClient
-				.get(Register.REGISTER_COUNTRY_LIST_KEY);
-		if (!StringUtil.isBlank(countryList)) {
-			result = JSON.parseArray(countryList, CountryVo.class);
-			return new ResponseData<List<CountryVo>>(
-					ResponseData.AJAX_STATUS_SUCCESS, msg, result);
-		}
-		CountryResponse res = null;
-		try {
-			res = DubboConsumerFactory.getService(IGnCountrySV.class)
-					.queryCountry(new CountryRequest());
-		} catch (Exception e) {
-			msg = "error";
-			LOG.error(e.getMessage(), e);
-			return new ResponseData<List<CountryVo>>(
-					ResponseData.AJAX_STATUS_FAILURE, msg);
-		}
-		if (res != null && res.getResponseHeader() != null
-				&& res.getResponseHeader().isSuccess()) {
-			result = res.getResult();
-		}
-		if (!CollectionUtil.isEmpty(result)) {
-			iCacheClient.setex(Register.REGISTER_COUNTRY_LIST_KEY,
-					Register.REGISTER_COUNTRY_LIST_KEY_OVERTIME,
-					JSON.toJSONString(result));
-		}
-		return new ResponseData<List<CountryVo>>(
-				ResponseData.AJAX_STATUS_SUCCESS, msg, result);
-	}
 
 	/**
 	 * 提交注册
@@ -123,7 +68,8 @@ public class RegisterController {
 	@RequestMapping(value = "/submitRegister", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseData<Boolean> submitRegister(HttpServletRequest request) {
-		ResponseData<Boolean> result = checkImageVerifyCode(request);
+		String msg = rb.getMessage("ycregisterMsg.verificationCodeError");
+		ResponseData<Boolean> result = VerifyUtil.checkImageVerifyCode(request,msg);
 		if (ResponseData.AJAX_STATUS_FAILURE.equals(result.getStatusCode())
 				|| !result.getData()) {// 图片验证码校验
 			return result;
@@ -155,7 +101,6 @@ public class RegisterController {
 					IYCUserServiceSV.class).insertYCUser(req);
 			ResponseHeader resHeader = res == null ? null : res
 					.getResponseHeader();
-			String msg = "";
 			if (resHeader != null)
 				msg = resHeader.getResultMessage();
 
@@ -174,55 +119,7 @@ public class RegisterController {
 
 	}
 
-	/**
-	 * 获取注册验证码
-	 */
-	@RequestMapping("/imageVerifyCode")
-	public void imageVerifyCode(HttpServletRequest request,
-			HttpServletResponse response) {
-		String cacheKey = PictureVerify.VERIFY_IMAGE_KEY
-				+ request.getSession().getId();
-		BufferedImage image = VerifyUtil.getImageVerifyCode(
-				Register.CACHE_NAMESPACE, cacheKey, 100, 38);
-		try {
-			ImageIO.write(image, "PNG", response.getOutputStream());
-		} catch (IOException e) {
-			LOG.error("生成图片验证码错误：" + e);
-		}
-	}
-
 	
-
-	/**
-	 * 校验注册验证码
-	 */
-	@RequestMapping("/checkImageVerifyCode")
-	@ResponseBody
-	public ResponseData<Boolean> checkImageVerifyCode(HttpServletRequest request) {
-		try {
-			ICacheClient cacheClient = MCSClientFactory
-					.getCacheClient(Register.CACHE_NAMESPACE);
-			String cacheKey = PictureVerify.VERIFY_IMAGE_KEY
-					+ request.getSession().getId();
-			String code = cacheClient.get(cacheKey);
-			String imgCode = request.getParameter("imgCode");
-			Boolean isRight = false;
-			String msg = rb.getMessage("ycregisterMsg.verificationCodeError");
-			if (!StringUtil.isBlank(code) && !StringUtil.isBlank(imgCode)
-					&& imgCode.equalsIgnoreCase(code)) {
-				isRight = true;
-				msg = "ok";
-			}
-			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
-					msg, isRight);
-
-		} catch (Exception e) {
-			LOG.error(e.getMessage(), e);
-			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_FAILURE,
-					"");
-		}
-	}
-
 	/**
 	 * 校验邮箱或手机
 	 */
