@@ -38,20 +38,11 @@ define('app/jsp/home', function (require, exports, module) {
 
         //翻译
         _mt:function() {
-        	var from;
-        	$("#showa option").each(function() {
-        		var txt = $(this).text();
-        		if (txt == $(".dropdown .selected").eq(0).html())
-        			from = $(this).val();
-
-            });
-        	
-        	var to;
-        	$("#showb option").each(function() {
-        		if ($(this).text() == $(".dropdown .selected").eq(1).html())
-        			to = $(this).val();
-
-            });
+        	var from = $(".dropdown .selected").eq(0).attr("value");
+        	var to = $(".dropdown .selected").eq(1).attr("value");
+			if (Window.console){
+				console.log("from:"+from+",to:"+to);
+			}
         	ajaxController.ajax({
 				type: "post",
 				url: _base + "/mt",
