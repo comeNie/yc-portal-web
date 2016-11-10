@@ -117,16 +117,16 @@
 <script src="${_base}/resources/spm_modules/radia/radialIndicator.js"></script>
 
 <script type="text/javascript">
+
 	var pager;
 	(function() {
-		seajs.use('app/jsp/user/securitycener/securitycener', function(secPager) {
-			pager = new secPager({
+		seajs.use('app/jsp/user/security/securitycenter', function(secXXXPager) {
+			pager = new secXXXPager({
 				element : document.body
 			});
 			pager.render();
 		});
 	})();
-	
 	var securitylevel = "${securitylevel}";
 	
 	$(document).ready(function(){
