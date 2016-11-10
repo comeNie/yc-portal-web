@@ -8,7 +8,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     require("jquery-validation/1.15.1/jquery.validate");
 	require("app/util/aiopt-validate-ext");
     var CountWordsUtil = require("app/util/countWords");
-    var CommonMethodUtil = require("app/util/commonMethod");
     
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
@@ -45,11 +44,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			this._transPrice();
 			this._globalRome();
 			this._initPage();
-			
-			var flag = CommonMethodUtil.getQueryString("flag");
-			if(flag == 'submit') { //如果类型是提交，调到提交订单页面
-				this._addTextOrderTemp();
-			} 
     	},
         
         _initValidate:function(){
