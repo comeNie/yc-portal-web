@@ -115,4 +115,19 @@ public final class Constants {
 		/** 密码操作验证码 */
 		public static final String OPERATION_TYPE_EMAIL_PASSWORD_DYNAMIC = "6";
 	}
+	
+	public static final class UUID{
+        private UUID(){}
+        /*** 失效时间*/
+        public static final int OVERTIME = 300;
+        /*** 失效时间*/
+        public static final String KEY_NAME = "k";
+    }
+	public static final class URLConstant {
+        private URLConstant() {
+        }
+
+        public static final String BAAS_PT_INDEX_URL_KEY = "/baas_pt_index_url";
+        public static final String INDEX_URL_KEY = "/slp_mall_web_index_url";
+    }
 }
