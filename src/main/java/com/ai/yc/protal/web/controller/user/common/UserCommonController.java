@@ -311,7 +311,8 @@ public class UserCommonController {
 		String msg = "ok";
 		if (!isOk) {
 			msg = rb.getMessage("ycregisterMsg.verificationCodeError");
-		}
+		} 
+		
 		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg,
 				isOk);
 	}

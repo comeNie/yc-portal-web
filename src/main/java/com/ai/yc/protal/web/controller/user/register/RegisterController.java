@@ -111,7 +111,7 @@ public class RegisterController {
 				msg = resHeader.getResultMessage();
 
 			if (resHeader != null && resHeader.isSuccess()) {
-				sendRegisterEmaial(res.getUserId(), req.getEmail());
+				sendRegisterEmaial(res.getUserId(), req.getEmail(),res.getOperationcode());
 				return new ResponseData<Boolean>(
 						ResponseData.AJAX_STATUS_SUCCESS, msg, true);
 			}
@@ -205,10 +205,10 @@ public class RegisterController {
 		return false;
 	}
 	@RequestMapping("emailActivate")
-	public String emailActivate() {
+	public String emailActivate(HttpServletRequest request,@RequestParam int uid,@RequestParam String code) {
 		UcMembersActiveRequest req = new UcMembersActiveRequest();
-		req.setUid(1);
-		req.setOperationcode("2222");
+		req.setUid(uid);
+		req.setOperationcode(code);
 		req.setOperationtype(UcenterOperation.OPERATION_TYPE_EMAIL_ACTIVATE);
 		UcMembersResponse res =DubboConsumerFactory.getService(IUcMembersOperationSV.class).ucActiveMember(req);
 		if (res != null && res.getMessage() != null
@@ -235,38 +235,23 @@ public class RegisterController {
 	/**
 	 * 发送验证邮件
 	 */
-	private boolean sendRegisterEmaial(String userId, String email) {
+	private boolean sendRegisterEmaial(String userId, String email,String code) {
 		if (!StringUtil.isBlank(email)) {
-			UcMembersGetOperationcodeRequest req = new UcMembersGetOperationcodeRequest();
-			req.setTenantId(Constants.DEFAULT_TENANT_ID);
-			req.setUid(Integer.parseInt(userId));
-			req.setUserinfo(email);
-			req.setOperationtype(UcenterOperation.OPERATION_TYPE_EMAIL_ACTIVATE);
-			Object[] result = VerifyUtil.getUcenterOperationCode(req);
-			String code = "";
-			boolean isOk = (boolean) result[0];
-			String msg = "ok";
-			if (!CollectionUtil.isEmpty(result) && result.length > 2) {
-				code = result[2] + "";
-			}
-			if (isOk) {
-				SendEmailRequest emailRequest = new SendEmailRequest();
-				emailRequest.setTomails(new String[] { email });
-				emailRequest.setData(new String[] { "zhangsan", code});
-				Locale locale = rb.getDefaultLocale();
-				String _template = "";
-				if (Locale.SIMPLIFIED_CHINESE.toString().equals(
-						locale.toString())) {
-					_template = Register.REGISTER_EMAIL_ZH_CN_TEMPLATE;
-				} else if (Locale.US.toString().equals(locale.toString())) {
-					_template = Register.REGISTER_EMAIL_EN_US_TEMPLATE;
-				}
-				emailRequest.setTemplateURL(_template);
-				emailRequest.setSubject("注册成功");
-				VerifyUtil.sendEmail(emailRequest);
-			}
 
-			return true;
+			SendEmailRequest emailRequest = new SendEmailRequest();
+			emailRequest.setTomails(new String[] { email });
+			emailRequest.setData(new String[] { "zhangsan", code});
+			Locale locale = rb.getDefaultLocale();
+			String _template = "";
+			if (Locale.SIMPLIFIED_CHINESE.toString().equals(
+					locale.toString())) {
+				_template = Register.REGISTER_EMAIL_ZH_CN_TEMPLATE;
+			} else if (Locale.US.toString().equals(locale.toString())) {
+				_template = Register.REGISTER_EMAIL_EN_US_TEMPLATE;
+			}
+			emailRequest.setTemplateURL(_template);
+			emailRequest.setSubject("注册成功");
+			return VerifyUtil.sendEmail(emailRequest);
 		}
 		return false;
 	}

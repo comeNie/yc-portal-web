@@ -184,14 +184,17 @@ define(
 								//verifyCodeImg.focus();
 								return false;
 							}
-							var smsCode = $("#smsCode");
-							var smsCodeVal = smsCode.val();
-							if ($.trim(smsCodeVal) == "") {
-								this
-										._showCheckMsg(registerMsg.sms_code_empty);
-								//smsCode.focus();
-								return false;
+							if ("phone" == register_type) {// 手机注册
+								var smsCode = $("#smsCode");
+								var smsCodeVal = smsCode.val();
+								if ($.trim(smsCodeVal) == "") {
+									this
+											._showCheckMsg(registerMsg.sms_code_empty);
+									//smsCode.focus();
+									return false;
+								}
 							}
+							
 							if ($("[id='agreement']:checked").length < 1) {
 								this._showCheckMsg(registerMsg.agreement);
 								return false;
