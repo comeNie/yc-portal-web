@@ -268,7 +268,7 @@ public class VerifyUtil {
 		} else if (PhoneVerify.PHONE_CODE_UPDATE_DATA_OPERATION.equals(type)) {// 修改资料
 			codeKey = PhoneVerify.UPDATE_DATA_PHONE_CODE + phone;
 		}
-		if (StringUtil.isBlank(type)) {
+		if (!StringUtil.isBlank(type)) {
 			ICacheClient iCacheClient = AiPassUitl.getCacheClient();
 			String code = iCacheClient.get(codeKey);
 			if (!StringUtil.isBlank(code) && !StringUtil.isBlank(ckValue)
