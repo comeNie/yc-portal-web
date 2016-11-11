@@ -24,7 +24,7 @@ define('app/jsp/home', function (require, exports, module) {
             "click #toCreateOrder":"_toCreateOrder",
             "click #trante": "_mt",
             "click #playControl": "_text2audio",
-            "focus #int-before": "_verifyTranslateLan"
+            "blur #int-before": "_verifyTranslateLan",
 			"click #humanTranBtn":"_goTextOrder"
         },
 
@@ -63,6 +63,12 @@ define('app/jsp/home', function (require, exports, module) {
 				},
 				success: function (data) {
 					$("#transRes").val(data.data.text);
+					
+					//翻译后的文字超过1000，隐藏播放喇叭
+					if ($("#transRes").val().length > 1000) 
+						$("#playControl").hide();
+					else
+						$("#playControl").show();
 				}
 			});
         },
@@ -76,6 +82,10 @@ define('app/jsp/home', function (require, exports, module) {
         			to = $(this).val();
 
             });
+        	
+        	if (to == 'pl' || to == 'fi') { //目标语言是芬兰 波兰 语时，不能合成
+        		return;
+        	}
         	
         	var myAudio = document.getElementById('audioPlay');
 	    	if(myAudio.paused){
