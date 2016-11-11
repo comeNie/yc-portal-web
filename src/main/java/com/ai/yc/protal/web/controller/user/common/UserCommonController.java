@@ -39,6 +39,7 @@ import com.ai.yc.protal.web.constants.Constants.UcenterOperation;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
 import com.ai.yc.protal.web.model.sms.SmsRequest;
 import com.ai.yc.protal.web.utils.AiPassUitl;
+import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.protal.web.utils.VerifyUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersOperationSV;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeRequest;
@@ -174,7 +175,7 @@ public class UserCommonController {
 		req.setMaxCountKey(maxCountKey);
 		req.setMaxCountOverTimeKey(maxCountOverTimeKey);
 		req.setNowCountKey(nowCountKey);
-		String uid = request.getParameter("uid");
+		String uid = UserUtil.getUserId();
 		return sendSms(req, type, uid, phone);
 
 	}
@@ -269,7 +270,7 @@ public class UserCommonController {
 				&& res.getCode().getCodeNumber() != null) {
 			if (res.getCode().getCodeNumber() == 1) {
 				isOk = true;
-				code = String.valueOf(res.getOperationcode());
+				code = res.getDate().get("operationcode")+"";
 			}else{
 				msg = res.getCode().getCodeMessage();
 			}
