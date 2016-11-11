@@ -35,11 +35,14 @@ import com.ai.yc.protal.web.constants.Constants.EmailVerify;
 import com.ai.yc.protal.web.constants.Constants.PhoneVerify;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
+import com.ai.yc.protal.web.constants.Constants.UcenterOperation;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
 import com.ai.yc.protal.web.model.sms.SmsRequest;
 import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.ai.yc.protal.web.utils.VerifyUtil;
+import com.ai.yc.ucenter.api.members.interfaces.IUcMembersOperationSV;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeRequest;
+import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeResponse;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
@@ -151,15 +154,15 @@ public class UserCommonController {
 		/** 当前发送次数key **/
 		String nowCountKey = null;
 		if (StringUtil.isBlank(type)) {
-			type = PhoneVerify.PHONE_CODE_REGISTER_OPERATION;
+			type = UcenterOperation.OPERATION_TYPE_PHONE_ACTIVATE;
 		}
-		if (PhoneVerify.PHONE_CODE_REGISTER_OPERATION.equals(type)) {// 注册
+		if (UcenterOperation.OPERATION_TYPE_PHONE_ACTIVATE.equals(type)) {// 注册手机激活码
 			codeKey = PhoneVerify.REGISTER_PHONE_CODE + phone;
 			codeOverTimeKey = PhoneVerify.REGISTER_PHONE_CODE_OVERTIME;
 			nowCountKey = PhoneVerify.REGISTER_PHONE_CODE_COUNT + phone;
 			maxCountKey = PhoneVerify.REGISTER_PHONE_CODE_MAX_COUNT;
 			maxCountOverTimeKey = PhoneVerify.REGISTER_PHONE_CODE_MAX_COUNT_OVERTIME;
-		} else if (PhoneVerify.PHONE_CODE_UPDATE_DATA_OPERATION.equals(type)) {// 修改资料
+		} else if (UcenterOperation.OPERATION_TYPE_PHONE_VERIFY.equals(type)) {// 手机验证码
 			codeKey = PhoneVerify.UPDATE_DATA_PHONE_CODE + phone;
 			codeOverTimeKey = PhoneVerify.UPDATE_DATA_PHONE_CODE_OVERTIME;
 			nowCountKey = PhoneVerify.UPDATE_DATA_PHONE_CODE_COUNT + phone;
@@ -171,9 +174,14 @@ public class UserCommonController {
 		req.setMaxCountKey(maxCountKey);
 		req.setMaxCountOverTimeKey(maxCountOverTimeKey);
 		req.setNowCountKey(nowCountKey);
-		String randomStr = RandomUtil.randomNum(6);
-		req.setContent("短信验证码:" + randomStr);
-		return sendSms(req, randomStr);
+		String uid = request.getParameter("uid");
+		Object[] ucenterRes = getUcenterOperationCode(type, uid, phone);
+		if ((boolean) ucenterRes[0]) {
+			String randomStr = (String) ucenterRes[1];// RandomUtil.randomNum(6);
+			req.setContent("短信验证码:" + randomStr);
+			return sendSms(req, randomStr);
+		}
+		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, (String) ucenterRes[2], false);
 
 	}
 
@@ -238,13 +246,8 @@ public class UserCommonController {
 	/**
 	 * 调用ucenter生成操作码
 	 */
-	@RequestMapping("/getUcenterOperationCode")
-	@ResponseBody
-	public ResponseData<Boolean> getUcenterOperationCode(
-			HttpServletRequest request) {
-		String operationtype = request.getParameter("type");
-		String uid = request.getParameter("uid");
-		String userinfo = request.getParameter("userinfo");// 移动电话/邮箱
+	private Object[] getUcenterOperationCode(String operationtype, String uid,
+			String userinfo) {
 		UcMembersGetOperationcodeRequest req = new UcMembersGetOperationcodeRequest();
 		req.setTenantId(Constants.DEFAULT_TENANT_ID);
 		req.setOperationtype(operationtype);
@@ -254,15 +257,26 @@ public class UserCommonController {
 		if (!StringUtil.isBlank(userinfo)) {
 			req.setUserinfo(userinfo);
 		}
-		Object[] result = VerifyUtil.getUcenterOperationCode(req);
+		boolean isOk = false;
 		String code = "";
-		boolean isOk = (boolean) result[0];
-		String msg = "ok";
-		if (!CollectionUtil.isEmpty(result) && result.length > 2) {
-			code = result[2] + "";
+		String msg = "";
+		UcMembersGetOperationcodeResponse res = DubboConsumerFactory
+				.getService(IUcMembersOperationSV.class)
+				.ucGetOperationcode(req);
+		LOG.info("ucenter 生成验证码返回：" + JSON.toJSONString(res));
+		if (res != null && res.getMessage() != null
+				&& res.getMessage().isSuccess() && res.getCode() != null
+				&& res.getCode().getCodeNumber() != null) {
+			if (res.getCode().getCodeNumber() == 1) {
+				isOk = true;
+				code = String.valueOf(res.getOperationcode());
+			}else{
+				msg = res.getCode().getCodeMessage();
+			}
+
 		}
-		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg,
-				isOk);
+
+		return new Object[] { isOk, code,msg };
 	}
 
 	/**
@@ -291,14 +305,16 @@ public class UserCommonController {
 		emailRequest.setSubject(_subject);
 		boolean isOk = VerifyUtil.sendEmail(emailRequest);
 		if (isOk) {
-		   String key = EmailVerify.EMAIL_VERIFICATION_CODE+email;
-		   JSONObject config = AiPassUitl.getVerificationCodeConfig();
-		   int overTime = config.getIntValue(EmailVerify.EMAIL_VERIFICATION_OVER_TIME);
-           AiPassUitl.getCacheClient().setex(key, overTime, randomStr);
+			String key = EmailVerify.EMAIL_VERIFICATION_CODE + email;
+			JSONObject config = AiPassUitl.getVerificationCodeConfig();
+			int overTime = config
+					.getIntValue(EmailVerify.EMAIL_VERIFICATION_OVER_TIME);
+			AiPassUitl.getCacheClient().setex(key, overTime, randomStr);
 		}
-		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, "ok",
-				isOk);
+		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
+				"ok", isOk);
 	}
+
 	/**
 	 * 校验邮件验证码
 	 */
@@ -307,13 +323,13 @@ public class UserCommonController {
 	public ResponseData<Boolean> checkEmailCode(HttpServletRequest request) {
 		String email = request.getParameter("email");
 		String ckValue = request.getParameter("code");
-		String codeKey = EmailVerify.EMAIL_VERIFICATION_CODE+email;
+		String codeKey = EmailVerify.EMAIL_VERIFICATION_CODE + email;
 		boolean isOk = VerifyUtil.checkRedisValue(codeKey, ckValue);
 		String msg = "ok";
 		if (!isOk) {
 			msg = rb.getMessage("ycregisterMsg.verificationCodeError");
-		} 
-		
+		}
+
 		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg,
 				isOk);
 	}
