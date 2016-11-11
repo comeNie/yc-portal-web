@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>安全设置无</title>
+    <title>安全设置</title>
  	<%@ include file="/inc/inc.jsp"%>
 </head>
 <body>
@@ -32,7 +32,7 @@
   				</li>
   				<li class="nav-icon"><a href="#"><i class="icon iconfont">&#xe60b;</i></a></li>
   				<li class="nav-icon mt-2"><a href="#"><i class="icon iconfont">&#xe60a;</i><span class="message">3</span></a></li>
-  				<li class="user"><a href="#" class="yonh">${userinfo.nickname}<i class="icon-caret-down"></i></a>
+  				<li class="user"><a href="#" class="yonh">${userinfo.username}<i class="icon-caret-down"></i></a>
   					<div class="show">
   						<ul>
   							<li><i class="icon-user"></i><a href="#">个人信息</a></li>
@@ -78,27 +78,27 @@
   			</div>
   			<div class="security-list">
   				<ul>
-  					<li class="red"><i class="icon-remove-sign"></i></li>
+  					<li id="login_password_icon_color" class="green"><i id="login_password_icon" class="icon-ok-sign"></i></li>
   					<li class="word">登录密码</li>
-  					<li>请设置密码，用于系统登录等操作</li>
+  					<li>互联网账号存在被盗风险，建议您定期更改密码以保护账户安全</li>
   					<li class="right"><a href="${_base}/p/security/updatePassword">设置</a></li>
   				</ul>
   				<ul>
-  					<li class="red"><i class="icon-remove-sign"></i></li>
+  					<li id="login_email_icon_color" class="red"><i id="login_email_icon" class="icon-remove-sign"></i></li>
   					<li class="word">绑定邮箱</li>
-  					<li>您还没有绑定邮箱，请绑定</li>
+  					<li id="login_email_text">您还没有绑定邮箱，请绑定</li>
   					<li class="right"><a href="#">设置</a></li>
   				</ul>
   				<ul>
-  					<li class="red"><i class="icon-remove-sign"></i></li>
-  					<li class="word">登录密码</li>
-  					<li>您还没有绑定手机，请绑定</li>
+  					<li id="login_phone_icon_color" class="red"><i id="login_phone_icon" class="icon-remove-sign"></i></li>
+  					<li class="word">登录手机</li>
+  					<li id="login_phone_text">您还没有绑定手机，请绑定</li>
   					<li class="right"><a href="#">设置</a></li>
   				</ul>
   				<ul>
-  					<li class="red"><i class="icon-remove-sign"></i></li>
+  					<li id="pay_password_icon_color"  class="red"><i id="pay_password_icon" class="icon-remove-sign"></i></li>
   					<li class="word">支付密码</li>
-  					<li>用于管理账户余额</li>
+  					<li id="pay_password_text">您还没有绑定手机，请绑定(用于管理账户余额)</li>
   					<li class="right"><a href="#">设置</a></li>
   				</ul>
   			</div>
@@ -127,16 +127,30 @@
 			pager.render();
 		});
 	})();
-	var securitylevel = "${securitylevel}";
 	
+	var isexistemail = "${isexistemail}";
+	var isexistphone = "${isexistphone}";
+	var isexistpaypassword = "${isexistpaypassword}"
+	var securitylevel = "${securitylevel}";
+	var userEmail = "${userinfo.email}"
+
 	$(document).ready(function(){
-		var accLevelInfo = $('#sec-level-info-account-level');
+		var accLevelInfo = $("#sec-level-info-account-level");
 		if(parseInt(securitylevel) < 60)
-			{accLevelInfo.html("高危账号");}
+		{
+			accLevelInfo.html("高危账号");
+			$("#sec-level-info-account-warn").html("强烈建议您尽快完善安全信息！");
+		}
 		if(parseInt(securitylevel) >= 60 && parseInt(securitylevel) < 100)
-			{accLevelInfo.html("有一定风险");}
+		{
+			accLevelInfo.html("有一定风险");
+			$("#sec-level-info-account-warn").html("建议您尽快完善信息！");
+		}
 		if(parseInt(securitylevel) == 100)
-			{accLevelInfo.html("您的帐号很安全");}
+		{
+			accLevelInfo.html("您的帐号很安全");
+			$("#sec-level-info-account-warn").html("恭喜，您的账号很安全！");
+		}
 		
 		// 环形
 		$('#indicatorContainer').radialIndicator({

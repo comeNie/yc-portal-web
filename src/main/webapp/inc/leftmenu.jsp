@@ -10,7 +10,7 @@
   			<ul>
   				<li class="user"><img src="${uedroot}/images/icon.jpg" /></li>
   				<li class="word">
-  					<p>大脸盼爱大脸</p>
+  					<p>${userinfo.username}</p>
   					<p class="vip1"></p>
   				</li>
   			</ul>
