@@ -278,6 +278,10 @@ define("app/jsp/user/password/password",
 											if(telphone==null&&passwordEmail!=null){
 												 isBandEmail = true;
 											}
+											if(telphone!=null&&passwordEmail!=null){
+												isBandPhone = true;
+												isBandEmail = true;
+											}
 											accountFlag = true;
 										}
 									}
