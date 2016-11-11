@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.yc.order.api.orderdetails.interfaces.IQueryOrderDetailsSV;
-import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsResponse;
 import com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV;
 import com.alibaba.fastjson.JSONObject;
 

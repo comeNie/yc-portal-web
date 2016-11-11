@@ -19,18 +19,19 @@ define("app/jsp/user/security/securitycenter", function(require, exports, module
             	if(isexistemail == "true") {
             		$("#login_email_icon").attr("class","icon-ok-sign");
             		$("#login_email_icon_color").attr("class","green");
-            		var userEmailWithStart = this._getEmailWithStart(userEmail)
-            		$("#login_email_text").html("您绑定邮箱：" + userEmailWithStart );
+            		var userEmailWithStart = this._getEmailWithStart(userEmail);
+            		$("#login_email_text").html(secCenterMsg.email_set + userEmailWithStart );
             	}
             	if(isexistphone == "true") {
             		$("#login_phone_icon").attr("class","icon-ok-sign");
             		$("#login_phone_icon_color").attr("class","green");
-            		$("#login_phone_text").html("您已绑定手机");
+            		var userMobileWithStart = this._getMobileWithStart(userMobile);
+            		$("#login_phone_text").html(secCenterMsg.login_phone_set + " " + userMobileWithStart);
             	}
             	if(isexistpaypassword == "true") {
             		$("#pay_password_icon").attr("class","icon-ok-sign");
             		$("#pay_password_icon_color").attr("class","green");
-            		$("#pay_password_text").html("您已经设置支付密码");
+            		$("#pay_password_text").html(secCenterMsg.paypassword_set);
             	}
             },
             _getEmailWithStart : function (orginalEmail) {
@@ -39,6 +40,12 @@ define("app/jsp/user/security/securitycenter", function(require, exports, module
             	var parttwo = "******";
             	var StartEmail = partone + parttwo + "@" + emailPart[1];
             	return StartEmail;
+            },
+            _getMobileWithStart : function (orginalMobile) {
+            	var part1 = orginalMobile.substring(0,3);
+            	var part2 = "******";
+            	var part3 = orginalMobile.substring(9,11);
+            	return part1 + part2 + part3;
             }
 	 });
 	module.exports = secXXXPager;
