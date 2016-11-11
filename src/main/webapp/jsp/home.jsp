@@ -49,16 +49,10 @@
                             <option value="en"><spring:message code="home.trans_language_en"/></option>
                             <%--法语--%>
                             <option value="fr"><spring:message code="home.trans_language_fr"/></option>
-                            <%--德语--%>
-                            <option value="de"><spring:message code="home.trans_language_de"/></option>
+                            <%--俄语--%>
+                            <option value="ru"><spring:message code="home.trans_language_ru"/></option>
                             <%--葡萄牙语--%>
                             <option value="pt"><spring:message code="home.trans_language_pt"/></option>
-                            <%--波兰语--%>
-                            <option value="pl"><spring:message code="home.trans_language_pl"/></option>
-                            <%--芬兰语--%>
-                            <option value="fi"><spring:message code="home.trans_language_fi"/></option>
-                            <%--西班牙语--%>
-                            <option value="es"><spring:message code="home.trans_language_es"/></option>
                     </select>
                 </li>
                 <li class="change"><a href="#"><i class="icon-exchange"></i></a></li>
@@ -70,16 +64,10 @@
                         <option value="en"><spring:message code="home.trans_language_en"/></option>
                         <%--法语--%>
                         <option value="fr"><spring:message code="home.trans_language_fr"/></option>
-                        <%--德语--%>
-                        <option value="de"><spring:message code="home.trans_language_de"/></option>
+                        <%--俄语--%>
+                        <option value="ru"><spring:message code="home.trans_language_ru"/></option>
                         <%--葡萄牙语--%>
                         <option value="pt"><spring:message code="home.trans_language_pt"/></option>
-                        <%--波兰语--%>
-                        <option value="pl"><spring:message code="home.trans_language_pl"/></option>
-                        <%--芬兰语--%>
-                        <option value="fi"><spring:message code="home.trans_language_fi"/></option>
-                        <%--西班牙语--%>
-                        <option value="es"><spring:message code="home.trans_language_es"/></option>
                     </select>
                 </li>
                 <%--翻译--%>

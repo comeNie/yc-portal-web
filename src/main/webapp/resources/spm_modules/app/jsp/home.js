@@ -60,14 +60,9 @@ define('app/jsp/home', function (require, exports, module) {
         
         //文本转音频
         _text2audio:function() {
-        	var to;
 			//获取目标语言编码
-        	$("#showb option").each(function() {
-        		if ($(this).text() == $(".dropdown .selected").eq(1).html())
-        			to = $(this).val();
+			var to =$(".dropdown .selected").eq(1).attr("value");
 
-            });
-        	
         	var myAudio = document.getElementById('audioPlay');
 	    	if(myAudio.paused){
 		        var itostr = $.trim($("#transRes").val());
