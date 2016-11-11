@@ -199,7 +199,8 @@ public class UserCommonController {
 				isOk);
 	}
 
-	private ResponseData<Boolean> sendSms(SmsRequest req,String type,String uid, String phone) {
+	private ResponseData<Boolean> sendSms(SmsRequest req, String type,
+			String uid, String phone) {
 		ICacheClient iCacheClient = AiPassUitl.getCacheClient();
 		JSONObject config = AiPassUitl.getVerificationCodeConfig();
 		// 最多发送次数 key
@@ -220,12 +221,13 @@ public class UserCommonController {
 		Object[] ucenterRes = getUcenterOperationCode(type, uid, phone);
 		if (!(boolean) ucenterRes[0]) {
 			msg = (String) ucenterRes[2];
-			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg,
-					false);
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
+					msg, false);
 		}
 		String randomStr = (String) ucenterRes[1];// RandomUtil.randomNum(6);
 		req.setContent("短信验证码:" + randomStr);
-		boolean sendOk = true;// SmsSenderUtil.sendMessage(phone, req.getContent());
+		boolean sendOk = true;// SmsSenderUtil.sendMessage(phone,
+								// req.getContent());
 		if (sendOk) {
 			// 最多发送次数超时时间
 			int maxOverTimeCount = config.getIntValue(req
@@ -270,14 +272,14 @@ public class UserCommonController {
 				&& res.getCode().getCodeNumber() != null) {
 			if (res.getCode().getCodeNumber() == 1) {
 				isOk = true;
-				code = res.getDate().get("operationcode")+"";
-			}else{
+				code = res.getDate().get("operationcode") + "";
+			} else {
 				msg = res.getCode().getCodeMessage();
 			}
 
 		}
 
-		return new Object[] { isOk, code,msg };
+		return new Object[] { isOk, code, msg };
 	}
 
 	/**
@@ -287,10 +289,25 @@ public class UserCommonController {
 	@ResponseBody
 	public ResponseData<Boolean> sendEmail(HttpServletRequest request) {
 		String email = request.getParameter("email");
-		String operation = request.getParameter("operation");
+		String type = request.getParameter("type");
+		String randomStr = "";
+		String msg = "";
+		if (UcenterOperation.OPERATION_TYPE_EMAIL_VERIFY.equals(type)) {// 邮箱验证
+			randomStr = RandomUtil.randomNum(6);
+			String uid = UserUtil.getUserId();
+			if (StringUtil.isBlank(uid)) {
+				uid = request.getParameter("uid");
+			}
+			Object[] ucenterRes = getUcenterOperationCode(type, uid, email);
+			if (!(boolean) ucenterRes[0]) {
+				msg = (String) ucenterRes[2];
+				return new ResponseData<Boolean>(
+						ResponseData.AJAX_STATUS_SUCCESS, msg, false);
+			}
+			randomStr = (String) ucenterRes[1];
+		}
 		SendEmailRequest emailRequest = new SendEmailRequest();
 		emailRequest.setTomails(new String[] { email });
-		String randomStr = RandomUtil.randomNum(6);
 		emailRequest.setData(new String[] { "zhangsan", randomStr });
 		Locale locale = rb.getDefaultLocale();
 		String _template = "";
