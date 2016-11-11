@@ -53,8 +53,20 @@ public class HcicloudService {
             config += "capkey=tts.cloud.wangjing";
         } else if(lan.equals("en")) {
             config += "capkey=tts.cloud.serena";
-        }//TODO 其他语言
-
+        } else if(lan.equals("fr")) {// 法语
+            config += "tts.cloud.thomas";
+        } else if(lan.equals("de")) {// 德语
+            config += "tts.cloud.anna";
+        } else if(lan.equals("pt")) {//葡萄牙
+            config += "tts.cloud.vera";
+//        } else if(lan.equals("pl")) { //波兰
+//            
+//        } else if(lan.equals("fi")) { //芬兰
+//            
+        } else if(lan.equals("es")) { //西班牙
+            config += "tts.cloud.diego";
+        }
+        
         if (browserName.equals("firefox") || browserName.equals("opera")) {
             audioformat = ",audioformat=pcm8k16bit";
         } else {

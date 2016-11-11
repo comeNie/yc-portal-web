@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.RandomUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
@@ -25,7 +24,7 @@ import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.constants.Constants.UcenterOperation;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
-import com.ai.yc.protal.web.utils.MD5Util;
+import com.ai.yc.protal.web.utils.PasswordMD5Util.Md5Utils;
 import com.ai.yc.protal.web.utils.VerifyUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersOperationSV;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
@@ -119,7 +118,7 @@ public class RegisterController {
 					msg, false);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
-			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_FAILURE,
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 					"error", false);
 		}
 
@@ -221,15 +220,9 @@ public class RegisterController {
 		return ERROR;
 	}
 	@RequestMapping("test")
-	@ResponseBody
+	
 	public String test() {
-		UcMembersGetOperationcodeRequest req = new UcMembersGetOperationcodeRequest();
-		req.setTenantId(Constants.DEFAULT_TENANT_ID);
-		req.setOperationtype(UcenterOperation.OPERATION_TYPE_EMAIL_ACTIVATE);
-		req.setUid(100058);
-		req.setUserinfo("1820025657@qq.com");
-		Object[] result =VerifyUtil.getUcenterOperationCode(req);
-		return JSON.toJSONString(result);
+		return ERROR;
 	}
 
 	/**
@@ -240,7 +233,7 @@ public class RegisterController {
 
 			SendEmailRequest emailRequest = new SendEmailRequest();
 			emailRequest.setTomails(new String[] { email });
-			emailRequest.setData(new String[] { "zhangsan", code});
+			emailRequest.setData(new String[] { "zhangsan", code,userId});
 			Locale locale = rb.getDefaultLocale();
 			String _template = "";
 			if (Locale.SIMPLIFIED_CHINESE.toString().equals(
@@ -276,7 +269,7 @@ public class RegisterController {
 		req.setNickname("译粉_" + RandomUtil.randomNum(8));
 		String password = request.getParameter("password");
 		if (!StringUtil.isBlank(password)) {
-			req.setPassword(MD5Util.MD5(password));
+			req.setPassword(Md5Utils.md5(password));
 		}
 		req.setRegip("0");
 		return req;

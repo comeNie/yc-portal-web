@@ -59,7 +59,7 @@
 						index: 0,
 						title: self.$options.eq(0).text(),
 						value: self.$options.eq(0).val()
-					}
+					};
 					self.focusIndex = 0;
 				};
 				self.render();

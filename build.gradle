@@ -84,12 +84,13 @@ dependencies {
 
     //订单查询
     compile 'com.ai.yc.order:orderquery:1.0-SNAPSHOT'
+    //订单查询 我的订单
+    compile 'com.ai.yc.order:orderdetails:1.0-SNAPSHOT'
 	//注册
 	compile 'com.ai.yc.user:userservice:1.0-SNAPSHOT'
     
 	compile 'com.ai.yc.ucenter:members:1.1.1-SNAPSHOT'
 	compile 'com.ai.yc.common:country:1.0-SNAPSHOT'
-	compile 'com.ai.yc.order:orderquery:1.0-SNAPSHOT'
 	
 	//jars for sms
 	

@@ -8,33 +8,30 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>注册失败</title>
-<link href="${_base}/resources/template/css/bootstrap/font-awesome.css" rel="stylesheet"
-	type="text/css">
-<link href="${_base}/resources/template/css/iconfont.css" rel="stylesheet" type="text/css">
-<link href="${_base}/resources/template/css/modular/global.css" rel="stylesheet" type="text/css" />
-<link href="${_base}/resources/template/css/modular/login-regsiter.css" rel="stylesheet"
-	type="text/css" />
+<%@ include file="/inc/inc.jsp"%>
+<title><spring:message code="ycregister.register" />
+</title>
+<link href="${uedroot}/css/modular/login-regsiter.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="login-body">
 	<div class="login-big">
 		<div class="login-headr">
 			<p>
-				<img src="${_base}/resources/template/images/login-logo.png" />
+				<img src="${uedroot}/images/login-logo.png" />
 			</p>
-			<p class="word">账号注册</p>
+			<p class="word"><spring:message code="ycregister.registerTitle" /></p>
 		</div>
 		<div class="login-wrapper">
 			<div class="login-left">
-				<img src="${_base}/resources/template/images/login-bj.png">
+				<img src="${uedroot}/images/login-bj.png">
 			</div>
 			<div class="register-right radius">
 
 				<div class="verification">
 					<ul>
-						<li><img src="${_base}/resources/template/images/rech-fail.png" /></li>
-						<li class="word">抱歉，激活链接已经过期失效，请重新注册</li>
-						<li><span>5s</span>内自动回到<a href="#">注册</a>页面</li>
+						<li><img src="${uedroot}/images/rech-fail.png" /></li>
+						<li class="word"><spring:message code="ycregister.registerSuccessMsg2" /></li>
+						<li><spring:message code="ycregister.registerMailErrorMsg" /></li>
 					</ul>
 				</div>
 
@@ -44,4 +41,20 @@
 
 	</div>
 </body>
+<%@ include file="/inc/incJs.jsp"%>
+<script type="text/javascript">
+	var intervalObj; // timer变量，控制时间
+	var count = 5; // 间隔函数
+	var curCount=count;// 当前剩余秒数
+	intervalObj = window.setInterval(startSmsTime, 1000); // 启动计时器，1秒执行一次
+	function startSmsTime() {
+		if (curCount == 1) {
+			window.clearInterval(intervalObj);// 停止计时器
+			location.href="http://www.yeecloud.com/index";
+		} else {
+			curCount = curCount - 1;
+			$(".verification ul li span").html(curCount);
+		}
+	}
+</script>
 </html>

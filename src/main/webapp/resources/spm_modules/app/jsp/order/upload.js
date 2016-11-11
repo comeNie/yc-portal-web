@@ -8,38 +8,79 @@
 	          server: _base+'/order/uploadFile',
 	          auto : true,
 	          pick : "#selectFile",
+	          dnd: '#fy2', //拖拽
+	          accept: {
+	      	    title: 'intoTypes',
+	      	    extensions: 'rar,zip,doc,xls,docx,xlsx,pdf,jpg,png,jif',
+	      	    mimeTypes: '.rar,.zip,.doc,.xls,.docx,.xlsx,.pdf,.jpg,.png,.jif'
+	      		},
              resize : false,
-             fileNumLimit: 300,
-             fileSizeLimit: 100 * 1024 * 1024,    // 200 M
+             fileNumLimit: 10,
+             fileSizeLimit: 100 * 1024 * 1024,    // 100 M
          });
 
          uploader.on("fileQueued",function(file){
-             $("#fileInfo").append('<div id="'+file.id+'">'+file.name+'<p class="state">等待上传</p><div class="webuploadDelbtn">删除</div></div>');
+        	 $("#fileList ul").css('"border-bottom","none"');
+             $("#fileList").append('<ul style="border-bottom: medium none;"><li class="word" id="'+file.id+'">'+file.name+'</li><li><p class="ash-bj"><span style="width:0%;"></span></p><p name="percent">0%</p></li><li class="right"><i class="icon iconfont" >&#xe618;</i></li></ul>');
          });
+         
          uploader.on("uploadProgress",function(file,percentage){
-             console.log(file);
+             
              var fileId = $("#"+file.id),
                  percent = fileId.find(".progress .progress-bar");
              if(!percent.length){//避免重复创建
                  percent = $('<div class="progress progress-striped active"><div class="progress-bar" role="progressbar" style="width: 0%"></div></div>')
                      .appendTo(fileId).find('.progress-bar');
              }
-             fileId.find('p.state').text('上传中');
+             fileId.next().find('span').css('width',percentage*100+"%");
+             fileId.next().find('p[name="percent"]').text(percentage*100+"%");
              percent.css( 'width', percentage * 100 + '%' );
-             console.log(percentage);
-
+           
          });
-         uploader.on( 'uploadSuccess', function( file ) {
-             $( '#'+file.id ).find('p.state').text('已上传');
+         
+         uploader.on( 'uploadSuccess', function( file, responseData ) {
+        	 if(responseData.statusCode=="1"){
+					var fileData = responseData.data;
+					console.log(fileData);
+					//文件上传成功
+					if(fileData){
+						 $("#"+file.id).attr("fileId", fileData);
+						return;
+					}
+				}//上传失败
+				else{
+					_this._showFail(responseData.statusInfo);
+					_this._closeDialog();
+					return;
+				}
          });
 
          uploader.on( 'uploadError', function( file ) {
-             $( '#'+file.id ).find('p.state').text('上传出错');
+        	 $("#"+file.id).parent().next().find('p[name="percent"]').text("上传出错");
          });
 
          uploader.on( 'uploadComplete', function( file ) {
              $( '#'+file.id ).find('.progress').fadeOut();
          });
+         
+         // 拖拽时不接受 js, txt 文件。
+//         uploader.on( 'dndAccept', function( items ) {
+//             var denied = false,
+//                 len = items.length,
+//                 i = 0,
+//                 // 修改js类型
+//                 unAllowed = 'text/plain;application/javascript ';
+//
+//             for ( ; i < len; i++ ) {
+//                 // 如果在列表里面
+//                 if ( ~unAllowed.indexOf( items[ i ].type ) ) {
+//                     denied = true;
+//                     break;
+//                 }
+//             }
+//
+//             return !denied;
+//         });
 
          uploader.onFileDequeued = function( file ) {
 //             fileCount--;
@@ -51,7 +92,7 @@
 //                     alert(data.message);
 //                 })
 //             }
-                 $("#"+file.id).remove();
+//                 $("#"+file.id).remove();
 //             $("#"+ $(item)[0].id + file.id).remove();
 //             $("#hiddenInput" + $(item)[0].id + file.id).remove();
 
@@ -84,17 +125,13 @@
          }
 
          //删除
-//         $list.on("click", ".webuploadDelbtn", function () {
-//             debugger
-//             var $ele = $(this);
-//             var id = $ele.parent().attr("id");
-//             //var id = id.replace($(item)[0].id, "");
-//
-//             var file = uploader.getFile(id);
-//             uploader.removeFile(file);
-//         });
-
-
+    	 $('.attachment').delegate('ul li i','click',function(){
+			 $(this).parent().parent('ul').remove();
+			 
+			 var id = $(this).parent().parent('ul').find('li:first').attr("id");
+			 var file = uploader.getFile(id);
+			 uploader.removeFile(file);
+		 });
 
          //上传出错时触发
          uploader.on( "uploadError", function( obj, reason  ) {

@@ -6,14 +6,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     require("jsviews/jsrender.min");
 
     require("jquery-validation/1.15.1/jquery.validate");
-	//require("app/util/aiopt-validate-ext");
+	require("app/util/aiopt-validate-ext");
     var CountWordsUtil = require("app/util/countWords");
     
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
-    
     var textOrderAddPager = Widget.extend({
-
     	//属性，使用时由类的构造函数传入
     	attrs: {
     		clickId:""
@@ -25,7 +23,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			"click #submitOrder":"_addTextOrder",
 			"click #toCreateOrder":"_toCreateOrder",
 			"click #urgentOrder":"_transPrice",
-			"change #selectDuad":"_transPrice",
+			"click .dropdown":"_transPrice",
 			"click #saveContact":"_saveContact",
 			"click #editContact":"_editContactDiv",
 			"click #fy-btn": "_uploadFile",
@@ -36,20 +34,36 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     	//重写父类
     	setup: function () {
     		textOrderAddPager.superclass.setup.call(this);
-			this._transGrade();
-			this._transPrice();
-			this._globalRome();
-			this._initPage();
-		
+			
 			var formValidator=this._initValidate();
 			$(":input").bind("focusout",function(){
 				formValidator.element(this);
 			});
+			
+			this._transGrade();
+			this._transPrice();
+			this._globalRome();
+			this._initPage();
     	},
         
         _initValidate:function(){
         	var formValidator=$("#textOrderForm").validate({
-        		showErrors:function(errorMap,errorList) {
+        		errorPlacement: function(error, element) {
+					if (element.is(":checkbox")) {
+						error.appendTo(element.parent().parent().parent());
+					} else {
+						error.insertAfter(element);
+					}
+						
+				},
+				highlight: function(element, errorClass) {
+					
+				}, 
+				unhighlight: function(element, errorClass) {
+					
+				} ,
+				errorClass:"x-label",
+				showErrors:function(errorMap,errorList) {
 					$('ul li p label').remove()//删除所有隐藏的li p label标签
 					this.defaultShowErrors();
 				},
@@ -145,49 +159,87 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			var totalWords = CountWordsUtil.count($("#translateContent").val());
 			
 			var baseInfo = {};
-			//baseInfo.chlId=""后台写
-			//baseInfo.orderType
-			baseInfo.busiType = 1;
-			baseInfo.translateType = "0"; //0：快速翻译 1：文档翻译 缺判断
-			baseInfo.translateName = $("#translateContent").val().substring(0,15);
-			//baseInfo.orderLevel =??
-			baseInfo.subFlag = "0"; // "0：系统自动报价 1：人工报价"
-			//baseInfo.userType
-			baseInfo.userId = "userid";
-			baseInfo.corporaId = "corporaId";
-			
 			var productInfo = {};
-			productInfo.translateSum = totalWords;
-			productInfo.useCode = "";
-			productInfo.fieldCode = "";
-			productInfo.isSetType = "1"
-			if ( $("#urgentOrder").is(':checked') ) {
-				productInfo.isUrgent = "1";
-			}
-			//productInfo.needTranslateInfo??
-			productInfo.translateInfo = $("#translateContent").val();
-			var duadList =[];    
-			$('input[name="duad"]:checked').each(function(){   
-				var tempObj = {};
-				tempObj.languagePairId =$(this).attr("name");
-				//languagePairName =
-				//languageNameEn =
-				duadList.push(tempObj);    
-			});
-			productInfo.languagePairInfoList = duadList;
-			//productInfo.translateLevelInfoList = []
-			
 			var contactInfo = {};
+			var feeInfo = {};
+			if (currentLan.indexOf("zh") >= 0) { 
+				baseInfo.orderType = "0";
+				baseInfo.flag = "0";
+				baseInfo.chlId = "0";
+			}else {
+				baseInfo.orderType = "1";
+				baseInfo.flag = "1";//业务标识 0:国内业务 1：国际业务 ??
+				baseInfo.chlId = "1";
+			}
+			
+			baseInfo.orderType = "1"; //??
+			baseInfo.busiType = 1;
+			if($("li[fileid]").length > 0) {
+				baseInfo.translateType = "1"
+				
+				var fileInfoList = [];
+				//判断是文档翻译
+				$("li[fileid]").each(function(){   
+					var tempObj = {};
+					tempObj.fileName = $(this).text();
+					tempObj.fileSaveId = $(this).attr("fileid");
+					fileInfoList.push(tempObj);    
+				});
+				productInfo.fileInfoList = fileInfoList;
+				
+				baseInfo.subFlag = "1";
+				productInfo.needTranslateInfo = JSON.stringify(fileInfoList);
+				productInfo.translateInfo = JSON.stringify(fileInfoList);
+				baseInfo.translateName = $("#fileList").find('li:first').text().substring(0,15);
+			} else {
+				baseInfo.translateType = "0"; //0：快速翻译 1：文档翻译 
+				baseInfo.subFlag = "0"; // "0：系统自动报价 1：人工报价"
+				productInfo.needTranslateInfo = $("#translateContent").val();
+				productInfo.translateInfo = $("#translateContent").val();
+				baseInfo.translateName = $("#translateContent").val().substring(0,15);
+			}
+			baseInfo.orderLevel = "1";
+			baseInfo.userType = "10"; //"10：个人 11：企业 12：代理人 "??
+			baseInfo.userId = "10086";
+			//baseInfo.corporaId
+			//baseInfo.accountId
+				
+			var today = new Date();
+			baseInfo.timeZone = 'GMT+'+(0 - today.stdTimezoneOffset()/60);
+			
+			productInfo.translateSum = totalWords;
+			productInfo.useCode = "222";
+			productInfo.fieldCode = "222";
+			productInfo.isSetType = "1"
+			if ( $("#urgentOrder").is(':checked') )
+				productInfo.isUrgent = "Y";
+			else 
+				productInfo.isUrgent = "N";
+				
+			var duadList =[];    
+			var tempLanPairObj = {};
+			tempLanPairObj.languagePairId = $(".dropdown .selected").attr('value');
+			tempLanPairObj.languagePairName =  $(".dropdown .selected").text();
+			tempLanPairObj.languageNameEn = currentLan.indexOf("zh") >= 0 ? 'zh':'en';
+			duadList.push(tempLanPairObj);
+			productInfo.languagePairInfoList = duadList;
+			
+			var translateLevelInfoList=[];
+			var tempTranlevObj={};
+			tempTranlevObj.translateLevel = $(".none-ml.current").attr('name');
+			translateLevelInfoList.push(tempTranlevObj);
+			
+			productInfo.translateLevelInfoList = translateLevelInfoList;
+			
 //			contactInfo.contactName =  $("#editContactDiv").find('p').eq(0).html();
 //			contactInfo.contactTel  =  $("#editContactDiv").find('p').eq(1).html();
 //			contactInfo.contactEmail  =  $("#editContactDiv").find('p').eq(2).html();
 			contactInfo.contactName=$("#saveContactDiv").find('input').eq(0).val();
-		    contactInfo.contactName="+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val();
-			contactInfo.contactName=$("#saveContactDiv").find('input').eq(2).val();
+		    contactInfo.contactTel="+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val();
+			contactInfo.contactEmail=$("#saveContactDiv").find('input').eq(2).val();
 			
-			var feeInfo = {};
 			feeInfo.totalFee = 100;
-			feeInfo.currencyUnit = $("#selectDuad").find("option:selected").attr("currency");
+			feeInfo.currencyUnit = $("#selectDuad").find("option:selected").val();
 			
 			ajaxController.ajax({
 				type: "post",
@@ -201,13 +253,15 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 					feeInfo: JSON.stringify(feeInfo)
 				},
 				success: function (data) {
-					if ("1" === data.statusCode) {
-						if(baseInfo.translateType == 1) {
-							window.location.href =  _base + "/p/customer/order/payOrder";
+					if ("OK" === data.statusInfo) {
+						if(baseInfo.translateType == 0) { //文字翻译
+							window.location.href =  _base + "/p/customer/order/payOrder?orderId="+data.data;
 						} else {
 							
+							//文档翻译，跳到待报价页面，暂缺
 						}
-						
+					} else { //用户未登陆
+						window.location.href = _base + "/p/order/orderSubmit?orderType=text";
 					}
 				}
 			});
@@ -215,18 +269,18 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		
 		//查询报价
 		_queryAutoOffer:function() {
+			if($("li[fileid]").length > 0) {
+				$("#price").html("<span>请耐心等待报价！</span>");
+				return;
+			}
+			
 			var req={};
 			req.wordNum = CountWordsUtil.count($("#translateContent").val());
 		    req.duadId = $("#selectDuad").find("option:selected").val();
 		    req.purposeId = $("#selectPurpose").find("option:selected").val();
 		    
-		    if($(".none-ml.current").attr('name') == 0) {
-		    	req.translateLevel = "100210";
-			} else if($(".none-ml.current").attr('name') == 1) {
-				req.translateLevel = "100220";
-			} else {
-				req.translateLevel = "100230";
-			}
+		    req.translateLevel = $(".none-ml.current").attr('name');
+		   
 	    	if ( $("#urgentOrder").is(':checked') ) 
 	    		req.isUrgent  = "1";
 			else 
@@ -285,33 +339,44 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		
 		//语言对改变，价格改变,翻译速度改变
 		_transPrice:function() {
-			
 			var _this = this;
-			var selected = $("#selectDuad").find("option:selected");
-			var currency;
-			var ordinary = selected.attr("ordinary");
-			var ordinaryUrgent = selected.attr("ordinaryUrgent");
-			var professional = selected.attr("professional");
-			var professionalUrgent = selected.attr("professionalUrgent");
-			var publish = selected.attr("publish");
-			var publishUrgent = selected.attr("publishUrgent");
 			
-			if (currentLan.indexOf("zh") >= 0) {
-				currency = "元";
-			} else {
-				currency = "美元";
-			}
-			
-			if ($("#urgentOrder").is(':checked') ) {
-				$("#stanPrice").html(professionalUrgent).after(currency);
-				$("#proPrice").html(professionalUrgent).after(currency);
-				$("#pubPrice").html(publishUrgent).after(currency);
-			} else {
-				$("#stanPrice").html(ordinary).after(currency);
-				$("#proPrice").html(professional).after(currency);
-				$("#pubPrice").html(publish).after(currency);
-			}
-			
+        	$("#selectDuad").find('option').each(function() {
+        		var val = $(this).val();
+        		if (val ==  $(".dropdown .selected").attr('value')) {
+        			var selected = $(this);
+
+        			var currency;
+        			var ordinary = selected.attr("ordinary");
+        			var ordinaryUrgent = selected.attr("ordinaryUrgent");
+        			var professional = selected.attr("professional");
+        			var professionalUrgent = selected.attr("professionalUrgent");
+        			var publish = selected.attr("publish");
+        			var publishUrgent = selected.attr("publishUrgent");
+        			
+        			if (currentLan.indexOf("zh") >= 0) {
+        				currency = "元";
+        			} else {
+        				currency = "美元";
+        			}
+        			
+        			if ($("#urgentOrder").is(':checked') ) {
+        				$("#stanPrice").html(professionalUrgent).after(currency);
+        				$("#proPrice").html(professionalUrgent);
+        				$("#pubPrice").html(publishUrgent);
+        			} else {
+        				$("#stanPrice").html(ordinary);
+        				$("#proPrice").html(professional);
+        				$("#pubPrice").html(publish);
+        			}
+        			
+        			$("#stanPrice").next('a').html(currency);
+    				$("#proPrice").next('a').html(currency);
+    				$("#pubPrice").next('a').html(currency);
+        		
+        		}
+            });
+		
 			this._getSpeed();
 		},
 		

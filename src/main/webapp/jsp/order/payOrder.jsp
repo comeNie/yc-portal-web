@@ -56,7 +56,7 @@
 					<ul class="mb-40">
 						<li class="none-ml">
 							<p class="word">订单号</p>
-							<p class="line-40">8180889140117891</p>
+							<p class="line-40">${OrderDetails.orderId}</p>
 						</li>
 						<%--<li>--%>
 							<%--<p class="word">订单性质</p>--%>
@@ -74,15 +74,15 @@
 					<ul>
 						<li class="none-ml line-none line-20">
 							<p class="word">订单金额</p>
-							<p>金额：1244.00元</p>
+							<p>金额：${OrderDetails.totalFee}元</p>
 						</li>
 						<li class="line-none line-20">
 							<p class="word">&nbsp;</p>
-							<p>已优惠：50.00元</p>
+							<p>已优惠：${OrderDetails.discountFee}元</p>
 						</li>
 						<li class="ml-100 line-none">
 							<p class="word">&nbsp;</p>
-							<p>应付金额：<span>980.00 </span>元</p>
+							<p>应付金额：<span>${OrderDetails.paidFee}</span>元</p>
 						</li>
 					</ul>
 				</div>
