@@ -175,13 +175,7 @@ public class UserCommonController {
 		req.setMaxCountOverTimeKey(maxCountOverTimeKey);
 		req.setNowCountKey(nowCountKey);
 		String uid = request.getParameter("uid");
-		Object[] ucenterRes = getUcenterOperationCode(type, uid, phone);
-		if ((boolean) ucenterRes[0]) {
-			String randomStr = (String) ucenterRes[1];// RandomUtil.randomNum(6);
-			req.setContent("短信验证码:" + randomStr);
-			return sendSms(req, randomStr);
-		}
-		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, (String) ucenterRes[2], false);
+		return sendSms(req, type, uid, phone);
 
 	}
 
@@ -204,7 +198,7 @@ public class UserCommonController {
 				isOk);
 	}
 
-	private ResponseData<Boolean> sendSms(SmsRequest req, String randomStr) {
+	private ResponseData<Boolean> sendSms(SmsRequest req,String type,String uid, String phone) {
 		ICacheClient iCacheClient = AiPassUitl.getCacheClient();
 		JSONObject config = AiPassUitl.getVerificationCodeConfig();
 		// 最多发送次数 key
@@ -222,9 +216,15 @@ public class UserCommonController {
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 					msg, false);
 		}
-
-		boolean sendOk = true;// SmsSenderUtil.sendMessage(phone,
-								// req.getContent());
+		Object[] ucenterRes = getUcenterOperationCode(type, uid, phone);
+		if (!(boolean) ucenterRes[0]) {
+			msg = (String) ucenterRes[2];
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg,
+					false);
+		}
+		String randomStr = (String) ucenterRes[1];// RandomUtil.randomNum(6);
+		req.setContent("短信验证码:" + randomStr);
+		boolean sendOk = true;// SmsSenderUtil.sendMessage(phone, req.getContent());
 		if (sendOk) {
 			// 最多发送次数超时时间
 			int maxOverTimeCount = config.getIntValue(req
