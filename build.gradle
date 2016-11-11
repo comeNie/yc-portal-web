@@ -86,6 +86,8 @@ dependencies {
     compile 'com.ai.yc.order:orderquery:1.0-SNAPSHOT'
     //订单查询 我的订单
     compile 'com.ai.yc.order:orderdetails:1.0-SNAPSHOT'
+    //订单费用查询
+    compile 'com.ai.yc.order:orderfee:1.0-SNAPSHOT'
 	//注册
 	compile 'com.ai.yc.user:userservice:1.0-SNAPSHOT'
     

@@ -35,6 +35,15 @@ import com.alibaba.fastjson.JSONObject;
 public class VerifyUtil {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(VerifyUtil.class);
+	/**
+	 * 默认编码
+	 */
+	private static final String DEFAULT_CHARSET = "utf-8";
+
+	/**
+	 * 加密组装分隔符
+	 */
+	public static final String SEPARATOR = ";";
 
 	public static BufferedImage getImageVerifyCode(String namespace,
 			String cacheKey, int width, int height) {
@@ -307,5 +316,17 @@ public class VerifyUtil {
 			isOk = true;
 		}
 		return isOk;
+	}
+
+	/**
+	 * 参数加密
+	 *
+	 * @param param
+	 * @param key
+	 * @return
+	 * @author LiangMeng
+	 */
+	public static String encodeParam(String param, String key) {
+		return MD5.sign(param, key, DEFAULT_CHARSET);
 	}
 }

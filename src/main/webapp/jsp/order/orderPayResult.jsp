@@ -1,3 +1,4 @@
+<%@ page import="com.ai.yc.protal.web.model.pay.PayNotify" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -52,7 +53,7 @@
             <div class="recharge-success">
                 <ul>
                     <c:choose>
-                        <c:when test="${payResult == '1'}">
+                        <c:when test="${payResult == true}">
                             <li><img src="${uedroot}/images/rech-win.png" /></li>
                             <%--支付成功--%>
                             <li class="word"><spring:message code="order.pay.result.success"/></li>
