@@ -58,13 +58,13 @@
   					<li id="login_email_icon_color" class="red"><i id="login_email_icon" class="icon-remove-sign"></i></li>
   					<li class="word"><spring:message code="ycaccountcenter.setting.email"/></li>
   					<li id="login_email_text"><spring:message code="ycaccountcenter.setting.email.unset"/></li>
-  					<li class="right"><a href="#"><spring:message code="ycaccountcenter.setting.set"/></a></li>
+  					<li class="right"><a href="${_base}/p/security/bindEmail"><spring:message code="ycaccountcenter.setting.set"/></a></li>
   				</ul>
   				<ul>
   					<li id="login_phone_icon_color" class="red"><i id="login_phone_icon" class="icon-remove-sign"></i></li>
   					<li class="word"><spring:message code="ycaccountcenter.setting.loginphone"/></li>
   					<li id="login_phone_text"><spring:message code="ycaccountcenter.setting.loginphone.unset"/></li>
-  					<li class="right"><a href="#"><spring:message code="ycaccountcenter.setting.set"/></a></li>
+  					<li class="right"><a href="${_base}/p/security/bindPhone"><spring:message code="ycaccountcenter.setting.set"/></a></li>
   				</ul>
   				<ul>
   					<li id="pay_password_icon_color"  class="red"><i id="pay_password_icon" class="icon-remove-sign"></i></li>

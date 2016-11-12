@@ -17,7 +17,9 @@
 		<div class="cloud-wrapper">
 			<!--左侧菜单-->
 			<div class="left-subnav">
-				<jsp:include page="/inc/leftmenu.jsp" />
+				<jsp:include page="/inc/leftmenu.jsp">
+  	            <jsp:param name="current" value="seccenterSettings" />
+  	            </jsp:include>
 			</div>
 			<!--右侧内容-->
 			<!--右侧大块-->
