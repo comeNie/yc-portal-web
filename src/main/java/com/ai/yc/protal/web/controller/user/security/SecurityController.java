@@ -3,19 +3,33 @@ package com.ai.yc.protal.web.controller.user.security;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.StringUtil;
+import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.yc.protal.web.constants.Constants;
+import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
 import com.ai.yc.protal.web.utils.UserUtil;
+import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
+import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
+import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckEmailRequest;
+import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckeMobileRequest;
+import com.ai.yc.ucenter.api.members.param.editemail.UcMembersEditEmailRequest;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
 import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
+import com.alibaba.fastjson.JSON;
 
 /**
  * 帐号安全设置<br>
@@ -97,4 +111,114 @@ public class SecurityController {
 		modelView.addObject("user",UserUtil.getSsoUser());
 		return modelView;
 	}
+	
+	
+	@RequestMapping("bandEmail")
+	public ModelAndView bandEmail() {
+		return new ModelAndView("user/security/bandEmail");
+	}
+	
+	@RequestMapping("bandEmailSuccess")
+	public ModelAndView bandEmailSuccess() {
+		return new ModelAndView("user/security/bandEmailSuccess");
+	}
+	
+	
+	@RequestMapping("editEmail")
+	public ModelAndView editEmail() {
+		Map<String,Object> model = new HashMap<String,Object>();
+		UcMembersEditEmailRequest emailRequest = new UcMembersEditEmailRequest();
+		emailRequest.setEmail("178070754@qq.com");
+		model.put("ucMembersEditEmail", emailRequest);
+		return new ModelAndView("user/security/updateEmail",model);
+	}
+	
+	@RequestMapping("editPhone")
+	public ModelAndView editPhone() {
+		Map<String,Object> model = new HashMap<String,Object>();
+		UcMembersEditEmailRequest emailRequest = new UcMembersEditEmailRequest();
+		emailRequest.setEmail("178070754@qq.com");
+		model.put("UcMembersEditEmail", emailRequest);
+		return new ModelAndView("user/security/updateMobilePhone");
+	}
+	
+	@RequestMapping("updateEmail")
+	@ResponseBody
+	public String updateEmail() {
+		ResponseData<String> responseData = null;
+   	    responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "修改密码成功", "修改密码成功");
+   	    //IUcMembersSV ucMembersSV = DubboConsumerFactory.getService(IUcMembersSV.class);
+   	    ResponseHeader header = new ResponseHeader();
+        header.setIsSuccess(true);
+        header.setResultCode(Constants.SUCCESS_CODE);
+        responseData.setResponseHeader(header);
+   	 	return JSON.toJSONString(responseData);
+	}
+	
+	@RequestMapping("updatePhone")
+	@ResponseBody
+	public String updatePhone(@RequestParam("phone") String phone,@RequestParam("code") String code,@RequestParam("type") String type ) {
+		ResponseData<String> responseData = null;
+   	    responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "修改密码成功", "修改密码成功");
+   	    //IUcMembersSV ucMembersSV = DubboConsumerFactory.getService(IUcMembersSV.class);
+   	    ResponseHeader header = new ResponseHeader();
+        header.setIsSuccess(true);
+        header.setResultCode(Constants.SUCCESS_CODE);
+        responseData.setResponseHeader(header);
+   	 	return JSON.toJSONString(responseData);
+	}
+	
+	/**
+	 * 校验邮箱或手机
+	 */
+	@RequestMapping("/checkPhoneOrEmail")
+	@ResponseBody
+	public ResponseData<Boolean> checkPhoneOrEmail(HttpServletRequest request) {
+		try {
+			String checkType = request.getParameter("checkType");
+			String checkVal = request.getParameter("checkVal");
+			String msg = "帐号已存在";
+			Boolean canUse = checkPhoneOrEmail(checkType, checkVal);
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
+					msg, canUse);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_FAILURE,
+					"error");
+		}
+	}
+	/**
+	 * 校验手机或邮箱可用
+	 */
+	private Boolean checkPhoneOrEmail(String checkType, String checkVal) {
+		UcMembersResponse res = null;
+		try {
+			IUcMembersSV sv = DubboConsumerFactory
+					.getService(IUcMembersSV.class);
+			if (Register.CHECK_TYPE_EMAIL.equals(checkType)) {// 邮箱校验
+				UcMembersCheckEmailRequest emailReq = new UcMembersCheckEmailRequest();
+				emailReq.setEmail(checkVal);
+				emailReq.setTenantId(Constants.DEFAULT_TENANT_ID);
+				res = sv.ucCheckeEmail(emailReq);
+				LOG.info("校验邮箱返回：" + JSON.toJSONString(res));
+			}
+			if (Register.CHECK_TYPE_PHONE.equals(checkType)) {// 手机校验
+				UcMembersCheckeMobileRequest phoneReq = new UcMembersCheckeMobileRequest();
+				phoneReq.setTenantId(Constants.DEFAULT_TENANT_ID);
+				phoneReq.setMobilephone(checkVal);
+				res = sv.ucCheckeMobilephone(phoneReq);
+				LOG.info("校验手机返回：" + JSON.toJSONString(res));
+			}
+		} catch (Exception e) {
+			LOG.info(e.getMessage(), e);
+		}
+		if (res != null && res.getMessage() != null
+				&& res.getMessage().isSuccess() && res.getCode() != null
+				&& res.getCode().getCodeNumber() != null
+				&& res.getCode().getCodeNumber() == 1) {
+			return true;
+		}
+		return false;
+	}
+
 }
