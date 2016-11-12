@@ -113,16 +113,15 @@ public class SecurityController {
 	}
 	
 	
-	@RequestMapping("bandEmail")
-	public ModelAndView bandEmail() {
-		return new ModelAndView("user/security/bandEmail");
+	@RequestMapping("bindEmail")
+	public ModelAndView bindEmail() {
+		return new ModelAndView("user/security/bindEmail");
 	}
 	
-	@RequestMapping("bandEmailSuccess")
-	public ModelAndView bandEmailSuccess() {
-		return new ModelAndView("user/security/bandEmailSuccess");
+	@RequestMapping("bindEmailSuccess")
+	public ModelAndView bindEmailSuccess() {
+		return new ModelAndView("user/security/bindEmailSuccess");
 	}
-	
 	
 	@RequestMapping("editEmail")
 	public ModelAndView editEmail() {
@@ -131,6 +130,10 @@ public class SecurityController {
 		emailRequest.setEmail("178070754@qq.com");
 		model.put("ucMembersEditEmail", emailRequest);
 		return new ModelAndView("user/security/updateEmail",model);
+	}
+	@RequestMapping("bindPhone")
+	public ModelAndView bindPhone() {
+		return new ModelAndView("user/security/bindPhone");
 	}
 	
 	@RequestMapping("editPhone")
