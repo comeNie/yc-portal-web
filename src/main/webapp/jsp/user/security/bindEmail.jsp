@@ -36,14 +36,15 @@
  				<div class="recharge-content binding">
  					<div class="recharge-form-label mt-20">
  						<ul>
+ 							<li><label class="ml-70" id="dynamicodeErrMsg" style="display: none;"></label></li>
  							<li>
  								<p class="word">邮箱:</p>
- 								<p><input type="text" class="int-text int-large radius"></p>
+ 								<p><input type="text" class="int-text int-large radius" id="bindEmail"></p>
  							</li>
  							<li>
  								<p class="word">验证码:</p>
- 								<p><input type="text" class="int-text int-in radius"></p>
- 								<p><input type="button" class="btn biu-btn radius btn-medium" value="60S后重发"></p>
+ 								<p><input type="text" class="int-text int-in radius" id="emailValue"></p>
+ 								<p><input type="button" class="btn border-green border-sma radius btn-medium" id="email-sendCode-btn" value="获取验证码"></p>
  								<p><a href="#">立即进入邮箱</a></p>
  							</li>
  						</ul>
@@ -52,7 +53,7 @@
  				</div>
  				<!--按钮-->
  				<div class="recharge-btn">
- 						<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="提 交">
+ 						<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" id="bandEmailSubmit" value="提 交">
  					</div>
  			</div>
   		</div>	
@@ -68,5 +69,15 @@
 <script type="text/javascript">
 	var phone = "${user.mobile}";
 	var email = "${user.email}";
+	var pager;
+	(function() {
+		seajs.use('app/jsp/user/security/bindEmail', function(bindEmailPager) {
+			pager = new bindEmailPager({
+				element : document.body
+			});
+			pager.render();
+		});
+	})();
 </script>
+
 </html>
