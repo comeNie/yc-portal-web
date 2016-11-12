@@ -19,34 +19,32 @@ define("app/jsp/user/security/updateEmail",
 						/* 事件代理 */
 						events : {
 							/**
-							 * 通过手机修改手机号
+							 * 通过手机修改邮箱
 							 */
 							//发送手机动态码
 							"click #send_dynamicode_btn":"_sendDynamiCode",
 							//手机验证身份下一步
 							"click #next-bt1":"_checkPhoneDynamicode",
-							//校验手机号
-							"blur #uPhone":"_checkPhone",
+							//校验邮箱地址
+							"blur #phoneUEmail":"_pcheckEmail",
 							//校验手机合法性
-							"click #usend_dynamicode_btn":"_checkPhone",
-							//修改手机号，发送动态码
-							"click #usend_dynamicode_btn":"_sendUDynamiCode",
+							"click #phone-send-email-btn":"_psendEmail",
 							//校验手机和动态码是否匹配
-							"click #unext-bt2":"_checkUpdatePhoneDynamicode",
+							"click #pnext-bt2":"_submitEmailValue",
 
 							
 							
 							/**
-							 * 通过邮箱修改手机号
+							 * 通过邮箱修改邮箱
 							 */
 							//验证身份发送邮件
 							"click #sendEmailBtn" : "_sendEmail",
 							//邮箱验证下一步
 							"click #next-bt4":"_checkEmailImageCode",
-							//通过邮箱修改手机号,校验手机号合法性
-							"blur #emailUpdatePhone":"_checkEmailUpdatePhone",
-							//通过邮箱修改手机号，发送动态码验证
-							"click #emailUpDynamicodeBtn":"_sendEmailUPhoneDynamiCode",
+							//通过邮箱修改邮箱,校验邮箱合法性
+							"blur #emailUpdateEmail":"_checkEmail",
+							//通过邮箱修改邮箱，发送动态码验证
+							"click #email-sendCode-btn":"_sendEmailUDynamiCode",
 							//校验手机和验证码是否匹配，如果匹配则修改手机号
 							"click #next-bt5":"_submitValue",
 						},
@@ -129,7 +127,8 @@ define("app/jsp/user/security/updateEmail",
 							ajaxController.ajax({
 								type : "POST",
 								data : {
-									"email": "178070754@qq.com"
+									"email": "178070754@qq.com",
+									"type":"5"
 								},
 								dataType: 'json',
 								url :_base+"/userCommon/sendEmail",
@@ -161,6 +160,54 @@ define("app/jsp/user/security/updateEmail",
 								},
 								failure : function(){
 									$("#sendEmailBtn").removeAttr("disabled"); //移除disabled属性
+								},
+								error : function(){
+									alert("网络连接超时!");
+								}
+							});
+						},
+						/**
+						 * 发送邮件
+						 */
+						_psendEmail:function(){
+							var _this = this;
+							$("#phone-send-email-btn").attr("disabled", true);
+							ajaxController.ajax({
+								type : "POST",
+								data : {
+									"email": "178070754@qq.com",
+									"type":"5"
+								},
+								dataType: 'json',
+								url :_base+"/userCommon/sendEmail",
+								processing: true,
+								message : "正在处理中，请稍候...",
+								success : function(data) {
+									var resultCode = data.data;
+									if(!resultCode){
+										$("#phoneUEmailErrMgs").show();
+										$("#phoneUEmailErrMgs").text("发送邮件失败");
+										$("#phone-send-email-btn").removeAttr("disabled"); //移除disabled属性
+									}else{
+										var step = 59;
+							            $('#phone-send-email-btn').val('重新发送60');
+							            $("#phone-send-email-btn").attr("disabled", true);
+							            var _res = setInterval(function(){
+							                $("#phone-send-email-btn").attr("disabled", true);//设置disabled属性
+							                $('#phone-send-email-btn').val('重新发送'+step);
+							                step-=1;
+							                if(step <= 0){
+							                $("#phone-send-email-btn").removeAttr("disabled"); //移除disabled属性
+							                $('#phone-send-email-btn').val('获取验证码');
+							                clearInterval(_res);//清除setInterval
+							                }
+							            },1000);
+							            //window.location.href = _base+"/user/bandEmail/sendBandEmailSuccess?email="+$("#email").val();
+										
+									}
+								},
+								failure : function(){
+									$("#phone-send-email-btn").removeAttr("disabled"); //移除disabled属性
 								},
 								error : function(){
 									alert("网络连接超时!");
@@ -260,8 +307,8 @@ define("app/jsp/user/security/updateEmail",
 						_checkUpdatePhoneDynamicode:function(){
 							 var phoneDynamicode = $("#uphoneDynamicode").val();
 							 if(phoneDynamicode==null||phoneDynamicode==""){
-								 $("#uphoneErrMsg").show();
-								 $("#uphoneErrMsg").text("请输入验证码");
+								 $("#updateEmailErrMsg").show();
+								 $("#updateEmailErrMsg").text("请输入验证码");
 								 return false;
 							 }
 							 ajaxController.ajax({
@@ -307,47 +354,41 @@ define("app/jsp/user/security/updateEmail",
 				    					}
 				    				});
 						},
-						/* 手机格式校验 */
-						_checkPhone : function() {
-							var country = $("#country").find("option:selected");
-							var reg = country.attr("reg");
-							var phone = $("#uPhone");
-							var phoneVal = phone.val();
-							if ($.trim(phoneVal) == "") {
-								$("#uphoneErrMsg").show();
-								$("#uphoneErrMsg").html("手机号不能为空");
-								phone.focus();
+						/* 邮箱校验 */
+						_checkEmail : function() {
+							var email = $("#emailUpdateEmail");
+							var emailVal = email.val();
+							if ($.trim(emailVal) == "") {
+								$("#emailUErrMsg").show();
+								$("#emailUErrMsg").text("请输入邮箱地址");
+								//email.focus();
 								return false;
-							}else{
-								$("#uphoneErrMsg").hide();
-								reg = eval('/' + reg + '/');
-								if (!reg.test(phoneVal)) {
-									$("#uphoneErrMsg").show();
-									$("#uphoneErrMsg").html("请输入正确的手机号");
-									phone.focus();
-									return false;
-								}else{
-									$("#uphoneErrMsg").hide();
-									ajaxController.ajax({
-										type : "post",
-										processing : false,
-										message : "保存中，请等待...",
-										url : _base + "/reg/checkPhoneOrEmail",
-										data : {
-											'checkType' : "phone",
-											"checkVal" : $("#uPhone").val()
-										},
-										success : function(json) {
-											if (!json.data) {
-												$("#uphoneErrMsg").show();
-												$("#uphoneErrMsg").html(json.statusInfo);
-											}else{
-												$("#uphoneErrMsg").hide();
-											}
-										}
-									});
-								}
 							}
+							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
+									.test(emailVal)) {
+								$("#emailUErrMsg").show();
+								$("#emailUErrMsg").text("请输入合法邮箱地址");
+								return false;
+							}
+							$("#emailUErrMsg").hide();
+							return true;
+						},
+						_pcheckEmail:function(){
+							var email = $("#phoneUEmail");
+							var emailVal = email.val();
+							if ($.trim(emailVal) == "") {
+								$("#phoneUEmailErrMgs").show();
+								$("#phoneUEmailErrMgs").text("请输入邮箱地址");
+								//email.focus();
+								return false;
+							}
+							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
+									.test(emailVal)) {
+								$("#phoneUEmailErrMgs").show();
+								$("#phoneUEmailErrMgs").text("请输入合法邮箱地址");
+								return false;
+							}
+							$("#phoneUEmailErrMgs").hide();
 							return true;
 						},
 						/**
@@ -396,9 +437,9 @@ define("app/jsp/user/security/updateEmail",
 							return true;
 						},
 						/* 发送动态码 */
-						  _sendEmailUPhoneDynamiCode : function() {
+						  _sendEmailUEmailDynamiCode : function() {
 								var _this = this;
-								var btn = $("#emailUpDynamicodeBtn");
+								var btn = $("#email-sendCode-btn");
 								if (btn.hasClass("biu-btn")) {
 									return;
 								}
@@ -408,36 +449,36 @@ define("app/jsp/user/security/updateEmail",
 										type : "post",
 										processing : false,
 										message : "保存中，请等待...",
-										url : _base + "/userCommon/sendSmsCode",
+										url : _base + "/userCommon/sendEmail",
 										data : {
-											'phone' : $("#emailUpdatePhone").val(),
-											'type':"2"
+											'email' : $("#emailUpdateEmail").val(),
+											'type':"5"
 										},
 										success : function(data) {
 											if(data.data==false){
-												$("#emailUpdatePhoneErrMsg").show();
-												$("#emailUpdatePhoneErrMsg").text(data.statusInfo);
-												$("#emailUpDynamicodeBtn").removeAttr("disabled"); //移除disabled属性
-									            $('#emailUpDynamicodeBtn').val('获取验证码');
+												$("#emailUErrMsg").show();
+												$("#emailUErrMsg").text(data.statusInfo);
+												$("#email-sendCode-btn").removeAttr("disabled"); //移除disabled属性
+									            $('#email-sendCode-btn').val('获取验证码');
 												return;
 											}else{
 												if(data.data){
 													var step = 59;
-										            $('#emailUpDynamicodeBtn').val('重新发送60');
-										            $("#emailUpDynamicodeBtn").attr("disabled", true);
+										            $('#email-sendCode-btn').val('重新发送60');
+										            $("#email-sendCode-btn").attr("disabled", true);
 										            var _res = setInterval(function(){
-										                $("#emailUpDynamicodeBtn").attr("disabled", true);//设置disabled属性
-										                $('#emailUpDynamicodeBtn').val('重新发送'+step);
+										                $("#email-sendCode-btn").attr("disabled", true);//设置disabled属性
+										                $('#email-sendCode-btn').val('重新发送'+step);
 										                step-=1;
 										                if(step <= 0){
-										                $("#emailUpDynamicodeBtn").removeAttr("disabled"); //移除disabled属性
-										                $('#emailUpDynamicodeBtn').val('获取验证码');
+										                $("#email-sendCode-btn").removeAttr("disabled"); //移除disabled属性
+										                $('#email-sendCode-btn').val('获取验证码');
 										                clearInterval(_res);//清除setInterval
 										                }
 										            },1000);
-										            $("#emailUpdatePhoneErrMsg").hide();
+										            $("#emailUErrMsg").hide();
 												}else{
-													$("#emailUpDynamicodeBtn").removeAttr("disabled");
+													$("#email-sendCode-btn").removeAttr("disabled");
 												}
 										  }
 										}
@@ -446,9 +487,9 @@ define("app/jsp/user/security/updateEmail",
 						/**
 						 * 邮箱修改手机号，获取动态码
 						 */
-						_sendEmailPhoneUDynamiCode:function(){
-							if (this._checkEmailUpdatePhone()) {
-								  this._sendEmailUPhoneDynamiCode();
+						_sendEmailUDynamiCode:function(){
+							if (this._checkEmail()) {
+								  this._sendEmailUEmailDynamiCode();
 							  }
 						},
 						/**
@@ -488,33 +529,33 @@ define("app/jsp/user/security/updateEmail",
 							/**
 							 * 校验动态码
 							 */
-							 var phoneDynamicode = $("#emailUValidateCode").val();
+							 var phoneDynamicode = $("#uEmailCode").val();
 							 if(phoneDynamicode==null||phoneDynamicode==""){
-								 $("#emailUpdatePhoneErrMsg").show();
-								 $("#emailUpdatePhoneErrMsg").text("请输入验证码");
+								 $("#emailUErrMsg").show();
+								 $("#emailUErrMsg").text("请输入验证码");
 								 return false;
 							 }
 							 ajaxController.ajax({
 								    type:"post",
-				    				url:_base+"/userCommon/checkSmsCode",
+				    				url:_base+"/userCommon/checkEmailCode",
 				    				data:{
-				    					phone:$("#emailUpdatePhone").val(),
-				    					type:"2",
-				    					code:$("#emailUValidateCode").val(),
+				    					email:$("#emailUpdateEmail").val(),
+				    					type:"5",
+				    					code:$("#uEmailCode").val(),
 				    				},
 				    		        success: function(data) {
 				    		        	if(!data.data){
-				    		        		$("#emailUpdatePhoneErrMsg").show();
-											$("#emailUpdatePhoneErrMsg").text(data.statusInfo);
+				    		        		$("#emailUErrMsg").show();
+											$("#emailUErrMsg").text(data.statusInfo);
 											return false;
 				    		        	}else{
 				    		        		 ajaxController.ajax({
 				    		        			 type:"post",
-								    			 url:_base+"/p/security/updatePhone",
+								    			 url:_base+"/p/security/updateEmail",
 								    			 data:{
-								    					phone:$("#emailUpdatePhone").val(),
-								    					type:"2",
-								    					code:$("#emailUValidateCode").val(),
+								    				 	email:$("#emailUpdateEmail").val(),
+								    					type:"5",
+								    					code:$("#uEmailCode").val(),
 								    				},
 								    				success: function(data) {
 								    					var jsonData = JSON.parse(data);
@@ -524,6 +565,59 @@ define("app/jsp/user/security/updateEmail",
 								    		        	}else{
 								    		        		$("#next5").hide();
 								    		        		$("#next6").show();
+								    		        	}
+								    		          },
+								    				error: function(error) {
+								    						alert("error:"+ error);
+								    					}
+								    				});
+				    		        	}
+				    		          },
+				    				error: function(error) {
+				    						alert("error:"+ error);
+				    					}
+				    				});
+						},
+						_submitEmailValue:function(){
+							/**
+							 * 校验动态码
+							 */
+							 var emailDynamicode = $("#phoneUEmailCode").val();
+							 if(emailDynamicode==null||emailDynamicode==""){
+								 $("#phoneUEmailErrMgs").show();
+								 $("#phoneUEmailErrMgs").text("请输入验证码");
+								 return false;
+							 }
+							 ajaxController.ajax({
+								    type:"post",
+				    				url:_base+"/userCommon/checkEmailCode",
+				    				data:{
+				    					email:$("#phoneUEmail").val(),
+				    					type:"5",
+				    					code:$("#phoneUEmailCode").val(),
+				    				},
+				    		        success: function(data) {
+				    		        	if(!data.data){
+				    		        		$("#phoneUEmailErrMgs").show();
+											$("#phoneUEmailErrMgs").text(data.statusInfo);
+											return false;
+				    		        	}else{
+				    		        		 ajaxController.ajax({
+				    		        			 type:"post",
+								    			 url:_base+"/p/security/updateEmail",
+								    			 data:{
+								    				 	email:$("#phoneUEmail").val(),
+								    					type:"5",
+								    					code:$("#phoneUEmailCode").val(),
+								    				},
+								    				success: function(data) {
+								    					var jsonData = JSON.parse(data);
+								    		        	if(jsonData.statusCode!="1"){
+								    		        		alert("修改失败")
+															return false;
+								    		        	}else{
+								    		        		$("#next2").hide();
+								    		        		$("#next3").show();
 								    		        	}
 								    		          },
 								    				error: function(error) {
