@@ -17,7 +17,9 @@
 		<div class="cloud-wrapper">
 			<!--左侧菜单-->
 			<div class="left-subnav">
-				<jsp:include page="/inc/leftmenu.jsp" />
+				<jsp:include page="/inc/leftmenu.jsp">
+  	              <jsp:param name="current" value="seccenterSettings" />
+  	           </jsp:include>
 			</div>
 			<!--右侧内容-->
 			<!--右侧大块-->
@@ -27,15 +29,15 @@
 				<!--右侧第二块-->
 				<div class="right-list mt-0">
 					<div class="right-list-title pb-10 pl-20">
-						<p>设置登录密码</p>
+						<p><spring:message code="ycaccountcenter.updatePassword.title"/></p>
 					</div>
 					<!--充值-->
 					<div class="recharge mt-30">
 						<div class="recharge-content">
-							<div class="recharge-unionPay set-up">
+							<div class="recharge-unionPay set-up" >
 								<ul>
-									<a href="#" class="current"><i class="icon iconfont def">&#xe60b;</i><br>手机修改密码<label></label></a>
-									<a href="#" class="ml-50"><i class="icon iconfont def">&#xe62f;</i><br>邮箱修改密码<label></label></a>
+									<li ><a id="phoneVerification" href="javascript:void(0);" class="current"><i class="icon iconfont def">&#xe60b;</i><br><spring:message code="ycaccountcenter.updatePassword.phoneVerification"/><label></label></a></li>
+									<li ><a id="emailVerification" href="javascript:void(0);" class="ml-50"><i class="icon iconfont def">&#xe62f;</i><br><spring:message code="ycaccountcenter.updatePassword.emailVerification"/><label></label></a></li>
 								</ul>
 							</div>
 						</div>
@@ -47,7 +49,7 @@
 									<div class="place-step-none adopt-stgreen-bj shezh-line">
 										<ul>
 											<li class="circle">1</li>
-											<li class="word">验证身份</li>
+											<li class="word"><spring:message code="ycaccountcenter.updatePassword.step1"/></li>
 										</ul>
 										<p class="line"></p>
 									</div>
@@ -55,7 +57,7 @@
 									<div class="place-step-none adopt-stash-bj shezh-line">
 										<ul>
 											<li class="circle">2</li>
-											<li class="word">设置密码</li>
+											<li class="word"><spring:message code="ycaccountcenter.updatePassword.step2"/></li>
 										</ul>
 										<p class="line"></p>
 									</div>
@@ -63,7 +65,7 @@
 									<div class="place-step-none adopt-stash-bj shezh-line">
 										<ul>
 											<li class="circle">3</li>
-											<li class="word">完成</li>
+											<li class="word"><spring:message code="ycaccountcenter.updatePassword.step3"/></li>
 										</ul>
 										<p class="line"></p>
 									</div>
@@ -71,17 +73,18 @@
 								<!--表单-->
 								<div class="recharge-form-label mt-30 ">
 									<ul>
-										<li>
-											<p class="word">已绑定手机:</p>
-											<p>${user.mobile}</p>
+										<li> 
+										    <label class="ml-70" id="dynamicode" style="display: none;"></label>
+											<p class="word"><spring:message code="ycaccountcenter.updatePassword.bindPhone"/></p>
+											<p id="telephone">18929309495</p>
 										</li>
 										<li>
 											<p class="word">动态码:</p>
 											<p>
-												<input type="text" class="int-text int-in radius">
+												<input id="phoneDynamicode" type="text" class="int-text int-in radius">
 											</p>
 											<p>
-												<input type="button"
+												<input type="button" id="send_dynamicode_btn"
 													class="btn border-green border-sma radius btn-medium"
 													value="获取动态码">
 											</p>
@@ -103,7 +106,7 @@
 									<div class="place-step-none adopt-lightgreen-bj shezh-line">
 										<ul>
 											<li class="circle">1</li>
-											<li class="word">验证身份</li>
+											<li class="word"><spring:message code="ycaccountcenter.updatePassword.step1"/></li>
 										</ul>
 										<p class="line"></p>
 									</div>
@@ -111,7 +114,7 @@
 									<div class="place-step-none adopt-stgreen-bj shezh-line">
 										<ul>
 											<li class="circle">2</li>
-											<li class="word">设置密码</li>
+											<li class="word"><spring:message code="ycaccountcenter.updatePassword.step2"/></li>
 										</ul>
 										<p class="line"></p>
 									</div>
@@ -119,7 +122,7 @@
 									<div class="place-step-none adopt-stash-bj shezh-line">
 										<ul>
 											<li class="circle">3</li>
-											<li class="word">完成</li>
+											<li class="word"><spring:message code="ycaccountcenter.updatePassword.step3"/></li>
 										</ul>
 										<p class="line"></p>
 									</div>
@@ -127,18 +130,15 @@
 								<!--表单-->
 								<div class="recharge-form-label mt-30 ">
 									<ul>
-										<li>
-											<p class="word">密码:</p>
-											<p>
-												<input type="text" class="int-text int-xlarge radius">
-											</p>
-										</li>
-										<li>
-											<p class="word">确认密码:</p>
-											<p>
-												<input type="text" class="int-text int-xlarge radius">
-											</p>
-										</li>
+									<li>
+		 								<label class="ml-70" id="passwordMsg" style="display: none;">输入账号错误</label>
+		 								<p class="word">密码:</p>
+		 								<p><input type="text" class="int-text int-xlarge radius" id="password"></p>
+		 							</li>
+		 							<li>
+		 								<p class="word">确认密码:</p>
+		 								<p><input type="text" class="int-text int-xlarge radius" id="confirmPassword"></p>
+		 							</li>
 									</ul>
 								</div>
 								<!--按钮-->
@@ -154,7 +154,7 @@
 									<div class="place-step-none adopt-lightgreen-bj shezh-line">
 										<ul>
 											<li class="circle">1</li>
-											<li class="word">验证身份</li>
+											<li class="word"><spring:message code="ycaccountcenter.updatePassword.step1"/></li>
 										</ul>
 										<p class="line"></p>
 									</div>
@@ -162,7 +162,7 @@
 									<div class="place-step-none adopt-lightgreen-bj shezh-line">
 										<ul>
 											<li class="circle">2</li>
-											<li class="word">设置密码</li>
+											<li class="word"><spring:message code="ycaccountcenter.updatePassword.step2"/></li>
 										</ul>
 										<p class="line"></p>
 									</div>
@@ -170,7 +170,7 @@
 									<div class="place-step-none adopt-stgreen-bj shezh-line">
 										<ul>
 											<li class="circle">3</li>
-											<li class="word">完成</li>
+											<li class="word"><spring:message code="ycaccountcenter.updatePassword.step3"/></li>
 										</ul>
 										<p class="line"></p>
 									</div>
@@ -179,7 +179,7 @@
 								<div class="recharge-success mt-40">
 									<ul>
 										<li><img src="${uedroot}/images/rech-win.png"></li>
-										<li class="word">设置密码成功</li>
+										<li class="word"><spring:message code="ycaccountcenter.updatePassword.step2"/>成功</li>
 									</ul>
 								</div>
 
@@ -193,7 +193,7 @@
 									<div class="place-step-none adopt-stgreen-bj shezh-line">
 										<ul>
 											<li class="circle">1</li>
-											<li class="word">验证身份</li>
+											<li class="word"><spring:message code="ycaccountcenter.updatePassword.step1"/></li>
 										</ul>
 										<p class="line"></p>
 									</div>
@@ -201,7 +201,7 @@
 									<div class="place-step-none adopt-stash-bj shezh-line">
 										<ul>
 											<li class="circle">2</li>
-											<li class="word">设置密码</li>
+											<li class="word"><spring:message code="ycaccountcenter.updatePassword.step2"/></li>
 										</ul>
 										<p class="line"></p>
 									</div>
@@ -209,7 +209,7 @@
 									<div class="place-step-none adopt-stash-bj shezh-line">
 										<ul>
 											<li class="circle">3</li>
-											<li class="word">完成</li>
+											<li class="word"><spring:message code="ycaccountcenter.updatePassword.step3"/></li>
 										</ul>
 										<p class="line"></p>
 									</div>
@@ -218,19 +218,14 @@
 								<div class="recharge-form-label mt-30 ">
 									<ul>
 										<li>
-											<p class="word">已绑定邮箱:</p>
-											<p>${user.email}</p>
+											<p class="word"><spring:message code="ycaccountcenter.updatePassword.bindEmail"/></p>
+											<p id="passwordEmail">${user.email}</p>
 										</li>
 										<li>
-											<p class="word">动态码:</p>
-											<p>
-												<input type="text" class="int-text int-in radius">
-											</p>
-											<p>
-												<input type="button"
-													class="btn border-green border-sma radius btn-medium"
-													value="获取动态码">
-											</p>
+											<p class="word">验证码:</p>
+ 								            <p><input type="text" class="int-text int-in radius" id="emailIdentifyCode"></p>
+ 								            <p><input type="button" class="btn biu-btn radius btn-medium" value="<spring:message code="ycaccountcenter.updatePassword.sendEmailCode"/>" id="sendEmailBtn"></p>
+ 								            <p><a href="javascript:void(0);" id="goEmail"><spring:message code="ycaccountcenter.updatePassword.goEmail"/></a></p>
 										</li>
 									</ul>
 								</div>
@@ -249,7 +244,7 @@
 									<div class="place-step-none adopt-lightgreen-bj shezh-line">
 										<ul>
 											<li class="circle">1</li>
-											<li class="word">验证身份</li>
+											<li class="word"><spring:message code="ycaccountcenter.updatePassword.step1"/></li>
 										</ul>
 										<p class="line"></p>
 									</div>
@@ -257,7 +252,7 @@
 									<div class="place-step-none adopt-stgreen-bj shezh-line">
 										<ul>
 											<li class="circle">2</li>
-											<li class="word">设置密码</li>
+											<li class="word"><spring:message code="ycaccountcenter.updatePassword.step2"/></li>
 										</ul>
 										<p class="line"></p>
 									</div>
@@ -265,7 +260,7 @@
 									<div class="place-step-none adopt-stash-bj shezh-line">
 										<ul>
 											<li class="circle">3</li>
-											<li class="word">完成</li>
+											<li class="word"><spring:message code="ycaccountcenter.updatePassword.step3"/></li>
 										</ul>
 										<p class="line"></p>
 									</div>
@@ -274,17 +269,14 @@
 								<div class="recharge-form-label mt-30 ">
 									<ul>
 										<li>
-											<p class="word">密码:</p>
-											<p>
-												<input type="text" class="int-text int-xlarge radius">
-											</p>
-										</li>
-										<li>
-											<p class="word">确认密码:</p>
-											<p>
-												<input type="text" class="int-text int-xlarge radius">
-											</p>
-										</li>
+			 								<label class="ml-70" id="emailPasswordErrMsg" style="display: none;"></label>
+			 								<p class="word">密码:</p>
+			 								<p><input type="text" class="int-text int-xlarge radius" id="emailPassword"></p>
+	 									</li>
+			 							<li>
+			 								<p class="word">确认密码:</p>
+			 								<p><input type="text" class="int-text int-xlarge radius" id="emailConfirmPassword"></p>
+			 							</li>
 									</ul>
 								</div>
 								<!--按钮-->
@@ -300,7 +292,7 @@
 									<div class="place-step-none adopt-lightgreen-bj shezh-line">
 										<ul>
 											<li class="circle">1</li>
-											<li class="word">验证身份</li>
+											<li class="word"><spring:message code="ycaccountcenter.updatePassword.step1"/></li>
 										</ul>
 										<p class="line"></p>
 									</div>
@@ -308,7 +300,7 @@
 									<div class="place-step-none adopt-lightgreen-bj shezh-line">
 										<ul>
 											<li class="circle">2</li>
-											<li class="word">设置密码</li>
+											<li class="word"><spring:message code="ycaccountcenter.updatePassword.step2"/></li>
 										</ul>
 										<p class="line"></p>
 									</div>
@@ -316,7 +308,7 @@
 									<div class="place-step-none adopt-stgreen-bj shezh-line">
 										<ul>
 											<li class="circle">3</li>
-											<li class="word">完成</li>
+											<li class="word"><spring:message code="ycaccountcenter.updatePassword.step3"/></li>
 										</ul>
 										<p class="line"></p>
 									</div>
@@ -340,13 +332,53 @@
 		</div>
 
 	</div>
+	<input type="hidden" id="code"/>
 </body>
 <%@ include file="/inc/incJs.jsp"%>
-<script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
-<script type="text/javascript" src="${uedroot}/scripts/modular/eject.js"></script>
-
 <script type="text/javascript">
-	var phone = "${user.mobile}";
+	var phone = "18929309495";
 	var email = "${user.email}";
+	var pager;
+	(function() {
+		seajs.use('app/jsp/user/security/updatePassword', function(updatePasswordPager) {
+			pager = new updatePasswordPager({
+				element : document.body
+			});
+			pager.render();
+		});
+	})();
+	var hash = {
+		'qq.com' : 'http://mail.qq.com',
+		'gmail.com' : 'http://mail.google.com',
+		'sina.com' : 'http://mail.sina.com.cn',
+		'163.com' : 'http://mail.163.com',
+		'126.com' : 'http://mail.126.com',
+		'yeah.net' : 'http://www.yeah.net/',
+		'sohu.com' : 'http://mail.sohu.com/',
+		'tom.com' : 'http://mail.tom.com/',
+		'139.com' : 'http://mail.10086.cn/',
+		'hotmail.com' : 'http://www.hotmail.com',
+		'live.com' : 'http://login.live.com/',
+		'live.cn' : 'http://login.live.cn/',
+		'live.com.cn' : 'http://login.live.com.cn',
+		'189.com' : 'http://webmail16.189.cn/webmail/',
+		'yahoo.com.cn' : 'http://mail.cn.yahoo.com/',
+		'yahoo.cn' : 'http://mail.cn.yahoo.com/',
+		'eyou.com' : 'http://www.eyou.com/',
+		'21cn.com' : 'http://mail.21cn.com/',
+		'188.com' : 'http://www.188.com/',
+		'foxmail.com' : 'http://mail.foxmail.com',
+		'outlook.com' : 'http://www.outlook.com'
+	}
+	$(document).ready(function(){
+		$("#goEmail").click(function(){
+			var _mail =email.split('@')[1];    //获取邮箱域
+			var _host = hash[_mail];
+			if(!_host){
+				_host = 'http://mail.'+_mail;
+			}
+			window.open(_host);
+		});
+	});
 </script>
 </html>

@@ -21,7 +21,9 @@
   <div class="cloud-wrapper">
   	<!--左侧菜单-->
   	<div class="left-subnav">
-  	<jsp:include page="/inc/leftmenu.jsp" />
+  	<jsp:include page="/inc/leftmenu.jsp">
+  	<jsp:param name="current" value="seccenterSettings" />
+  	</jsp:include>
   	</div>
   	<!--右侧内容-->
   	<!--右侧大块-->
@@ -50,19 +52,35 @@
   					<li id="login_password_icon_color" class="green"><i id="login_password_icon" class="icon-ok-sign"></i></li>
   					<li class="word"><spring:message code="ycaccountcenter.setting.loginpassword"/></li>
   					<li><spring:message code="ycaccountcenter.setting.loginpassword.tip"/></li>
-  					<li class="right"><a href="${_base}/p/security/updatePassword"><spring:message code="ycaccountcenter.setting.set"/></a></li>
+  					<li class="right">
+  					  <a href="${_base}/p/security/updatePassword"><spring:message code="ycaccountcenter.setting.set"/></a>
+  					 </li>
   				</ul>
   				<ul>
   					<li id="login_email_icon_color" class="red"><i id="login_email_icon" class="icon-remove-sign"></i></li>
   					<li class="word"><spring:message code="ycaccountcenter.setting.email"/></li>
   					<li id="login_email_text"><spring:message code="ycaccountcenter.setting.email.unset"/></li>
-  					<li class="right"><a href="#"><spring:message code="ycaccountcenter.setting.set"/></a></li>
+  					<li class="right">
+  					 <c:if test="${!isexistemail}">
+  					  <a href="${_base}/p/security/bindEmail"><spring:message code="ycaccountcenter.setting.set"/></a>
+  					 </c:if>
+  					  <c:if test="${isexistemail}">
+  					 <a href="${_base}/p/security/editEmail"><spring:message code="ycaccountcenter.setting.update"/></a>
+  					 </c:if>
+  					</li>
   				</ul>
   				<ul>
   					<li id="login_phone_icon_color" class="red"><i id="login_phone_icon" class="icon-remove-sign"></i></li>
   					<li class="word"><spring:message code="ycaccountcenter.setting.loginphone"/></li>
   					<li id="login_phone_text"><spring:message code="ycaccountcenter.setting.loginphone.unset"/></li>
-  					<li class="right"><a href="#"><spring:message code="ycaccountcenter.setting.set"/></a></li>
+  					<li class="right">
+  					<c:if test="${!isexistphone}">
+  					 <a href="${_base}/p/security/bindPhone"><spring:message code="ycaccountcenter.setting.set"/></a>
+  					</c:if>
+  					<c:if test="${isexistphone}">
+  					 <a href="${_base}/p/security/editPhone"><spring:message code="ycaccountcenter.setting.set"/></a>
+  					</c:if>
+  					</li>
   				</ul>
   				<ul>
   					<li id="pay_password_icon_color"  class="red"><i id="pay_password_icon" class="icon-remove-sign"></i></li>

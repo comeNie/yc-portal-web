@@ -11,6 +11,7 @@ public final class Constants {
 	public static final String DEFAULT_TENANT_ID = "yeecloud";
 	// 订单文档存储
 	public static final String IPAAS_ORDER_FILE_DSS = "order-file-dss";
+	public static final String SELF_SOURCE = "1";
 
 	/** 邮箱可重复发送时间 配置key */
 	public static final String SEND_VERIFY_MAX_TIME_KEY = "/email_verifycode_send_maxtime";

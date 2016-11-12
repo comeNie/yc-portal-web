@@ -66,20 +66,20 @@ private static final Logger LOGGER = LoggerFactory.getLogger(PasswordController.
         membersGetRequest.setUsername(account);
         membersGetRequest.setGetmode("0");
         UcMembersGetResponse getResponse = ucMembersSV.ucGetMember(membersGetRequest);
-        UcMembersGetDate getDate = getResponse.getDate();
-        if(getDate==null){
-        	 header = new ResponseHeader(false, Constants.ERROR_CODE, "失败");
-             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "失败", null);
-             responseData.setResponseHeader(header);
-        }else{
-        	 header = new ResponseHeader(true, Constants.SUCCESS_CODE, "成功");
-             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "成功", null);
-             responseData.setResponseHeader(header);
-        }
+//        UcMembersGetDate getDate = getResponse.getDate();
+//        if(getDate==null){
+//        	 header = new ResponseHeader(false, Constants.ERROR_CODE, "失败");
+//             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "失败", null);
+//             responseData.setResponseHeader(header);
+//        }else{
+//        	 header = new ResponseHeader(true, Constants.SUCCESS_CODE, "成功");
+//             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "成功", null);
+//             responseData.setResponseHeader(header);
+//        }
         header = new ResponseHeader(true, Constants.SUCCESS_CODE, "成功");
         responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "成功", null);
         responseData.setResponseHeader(header);
-        responseData.setData(JSON.toJSONString(getDate));
+//        responseData.setData(JSON.toJSONString(getDate));
         return JSON.toJSONString(responseData);
 	}
 	

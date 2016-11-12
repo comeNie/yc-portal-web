@@ -25,6 +25,7 @@ import com.ai.yc.order.api.ordersubmission.param.OrderSubmissionResponse;
 import com.ai.yc.order.api.ordersubmission.param.ProductInfo;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.Register;
+import com.ai.yc.protal.web.model.pay.PayNotify;
 import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.alibaba.fastjson.JSON;
@@ -321,16 +322,4 @@ public class OrderController {
         return resData;
     }
 
-    /**
-     * 订单支付结果
-     * @return
-     */
-    @RequestMapping("/payResult")
-    public String orderPayResult(Model uiModel){
-        //订单号
-        uiModel.addAttribute("orderId","23423");
-        //支付结果
-        uiModel.addAttribute("payResult","1");
-        return "order/orderPayResult";
-    }
 }

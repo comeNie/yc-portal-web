@@ -275,8 +275,8 @@
 		</form>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
-<script type="text/javascript" src="${_base}/resources/template/scripts/modular/drop-down.js"></script>
-<script type="text/javascript" src="${_base}/resources/template/scripts/modular/frame.js"></script>	
+<script type="text/javascript" src="${uedroot}/scripts/modular/drop-down.js"></script>
+<script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
 <script type="text/javascript" src="${_base}/resources/spm_modules/webuploader/webuploader.js"></script>
 <script type="text/javascript" src="${_base}/resources/spm_modules/app/jsp/order/upload.js"></script>
 <script type="text/javascript">
