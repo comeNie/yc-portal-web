@@ -39,7 +39,7 @@ public class SecurityController {
 			LOG.debug("-------进入安全设置界面-------");
 		}
 		Map<String, Object> model = new HashMap<String, Object>();
-		IYCUserServiceSV iYCUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
+		//IYCUserServiceSV iYCUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
 		SearchYCUserRequest request = new SearchYCUserRequest();
 //		request.setUserId("000000000000003211");
 		GeneralSSOClientUser userSSOInfo = UserUtil.getSsoUser();
