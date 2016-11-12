@@ -81,7 +81,7 @@
 									<select id="country" class="select select-in radius"></select>
 								</p>
  								
- 								<p id="telephone">13718206604</p>
+ 								<p id="telephone">13718206605</p>
  							</li>
  							<li>
  								<p class="word">动态码:</p>
@@ -131,25 +131,21 @@
  					<div class="recharge-form-label mt-30 ">
  						<ul>
  							<li>
- 								<label class="ml-70" id="uphoneErrMsg" style="display: none;"></label>
- 								<p class="word">手机:</p>
- 								<p>
-									<select id="country" class="select select-in radius"></select>
-									<input type="text"  class="" id="uPhone">
-								</p>
- 								<p></p>
+ 								<label class="ml-70" id="phoneUEmailErrMgs" style="display: none;"></label>
+ 								<p class="word">邮箱:</p>
+ 								<p><input type="text" class="int-text int-xlarge radius" id="phoneUEmail"></p>
  							</li>
  							<li>
- 								<p class="word">动态码:</p>
- 								<p><input type="text" class="int-text int-in radius" id="uphoneDynamicode"></p>
- 								<p><input type="button" class="btn border-green border-sma radius btn-medium" id="usend_dynamicode_btn" value="获取动态码">
- 								</p>
+ 								<p class="word">验证码:</p>
+ 								<p><input type="text" class="int-text int-in radius" id="phoneUEmailCode"></p>
+ 								<p><input type="button" class="btn border-green border-sma radius btn-medium" id="phone-send-email-btn" value="获取动态码"></p>
+ 								<p><a href="#">立即进入邮箱</a></p>
  							</li>
  						</ul>
  					</div>
  				<!--按钮-->
  				<div class="recharge-btn">
- 						<input type="button" id="unext-bt2" class="btn btn-green btn-xxxlarge radius10" value="提交">
+ 						<input type="button" id="pnext-bt2" class="btn btn-green btn-xxxlarge radius10" value="提交">
  				</div>
  				</div>
  				<div class="binding" id="next3">
@@ -274,17 +270,15 @@
  					<div class="recharge-form-label mt-30 ">
  						<ul>
  							<li>
- 								<label class="ml-70" id="emailUpdatePhoneErrMsg" style="display: none;"></label>
- 								<p class="word">手机:</p>
- 								<p>
-									<select id="country" class="select select-in radius"></select>
-								</p>
- 								<p><input type="text" class="int-text int-large radius" id="emailUpdatePhone"></p>
+ 								<label class="ml-70" id="emailUErrMsg" style="display: none;"></label>
+ 								<p class="word">邮箱:</p>
+ 								<p><input type="text" class="int-text int-xlarge radius" id="emailUpdateEmail"></p>
  							</li>
  							<li>
  								<p class="word">验证码:</p>
- 								<p><input type="text" class="int-text int-in radius" id="emailUValidateCode"></p>
- 								<p><input type="button" class="btn border-green border-sma radius btn-medium" id="emailUpDynamicodeBtn" value="获取动态码"></p>
+ 								<p><input type="text" class="int-text int-in radius" id="uEmailCode"></p>
+ 								<p><input type="button" class="btn border-green border-sma radius btn-medium" id="email-sendCode-btn" value="获取验证码"></p>
+ 								<p><a href="#">立即进入邮箱</a></p>
  							</li>
  						</ul>
  					</div>
@@ -372,8 +366,10 @@ var pager;
 		'foxmail.com' : 'http://mail.foxmail.com',
 		'outlook.com' : 'http://www.outlook.com'
 	}
-	var email = "${sessionScope.user_session_key.mobile}";
-	var phone = "${sessionScope.user_session_key.email}";
+	//var email = "${sessionScope.user_session_key.mobile}";
+	//var phone = "${sessionScope.user_session_key.email}";
+	var email = "178070754@qq.com";
+	var phone = "13718206605";
 	$(document).ready(function(){
 		$("#goEmail").click(function(){
 			var _mail =email.split('@')[1];    //获取邮箱域
