@@ -78,13 +78,13 @@ public class SecurityController {
 		model.put("userinfo", userSSOInfo);
 		
 		// 登录密码exist
-		model.put("isexistloginpassword", isexistpaypassword.toString());
+		model.put("isexistloginpassword", isexistpaypassword);
 		// 邮箱exist
-		model.put("isexistemail", isexistemail.toString());
+		model.put("isexistemail", isexistemail);
 		// 手机exist
-		model.put("isexistphone", isexistphone.toString());
+		model.put("isexistphone", isexistphone);
 		// 支付密码exist
-		model.put("isexistpaypassword", isexistloginpassword.toString());
+		model.put("isexistpaypassword", isexistloginpassword);
 		
 		if(isexistemail == true){
 			securitylevel += 25;
