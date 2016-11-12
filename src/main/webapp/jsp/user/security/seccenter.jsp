@@ -136,7 +136,7 @@
 	                66: '#0066FF',
 	                100: '#33CC33'
 	            },
-	            frameTime : 30,
+	            frameTime : 20,
 	            percentage: true
 		});
 		var radialObj = $('#indicatorContainer').data('radialIndicator');
