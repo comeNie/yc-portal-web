@@ -50,12 +50,24 @@
 			<!--白色背景-->
 			<div class="white-bj">
 				<div class="right-list-title pb-10 ">
-  					<p>支付订单</p>
+					<%--支付订单--%>
+  					<p><spring:message code="pay.order.title"/></p>
   				</div>
+				<form id="toPayForm" method="post" action="${_base}/p/customer/order/gotoPay">
+					<input type="hidden" name="orderId" value="20161112900034">
+					<input type="hidden" name="orderAmount" value="${orderFee.totalFee}">
+					<input type="hidden" name="currencyUnit" value="${orderFee.currencyUnit}">
+					<input type="hidden" id="payType" name="payOrgCode">
+					<%--当前地址--%>
+					<input type="hidden" id="merchantUrl" name="merchantUrl">
+					<%--订单类型 目前只支持用户--%>
+					<input type="hidden" name="orderType" value="1">
+				</form>
   				<div class="selection-select single-select mt-20">
 					<ul class="mb-40">
 						<li class="none-ml">
-							<p class="word">订单号</p>
+							<%--订单号--%>
+							<p class="word"><spring:message code="pay.order.order.id"/></p>
 							<p class="line-40">${orderId}</p>
 						</li>
 						<%--<li>--%>
@@ -73,23 +85,33 @@
 					</ul>
 					<ul>
 						<li class="none-ml line-none line-20">
-							<p class="word">订单金额</p>
-							<p>金额：100元</p>
+							<%--订单金额--%>
+							<p class="word"><spring:message code="pay.order.amount.title"/></p>
+							<%--金额--%>
+							<p><spring:message code="pay.order.amount.order"/>：<c:if
+									test="${orderFee.currencyUnit == '2'}">$</c:if><fmt:formatNumber
+									value="${orderFee.totalFee/1000}" pattern="#,##0.00#"/><c:if
+									test="${orderFee.currencyUnit == '1'}">元</c:if></p>
 						</li>
-						<li class="line-none line-20">
-							<p class="word">&nbsp;</p>
-							<p>已优惠：50.00元</p>
-						</li>
+						<%--<li class="line-none line-20">--%>
+						<%--<p class="word">&nbsp;</p>--%>
+						<%--<p>已优惠：50.00元</p>--%>
+						<%--</li>--%>
 						<li class="ml-100 line-none">
 							<p class="word">&nbsp;</p>
-							<p>应付金额：<span><fmt:formatNumber value="${orderFee.totalFee/1000}" pattern="#,##0.00#"/> </span>元</p>
+							<%--应付金额--%>
+							<p><spring:message code="pay.order.payable.order"/>：<c:if
+									test="${orderFee.currencyUnit == '2'}">$</c:if><span><fmt:formatNumber
+									value="${orderFee.totalFee/1000}" pattern="#,##0.00#"/></span><c:if
+									test="${orderFee.currencyUnit == '1'}">元</c:if></p>
 						</li>
 					</ul>
 				</div>
 			</div>
 			<div class="white-bj">
 				<div class="right-list-title pb-10 ">
-  					<p>选择支付方式</p>
+					<%--选择支付方式--%>
+					<p><spring:message code="pay.order.pay.method"/></p>
   				</div>
   				<div id="payment-method" class="payment-method mt-30">
 					<c:choose>
@@ -135,16 +157,10 @@
   				</div>
   			</div>
 			<div class="recharge-btn order-btn placeorder-btn ml-0">
- 				<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="支 付">
+				<%--支 付--%>
+ 				<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="pay.order.payment"/>">
  			</div>
-			<form id="toPayForm" method="post" action="${_base}/pay/gotoPay">
-				<input type="hidden" name="orderId" value="20161112900034">
-				<input type="hidden" name="orderAmount" value="${orderFee.totalFee}">
-				<input type="hidden" name="currencyUnit" value="${orderFee.currencyUnit}">
-				<input type="hidden" id="payType" name="payOrgCode">
-				<%--当前地址--%>
-				<input type="hidden" id="merchantUrl" name="merchantUrl">
-			</form>
+
 		</div>
 		</div>
 </body>

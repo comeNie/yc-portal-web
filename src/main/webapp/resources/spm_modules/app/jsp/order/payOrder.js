@@ -1,17 +1,7 @@
 define('app/jsp/order/payOrder', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
-	    Widget = require('arale-widget/1.2.0/widget'),
-	    AjaxController = require('opt-ajax/1.0.0/index');
-    require("jsviews/jsrender.min");
-
-    require("jquery-validation/1.15.1/jquery.validate");
-	//require("app/util/aiopt-validate-ext");
-    var CountWordsUtil = require("app/util/countWords");
-    
-    //实例化AJAX控制处理对象
-    var ajaxController = new AjaxController();
-    
+	    Widget = require('arale-widget/1.2.0/widget');
     var payOrderPager = Widget.extend({
     	
     	//事件代理

@@ -39,4 +39,6 @@
 		interface="com.ai.yc.ucenter.api.members.interfaces.IUcMembersOperationSV" />
 	<dubbo:reference id="iOrderFeeQuerySV" registry="ycRegistry"
 			interface="com.ai.yc.order.api.orderfee.interfaces.IOrderFeeQuerySV"/>
+	<dubbo:reference id="iOrderPayProcessedResultSV" registry="ycRegistry"
+			interface="com.ai.yc.order.api.orderpay.interfaces.IOrderPayProcessedResultSV"/>
 </beans>
