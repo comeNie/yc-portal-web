@@ -16,7 +16,6 @@ import com.ai.opt.sdk.components.ccs.CCSClientFactory;
 import com.ai.opt.sdk.components.mail.EmailFactory;
 import com.ai.opt.sdk.components.mail.EmailTemplateUtil;
 import com.ai.opt.sdk.components.mcs.MCSClientFactory;
-import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.RandomUtil;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
@@ -27,9 +26,6 @@ import com.ai.yc.protal.web.constants.Constants.PhoneVerify;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
-import com.ai.yc.ucenter.api.members.interfaces.IUcMembersOperationSV;
-import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeRequest;
-import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeResponse;
 import com.alibaba.fastjson.JSONObject;
 
 public class VerifyUtil {
@@ -231,35 +227,6 @@ public class VerifyUtil {
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_FAILURE,
 					"error");
 		}
-	}
-
-	/**
-	 * 请求生成code
-	 * 
-	 * @param req
-	 * @return
-	 */
-	public static Object[] getUcenterOperationCode(
-			UcMembersGetOperationcodeRequest req) {
-		boolean isOk = false;
-		String msg = "ok";
-		String code = "";
-		try {
-			UcMembersGetOperationcodeResponse res = DubboConsumerFactory
-					.getService(IUcMembersOperationSV.class)
-					.ucGetOperationcode(req);
-			if (res != null && res.getMessage() != null
-					&& res.getMessage().isSuccess() && res.getCode() != null
-					&& res.getCode().getCodeNumber() != null
-					&& res.getCode().getCodeNumber() == 1) {
-				isOk = true;
-				code = String.valueOf(res.getOperationcode());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			msg = "Ucenter Error";
-		}
-		return new Object[] { isOk, msg, code };
 	}
 
 	/**

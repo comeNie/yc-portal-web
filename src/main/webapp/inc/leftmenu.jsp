@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="uedroot" value="${pageContext.request.contextPath}/resources/template"/>
-<jsp:include page="/inc/inc.jsp"/>
+<c:set var="_base" value="${pageContext.request.contextPath}"/>
+<script src="${_base}/resources/spm_modules/jquery/1.9.1/jquery.min.js"></script>
    <!--二级主体-->
   <!--外侧背景-->
   	<!--左侧菜单-->
@@ -10,12 +11,12 @@
   			<ul>
   				<li class="user"><img src="${uedroot}/images/icon.jpg" /></li>
   				<li class="word">
-  					<p>大脸盼爱大脸</p>
+  					<p>${userinfo.username}</p>
   					<p class="vip1"></p>
   				</li>
   			</ul>
   		</div>
-  		<div class="left-list">
+  		<div class="left-list" id="left_menu_list">
   			<ul>
   				<li class="current">
   					<a href="我的订单-下过订单.html">
@@ -23,8 +24,8 @@
   					<span>我的首页</span>
   					</a>
   				</li>
-  				<li>
-  					<a href="我的订单.html">
+  				<li id="orderList">
+  					<a href="${_base}/p/customer/order/list/view">
   					<span><i class="icon iconfont">&#xe601;</i></span>
   					<span>我的订单</span>
   					</a>
@@ -71,8 +72,8 @@
   					<span>个人信息</span>
   					</a>
   				</li>
-  				<li>
-  					<a href="安全设置.html">
+  				<li id="seccenterSettings">
+  					<a  href="${_base}/p/security/seccenter">
   					<span><i class="icon iconfont">&#xe609;</i></span>
   					<span>安全设置</span>
   					</a>
@@ -88,3 +89,13 @@
   		</div>
   		<div class="left-tplist"><a href="#"><img src="${uedroot}/images/to.jpg" /></a><i class="icon-remove-circle"></i></div>
   	</div>
+  	<script type="text/javascript">
+  	  var current ="${param.current}";
+  	  $(function(){
+  		var currentEle = $("#"+current);
+    	  if(current!=""&&currentEle){
+    		$("#left_menu_list ul li").removeClass("current");
+    		currentEle.addClass("current");
+    	  } 
+  	  });
+  	</script>

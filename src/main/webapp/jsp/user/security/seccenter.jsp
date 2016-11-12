@@ -1,50 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>安全设置无</title>
+    <title><spring:message code="ycaccountcenter.title"/> </title>
+
  	<%@ include file="/inc/inc.jsp"%>
 </head>
 <body>
-	<!--头部-->
-	<div class="header-big">
-  	<div class="cloud-header">
-  		<div class="logo"><a href="#"><img src="${uedroot}/images/logo.png" /></a></div>
-  		<!--导航-->
-  		<div class="cloud-nav">
-  			<ul>
-  				<li class="current"><a href="#">我是客户</a></li>
-  				<li><a href="#">我是服务方</a></li>
-  			</ul>
-  		</div>
-  		<!--导航-->
-  		<div class="cloud-breadcrumb">
-  			<ul>
-  				<li>
-  					<select class="select select-topmini none-select">
-  					<option>简体中文</option>
-  					<option>ENGLISH</option>
-  					</select>
-  					<i class="icon-caret-down"></i>
-  				</li>
-  				<li class="nav-icon"><a href="#"><i class="icon iconfont">&#xe60b;</i></a></li>
-  				<li class="nav-icon mt-2"><a href="#"><i class="icon iconfont">&#xe60a;</i><span class="message">3</span></a></li>
-  				<li class="user"><a href="#" class="yonh">${userinfo.nickname}<i class="icon-caret-down"></i></a>
-  					<div class="show">
-  						<ul>
-  							<li><i class="icon-user"></i><a href="#">个人信息</a></li>
-  							<li><i class="icon-lock"></i><a href="#">安全设置</a></li>
-  							<li><i class="icon-off"></i><a href="#">退出</a></li>
-  						</ul>
-  					</div>
-  				</li>
-  			</ul>
-  		</div>
-  	</div>
-  </div>
+  <!--头部-->
+  <jsp:include page="/inc/userTopMenu.jsp"/>
+
   <!--二级主体-->
   <!--外侧背景-->
   <div class="cloud-container">
@@ -52,7 +21,9 @@
   <div class="cloud-wrapper">
   	<!--左侧菜单-->
   	<div class="left-subnav">
-  	<jsp:include page="/inc/leftmenu.jsp" />
+  	<jsp:include page="/inc/leftmenu.jsp">
+  	<jsp:param name="current" value="seccenterSettings" />
+  	</jsp:include>
   	</div>
   	<!--右侧内容-->
   	<!--右侧大块-->
@@ -70,36 +41,52 @@
   				
   				<div  id="sec-level-info"  class="security-word">
   					<ul>
-  						<li >您的账号安全级别</li>
-  						<li id="sec-level-info-account-level" class="red">高危账号</li>
-  						<li id="sec-level-info-account-warn" class="ash">请保持手机、邮箱正常使用，如果停用，请及时修改</li>
+  						<li ><spring:message code="ycaccountcenter.accountleveltip"/></li>
+  						<li id="sec-level-info-account-level" class="red"><spring:message code="ycaccountcenter.acc.level.danger"/></li>
+  						<li id="sec-level-info-account-warn" class="ash"><spring:message code="ycaccountcenter.acc.level.danger.warning"/></li>
   					</ul>
   				</div>
   			</div>
   			<div class="security-list">
   				<ul>
-  					<li class="red"><i class="icon-remove-sign"></i></li>
-  					<li class="word">登录密码</li>
-  					<li>请设置密码，用于系统登录等操作</li>
-  					<li class="right"><a href="${_base}/p/security/updatePassword">设置</a></li>
+  					<li id="login_password_icon_color" class="green"><i id="login_password_icon" class="icon-ok-sign"></i></li>
+  					<li class="word"><spring:message code="ycaccountcenter.setting.loginpassword"/></li>
+  					<li><spring:message code="ycaccountcenter.setting.loginpassword.tip"/></li>
+  					<li class="right">
+  					  <a href="${_base}/p/security/updatePassword"><spring:message code="ycaccountcenter.setting.set"/></a>
+  					 </li>
   				</ul>
   				<ul>
-  					<li class="red"><i class="icon-remove-sign"></i></li>
-  					<li class="word">绑定邮箱</li>
-  					<li>您还没有绑定邮箱，请绑定</li>
-  					<li class="right"><a href="#">设置</a></li>
+  					<li id="login_email_icon_color" class="red"><i id="login_email_icon" class="icon-remove-sign"></i></li>
+  					<li class="word"><spring:message code="ycaccountcenter.setting.email"/></li>
+  					<li id="login_email_text"><spring:message code="ycaccountcenter.setting.email.unset"/></li>
+  					<li class="right">
+  					 <c:if test="${!isexistemail}">
+  					  <a href="${_base}/p/security/bindEmail"><spring:message code="ycaccountcenter.setting.set"/></a>
+  					 </c:if>
+  					  <c:if test="${isexistemail}">
+  					 <a href="${_base}/p/security/editEmail"><spring:message code="ycaccountcenter.setting.update"/></a>
+  					 </c:if>
+  					</li>
   				</ul>
   				<ul>
-  					<li class="red"><i class="icon-remove-sign"></i></li>
-  					<li class="word">登录密码</li>
-  					<li>您还没有绑定手机，请绑定</li>
-  					<li class="right"><a href="#">设置</a></li>
+  					<li id="login_phone_icon_color" class="red"><i id="login_phone_icon" class="icon-remove-sign"></i></li>
+  					<li class="word"><spring:message code="ycaccountcenter.setting.loginphone"/></li>
+  					<li id="login_phone_text"><spring:message code="ycaccountcenter.setting.loginphone.unset"/></li>
+  					<li class="right">
+  					<c:if test="${!isexistphone}">
+  					 <a href="${_base}/p/security/bindPhone"><spring:message code="ycaccountcenter.setting.set"/></a>
+  					</c:if>
+  					<c:if test="${isexistphone}">
+  					 <a href="${_base}/p/security/editPhone"><spring:message code="ycaccountcenter.setting.set"/></a>
+  					</c:if>
+  					</li>
   				</ul>
   				<ul>
-  					<li class="red"><i class="icon-remove-sign"></i></li>
-  					<li class="word">支付密码</li>
-  					<li>用于管理账户余额</li>
-  					<li class="right"><a href="#">设置</a></li>
+  					<li id="pay_password_icon_color"  class="red"><i id="pay_password_icon" class="icon-remove-sign"></i></li>
+  					<li class="word"><spring:message code="ycaccountcenter.setting.paypassword"/></li>
+  					<li id="pay_password_text"><spring:message code="ycaccountcenter.setting.paypassword.unset"/></li>
+  					<li class="right"><a href="#"><spring:message code="ycaccountcenter.setting.set"/></a></li>
   				</ul>
   			</div>
  			
@@ -127,23 +114,52 @@
 			pager.render();
 		});
 	})();
-	var securitylevel = "${securitylevel}";
 	
+	var isexistemail = "${isexistemail}";
+	var isexistphone = "${isexistphone}";
+	var isexistpaypassword = "${isexistpaypassword}"
+	var securitylevel = "${securitylevel}";
+	var userEmail = "${userinfo.email}"
+	var userMobile = "${userinfo.mobile}";
+	var secCenterMsg = {
+			"email_set"       : '<spring:message code="ycaccountcenter.setting.email.set"/>',
+			"login_phone_set" : '<spring:message code="ycaccountcenter.setting.loginphone.set"/>',
+			"paypassword_set" : '<spring:message code="ycaccountcenter.setting.paypassword.set"/>'
+		};
+
 	$(document).ready(function(){
-		var accLevelInfo = $('#sec-level-info-account-level');
+		var accLevelInfo = $("#sec-level-info-account-level");
 		if(parseInt(securitylevel) < 60)
-			{accLevelInfo.html("高危账号");}
+		{
+			accLevelInfo.html('<spring:message code="ycaccountcenter.acc.level.danger"/>');
+			$("#sec-level-info-account-warn").html('<spring:message code="ycaccountcenter.acc.level.danger.warning"/>');
+		}
 		if(parseInt(securitylevel) >= 60 && parseInt(securitylevel) < 100)
-			{accLevelInfo.html("有一定风险");}
+		{
+			accLevelInfo.html('<spring:message code="ycaccountcenter.acc.level.warn"/>');
+			$("#sec-level-info-account-warn").html('<spring:message code="ycaccountcenter.acc.level.warn.warning"/>');
+		}
 		if(parseInt(securitylevel) == 100)
-			{accLevelInfo.html("您的帐号很安全");}
+		{
+			accLevelInfo.html('<spring:message code="ycaccountcenter.acc.level.safe"/>');
+			$("#sec-level-info-account-warn").html('<spring:message code="ycaccountcenter.acc.level.safe.warning"/>');
+		}
 		
 		// 环形
 		$('#indicatorContainer').radialIndicator({
-				radius : 100
+				radius : 100,
+				barColor: {
+	                0: '#FF0000',
+	                33: '#FFFF00',
+	                66: '#0066FF',
+	                100: '#33CC33'
+	            },
+	            frameTime : 30,
+	            percentage: true
 		});
 		var radialObj = $('#indicatorContainer').data('radialIndicator');
 		radialObj.animate(parseInt(securitylevel));
+		
 	});
 </script>
    

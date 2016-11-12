@@ -5,6 +5,8 @@ define("app/jsp/user/password/password",
 			var curCount;// 当前剩余秒数
 			var accountFlag = false;
 			var imgCodeFlag = false;
+			var isBandPhone = false;
+			var isBandEmail = false;
 			var $ = require('jquery'), 
 			Widget = require('arale-widget/1.2.0/widget'), 
 			Dialog = require("optDialog/src/dialog"), 
@@ -255,24 +257,31 @@ define("app/jsp/user/password/password",
 											$("#userNameText").text("用户不存在");
 										}
 										if(jsonData.responseHeader.resultCode=="000000"){
-											var userId =$("#userId").val(jsonData.data.uid);
-											var telphone = $("#telephone").html(jsonData.data.mobilephone);
-											var passwordEmail = $("#passwordEmail").html(jsonData.data.email);
-											if(telphone==null&&passwordEmail==null){
-												alert("该账户没有绑定邮箱或者手机,无法找回密码");
-											}
-											if(telphone!=null&&passwordEmail==null){
-												 $('#set-table1').show();
-											  	 $('#set-table2').hide();
-											  	 $("#emailVerification").hide();
-											}
-											if(telphone==null&&passwordEmail!=null){
-												 $('#set-table1').hide();
-											  	 $('#set-table2').show();
-											  	 $("#phoneVerification").hide();
-											}
+											
 											$("#userNameErrMsg").hide();
 											$("#userNameText").text("");
+											/**
+											 * 保存用户id
+											 */
+											var userId = jsonData.data.uid;
+											$("#userId").val(userId);
+											/**
+											 * 查看邮箱和手机号是否绑定
+											 */
+											var telphone = jsonData.data.mobilephone;
+											$("#telephone").html(telphone);
+											var passwordEmail = jsonData.data.email;
+											$("#passwordEmail").html(passwordEmail);
+											if(telphone!=null&&passwordEmail==null){
+												 isBandPhone = true;
+											}
+											if(telphone==null&&passwordEmail!=null){
+												 isBandEmail = true;
+											}
+											if(telphone!=null&&passwordEmail!=null){
+												isBandPhone = true;
+												isBandEmail = true;
+											}
 											accountFlag = true;
 										}
 									}
@@ -286,7 +295,27 @@ define("app/jsp/user/password/password",
 				       _nextStep:function(){
 				    	   this._checkAccount();
 						   this._checkImageCode();
+						   /**
+						    * 如果手机号绑定邮箱没有绑定是不能找回密码的
+						    * 如果邮箱绑定手机号没有绑定是不能找回密码的
+						    */
 				    	   if(accountFlag&&imgCodeFlag){
+				    		   if(isBandEmail&&!isBandPhone){
+				    			   $('#set-table1').show();
+								   $('#set-table2').hide();
+								   $("#set-table1").html("<div class='recharge-success mt-40'><ul><li class='word'>没有绑定手机,无法通过手机号找回密码</li></ul></div>");
+				    		   }
+				    		   if(!isBandEmail&&isBandPhone){
+				    			   $('#set-table1').show();
+								   $('#set-table2').hide();
+								   $("#set-table2").html("<div class='recharge-success mt-40'><ul><li class='word'>没有绑定邮箱,无法通过邮箱地址找回密码</li></ul></div>");
+				    		   }
+				    		   if(!isBandEmail&&!isBandPhone){
+				    			   $('#set-table1').show();
+								   $('#set-table2').hide();
+								   $("#set-table1").html("<div class='recharge-success mt-40'><ul><li class='word'>没有绑定手机,无法通过手机号找回密码</li></ul></div>");
+								   $("#set-table2").html("<div class='recharge-success mt-40'><ul><li class='word'>没有绑定邮箱,无法通过邮箱地址找回密码</li></ul></div>");
+				    		   }
 				    		   $("#back-pass").hide();
 							   $("#back-pass1").show();
 				    	   }
