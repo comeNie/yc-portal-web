@@ -189,31 +189,77 @@ public class CustomerOrderController {
         return resData;
     }
 
-    /**
+     /**
      * 支付页面
      * @return
      */
-    @RequestMapping("/payOrder")
-    public String createTextView(String orderId,  Model uiModel){
+    @RequestMapping("/payOrder/{orderId}")
+    public String createTextView(@PathVariable("orderId") Long orderId,String unit,Model uiModel){
+        //TODO... 模拟数据
+//        IOrderFeeQuerySV iOrderFeeQuerySV = DubboConsumerFactory.getService(IOrderFeeQuerySV.class);
+//        OrderFeeQueryRequest feeQueryRequest = new OrderFeeQueryRequest();
+//        feeQueryRequest.setOrderId(orderId);
+//        OrderFeeQueryResponse feeQueryResponse = iOrderFeeQuerySV.orderFeeQuery(feeQueryRequest);
+        OrderFeeQueryResponse feeQueryResponse = new OrderFeeQueryResponse();
+        OrderFeeInfo orderFeeInfo = new OrderFeeInfo();
+        feeQueryResponse.setOrderFeeInfo(orderFeeInfo);
+        //模拟币种
+        orderFeeInfo.setCurrencyUnit(unit);
+
+        //总费用
+        orderFeeInfo.setTotalFee(100000l);
         //获取订单价格,币种
-        
-        //TODO 暂时关闭
-//        try {
-//            IQueryOrderDetailsSV iQueryOrderDetailsSV =  DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
-//            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(Long.valueOf(orderId));
-//            
-//            uiModel.addAttribute("OrderDetails", orderDetailsRes);
-//        } catch (Exception e) {
-//            LOGGER.error("查询订单详情失败:",e);
-//        }
-        
-        String string = "{  "
-                + "'orderId': 10086,"
-                + "'orderFee': {'currentcyUnit': '1', 'totalFee': 100, 'discountFee': 10, 'paidFee': 90}"
-                + "}";
-      
-        uiModel.addAttribute("OrderDetails", JSONObject.parse(string));
+        //订单编号
+        uiModel.addAttribute("orderId",orderId);
+        //订单信息
+        uiModel.addAttribute("orderFee",feeQueryResponse.getOrderFeeInfo());
         return "order/payOrder";
+    }
+    
+     /**
+     * 跳转支付页面,需要登录后才能进行支付
+     * @param orderId
+     * @param orderAmount
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping(value = "/gotoPay")
+    public void gotoPay(
+            String orderId,Long orderAmount,String currencyUnit,String merchantUrl,String payOrgCode,
+            String orderType,
+            HttpServletResponse response)
+            throws Exception {
+        //租户
+        String tenantId= ConfigUtil.getProperty("TENANT_ID");
+        //服务异步通知地址
+        String notifyUrl= ConfigUtil.getProperty("NOTIFY_URL")+"/"+orderType+"/"+ UserUtil.getUserId();
+
+        //异步通知地址,默认为用户
+        String amount = String.valueOf(AmountUtil.changeLiToYuan(orderAmount));
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("tenantId", tenantId);//租户ID
+        map.put("orderId", orderId);//请求单号
+        map.put("returnUrl", ConfigUtil.getProperty("RETURN_URL"));//页面跳转地址
+        map.put("notifyUrl", notifyUrl);//服务异步通知地址
+        map.put("merchantUrl",merchantUrl);//用户付款中途退出返回商户的地址
+        map.put("requestSource", Constants.SELF_SOURCE);//终端来源
+        map.put("currencyUnit",currencyUnit);//币种
+        map.put("orderAmount", amount);//金额
+        map.put("subject", "orderPay");//订单名称
+        map.put("payOrgCode",payOrgCode);
+        // 加密
+        String infoStr = orderId+ VerifyUtil.SEPARATOR
+                + amount + VerifyUtil.SEPARATOR
+                + notifyUrl + VerifyUtil.SEPARATOR
+                + tenantId;
+        String infoMd5 = VerifyUtil.encodeParam(infoStr, ConfigUtil.getProperty("REQUEST_KEY"));
+        map.put("infoMd5", infoMd5);
+        LOGGER.info("开始前台通知:" + map);
+        String htmlStr = PaymentUtil.generateAutoSubmitForm(ConfigUtil.getProperty("ACTION_URL"), map);
+        LOGGER.info("发起支付申请:" + htmlStr);
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.getWriter().write(htmlStr);
+        response.getWriter().flush();
     }
 
     /**

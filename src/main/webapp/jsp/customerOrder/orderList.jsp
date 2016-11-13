@@ -19,7 +19,9 @@
   <!--内侧内容区域-->
   <div class="cloud-wrapper">
   	<!--左侧菜单-->
-	  <%@ include file="/inc/leftmenu.jsp" %>
+	 <jsp:include page="/inc/leftmenu.jsp">
+  	 <jsp:param name="current" value="orderList" />
+  	 </jsp:include>
   	<!--右侧内容-->
   	<!--右侧大块-->
   	<div class="right-wrapper">	

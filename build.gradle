@@ -74,20 +74,25 @@ dependencies {
     compile 'com.ai.opt.uni.session:opt-uni-session:2.0-SNAPSHOT'
     compile 'com.ai.opt.sso.client:opt-sso-client:1.0.2-SNAPSHOT'
 
-
     //公共缓存
     compile 'com.ai.yc.common:cachekey:1.0-SNAPSHOT'
     //订单下单
     compile 'com.ai.yc.order:ordersubmission:1.0-SNAPSHOT'
-    //系统自动报价查询
+    //订单系统自动报价查询
     compile 'com.ai.yc.order:autooffer:1.0-SNAPSHOT'
 
     //订单查询
     compile 'com.ai.yc.order:orderquery:1.0-SNAPSHOT'
     //订单查询 我的订单
     compile 'com.ai.yc.order:orderdetails:1.0-SNAPSHOT'
-	//注册
+    //订单费用查询
+    compile 'com.ai.yc.order:orderfee:1.0-SNAPSHOT'
+    //订单支付结果处理
+    compile 'com.ai.yc.order:orderpay:1.0-SNAPSHOT'
+
+	//用户服务
 	compile 'com.ai.yc.user:userservice:1.0-SNAPSHOT'
+
     
 	compile 'com.ai.yc.ucenter:members:1.1.1-SNAPSHOT'
 	compile 'com.ai.yc.common:country:1.0-SNAPSHOT'

@@ -39,20 +39,11 @@ define('app/jsp/home', function (require, exports, module) {
 
         //翻译
         _mt:function() {
-        	var from;
-        	$("#showa option").each(function() {
-        		var txt = $(this).text();
-        		if (txt == $(".dropdown .selected").eq(0).html())
-        			from = $(this).val();
-
-            });
-        	
-        	var to;
-        	$("#showb option").each(function() {
-        		if ($(this).text() == $(".dropdown .selected").eq(1).html())
-        			to = $(this).val();
-
-            });
+        	var from = $(".dropdown .selected").eq(0).attr("value");
+        	var to = $(".dropdown .selected").eq(1).attr("value");
+			if (Window.console){
+				console.log("from:"+from+",to:"+to);
+			}
         	ajaxController.ajax({
 				type: "post",
 				url: _base + "/mt",
@@ -63,9 +54,9 @@ define('app/jsp/home', function (require, exports, module) {
 				},
 				success: function (data) {
 					$("#transRes").val(data.data.text);
-					
+
 					//翻译后的文字超过1000，隐藏播放喇叭
-					if ($("#transRes").val().length > 1000) 
+					if ($("#transRes").val().length > 1000)
 						$("#playControl").hide();
 					else
 						$("#playControl").show();
@@ -75,18 +66,9 @@ define('app/jsp/home', function (require, exports, module) {
         
         //文本转音频
         _text2audio:function() {
-        	var to;
 			//获取目标语言编码
-        	$("#showb option").each(function() {
-        		if ($(this).text() == $(".dropdown .selected").eq(1).html())
-        			to = $(this).val();
+			var to =$(".dropdown .selected").eq(1).attr("value");
 
-            });
-        	
-        	if (to == 'pl' || to == 'fi') { //目标语言是芬兰 波兰 语时，不能合成
-        		return;
-        	}
-        	
         	var myAudio = document.getElementById('audioPlay');
 	    	if(myAudio.paused){
 		        var itostr = $.trim($("#transRes").val());

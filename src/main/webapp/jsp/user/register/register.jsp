@@ -11,6 +11,7 @@
 <%@ include file="/inc/inc.jsp"%>
 <link href="${uedroot}/css/modular/login-regsiter.css" rel="stylesheet"
 	type="text/css" />
+<%@ include file="/inc/incJs.jsp" %>
 </head>
 <body class="login-body">
 	<div class="login-big">
@@ -120,7 +121,7 @@
 									<spring:message code="ycregister.agreement" />
 								</p>
 								<p class="right">
-									<a href="javascript:void(0);"><spring:message
+									<a href="${ssoLoginUrl}"><spring:message
 											code="ycregister.haveAccounts" /></a>
 								</p>
 							</li>
@@ -136,7 +137,6 @@
 
 	</div>
 </body>
-<%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
 	var pager;
 	(function() {
