@@ -157,9 +157,35 @@ $('.set-up a').click(function(){
    }
   }); 
 });
+//翻译 table
+$(function(){
+$(".prompt-center-title ul li a").click(function () {
+                $(".prompt-center-title ul li a").each(function () {
+                    $(this).removeClass("current");
+                });
+                $(this).addClass("current");
+            });
+$('.prompt-center-title ul li a').click(function(){
+  var index=$('.prompt-center-title ul li a').index(this);
+     if(index==0){
+     $('#tran-tab1').show();
+  	 $('#tran-tab2').hide();
+  	 $('#tran-tab3').hide();
+   }
+   if(index==1){
+   $('#tran-tab2').show();
+   $('#tran-tab1').hide();
+   $('#tran-tab3').hide();
+   }
+   if(index==2){
+   $('#tran-tab3').show();
+   $('#tran-tab2').hide();
+   $('#tran-tab1').hide();
+   }
+  }); 
+});
 
 /**翻译下单去掉最后的线条**/
 $(function () {
 $(".attachment  ul:last").css("border-bottom","none");
 });
-//翻译下单关闭附件
