@@ -24,6 +24,8 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
     	//事件代理
     	events: {
 			"click #submitQuery":"_orderList",
+			"change #displayFlag":"_orderList",
+			"change #translateType":"_orderList"
     	},
     	
       	//重写父类
@@ -64,6 +66,7 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
         
         //查询订单
         _getOrderList:function(reqdata) {
+        	var _this = this;
           	$("#pagination-ul").runnerPagination({
 	 			url: _base+"/p/customer/order/orderList",
 	 			method: "POST",
@@ -77,6 +80,13 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
 	            render: function (data) {
 	            	console.log(data);
 	            	if(data != null && data != 'undefined' && data.length>0){
+	            		//把时间戳修改成日期格式,金钱厘 转换成元
+		            	for(var i=0;i<data.length;i++){
+		            		data[i].orderTime = new Date( data[i].orderTime).format('yyyy-MM-dd h:m:s');
+		            		console.log(parseInt(data[i].totalFee)/1000);
+		            		data[i].totalFee = _this.fmoney(parseInt(data[i].totalFee)/1000,2);
+		            	}
+		            	
 	            		var template = $.templates("#searchOrderTemple");
 	            	    var htmlOutput = template.render(data);
 	            	    $("#searchOrderData").html(htmlOutput);
@@ -98,6 +108,24 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
 				}
 			});
         },
+        
+        //金钱格式化 订单金额的转换类（厘->元）
+        fmoney:function (s, n) {
+        	var result = '0.00';
+    		if(isNaN(s) || !s){
+    			return result;
+    		}
+            
+        	n = n > 0 && n <= 20 ? n : 2;
+        	s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
+        	var l = s.split(".")[0].split("").reverse(),
+        	r = s.split(".")[1];
+        	var t = "";
+        	for(var i = 0; i < l.length; i ++ ){   
+        		t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
+        	}
+        	return t.split("").reverse().join("") + "." + r;
+        }
     });
     module.exports = orderListPage;
 });
