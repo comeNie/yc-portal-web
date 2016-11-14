@@ -38,14 +38,17 @@
  					<div class="recharge-form-label mt-20">
  						<ul>
  							<li>
- 								<p class="word">新手机号:</p>
- 								<p><select class="select select-in"><option>中国 ＋86</option></select></p>
- 								<p><input type="text" class="int-text int-large radius"></p>
+ 							   <p class="word">手机号:</p>
+ 								<p><select id="country" class="select select-in"></select></p>
+ 								<p><input id="telephone" type="text" class="int-text int-large radius"></p>
+ 								<label id="telephoneErrMsg"></label>
+ 								
  							</li>
  							<li>
- 								<p class="word">新手机号:</p>
- 								<p><input type="text" class="int-text int-in radius"></p>
- 								<p><input type="button" class="btn biu-btn radius btn-medium" value="60S后重发"></p>
+ 								<p class="word">动态码:</p>
+ 								<p><input id="dynamicode" type="text" class="int-text int-in radius"></p>
+ 								<p><input type="button" id="send_dynamicode_btn" class="btn border-green border-sma radius btn-medium" value="获取动态码"></p>
+ 							   <label id="dynamicodeErrMsg"></label>
  							</li>
  						</ul>
  					</div>
@@ -53,7 +56,7 @@
  				</div>
  				<!--按钮-->
  				<div class="recharge-btn">
- 						<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="提 交">
+ 						<input type="button" id="submitPhoneBtn" class="btn btn-green btn-xxxlarge radius10" value="提 交">
  					</div>
  			</div>
  			</div>
@@ -64,11 +67,15 @@
 	</div>
 </body>
 <%@ include file="/inc/incJs.jsp"%>
-<script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
-<script type="text/javascript" src="${uedroot}/scripts/modular/eject.js"></script>
-
 <script type="text/javascript">
-	var phone = "${user.mobile}";
-	var email = "${user.email}";
+	var pager;
+	(function() {
+		seajs.use('app/jsp/user/security/bindPhone', function(updatePhonePager) {
+			pager = new updatePhonePager({
+				element : document.body
+			});
+			pager.render();
+		});
+	})();
 </script>
 </html>

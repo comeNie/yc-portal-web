@@ -176,7 +176,7 @@ public class UserCommonController {
 		req.setMaxCountOverTimeKey(maxCountOverTimeKey);
 		req.setNowCountKey(nowCountKey);
 		String uid = UserUtil.getUserId();
-		return sendSms(req, type, uid, phone);
+		return sendSms(request,req, type, uid, phone);
 
 	}
 
@@ -199,7 +199,7 @@ public class UserCommonController {
 				isOk);
 	}
 
-	private ResponseData<Boolean> sendSms(SmsRequest req, String type,
+	private ResponseData<Boolean> sendSms(HttpServletRequest request,SmsRequest req, String type,
 			String uid, String phone) {
 		ICacheClient iCacheClient = AiPassUitl.getCacheClient();
 		JSONObject config = AiPassUitl.getVerificationCodeConfig();
@@ -229,6 +229,9 @@ public class UserCommonController {
 		boolean sendOk = true;// SmsSenderUtil.sendMessage(phone,
 								// req.getContent());
 		if (sendOk) {
+			if (UcenterOperation.OPERATION_TYPE_PHONE_ACTIVATE.equals(type)) {// 手机注册操作有uid
+			    request.getSession().setAttribute(req.getCodeKey()+PhoneVerify.PHONE_CODE_REGISTER_UID, ucenterRes[3]);
+			}
 			// 最多发送次数超时时间
 			int maxOverTimeCount = config.getIntValue(req
 					.getMaxCountOverTimeKey());
@@ -263,6 +266,7 @@ public class UserCommonController {
 		boolean isOk = false;
 		String code = "";
 		String msg = "";
+		String resUid ="";
 		UcMembersGetOperationcodeResponse res = DubboConsumerFactory
 				.getService(IUcMembersOperationSV.class)
 				.ucGetOperationcode(req);
@@ -273,13 +277,14 @@ public class UserCommonController {
 			if (res.getCode().getCodeNumber() == 1) {
 				isOk = true;
 				code = res.getDate().get("operationcode") + "";
+				resUid =res.getDate().get("uid") + "";
 			} else {
 				msg = res.getCode().getCodeMessage();
 			}
 
 		}
 
-		return new Object[] { isOk, code, msg };
+		return new Object[] { isOk, code, msg,resUid};
 	}
 
 	/**

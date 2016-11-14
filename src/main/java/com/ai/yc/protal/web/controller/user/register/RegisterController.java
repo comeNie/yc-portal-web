@@ -21,6 +21,7 @@ import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.util.StringUtil;
 import com.ai.yc.protal.web.constants.Constants;
+import com.ai.yc.protal.web.constants.Constants.PhoneVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.constants.Constants.UcenterOperation;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
@@ -32,7 +33,6 @@ import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
 import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckEmailRequest;
 import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckeMobileRequest;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersActiveRequest;
-import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeRequest;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.InsertYCUserRequest;
 import com.ai.yc.user.api.userservice.param.YCInsertUserResponse;
@@ -259,6 +259,9 @@ public class RegisterController {
 			req.setMobilePhone(phone);
 			req.setLoginway("2");
 			req.setOperationcode(request.getParameter("smsCode"));
+			String key = PhoneVerify.REGISTER_PHONE_CODE + phone+PhoneVerify.PHONE_CODE_REGISTER_UID;
+		    String uid = (String) request.getSession().getAttribute(key);
+            req.setUserId(uid);
 		}
 		String email = request.getParameter("email");
 		if (!StringUtil.isBlank(email)) {
