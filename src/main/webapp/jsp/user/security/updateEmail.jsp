@@ -379,7 +379,7 @@ var pager;
 			if(!_host){
 				_host = 'http://mail.'+_mail;
 			}
-			location.href=_host;
+			window.open(_host);
 		});
 	});
 	var updateEmailMsg = {
