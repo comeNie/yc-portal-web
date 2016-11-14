@@ -46,7 +46,7 @@
 	var email = "${email}";
 	$(document).ready(function(){
 		$("#goEmail").click(function(){
-			$emailHandle.openEmail(email);
+			$emailHandle.goEmail(email);
 		});
 	});
 </script>
