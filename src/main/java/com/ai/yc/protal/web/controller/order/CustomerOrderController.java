@@ -38,6 +38,8 @@ import com.ai.yc.order.api.orderdetails.param.ProdExtendVo;
 import com.ai.yc.order.api.orderdetails.param.ProdLevelVo;
 import com.ai.yc.order.api.orderdetails.param.ProdVo;
 import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsResponse;
+import com.ai.yc.order.api.orderfee.param.OrderFeeInfo;
+import com.ai.yc.order.api.orderfee.param.OrderFeeQueryResponse;
 import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
 import com.ai.yc.order.api.orderquery.param.OrdOrderVo;
 import com.ai.yc.order.api.orderquery.param.OrdProdExtendVo;
