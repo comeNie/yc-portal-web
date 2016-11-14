@@ -20,7 +20,7 @@ configurations {
 }
 
 repositories {
-    maven { url "http://10.1.228.199:18081/nexus/content/groups/public/" }
+   maven { url "http://10.1.228.199:18081/nexus/content/groups/public/" }
 }
 buildscript{
     repositories {
@@ -87,6 +87,8 @@ dependencies {
     compile 'com.ai.yc.order:orderdetails:1.0-SNAPSHOT'
     //订单费用查询
     compile 'com.ai.yc.order:orderfee:1.0-SNAPSHOT'
+    //手动关闭未支付订单
+    compile 'com.ai.yc.order:orderclose:1.0-SNAPSHOT'
     //订单支付结果处理
     compile 'com.ai.yc.order:orderpay:1.0-SNAPSHOT'
 
