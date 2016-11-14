@@ -7,8 +7,27 @@
     <title>口译下单页</title>
 	<%@ include file="/inc/inc.jsp" %>
 </head>
-<body>	
-	<!--面包屑导航-->
+<body>
+<!--弹出-->
+<div class="eject-big">
+	<div class="prompt-samll" id="rechargepop">
+		<div class="prompt-samll-title">支付</div>
+		<!--确认删除-->
+		<div class="prompt-samll-confirm">
+			<ul>
+				<li>请输入支付密码，完成订单支付</li>
+				<li><input id="payPass" type="password" class="int-text int-large radius" maxlength="16"></li>
+				<li class="eject-btn">
+					<input type="button" id="completed" class="btn btn-green btn-120 radius20" value="确 定">
+					<input type="button" id="close-completed" class="btn border-green btn-120 radius20" value="取 消">
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="mask" id="eject-mask"></div>
+</div>
+<!--/弹出结束-->
+<!--面包屑导航-->
 	<%@ include file="/inc/topHead.jsp" %>
 	<%@ include file="/inc/topMenu.jsp" %>
 	
@@ -54,7 +73,7 @@
   					<p><spring:message code="pay.order.title"/></p>
   				</div>
 				<form id="toPayForm" method="post" action="${_base}/p/customer/order/gotoPay">
-					<input type="hidden" name="orderId" value="20161112900034">
+					<input type="hidden" name="orderId" value="${orderId}">
 					<input type="hidden" name="orderAmount" value="${orderFee.totalFee}">
 					<input type="hidden" name="currencyUnit" value="${orderFee.currencyUnit}">
 					<input type="hidden" id="payType" name="payOrgCode">
@@ -63,6 +82,7 @@
 					<%--订单类型 目前只支持用户--%>
 					<input type="hidden" name="orderType" value="1">
 				</form>
+
   				<div class="selection-select single-select mt-20">
 					<ul class="mb-40">
 						<li class="none-ml">
@@ -126,12 +146,25 @@
 							<ul payType="ZFB">
 								<li class="zhifb"></li>
 							</ul>
+							<c:if test="${balanceInfo!=null}">
 							<ul payType="YE"  class="none-ml">
 								<li class="payment-balance">
 									<p>账户余额</p>
-									<p class="word">支付余额：300.00元</p>
+									<p class="word">支付余额：<fmt:formatNumber
+											value="${balanceInfo.balance/1000}" pattern="#,##0.00#"/>元</p>
 								</li>
 							</ul>
+							<%--余额支付--%>
+							<form id="yePayForm" method="post" action="${_base}/p/customer/order/payOrder/balance">
+								<input type="hidden" name="externalId" value="${orderId}">
+								<input type="hidden" name="accountId" value="${balanceInfo.accountId}">
+								<input type="hidden" id="balancePass" name="password" />
+								<input type="hidden" name="totalAmount" value="${orderFee.totalFee}">
+								<input type="hidden" name="currencyUnit" value="${orderFee.currencyUnit}">
+									<%--订单类型 目前只支持用户--%>
+								<input type="hidden" name="orderType" value="1">
+							</form>
+							</c:if>
 						</c:when>
 						<%--美元--%>
 						<c:when test="${orderFee.currencyUnit == '2'}">
@@ -149,7 +182,7 @@
   				</div>
   				<div class="payment-btn">
 					<%--人民币订单,且余额不足--%>
-					<c:if test="${orderFee.currencyUnit == '1'}">
+					<c:if test="${orderFee.currencyUnit == '1'&&needPay==true}">
   					<ul>
   						<li>余额不足，可先<input type="button" class="btn radius20 border-blue btn-80 ml-10" value="充 值"></li>
   					</ul>
@@ -165,7 +198,6 @@
 		</div>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
-<script type="text/javascript" src="${uedroot}/scripts/modular/eject.js"></script>
 <script type="text/javascript">
 	(function () {
 		var pager;

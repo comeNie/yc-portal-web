@@ -254,14 +254,15 @@ public class CustomerOrderController {
     @RequestMapping("/payOrder/balance")
     public String balancePay(DeductParam deductParam,String orderType,Model uiModel){
         String userId = UserUtil.getUserId();
-        //进行余额扣款,
-        IDeductSV deductSV = DubboConsumerFactory.getService(IDeductSV.class);
+        //进行余额扣款,页面
         deductParam.setTenantId(Constants.DEFAULT_TENANT_ID);
         //中心产品或垂直产品的唯一编码,传balance
         deductParam.setSystemId("balance");
         deductParam.setBusinessCode("001");//目前无用,使用固定内容
         deductParam.setChannel("中译语通科技有限公司");
         deductParam.setBusiDesc("订单支付,订单号:"+deductParam.getExternalId());
+        //TODO... 模拟数据
+//        IDeductSV deductSV = DubboConsumerFactory.getService(IDeductSV.class);
 //        DeductResponse deductResponse = deductSV.deductFund(deductParam);
         DeductResponse deductResponse = new DeductResponse();
         deductResponse.setSerialNo("123123");

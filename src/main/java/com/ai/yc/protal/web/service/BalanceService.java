@@ -57,7 +57,7 @@ public class BalanceService {
         //TODO....模拟数据
         FundInfo fundInfo = new FundInfo();
         fundInfo.setAccountId(23423l);
-        fundInfo.setBalance(345l);
+        fundInfo.setBalance(110000l);
 
         AccountInfoVo accountInfoVo = new AccountInfoVo();
 //        0 不验证 1 验证
