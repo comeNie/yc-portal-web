@@ -1,9 +1,14 @@
 package com.ai.yc.protal.web.service;
 
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.BeanUtils;
+import com.ai.slp.balance.api.accountquery.interfaces.IAccountQuerySV;
+import com.ai.slp.balance.api.fundquery.param.AccountIdParam;
 import com.ai.slp.balance.api.accountquery.param.AccountInfoVo;
+import com.ai.slp.balance.api.fundquery.interfaces.IFundQuerySV;
 import com.ai.slp.balance.api.fundquery.param.FundInfo;
 import com.ai.yc.protal.web.constants.BalanceConstants;
+import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
 import com.ai.yc.protal.web.utils.UserUtil;
 import org.springframework.stereotype.Service;
@@ -33,35 +38,30 @@ public class BalanceService {
         //若没有账户信息,直接返回null
         */
         //用户账户
-        long accountId = 234324l;
+        long accountId = 11531l;
 
         //查询用户余额
-        /*
         IFundQuerySV fundQuerySV = DubboConsumerFactory.getService(IFundQuerySV.class);
         AccountIdParam accountIdParam = new AccountIdParam();
         accountIdParam.setTenantId(Constants.DEFAULT_TENANT_ID);
         accountIdParam.setAccountId(accountId);
         FundInfo fundInfo = fundQuerySV.queryUsableFund(accountIdParam);
-        */
         //查询账号设置
-/*
-
         IAccountQuerySV accountQuerySV = DubboConsumerFactory.getService(IAccountQuerySV.class);
         com.ai.slp.balance.api.accountquery.param.AccountIdParam accountInfoReq =
                 new com.ai.slp.balance.api.accountquery.param.AccountIdParam();
         accountInfoReq.setTenantId(Constants.DEFAULT_TENANT_ID);
         accountInfoReq.setAccountId(accountId);
         AccountInfoVo accountInfoVo = accountQuerySV.queryAccontById(accountInfoReq);
-*/
 
         //TODO....模拟数据
-        FundInfo fundInfo = new FundInfo();
-        fundInfo.setAccountId(23423l);
-        fundInfo.setBalance(110000l);
+//        FundInfo fundInfo = new FundInfo();
+//        fundInfo.setAccountId(23423l);
+//        fundInfo.setBalance(110000l);
 
-        AccountInfoVo accountInfoVo = new AccountInfoVo();
+//        AccountInfoVo accountInfoVo = new AccountInfoVo();
 //        0 不验证 1 验证
-        accountInfoVo.setPayCheck(BalanceConstants.PAY_CHECK_TRUE);
+//        accountInfoVo.setPayCheck(BalanceConstants.PAY_CHECK_TRUE);
 
         accountBalanceInfo = new AccountBalanceInfo();
         BeanUtils.copyProperties(accountBalanceInfo,fundInfo);

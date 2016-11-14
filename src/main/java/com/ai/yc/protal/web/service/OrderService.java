@@ -1,6 +1,7 @@
 package com.ai.yc.protal.web.service;
 
-import com.ai.opt.sdk.util.DateUtil;
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.yc.order.api.orderpay.interfaces.IOrderPayProcessedResultSV;
 import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultBaseInfo;
 import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultFeeInfo;
 import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultProdInfo;
@@ -57,8 +58,7 @@ public class OrderService {
         OrderPayProcessedResultProdInfo payResultProdInfo = new OrderPayProcessedResultProdInfo();
         payResultReq.setProdInfo(payResultProdInfo);
         payResultProdInfo.setStateTime(notifyTime);
-        //TODO... 等待联调
-//        IOrderPayProcessedResultSV payResultSv= DubboConsumerFactory.getService(IOrderPayProcessedResultSV.class);
-//        payResultSv.orderPayProcessedResult(payResultReq);
+        IOrderPayProcessedResultSV payResultSv= DubboConsumerFactory.getService(IOrderPayProcessedResultSV.class);
+        payResultSv.orderPayProcessedResult(payResultReq);
     }
 }
