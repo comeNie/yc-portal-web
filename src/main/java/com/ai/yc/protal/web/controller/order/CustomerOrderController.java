@@ -12,11 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.ai.yc.order.api.orderfee.param.OrderFeeInfo;
 import com.ai.yc.order.api.orderfee.param.OrderFeeQueryResponse;
 import com.ai.yc.protal.web.constants.Constants;
+import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
+import com.ai.yc.protal.web.service.BalanceService;
 import com.ai.yc.protal.web.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.fs.DF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,7 +61,8 @@ import com.alibaba.fastjson.JSONObject;
 @RequestMapping("/p/customer/order")
 public class CustomerOrderController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerOrderController.class);
-    
+    @Autowired
+    BalanceService balanceService;
     /**
      * 我的订单,订单列表
      * @return
@@ -208,15 +212,26 @@ public class CustomerOrderController {
 //        OrderFeeQueryRequest feeQueryRequest = new OrderFeeQueryRequest();
 //        feeQueryRequest.setOrderId(orderId);
 //        OrderFeeQueryResponse feeQueryResponse = iOrderFeeQuerySV.orderFeeQuery(feeQueryRequest);
+
+
         OrderFeeQueryResponse feeQueryResponse = new OrderFeeQueryResponse();
         OrderFeeInfo orderFeeInfo = new OrderFeeInfo();
+        //获取订单价格,币种
         feeQueryResponse.setOrderFeeInfo(orderFeeInfo);
         //模拟币种
         orderFeeInfo.setCurrencyUnit(unit);
-
         //总费用
         orderFeeInfo.setTotalFee(100000l);
-        //获取订单价格,币种
+
+        //若是人民币,需要获取账户余额
+        if(Constants.CURRENCTY_UNIT_RMB.equals(orderFeeInfo.getCurrencyUnit())){
+            AccountBalanceInfo balanceInfo = balanceService.queryOfUser();
+            //账户余额信息
+            uiModel.addAttribute("balanceInfo",balanceInfo);
+            //是否显示待充值信息
+            uiModel.addAttribute("needPay",
+                    (balanceInfo!=null&&balanceInfo.getBalance()<orderFeeInfo.getTotalFee())?true:false);
+        }
         //订单编号
         uiModel.addAttribute("orderId",orderId);
         //订单信息

@@ -71,8 +71,7 @@ public class PayController {
         }
         //获取交易时间 20161111181026
         Timestamp notifyTime = DateUtil.getTimestamp(payNotify.getNotifyTime(),"yyyyMMddHHmmss");
-        //TODO...若是企业订单,需要查询企业信息
-        IOrderPayProcessedResultSV payResultSv= DubboConsumerFactory.getService(IOrderPayProcessedResultSV.class);
+        //TODO...若是企业订单,需要查询企业信息,一阶段暂不实现
         OrderPayProcessedResultRequest payResultReq = new OrderPayProcessedResultRequest();
         //基本信息
         OrderPayProcessedResultBaseInfo payResultReqBase = new OrderPayProcessedResultBaseInfo();
@@ -101,6 +100,7 @@ public class PayController {
         payResultReq.setProdInfo(payResultProdInfo);
         payResultProdInfo.setStateTime(notifyTime);
         //TODO... 等待联调
+//        IOrderPayProcessedResultSV payResultSv= DubboConsumerFactory.getService(IOrderPayProcessedResultSV.class);
 //        payResultSv.orderPayProcessedResult(payResultReq);
 
     }

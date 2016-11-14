@@ -41,4 +41,6 @@
 			interface="com.ai.yc.order.api.orderfee.interfaces.IOrderFeeQuerySV"/>
 	<dubbo:reference id="iOrderPayProcessedResultSV" registry="ycRegistry"
 			interface="com.ai.yc.order.api.orderpay.interfaces.IOrderPayProcessedResultSV"/>
+	<dubbo:reference id="iFundQuerySV" registry="ycRegistry"
+			interface="com.ai.slp.balance.api.fundquery.interfaces.IFundQuerySV "/>
 </beans>

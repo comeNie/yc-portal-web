@@ -13,6 +13,11 @@ public final class Constants {
 	public static final String IPAAS_ORDER_FILE_DSS = "order-file-dss";
 	public static final String SELF_SOURCE = "1";
 
+	//货币单位:人民币
+	public static final String CURRENCTY_UNIT_RMB = "1";
+	//货币单位:美元
+	public static final String CURRENCTY_UNIT_USD = "2";
+
 	/** 邮箱可重复发送时间 配置key */
 	public static final String SEND_VERIFY_MAX_TIME_KEY = "/email_verifycode_send_maxtime";
 	/** IP发送邮件次数key */
