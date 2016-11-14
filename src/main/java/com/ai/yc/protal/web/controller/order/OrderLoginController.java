@@ -66,6 +66,6 @@ public class OrderLoginController {
             }
         }
 
-        return "forward:/p/customer/payOrder/"+orderId;
+        return "forward:/p/customer/order/payOrder/"+orderId;
     }
 }
