@@ -76,7 +76,7 @@
 										<li> 
 										    <label class="ml-70" id="dynamicode" style="display: none;"></label>
 											<p class="word"><spring:message code="ycaccountcenter.updatePassword.bindPhone"/></p>
-											<p id="telephone">18929309495</p>
+											<p id="telephone">${phone}</p>
 										</li>
 										<li>
 											<p class="word">动态码:</p>
@@ -224,7 +224,7 @@
 										<li>
 											<p class="word">验证码:</p>
  								            <p><input type="text" class="int-text int-in radius" id="emailIdentifyCode"></p>
- 								            <p><input type="button" class="btn biu-btn radius btn-medium" value="<spring:message code="ycaccountcenter.updatePassword.sendEmailCode"/>" id="sendEmailBtn"></p>
+ 								            <p><input type="button" class="btn border-green border-sma radius btn-medium" value="<spring:message code="ycaccountcenter.updatePassword.sendEmailCode"/>" id="sendEmailBtn"></p>
  								            <p><a href="javascript:void(0);" id="goEmail"><spring:message code="ycaccountcenter.updatePassword.goEmail"/></a></p>
 										</li>
 									</ul>

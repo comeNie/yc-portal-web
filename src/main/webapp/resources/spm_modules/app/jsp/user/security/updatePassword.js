@@ -205,7 +205,8 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
         },
         _sendEmail:function(){
           var _this = this;
-			$("#sendEmailBtn").attr("disabled", true);
+          var sendEmailBtn= $("#sendEmailBtn");
+          sendEmailBtn.attr("disabled", true);
 			ajaxController.ajax({
 				type : "POST",
 				data : {
@@ -218,32 +219,28 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 				success : function(data) {
 					var resultCode = data.data;
 					if(!resultCode){
+						sendEmailBtn.removeAttr("disabled"); //移除disabled属性
 						$("#emailErrMsg").show();
 						$("#emailErrMsg").text("发送邮件失败");
-						$("#sendEmailBtn").removeAttr("disabled"); //移除disabled属性
 					}else{
 						var step = 59;
-			            $('#sendEmailBtn').val('重新发送60');
-			            $("#sendEmailBtn").attr("disabled", true);
+						sendEmailBtn.val('重新发送60');
 			            var _res = setInterval(function(){
-			                $("#sendEmailBtn").attr("disabled", true);//设置disabled属性
-			                $('#sendEmailBtn').val('重新发送'+step);
+			            	sendEmailBtn.val('重新发送'+step);
 			                step-=1;
 			                if(step <= 0){
-			                $("#sendEmailBtn").removeAttr("disabled"); //移除disabled属性
-			                $('#sendEmailBtn').val('获取验证码');
+			                sendEmailBtn.removeAttr("disabled"); //移除disabled属性
+			                sendEmailBtn.val('获取验证码');
 			                clearInterval(_res);//清除setInterval
 			                }
-			            },1000);
-			            //window.location.href = _base+"/user/bandEmail/sendBandEmailSuccess?email="+$("#email").val();
-						
+			            },1000);						
 					}
 				},
 				failure : function(){
-					$("#sendEmailBtn").removeAttr("disabled"); //移除disabled属性
+					sendEmailBtn.removeAttr("disabled"); //移除disabled属性
 				},
 				error : function(){
-					alert("网络连接超时!");
+					sendEmailBtn.removeAttr("disabled"); //移除disabled属性
 				}
 			});
         },
