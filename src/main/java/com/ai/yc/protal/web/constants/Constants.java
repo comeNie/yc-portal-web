@@ -97,6 +97,8 @@ public final class Constants {
 		public static final String UPDATE_DATA_PHONE_CODE_MAX_COUNT = "update_data_phone_code_max_count";
 		/** 资料修改手机验证码最大次数超时时间key */
 		public static final String UPDATE_DATA_PHONE_CODE_MAX_COUNT_OVERTIME = "update_data_phone_code_max_count_overtime";
+		/** 手机注册验证码UID后缀 */
+		public static final String  PHONE_CODE_REGISTER_UID = "_uid";
 	}
 
 	public final class UcenterOperation {
