@@ -4,7 +4,7 @@ define('app/jsp/home', function (require, exports, module) {
         Widget = require('arale-widget/1.2.0/widget'),
         AjaxController = require('opt-ajax/1.0.0/index');
     require("jsviews/jsrender.min");
-
+	require("zeroclipboard/ZeroClipboard.min");
     require("jquery-validation/1.15.1/jquery.validate");
     require("app/util/aiopt-validate-ext");
     var SendMessageUtil = require("app/util/sendMessage");
@@ -31,6 +31,15 @@ define('app/jsp/home', function (require, exports, module) {
         //重写父类
         setup: function () {
             homePage.superclass.setup.call(this);
+			// 定义一个新的复制对象
+			var clip = new ZeroClipboard( document.getElementById("copyText"), {
+				moviePath: "ZeroClipboard.swf"
+			});
+
+			// 复制内容到剪贴板成功后的操作
+			clip.on( 'complete', function(client, args) {
+				// alert("复制成功，复制内容为："+ args.text);
+			} );
         },
 		//人工翻译,跳转到笔译订单
        	_goTextOrder:function(){

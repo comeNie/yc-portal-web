@@ -297,10 +297,6 @@
 </div>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
-<script type="text/javascript" src="${uedroot}/scripts/modular/drop-down.js"></script>
-<script type="text/javascript" src="${uedroot}/scripts/modular/index.js"></script>
-<script type="text/javascript" src="${uedroot}/scripts/modular/digital-scroll.js"></script>
-<script type="text/javascript" src="${_base}/resources/spm_modules/zeroclipboard/ZeroClipboard.min.js"></script>  
 <script type="text/javascript">
     (function () {
         <%-- 笔译下单 --%>
@@ -315,15 +311,8 @@
             pager.render();
         });
     })();
-    
-	// 定义一个新的复制对象  
-    var clip = new ZeroClipboard( document.getElementById("copyText"), {  
-      moviePath: "ZeroClipboard.swf"  
-    });  
-      
-    // 复制内容到剪贴板成功后的操作  
-    clip.on( 'complete', function(client, args) {  
-      // alert("复制成功，复制内容为："+ args.text);  
-    } );  
 </script>
+<script type="text/javascript" src="${uedroot}/scripts/modular/drop-down.js"></script>
+<script type="text/javascript" src="${uedroot}/scripts/modular/index.js"></script>
+<script type="text/javascript" src="${uedroot}/scripts/modular/digital-scroll.js"></script>
 </html>
