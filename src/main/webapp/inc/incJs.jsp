@@ -2,8 +2,8 @@
   Created by IntelliJ IDEA.
   User: jackieliu
   Date: 16/11/4
-  Time: 下午9:17
-  通用js引入.
+  Time: ä¸å9:17
+  éç¨jså¼å¥.
 --%>
 <%@page import="com.ai.opt.sso.client.filter.SSOClientUtil"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -34,9 +34,33 @@
         return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
         };
 
+    //获取时区
     Date.prototype.dst = function() {
         return this.getTimezoneOffset() < this.stdTimezoneOffset();
     }
+    
+    //日期格式化
+    Date.prototype.format = function(format) {
+        var date = {
+               "M+": this.getMonth() + 1,
+               "d+": this.getDate(),
+               "h+": this.getHours(),
+               "m+": this.getMinutes(),
+               "s+": this.getSeconds(),
+               "q+": Math.floor((this.getMonth() + 3) / 3),
+               "S+": this.getMilliseconds()
+        };
+        if (/(y+)/i.test(format)) {
+               format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
+        }
+        for (var k in date) {
+               if (new RegExp("(" + k + ")").test(format)) {
+                      format = format.replace(RegExp.$1, RegExp.$1.length == 1
+                             ? date[k] : ("00" + date[k]).substr(("" + date[k]).length));
+               }
+        }
+        return format;
+  }
 </script>
 <script src="${_base}/resources/spm_modules/jquery/1.9.1/jquery.min.js"></script>
 <script src="${_base}/resources/spm_modules/seajs/2.3.0/dist/sea.js"></script>
