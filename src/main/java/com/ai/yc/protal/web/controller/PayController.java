@@ -10,6 +10,7 @@ import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultRequest;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.OrderConstants;
 import com.ai.yc.protal.web.model.pay.PayNotify;
+import com.ai.yc.protal.web.service.OrderService;
 import com.ai.yc.protal.web.utils.AmountUtil;
 import com.ai.yc.protal.web.utils.ConfigUtil;
 import com.ai.yc.protal.web.utils.PaymentUtil;
@@ -19,6 +20,7 @@ import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +39,8 @@ import java.util.Map;
 @RequestMapping("/pay")
 public class PayController {
     private static final Logger LOG = LoggerFactory.getLogger(PayController.class);
+    @Autowired
+    OrderService orderService;
 
     /**
      * 订单支付结果
@@ -71,38 +75,10 @@ public class PayController {
         }
         //获取交易时间 20161111181026
         Timestamp notifyTime = DateUtil.getTimestamp(payNotify.getNotifyTime(),"yyyyMMddHHmmss");
-        //TODO...若是企业订单,需要查询企业信息,一阶段暂不实现
-        OrderPayProcessedResultRequest payResultReq = new OrderPayProcessedResultRequest();
-        //基本信息
-        OrderPayProcessedResultBaseInfo payResultReqBase = new OrderPayProcessedResultBaseInfo();
-        payResultReq.setBaseInfo(payResultReqBase);
-        payResultReqBase.setOrderId(Long.parseLong(payNotify.getOrderId()));
-        payResultReqBase.setOrderType(orderType);
-        payResultReqBase.setUserId(userId);
-        //用户类型
-        if (OrderConstants.ORDER_TYPE_PERSON.equals(orderType)) {
-            payResultReqBase.setUserType(OrderConstants.USER_TYPE_PERSON);
-        }//TODO... 缺少代理人的检查,后续二阶段实现
-        else if (OrderConstants.ORDER_TYPE_ENTERPRISE.equals(orderType)){
-            payResultReqBase.setUserType(OrderConstants.USER_TYPE_ENTERPRISE);
-            //添加企业ID
-        }
-        //费用信息
-        OrderPayProcessedResultFeeInfo payResultFeeInfo = new OrderPayProcessedResultFeeInfo();
-        payResultReq.setFeeInfo(payResultFeeInfo);
-        payResultFeeInfo.setPayStyle(payNotify.getPayOrgCode());//支付机构
+        //支付费用
         Double totalFee = Double.valueOf(payNotify.getOrderAmount())*1000;
-        payResultFeeInfo.setTotalFee(totalFee.longValue());
-        payResultFeeInfo.setExternalId(payNotify.getOutOrderId());
-        payResultFeeInfo.setPayTime(notifyTime);
-        //产品信息
-        OrderPayProcessedResultProdInfo payResultProdInfo = new OrderPayProcessedResultProdInfo();
-        payResultReq.setProdInfo(payResultProdInfo);
-        payResultProdInfo.setStateTime(notifyTime);
-        //TODO... 等待联调
-//        IOrderPayProcessedResultSV payResultSv= DubboConsumerFactory.getService(IOrderPayProcessedResultSV.class);
-//        payResultSv.orderPayProcessedResult(payResultReq);
-
+        orderService.orderPayProcessResult(userId,Long.parseLong(payNotify.getOrderId()),orderType,
+                totalFee.longValue(),payNotify.getPayOrgCode(),payNotify.getOutOrderId(),notifyTime);
     }
 
     /**

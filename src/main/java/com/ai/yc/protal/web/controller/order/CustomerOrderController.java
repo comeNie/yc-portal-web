@@ -9,11 +9,17 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ai.opt.sdk.util.DateUtil;
+import com.ai.slp.balance.api.deduct.interfaces.IDeductSV;
+import com.ai.slp.balance.api.deduct.param.DeductParam;
+import com.ai.slp.balance.api.deduct.param.DeductResponse;
+import com.ai.slp.balance.api.deduct.param.ForegiftDeduct;
 import com.ai.yc.order.api.orderfee.param.OrderFeeInfo;
 import com.ai.yc.order.api.orderfee.param.OrderFeeQueryResponse;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
 import com.ai.yc.protal.web.service.BalanceService;
+import com.ai.yc.protal.web.service.OrderService;
 import com.ai.yc.protal.web.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.fs.DF;
@@ -63,6 +69,8 @@ public class CustomerOrderController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerOrderController.class);
     @Autowired
     BalanceService balanceService;
+    @Autowired
+    OrderService orderService;
     /**
      * 我的订单,订单列表
      * @return
@@ -238,7 +246,41 @@ public class CustomerOrderController {
         uiModel.addAttribute("orderFee",feeQueryResponse.getOrderFeeInfo());
         return "order/payOrder";
     }
-    
+
+    /**
+     * 余额支付
+     * @return
+     */
+    @RequestMapping("/payOrder/balance")
+    public String balancePay(DeductParam deductParam,String orderType,Model uiModel){
+        String userId = UserUtil.getUserId();
+        //进行余额扣款,
+        IDeductSV deductSV = DubboConsumerFactory.getService(IDeductSV.class);
+        deductParam.setTenantId(Constants.DEFAULT_TENANT_ID);
+        //中心产品或垂直产品的唯一编码,传balance
+        deductParam.setSystemId("balance");
+        deductParam.setBusinessCode("001");//目前无用,使用固定内容
+        deductParam.setChannel("中译语通科技有限公司");
+        deductParam.setBusiDesc("订单支付,订单号:"+deductParam.getExternalId());
+//        DeductResponse deductResponse = deductSV.deductFund(deductParam);
+        DeductResponse deductResponse = new DeductResponse();
+        deductResponse.setSerialNo("123123");
+        ResponseHeader responseHeader = deductResponse.getResponseHeader();
+        //支付结果,默认为失败
+        boolean payResult = false;
+        //扣款成功,同步订单状态
+        if (responseHeader==null||responseHeader.isSuccess()){
+            orderService.orderPayProcessResult(userId,Long.parseLong(deductParam.getExternalId()),orderType,
+                    deductParam.getTotalAmount(),"YE",deductResponse.getSerialNo(), DateUtil.getFutureTime());
+            payResult = true;
+        }
+        //订单号
+        uiModel.addAttribute("orderId",deductParam.getExternalId());
+        //支付结果
+        uiModel.addAttribute("payResult",payResult);
+        //显示订单支付结果
+        return "order/orderPayResult";
+    }
      /**
      * 跳转支付页面,需要登录后才能进行支付
      * @param orderId
