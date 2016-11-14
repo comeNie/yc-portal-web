@@ -36,7 +36,7 @@
  				<div class="recharge-content binding">
  					<div class="recharge-form-label mt-20">
  						<ul>
- 							<li><label class="ml-70" id="dynamicodeErrMsg" style="display: none;"></label></li>
+ 							<li><label class="ml-70" id="emailUErrMsg" style="display: none;"></label></li>
  							<li>
  								<p class="word">邮箱:</p>
  								<p><input type="text" class="int-text int-large radius" id="bindEmail"></p>
@@ -45,7 +45,7 @@
  								<p class="word">验证码:</p>
  								<p><input type="text" class="int-text int-in radius" id="emailValue"></p>
  								<p><input type="button" class="btn border-green border-sma radius btn-medium" id="email-sendCode-btn" value="获取验证码"></p>
- 								<p><a href="#">立即进入邮箱</a></p>
+ 								<p><a id="goEmail" href="javascript:void(0);">立即进入邮箱</a></p>
  							</li>
  						</ul>
  					</div>
@@ -63,12 +63,17 @@
 	</div>
 </body>
 <%@ include file="/inc/incJs.jsp"%>
-<script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
-<script type="text/javascript" src="${uedroot}/scripts/modular/eject.js"></script>
+<script src="${_base}/resources/spm_modules/email/emailHandle.js"></script>
 
 <script type="text/javascript">
 	var phone = "${user.mobile}";
 	var email = "${user.email}";
+	$(document).ready(function(){
+		$("#goEmail").click(function(){
+			$emailHandle.openEmail($("#bindEmail").val());
+		});
+	});
+	
 	var pager;
 	(function() {
 		seajs.use('app/jsp/user/security/bindEmail', function(bindEmailPager) {
