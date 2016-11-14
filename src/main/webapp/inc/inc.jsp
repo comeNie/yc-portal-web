@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>  
 <c:set var="_base" value="${pageContext.request.contextPath}"/>
-<c:set var="_slpres" value="${_base}/resources/local"/>
+<c:set var="rootRes" value="${_base}/resources"/>
 <c:set var="spmRes" value="${_base}/resources/spm_modules"/>
 <c:set var="uedroot" value="${pageContext.request.contextPath}/resources/template"/>
 <%

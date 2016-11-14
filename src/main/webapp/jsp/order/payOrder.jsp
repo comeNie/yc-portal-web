@@ -200,7 +200,7 @@
 </body>
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
-	var needPayPass="${balanceInfo.payCheck}";
+	var needPayPass = "${balanceInfo.payCheck}";
 	(function () {
 		var pager;
 		seajs.use('app/jsp/order/payOrder', function(payOrderPager) {

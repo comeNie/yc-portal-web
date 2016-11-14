@@ -2,6 +2,8 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget');
+
+	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
     var payOrderPager = Widget.extend({
     	
     	//事件代理
@@ -16,6 +18,19 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
     	setup: function () {
 			payOrderPager.superclass.setup.call(this);
 			this._changePayType();
+			//初始化国际化
+			$.i18n.properties({//加载资浏览器语言对应的资源文件
+				name: ["payOrder"], //资源文件名称，可以是数组
+				path: _i18n_res, //资源文件路径
+				mode: 'both',
+				language: currentLan,
+				async: true
+				//callback: function() {//加载成功后设置显示内容
+				//	alert($.i18n.prop('com.ai.paas.ipaas.common.auth_null'));
+				//	//用户名
+				//	alert($.i18n.prop('pay.pass.null'));
+				//}
+			});
     	},
 		//支付订单
 		_payOrder:function(){
@@ -61,7 +76,12 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 		},
 		//提交余额支付
 		_submitYEpay:function(){
-			var payPass=$("#payPass").val();
+			var payPass=$("#payPass").val().trim();
+			//密码不能为空
+			if(payPass==""||payPass==null){
+				alert($.i18n.prop('pay.pass.null'));
+				return;
+			}
 			$("#balancePass").val(payPass);
 			//提交
 			$("#yePayForm").submit();
