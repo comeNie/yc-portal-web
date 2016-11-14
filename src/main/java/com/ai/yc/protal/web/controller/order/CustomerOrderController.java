@@ -265,11 +265,8 @@ public class CustomerOrderController {
         deductParam.setBusinessCode("001");//目前无用,使用固定内容
         deductParam.setChannel("中译语通科技有限公司");
         deductParam.setBusiDesc("订单支付,订单号:"+deductParam.getExternalId());
-        //TODO... 模拟数据
-//        IDeductSV deductSV = DubboConsumerFactory.getService(IDeductSV.class);
-//        DeductResponse deductResponse = deductSV.deductFund(deductParam);
-        DeductResponse deductResponse = new DeductResponse();
-        deductResponse.setSerialNo("123123");
+        IDeductSV deductSV = DubboConsumerFactory.getService(IDeductSV.class);
+        DeductResponse deductResponse = deductSV.deductFund(deductParam);
         ResponseHeader responseHeader = deductResponse.getResponseHeader();
         //支付结果,默认为失败
         boolean payResult = false;
