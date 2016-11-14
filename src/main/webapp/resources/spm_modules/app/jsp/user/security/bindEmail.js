@@ -7,6 +7,18 @@ define("app/jsp/user/security/bindEmail",
 			var imgCodeFlag = false;
 			var isBandPhone = false;
 			var isBandEmail = false;
+			var showInfoMsg = function(msg){
+		    	var d = Dialog({
+					content:msg,
+					icon:'info',
+					okValue: '确 定',
+					title: '提示',
+					ok:function(){
+						this.close();
+					}
+				});
+				d.show();
+		    }
 			var $ = require('jquery'), 
 			Widget = require('arale-widget/1.2.0/widget'), 
 			Dialog = require("optDialog/src/dialog"), 
@@ -36,38 +48,6 @@ define("app/jsp/user/security/bindEmail",
 						/* 重写父类 */
 						setup : function() {
 							bindEmailPager.superclass.setup.call(this);
-							this._loadCountry();
-						},
-						/* 加载国家 */
-						_loadCountry : function() {
-							ajaxController.ajax({
-								type : "post",
-								processing : false,
-								message : "保存中，请等待...",
-								url : _base + "/userCommon/loadCountry",
-								data : {},
-								success : function(json) {
-									var data = json.data;
-									console.log(currentLan);
-									if (json.statusCode == "1" && data) {
-										var html = [];
-										for (var i = 0; i < data.length; i++) {
-											var t = data[i];
-											var _code = t.countryCode;
-											var name = t.countryNameCn;
-											if ("zh_CN" != currentLan) {
-												name = t.countryNameEn;
-											}
-											html.push('<option reg="'
-													+ t.regularExpression
-													+ '" value="' + _code
-													+ '" >' + _code + '+'
-													+ name + '</option>');
-										}
-										$("#country").html(html.join(""));
-									}
-								}
-							});
 						},
 						/**
 						 * 发送邮件
@@ -172,7 +152,8 @@ define("app/jsp/user/security/bindEmail",
 						},
 						/* 邮箱校验 */
 						_checkEmail : function() {
-							var email = $("#emailUpdateEmail");
+							debugger;
+							var email = $("#bindEmail");
 							var emailVal = email.val();
 							if ($.trim(emailVal) == "") {
 								$("#emailUErrMsg").show();
@@ -187,24 +168,6 @@ define("app/jsp/user/security/bindEmail",
 								return false;
 							}
 							$("#emailUErrMsg").hide();
-							return true;
-						},
-						_pcheckEmail:function(){
-							var email = $("#phoneUEmail");
-							var emailVal = email.val();
-							if ($.trim(emailVal) == "") {
-								$("#phoneUEmailErrMgs").show();
-								$("#phoneUEmailErrMgs").text("请输入邮箱地址");
-								//email.focus();
-								return false;
-							}
-							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
-									.test(emailVal)) {
-								$("#phoneUEmailErrMgs").show();
-								$("#phoneUEmailErrMgs").text("请输入合法邮箱地址");
-								return false;
-							}
-							$("#phoneUEmailErrMgs").hide();
 							return true;
 						},
 						/* 发送动态码 */
@@ -255,14 +218,6 @@ define("app/jsp/user/security/bindEmail",
 										}
 									});
 							},
-						/**
-						 * 邮箱修改手机号，获取动态码
-						 */
-						_sendEmailUDynamiCode:function(){
-							if (this._checkEmail()) {
-								  this._sendEmailUEmailDynamiCode();
-							  }
-						},
 						/**
 						 * 校验邮件验证码
 						 */

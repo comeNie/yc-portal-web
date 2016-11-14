@@ -26,9 +26,7 @@ import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
 import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckEmailRequest;
 import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckeMobileRequest;
 import com.ai.yc.ucenter.api.members.param.editemail.UcMembersEditEmailRequest;
-import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
-import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
 import com.alibaba.fastjson.JSON;
 
 /**
@@ -45,7 +43,6 @@ public class SecurityController {
 			.getLogger(SecurityController.class);
 	private static final String INIT = "user/security/seccenter";
 	private static final String UPDATE_PASSWORD = "user/security/updatePassword";
-	@SuppressWarnings(value = { "do not exist this error page" })
 	private static final String ERROR_PAGE = "user/error";
 	@RequestMapping("seccenter")
 	public ModelAndView init() {

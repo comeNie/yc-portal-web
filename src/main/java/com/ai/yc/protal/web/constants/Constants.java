@@ -13,6 +13,11 @@ public final class Constants {
 	public static final String IPAAS_ORDER_FILE_DSS = "order-file-dss";
 	public static final String SELF_SOURCE = "1";
 
+	//货币单位:人民币
+	public static final String CURRENCTY_UNIT_RMB = "1";
+	//货币单位:美元
+	public static final String CURRENCTY_UNIT_USD = "2";
+
 	/** 邮箱可重复发送时间 配置key */
 	public static final String SEND_VERIFY_MAX_TIME_KEY = "/email_verifycode_send_maxtime";
 	/** IP发送邮件次数key */
@@ -97,6 +102,8 @@ public final class Constants {
 		public static final String UPDATE_DATA_PHONE_CODE_MAX_COUNT = "update_data_phone_code_max_count";
 		/** 资料修改手机验证码最大次数超时时间key */
 		public static final String UPDATE_DATA_PHONE_CODE_MAX_COUNT_OVERTIME = "update_data_phone_code_max_count_overtime";
+		/** 手机注册验证码UID后缀 */
+		public static final String  PHONE_CODE_REGISTER_UID = "_uid";
 	}
 
 	public final class UcenterOperation {
