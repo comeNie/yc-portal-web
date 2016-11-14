@@ -25,15 +25,18 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 			var merchantUrl = "";
 			$("#payType").val(payType);
 			//若为余额支付,则进行余额支付流程
-			if("YE" === payType){
-				$("#payPass").val("");
-				$('#eject-mask').fadeIn(100);
-				$('#rechargepop').slideDown(100);
-			}
-			else {
+			if("YE" != payType){
 				$("#merchantUrl").val(window.location.href);
 				//提交
 				$("#toPayForm").submit();
+			}//余额支付,需要密码
+			else if("YE" === payType && needPayPass==="1"){
+				$("#payPass").val("");
+				$('#eject-mask').fadeIn(100);
+				$('#rechargepop').slideDown(100);
+			}//余额支付不需要密码
+			else if("YE" === payType){
+				$("#yePayForm").submit();
 			}
 
 		},

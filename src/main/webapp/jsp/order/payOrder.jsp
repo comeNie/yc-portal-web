@@ -146,8 +146,9 @@
 							<ul payType="ZFB">
 								<li class="zhifb"></li>
 							</ul>
+							<%--使用余额--%>
 							<c:if test="${balanceInfo!=null}">
-							<ul payType="YE"  class="none-ml">
+							<ul payType="YE" class="none-ml">
 								<li class="payment-balance">
 									<p>账户余额</p>
 									<p class="word">支付余额：<fmt:formatNumber
@@ -199,6 +200,7 @@
 </body>
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
+	var needPayPass="${balanceInfo.payCheck}";
 	(function () {
 		var pager;
 		seajs.use('app/jsp/order/payOrder', function(payOrderPager) {
