@@ -14,8 +14,8 @@ import com.ai.slp.balance.api.deduct.interfaces.IDeductSV;
 import com.ai.slp.balance.api.deduct.param.DeductParam;
 import com.ai.slp.balance.api.deduct.param.DeductResponse;
 import com.ai.slp.balance.api.deduct.param.ForegiftDeduct;
-import com.ai.yc.order.api.orderfee.param.OrderFeeInfo;
-import com.ai.yc.order.api.orderfee.param.OrderFeeQueryResponse;
+import com.ai.yc.order.api.orderfee.interfaces.IOrderFeeQuerySV;
+import com.ai.yc.order.api.orderfee.param.*;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
 import com.ai.yc.protal.web.service.BalanceService;
@@ -30,6 +30,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ai.opt.base.vo.BaseResponse;
@@ -214,22 +215,25 @@ public class CustomerOrderController {
      * @return
      */
     @RequestMapping("/payOrder/{orderId}")
-    public String createTextView(@PathVariable("orderId") Long orderId,String unit,Model uiModel){
-        //TODO... 模拟数据
-//        IOrderFeeQuerySV iOrderFeeQuerySV = DubboConsumerFactory.getService(IOrderFeeQuerySV.class);
-//        OrderFeeQueryRequest feeQueryRequest = new OrderFeeQueryRequest();
-//        feeQueryRequest.setOrderId(orderId);
-//        OrderFeeQueryResponse feeQueryResponse = iOrderFeeQuerySV.orderFeeQuery(feeQueryRequest);
+    public String createTextView(
+            @PathVariable("orderId") Long orderId, @RequestParam(value = "unit",required = false) String unit,
+            Model uiModel){
 
+        IOrderFeeQuerySV iOrderFeeQuerySV = DubboConsumerFactory.getService(IOrderFeeQuerySV.class);
+        OrderFeeQueryRequest feeQueryRequest = new OrderFeeQueryRequest();
+        feeQueryRequest.setOrderId(orderId);
+        OrderFeeQueryResponse feeQueryResponse = iOrderFeeQuerySV.orderFeeQuery(feeQueryRequest);
+        OrderFeeInfo orderFeeInfo = feeQueryResponse.getOrderFeeInfo();
 
-        OrderFeeQueryResponse feeQueryResponse = new OrderFeeQueryResponse();
-        OrderFeeInfo orderFeeInfo = new OrderFeeInfo();
-        //获取订单价格,币种
-        feeQueryResponse.setOrderFeeInfo(orderFeeInfo);
-        //模拟币种
-        orderFeeInfo.setCurrencyUnit(unit);
-        //总费用
-        orderFeeInfo.setTotalFee(100000l);
+//TODO... 模拟数据
+//        OrderFeeQueryResponse feeQueryResponse = new OrderFeeQueryResponse();
+//        OrderFeeInfo orderFeeInfo = new OrderFeeInfo();
+//        //获取订单价格,币种
+//        feeQueryResponse.setOrderFeeInfo(orderFeeInfo);
+//        //模拟币种
+//        orderFeeInfo.setCurrencyUnit(unit);
+//        //总费用
+//        orderFeeInfo.setTotalFee(100000l);
 
         //若是人民币,需要获取账户余额
         if(Constants.CURRENCTY_UNIT_RMB.equals(orderFeeInfo.getCurrencyUnit())){

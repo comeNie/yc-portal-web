@@ -162,6 +162,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			var productInfo = {};
 			var contactInfo = {};
 			var feeInfo = {};
+			//区分国内外订单
 			if (currentLan.indexOf("zh") >= 0) { 
 				baseInfo.orderType = "0";
 				baseInfo.flag = "0";
@@ -189,18 +190,17 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				
 				baseInfo.subFlag = "1";
 				productInfo.needTranslateInfo = JSON.stringify(fileInfoList);
-				productInfo.translateInfo = JSON.stringify(fileInfoList);
+				productInfo.translateInfo = "";
 				baseInfo.translateName = $("#fileList").find('li:first').text().substring(0,15);
 			} else {
 				baseInfo.translateType = "0"; //0：快速翻译 1：文档翻译 
 				baseInfo.subFlag = "0"; // "0：系统自动报价 1：人工报价"
 				productInfo.needTranslateInfo = $("#translateContent").val();
-				productInfo.translateInfo = $("#translateContent").val();
+				productInfo.translateInfo = "";
 				baseInfo.translateName = $("#translateContent").val().substring(0,15);
 			}
 			baseInfo.orderLevel = "1";
 			baseInfo.userType = "10"; //"10：个人 11：企业 12：代理人 "??
-			baseInfo.userId = "10086";
 			//baseInfo.corporaId
 			//baseInfo.accountId
 				
@@ -210,7 +210,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			productInfo.translateSum = totalWords;
 			productInfo.useCode = "222";
 			productInfo.fieldCode = "222";
-			productInfo.isSetType = "1"
+			productInfo.isSetType = "1";
 			if ( $("#urgentOrder").is(':checked') )
 				productInfo.isUrgent = "Y";
 			else 
@@ -238,7 +238,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		    contactInfo.contactTel="+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val();
 			contactInfo.contactEmail=$("#saveContactDiv").find('input').eq(2).val();
 			
-			feeInfo.totalFee = 100;
+			feeInfo.totalFee = 100000;
 			feeInfo.currencyUnit = $("#selectDuad").find("option:selected").val();
 			
 			ajaxController.ajax({
@@ -255,7 +255,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				success: function (data) {
 					if ("OK" === data.statusInfo) {
 						if(baseInfo.translateType == 0) { //文字翻译
-							window.location.href =  _base + "/p/customer/order/payOrder?orderId="+data.data;
+							window.location.href =  _base + "/p/customer/order/payOrder/"+data.data;
 						} else {
 							
 							//文档翻译，跳到待报价页面，暂缺

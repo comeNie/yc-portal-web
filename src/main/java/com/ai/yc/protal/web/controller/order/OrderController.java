@@ -226,7 +226,7 @@ public class OrderController {
             }
         } catch(Exception e) {
             LOGGER.error("系统自动报价:",e);
-            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,rb.getMessage(""));
+            resData = new ResponseData<QueryAutoOfferRes>(ResponseData.AJAX_STATUS_FAILURE,rb.getMessage(""));
         }*/
         QueryAutoOfferRes offerRes = new QueryAutoOfferRes();
         offerRes.setCurrencyUnit("1");//币种 1：RMB 2：$
@@ -282,9 +282,6 @@ public class OrderController {
             LOGGER.error("提交订单失败:",e);
             resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,rb.getMessage(""));
         }
-
-        //TODO... 虚拟数据
-       // OrderSubmissionResponse subRes = new OrderSubmissionResponse();
         return resData;
     }
     
@@ -297,27 +294,28 @@ public class OrderController {
      */
     @RequestMapping("/uploadFile")
     @ResponseBody
-    public ResponseData<String> uploadFile(HttpServletRequest request) throws IOException{
-        ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-        
+    public ResponseData<String> uploadFile(HttpServletRequest request) throws IOException {
+        ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,
+                "OK");
+
         LOGGER.info("文件上传");
         IDSSClient client = DSSClientFactory.getDSSClient(Constants.IPAAS_ORDER_FILE_DSS);
-        //文件上传的请求
+        // 文件上传的请求
         MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest) request;
-        //获取请求的参数
+        // 获取请求的参数
         Map<String, MultipartFile> fileMap = mRequest.getFileMap();
-        String fileId = ""; 
+        String fileId = "";
         Iterator<Map.Entry<String, MultipartFile>> it = fileMap.entrySet().iterator();
-        while(it.hasNext()){
-             Map.Entry<String, MultipartFile> entry = it.next();
-             MultipartFile mFile = entry.getValue();
-            
-             if(mFile.getSize() != 0 && !"".equals(mFile.getName())){
-                 fileId = client.save(mFile.getBytes(), mFile.getOriginalFilename());
-                 LOGGER.info( mFile.getOriginalFilename() + mFile.getSize() + fileId);
-             }
+        while (it.hasNext()) {
+            Map.Entry<String, MultipartFile> entry = it.next();
+            MultipartFile mFile = entry.getValue();
+
+            if (mFile.getSize() != 0 && !"".equals(mFile.getName())) {
+                fileId = client.save(mFile.getBytes(), mFile.getOriginalFilename());
+                LOGGER.info(mFile.getOriginalFilename() + mFile.getSize() + fileId);
+            }
         }
-        
+
         resData.setData(fileId);
         return resData;
     }
