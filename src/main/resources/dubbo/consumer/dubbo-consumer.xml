@@ -31,7 +31,7 @@
 <!-- IUcMembersSV -->
 	<dubbo:reference id="iUcMembersSV" registry="ycRegistry"
 		interface="com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV" />
-	<dubbo:reference id="iGnCountrySV" registry="ycRegistry"
+	<dubbo:reference id="iGnCountrySV" registry="ycRcom.ai.slp.balance.api.incomeoutquery.interfaces.IncomeOutQuerySVegistry"
 		interface="com.ai.yc.common.api.country.interfaces.IGnCountrySV" />
 	<dubbo:reference id="iOrderQuerySV" registry="ycRegistry"
 		interface="com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV" />
@@ -47,4 +47,5 @@
 			interface="com.ai.slp.balance.api.accountquery.interfaces.IAccountQuerySV"/>
 	<dubbo:reference id="iDeductSV" registry="ycRegistry"
 			interface="com.ai.slp.balance.api.deduct.interfaces.IDeductSV"/>
+	<dubbo:reference id="incomeOutQuerySV" registry="ycRegistry" interface="com.ai.slp.balance.api.incomeoutquery.interfaces.IncomeOutQuerySV"/>
 </beans>
