@@ -11,8 +11,9 @@
 .login-form-title{width:100%;float:left;padding:30px;}
 .login-form-title label{float:left;color:#fe6b6b;font-size:12px;}
 .login-form-title .right{float:right;font-size:12px;}
-.login-form-title .right a{color:#9ba3af}
-.login-form-title .right a i{color:#2361ea}
+.login-form-title .right a{color:#9ba3af;font-size:12px;}
+.login-form-title .right a i{color:#2361ea;font-size:14px;margin-right:10px;margin-top:2px;float:left}
+.login-form-title .icon-mt a i{margin-top:4px;}
 
 
 .login-form{width:100%;float:left;padding:0 30px;}
@@ -51,7 +52,7 @@
 .register-right ul li{width:100%;float:left;line-height:44px;margin-bottom:20px;}
 .register-right ul li p{float:left;}
 .register-right ul li .img{height:44px;margin:0;}
-.register-right ul li .word{width:80px;text-align: right;margin-right:20px;}
+.register-right ul li .word{width:70px;text-align: right;margin-right:20px;}
 .radio{width: 14px;height: 14px;margin-right:10px;}
 .register-right ul .ml-100{margin-left:100px;}
 .register-right ul .ml-70{margin-left:70px;}
@@ -138,3 +139,11 @@
 .adopt-lightgreen-bj ul .word{color:#8eddce;font-size:12px;}
 .adopt-lightgreen-bj .line{border-bottom:2px solid #8eddce;}
 
+/**没有绑定**/
+.recharge-success{width:100%;float:left;padding-top:100px;}
+.recharge-success ul{width:100%;float:left;}
+.recharge-success ul li{text-align: center;}
+.recharge-success ul .word{font-size:16px;margin-top:30px;}
+.recharge-success ul .list{font-size:14px}
+.recharge-success ul .list a{color:#3292f8;font-size:14px}
+.recharge-success ul .word .red{font-size:36px;color:#39d5b0;margin:10px;}

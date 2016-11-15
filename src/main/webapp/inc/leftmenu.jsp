@@ -80,14 +80,17 @@
   				</li>
   			</ul>
   		</div>
-  		<div class="left-phone">
-  			<p><i class="icon iconfont">&#xe60d;</i></p>
-  			<p class="phone-word">
-  				<span>早9:00-晚7:00</span>
-  				<span class="red">400-119-8080</span>
-  			</p>
-  		</div>
-  		<div class="left-tplist"><a href="#"><img src="${uedroot}/images/to.jpg" /></a><i class="icon-remove-circle"></i></div>
+		<!--定位-->
+		<div class="locationaaa">
+			<div class="left-phone">
+				<p><i class="icon iconfont">&#xe60d;</i></p>
+				<p class="phone-word">
+					<span>早9:00-晚7:00</span>
+					<span class="red">400-119-8080</span>
+				</p>
+			</div>
+			<div class="left-tplist"><a hrel="#"><img src="${uedroot}/images/to.jpg" /></a><i class="icon-remove-circle"></i></div>
+		</div>
   	</div>
   	<script type="text/javascript">
   	  var current ="${param.current}";
