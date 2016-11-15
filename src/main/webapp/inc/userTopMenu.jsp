@@ -25,11 +25,11 @@
 								<%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"selected":""%>
 						>ENGLISH</option>
 					</select>
-  					<i class="icon-caret-down"></i>
+  					<i class="icon-caret-down dingw"></i>
   				</li>
   				<li class="nav-icon"><a href="#"><i class="icon iconfont">&#xe60b;</i></a></li>
   				<li class="nav-icon mt-2"><a href="#"><i class="icon iconfont">&#xe60a;</i><span class="message">3</span></a></li>
-  				<li class="user"><a href="javaScript:void(0)" class="yonh">爱大脸大脸<i class="icon-caret-down"></i></a>
+				<li class="user"><a href="javaScript:void(0)" class="yonh">爱大脸大脸<i class="icon-caret-down btg" id="icon2"></i></a>
   					<div class="show">
   						<ul>
   							<li><i class="icon-user"></i><a href="#"><spring:message code="user.topMenu.perProfile"/></a></li>

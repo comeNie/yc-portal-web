@@ -30,12 +30,12 @@
   					<span>我的订单</span>
   					</a>
   				</li>
-  				<li>
-  					<a href="我的账户.html">
-  					<span><i class="icon iconfont">&#xe602;</i></span>
-  					<span>我的账户</span>
-  					</a>
-  				</li>
+				<li id="myaccount">
+					<a href="${_base}/balance/account">
+						<span><i class="icon iconfont">&#xe602;</i></span>
+						<span>我的账户</span>
+					</a>
+				</li>
   				<li>
   					<a href="优惠卷.html">
   					<span><i class="icon iconfont">&#xe603;</i></span>
@@ -80,14 +80,17 @@
   				</li>
   			</ul>
   		</div>
-  		<div class="left-phone">
-  			<p><i class="icon iconfont">&#xe60d;</i></p>
-  			<p class="phone-word">
-  				<span>早9:00-晚7:00</span>
-  				<span class="red">400-119-8080</span>
-  			</p>
-  		</div>
-  		<div class="left-tplist"><a href="#"><img src="${uedroot}/images/to.jpg" /></a><i class="icon-remove-circle"></i></div>
+		<!--定位-->
+		<div class="locationaaa">
+			<div class="left-phone">
+				<p><i class="icon iconfont">&#xe60d;</i></p>
+				<p class="phone-word">
+					<span>早9:00-晚7:00</span>
+					<span class="red">400-119-8080</span>
+				</p>
+			</div>
+			<div class="left-tplist"><a hrel="#"><img src="${uedroot}/images/to.jpg" /></a><i class="icon-remove-circle"></i></div>
+		</div>
   	</div>
   	<script type="text/javascript">
   	  var current ="${param.current}";

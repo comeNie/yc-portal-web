@@ -33,9 +33,7 @@ public class OrderLoginController {
      * @return
      */
     @RequestMapping(value = "/orderSubmit")
-    @ResponseBody
-    public String submitTextView(String orderType, Model uiModel){
-        HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
+    public String submitTextView(String orderType, HttpSession session){
         Long orderId;
         try {
             String userId = UserUtil.getUserId();
@@ -48,15 +46,11 @@ public class OrderLoginController {
             LOGGER.info(JSONObject.toJSONString(subRes));
             //如果返回值为空,或返回信息中包含错误信息,则抛出异常
             if (subRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-                if (orderType.equalsIgnoreCase("text")) {
-                    return "order/createTextOrder"; 
-                } else {
-                    return "order/createOralOrder"; 
-                }
+                throw new BusinessException("","提交订单错误");
             }
             
             //保存orderId
-           orderId = subRes.getOrderId();
+            orderId = subRes.getOrderId();
         }catch (BusinessException e){
             LOGGER.error("提交订单失败:",e);
             if (orderType.equalsIgnoreCase("text")) {
@@ -66,6 +60,6 @@ public class OrderLoginController {
             }
         }
 
-        return "forward:/p/customer/order/payOrder/"+orderId;
+        return "redirect:/p/customer/order/payOrder/"+orderId;
     }
 }

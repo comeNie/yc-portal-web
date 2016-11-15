@@ -77,19 +77,14 @@ define("app/jsp/user/security/bindPhone",
 								}
 							});
 						},
-						_sendUDynamiCode:function(){
-						  if (this._checkPhone()) {
-							  this._sendDynamiCode();
-						  }
-					  },
 						/* 发送动态码 */
 					  _sendDynamiCode : function() {
+						  if (!this._checkPhone()) {
+							 return;
+						  }
 							var _this = this;
-							var btn = $("#send_dynamicode_btn");
-							if (btn.hasClass("biu-btn")) {
-								return;
-							}
-							curCount = count;
+							var _dynamicode_btn = $("#send_dynamicode_btn");
+							_dynamicode_btn.attr("disabled", true);
 							ajaxController
 								.ajax({
 									type : "post",
@@ -104,27 +99,25 @@ define("app/jsp/user/security/bindPhone",
 										if(data.data==false){
 											$("#dynamicode").show();
 											$("#dynamicode").text(data.statusInfo);
-											$("#send_dynamicode_btn").removeAttr("disabled"); //移除disabled属性
-								            $('#send_dynamicode_btn').val('获取验证码');
+											_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
+											_dynamicode_btn.val('获取验证码');
 											return;
 										}else{
 											if(data.data){
 												var step = 59;
-									            $('#send_dynamicode_btn').val('重新发送60');
-									            $("#send_dynamicode_btn").attr("disabled", true);
+												_dynamicode_btn.val('重新发送60');
 									            var _res = setInterval(function(){
-									                $("#send_dynamicode_btn").attr("disabled", true);//设置disabled属性
-									                $('#send_dynamicode_btn').val('重新发送'+step);
+									            	_dynamicode_btn.val('重新发送'+step);
 									                step-=1;
 									                if(step <= 0){
-									                $("#send_dynamicode_btn").removeAttr("disabled"); //移除disabled属性
-									                $('#send_dynamicode_btn').val('获取验证码');
+									                _dynamicode_btn.removeAttr("disabled"); //移除disabled属性
+									                _dynamicode_btn.val('获取验证码');
 									                clearInterval(_res);//清除setInterval
 									                }
 									            },1000);
 									            
 											}else{
-												$("#send_dynamicode_btn").removeAttr("disabled");
+												_dynamicode_btn.removeAttr("disabled");
 											}
 									  }
 									}
@@ -192,7 +185,7 @@ define("app/jsp/user/security/bindPhone",
 										url : _base + "/reg/checkPhoneOrEmail",
 										data : {
 											'checkType' : "phone",
-											"checkVal" : $("#telephone").val()
+											"checkVal" :phoneVal
 										},
 										success : function(json) {
 											if (!json.data) {
@@ -239,10 +232,9 @@ define("app/jsp/user/security/bindPhone",
 								    					type:"2",
 								    					code:phoneDynamicode,
 								    				},
-								    				success: function(data) {
-								    					var jsonData = JSON.parse(data);
-								    		        	if(jsonData.statusCode!="1"){
-								    		        		alert("绑定失败");
+								    				success: function(json) {
+								    					if(!json.data){
+								    		        		alert(json.statusInfo);
 															return false;
 								    		        	}else{
 								    		        		alert("绑定成功");

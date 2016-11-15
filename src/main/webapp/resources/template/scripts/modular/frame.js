@@ -1,10 +1,17 @@
 //导航下拉
 $(function () {
-    $(".cloud-breadcrumb ul .user .yonh").click(function () {
-		$(this).children('i').toggleClass(" icon-caret-down   icon-caret-up");
-		$(this).parent().children('.show').slideToggle(100);
-    });
-});	
+    var st = 100;
+    $('.cloud-breadcrumb ul .user .yonh').mouseenter(function () {
+		$('.show').show(1);
+    })
+		$(".show").click(function () {
+                $(this).hide(1);
+            });
+			
+		$('.cloud-breadcrumb').mouseleave(function () {
+        $('.show').hide(1);
+    });	
+  });
 
 //左侧菜单关闭
 $(function(){
@@ -189,3 +196,39 @@ $('.prompt-center-title ul li a').click(function(){
 $(function () {
 $(".attachment  ul:last").css("border-bottom","none");
 });
+//翻译下单关闭附件
+$(function(){
+$(".attachment ul li i").click(function () {
+	$(this).parent().parent('ul').hide();
+	});
+	}); 
+	
+
+//旋转
+$(document).ready(function(){
+$("#icon1").rotate({ 
+   bind: 
+     { 
+        mouseover : function() { 
+            $(this).rotate({animateTo:180});
+        },
+        mouseout : function() { 
+            $(this).rotate({animateTo:0});
+        }
+     } 
+   
+});
+$("#icon2").rotate({ 
+   bind: 
+     { 
+        mouseover : function() { 
+            $(this).rotate({animateTo:180});
+        },
+        mouseout : function() { 
+            $(this).rotate({animateTo:0});
+        }
+     } 
+   
+});
+});
+document.getElementById(".left-subnav").style.height=document.getElementById(".right-wrapper").scrollHeight+"px"

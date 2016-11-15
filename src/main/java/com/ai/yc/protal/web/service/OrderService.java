@@ -1,12 +1,12 @@
 package com.ai.yc.protal.web.service;
 
+import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.yc.order.api.orderpay.interfaces.IOrderPayProcessedResultSV;
-import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultBaseInfo;
-import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultFeeInfo;
-import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultProdInfo;
-import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultRequest;
+import com.ai.yc.order.api.orderpay.param.*;
 import com.ai.yc.protal.web.constants.OrderConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -17,10 +17,11 @@ import java.sql.Timestamp;
  */
 @Service
 public class OrderService {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderService.class);
     /**
      * 订单支付处理
      * @param userId 用户ID
+     * @param accountId 账号ID,可为空
      * @param orderId 订单ID
      * @param orderType 订单类型 企业/个人
      * @param totalFee 订单金额
@@ -29,8 +30,11 @@ public class OrderService {
      * @param notifyTime 支付时间
      */
     public void orderPayProcessResult(
-            String userId,long orderId,String orderType,long totalFee,
+            String userId,Long accountId,long orderId,String orderType,long totalFee,
             String payStyle,String outOrderId,Timestamp notifyTime){
+        LOGGER.info("order pay process result,\r\n" +
+                "userId:{},orderId:{},orderType:{},totalFee:{},payStyle:{},outOrderId:{}",
+                userId,orderId,orderType,totalFee,payStyle,outOrderId);
         //TODO...若是企业订单,需要查询企业信息,一阶段暂不实现
         OrderPayProcessedResultRequest payResultReq = new OrderPayProcessedResultRequest();
         //基本信息
@@ -39,6 +43,7 @@ public class OrderService {
         payResultReqBase.setOrderId(orderId);
         payResultReqBase.setOrderType(orderType);
         payResultReqBase.setUserId(userId);
+        payResultReqBase.setAccountId(accountId);
         //用户类型
         if (OrderConstants.ORDER_TYPE_PERSON.equals(orderType)) {
             payResultReqBase.setUserType(OrderConstants.USER_TYPE_PERSON);
@@ -59,6 +64,9 @@ public class OrderService {
         payResultReq.setProdInfo(payResultProdInfo);
         payResultProdInfo.setStateTime(notifyTime);
         IOrderPayProcessedResultSV payResultSv= DubboConsumerFactory.getService(IOrderPayProcessedResultSV.class);
-        payResultSv.orderPayProcessedResult(payResultReq);
+        OrderPayProcessedResultResponse resultResponse = payResultSv.orderPayProcessedResult(payResultReq);
+        ResponseHeader header = resultResponse.getResponseHeader();
+        LOGGER.info("The order pay process result:{},orderId:{}",
+                header==null?true:header.getIsSuccess(),resultResponse.getOrderId());
     }
 }

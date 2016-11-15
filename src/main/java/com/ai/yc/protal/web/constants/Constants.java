@@ -122,6 +122,10 @@ public final class Constants {
 		public static final String OPERATION_TYPE_EMAIL_VERIFY = "5";
 		/** 密码操作验证码 */
 		public static final String OPERATION_TYPE_EMAIL_PASSWORD_DYNAMIC = "6";
+		/**修改密码方式 1：旧密码 */
+        public static final String OPERATION_TYPE_UPDATE_PWD_OLDPSD = "1";
+        /**修改密码方式 2：验证码*/
+        public static final String  OPERATION_TYPE_UPDATE_PWD_CODE = "2";
 	}
 	
 	public static final class UUID{
