@@ -32,4 +32,12 @@ public class UserUtil {
         HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
         return (GeneralSSOClientUser)session.getAttribute(SSOClientConstants.USER_SESSION_KEY);
     }
+    /**
+     * 更新单点登陆的用户信息
+     * @return
+     */
+    public static void saveSsoUser(GeneralSSOClientUser user){
+        HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
+        session.setAttribute(SSOClientConstants.USER_SESSION_KEY,user);
+    }
 }

@@ -11,6 +11,19 @@ define("app/jsp/user/security/updateMobilePhone",
 			Widget = require('arale-widget/1.2.0/widget'), 
 			Dialog = require("optDialog/src/dialog"), 
 			AjaxController = require('opt-ajax/1.0.0/index');
+			var showMsg = function(msg){
+		    	var d = Dialog({
+					content:msg,
+					icon:'fail',
+					okValue: '确 定',
+					title: '提示',
+					ok:function(){
+						this.close();
+					}
+				});
+				d.show();
+		    }
+
 			// 实例化AJAX控制处理对象
 			var ajaxController = new AjaxController();
 			// 定义页面组件类
@@ -27,8 +40,6 @@ define("app/jsp/user/security/updateMobilePhone",
 							"click #next-bt1":"_checkPhoneDynamicode",
 							//校验手机号
 							"blur #uPhone":"_checkPhone",
-							//校验手机合法性
-							"click #usend_dynamicode_btn":"_checkPhone",
 							//修改手机号，发送动态码
 							"click #usend_dynamicode_btn":"_sendUDynamiCode",
 							//校验手机和动态码是否匹配
@@ -116,6 +127,8 @@ define("app/jsp/user/security/updateMobilePhone",
 													+ name + '</option>');
 										}
 										$("#country").html(html.join(""));
+										$("#country2").html(html.join(""));
+										$("#country3").html(html.join(""));
 									}
 								}
 							});
@@ -125,11 +138,13 @@ define("app/jsp/user/security/updateMobilePhone",
 						 */
 						_sendEmail:function(){
 							var _this = this;
-							$("#sendEmailBtn").attr("disabled", true);
+							var _sendEmailBtn =$("#sendEmailBtn");
+							_sendEmailBtn.attr("disabled", true);
 							ajaxController.ajax({
 								type : "POST",
 								data : {
-									"email": "178070754@qq.com"
+									"email": $("#bindEmail").html(),
+									"type":'5'
 								},
 								dataType: 'json',
 								url :_base+"/userCommon/sendEmail",
@@ -140,27 +155,23 @@ define("app/jsp/user/security/updateMobilePhone",
 									if(!resultCode){
 										$("#emailErrMsg").show();
 										$("#emailErrMsg").text("发送邮件失败");
-										$("#sendEmailBtn").removeAttr("disabled"); //移除disabled属性
+										_sendEmailBtn.removeAttr("disabled"); //移除disabled属性
 									}else{
 										var step = 59;
-							            $('#sendEmailBtn').val('重新发送60');
-							            $("#sendEmailBtn").attr("disabled", true);
+										_sendEmailBtn.val('重新发送60');
 							            var _res = setInterval(function(){
-							                $("#sendEmailBtn").attr("disabled", true);//设置disabled属性
-							                $('#sendEmailBtn').val('重新发送'+step);
+							            	_sendEmailBtn.val('重新发送'+step);
 							                step-=1;
 							                if(step <= 0){
-							                $("#sendEmailBtn").removeAttr("disabled"); //移除disabled属性
+							                _sendEmailBtn.removeAttr("disabled"); //移除disabled属性
 							                $('#sendEmailBtn').val('获取验证码');
 							                clearInterval(_res);//清除setInterval
 							                }
 							            },1000);
-							            //window.location.href = _base+"/user/bandEmail/sendBandEmailSuccess?email="+$("#email").val();
-										
 									}
 								},
 								failure : function(){
-									$("#sendEmailBtn").removeAttr("disabled"); //移除disabled属性
+									_sendEmailBtn.removeAttr("disabled"); //移除disabled属性
 								},
 								error : function(){
 									alert("网络连接超时!");
@@ -169,17 +180,54 @@ define("app/jsp/user/security/updateMobilePhone",
 						},
 					  _sendUDynamiCode:function(){
 						  if (this._checkPhone()) {
-							  this._sendDynamiCode();
+                                var _this = this;
+								var _dynamicode_btn = $("#usend_dynamicode_btn");
+								_dynamicode_btn.attr("disabled", true);
+								ajaxController
+									.ajax({
+										type : "post",
+										processing : false,
+										message : "保存中，请等待...",
+										url : _base + "/userCommon/sendSmsCode",
+										data : {
+											'phone' : $("#uPhone").val(),
+											'type':"2"
+										},
+										success : function(data) {
+											if(data.data==false){
+												$("#uphoneErrMsg").show();
+												$("#uphoneErrMsg").text(data.statusInfo);
+												_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
+												_dynamicode_btn.val('获取验证码');
+												return;
+											}else{
+												if(data.data){
+													var step = 59;
+													_dynamicode_btn.val('重新发送60');
+										            var _res = setInterval(function(){
+										            	_dynamicode_btn.val('重新发送'+step);
+										                step-=1;
+										                if(step <= 0){
+										                _dynamicode_btn.removeAttr("disabled"); //移除disabled属性
+										                _dynamicode_btn.val('获取验证码');
+										                clearInterval(_res);//清除setInterval
+										                }
+										            },1000);
+										            $("#uphoneErrMsg").hide();
+												}else{
+													_dynamicode_btn.removeAttr("disabled");
+												}
+										  }
+										}
+									});
+							
 						  }
 					  },
-						/* 发送动态码 */
+						/* 身份验证发送动态码 */
 					  _sendDynamiCode : function() {
 							var _this = this;
-							var btn = $("#send_dynamicode_btn");
-							if (btn.hasClass("biu-btn")) {
-								return;
-							}
-							curCount = count;
+							var _dynamicode_btn = $("#send_dynamicode_btn");
+							_dynamicode_btn.attr("disabled", true);
 							ajaxController
 								.ajax({
 									type : "post",
@@ -194,27 +242,25 @@ define("app/jsp/user/security/updateMobilePhone",
 										if(data.data==false){
 											$("#dynamicode").show();
 											$("#dynamicode").text(data.statusInfo);
-											$("#send_dynamicode_btn").removeAttr("disabled"); //移除disabled属性
-								            $('#send_dynamicode_btn').val('获取验证码');
+											_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
+											_dynamicode_btn.val('获取验证码');
 											return;
 										}else{
 											if(data.data){
 												var step = 59;
-									            $('#send_dynamicode_btn').val('重新发送60');
-									            $("#send_dynamicode_btn").attr("disabled", true);
+												_dynamicode_btn.val('重新发送60');
 									            var _res = setInterval(function(){
-									                $("#send_dynamicode_btn").attr("disabled", true);//设置disabled属性
-									                $('#send_dynamicode_btn').val('重新发送'+step);
+									            	_dynamicode_btn.val('重新发送'+step);
 									                step-=1;
 									                if(step <= 0){
-									                $("#send_dynamicode_btn").removeAttr("disabled"); //移除disabled属性
-									                $('#send_dynamicode_btn').val('获取验证码');
+									                _dynamicode_btn.removeAttr("disabled"); //移除disabled属性
+									                _dynamicode_btn.val('获取验证码');
 									                clearInterval(_res);//清除setInterval
 									                }
 									            },1000);
 									            $("#dynamicode").hide();
 											}else{
-												$("#send_dynamicode_btn").removeAttr("disabled");
+												_dynamicode_btn.removeAttr("disabled");
 											}
 									  }
 									}
@@ -265,41 +311,20 @@ define("app/jsp/user/security/updateMobilePhone",
 								 return false;
 							 }
 							 ajaxController.ajax({
-								    type:"post",
-				    				url:_base+"/userCommon/checkSmsCode",
-				    				data:{
+    		        			 type:"post",
+				    			 url:_base+"/p/security/updatePhone",
+				    			 data:{
 				    					phone:$("#uPhone").val(),
 				    					type:"2",
-				    					code:$("#uphoneDynamicode").val(),
+				    					code:phoneDynamicode,
 				    				},
-				    		        success: function(data) {
-				    		        	if(!data.data){
-				    		        		$("#uphoneDynamicode").show();
-											$("#uphoneDynamicode").text(data.statusInfo);
+				    				success: function(json) {
+				    					if(!json.data){
+				    		        		alert(json.statusInfo);
 											return false;
 				    		        	}else{
-				    		        		 ajaxController.ajax({
-				    		        			 type:"post",
-								    			 url:_base+"/p/security/updatePhone",
-								    			 data:{
-								    					phone:$("#uPhone").val(),
-								    					type:"2",
-								    					code:$("#uphoneDynamicode").val(),
-								    				},
-								    				success: function(data) {
-								    					var jsonData = JSON.parse(data);
-								    		        	if(jsonData.statusCode!="1"){
-								    		        		alert("修改失败")
-															return false;
-								    		        	}else{
-								    		        		$("#next2").hide();
-								    		        		$("#next3").show();
-								    		        	}
-								    		          },
-								    				error: function(error) {
-								    						alert("error:"+ error);
-								    					}
-								    				});
+				    		        		$("#next2").hide();
+				    		        		$("#next3").show();
 				    		        	}
 				    		          },
 				    				error: function(error) {
@@ -309,7 +334,7 @@ define("app/jsp/user/security/updateMobilePhone",
 						},
 						/* 手机格式校验 */
 						_checkPhone : function() {
-							var country = $("#country").find("option:selected");
+							var country = $("#country2").find("option:selected");
 							var reg = country.attr("reg");
 							var phone = $("#uPhone");
 							var phoneVal = phone.val();
@@ -354,7 +379,7 @@ define("app/jsp/user/security/updateMobilePhone",
 						 *  通过邮箱地址修改手机号 
 						 */
 						_checkEmailUpdatePhone : function() {
-							var country = $("#country").find("option:selected");
+							var country = $("#country3").find("option:selected");
 							var reg = country.attr("reg");
 							var phone = $("#emailUpdatePhone");
 							var phoneVal = phone.val();
@@ -380,7 +405,7 @@ define("app/jsp/user/security/updateMobilePhone",
 										url : _base + "/reg/checkPhoneOrEmail",
 										data : {
 											'checkType' : "phone",
-											"checkVal" : $("#emailUpdatePhone").val()
+											"checkVal" : phoneVal
 										},
 										success : function(json) {
 											if (!json.data) {
@@ -398,11 +423,8 @@ define("app/jsp/user/security/updateMobilePhone",
 						/* 发送动态码 */
 						  _sendEmailUPhoneDynamiCode : function() {
 								var _this = this;
-								var btn = $("#emailUpDynamicodeBtn");
-								if (btn.hasClass("biu-btn")) {
-									return;
-								}
-								curCount = count;
+								var _emailUpDynamicodeBtn = $("#emailUpDynamicodeBtn");
+								_emailUpDynamicodeBtn.attr("disabled", true);
 								ajaxController
 									.ajax({
 										type : "post",
@@ -417,27 +439,25 @@ define("app/jsp/user/security/updateMobilePhone",
 											if(data.data==false){
 												$("#emailUpdatePhoneErrMsg").show();
 												$("#emailUpdatePhoneErrMsg").text(data.statusInfo);
-												$("#emailUpDynamicodeBtn").removeAttr("disabled"); //移除disabled属性
-									            $('#emailUpDynamicodeBtn').val('获取验证码');
+												_emailUpDynamicodeBtn.removeAttr("disabled"); //移除disabled属性
+												_emailUpDynamicodeBtn.val('获取验证码');
 												return;
 											}else{
 												if(data.data){
 													var step = 59;
-										            $('#emailUpDynamicodeBtn').val('重新发送60');
-										            $("#emailUpDynamicodeBtn").attr("disabled", true);
+													_emailUpDynamicodeBtn.val('重新发送60');
 										            var _res = setInterval(function(){
-										                $("#emailUpDynamicodeBtn").attr("disabled", true);//设置disabled属性
-										                $('#emailUpDynamicodeBtn').val('重新发送'+step);
+										                _emailUpDynamicodeBtn.val('重新发送'+step);
 										                step-=1;
 										                if(step <= 0){
-										                $("#emailUpDynamicodeBtn").removeAttr("disabled"); //移除disabled属性
-										                $('#emailUpDynamicodeBtn').val('获取验证码');
+										                _emailUpDynamicodeBtn.removeAttr("disabled"); //移除disabled属性
+										                _emailUpDynamicodeBtn.val('获取验证码');
 										                clearInterval(_res);//清除setInterval
 										                }
 										            },1000);
 										            $("#emailUpdatePhoneErrMsg").hide();
 												}else{
-													$("#emailUpDynamicodeBtn").removeAttr("disabled");
+													_emailUpDynamicodeBtn.removeAttr("disabled");
 												}
 										  }
 										}
@@ -465,8 +485,8 @@ define("app/jsp/user/security/updateMobilePhone",
 								type:"post",
 			    				url:_base+"/userCommon/checkEmailCode",
 			    				data:{
-			    					email:"178070754@qq.com",
-			    					code:$("#emailIdentifyCode").val(),
+			    					'email':$("#bindEmail").html(),
+			    					'code':emailIdentifyCode,
 			    				},
 			    		        success: function(data) {
 			    		        	if(!data.data){
@@ -495,41 +515,20 @@ define("app/jsp/user/security/updateMobilePhone",
 								 return false;
 							 }
 							 ajaxController.ajax({
-								    type:"post",
-				    				url:_base+"/userCommon/checkSmsCode",
-				    				data:{
-				    					phone:$("#emailUpdatePhone").val(),
-				    					type:"2",
-				    					code:$("#emailUValidateCode").val(),
+    		        			 type:"post",
+				    			 url:_base+"/p/security/updatePhone",
+				    			 data:{
+				    					'phone':$("#emailUpdatePhone").val(),
+				    					'type':"2",
+				    					'code':phoneDynamicode,
 				    				},
-				    		        success: function(data) {
-				    		        	if(!data.data){
-				    		        		$("#emailUpdatePhoneErrMsg").show();
-											$("#emailUpdatePhoneErrMsg").text(data.statusInfo);
+				    				success: function(json) {
+				    					if(!json.data){
+				    		        		alert(json.statusInfo)
 											return false;
 				    		        	}else{
-				    		        		 ajaxController.ajax({
-				    		        			 type:"post",
-								    			 url:_base+"/p/security/updatePhone",
-								    			 data:{
-								    					phone:$("#emailUpdatePhone").val(),
-								    					type:"2",
-								    					code:$("#emailUValidateCode").val(),
-								    				},
-								    				success: function(data) {
-								    					var jsonData = JSON.parse(data);
-								    		        	if(jsonData.statusCode!="1"){
-								    		        		alert("修改失败")
-															return false;
-								    		        	}else{
-								    		        		$("#next5").hide();
-								    		        		$("#next6").show();
-								    		        	}
-								    		          },
-								    				error: function(error) {
-								    						alert("error:"+ error);
-								    					}
-								    				});
+				    		        		$("#next5").hide();
+				    		        		$("#next6").show();
 				    		        	}
 				    		          },
 				    				error: function(error) {

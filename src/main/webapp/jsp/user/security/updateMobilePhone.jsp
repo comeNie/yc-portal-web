@@ -83,7 +83,7 @@
 									<select id="country" class="select select-in radius"></select>
 								</p>
  								
- 								<p id="telephone">13718206604</p>
+ 								<p id="telephone">${sessionScope.user_session_key.mobile}</p>
  							</li>
  							<li>
  								<p class="word">动态码:</p>
@@ -136,7 +136,7 @@
  								<label class="ml-70" id="uphoneErrMsg" style="display: none;"></label>
  								<p class="word">手机:</p>
  								<p>
-									<select id="country" class="select select-in radius"></select>
+									<select id="country2" class="select select-in radius"></select>
 									<input type="text"  class="" id="uPhone">
 								</p>
  								<p></p>
@@ -226,8 +226,8 @@
  						<ul>
  							<li>
  								<label class="ml-70" id="emailErrMsg" style="display: none;"></label>
- 								<p class="word">已绑定邮箱:</p>
- 								<p>178070754@qq.com</p>
+ 								<p class="word" >已绑定邮箱:</p>
+ 								<p id="bindEmail">${sessionScope.user_session_key.email}</p>
  							</li>
  							<li>
  								<p class="word">动态码:</p>
@@ -279,7 +279,7 @@
  								<label class="ml-70" id="emailUpdatePhoneErrMsg" style="display: none;"></label>
  								<p class="word">手机:</p>
  								<p>
-									<select id="country" class="select select-in radius"></select>
+									<select id="country3" class="select select-in radius"></select>
 								</p>
  								<p><input type="text" class="int-text int-large radius" id="emailUpdatePhone"></p>
  							</li>
@@ -353,8 +353,8 @@ var pager;
 <script src="${_base}/resources/spm_modules/email/emailHandle.js"></script>
 <script type="text/javascript">
 	
-	var email = "${sessionScope.user_session_key.mobile}";
-	var phone = "${sessionScope.user_session_key.email}";
+	var phone = "${sessionScope.user_session_key.mobile}";
+	var email = "${sessionScope.user_session_key.email}";
 	$(document).ready(function(){
 		$("#goEmail").click(function(){
 			$emailHandle.openEmail(email);

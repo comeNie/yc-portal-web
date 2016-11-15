@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.RandomUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
@@ -30,6 +31,7 @@ import com.ai.yc.protal.web.utils.VerifyUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersOperationSV;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
+import com.ai.yc.ucenter.api.members.param.base.ResponseCode;
 import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckEmailRequest;
 import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckeMobileRequest;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersActiveRequest;
@@ -89,16 +91,17 @@ public class RegisterController {
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 					rb.getMessage("ycregisterMsg.passwordEmpty"), false);
 		}
-		if (!StringUtil.isBlank(req.getMobilePhone())
-				&& !checkPhoneOrEmail(Register.CHECK_TYPE_PHONE,
-						req.getMobilePhone())) {
-			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
-					"帐号已存在", false);
+		 Object [] checkResult =null;
+		if (!StringUtil.isBlank(req.getMobilePhone())) {
+			checkResult =checkPhoneOrEmail(Register.CHECK_TYPE_PHONE,req.getMobilePhone());
 		}
-		if (!StringUtil.isBlank(req.getEmail())
-				&& !checkPhoneOrEmail(Register.CHECK_TYPE_EMAIL, req.getEmail())) {
+		if (!StringUtil.isBlank(req.getEmail())) {
+			checkResult =checkPhoneOrEmail(Register.CHECK_TYPE_EMAIL, req.getEmail());
+			
+		}
+		if(!CollectionUtil.isEmpty(checkResult)&&!(boolean)checkResult[0]){
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
-					"帐号已存在", false);
+					(String) checkResult[1], false);
 		}
 		try {
 			// 用户名 手机 邮箱校验 昵称 校验
@@ -133,8 +136,9 @@ public class RegisterController {
 		try {
 			String checkType = request.getParameter("checkType");
 			String checkVal = request.getParameter("checkVal");
-			String msg = "帐号已存在";
-			Boolean canUse = checkPhoneOrEmail(checkType, checkVal);
+			Object[] result = checkPhoneOrEmail(checkType, checkVal);
+			Boolean canUse = (Boolean) result[0];
+			String msg =  (String) result[1];
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 					msg, canUse);
 		} catch (Exception e) {
@@ -173,7 +177,7 @@ public class RegisterController {
 	/**
 	 * 校验手机或邮箱可用
 	 */
-	private Boolean checkPhoneOrEmail(String checkType, String checkVal) {
+	private Object[] checkPhoneOrEmail(String checkType, String checkVal) {
 		UcMembersResponse res = null;
 		try {
 			IUcMembersSV sv = DubboConsumerFactory
@@ -195,13 +199,17 @@ public class RegisterController {
 		} catch (Exception e) {
 			LOG.info(e.getMessage(), e);
 		}
-		if (res != null && res.getMessage() != null
-				&& res.getMessage().isSuccess() && res.getCode() != null
-				&& res.getCode().getCodeNumber() != null
-				&& res.getCode().getCodeNumber() == 1) {
-			return true;
+		ResponseCode responseCode = res == null ? null : res.getCode();
+		Integer codeNumber = responseCode == null ? null : responseCode
+				.getCodeNumber();
+		boolean falg =false;
+		String msg ="ok";
+		if (codeNumber != null && codeNumber == 1) {
+			falg = true;
+		} else {
+			msg = responseCode.getCodeMessage();
 		}
-		return false;
+		return new Object[]{falg,msg};
 	}
 	@RequestMapping("emailActivate")
 	public String emailActivate(HttpServletRequest request,@RequestParam int uid,@RequestParam String code) {
