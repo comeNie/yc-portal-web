@@ -76,7 +76,7 @@
 										<li> 
 										    <label class="ml-70" id="dynamicode" style="display: none;"></label>
 											<p class="word"><spring:message code="ycaccountcenter.updatePassword.bindPhone"/></p>
-											<p id="telephone">18929309495</p>
+											<p id="telephone">${user.mobile}</p>
 										</li>
 										<li>
 											<p class="word">动态码:</p>
@@ -133,11 +133,11 @@
 									<li>
 		 								<label class="ml-70" id="passwordMsg" style="display: none;">输入账号错误</label>
 		 								<p class="word">密码:</p>
-		 								<p><input type="text" class="int-text int-xlarge radius" id="password"></p>
+		 								<p><input type="password" class="int-text int-xlarge radius" id="password"></p>
 		 							</li>
 		 							<li>
 		 								<p class="word">确认密码:</p>
-		 								<p><input type="text" class="int-text int-xlarge radius" id="confirmPassword"></p>
+		 								<p><input type="password" class="int-text int-xlarge radius" id="confirmPassword"></p>
 		 							</li>
 									</ul>
 								</div>
@@ -224,7 +224,7 @@
 										<li>
 											<p class="word">验证码:</p>
  								            <p><input type="text" class="int-text int-in radius" id="emailIdentifyCode"></p>
- 								            <p><input type="button" class="btn biu-btn radius btn-medium" value="<spring:message code="ycaccountcenter.updatePassword.sendEmailCode"/>" id="sendEmailBtn"></p>
+ 								            <p><input type="button" class="btn border-green border-sma radius btn-medium" value="<spring:message code="ycaccountcenter.updatePassword.sendEmailCode"/>" id="sendEmailBtn"></p>
  								            <p><a href="javascript:void(0);" id="goEmail"><spring:message code="ycaccountcenter.updatePassword.goEmail"/></a></p>
 										</li>
 									</ul>
@@ -271,11 +271,11 @@
 										<li>
 			 								<label class="ml-70" id="emailPasswordErrMsg" style="display: none;"></label>
 			 								<p class="word">密码:</p>
-			 								<p><input type="text" class="int-text int-xlarge radius" id="emailPassword"></p>
+			 								<p><input type="password" class="int-text int-xlarge radius" id="emailPassword"></p>
 	 									</li>
 			 							<li>
 			 								<p class="word">确认密码:</p>
-			 								<p><input type="text" class="int-text int-xlarge radius" id="emailConfirmPassword"></p>
+			 								<p><input type="password" class="int-text int-xlarge radius" id="emailConfirmPassword"></p>
 			 							</li>
 									</ul>
 								</div>
