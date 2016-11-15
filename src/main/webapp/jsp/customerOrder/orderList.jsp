@@ -161,7 +161,7 @@
 				{{/if}}
       		</div>
     	</th>
-  	 </tr>
+	</tr>
     </thead>
     <tbody>
 		<input type="hidden" name="orderId" value="{{:orderId}}">

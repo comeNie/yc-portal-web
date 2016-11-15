@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: jackieliu
-  Date: 16/11/4
-  Time: 下午9:12
-  To change this template use File | Settings | File Templates.
---%>
 <%@page import="java.util.Locale"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -30,7 +23,8 @@
                 <%--我的订单--%>
                 <p><a href="${_base}/p/customer/order/list/view"><spring:message code="topMenue.myOrder"/></a></p>
                 <p><a href="#"><spring:message code="topMenue.Customers"/></a></p>
-                <p><a href="#"><spring:message code="topMenue.Suppliers"/></a></p>
+                <%--我是服务商--%>
+                <p><a href="${_base}/p/trans/order/taskCenter/view"><spring:message code="topMenue.Suppliers"/></a></p>
                 <p class="none-border"><i class="icon iconfont">&#xe60b;</i><a href="#"><spring:message code="topMenue.Mobile"/></a></p>
                 <p class="none-border none-top">
                     <select id="langHeadSel" class="select select-topmini none-select ash-select"

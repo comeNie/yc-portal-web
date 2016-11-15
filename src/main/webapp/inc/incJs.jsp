@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: jackieliu
-  Date: 16/11/4
-  Time: ä¸å9:17
-  éç¨jså¼å¥.
---%>
 <%@page import="com.ai.opt.sso.client.filter.SSOClientUtil"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="_base" value="${pageContext.request.contextPath}"/>
