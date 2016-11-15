@@ -224,8 +224,9 @@ public class SecurityController {
 		try {
 			String checkType = request.getParameter("checkType");
 			String checkVal = request.getParameter("checkVal");
-			String msg = "帐号已存在";
-			Boolean canUse = checkPhoneOrEmail(checkType, checkVal);
+			Object[] result = checkPhoneOrEmail(checkType, checkVal);
+			Boolean canUse = (Boolean) result[0];
+			String msg =  (String) result[1];
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 					msg, canUse);
 		} catch (Exception e) {
@@ -238,7 +239,7 @@ public class SecurityController {
 	/**
 	 * 校验手机或邮箱可用
 	 */
-	private Boolean checkPhoneOrEmail(String checkType, String checkVal) {
+	private Object[] checkPhoneOrEmail(String checkType, String checkVal) {
 		UcMembersResponse res = null;
 		try {
 			IUcMembersSV sv = DubboConsumerFactory
@@ -260,13 +261,17 @@ public class SecurityController {
 		} catch (Exception e) {
 			LOG.info(e.getMessage(), e);
 		}
-		if (res != null && res.getMessage() != null
-				&& res.getMessage().isSuccess() && res.getCode() != null
-				&& res.getCode().getCodeNumber() != null
-				&& res.getCode().getCodeNumber() == 1) {
-			return true;
+		ResponseCode responseCode = res == null ? null : res.getCode();
+		Integer codeNumber = responseCode == null ? null : responseCode
+				.getCodeNumber();
+		boolean falg =false;
+		String msg ="ok";
+		if (codeNumber != null && codeNumber == 1) {
+			falg = true;
+		} else {
+			msg = responseCode.getCodeMessage();
 		}
-		return false;
+		return new Object[]{falg,msg};
 	}
 
 }
