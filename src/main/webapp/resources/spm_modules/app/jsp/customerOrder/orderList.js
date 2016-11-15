@@ -80,18 +80,13 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
 	            	if(data != null && data != 'undefined' && data.length>0){
 	            		//把返回结果转换
 		            	for(var i=0;i<data.length;i++){
-		            		//时间戳修改成日期格式
-		            		data[i].orderTime = new Date( data[i].orderTime).format('yyyy-MM-dd h:m:s');
-		            		//,金钱厘 转换成元
-		            		data[i].totalFee = _this.fmoney(parseInt(data[i].totalFee)/1000,2);
 		            		//确认截止时间转为 剩余x天x小时x分
 		            		var remainingTime = _this.ftimeDHS(data[i].remainingTime);
 		            		data[i].confirmTakeDays = remainingTime.days;
 		            		data[i].confirmTakeHours = remainingTime.hours;
 		            		data[i].confirmTakeMinutes =  remainingTime.minutes;
 		            		
-		            		data[i].currentLan = currentLan;
-		            		console.log(currentLan);
+		            		data[i].currentLan = currentLan; //当前语言
 		            	}
 	            		var template = $.templates("#searchOrderTemple");
 	            	    var htmlOutput = template.render(data);
@@ -113,24 +108,6 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
 					}
 				}
 			});
-        },
-        
-        //金钱格式化 订单金额的转换类（厘->元）
-        fmoney:function (s, n) {
-        	var result = '0.00';
-    		if(isNaN(s) || !s){
-    			return result;
-    		}
-            
-        	n = n > 0 && n <= 20 ? n : 2;
-        	s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
-        	var l = s.split(".")[0].split("").reverse(),
-        	r = s.split(".")[1];
-        	var t = "";
-        	for(var i = 0; i < l.length; i ++ ){   
-        		t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
-        	}
-        	return t.split("").reverse().join("") + "." + r;
         },
         
         //把毫秒数转为 x天x小时x分钟x秒
