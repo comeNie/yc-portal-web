@@ -5,8 +5,8 @@ define("app/jsp/user/password/password",
 			var curCount;// 当前剩余秒数
 			var accountFlag = false;
 			var imgCodeFlag = false;
-			var isBandPhone = false;
-			var isBandEmail = false;
+			var isBindPhone = false;
+			var isBindEmail = false;
 			var $ = require('jquery'), 
 			Widget = require('arale-widget/1.2.0/widget'), 
 			Dialog = require("optDialog/src/dialog"), 
@@ -25,11 +25,11 @@ define("app/jsp/user/password/password",
 							/**
 							 * 校验验证码
 							 */
-							"blur #verifyCodeImg" : "_checkImageCode",
+							//"blur #verifyCodeImg" : "_checkImageCode",
 							/**
 							 * 校验账号
 							 */
-							"blur #userName" : "_checkAccount",
+							//"blur #userName" : "_checkAccount",
 							/**
 							 * 发送邮件
 							 */
@@ -163,7 +163,7 @@ define("app/jsp/user/password/password",
 								type : "post",
 								processing : false,
 								message : "保存中，请等待...",
-								async: true,
+								async: false,
 								url : _base + "/userCommon/checkImageVerifyCode",
 								data : {
 									'imgCode' : imgCodeVal
@@ -186,11 +186,14 @@ define("app/jsp/user/password/password",
 						 */
 						_sendEmail:function(){
 							var _this = this;
-							$("#sendEmailBtn").attr("disabled", true);
+							var sendEmailBtn =$("#sendEmailBtn");
+							sendEmailBtn.attr("disabled", true);
 							ajaxController.ajax({
 								type : "POST",
 								data : {
-									"email": "178070754@qq.com"
+									"email": $("#passwordEmail").html(),
+									"type":'5',
+									"uid":$("#userId").val()
 								},
 								dataType: 'json',
 								url :_base+"/userCommon/sendEmail",
@@ -201,27 +204,23 @@ define("app/jsp/user/password/password",
 									if(!resultCode){
 										$("#emailErrMsg").show();
 										$("#emailErrMsg").text("发送邮件失败");
-										$("#sendEmailBtn").removeAttr("disabled"); //移除disabled属性
+										sendEmailBtn.removeAttr("disabled"); //移除disabled属性
 									}else{
 										var step = 59;
-							            $('#sendEmailBtn').val('重新发送60');
-							            $("#sendEmailBtn").attr("disabled", true);
+										sendEmailBtn.val('重新发送60');
 							            var _res = setInterval(function(){
-							                $("#sendEmailBtn").attr("disabled", true);//设置disabled属性
-							                $('#sendEmailBtn').val('重新发送'+step);
+							            	sendEmailBtn.val('重新发送'+step);
 							                step-=1;
 							                if(step <= 0){
-							                $("#sendEmailBtn").removeAttr("disabled"); //移除disabled属性
-							                $('#sendEmailBtn').val('获取验证码');
+							                	sendEmailBtn.removeAttr("disabled"); //移除disabled属性
+							                	sendEmailBtn.val('获取验证码');
 							                clearInterval(_res);//清除setInterval
 							                }
 							            },1000);
-							            //window.location.href = _base+"/user/bandEmail/sendBandEmailSuccess?email="+$("#email").val();
-										
 									}
 								},
 								failure : function(){
-									$("#sendEmailBtn").removeAttr("disabled"); //移除disabled属性
+									sendEmailBtn.removeAttr("disabled"); //移除disabled属性
 								},
 								error : function(){
 									alert("网络连接超时!");
@@ -244,17 +243,17 @@ define("app/jsp/user/password/password",
 								ajaxController.ajax({
 									type : "post",
 									processing : false,
-									async: true,
+									async: false,
 									message : "保存中，请等待...",
 									url : _base + "/password/checkAccountInfo",
 									data : {
 										'account' : $("#userName").val()
 									},
-									success : function(data) {
-										var jsonData = JSON.parse(data);
+									success : function(jsonData) {
 										if(jsonData.responseHeader.resultCode=="111111"){
 											$("#userNameErrMsg").show();
 											$("#userNameText").text("用户不存在");
+											accountFlag = false;
 										}
 										if(jsonData.responseHeader.resultCode=="000000"){
 											
@@ -272,17 +271,18 @@ define("app/jsp/user/password/password",
 											$("#telephone").html(telphone);
 											var passwordEmail = jsonData.data.email;
 											$("#passwordEmail").html(passwordEmail);
-											if(telphone!=null&&passwordEmail==null){
-												 isBandPhone = true;
+											if(telphone!=null&&telphone!=""){
+												 isBindPhone = true;
 											}
-											if(telphone==null&&passwordEmail!=null){
-												 isBandEmail = true;
+											if(passwordEmail!=null&&passwordEmail!=""){
+												 isBindEmail = true;
 											}
-											if(telphone!=null&&passwordEmail!=null){
-												isBandPhone = true;
-												isBandEmail = true;
+											if(isBindPhone||isBindEmail){//绑定任意一个则有帐号
+												accountFlag = true;
+											}else{
+												accountFlag = false;
 											}
-											accountFlag = true;
+											
 										}
 									}
 								});
@@ -300,17 +300,19 @@ define("app/jsp/user/password/password",
 						    * 如果邮箱绑定手机号没有绑定是不能找回密码的
 						    */
 				    	   if(accountFlag&&imgCodeFlag){
-				    		   if(isBandEmail&&!isBandPhone){
-				    			   $('#set-table1').show();
-								   $('#set-table2').hide();
+				    		   if(isBindEmail&&!isBindPhone){
+				    			   $('#set-table2').show();
+								   $('#set-table1').hide();
 								   $("#set-table1").html("<div class='recharge-success mt-40'><ul><li class='word'>没有绑定手机,无法通过手机号找回密码</li></ul></div>");
+				    		       $("#phoneVerification a").removeClass("current");
+				    		       $("#emailVerification a").addClass("current");
 				    		   }
-				    		   if(!isBandEmail&&isBandPhone){
+				    		   if(!isBindEmail&&isBindPhone){
 				    			   $('#set-table1').show();
 								   $('#set-table2').hide();
 								   $("#set-table2").html("<div class='recharge-success mt-40'><ul><li class='word'>没有绑定邮箱,无法通过邮箱地址找回密码</li></ul></div>");
 				    		   }
-				    		   if(!isBandEmail&&!isBandPhone){
+				    		   if(!isBindEmail&&!isBindPhone){
 				    			   $('#set-table1').show();
 								   $('#set-table2').hide();
 								   $("#set-table1").html("<div class='recharge-success mt-40'><ul><li class='word'>没有绑定手机,无法通过手机号找回密码</li></ul></div>");
@@ -318,7 +320,7 @@ define("app/jsp/user/password/password",
 				    		   }
 				    		   $("#back-pass").hide();
 							   $("#back-pass1").show();
-				    	   }
+							}
 						},
 						/* 发送验证码 */
 					  _sendDynamiCode : function() {
@@ -336,7 +338,8 @@ define("app/jsp/user/password/password",
 								url : _base + "/userCommon/sendSmsCode",
 								data : {
 									'phone' : $("#telephone").html(),
-									'type':"2"
+									'type':"2",
+									'uid':$("#userId").val()
 								},
 								success : function(data) {
 									if(data.data==false){
@@ -392,6 +395,7 @@ define("app/jsp/user/password/password",
 											$("#dynamicode").text(data.statusInfo);
 											return false;
 				    		        	}else{
+				    		        		 $("#tcode").val(phoneDynamicode);
 				    		        		 $("#next1").hide();
 				 						     $("#next2").show();
 				    		        	}
@@ -439,14 +443,15 @@ define("app/jsp/user/password/password",
 								type:"post",
 			    				url:_base+"/password/updatePassword",
 			    				data:{
-			    					uid:"000000000000003081",
-			    					newpw:passwordVal,
+			    					'uid':$("#userId").val(),
+			    					'newpw':passwordVal,
+			    					'checke_code':$("#tcode").val()
 			    				},
-			    		        success: function(data) {
-			    		        	if(data.responseHeader.resultCode=="111111"){
+			    		        success: function(json) {
+			    		        	if(!json.data){
 			    		        		alert("保存失败");
 			    		        		return false;
-			    		        	}else if(data.responseHeader.resultCode=="000000"){
+			    		        	}else if(json.data){
 			    		        		$("#next2").hide();
 										$("#next3").show();
 			    		        	}
@@ -509,8 +514,8 @@ define("app/jsp/user/password/password",
 								type:"post",
 			    				url:_base+"/userCommon/checkEmailCode",
 			    				data:{
-			    					email:"178070754@qq.com",
-			    					code:$("#emailIdentifyCode").val(),
+			    					'email':$("#passwordEmail").html(),
+			    					'code':$("#emailIdentifyCode").val(),
 			    				},
 			    		        success: function(data) {
 			    		        	if(!data.data){
@@ -519,6 +524,7 @@ define("app/jsp/user/password/password",
 			    		        	}else{
 			    		        		$("#next4").hide();
 										$("#next5").show();
+										$("#tcode").val($("#emailIdentifyCode").val());
 			    		        	}
 			    		          },
 			    				error: function(error) {
@@ -602,14 +608,15 @@ define("app/jsp/user/password/password",
 								type:"post",
 			    				url:_base+"/password/updatePassword",
 			    				data:{
-			    					userId:"000000000000003081",
-			    					password:passwordVal,
+			    					'newpw':passwordVal,
+			    					'checke_code':$("#tcode").val(),
+			    					'uid':$("#userId").val()
 			    				},
-			    		        success: function(data) {
-			    		        	if(data.responseHeader.resultCode=="111111"){
+			    		        success: function(json) {
+			    		        	if(!json.data){
 			    		        		alert("保存失败");
 			    		        		return false;
-			    		        	}else if(data.responseHeader.resultCode=="000000"){
+			    		        	}else if(json.data){
 			    		        		$("#next5").hide();
 			    		        		$("#next6").show();
 			    		        	}

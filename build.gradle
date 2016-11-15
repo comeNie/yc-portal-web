@@ -102,6 +102,8 @@ dependencies {
     compile 'com.ai.slp.balance:fundquery:1.0-SNAPSHOT'
     //账户服务
     compile 'com.ai.slp.balance:accountquery:1.0-SNAPSHOT'
+    //收支查询服务
+    compile 'com.ai.slp.balance:incomeoutquery:1.0-SNAPSHOT'
     //余额扣减服务
     compile 'com.ai.slp.balance:deduct:1.0-SNAPSHOT'
     

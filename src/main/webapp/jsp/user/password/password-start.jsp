@@ -9,6 +9,8 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>忘记密码</title>
    <%@ include file="/inc/inc.jsp" %>
+   <link href="${uedroot}/css/modular/login-regsiter.css" rel="stylesheet"
+	type="text/css" />
 </head>
 <body>
 	<!--头部-->
@@ -37,6 +39,7 @@
  						<ul>
  							<li>
  								<input type="hidden" id="userId" name="uid"/>
+ 								<input type="hidden" id="tcode"/>
  								<p class="word">账号:</p>
  								<p><input type="text" class="int-text int-in-big radius" name="userName" id="userName"></p>
  								<label id="userNameErrMsg" style="display: none;"><span class="ash" id="userNameText"></span></label>
@@ -158,11 +161,11 @@
 	 							<li>
 	 								<label class="ml-70" id="passwordMsg" style="display: none;">输入账号错误</label>
 	 								<p class="word">密码:</p>
-	 								<p><input type="text" class="int-text int-xlarge radius" id="password"></p>
+	 								<p><input type="password" class="int-text int-xlarge radius" id="password"></p>
 	 							</li>
 	 							<li>
 	 								<p class="word">确认密码:</p>
-	 								<p><input type="text" class="int-text int-xlarge radius" id="confirmPassword"></p>
+	 								<p><input type="password" class="int-text int-xlarge radius" id="confirmPassword"></p>
 	 							</li>
 	 						</ul>
 	 					</div>
@@ -297,11 +300,11 @@
 	 							<li>
 	 								<label class="ml-70" id="emailPasswordErrMsg" style="display: none;"></label>
 	 								<p class="word">密码:</p>
-	 								<p><input type="text" class="int-text int-xlarge radius" id="emailPassword"></p>
+	 								<p><input type="password" class="int-text int-xlarge radius" id="emailPassword"></p>
 	 							</li>
 	 							<li>
 	 								<p class="word">确认密码:</p>
-	 								<p><input type="text" class="int-text int-xlarge radius" id="emailConfirmPassword"></p>
+	 								<p><input type="password" class="int-text int-xlarge radius" id="emailConfirmPassword"></p>
 	 							</li>
 	 						</ul>
 	 					</div>
@@ -373,11 +376,9 @@ var pager;
 </script>
 <script src="${_base}/resources/spm_modules/email/emailHandle.js"></script>
 <script type="text/javascript">
-	
-	var email = "${data.email}";
 	$(document).ready(function(){
 		$("#goEmail").click(function(){
-			$emailHandle.openEmail(email);
+			$emailHandle.openEmail($("#passwordEmail").html());
 		});
 	});
 	var passwordMsg = {

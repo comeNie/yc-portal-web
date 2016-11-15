@@ -25,6 +25,8 @@
 	<!-- 订单信息 -->
 	<dubbo:reference id="iOrderSubmissionSV" registry="ycRegistry"
 		interface="com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV" />
+	<dubbo:reference id="IQueryOrderDetailsSV" registry="ycRegistry"
+		interface="com.ai.yc.order.api.orderdetails.interfaces.IQueryOrderDetailsSV" />
 	<!-- 注册 -->
 	<dubbo:reference id="iYCUserServiceSV" registry="ycRegistry"
 		interface="com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV" />
@@ -47,4 +49,5 @@
 			interface="com.ai.slp.balance.api.accountquery.interfaces.IAccountQuerySV"/>
 	<dubbo:reference id="iDeductSV" registry="ycRegistry"
 			interface="com.ai.slp.balance.api.deduct.interfaces.IDeductSV"/>
+	<dubbo:reference id="incomeOutQuerySV" registry="ycRegistry" interface="com.ai.slp.balance.api.incomeoutquery.interfaces.IncomeOutQuerySV"/>
 </beans>

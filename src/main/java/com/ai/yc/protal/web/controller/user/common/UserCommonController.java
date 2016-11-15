@@ -175,7 +175,10 @@ public class UserCommonController {
 		req.setMaxCountKey(maxCountKey);
 		req.setMaxCountOverTimeKey(maxCountOverTimeKey);
 		req.setNowCountKey(nowCountKey);
-		String uid = UserUtil.getUserId();
+		String uid = request.getParameter("uid");
+		if(StringUtil.isBlank(uid)){
+			uid = UserUtil.getUserId();
+		}
 		return sendSms(request,req, type, uid, phone);
 
 	}

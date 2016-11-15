@@ -70,9 +70,9 @@
   						</p>
   						<!-- 订单时间 -->
   						<p><spring:message code="myOrder.orderTime"/></p>
-  						<p><input id="orderTimeStart" name="orderTime" type="text" class="int-text int-small radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'%y-%M-%d',maxDate:'#F{$dp.$D(\'stateChgTimeEnd\')}'})" readonly="readonly"></p>
+  						<p><input id="orderTimeStart" name="orderTime" type="text" class="int-text int-small radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'orderTimeEnd\')}'})" readonly="readonly"></p>
   						<p>－</p>
-  						<p><input id="stateChgTimeEnd" name="orderTime" type="text" class="int-text int-small radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'orderTimeStart\')}',onpicked:function(dp){endtime();}})" readonly="readonly"></p>
+  						<p><input id="orderTimeEnd" name="orderTime" type="text" class="int-text int-small radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'orderTimeStart\')}',onpicked:function(dp){endtime();}})" readonly="readonly"></p>
   						<!-- 翻译内容 -->
   						<p><spring:message code="myOrder.translatingContent"/></p>
   						<p>
@@ -150,11 +150,14 @@
  				<p>{{:orderTime}}</p>
  				<p name="orderId"><spring:message code="myOrder.Ordernumber"/>：<span>{{:orderId}}</span></p>
 				{{if  displayFlag == '11'}}
-					<!-- 剩余2天23小时59分钟 -->
+					<!-- 剩余2天23小时59分钟  待支付-->
     				<p class="right"><spring:message
                                     code="myOrder.Remaining" arguments="1,2,3"/></p>
 				{{/if}}
 				{{if  displayFlag == '50'}}
+					<!-- 剩余2天23小时59分钟   待确认-->
+    				<p class="right"><spring:message
+                                    code="myOrder.Remaining" arguments="{{:confirmTakeDays}},{{:confirmTakeHours}},{{:confirmTakeMinutes}}"/></p>
 				{{/if}}
       		</div>
     	</th>
@@ -167,7 +170,15 @@
 		<tr class="width-16" displayFlag="{{:displayFlag}}">
             <td name="translateName" orderId="{{:orderId}}">{{:translateName}}</td>
            <!-- <td>{{:userName}}</td>-->
-  			<td>{{:ordProdExtendList[0].langungePairChName}}</td>
+  			<td>
+			  	{{for ordProdExtendList}}
+					{{if #parent.parent.data.currentLan == 'zh_CN'}}
+						{{:langungePairChName}}
+					{{else}}
+						{{:langungePairEnName}}
+					{{/if}}
+				{{/for}}
+			</td>
             <td>{{:totalFee}}
 				{{if  currencyUnit == '1'}}
 					<spring:message code="myOrder.rmb"/>
@@ -259,7 +270,7 @@ var pager;
 	   
        //订单详情 点击订单号
        $('#searchOrderData').delegate("p[name='orderId']", 'click', function () {
-       	  window.location.href="${_base}/p/customer/order/"+$(this).parents("table").find("input[name='orderId']").val() +"?displayFlag="+$(this).parents("table").find("input[name='displayFlag']").val();
+       	  window.location.href="${_base}/p/customer/order/"+$(this).parents("table").find("input[name='orderId']").val();
        });
        
        <%-- 支付订单 --%>
