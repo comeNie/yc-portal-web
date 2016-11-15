@@ -12,6 +12,9 @@ sourceSets.main.java.srcDir 'src'   // 设置 Java 源码所在目录
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
     resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+    exclude group: 'log4j', module: 'log4j'
+    exclude group: "org.slf4j", module: "slf4j-log4j12"
+    exclude group: "org.slf4j", module: "log4j-over-slf4j"
 }
 
 configurations {
