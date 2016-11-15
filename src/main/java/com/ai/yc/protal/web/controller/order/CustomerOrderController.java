@@ -274,7 +274,8 @@ public class CustomerOrderController {
         boolean payResult = false;
         //扣款成功,同步订单状态
         if (responseHeader==null||responseHeader.isSuccess()){
-            orderService.orderPayProcessResult(userId,Long.parseLong(deductParam.getExternalId()),orderType,
+            orderService.orderPayProcessResult(userId,deductParam.getAccountId(),
+                    Long.parseLong(deductParam.getExternalId()),orderType,
                     deductParam.getTotalAmount(),"YE",deductResponse.getSerialNo(), DateUtil.getFutureTime());
             payResult = true;
         }

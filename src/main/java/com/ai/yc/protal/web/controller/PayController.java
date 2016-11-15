@@ -77,7 +77,7 @@ public class PayController {
         Timestamp notifyTime = DateUtil.getTimestamp(payNotify.getNotifyTime(),"yyyyMMddHHmmss");
         //支付费用
         Double totalFee = Double.valueOf(payNotify.getOrderAmount())*1000;
-        orderService.orderPayProcessResult(userId,Long.parseLong(payNotify.getOrderId()),orderType,
+        orderService.orderPayProcessResult(userId,null,Long.parseLong(payNotify.getOrderId()),orderType,
                 totalFee.longValue(),payNotify.getPayOrgCode(),payNotify.getOutOrderId(),notifyTime);
     }
 
