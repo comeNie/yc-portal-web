@@ -64,6 +64,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
     		        	}else{
     		        		 $("#next1").hide();
  						     $("#next2").show();
+ 						     $("#code").val($("#phoneDynamicode").val());
     		        	}
     		          },
     				error: function(error) {
@@ -106,14 +107,14 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 				type:"post",
 				url:_base+"/password/updatePassword",
 				data:{
-					uid:"000000000000003081",
-					newpw:passwordVal,
+					'newpw':passwordVal,
+					'checke_code':$("#code").val()
 				},
-		        success: function(data) {
-		        	if(data.responseHeader.resultCode=="111111"){
+		        success: function(json) {
+		        	if(!json.data){
 		        		alert("保存失败");
 		        		return false;
-		        	}else if(data.responseHeader.resultCode=="000000"){
+		        	}else if(json.data){
 		        		$("#next2").hide();
 						$("#next3").show();
 		        	}
@@ -183,14 +184,14 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 				type:"post",
 				url:_base+"/password/updatePassword",
 				data:{
-					userId:"000000000000003081",
-					password:passwordVal,
+					'newpw':passwordVal,
+					'checke_code':$("#code").val()
 				},
-		        success: function(data) {
-		        	if(data.responseHeader.resultCode=="111111"){
+		        success: function(json) {
+		        	if(!json.data){
 		        		alert("保存失败");
 		        		return false;
-		        	}else if(data.responseHeader.resultCode=="000000"){
+		        	}else if(json.data){
 		        		$("#next5").hide();
 		        		$("#next6").show();
 		        	}
@@ -210,7 +211,8 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 			ajaxController.ajax({
 				type : "POST",
 				data : {
-					"email": $("#passwordEmail").html()
+					"email": $("#passwordEmail").html(),
+					"type":'5'
 				},
 				dataType: 'json',
 				url :_base+"/userCommon/sendEmail",
@@ -248,9 +250,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 		  _sendDynamiCode : function() {
 			var _this = this;
 			var btn = $("#send_dynamicode_btn");
-			if (btn.hasClass("biu-btn")) {
-				return;
-			}
+			btn.attr("disabled", true);
 			ajaxController
 				.ajax({
 					type : "post",
@@ -265,27 +265,25 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 						if(data.data==false){
 							$("#dynamicode").show();
 							$("#dynamicode").text(data.statusInfo);
-							$("#send_dynamicode_btn").removeAttr("disabled"); //移除disabled属性
-				            $('#send_dynamicode_btn').val('获取验证码');
+							btn.removeAttr("disabled"); //移除disabled属性
+							btn.val('获取验证码');
 							return;
 						}else{
 							if(data.data){
 								var step = 59;
-					            $('#send_dynamicode_btn').val('重新发送60');
-					            $("#send_dynamicode_btn").attr("disabled", true);
+								btn.val('重新发送60');
 					            var _res = setInterval(function(){
-					                $("#send_dynamicode_btn").attr("disabled", true);//设置disabled属性
-					                $('#send_dynamicode_btn').val('重新发送'+step);
+					                btn.val('重新发送'+step);
 					                step-=1;
 					                if(step <= 0){
-					                $("#send_dynamicode_btn").removeAttr("disabled"); //移除disabled属性
-					                $('#send_dynamicode_btn').val('获取验证码');
+					                	btn.removeAttr("disabled"); //移除disabled属性
+					                	btn.val('获取验证码');
 					                clearInterval(_res);//清除setInterval
 					                }
 					            },1000);
 					            $("#dynamicode").hide();
 							}else{
-								$("#send_dynamicode_btn").removeAttr("disabled");
+								btn.removeAttr("disabled");
 							}
 					  }
 					}
