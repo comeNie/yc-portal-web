@@ -1,5 +1,7 @@
 package com.ai.yc.protal.web.controller.order;
 
+import java.io.OutputStream;
+import java.security.acl.Owner;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,11 +20,13 @@ import com.ai.yc.order.api.orderfee.interfaces.IOrderFeeQuerySV;
 import com.ai.yc.order.api.orderfee.param.*;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
+import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
 import com.ai.yc.protal.web.service.BalanceService;
 import com.ai.yc.protal.web.service.OrderService;
 import com.ai.yc.protal.web.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.fs.DF;
+import org.apache.tools.ant.types.selectors.OrSelector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +40,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.base.vo.ResponseHeader;
+import com.ai.opt.sdk.components.dss.DSSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.paas.ipaas.dss.base.interfaces.IDSSClient;
 import com.ai.yc.order.api.orderclose.interfaces.IOrderCancelSV;
 import com.ai.yc.order.api.orderclose.param.OrderCancelRequest;
 import com.ai.yc.order.api.orderdetails.interfaces.IQueryOrderDetailsSV;
@@ -45,6 +51,7 @@ import com.ai.yc.order.api.orderdetails.param.ContactsVo;
 import com.ai.yc.order.api.orderdetails.param.OrderFeeVo;
 import com.ai.yc.order.api.orderdetails.param.OrderStateChgVo;
 import com.ai.yc.order.api.orderdetails.param.ProdExtendVo;
+import com.ai.yc.order.api.orderdetails.param.ProdFileVo;
 import com.ai.yc.order.api.orderdetails.param.ProdLevelVo;
 import com.ai.yc.order.api.orderdetails.param.ProdVo;
 import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsResponse;
@@ -112,78 +119,59 @@ public class CustomerOrderController {
         return "customerOrder/orderList";
     }
     
+    /**
+     * 查询订单列表
+     * @param request
+     * @return
+     * @author mimw
+     */
     @RequestMapping("/orderList")
     @ResponseBody
     public ResponseData<PageInfo<OrdOrderVo> > orderList(HttpServletRequest request){
-        ResponseData<PageInfo<OrdOrderVo> > resData = new ResponseData<PageInfo<OrdOrderVo> >(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-        String disFlag = request.getParameter("disFlag");
-        String displayFlag = request.getParameter("displayFlag");
-        String orderTimeStart = request.getParameter("orderTimeStart");
-        String stateChgTimeEnd = request.getParameter("stateChgTimeEnd");
-        String translateName = request.getParameter("translateName");
-        String translateType = request.getParameter("translateType");
+        ResponseData<PageInfo<OrdOrderVo>> resData = new ResponseData<PageInfo<OrdOrderVo>>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        String displayFlag = request.getParameter("displayFlag");   //订单状态
+        String orderTimeStart = request.getParameter("orderTimeStart");  //订单查询开始时间
+        String orderTimeEnd = request.getParameter("orderTimeEnd"); //订单查询结束时间
+        String translateName = request.getParameter("translateName"); //订单主题
+        String translateType = request.getParameter("translateType"); //订单类型
         String pageNo = request.getParameter("pageNo");
         String pageSize = request.getParameter("pageSize");
         
-//        try {
-//            QueryOrderRequest orderReq = new QueryOrderRequest();
-//            IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
-//            QueryOrderRsponse orderRes = iOrderQuerySV.queryOrder(orderReq);
-//            ResponseHeader resHeader = orderRes.getResponseHeader();
-//            //如果返回值为空,或返回信息中包含错误信息,返回失败
-//            if (orderRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-//            } else {
-//                //返回订单分页信息
-//                resData.setData(orderRes);
-//            }
-//        } catch (Exception e) {
-//            LOGGER.error("查询订单分页失败:",e);
-//            resData = new ResponseData<QueryOrderRsponse>(ResponseData.AJAX_STATUS_FAILURE, "查询订单失败");
-//        }
-        
-        QueryOrderRsponse orderRes = new QueryOrderRsponse();
-        PageInfo<OrdOrderVo> pageInfo = new  PageInfo<OrdOrderVo>();
-        pageInfo.setCount(8);
-        pageInfo.setPageCount(1);
-        pageInfo.setPageNo(1);
-        pageInfo.setPageSize(10);
-        
-        List<OrdOrderVo> orderLisst = new ArrayList<>();
-        
-        OrdOrderVo order = new OrdOrderVo();
-        order.setOrderId((long) 20141111);
-        order.setBusiType("0");
-        order.setOrderTime(new Timestamp(System.currentTimeMillis()));
-        order.setTranslateName("翻译主题");
-        order.setUserName("王五");
-        order.setTotalFee(1001);
-        order.setCurrencyUnit("2");
-        order.setRemainingTime(new Timestamp(1000)); //确认剩余时间
-        /**
-         * 客户端显示状态
-         * 11：待支付
-         *13：待报价
-         *23：翻译中
-         *50：待确认
-         *52：待评价
-         *90：完成
-         *91：关闭（取消）
-         *92：已退款
-         */
-        order.setDisplayFlag(displayFlag); 
-        List<OrdProdExtendVo> ordProdExtendList = new ArrayList<>();
-        OrdProdExtendVo ordProdExtendVo = new OrdProdExtendVo();
-        ordProdExtendVo.setLangungePair("1");
-        ordProdExtendVo.setLangungePairChName("中-英");
-        ordProdExtendVo.setLangungePairEnName("en-ch");
-        ordProdExtendList.add(ordProdExtendVo);
-        order.setOrdProdExtendList(ordProdExtendList);
-        
-        orderLisst.add(order);
-        pageInfo.setResult(orderLisst);
-        orderRes.setPageInfo(pageInfo);
-        resData.setData(orderRes.getPageInfo());
-        
+        try {
+            //用户名
+            String userId = UserUtil.getUserId();
+            
+            QueryOrderRequest orderReq = new QueryOrderRequest();
+            
+            //TODO 现在是假名字 test， 用户id也暂时关闭
+            orderReq.setUserName("test");
+//            orderReq.setUserId("userId");
+            orderReq.setDisplayFlag(displayFlag);
+            if (StringUtils.isNotEmpty(orderTimeStart)) {
+                orderReq.setOrderTimeStart(Timestamp.valueOf(orderTimeStart + " 00:00:00"));
+            }
+            if (StringUtils.isNotEmpty(orderTimeEnd)) {
+                orderReq.setOrderTimeEnd(Timestamp.valueOf(orderTimeEnd + " 00:00:00"));
+            }
+            orderReq.setTranslateName(translateName);
+            orderReq.setTranslateType(translateType);
+            orderReq.setPageNo(Integer.valueOf(pageNo));
+            orderReq.setPageSize(Integer.valueOf(pageSize));
+            
+            IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
+            QueryOrderRsponse orderRes = iOrderQuerySV.queryOrder(orderReq);
+            ResponseHeader resHeader = orderRes.getResponseHeader();
+            LOGGER.info("订单列表查询 ：" + JSONObject.toJSONString(orderRes));
+            //如果返回值为空,或返回信息中包含错误信息,返回失败
+            if (orderRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
+            } else {
+                //返回订单分页信息
+                resData.setData(orderRes.getPageInfo());
+            }
+        } catch (Exception e) {
+            LOGGER.error("查询订单分页失败:",e);
+            resData = new ResponseData<PageInfo<OrdOrderVo>>(ResponseData.AJAX_STATUS_FAILURE, "查询订单失败");
+        }
         return resData;
     }
     
@@ -341,79 +329,124 @@ public class CustomerOrderController {
      * @return
      */
     @RequestMapping("/{orderId}")
-    public String orderInfoView(@PathVariable("orderId") String orderId,String displayFlag, Model uiModel){
+    public String orderInfoView(@PathVariable("orderId") String orderId, Model uiModel){
         
-        //返回失败
+        //TODO 跳转错误页面
         if (StringUtils.isEmpty(orderId)) {
         }
         
-//        try {
-//            IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
-//            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(Long.valueOf(orderId));
-//            
-//            ResponseHeader resHeader = orderDetailsRes.getResponseHeader();
-//            //如果返回值为空,或返回信息中包含错误信息,返回失败
-//            if (orderDetailsRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-//            }
-//            uiModel.addAttribute("OrderDetails", orderDetailsRes);
-//        } catch (Exception e) {
-//            LOGGER.error("查询订单详情失败:",e);
-//        }
-        QueryOrderDetailsResponse orderDetailsRes = new QueryOrderDetailsResponse();
-        ProdVo prod = new ProdVo();
-        prod.setNeedTranslateInfo("需要翻译的内容");
-        prod.setTranslateInfo("翻译结果");
-        prod.setUseCn("用途名");
-        prod.setUseEn("purposename");
-        prod.setFieldCn("领域名");
-        prod.setFieldEn("dominaname");
-        prod.setTakeDay("1"); //预计耗时 天数
-        prod.setTakeTime("20"); //预计翻译耗时 小时
-        prod.setIsUrgent("1"); //加急
-        prod.setIsSetType("1"); //排版
-        orderDetailsRes.setProd(prod);
-        
-        orderDetailsRes.setRemark("速度翻译");//备注
-        orderDetailsRes.setOrderId(Long.valueOf(orderId));
-        orderDetailsRes.setTranslateName("翻译主题");
-        orderDetailsRes.setOrderTime(new Timestamp(System.currentTimeMillis()));//下单时间
-        orderDetailsRes.setDisplayFlag(displayFlag);
-        
-        List<ProdExtendVo> prodExtendVos = new ArrayList<>();
-        ProdExtendVo prodExtendVo =  new ProdExtendVo();
-        prodExtendVo.setLangungePair("1");
-        prodExtendVo.setLangungeNameEn("en-ch");
-        prodExtendVo.setLangungePairName("英-中");
-        prodExtendVos.add(prodExtendVo);
-        orderDetailsRes.setProdExtends(prodExtendVos);
-        
-        List<ProdLevelVo> prodLevels = new ArrayList<>();
-        ProdLevelVo prodLevelVo = new ProdLevelVo();
-        prodLevelVo.setTranslateLevel("1");
-        prodLevels.add(prodLevelVo);
-        orderDetailsRes.setProdLevels(prodLevels);
-        
-        OrderFeeVo orderFeeVo = new OrderFeeVo();
-        orderFeeVo.setCurrencyUnit("1");//1：RMB 2：$
-        orderFeeVo.setPaidFee((long) 100);
-        orderFeeVo.setDiscountFee((long) 10);
-        orderDetailsRes.setOrderFee(orderFeeVo);
-      
-        ContactsVo contact = new ContactsVo();
-        contact.setContactName("王五");
-        contact.setContactTel("+86 13844987323");
-        contact.setContactEmail("1231@qq.com");
-        orderDetailsRes.setContacts(contact);
-        
-        List<OrderStateChgVo> chgList = new ArrayList<>();
-        OrderStateChgVo stateChgVo = new OrderStateChgVo();
-        stateChgVo.setStateChgTime(new Timestamp(System.currentTimeMillis()));
-        stateChgVo.setChgDesc("订单已被译员领取，正在翻译中，请耐心等待");
-        stateChgVo.setChgDescEn("The order has been received by the interpreter, is in translation, please be patient");
-        chgList.add(stateChgVo);
-        orderDetailsRes.setOrderStateChgs(chgList);
-       
-        uiModel.addAttribute("OrderDetails", orderDetailsRes);
+        try {
+            IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
+            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(Long.valueOf(orderId));
+            ResponseHeader resHeader = orderDetailsRes.getResponseHeader();
+            LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
+            //如果返回值为空,或返回信息中包含错误信息,返回失败
+            if (orderDetailsRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
+            }
+//  getProdLevels  返回的是id,前台把 id转成对应的 中英文文字。    
+//          ("100110", "陪同翻译");("100120", "交替传译");("100130", "同声翻译");
+//          ("100210", "标准级");("100220", "专业级");("100230", "出版级");
+            uiModel.addAttribute("OrderDetails", orderDetailsRes);
+        } catch (Exception e) {
+            LOGGER.error("查询订单详情失败:",e);
+        }
+//        QueryOrderDetailsResponse orderDetailsRes = new QueryOrderDetailsResponse();
+//        ProdVo prod = new ProdVo();
+//        prod.setNeedTranslateInfo("需要翻译的内容");
+//        prod.setTranslateInfo("翻译结果");
+//        prod.setUseCn("用途名");
+//        prod.setUseEn("purposename");
+//        prod.setFieldCn("领域名");
+//        prod.setFieldEn("dominaname");
+//        prod.setTakeDay("1"); //预计耗时 天数
+//        prod.setTakeTime("20"); //预计翻译耗时 小时
+//        prod.setIsUrgent("1"); //加急
+//        prod.setIsSetType("1"); //排版
+//        //口译信息
+//        prod.setStateTime(new Timestamp(System.currentTimeMillis()));
+//        prod.setEndTime(new Timestamp(System.currentTimeMillis()));
+//        prod.setInterperSum((long) 10);//译员数
+//        prod.setMeetingSum((long) 10);//会场数
+//        prod.setMeetingAddress("北京");
+//        prod.setInterperGen("不限"); //
+//        orderDetailsRes.setProd(prod);
+//        
+//        orderDetailsRes.setRemark("速度翻译");//备注
+//        orderDetailsRes.setOrderId(Long.valueOf(orderId));
+//        orderDetailsRes.setTranslateName("翻译主题");
+//        orderDetailsRes.setOrderTime(new Timestamp(System.currentTimeMillis()));//下单时间
+//        orderDetailsRes.setDisplayFlag(displayFlag);
+//        orderDetailsRes.setTranslateType("2"); //翻译类型 0：文本翻译 1：文档翻译 2：口译翻译
+//        
+//        List<ProdFileVo> prodFiles = new ArrayList<>();//文档
+//        ProdFileVo prodFileVo = new ProdFileVo();
+//        prodFileVo.setFileName("原文名字");
+//        prodFileVo.setFileSaveId("yuanId");
+//        prodFileVo.setFileTraslateId("yiId");
+//        prodFileVo.setFileTranslateName("译文名字");
+//        prodFiles.add(prodFileVo);
+//        orderDetailsRes.setProdFiles(prodFiles);
+//        
+//        List<ProdExtendVo> prodExtendVos = new ArrayList<>();
+//        ProdExtendVo prodExtendVo =  new ProdExtendVo();
+//        prodExtendVo.setLangungePair("1");
+//        prodExtendVo.setLangungeNameEn("en-ch");
+//        prodExtendVo.setLangungePairName("英-中");
+//        prodExtendVos.add(prodExtendVo);
+//        orderDetailsRes.setProdExtends(prodExtendVos);
+//        
+//        List<ProdLevelVo> prodLevels = new ArrayList<>();//peitong
+//        ProdLevelVo prodLevelVo = new ProdLevelVo();
+//        prodLevelVo.setTranslateLevel("1");
+//        prodLevels.add(prodLevelVo);
+//        orderDetailsRes.setProdLevels(prodLevels);
+//        
+//        OrderFeeVo orderFeeVo = new OrderFeeVo();
+//        orderFeeVo.setCurrencyUnit("1");//1：RMB 2：$
+//        orderFeeVo.setPaidFee((long) 100);
+//        orderFeeVo.setDiscountFee((long) 10);
+//        orderDetailsRes.setOrderFee(orderFeeVo);
+//      
+//        ContactsVo contact = new ContactsVo();
+//        contact.setContactName("王五");
+//        contact.setContactTel("+86 13844987323");
+//        contact.setContactEmail("1231@qq.com");
+//        orderDetailsRes.setContacts(contact);
+//        
+//        List<OrderStateChgVo> chgList = new ArrayList<>();
+//        OrderStateChgVo stateChgVo = new OrderStateChgVo();
+//        stateChgVo.setStateChgTime(new Timestamp(System.currentTimeMillis()));
+//        stateChgVo.setChgDesc("订单已被译员领取，正在翻译中，请耐心等待");
+//        stateChgVo.setChgDescEn("The order has been received by the interpreter, is in translation, please be patient");
+//        chgList.add(stateChgVo);
+//        orderDetailsRes.setOrderStateChgs(chgList);
+//       
+//        uiModel.addAttribute("OrderDetails", orderDetailsRes);
         return "customerOrder/orderInfo";
+    }
+    
+    /**
+     * 文档订单详细页面 下载文件
+     * @param fileId
+     * @param request
+     * @param response
+     * @author mimw
+     */
+    @RequestMapping("/download")
+    public void download(String fileId, String fileName, HttpServletRequest request,
+            HttpServletResponse response) {
+        IDSSClient client = DSSClientFactory.getDSSClient(Constants.IPAAS_ORDER_FILE_DSS);
+        byte[] b = client.read(fileId);
+    
+        try {
+            OutputStream os = response.getOutputStream();
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("multipart/form-data");
+            response.setHeader("Content-Disposition", "attachment;fileName="+fileName);
+            os.write(b);
+            os.close();
+        } catch (Exception e) {
+           LOGGER.info("下载文件异常：", e);
+        }
     }
 }
