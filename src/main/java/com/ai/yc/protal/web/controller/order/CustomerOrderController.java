@@ -157,6 +157,8 @@ public class CustomerOrderController {
         order.setTranslateName("翻译主题");
         order.setUserName("王五");
         order.setTotalFee(1001);
+        order.setCurrencyUnit("2");
+        order.setRemainingTime(new Timestamp(1000)); //确认剩余时间
         /**
          * 客户端显示状态
          * 11：待支付
@@ -265,11 +267,8 @@ public class CustomerOrderController {
         deductParam.setBusinessCode("001");//目前无用,使用固定内容
         deductParam.setChannel("中译语通科技有限公司");
         deductParam.setBusiDesc("订单支付,订单号:"+deductParam.getExternalId());
-        //TODO... 模拟数据
-//        IDeductSV deductSV = DubboConsumerFactory.getService(IDeductSV.class);
-//        DeductResponse deductResponse = deductSV.deductFund(deductParam);
-        DeductResponse deductResponse = new DeductResponse();
-        deductResponse.setSerialNo("123123");
+        IDeductSV deductSV = DubboConsumerFactory.getService(IDeductSV.class);
+        DeductResponse deductResponse = deductSV.deductFund(deductParam);
         ResponseHeader responseHeader = deductResponse.getResponseHeader();
         //支付结果,默认为失败
         boolean payResult = false;
@@ -362,7 +361,10 @@ public class CustomerOrderController {
         prod.setNeedTranslateInfo("需要翻译的内容");
         prod.setTranslateInfo("翻译结果");
         prod.setUseCn("用途名");
+        prod.setUseEn("purposename");
         prod.setFieldCn("领域名");
+        prod.setFieldEn("dominaname");
+        prod.setTakeDay("1"); //预计耗时 天数
         prod.setTakeTime("20"); //预计翻译耗时 小时
         prod.setIsUrgent("1"); //加急
         prod.setIsSetType("1"); //排版
@@ -404,6 +406,7 @@ public class CustomerOrderController {
         OrderStateChgVo stateChgVo = new OrderStateChgVo();
         stateChgVo.setStateChgTime(new Timestamp(System.currentTimeMillis()));
         stateChgVo.setChgDesc("订单已被译员领取，正在翻译中，请耐心等待");
+        stateChgVo.setChgDescEn("The order has been received by the interpreter, is in translation, please be patient");
         chgList.add(stateChgVo);
         orderDetailsRes.setOrderStateChgs(chgList);
        

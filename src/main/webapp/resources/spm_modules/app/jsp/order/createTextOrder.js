@@ -226,7 +226,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			
 			var translateLevelInfoList=[];
 			var tempTranlevObj={};
-			tempTranlevObj.translateLevel = $(".none-ml.current").attr('name');
+			tempTranlevObj.translateLevel = $("#transGrade ul.current").first().attr('name');
 			translateLevelInfoList.push(tempTranlevObj);
 			
 			productInfo.translateLevelInfoList = translateLevelInfoList;
