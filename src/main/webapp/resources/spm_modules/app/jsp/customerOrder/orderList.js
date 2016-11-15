@@ -41,7 +41,7 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
         	var translateType  = $('#translateType option:selected').val();
         	var translateName  = $('#translateName').val();
         	var orderTimeStart = $("#orderTimeStart").val();
-        	var stateChgTimeEnd = $("#stateChgTimeEnd").val();
+        	var orderTimeEnd = $("#orderTimeEnd").val();
         	
         	if(translateName.length > 50) {
         		alert("不能超过50个字");
@@ -52,8 +52,7 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
  				'translateType': translateType,
  				'translateName': translateName,
  				'orderTimeStart': orderTimeStart,
- 				'stateChgTimeEnd': stateChgTimeEnd,
- 				'disFlag': translateName
+ 				'orderTimeEnd': orderTimeEnd
  				}
         	_this._getOrderList(reqdata);
         },
@@ -78,15 +77,22 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
 	           	pageSize: orderListPage.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
 	            render: function (data) {
-	            	console.log(data);
 	            	if(data != null && data != 'undefined' && data.length>0){
-	            		//把时间戳修改成日期格式,金钱厘 转换成元
+	            		//把返回结果转换
 		            	for(var i=0;i<data.length;i++){
+		            		//时间戳修改成日期格式
 		            		data[i].orderTime = new Date( data[i].orderTime).format('yyyy-MM-dd h:m:s');
-		            		console.log(parseInt(data[i].totalFee)/1000);
+		            		//,金钱厘 转换成元
 		            		data[i].totalFee = _this.fmoney(parseInt(data[i].totalFee)/1000,2);
+		            		//确认截止时间转为 剩余x天x小时x分
+		            		var remainingTime = _this.ftimeDHS(data[i].remainingTime);
+		            		data[i].confirmTakeDays = remainingTime.days;
+		            		data[i].confirmTakeHours = remainingTime.hours;
+		            		data[i].confirmTakeMinutes =  remainingTime.minutes;
+		            		
+		            		data[i].currentLan = currentLan;
+		            		console.log(currentLan);
 		            	}
-		            	
 	            		var template = $.templates("#searchOrderTemple");
 	            	    var htmlOutput = template.render(data);
 	            	    $("#searchOrderData").html(htmlOutput);
@@ -125,6 +131,17 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
         		t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
         	}
         	return t.split("").reverse().join("") + "." + r;
+        },
+        
+        //把毫秒数转为 x天x小时x分钟x秒
+        ftimeDHS:function(ts) {
+        	var res = {};
+        	res.days = parseInt( ts / (1000 * 60 * 60 * 24) );
+        	res.hours = parseInt( (ts % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) );
+        	res.minutes = parseInt( (ts % (1000 * 60 * 60)) / (1000 * 60) );
+        	res.seconds = parseInt( (ts % (1000 * 60)) / 1000 );
+        	
+        	return res;
         }
     });
     module.exports = orderListPage;
