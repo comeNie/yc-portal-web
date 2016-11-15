@@ -1,6 +1,5 @@
 package com.ai.yc.protal.web.controller.user.password;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,47 +39,53 @@ public class PasswordController {
 
 	@RequestMapping("/passwordPager")
 	public ModelAndView toInterpreterBaseInfo() {
-		IUcMembersSV ucMembersSV = DubboConsumerFactory
-				.getService(IUcMembersSV.class);
-		UcMembersGetRequest membersGetRequest = new UcMembersGetRequest();
-		membersGetRequest.setUsername("18518162319");
-		membersGetRequest.setGetmode("0");
-		UcMembersGetResponse getResponse = ucMembersSV
-				.ucGetMember(membersGetRequest);
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("data", getResponse);
-		return new ModelAndView("/user/password/password-start", model);
+		/*
+		 * IUcMembersSV ucMembersSV = DubboConsumerFactory
+		 * .getService(IUcMembersSV.class); UcMembersGetRequest
+		 * membersGetRequest = new UcMembersGetRequest();
+		 * membersGetRequest.setUsername("18518162319");
+		 * membersGetRequest.setGetmode("0"); UcMembersGetResponse getResponse =
+		 * ucMembersSV .ucGetMember(membersGetRequest); Map<String, Object>
+		 * model = new HashMap<String, Object>(); model.put("data",
+		 * getResponse);
+		 */
+		return new ModelAndView("/user/password/password-start");
 	}
 
 	@RequestMapping("/checkAccountInfo")
-	public String checkAccountInfo(String account) {
-		ResponseData<String> responseData = null;
+	@ResponseBody
+	public ResponseData<Map<Object,Object>> checkAccountInfo(String account) {
+		ResponseData<Map<Object,Object>> responseData = null;
 		ResponseHeader header = null;
-		IUcMembersSV ucMembersSV = DubboConsumerFactory
-				.getService(IUcMembersSV.class);
-		UcMembersGetRequest membersGetRequest = new UcMembersGetRequest();
-		membersGetRequest.setUsername(account);
-		membersGetRequest.setGetmode("0");
-		UcMembersGetResponse getResponse = ucMembersSV
-				.ucGetMember(membersGetRequest);
-		// UcMembersGetDate getDate = getResponse.getDate();
-		// if(getDate==null){
-		// header = new ResponseHeader(false, Constants.ERROR_CODE, "失败");
-		// responseData = new
-		// ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "失败", null);
-		// responseData.setResponseHeader(header);
-		// }else{
-		// header = new ResponseHeader(true, Constants.SUCCESS_CODE, "成功");
-		// responseData = new
-		// ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "成功", null);
-		// responseData.setResponseHeader(header);
-		// }
-		header = new ResponseHeader(true, Constants.SUCCESS_CODE, "成功");
-		responseData = new ResponseData<String>(
-				ResponseData.AJAX_STATUS_SUCCESS, "成功", null);
-		responseData.setResponseHeader(header);
-		// responseData.setData(JSON.toJSONString(getDate));
-		return JSON.toJSONString(responseData);
+		try {
+			IUcMembersSV ucMembersSV = DubboConsumerFactory
+					.getService(IUcMembersSV.class);
+			UcMembersGetRequest membersGetRequest = new UcMembersGetRequest();
+			membersGetRequest.setUsername(account);
+			membersGetRequest.setGetmode("4");
+			UcMembersGetResponse getResponse = ucMembersSV
+					.ucGetMember(membersGetRequest);
+			Map getDate = getResponse.getDate();
+			if (getDate == null) {
+				header = new ResponseHeader(false, Constants.ERROR_CODE, "失败");
+				responseData = new ResponseData<Map<Object,Object>>(
+						ResponseData.AJAX_STATUS_FAILURE, "失败", null);
+				
+			} else {
+				header = new ResponseHeader(true, Constants.SUCCESS_CODE, "成功");
+				responseData = new ResponseData<Map<Object,Object>>(
+						ResponseData.AJAX_STATUS_SUCCESS, "成功", null);
+			}
+			responseData.setResponseHeader(header);
+			responseData.setData(getDate);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(),e);
+			header = new ResponseHeader(false, Constants.ERROR_CODE, "失败");
+			responseData = new ResponseData<Map<Object,Object>>(
+					ResponseData.AJAX_STATUS_FAILURE, "失败", null);
+			responseData.setResponseHeader(header);
+		}
+		return responseData;
 	}
 
 	/**
@@ -90,11 +95,11 @@ public class PasswordController {
 	@ResponseBody
 	public ResponseData<Boolean> updatePassword(HttpServletRequest request,
 			UcMembersEditPassRequest passRequest) {
-		String msg ="error";
+		String msg = "error";
 		boolean isOK = false;
-		
+
 		try {
-			if(passRequest.getUid()==null){//修改密码uid无需传值
+			if (passRequest.getUid() == null) {// 修改密码uid无需传值
 				passRequest.setUid(Integer.parseInt(UserUtil.getUserId()));
 			}
 			passRequest
@@ -105,15 +110,16 @@ public class PasswordController {
 					.getService(IUcMembersSV.class);
 			UcMembersResponse res = ucMembersSV.ucEditPassword(passRequest);
 			ResponseCode responseCode = res == null ? null : res.getCode();
-			Integer codeNumber = responseCode==null?null:responseCode.getCodeNumber();
-			if (codeNumber!=null&&codeNumber== 1) {//成功
+			Integer codeNumber = responseCode == null ? null : responseCode
+					.getCodeNumber();
+			if (codeNumber != null && codeNumber == 1) {// 成功
 				msg = "ok";
 				isOK = true;
 			} else {
 				msg = responseCode.getCodeMessage();
 				LOGGER.error(JSON.toJSONString(res));
 			}
-			
+
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}
