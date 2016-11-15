@@ -1,23 +1,37 @@
 package com.ai.yc.protal.web.controller.order;
 
+import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.vo.PageInfo;
+import com.ai.opt.base.vo.ResponseHeader;
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.DateUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.yc.order.api.orderquery.param.OrdOrderVo;
 import com.ai.yc.order.api.orderquery.param.OrdProdExtendVo;
 import com.ai.yc.order.api.orderquery.param.QueryOrderRsponse;
+import com.ai.yc.order.api.orderreceivesearch.interfaces.IOrderWaitReceiveSV;
+import com.ai.yc.order.api.orderreceivesearch.param.OrderWaitReceiveSearchInfo;
+import com.ai.yc.order.api.orderreceivesearch.param.OrderWaitReceiveSearchRequest;
+import com.ai.yc.order.api.orderreceivesearch.param.OrderWaitReceiveSearchResponse;
 import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.utils.UserUtil;
+import org.apache.commons.lang.StringUtils;
+import org.owasp.esapi.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 订单大厅
@@ -26,6 +40,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/p/taskcenter")
 public class TaskCenterController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TaskCenterController.class);
     @Autowired
     private CacheServcie cacheServcie;
     @Autowired
@@ -65,75 +80,61 @@ public class TaskCenterController {
      */
     @RequestMapping("/list")
     @ResponseBody
-    public ResponseData<PageInfo<OrdOrderVo>> taskCenter(HttpServletRequest request){
-        ResponseData<PageInfo<OrdOrderVo> > resData = new ResponseData<PageInfo<OrdOrderVo> >(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-        String disFlag = request.getParameter("disFlag");
-        String displayFlag = request.getParameter("displayFlag");
-        String orderTimeStart = request.getParameter("orderTimeStart");
-        String stateChgTimeEnd = request.getParameter("stateChgTimeEnd");
-        String translateName = request.getParameter("translateName");
-        String translateType = request.getParameter("translateType");
-        String pageNo = request.getParameter("pageNo");
-        String pageSize = request.getParameter("pageSize");
-
-//        try {
-//            QueryOrderRequest orderReq = new QueryOrderRequest();
-//            IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
-//            QueryOrderRsponse orderRes = iOrderQuerySV.queryOrder(orderReq);
-//            ResponseHeader resHeader = orderRes.getResponseHeader();
-//            //如果返回值为空,或返回信息中包含错误信息,返回失败
-//            if (orderRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-//            } else {
-//                //返回订单分页信息
-//                resData.setData(orderRes);
-//            }
-//        } catch (Exception e) {
-//            LOGGER.error("查询订单分页失败:",e);
-//            resData = new ResponseData<QueryOrderRsponse>(ResponseData.AJAX_STATUS_FAILURE, "查询订单失败");
-//        }
-
-        QueryOrderRsponse orderRes = new QueryOrderRsponse();
-        PageInfo<OrdOrderVo> pageInfo = new  PageInfo<OrdOrderVo>();
+    public ResponseData<PageInfo<OrderWaitReceiveSearchInfo>> taskCenter(
+            @RequestParam(value = "lspId",required = false) String lspId,
+            @RequestParam(value = "startDateStr",required = false)String startDateStr,
+            @RequestParam(value = "endDateStr",required = false)String endDateStr,
+            OrderWaitReceiveSearchRequest orderReq){
+        ResponseData<PageInfo<OrderWaitReceiveSearchInfo> > resData =
+                new ResponseData<PageInfo<OrderWaitReceiveSearchInfo>>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        /*try {
+            //判断是国内还是国外业务
+            String flag = Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale())?"0":"1";
+            orderReq.setFlag(flag);
+            //译员类型 0:普通译员 1:LSP
+            String interperType = StringUtils.isNotBlank(lspId)?"1":"0";
+            orderReq.setInterperType(interperType);
+            //订单状态 固定为待领取
+            orderReq.setState("20");
+            //若没有页面,则使用第1页为默认
+            if (orderReq.getPageNo()==null || orderReq.getPageNo()<1)
+                orderReq.setPageNo(1);
+            //添加下单开始时间和结束时间 TODO...
+            IOrderWaitReceiveSV iOrderQuerySV = DubboConsumerFactory.getService(IOrderWaitReceiveSV.class);
+            OrderWaitReceiveSearchResponse orderRes = iOrderQuerySV.pageSearchWaitReceive(orderReq);
+            ResponseHeader resHeader = orderRes.getResponseHeader();
+            //如果返回值为空,或返回信息中包含错误信息,返回失败
+            if (orderRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
+                throw new BusinessException("","");
+            } else {
+                //返回订单分页信息
+                resData.setData(orderRes.getPageInfo());
+            }
+        } catch (Exception e) {
+            LOGGER.error("查询订单分页失败:",e);
+            resData = new ResponseData<PageInfo<OrderWaitReceiveSearchInfo>>(ResponseData.AJAX_STATUS_FAILURE, "查询订单失败");
+        }*/
+        //TODO... 模拟数据
+        PageInfo<OrderWaitReceiveSearchInfo> pageInfo = new  PageInfo<OrderWaitReceiveSearchInfo>();
         pageInfo.setCount(8);
         pageInfo.setPageCount(1);
         pageInfo.setPageNo(1);
         pageInfo.setPageSize(10);
 
-        List<OrdOrderVo> orderLisst = new ArrayList<>();
-
-        OrdOrderVo order = new OrdOrderVo();
-        order.setOrderId((long) 20141111);
-        order.setBusiType("0");
-        order.setOrderTime(new Timestamp(System.currentTimeMillis()));
-        order.setTranslateName("翻译主题");
-        order.setUserName("王五");
-        order.setTotalFee(1001);
-        order.setCurrencyUnit("2");
-        order.setRemainingTime(new Timestamp(1000)); //确认剩余时间
-        /**
-         * 客户端显示状态
-         * 11：待支付
-         *13：待报价
-         *23：翻译中
-         *50：待确认
-         *52：待评价
-         *90：完成
-         *91：关闭（取消）
-         *92：已退款
-         */
-        order.setDisplayFlag(displayFlag);
-        List<OrdProdExtendVo> ordProdExtendList = new ArrayList<>();
-        OrdProdExtendVo ordProdExtendVo = new OrdProdExtendVo();
-        ordProdExtendVo.setLangungePair("1");
-        ordProdExtendVo.setLangungePairChName("中-英");
-        ordProdExtendVo.setLangungePairEnName("en-ch");
-        ordProdExtendList.add(ordProdExtendVo);
-        order.setOrdProdExtendList(ordProdExtendList);
-
-        orderLisst.add(order);
+        List<OrderWaitReceiveSearchInfo> orderLisst = new ArrayList<>();
+        OrderWaitReceiveSearchInfo searchInfo = new OrderWaitReceiveSearchInfo();
+        searchInfo.setOrderId(2000000026089247l);
+        searchInfo.setTranslateName("1.下单流程中的“支付”环节，");
+        searchInfo.setLanguagePairName("中文-英文");
+        searchInfo.setLanguageNameEn("ch-en");
+        searchInfo.setOrderTime(DateUtil.getFutureTime());
+        searchInfo.setTotalFee(1000000l);
+        searchInfo.setTakeDay("1");
+        searchInfo.setTakeTime("2");
+        orderLisst.add(searchInfo);
         pageInfo.setResult(orderLisst);
-        orderRes.setPageInfo(pageInfo);
-        resData.setData(orderRes.getPageInfo());
+        resData.setData(pageInfo);
+
 
         return resData;
     }
@@ -144,8 +145,11 @@ public class TaskCenterController {
      */
     @RequestMapping("/claim")
     @ResponseBody
-    public ResponseData<String> claimOrder(){
+    public ResponseData<String> claimOrder(String orderId,String lspId){
         ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        String userId = UserUtil.getUserId();
+        //译员类型
+        String transType = StringUtils.isBlank(lspId)?"1":"0";
 
         return responseData;
     }

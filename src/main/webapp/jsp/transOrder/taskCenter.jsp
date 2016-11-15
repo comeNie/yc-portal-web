@@ -27,13 +27,18 @@
                 </div>
                 <div class="oder-form-lable mt-20">
                     <form id="orderQuery">
-                    <input type="hidden" name="lspId" id="lspId" value="${lspId}">
-                    <input type="hidden" name="lspRole" id="lspRole" value="${lspRole}">
-                    <input type="hidden" name="vipLevel" id="vipLevel" value="${vipLevel}">
+                        <input type="hidden" name="lspId" id="lspId" value="${lspId}">
+                        <input type="hidden" name="lspRole" id="lspRole" value="${lspRole}">
+                        <%--译员等级--%>
+                        <input type="hidden" name="interperLevel" id="vipLevel" value="${vipLevel}">
+                        <%--升降序标记--%>
+                        <input type="hidden" name="sortFlag" id="sortFlag" value="0">
+                        <%--升降序字段--%>
+                        <input type="hidden" name="sortField" id="sortField" value="0">
                     <ul>
                         <li class="mb-20">
                             <p>领域</p>
-                            <p><select class="select select-small radius">
+                            <p><select name="fieldCode" id="fieldCode" class="select select-small radius">
                                 <option value="">全部</option>
                                 <c:forEach var="obj" items="${domainList}">
                                     <option value="${obj.domainId}"><c:choose><c:when
@@ -42,7 +47,7 @@
                                 </c:forEach>
                             </select></p>
                             <p>用途</p>
-                            <p><select class="select select-small radius">
+                            <p><select name="useCode" id="useCode" class="select select-small radius">
                                 <option value="">全部</option>
                                 <c:forEach var="obj" items="${purposeList}">
                                     <option value="${obj.purposeId}"><c:choose><c:when
@@ -61,7 +66,7 @@
                                       onfocus="WdatePicker({el:id,readOnly:true,dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startDate\');}'})"/>
                             </p>
                             <p class="iocn-oder">
-                                <input type="text" class="int-text int-medium radius pr-30">
+                                <input type="text" name="translateName" class="int-text int-medium radius pr-30" maxlength="16">
                                 <i class="icon-search" id="searchBtn"></i></p>
                         </li>
                     </ul>
@@ -88,190 +93,39 @@
                         </thead>
                     </table>
                 </div>
-                <div class="right-list-table">
-                    <table class="table  table-bg tb-border mb-20">
-                        <thead>
-                        <tr>
-                            <th colspan="6" class="text-l">
-                                <div class="table-thdiv">
-                                    <p>2015-04-07 09:53:51</p>
-                                    <p>订单号：<span>198409857093246</span></p>
-                                </div>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="width-16">
-                            <td>翻译内容在这块显示不超过十五字……</td>
-                            <td>中文→西班牙语</td>
-                            <td>1000.00</td>
-                            <td>12天11小时59分</td>
-                            <td>
-                                <input type="button" class="btn biu-btn btn-auto-25 btn-green radius10" value="领 取">
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <table class="table  table-bg tb-border mb-20">
-                        <thead>
-                        <tr>
-                            <th colspan="6" class="text-l">
-                                <div class="table-thdiv">
-                                    <p>2015-04-07 09:53:51</p>
-                                    <p>订单号：<span>198409857093246</span></p>
-                                </div>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="width-16">
-                            <td>翻译内容在这块显示不超过十五字……</td>
-                            <td>中文→西班牙语</td>
-                            <td>1000.00</td>
-                            <td>12天11小时59分</td>
-                            <td>
-                                <input type="button" class="btn biu-btn btn-auto-25 btn-green radius10" value="领 取">
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <table class="table  table-bg tb-border mb-20">
-                        <thead>
-                        <tr>
-                            <th colspan="6" class="text-l">
-                                <div class="table-thdiv">
-                                    <p>2015-04-07 09:53:51</p>
-                                    <p>订单号：<span>198409857093246</span></p>
-                                </div>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="width-16">
-                            <td>翻译内容在这块显示不超过十五字……</td>
-                            <td>中文→西班牙语</td>
-                            <td>1000.00</td>
-                            <td>12天11小时59分</td>
-                            <td>
-                                <input type="button" class="btn biu-btn btn-auto-25 btn-green radius10" value="领 取">
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <table class="table  table-bg tb-border mb-20">
-                        <thead>
-                        <tr>
-                            <th colspan="6" class="text-l">
-                                <div class="table-thdiv">
-                                    <p>2015-04-07 09:53:51</p>
-                                    <p>订单号：<span>198409857093246</span></p>
-                                </div>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="width-16">
-                            <td>翻译内容在这块显示不超过十五字……</td>
-                            <td>中文→西班牙语</td>
-                            <td>1000.00</td>
-                            <td>12天11小时59分</td>
-                            <td>
-                                <input type="button" class="btn biu-btn btn-auto-25 btn-green radius10" value="领 取">
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <table class="table  table-bg tb-border mb-20">
-                        <thead>
-                        <tr>
-                            <th colspan="6" class="text-l">
-                                <div class="table-thdiv">
-                                    <p>2015-04-07 09:53:51</p>
-                                    <p>订单号：<span>198409857093246</span></p>
-                                </div>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="width-16">
-                            <td>翻译内容在这块显示不超过十五字……</td>
-                            <td>中文→西班牙语</td>
-                            <td>1000.00</td>
-                            <td>12天11小时59分</td>
-                            <td>
-                                <input type="button" class="btn biu-btn btn-auto-25 btn-green radius10" value="领 取">
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <table class="table  table-bg tb-border mb-20">
-                        <thead>
-                        <tr>
-                            <th colspan="6" class="text-l">
-                                <div class="table-thdiv">
-                                    <p>2015-04-07 09:53:51</p>
-                                    <p>订单号：<span>198409857093246</span></p>
-                                </div>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="width-16">
-                            <td>翻译内容在这块显示不超过十五字……</td>
-                            <td>中文→西班牙语</td>
-                            <td>1000.00</td>
-                            <td>12天11小时59分</td>
-                            <td>
-                                <input type="button" class="btn biu-btn btn-auto-25 btn-green radius10" value="领 取">
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <table class="table  table-bg tb-border mb-20">
-                        <thead>
-                        <tr>
-                            <th colspan="6" class="text-l">
-                                <div class="table-thdiv">
-                                    <p>2015-04-07 09:53:51</p>
-                                    <p>订单号：<span>198409857093246</span></p>
-                                </div>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="width-16">
-                            <td>翻译内容在这块显示不超过十五字……</td>
-                            <td>中文→西班牙语</td>
-                            <td>1000.00</td>
-                            <td>12天11小时59分</td>
-                            <td>
-                                <input type="button" class="btn biu-btn btn-auto-25 btn-green radius10" value="领 取">
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-
+                <div class="right-list-table" id="orderInfoTable">
                 </div>
+                <!-- 订单列表结束 -->
+                <div id="showMessageDiv"></div>
                 <div class="biu-paging paging-large">
-                    <ul>
-                        <li class="prev-up"><a href="#"><</a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">6</a></li>
-                        <li><a href="#">……</a></li>
-                        <li><a href="#">100</a></li>
-                        <li class="next-down"><a href="#">></a></li>
-                        <li>
-                            <span>到</span>
-                            <span><input type="text" class="int-verysmall radius"></span>
-                            <span>页</span>
-                        </li>
-                        <li class="taiz"><a href="#">跳转</a></li>
+                    <ul id="pagination-ul">
                     </ul>
                 </div>
+                <script id="searchOrderTemple" type="text/template">
+                    <table class="table  table-bg tb-border mb-20">
+                        <thead>
+                        <tr>
+                            <th colspan="6" class="text-l">
+                                <div class="table-thdiv">
+                                    <p>{{:~timestampToDate(orderTime,'yyyy-MM-dd HH:mm:ss')}}</p>
+                                    <p>订单号：<span>{{:orderId}}</span></p>
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="width-16">
+                            <td>{{:translateName}}</td>
+                            <td>中文→西班牙语</td>
+                            <td>{{:~liToYuan(totalFee)}}</td>
+                            <td>{{:takeDay}}天{{:takeTime}}小时</td>
+                            <td>
+                                <input type="button" class="btn biu-btn btn-auto-25 btn-green radius10" value="领 取">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </script>
             </div>
         </div>
     </div>
@@ -288,6 +142,6 @@
             pager = new taskCenterPage({element: document.body});
             pager.render();
         });
-    })
+    })();
 </script>
 </html>
