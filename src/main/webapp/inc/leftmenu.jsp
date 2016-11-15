@@ -30,12 +30,12 @@
   					<span>我的订单</span>
   					</a>
   				</li>
-  				<li>
-  					<a href="我的账户.html">
-  					<span><i class="icon iconfont">&#xe602;</i></span>
-  					<span>我的账户</span>
-  					</a>
-  				</li>
+				<li id="myaccount">
+					<a href="${_base}/balance/account">
+						<span><i class="icon iconfont">&#xe602;</i></span>
+						<span>我的账户</span>
+					</a>
+				</li>
   				<li>
   					<a href="优惠卷.html">
   					<span><i class="icon iconfont">&#xe603;</i></span>
