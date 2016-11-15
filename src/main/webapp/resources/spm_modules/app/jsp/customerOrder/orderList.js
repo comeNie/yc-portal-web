@@ -105,7 +105,7 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
         _cancelOrder:function(orderId) {
         	ajaxController.ajax({
 				type: "post",
-				url: _base+"/p/customer/order/orderList/cancelOrder",
+				url: _base+"/p/customer/order/cancelOrder",
 				data: {'orderId': orderId},
 				success: function(data){
 					//取消成功
