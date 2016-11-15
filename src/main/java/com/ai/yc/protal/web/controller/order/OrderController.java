@@ -26,6 +26,7 @@ import com.ai.yc.order.api.ordersubmission.param.ProductInfo;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.model.pay.PayNotify;
+import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.alibaba.fastjson.JSON;
@@ -73,6 +74,8 @@ public class OrderController {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
     @Autowired
     ResWebBundle rb;
+    @Autowired
+    CacheServcie cacheServcie;
 
     /**
      * 显示文本类下单页面
@@ -82,8 +85,6 @@ public class OrderController {
     public String createTextView(Model uiModel,String selPurpose){
         
         List<SysDuad> duadList = new ArrayList<SysDuad>();
-        List<SysDomain> domainList = new ArrayList<SysDomain>();
-        List<SysPurpose> purposeList = new ArrayList<SysPurpose>();
         //TODO ：服务不可用，暂时关闭
         String duadStr,domainStr,purposeStr;
          //获取cache客户端
@@ -91,17 +92,11 @@ public class OrderController {
        
        if (rb.getDefaultLocale().getLanguage().equals(Locale.SIMPLIFIED_CHINESE)) {
             duadStr = iCacheClient.get(CacheKey.CN_DUAD_KEY);
-            domainStr = iCacheClient.get(CacheKey.CN_DOMAIN_KEY);
-            purposeStr = iCacheClient.get(CacheKey.CN_PURPOSE_KEY);
         } else {
             duadStr = iCacheClient.get(CacheKey.EN_DUAD_KEY);
-            domainStr = iCacheClient.get(CacheKey.EN_DOMAIN_KEY);
-            purposeStr = iCacheClient.get(CacheKey.EN_PURPOSE_KEY);
         }
         
         duadList = JSONObject.parseArray(duadStr, SysDuad.class);
-        domainList = JSONObject.parseArray(domainStr, SysDomain.class);
-        purposeList = JSONObject.parseArray(purposeStr, SysPurpose.class);
         */
 
         //模拟数据
@@ -136,35 +131,10 @@ public class OrderController {
         sysDuad1.setPublishUrgent("350");
         duadList.add(sysDuad);
         duadList.add(sysDuad1);
-        //领域
-        SysDomain sysDomain = new SysDomain();
-        sysDomain.setDomainId("1");
-        sysDomain.setDomainCn("医学");
-        sysDomain.setDomainEn("yixue");
-        sysDomain.setLanguage("zh");
-        domainList.add(sysDomain);
-        domainList.add(sysDomain);
-        //用途
-        SysPurpose sysPurpose = new SysPurpose();
-        sysPurpose.setPurposeId("1");
-        sysPurpose.setLanguage("zh");
-        sysPurpose.setPurposeCn("专业论文");
-        sysPurpose.setPurposeEn("zhuanYeLunWen");
-        sysPurpose.setPurposeId("2");
-        sysPurpose.setLanguage("zh");
-        sysPurpose.setPurposeCn("简历");
-        sysPurpose.setPurposeEn("zhuanYeLunWen");
-        sysPurpose.setPurposeId("3");
-        sysPurpose.setLanguage("zh");
-        sysPurpose.setPurposeCn("产品说明");
-        sysPurpose.setPurposeEn("zhuanYeLunWen");
-
-        purposeList.add(sysPurpose);
-        purposeList.add(sysPurpose);
 
         uiModel.addAttribute("duadList", duadList);
-        uiModel.addAttribute("domainList", domainList);
-        uiModel.addAttribute("purposeList", purposeList);
+        uiModel.addAttribute("domainList", cacheServcie.getAllDomain(rb.getDefaultLocale()));
+        uiModel.addAttribute("purposeList", cacheServcie.getAllPurpose(rb.getDefaultLocale()));
         uiModel.addAttribute("selPurpose",selPurpose);
 
         return "order/createTextOrder";
