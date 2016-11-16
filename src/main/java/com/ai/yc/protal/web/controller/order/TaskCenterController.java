@@ -135,7 +135,7 @@ public class TaskCenterController {
             pageInfo.setResult(orderLisst);
             orderRes.setPageInfo(pageInfo);
 
-            ResponseHeader resHeader = orderRes.getResponseHeader();
+            ResponseHeader resHeader = orderRes==null?null:orderRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息,返回失败
             if (orderRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
                 throw new BusinessException("","");
@@ -161,7 +161,6 @@ public class TaskCenterController {
         String userId = UserUtil.getUserId();
         //译员类型
         String transType = StringUtils.isBlank(lspId)?"1":"0";
-        IOrderReceiveSV iOrderReceiveSV = DubboConsumerFactory.getService(IOrderReceiveSV.class);
         OrderReceiveRequest receiveRequest = new OrderReceiveRequest();
         OrderReceiveBaseInfo baseInfo = new OrderReceiveBaseInfo();
         baseInfo.setOrderId(orderId);
@@ -172,7 +171,9 @@ public class TaskCenterController {
         baseInfo.setInterperType(interperType);
         baseInfo.setLspId(lspId);
         baseInfo.setLockTime(DateUtil.getFutureTime());
+        receiveRequest.setBaseInfo(baseInfo);
         /*try {
+            IOrderReceiveSV iOrderReceiveSV = DubboConsumerFactory.getService(IOrderReceiveSV.class);
             OrderReceiveResponse receiveResponse = iOrderReceiveSV.orderReceive(receiveRequest);
             ResponseHeader header =receiveResponse==null?null:receiveResponse.getResponseHeader();
             if (header == null || !header.isSuccess()){
