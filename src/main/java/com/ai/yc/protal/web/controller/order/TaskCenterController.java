@@ -91,9 +91,6 @@ public class TaskCenterController {
             //判断是国内还是国外业务
             String flag = Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale())?"0":"1";
             orderReq.setFlag(flag);
-            //译员类型 0:普通译员 1:LSP
-            String interperType = StringUtils.isNotBlank(lspId)?"1":"0";
-            orderReq.setInterperType(interperType);
             //订单状态 固定为待领取
             orderReq.setState("20");
             //若没有页面,则使用第1页为默认

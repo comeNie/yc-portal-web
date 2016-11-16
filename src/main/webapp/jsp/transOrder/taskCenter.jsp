@@ -76,18 +76,20 @@
                 <div class="right-list-table mt-0">
                     <table class="table table-hover table-bg">
                         <thead>
-                        <tr>
+                        <tr id="headDiv">
                             <th width="16.666%" class="dinda">订单主题<i class="icon-caret-down"></i></th>
                             <th width="16.666%">翻译语言</th>
-                            <th width="16.666%">金额（元）<a href="#"><i class="icon iconfont">&#xe615;</i></a></th>
-                            <th width="16.666%">剩余时间 <a href="#"><i class="icon iconfont">&#xe615;</i></a></th>
+                            <th width="16.666%">金额（元）<a href="javaScript:void(0);" id="feeSort"
+                                                        sortFlag="0"><i class="icon iconfont" >&#xe615;</i></a></th>
+                            <th width="16.666%">剩余时间 <a href="javaScript:void(0);" id="endSort"
+                                                        sortFlag="0"><i class="icon iconfont" >&#xe615;</i></a></th>
                             <th width="16.666%">操作</th>
                         </tr>
                         <div class="table-show">
                             <ul>
-                                <li><a href="#">订单主题</a></li>
-                                <li><a href="#">发布时间升序</a></li>
-                                <li><a href="#">发布时间降序</a></li>
+                                <li><a href="javaScript:void(0);">订单主题</a></li>
+                                <li><a href="javaScript:void(0);" id="pdateAec">发布时间升序</a></li>
+                                <li><a href="javaScript:void(0);" id="pdateDesc">发布时间降序</a></li>
                             </ul>
                         </div>
                         </thead>

@@ -21,9 +21,12 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
     	
     	//事件代理
     	events: {
-			"click #searchBtn":"_getOrderList",
 			"change #fieldCode":"_getOrderList",
-			"change #useCode":"_getOrderList"
+			"change #useCode":"_getOrderList",
+			"click #feeSort":"_feeSortFun",
+			"click #endSort":"_endSortFun",
+			"click #pdateAec":"_pDateAec",
+			"click #pdateDesc":"_pdateDesc"
     	},
     	
       	//重写父类
@@ -31,7 +34,38 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
 			taskCenterPage.superclass.setup.call(this);
     		this._getOrderList();
     	},
-        
+		//金额排序处理
+		_feeSortFun:function(){
+			//获取当前排序
+			var nowSort = $("#feeSort").attr("sortFlag");
+			var sort = nowSort=="1"?"0":"1";
+			$("#feeSort").attr("sortFlag",sort);
+			$("#sortFlag").val(sort);
+			$("#sortField").val("2");
+			this._getOrderList();
+		},
+		//截止时间排序处理
+		_endSortFun:function(){
+			//获取当前排序
+			var nowSort = $("#endSort").attr("sortFlag");
+			var sort = nowSort=="1"?"0":"1";
+			$("#endSort").attr("sortFlag",sort);
+			$("#sortFlag").val(sort);
+			$("#sortField").val("1");
+			this._getOrderList();
+		},
+		//发布时间正序
+		_pDateAec:function(){
+			$("#sortFlag").val("0");
+			$("#sortField").val("0");
+			this._getOrderList();
+		},
+		//发布时间倒序
+        _pdateDesc:function(){
+			$("#sortFlag").val("1");
+			$("#sortField").val("0");
+			this._getOrderList();
+		},
         //查询订单
         _getOrderList:function() {
         	var _this = this;
