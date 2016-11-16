@@ -113,7 +113,7 @@ public class UserCommonController {
 		String cacheKey = PictureVerify.VERIFY_IMAGE_KEY
 				+ request.getSession().getId();
 		BufferedImage image = VerifyUtil.getImageVerifyCode(
-				Register.CACHE_NAMESPACE, cacheKey, 100, 38);
+				Constants.DEFAULT_YC_CACHE_NAMESPACE, cacheKey, 100, 38);
 		try {
 			ImageIO.write(image, "PNG", response.getOutputStream());
 		} catch (IOException e) {

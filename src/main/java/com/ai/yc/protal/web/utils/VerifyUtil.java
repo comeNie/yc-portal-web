@@ -24,7 +24,6 @@ import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.PhoneVerify;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
-import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
 import com.alibaba.fastjson.JSONObject;
 
@@ -215,7 +214,7 @@ public class VerifyUtil {
 			String cacheKey = PictureVerify.VERIFY_IMAGE_KEY
 					+ request.getSession().getId();
 			String imgCode = request.getParameter("imgCode");
-			Boolean isRight = checkImageVerifyCode(Register.CACHE_NAMESPACE,
+			Boolean isRight = checkImageVerifyCode(Constants.DEFAULT_YC_CACHE_NAMESPACE,
 					cacheKey, imgCode);
 			if (isRight) {
 				errorMsg = "ok";
