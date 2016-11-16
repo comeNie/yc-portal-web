@@ -90,7 +90,7 @@ public class TaskCenterController {
             OrderWaitReceiveSearchRequest orderReq){
         ResponseData<PageInfo<OrderWaitReceiveSearchInfo> > resData =
                 new ResponseData<PageInfo<OrderWaitReceiveSearchInfo>>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-        /*try {
+        try {
             //判断是国内还是国外业务
             String flag = Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale())?"0":"1";
             orderReq.setFlag(flag);
@@ -99,9 +99,42 @@ public class TaskCenterController {
             //若没有页面,则使用第1页为默认
             if (orderReq.getPageNo()==null || orderReq.getPageNo()<1)
                 orderReq.setPageNo(1);
-            //添加下单开始时间和结束时间 TODO...
-            IOrderWaitReceiveSV iOrderQuerySV = DubboConsumerFactory.getService(IOrderWaitReceiveSV.class);
-            OrderWaitReceiveSearchResponse orderRes = iOrderQuerySV.pageSearchWaitReceive(orderReq);
+            //添加下单开始时间
+            if (StringUtils.isNotBlank(startDateStr)){
+                String dateTmp = startDateStr+" 00:00:00";
+                Timestamp date =DateUtil.getTimestamp(dateTmp,DateUtil.DATETIME_FORMAT);
+                orderReq.setStartStateTime(date);
+            }
+            //添加下单结束时间
+            if (StringUtils.isNotBlank(endDateStr)){
+                String dateTmp = endDateStr+" 23:59:59";
+                Timestamp date =DateUtil.getTimestamp(dateTmp,DateUtil.DATETIME_FORMAT);
+                orderReq.setEndStateTime(date);
+            }
+//            IOrderWaitReceiveSV iOrderQuerySV = DubboConsumerFactory.getService(IOrderWaitReceiveSV.class);
+//            OrderWaitReceiveSearchResponse orderRes = iOrderQuerySV.pageSearchWaitReceive(orderReq);
+            //TODO... 模拟数据
+            OrderWaitReceiveSearchResponse orderRes = new OrderWaitReceiveSearchResponse();
+            PageInfo<OrderWaitReceiveSearchInfo> pageInfo = new  PageInfo<OrderWaitReceiveSearchInfo>();
+            pageInfo.setCount(8);
+            pageInfo.setPageCount(1);
+            pageInfo.setPageNo(1);
+            pageInfo.setPageSize(10);
+
+            List<OrderWaitReceiveSearchInfo> orderLisst = new ArrayList<>();
+            OrderWaitReceiveSearchInfo searchInfo = new OrderWaitReceiveSearchInfo();
+            searchInfo.setOrderId(2000000026089247l);
+            searchInfo.setTranslateName("1.下单流程中的“支付”环节，");
+            searchInfo.setLanguagePairName("中文-英文");
+            searchInfo.setLanguageNameEn("ch-en");
+            searchInfo.setOrderTime(DateUtil.getFutureTime());
+            searchInfo.setTotalFee(1000000l);
+            searchInfo.setTakeDay("1");
+            searchInfo.setTakeTime("2");
+            orderLisst.add(searchInfo);
+            pageInfo.setResult(orderLisst);
+            orderRes.setPageInfo(pageInfo);
+
             ResponseHeader resHeader = orderRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息,返回失败
             if (orderRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
@@ -113,29 +146,7 @@ public class TaskCenterController {
         } catch (Exception e) {
             LOGGER.error("查询订单分页失败:",e);
             resData = new ResponseData<PageInfo<OrderWaitReceiveSearchInfo>>(ResponseData.AJAX_STATUS_FAILURE, "查询订单失败");
-        }*/
-        //TODO... 模拟数据
-        PageInfo<OrderWaitReceiveSearchInfo> pageInfo = new  PageInfo<OrderWaitReceiveSearchInfo>();
-        pageInfo.setCount(8);
-        pageInfo.setPageCount(1);
-        pageInfo.setPageNo(1);
-        pageInfo.setPageSize(10);
-
-        List<OrderWaitReceiveSearchInfo> orderLisst = new ArrayList<>();
-        OrderWaitReceiveSearchInfo searchInfo = new OrderWaitReceiveSearchInfo();
-        searchInfo.setOrderId(2000000026089247l);
-        searchInfo.setTranslateName("1.下单流程中的“支付”环节，");
-        searchInfo.setLanguagePairName("中文-英文");
-        searchInfo.setLanguageNameEn("ch-en");
-        searchInfo.setOrderTime(DateUtil.getFutureTime());
-        searchInfo.setTotalFee(1000000l);
-        searchInfo.setTakeDay("1");
-        searchInfo.setTakeTime("2");
-        orderLisst.add(searchInfo);
-        pageInfo.setResult(orderLisst);
-        resData.setData(pageInfo);
-
-
+        }
         return resData;
     }
 

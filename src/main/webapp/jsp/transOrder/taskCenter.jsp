@@ -145,7 +145,7 @@
         //订单领取
         $("#orderInfoTable").delegate("input[name='getOrder']", 'click', function () {
             var orderId = $(this).attr("orderId");
-            pager._getOrder($(this),orderId);
+            window.location.href="${_base}/p/trans/order/"+orderId;
         });
         seajs.use('app/jsp/transOrder/taskCenter', function (taskCenterPage) {
             pager = new taskCenterPage({element: document.body});
