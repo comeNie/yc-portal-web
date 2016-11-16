@@ -231,4 +231,3 @@ $("#icon2").rotate({
    
 });
 });
-document.getElementById(".left-subnav").style.height=document.getElementById(".right-wrapper").scrollHeight+"px"
