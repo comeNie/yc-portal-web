@@ -29,6 +29,10 @@
 		interface="com.ai.yc.order.api.orderdetails.interfaces.IQueryOrderDetailsSV" />
 	<dubbo:reference id="IOrderCancelSV" registry="ycRegistry"
 		interface="com.ai.yc.order.api.orderclose.interfaces.IOrderCancelSV" />
+	<dubbo:reference id="IOrderStateUpdateSV" registry="ycRegistry"
+		interface="com.ai.yc.order.api.orderstate.interfaces.IOrderStateUpdateSV" />
+	<dubbo:reference id="IUpdateOrderSV" registry="ycRegistry"
+		interface="com.ai.yc.order.api.updateorder.interfaces.IUpdateOrderSV" />
 	<!-- 注册 -->
 	<dubbo:reference id="iYCUserServiceSV" registry="ycRegistry"
 		interface="com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV" />
