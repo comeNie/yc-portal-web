@@ -67,7 +67,7 @@ public class TaskCenterController {
 //        uiModel.addAttribute("lspId",userInfoResponse.getLspId());//lsp标识
 //        uiModel.addAttribute("lspRole",userInfoResponse.getLspRole());//lsp角色
 //        uiModel.addAttribute("vipLevel",userInfoResponse.getVipLevel());//译员等级
-        uiModel.addAttribute("lspId","123");//lsp标识
+        uiModel.addAttribute("lspId","");//lsp标识
         uiModel.addAttribute("lspRole","1");//lsp角色
         uiModel.addAttribute("vipLevel","4");//译员等级
         //获取领域,用途

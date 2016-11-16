@@ -26,6 +26,8 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
     	events: {
 			"change #fieldCode":"_getOrderList",
 			"change #useCode":"_getOrderList",
+			"keyup #endDate":"_getOrderList",
+			"click #searchBtn":"_getOrderList",
 			"click #feeSort":"_feeSortFun",
 			"click #endSort":"_endSortFun",
 			"click #pdateAec":"_pDateAec",
@@ -45,6 +47,13 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
 				async: true
 			});
     	},
+		//改变查询的结束时间
+		_changeEndDate:function(dp){
+			//若截止时间发生变更,则刷新页面
+			if(dp.cal.getDateStr() != dp.cal.getNewDateStr()){
+				this._getOrderList();
+			}
+		},
 		//金额排序处理
 		_feeSortFun:function(){
 			//获取当前排序
