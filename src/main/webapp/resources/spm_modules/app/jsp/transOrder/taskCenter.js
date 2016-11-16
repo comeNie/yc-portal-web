@@ -2,16 +2,16 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
+		Dialog = require("optDialog/src/dialog"),
 	    AjaxController = require('opt-ajax/1.0.0/index');
     require("jsviews/jsrender.min");
     require("jsviews/jsviews.min");
     require("app/util/jsviews-ext");
 	require("opt-paging/aiopt.pagination");
 	require("my97DatePicker/WdatePicker");
-    
-    //实例化AJAX控制处理对象
+	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
+
     var ajaxController = new AjaxController();
-    
     var taskCenterPage = Widget.extend({
     	//属性，使用时由类的构造函数传入
     	attrs: {
@@ -24,109 +24,118 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
     	
     	//事件代理
     	events: {
-			"click #submitQuery":"_orderList",
-			"change #displayFlag":"_orderList",
-			"change #translateType":"_orderList"
+			"change #fieldCode":"_getOrderList",
+			"change #useCode":"_getOrderList",
+			"keyup #endDate":"_getOrderList",
+			"click #searchBtn":"_getOrderList",
+			"click #feeSort":"_feeSortFun",
+			"click #endSort":"_endSortFun",
+			"click #pdateAec":"_pDateAec",
+			"click #pdateDesc":"_pdateDesc"
     	},
     	
       	//重写父类
     	setup: function () {
 			taskCenterPage.superclass.setup.call(this);
-    		//this._orderList();
+    		this._getOrderList();
+			//初始化国际化
+			$.i18n.properties({//加载资浏览器语言对应的资源文件
+				name: ["taskCenter"], //资源文件名称，可以是数组
+				path: _i18n_res, //资源文件路径
+				mode: 'both',
+				language: currentLan,
+				async: true
+			});
     	},
-    	
-        //表单查询订单列表
-        _orderList:function() {
-        	var _this = this;
-        	var displayFlag = $('#displayFlag option:selected').val();
-        	var translateType  = $('#translateType option:selected').val();
-        	var translateName  = $('#translateName').val();
-        	var orderTimeStart = $("#orderTimeStart").val();
-        	var stateChgTimeEnd = $("#stateChgTimeEnd").val();
-        	
-        	if(translateName.length > 50) {
-        		alert("不能超过50个字");
-        	}
-        	
-        	var reqdata = {
- 				'displayFlag': displayFlag,
- 				'translateType': translateType,
- 				'translateName': translateName,
- 				'orderTimeStart': orderTimeStart,
- 				'stateChgTimeEnd': stateChgTimeEnd,
- 				'disFlag': translateName
- 				}
-        	_this._getOrderList(reqdata);
-        },
-        
-        //根据状态查询订单
-        _orderListByType:function(displayFlag) {
-        	var reqdata = {'displayFlag': displayFlag}
-        	this._getOrderList(reqdata);
-        },
-        
+		//改变查询的结束时间
+		_changeEndDate:function(dp){
+			//若截止时间发生变更,则刷新页面
+			if(dp.cal.getDateStr() != dp.cal.getNewDateStr()){
+				this._getOrderList();
+			}
+		},
+		//金额排序处理
+		_feeSortFun:function(){
+			//获取当前排序
+			var nowSort = $("#feeSort").attr("sortFlag");
+			var sort = nowSort=="1"?"0":"1";
+			$("#feeSort").attr("sortFlag",sort);
+			$("#sortFlag").val(sort);
+			$("#sortField").val("2");
+			this._getOrderList();
+		},
+		//截止时间排序处理
+		_endSortFun:function(){
+			//获取当前排序
+			var nowSort = $("#endSort").attr("sortFlag");
+			var sort = nowSort=="1"?"0":"1";
+			$("#endSort").attr("sortFlag",sort);
+			$("#sortFlag").val(sort);
+			$("#sortField").val("1");
+			this._getOrderList();
+		},
+		//发布时间正序
+		_pDateAec:function(){
+			$("#sortFlag").val("0");
+			$("#sortField").val("0");
+			this._getOrderList();
+		},
+		//发布时间倒序
+        _pdateDesc:function(){
+			$("#sortFlag").val("1");
+			$("#sortField").val("0");
+			this._getOrderList();
+		},
         //查询订单
-        _getOrderList:function(reqdata) {
+        _getOrderList:function() {
         	var _this = this;
+			if(window.console)
+				console.log("quer list");
           	$("#pagination-ul").runnerPagination({
-	 			url: _base+"/p/customer/order/orderList",
+	 			url: _base+"/p/taskcenter/list",
 	 			method: "POST",
 	 			dataType: "json",
-	 			renderId:"searchOrderData",
+	 			renderId:"orderInfoTable",
 	 			messageId:"showMessageDiv",
 //	 			 $('#orderQuery').serialize()
-	 			data: reqdata,
-	           	pageSize: orderListPage.DEFAULT_PAGE_SIZE,
+	 			data: $("#orderQuery").serializeArray(),
+	           	pageSize: taskCenterPage.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
 	            render: function (data) {
-	            	console.log(data);
 	            	if(data != null && data != 'undefined' && data.length>0){
-	            		//把时间戳修改成日期格式,金钱厘 转换成元
-		            	for(var i=0;i<data.length;i++){
-		            		data[i].orderTime = new Date( data[i].orderTime).format('yyyy-MM-dd h:m:s');
-		            		console.log(parseInt(data[i].totalFee)/1000);
-		            		data[i].totalFee = _this.fmoney(parseInt(data[i].totalFee)/1000,2);
-		            	}
-		            	
 	            		var template = $.templates("#searchOrderTemple");
 	            	    var htmlOutput = template.render(data);
-	            	    $("#searchOrderData").html(htmlOutput);
+	            	    $("#orderInfoTable").html(htmlOutput);
 	            	}
 	            }
     		});
         },
-        
-        //取消订单
-        _cancelOrder:function(orderId) {
-        	ajaxController.ajax({
-				type: "post",
-				url: _base+"/p/customer/order/orderList/cancelOrder",
-				data: {'orderId': orderId},
-				success: function(data){
-					//取消成功
-					if("1"===data.statusCode){
-					}
+		//领取订单
+		_getOrder:function(intObj,orderId){
+			new Dialog({
+				content:"订单领取需按时完成,确认领取?",
+				icon:'prompt',
+				okValue: '确 定',
+				cancelValue:'取 消',
+				title: '领取订单',
+				ok:function(){
+					ajaxController.ajax({
+						type: "post",
+						url: _base+"/p/taskcenter/claim",
+						data: {'orderId': orderId,"lspId":lspId},
+						success: function(data){
+							//领取成功
+							if("1"===data.statusCode){
+								intObj.parent().html($.i18n.prop('task.center.claimed'));
+							}
+						}
+					});
+				},
+				cancel:function(){
+					this.close();
 				}
-			});
-        },
-        
-        //金钱格式化 订单金额的转换类（厘->元）
-        fmoney:function (s, n) {
-        	var result = '0.00';
-    		if(isNaN(s) || !s){
-    			return result;
-    		}
-            
-        	n = n > 0 && n <= 20 ? n : 2;
-        	s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
-        	var l = s.split(".")[0].split("").reverse(),
-        	r = s.split(".")[1];
-        	var t = "";
-        	for(var i = 0; i < l.length; i ++ ){   
-        		t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
-        	}
-        	return t.split("").reverse().join("") + "." + r;
-        }
+			}).show();
+		}
     });
     module.exports = taskCenterPage;
 });

@@ -1,5 +1,5 @@
 /**模块主体**/
-.cloud-container{width:100%;background:#f0f2f5;height: auto;float:left;min-width:1170px;padding-bottom:40px;}
+.cloud-container{width:100%;background:#f5f5f6;height: auto;float:left;min-width:1170px;padding-bottom:40px;}
 .cloud-wrapper{width:1170px;margin:0 auto;background:url(../../images/leftbj.png) repeat-y left;overflow:hidden;position:relative;}
 .translate-cloud-wrapper{width:1170px;margin:0 auto;background:url(../../images/yiybj.png) repeat-y left;overflow:hidden;position:relative;}
 /**左侧菜单**/
@@ -24,7 +24,7 @@
 .left-list ul li a i{margin:0 20px 0 0;font-size:18px;padding-top:10px;}
 .left-list ul .current{background:#eff1f4;}
 .left-list ul li:hover{background:#eff1f4;}
-.locationaaa{width:230px;position:absolute;bottom:10px;left:0;}
+.locationaaa{width:230px;position:absolute;bottom:15px;left:0;}
 .left-phone{width:230px;float:left;margin-top:48px;padding-left:30px;}
 .left-phone p{float:left}
 .left-phone p span{float:left}

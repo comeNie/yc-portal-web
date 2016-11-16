@@ -16,7 +16,7 @@
     var _spm_res = "${spmRes}";
     var ssoLoginUrl="${ssoLoginUrl}";
     var uedroot="${uedroot}";
-    var currentLan = "<%=response.getLocale()%>";    
+    var currentLan = "<%=response.getLocale()%>";
 
 </script>
 <script src="${_base}/resources/spm_modules/jquery/1.9.1/jquery.min.js"></script>
@@ -38,8 +38,8 @@
     var today = new Date();
 	//send to the back
 	$.post(_base+"/timezone.htm?offset="+today.stdTimezoneOffset());
-    
-    
+
+
     /*
     Date.prototype.format = function(format) {
         var date = {

@@ -1,11 +1,11 @@
 /**弹出框**/
-.prompt-samll{ width:350px;min-height:216px; background:#fff; position:fixed;top:50%;left:50%;margin-top:-200px;margin-left:-175px;z-index:999;border-radius:5px;display:none;padding-bottom:10px;}
+.prompt-samll{ width:350px; background:#fff; position:fixed;top:50%;left:50%;margin-top:-200px;margin-left:-175px;z-index:999;border-radius:5px;display:none;padding-bottom:10px;}
 .prompt-samll-title{ width:100%; float:left;height:50px;background:#39d5b0;border-radius:5px 5px 0 0;text-align:center;line-height:50px;color:#fff;font-size:16px}
-.prompt-samll-confirm{ width:100%;float:left; margin-top:25px;}
+.prompt-samll-confirm{ width:100%;float:left; margin-top:25px;padding:0 40px;}
 .prompt-samll-confirm ul{ width:100%;float:left; }
 .prompt-samll-confirm ul li{ text-align:center;margin-bottom: 10px;font-size:14px;}
-.prompt-samll-confirm ul .eject-btn{margin-top: 28px;}
-.prompt-samll-confirm ul .eject-btn .btn{margin-left:15px;}
+.prompt-samll-confirm ul .eject-btn{margin-top: 28px;text-align: center;}
+.prompt-samll-confirm ul .eject-btn .btn{margin-left:10px;}
 .mask{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;opacity:0.4;filter:alpha(opacity=40);z-index:199;display:none;}
 /**翻译中**/
 .prompt-big{ width:670px;min-height:446px; background:#fff; position:fixed;top:50%;left:50%;margin-top:-223px;margin-left:-335px;z-index:999;border-radius:5px;padding-bottom:10px;display:none;}
@@ -49,8 +49,8 @@
 .right-title-right{float:right;margin:35px 0 0 70px;}
 .right-title-right p{width:90px;display:inline-block;text-align:center;}
 .right-title-right p span{width:100%;float:left;text-align:center;line-height:25px;}
-.right-title-right p span a {color:#9ba3af;}
-.right-title-right p span a b{color:#fe6b6b;font-weight: normal;margin-left:4px;}
+.right-title-right a {color:#9ba3af;}
+.right-title-right a b{color:#fe6b6b;font-weight: normal;margin-left:4px;}
 .right-title-right p .tp1{width:47px;height:40px;background: url(../../images/icon-big.png) no-repeat left -173px;margin-left:21px;}
 .right-title-right p .tp2{width:44px;height:40px;background: url(../../images/icon-big.png) no-repeat -54px -173px;margin-left:23px;}
 .right-title-right p .tp3{width:44px;height:40px;background: url(../../images/icon-big.png) no-repeat -108px -173px;margin-left:23px;}
@@ -62,7 +62,7 @@
 .right-list-table{width: 100%;float:left;margin-top:20px;position:relative;}
 .right-list-table table tr td .btn{margin-right:10px;}
 .right-list-table table .width-16 td{width:16.666%;}
-.right-list-table table .table-thdiv{width:100%;padding-left:20px;}
+.right-list-table table .table-thdiv{width:100%;padding-left:20px;font-size:12px}
 .right-list-table table .table-thdiv p{float:left;font-weight:normal;margin-right:40px;}
 .right-list-table table .table-thdiv .right{float:right;color:#fe6b6b}
 .right-list-table table .table-thdiv  span{color:#2361ea}
@@ -178,7 +178,7 @@
 .confirmation-list ul .right .btn{float:right;margin-left:20px;}
 .info-center{width:100%;float:left;text-align:center;margin-top:20px;}
 .tracking-list{width:100%;float:left;margin-top:20px;}
-.tracking-list ul li{width:100%;float:left;line-height:28px;}
+.tracking-list ul li{width:100%;float:left;line-height:28px;padding-left:20px;}
 .tracking-list ul li p{float:left;font-size:12px;}
 .tracking-list ul li .right{float:left;margin-left:50px;}
 .tracking-list ul .conduct{color:#39d5b0}
@@ -218,7 +218,9 @@
 .form-lable ul .toux{line-height:100px;position:relative;}
 .form-lable ul li .portrait{width:100px;height:100px;float:left;}
 .form-lable ul li .portrait img{width:100px;height:100px;border:1px solid #0a5dd2;border-radius:50%}
-.form-lable ul .toux  .portrait-file a{width:98px;height:98px;float:left;background:#000;position:absolute;top:1px;left:121px;border-radius:50%;text-align: center;color:#fff;opacity:0.7;filter:alpha(opacity=70); -moz-opacity:0.7; -khtml-opacity:0.7; }
+.form-lable ul .toux  .portrait-file{opacity:0;filter:alpha(opacity=0); -moz-opacity:0; -khtml-opacity:0;}
+.form-lable ul .toux  .portrait-file:hover{opacity:0.8;filter:alpha(opacity=80); -moz-opacity:0.8; -khtml-opacity:0.8;}
+.form-lable ul .toux  .portrait-file a{width:98px;height:98px;float:left;background:#000;position:absolute;top:2px;left:121px;border-radius:50%;text-align: center;color:#fff; }
 .form-lable ul .toux  .portrait-file .file-opacity{width:98px;height:98px;float:left;background:#000;position:absolute;top:1px;left:121px;border-radius:50%;opacity:0;filter:alpha(opacity=0); -moz-opacity:0; -khtml-opacity:0;}
 .form-lable ul li label{color:#fe6b6b}
 .form-lable ul li .x-label{position:absolute;top:-32px;left:80px;font-size:12px;color:#fe6b6b}
@@ -392,8 +394,8 @@
 .dropdown select{position: absolute;left: 0px;top: 0px;}
 .dropdown.touch .old{width: 100%;height: 100%;}
 .dropdown.touch select{width: 100%;height: 100%;opacity: 0;padding-left:10px}
-.dropdown .selected,
-.dropdown li{display: block;font-size:14px;line-height: 1;color:#666;padding:11px 10px;overflow: hidden;white-space: nowrap;}
+.dropdown .selected,.dropdown li{display: block;font-size:14px;line-height: 1;color:#666;padding:11px 10px;overflow: hidden;white-space: nowrap;}
+.dropdown .selected{height:44px;padding:15px 10px;}
 .dropdown.disabled .selected{color: #999;}
 .dropdown .selected::after{content: '';position: absolute;right: 0;top: 0;bottom: 0;width: 60px;border-radius: 0 2px 2px 0;}
 .dropdown div{position: absolute;left: -1px;right: -1px;top:40px;background: #fff;border: 1px solid #ccc;border-top: 1px solid #dbdbdb;border-radius: 0 0 3px 3px;overflow: hidden;opacity:0;width:600px;max-height:150px;}
@@ -443,4 +445,5 @@
 .renz-list a{color:#2361ea;font-size:14px;}
 /**404**/
 .fourhundred{width:100%;margin:0 auto;text-align: center;}
-
+/****/
+.limit-height{height:250px;}

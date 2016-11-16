@@ -24,7 +24,7 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
     	//事件代理
     	events: {
 			"click #submitQuery":"_orderList",
-			"change #displayFlag":"_orderList",
+			"change #displayFlag":"_getOrderList",
 			"change #translateType":"_orderList"
     	},
     	
