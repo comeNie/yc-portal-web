@@ -6,6 +6,7 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>译员-我的订单</title>
     <%@ include file="/inc/inc.jsp" %>
+    <script src="${_base}/resources/spm_modules/my97DatePicker/WdatePicker.js"></script>
 </head>
 <body>
 <!--头部-->
@@ -26,34 +27,78 @@
 			<div class="right-list mt-0">
 	 			<div class="oder-table">
 	 				<ul>
-	 					<li><a href="javaScript:void(0);"  class="current">全部订单</a></li>
-	 					<li><a href="javaScript:void(0);">已领取(8)</a></li>
-	 					<li><a href="javaScript:void(0);">翻译中(4)</a></li>
+	 					<li><a href="javaScript:void(0);"  class="current" state="">全部订单</a></li>
+	 					<li><a href="javaScript:void(0);" state="21">已领取(${ReceivedCount})</a></li>
+	 					<li><a href="javaScript:void(0);" state="23">翻译中(${TranteCount})</a></li>
 	 				</ul>
 	 			</div>
 	 			<div id="table-da1">
+	 				<form id="orderQuery">
 		 			<div class="oder-form-lable mt-20">
 		 				<ul>
 		 					<li class="mb-20">
 		 						<p>订单状态</p>
-		 						<p><select class="select select-small radius"></select></p>
+		 						<p>
+		 							<select class="select select-small radius"  name="state" id="state">
+		 								<option value="">全部</option>
+		 								<option value="21">已领取</option>
+		 								<!-- <option value="211">已分配</option> -->
+		 								<option value="23">翻译中</option>
+		 								<option value="52">待审核</option>
+		 								<option value="50">待确认</option>
+		 								<option value="90">已完成</option>
+		 								<!-- <option value="53">已评价</option> -->
+		 								<option value="25">修改中</option>
+		 								<option value="92">已退款</option>
+		 							</select>
+		 						</p>
 		 						<p>订单阶段</p>
-		 						<p><select class="select select-small radius"></select></p>
+		 						<p>
+		 							<select class="select select-small radius"  name="stateListStr" id="stateListStr">
+		 								<option value="">全部</option>
+		 								<option value="['211','23']">翻译</option>
+		 								<option value="['40','41','42']">审校</option>
+		 							</select>
+		 						</p>
 		 						<p>翻译领域</p>
-		 						<p><select class="select select-small radius"></select></p>
+		 						<p>
+		 							<select class="select select-small radius" name="fieldCode" id="fieldCode">
+		 								<c:forEach items="${domainList}" var="domain">
+		 									<option value="${domain.domainId}">
+											<c:choose>
+												<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${domain.domainCn}</c:when>
+												<c:otherwise>${domain.domainEn}</c:otherwise>
+											</c:choose>
+										</option>
+		 								</c:forEach>
+		 							</select>
+		 						</p>
 		 						<p>订单时间</p>
-		 						<p><input type="text" class="int-text int-small radius"></p>
-		 						<p>－</p>
-		 						<p><input type="text" class="int-text int-small radius"></p>
+		 						<p><input id="orderTimeStart" name="orderTimeStartStr" type="text" class="int-text int-small radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'orderTimeEnd\')}'})" readonly="readonly"></p>
+  								<p>－</p>
+  								<p><input id="orderTimeEnd" name="orderTimeEndStr" type="text" class="int-text int-small radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'orderTimeStart\')}',onpicked:function(dp){endtime();}})" readonly="readonly"></p>
 		 					</li>
 		 					<li class="mb-20">
 		 						<p>翻译用途</p>
-		 						<p><select class="select select-small radius"></select></p>
-		 						<p class="iocn-oder right"><input type="text" class="int-text int-medium radius pr-30"><i class=" icon-search"></i></p>
+		 						<p>
+			 						<select class="select select-small radius" name="useCode" id="useCode">
+			 							<c:forEach items="${purpostList}" var="purpose">
+											<option value="${purpose.purposeId}">
+												<c:choose>
+													<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${purpose.purposeCn}</c:when>
+													<c:otherwise>${purpose.purposeEn}</c:otherwise>
+												</c:choose>
+											</option>
+										</c:forEach>
+			 						</select>
+		 						</p>
+		 						<p class="iocn-oder right"><input id="translateName" name="translateName" type="text" class="int-text int-medium radius pr-30">
+		 							<i id="submitQuery" class=" icon-search"></i></p>
 		 					</li>
 		 					
 		 				</ul>
 		 			</div>
+		 			</form>
 		 			
 		 			<div class="right-list-table">
 		 				<table class="table table-hover table-bg">
@@ -69,135 +114,116 @@
 		              		</thead>
 		          		 </table>
 		 			</div>
-		 			<div class="right-list-table">
+		 			<!-- 订单列表 -->
+		 			<div class="right-list-table" id="searchOrderData"></div>
+		 			<script id="searchOrderTemple" type="text/template">
 		 				<table class="table  table-bg tb-border mb-20">
 		                   <thead>
 		                      <tr>
 		                           <th colspan="6" class="text-l">
 		                           		<div class="table-thdiv">
-		                           			<p>2015-04-07 09:53:51</p>
-		                           			<p>订单号：<span>198409857093246</span></p>
+		                           			<p>{{:~timesToFmatter(orderTime)}}</p>
+		                           			<p name="orderId">订单号：<span>{{:orderId}}</span></p>
 		                           			<p class="right">剩余2天23小时59分钟</p>
 		                           		</div>
 		                           </th>
 		                     </tr>
 		              		</thead>
 		                   <tbody>
+							<input type="hidden" name="orderId" value="{{:orderId}}">
+							<input type="hidden" name="unit" value="{{:currencyUnit}}">
+							<input type="hidden" name="state" value="{{:state}}">
 							<tr class="width-16">
-		                           <td>我要翻译一段话，不超过15……</td>
-		                           <td>中文→西班牙语</td>
-		                           <td>1000.00</td>
-		                           <td>翻译</td>
-		                           <td>已领取</td>
+		                           <td name="translateName">{{:translateName}}</td>
 		                           <td>
-		                           	<input type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="分 配">
-		                           	<input type="button"  class="btn biu-btn btn-auto-25 btn-green radius10"  value="翻 译">
-		                           </td>
-							 </tr>
-					    </tbody>
-		           		</table>
-		           		<table class="table  table-bg tb-border mb-20">
-		                   <thead>
-		                      <tr>
-		                           <th colspan="6" class="text-l">
-		                           		<div class="table-thdiv">
-		                           			<p>2015-04-07 09:53:51</p>
-		                           			<p>订单号：<span>198409857093246</span></p>
-		                           			<p class="right">剩余2天23小时59分钟</p>
-		                           		</div>
-		                           </th>
-		                     </tr>
-		              		</thead>
-					    <tbody>
-							<tr class="width-16">
-		                           <td>我要翻译一段话，不超过15……</td>
-		                           <td>中文→西班牙语</td>
-		                           <td>1000.00</td>
-		                           <td>翻译</td>
-		                           <td>已领取</td>
+									{{for ordProdExtendList}}
+										{{if #parent.parent.data.currentLan == 'zh_CN'}}
+											{{:langungePairChName}}
+										{{else}}
+											{{:langungePairEnName}}
+										{{/if}}
+									{{/for}}
+								   </td>
+		                           <td>{{:~liToYuan(totalFee)}}
+										{{if  currencyUnit == '1'}}
+											<spring:message code="myOrder.rmb"/>
+										{{else }}
+											<spring:message code="myOrder.dollar"/>
+										{{/if}}
+								   </td>
 		                           <td>
-		                           	<input type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10"  value="提 交">
-		                           </td>
+								   		{{if state  == '211' || state  == '23'}}
+											翻译
+										{{else state  == '40' || state  == '41' || state  == '42'}}
+											审校
+										{{/if}}
+								   </td>
+								   {{if  state  == '21'}}
+								   		<td>已领取</td>
+		                           		<td>
+		                           			<!-- <input type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="分 配"> -->
+		                           			<input name="trans" type="button"  class="btn biu-btn btn-auto-25 btn-green radius10"  value="翻 译">
+		                          		</td>
+								   {{else state  == '221'}}
+										<td>已分配</td>
+		                           		<td>
+		                           			<!-- <input name="assigne" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="分 配"> -->
+		                          		</td>
+								   {{else state  == '23'}}
+									<!-- 翻译中 -->
+										<td>翻译中</td>
+		                           		<td>
+		                           			<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="提交">
+		                          		</td>
+								   {{else state  == '40'}}
+									<!-- 待审核 -->
+										<td>待审核</td>
+		                           		<td>
+		                           			<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="提交">
+		                          		</td>
+								  {{else state  == '50'}}
+									<!-- 待确认 -->
+										<td>待确认</td>
+		                           		<td>
+		                          		</td>
+								   {{else state  == '90'}}
+									<!-- 已完成 -->
+										<td>已完成</td>
+		                           		<td>
+		                          		</td>
+								  {{else state  == '53'}}
+									<!-- 已评价 -->
+										<td>已评价</td>
+		                           		<td>
+											<!-- <input name="evaluated" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="已评价"> -->
+		                          		</td>
+								  {{else state  == '25'}}
+									<!-- 修改中 -->
+										<td>修改中</td>
+		                           		<td>
+											<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="提交">
+		                          		</td>
+								  {{else state  == '92'}}
+									<!-- 已退款 -->
+										<td>已退款</td>
+		                           		<td>
+		                          		</td>
+								   {{else }}
+										<td></td>
+										<td></td>
+								   {{/if}}
 							 </tr>
 					    </tbody>
 		           		</table>
-		           		<table class="table  table-bg tb-border mb-20">
-		                   <thead>
-		                      <tr>
-		                           <th colspan="6" class="text-l">
-		                           		<div class="table-thdiv">
-		                           			<p>2015-04-07 09:53:51</p>
-		                           			<p>订单号：<span>198409857093246</span></p>
-		                           			<p class="right">剩余2天23小时59分钟</p>
-		                           		</div>
-		                           </th>
-		                     </tr>
-		              		</thead>
-					    <tbody>
-							<tr class="width-16">
-		                           <td>我要翻译一段话，不超过15……</td>
-		                           <td>中文→西班牙语</td>
-		                           <td>1000.00</td>
-		                           <td>翻译</td>
-		                           <td>已领取</td>
-		                           <td>
-		                           	<input type="button"  class="btn biu-btn btn-auto-25 btn-green radius10"  value="翻 译">
-		                           </td>
-							 </tr>
-					    </tbody>
-		           		</table>
-		           		<table class="table  table-bg tb-border mb-20">
-		                   <thead>
-		                      <tr>
-		                           <th colspan="6" class="text-l">
-		                           		<div class="table-thdiv">
-		                           			<p>2015-04-07 09:53:51</p>
-		                           			<p>订单号：<span>198409857093246</span></p>
-		                           			<p class="right">剩余2天23小时59分钟</p>
-		                           		</div>
-		                           </th>
-		                     </tr>
-		              		</thead>
-					    <tbody>
-							<tr class="width-16">
-		                           <td>我要翻译一段话，不超过15……</td>
-		                           <td>中文→西班牙语</td>
-		                           <td>1000.00</td>
-		                           <td>翻译</td>
-		                           <td>已领取</td>
-		                           <td class="yellow-td-icon">
-		                            <a href="javaScript:void(0);">
-			                            	<i class="icon iconfont">&javaScript:void(0);xe6bc;</i>
-			                            	<i class="icon iconfont">&javaScript:void(0);xe6bc;</i>
-			                            	<i class="icon iconfont">&javaScript:void(0);xe6bc;</i>
-			                            	<i class="icon iconfont">&javaScript:void(0);xe6bc;</i>
-			                            	<i class="icon iconfont">&javaScript:void(0);xe754;</i>
-		                            </a>
-		                           </td>
-							 </tr>
-					    </tbody>
-		           		</table>
-		 			</div>
-				  	<div class="biu-paging paging-large">
-					 	<ul>
-						     <li class="prev-up"><a href="javaScript:void(0);"><</a></li>
-						     <li class="active"><a href="javaScript:void(0);">1</a></li>
-						     <li><a href="javaScript:void(0);">2</a></li>
-						     <li><a href="javaScript:void(0);">3</a></li>
-						     <li><a href="javaScript:void(0);">4</a></li>
-						     <li><a href="javaScript:void(0);">5</a></li>
-						     <li><a href="javaScript:void(0);">6</a></li>
-						     <li><a href="javaScript:void(0);">……</a></li>
-						     <li><a href="javaScript:void(0);">100</a></li>
-						     <li class="next-down"><a href="javaScript:void(0);">></a></li>
-						     <li>
-								<span>到</span>
-								<span><input type="text" class="int-verysmall radius"></span>
-								<span>页</span>
-							</li>
-							<li class="taiz"><a href="javaScript:void(0);">跳转</a></li>
-					  	 </ul>
+					</script>
+		 			<!-- 订单列表结束 -->
+		 			<div id="showMessageDiv"></div>
+		 			<!--分页-->
+		 			<div class="biu-paging paging-large">
+				 		<ul id="pagination-ul">
+				  		</ul>
 					</div>
+					<!--分页结束-->
 	 			</div>
 			</div>	
 		</div>
@@ -207,18 +233,45 @@
 <%@ include file="/inc/incJs.jsp" %>
 
 <script type="text/javascript">
+var pager;
 (function () {
-	
-  
-})
-
-//最上面 订单类型切换
-$(".oder-table ul li a").click(function () {
-	$(".oder-table ul li a").each(function () {
-	    $(this).removeClass("current");
+	seajs.use('app/jsp/transOrder/orderList', function(oderListPage) {
+		pager = new oderListPage({element : document.body});
+		pager.render();
 	});
-	$(this).addClass("current");
-});
+	
+	//最上面 订单类型切换
+	$(".oder-table ul li a").click(function () {
+		$(".oder-table ul li a").each(function () {
+		    $(this).removeClass("current");
+		});
+		$(this).addClass("current");
+		pager._orderListByType($(this).attr('state'));
+	});
+	
+	//订单详情 点击订单标题
+	 $('#searchOrderData').delegate("td[name='translateName']", 'click', function () {
+       	  window.location.href="${_base}/p/trans/order/"+$(this).parent().parent().find("input[name='orderId']").val();
+     });
+	   
+     //订单详情 点击订单号
+	$('#searchOrderData').delegate("p[name='orderId']", 'click', function () {
+		  window.location.href="${_base}/p/trans/order/"+$(this).parents("table").find("input[name='orderId']").val();
+	});
+       
+	//提交按钮
+	$('#searchOrderData').delegate("input[name='translateName']", 'click', function () {
+	 
+	});
+	
+	//翻译按钮
+	$('#searchOrderData').delegate("input[name='trans']", 'click', function () {
+		 window.location.href="${_base}/p/trans/order/"+$(this).parents("table").find("input[name='orderId']").val();
+	});
+	
+})();
+
+
   
 </script>
 </html>
