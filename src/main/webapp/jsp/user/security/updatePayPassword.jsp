@@ -343,7 +343,7 @@
 	var pager;
 	(function() {
 		seajs.use('app/jsp/user/security/updatePayPassword', function(updatePayPasswordPager) {
-			pager = new updatePasswordPager({
+			pager = new updatePayPasswordPager({
 				element : document.body
 			});
 			pager.render();
