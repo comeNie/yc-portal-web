@@ -122,7 +122,8 @@
                             <td>{{:~liToYuan(totalFee)}}</td>
                             <td>{{:takeDay}}天{{:takeTime}}小时</td>
                             <td>
-                                <input type="button" class="btn biu-btn btn-auto-25 btn-green radius10" value="领 取">
+                                <input type="button" name="getOrder" orderId="{{:orderId}}"
+                                       class="btn biu-btn btn-auto-25 btn-green radius10" value="领 取">
                             </td>
                         </tr>
                         </tbody>
@@ -140,6 +141,11 @@
 <script type="text/javascript">
     var pager;
     (function () {
+        //订单领取
+        $("#orderInfoTable").delegate("input[name='getOrder']", 'click', function () {
+            var orderId = $this.attr("orderId");
+            pager._getOrder(orderId);
+        });
         seajs.use('app/jsp/transOrder/taskCenter', function (taskCenterPage) {
             pager = new taskCenterPage({element: document.body});
             pager.render();

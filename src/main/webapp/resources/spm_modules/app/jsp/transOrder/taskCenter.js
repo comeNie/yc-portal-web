@@ -89,7 +89,11 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
 	            	}
 	            }
     		});
-        }
+        },
+		//领取订单
+		_getOrder:function(orderId){
+
+		}
     });
     module.exports = taskCenterPage;
 });
