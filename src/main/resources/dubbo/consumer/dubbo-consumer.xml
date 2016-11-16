@@ -51,8 +51,12 @@
 			interface="com.ai.slp.balance.api.accountquery.interfaces.IAccountQuerySV"/>
 	<dubbo:reference id="iDeductSV" registry="ycRegistry"
 			interface="com.ai.slp.balance.api.deduct.interfaces.IDeductSV"/>
-	<dubbo:reference id="incomeOutQuerySV" registry="ycRegistry" 
+	<dubbo:reference id="incomeOutQuerySV" registry="ycRegistry"
 	        interface="com.ai.slp.balance.api.incomeoutquery.interfaces.IncomeOutQuerySV"/>
-	<dubbo:reference id="iAccountMaintainSV" registry="ycRegistry" 
-	        interface="com.ai.slp.balance.api.accountmaintain.interfaces.IAccountMaintainSV"/>     
+	<dubbo:reference id="iAccountMaintainSV" registry="ycRegistry"
+	        interface="com.ai.slp.balance.api.accountmaintain.interfaces.IAccountMaintainSV"/>
+	<dubbo:reference id="iOrderWaitReceiveSV" registry="ycRegistry"
+			interface="com.ai.yc.order.api.orderreceivesearch.interfaces.IOrderWaitReceiveSV"/>
+	<dubbo:reference id="IOrderReceiveSV" registry="ycRegistry"
+			interface="com.ai.yc.order.api.orderreceive.interfaces.IOrderReceiveSV"/>
 </beans>

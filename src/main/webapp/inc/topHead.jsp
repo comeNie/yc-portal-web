@@ -24,7 +24,7 @@
                 <p><a href="${_base}/p/customer/order/list/view"><spring:message code="topMenue.myOrder"/></a></p>
                 <p><a href="#"><spring:message code="topMenue.Customers"/></a></p>
                 <%--我是服务商--%>
-                <p><a href="${_base}/p/trans/order/taskCenter/view"><spring:message code="topMenue.Suppliers"/></a></p>
+                <p><a href="${_base}/p/taskcenter/view"><spring:message code="topMenue.Suppliers"/></a></p>
                 <p class="none-border"><i class="icon iconfont">&#xe60b;</i><a href="#"><spring:message code="topMenue.Mobile"/></a></p>
                 <p class="none-border none-top">
                     <select id="langHeadSel" class="select select-topmini none-select ash-select"

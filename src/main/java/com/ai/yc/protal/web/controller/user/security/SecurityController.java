@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +21,9 @@ import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.slp.balance.api.accountmaintain.interfaces.IAccountMaintainSV;
 import com.ai.slp.balance.api.accountmaintain.param.AccountUpdateParam;
+import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
+import com.ai.yc.order.api.orderquery.param.QueryOrdCountRequest;
+import com.ai.yc.order.api.orderquery.param.QueryOrdCountResponse;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
@@ -52,7 +56,59 @@ public class SecurityController {
 	private static final String UPDATE_PASSWORD = "user/security/updatePassword";
 	private static final String ERROR_PAGE = "user/error";
 	private static final String UPDATE_PAY_PASSWORD = "user/security/updatePayPassword";
-
+	private static final String INDEX = "user/userIndex";
+	@RequestMapping("/index")
+	public ModelAndView toRegister() {
+		ModelAndView modelView = new ModelAndView(INDEX);
+		return modelView;
+	}
+	@RequestMapping("/orderStatusCount")
+	@ResponseBody
+    public Map<String,Integer> OrderStatusCount(){
+        //查询 订单数量
+        int unPaidCount =0;
+        int translateCount=0;
+        int unConfirmCount =0;
+        int unEvaluateCount =0;
+        QueryOrdCountResponse ordCountRes =null;
+       try {
+            String userId = UserUtil.getUserId();
+            IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
+            QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
+            ordCountReq.setUserId(userId);
+            
+            //待支付
+            ordCountReq.setDisplayFlag("11");
+            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+            unPaidCount=ordCountRes.getCountNumber();
+            
+            //翻译中
+            ordCountReq.setDisplayFlag("23");
+            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+            translateCount = ordCountRes.getCountNumber();
+            
+            //待确认
+            ordCountReq.setDisplayFlag("50");
+            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+            unConfirmCount =ordCountRes.getCountNumber();
+            
+            //待评价
+            ordCountReq.setDisplayFlag("52");
+            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+            unEvaluateCount =ordCountRes.getCountNumber();
+        } catch (Exception e) {
+        	LOG.error("查询订单数量失败:",e);
+        	if(ordCountRes!=null){
+        		LOG.error("查询订单数量失败:",JSON.toJSONString(ordCountRes));
+        	}
+        }
+       Map<String,Integer> countMap = new HashMap<>();
+       countMap.put("unPaidCount", unPaidCount);
+       countMap.put("translateCount", translateCount);
+       countMap.put("unConfirmCount", unConfirmCount);
+       countMap.put("unEvaluateCount", unEvaluateCount);    
+       return countMap;
+    }
 	@RequestMapping("seccenter")
 	public ModelAndView init() {
 		if (LOG.isDebugEnabled()) {

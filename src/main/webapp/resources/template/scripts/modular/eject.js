@@ -29,3 +29,19 @@ jQuery(document).ready(function($) {
 	$('#tran').slideUp(200);
 	})
 })
+
+//订单大厅弹出框 
+jQuery(document).ready(function($) {
+	$('#receive-btn').click(function(){
+	$('#eject-mask').fadeIn(100);
+	$('#receive').slideDown(100);
+	})
+	$('#receive-determine').click(function(){
+	$('#eject-mask').fadeOut(200);
+	$('#receive').slideUp(200);
+	})
+	$('#receive-close').click(function(){
+	$('#eject-mask').fadeOut(200);
+	$('#receive').slideUp(200);
+	})
+})
