@@ -2,13 +2,16 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
+		Dialog = require("optDialog/src/dialog"),
 	    AjaxController = require('opt-ajax/1.0.0/index');
     require("jsviews/jsrender.min");
     require("jsviews/jsviews.min");
     require("app/util/jsviews-ext");
 	require("opt-paging/aiopt.pagination");
 	require("my97DatePicker/WdatePicker");
-    
+	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
+
+    var ajaxController = new AjaxController();
     var taskCenterPage = Widget.extend({
     	//属性，使用时由类的构造函数传入
     	attrs: {
@@ -33,6 +36,14 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
     	setup: function () {
 			taskCenterPage.superclass.setup.call(this);
     		this._getOrderList();
+			//初始化国际化
+			$.i18n.properties({//加载资浏览器语言对应的资源文件
+				name: ["taskCenter"], //资源文件名称，可以是数组
+				path: _i18n_res, //资源文件路径
+				mode: 'both',
+				language: currentLan,
+				async: true
+			});
     	},
 		//金额排序处理
 		_feeSortFun:function(){
@@ -91,8 +102,30 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
     		});
         },
 		//领取订单
-		_getOrder:function(orderId){
-
+		_getOrder:function(intObj,orderId){
+			new Dialog({
+				content:"订单领取需按时完成,确认领取?",
+				icon:'prompt',
+				okValue: '确 定',
+				cancelValue:'取 消',
+				title: '领取订单',
+				ok:function(){
+					ajaxController.ajax({
+						type: "post",
+						url: _base+"/p/taskcenter/claim",
+						data: {'orderId': orderId,"lspId":lspId},
+						success: function(data){
+							//领取成功
+							if("1"===data.statusCode){
+								intObj.parent().html($.i18n.prop('task.center.claimed'));
+							}
+						}
+					});
+				},
+				cancel:function(){
+					this.close();
+				}
+			}).show();
 		}
     });
     module.exports = taskCenterPage;

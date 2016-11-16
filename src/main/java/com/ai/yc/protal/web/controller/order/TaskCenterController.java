@@ -10,6 +10,10 @@ import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.yc.order.api.orderquery.param.OrdOrderVo;
 import com.ai.yc.order.api.orderquery.param.OrdProdExtendVo;
 import com.ai.yc.order.api.orderquery.param.QueryOrderRsponse;
+import com.ai.yc.order.api.orderreceive.interfaces.IOrderReceiveSV;
+import com.ai.yc.order.api.orderreceive.param.OrderReceiveBaseInfo;
+import com.ai.yc.order.api.orderreceive.param.OrderReceiveRequest;
+import com.ai.yc.order.api.orderreceive.param.OrderReceiveResponse;
 import com.ai.yc.order.api.orderreceivesearch.interfaces.IOrderWaitReceiveSV;
 import com.ai.yc.order.api.orderreceivesearch.param.OrderWaitReceiveSearchInfo;
 import com.ai.yc.order.api.orderreceivesearch.param.OrderWaitReceiveSearchRequest;
@@ -75,7 +79,6 @@ public class TaskCenterController {
     /**
      * 获得待领取订单信息
      * 领域,用途,订单时间(单位:天),输入内容
-     * @param request
      * @return
      */
     @RequestMapping("/list")
@@ -142,12 +145,35 @@ public class TaskCenterController {
      */
     @RequestMapping("/claim")
     @ResponseBody
-    public ResponseData<String> claimOrder(String orderId,String lspId){
+    public ResponseData<String> claimOrder(Long orderId,String lspId){
         ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         String userId = UserUtil.getUserId();
         //译员类型
         String transType = StringUtils.isBlank(lspId)?"1":"0";
-
+        IOrderReceiveSV iOrderReceiveSV = DubboConsumerFactory.getService(IOrderReceiveSV.class);
+        OrderReceiveRequest receiveRequest = new OrderReceiveRequest();
+        OrderReceiveBaseInfo baseInfo = new OrderReceiveBaseInfo();
+        baseInfo.setOrderId(orderId);
+        baseInfo.setState("21");//状态为固定的
+        baseInfo.setInterperId(userId);
+        //译员类型 0:普通译员 1:LSP
+        String interperType = StringUtils.isNotBlank(lspId)?"1":"0";
+        baseInfo.setInterperType(interperType);
+        baseInfo.setLspId(lspId);
+        baseInfo.setLockTime(DateUtil.getFutureTime());
+        /*try {
+            OrderReceiveResponse receiveResponse = iOrderReceiveSV.orderReceive(receiveRequest);
+            ResponseHeader header =receiveResponse==null?null:receiveResponse.getResponseHeader();
+            if (header == null || !header.isSuccess()){
+                LOGGER.error("receiveOrder fail,head status:{},head info:{}",
+                        header==null?"null":header.getIsSuccess(),header==null?"null":header.getResultMessage());
+                throw new BusinessException("","");
+            }
+        }catch (Exception e){
+            LOGGER.error("Claim order is fail",e);
+            //领取失败
+            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,rb.getMessage(""));
+        }*/
         return responseData;
     }
 }

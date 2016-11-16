@@ -118,7 +118,7 @@
                         <tbody>
                         <tr class="width-16">
                             <td>{{:translateName}}</td>
-                            <td>中文→西班牙语</td>
+                            <td>{{if <%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>}}{{:languagePairName}}{{else}}{{:languageNameEn}}{{/if}}</td>
                             <td>{{:~liToYuan(totalFee)}}</td>
                             <td>{{:takeDay}}天{{:takeTime}}小时</td>
                             <td>
@@ -140,11 +140,12 @@
 <script type="text/javascript" src="${uedroot}/scripts/modular/jqueryrotate.2.3.js"></script>
 <script type="text/javascript">
     var pager;
+    var lspId="${lspId}";
     (function () {
         //订单领取
         $("#orderInfoTable").delegate("input[name='getOrder']", 'click', function () {
-            var orderId = $this.attr("orderId");
-            pager._getOrder(orderId);
+            var orderId = $(this).attr("orderId");
+            pager._getOrder($(this),orderId);
         });
         seajs.use('app/jsp/transOrder/taskCenter', function (taskCenterPage) {
             pager = new taskCenterPage({element: document.body});
