@@ -23,6 +23,7 @@ import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.util.StringUtil;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.PhoneVerify;
+import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.constants.Constants.UcenterOperation;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
@@ -113,6 +114,9 @@ public class RegisterController {
 				msg = resHeader.getResultMessage();
 
 			if (resHeader != null && resHeader.isSuccess()) {
+				String cacheKey = PictureVerify.VERIFY_IMAGE_KEY
+						+ request.getSession().getId();
+				VerifyUtil.delRedisValue(cacheKey);//清除验证码
 				sendRegisterEmaial(res.getUserId(), req.getEmail(),res.getOperationcode());
 				return new ResponseData<Boolean>(
 						ResponseData.AJAX_STATUS_SUCCESS, msg, true);
@@ -265,7 +269,6 @@ public class RegisterController {
 		String phone = request.getParameter("phone");
 		if (!StringUtil.isBlank(phone)) {
 			req.setMobilePhone(phone);
-			req.setLoginway("2");
 			req.setOperationcode(request.getParameter("smsCode"));
 			String key = PhoneVerify.REGISTER_PHONE_CODE + phone+PhoneVerify.PHONE_CODE_REGISTER_UID;
 		    String uid = (String) request.getSession().getAttribute(key);
@@ -274,8 +277,8 @@ public class RegisterController {
 		String email = request.getParameter("email");
 		if (!StringUtil.isBlank(email)) {
 			req.setEmail(email);
-			req.setLoginway("1");
 		}
+		req.setLoginway("4");
 		req.setUserName("yiyun" + RandomUtil.randomNum(10));
 		req.setNickname("译粉_" + RandomUtil.randomNum(8));
 		String password = request.getParameter("password");

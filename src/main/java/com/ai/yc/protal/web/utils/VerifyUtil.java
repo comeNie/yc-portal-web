@@ -263,8 +263,17 @@ public class VerifyUtil {
 			codeKey = PhoneVerify.UPDATE_DATA_PHONE_CODE + phone;
 		}
 		if (StringUtil.isBlank(codeKey)) {
+			delRedisValue(codeKey);
+		}
+	}
+	/**
+	 * 删除redis值
+	 * @param key
+	 */
+	public static void delRedisValue(String key){
+		if (StringUtil.isBlank(key)) {
 			ICacheClient iCacheClient = AiPassUitl.getCacheClient();
-			iCacheClient.del(codeKey);
+			iCacheClient.del(key);
 		}
 	}
 	/**
