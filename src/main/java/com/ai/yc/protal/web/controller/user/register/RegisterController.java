@@ -269,6 +269,7 @@ public class RegisterController {
 		String phone = request.getParameter("phone");
 		if (!StringUtil.isBlank(phone)) {
 			req.setMobilePhone(phone);
+			req.setLoginway("2");
 			req.setOperationcode(request.getParameter("smsCode"));
 			String key = PhoneVerify.REGISTER_PHONE_CODE + phone+PhoneVerify.PHONE_CODE_REGISTER_UID;
 		    String uid = (String) request.getSession().getAttribute(key);
@@ -277,8 +278,8 @@ public class RegisterController {
 		String email = request.getParameter("email");
 		if (!StringUtil.isBlank(email)) {
 			req.setEmail(email);
+			req.setLoginway("1");
 		}
-		req.setLoginway("4");
 		req.setUserName("yiyun" + RandomUtil.randomNum(10));
 		req.setNickname("译粉_" + RandomUtil.randomNum(8));
 		String password = request.getParameter("password");
