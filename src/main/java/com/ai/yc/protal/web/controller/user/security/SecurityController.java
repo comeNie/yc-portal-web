@@ -45,6 +45,7 @@ public class SecurityController {
 	private static final String INIT = "user/security/seccenter";
 	private static final String UPDATE_PASSWORD = "user/security/updatePassword";
 	private static final String ERROR_PAGE = "user/error";
+	private static final String UPDATE_PAY_PASSWORD = "user/security/updatePayPassword";
 
 	@RequestMapping("seccenter")
 	public ModelAndView init() {
@@ -110,6 +111,13 @@ public class SecurityController {
 	@RequestMapping("updatePassword")
 	public ModelAndView updatePassword() {
 		ModelAndView modelView = new ModelAndView(UPDATE_PASSWORD);
+		modelView.addObject("user", UserUtil.getSsoUser());
+		return modelView;
+	}
+	
+	@RequestMapping("updatePayPassword")
+	public ModelAndView updatePayPwd() {
+		ModelAndView modelView = new ModelAndView(UPDATE_PAY_PASSWORD);
 		modelView.addObject("user", UserUtil.getSsoUser());
 		return modelView;
 	}
