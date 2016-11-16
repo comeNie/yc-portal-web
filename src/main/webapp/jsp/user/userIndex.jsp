@@ -55,19 +55,19 @@
 					</div>
 					<div class="right-title-right">
 						<p>
-							<a href="#"> <span class="tp1"></span> <span>待支付<b id="unPaidCount">0</b></span>
+							<a href="javascript:void(0);"> <span class="tp1"></span> <span>待支付<b id="unPaidCount">0</b></span>
 							</a>
 						</p>
 						<p>
-							<a href="#"> <span class="tp2"></span> <span>翻译中<b id="translateCount">0</b></span>
+							<a href="javascript:void(0);"> <span class="tp2"></span> <span>翻译中<b id="translateCount">0</b></span>
 							</a>
 						</p>
 						<p>
-							<a href="#"> <span class="tp3"></span> <span>待确认<b id="unConfirmCount">0</b></span>
+							<a href="javascript:void(0);"> <span class="tp3"></span> <span>待确认<b id="unConfirmCount">0</b></span>
 							</a>
 						</p>
 						<p>
-							<a href="#"> <span class="tp4"></span> <span>待评价<b id="unEvaluateCount">0</b></span>
+							<a href="javascript:void(0);"> <span class="tp4"></span> <span>待评价<b id="unEvaluateCount">0</b></span>
 							</a>
 						</p>
 					</div>
