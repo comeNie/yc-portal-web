@@ -25,7 +25,7 @@ define("app/jsp/user/userIndex",function(require, exports, module) {
 		    		        success: function(data) {
 		    		        	for(var key in data)
 		    		        	{
-		    		        	    $("#"+key).html(data[key])
+		    		        	    $("#"+key).html(data[key]);
 		    		        	}
 		    		        }
 		    		});
