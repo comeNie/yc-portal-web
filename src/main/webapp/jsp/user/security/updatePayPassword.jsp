@@ -317,7 +317,7 @@
 								<div class="recharge-success mt-40">
 									<ul>
 										<li><img src="${uedroot}/images/rech-win.png"></li>
-										<li class="word">修改密码成功</li>
+										<li class="word">修改支付密码成功</li>
 									</ul>
 								</div>
 
@@ -343,7 +343,7 @@
 	var pager;
 	(function() {
 		seajs.use('app/jsp/user/security/updatePayPassword', function(updatePayPasswordPager) {
-			pager = new updatePasswordPager({
+			pager = new updatePayPasswordPager({
 				element : document.body
 			});
 			pager.render();

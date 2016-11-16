@@ -113,7 +113,8 @@ dependencies {
     
 	compile 'com.ai.yc.ucenter:members:1.1.1-SNAPSHOT'
 	compile 'com.ai.yc.common:country:1.0-SNAPSHOT'
-	
+	//支付密码修改
+	compile 'com.ai.slp.balance:accountmaintain:1.0-SNAPSHOT'
 	//jars for sms
 	
 	compile 'org.dom4j:dom4j:2.0.0'

@@ -2,6 +2,18 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 	var $ = require('jquery'), Widget = require('arale-widget/1.2.0/widget'),
 	Dialog = require("optDialog/src/dialog"),
 	AjaxController = require('opt-ajax/1.0.0/index');
+	var showMsg = function(msg){
+    	var d = Dialog({
+			content:msg,
+			icon:'fail',
+			okValue: '确 定',
+			title: '提示',
+			ok:function(){
+				d.close();
+			}
+		});
+		d.show();
+    };
 	// 实例化AJAX控制处理对象
 	var ajaxController = new AjaxController();
 	// 定义页面组件类
@@ -202,7 +214,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 				});
 		},
         _showMsg:function(msg){
-        	alert(msg);
+        	showMsg(msg);
         },
         _sendEmail:function(){
           var _this = this;
