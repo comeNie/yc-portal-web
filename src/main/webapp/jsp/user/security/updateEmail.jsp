@@ -81,9 +81,10 @@
  								<p class="word">手机:</p>
  								<p>
 									<select id="country" class="select select-in radius"></select>
+									<input id="tempCode" type="hidden"/>
 								</p>
  								
- 								<p id="telephone">13718206605</p>
+ 								<p id="telephone">${sessionScope.user_session_key.mobile}</p>
  							</li>
  							<li>
  								<p class="word">动态码:</p>
@@ -141,7 +142,7 @@
  								<p class="word">验证码:</p>
  								<p><input type="text" class="int-text int-in radius" id="phoneUEmailCode"></p>
  								<p><input type="button" class="btn border-green border-sma radius btn-medium" id="phone-send-email-btn" value="获取动态码"></p>
- 								<p><a href="#">立即进入邮箱</a></p>
+ 								<p><a id="goEmail1" href="javascript:void(0);">立即进入邮箱</a></p>
  							</li>
  						</ul>
  					</div>
@@ -223,13 +224,13 @@
  							<li>
  								<label class="ml-70" id="emailErrMsg" style="display: none;"></label>
  								<p class="word">已绑定邮箱:</p>
- 								<p>178070754@qq.com</p>
+ 								<p id="goEmail2Val">${sessionScope.user_session_key.email}</p>
  							</li>
  							<li>
  								<p class="word">动态码:</p>
  								<p><input type="text" class="int-text int-in radius" id="emailIdentifyCode"></p>
  								<p><input type="button" class="btn border-green border-sma radius btn-medium" id="sendEmailBtn" value="获取动态码"></p>
- 								<p><a href="#" id="goEmail">立即进入邮箱</a></p>
+ 								<p><a href="javascript:void(0);" id="goEmail2">立即进入邮箱</a></p>
  							</li>
  						</ul>
  					</div>
@@ -280,7 +281,7 @@
  								<p class="word">验证码:</p>
  								<p><input type="text" class="int-text int-in radius" id="uEmailCode"></p>
  								<p><input type="button" class="btn border-green border-sma radius btn-medium" id="email-sendCode-btn" value="获取验证码"></p>
- 								<p><a href="#">立即进入邮箱</a></p>
+ 								<p><a href="javascript:void(0);" id="goEmail3">立即进入邮箱</a></p>
  							</li>
  						</ul>
  					</div>
@@ -346,13 +347,17 @@ var pager;
 })();
 </script>
 <script type="text/javascript">
-	 //var email = "${sessionScope.user_session_key.mobile}";
-	//var phone = "${sessionScope.user_session_key.email}";
-	var email = "178070754@qq.com";
-	var phone = "13718206605";
+	var phone = "${sessionScope.user_session_key.mobile}";
+	var email = "${sessionScope.user_session_key.email}";
 	$(document).ready(function(){
-		$("#goEmail").click(function(){
+		$("#goEmail1").click(function(){
+			$emailHandle.openEmail($("#phoneUEmail").val());
+		});
+		$("#goEmail2").click(function(){
 			$emailHandle.openEmail(email);
+		});
+		$("#goEmail3").click(function(){
+			$emailHandle.openEmail($("#emailUpdateEmail").val());
 		});
 	});
 	var updateEmailMsg = {

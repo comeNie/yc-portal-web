@@ -5,6 +5,7 @@ import com.ai.opt.sdk.components.mcs.MCSClientFactory;
 import com.ai.paas.ipaas.ccs.IConfigClient;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.paas.ipaas.util.StringUtil;
+import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.alibaba.fastjson.JSONObject;
 
@@ -19,7 +20,7 @@ public class AiPassUitl {
 	public static ICacheClient getCacheClient() {
 		// 获取cache客户端
 		ICacheClient iCacheClient = MCSClientFactory
-				.getCacheClient(Register.CACHE_NAMESPACE);
+				.getCacheClient(Constants.DEFAULT_YC_CACHE_NAMESPACE);
 		return iCacheClient;
 	}
     /**

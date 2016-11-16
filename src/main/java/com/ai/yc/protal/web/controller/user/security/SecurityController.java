@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
@@ -46,6 +45,7 @@ public class SecurityController {
 	private static final String INIT = "user/security/seccenter";
 	private static final String UPDATE_PASSWORD = "user/security/updatePassword";
 	private static final String ERROR_PAGE = "user/error";
+	private static final String UPDATE_PAY_PASSWORD = "user/security/updatePayPassword";
 
 	@RequestMapping("seccenter")
 	public ModelAndView init() {
@@ -114,6 +114,13 @@ public class SecurityController {
 		modelView.addObject("user", UserUtil.getSsoUser());
 		return modelView;
 	}
+	
+	@RequestMapping("updatePayPassword")
+	public ModelAndView updatePayPwd() {
+		ModelAndView modelView = new ModelAndView(UPDATE_PAY_PASSWORD);
+		modelView.addObject("user", UserUtil.getSsoUser());
+		return modelView;
+	}
 
 	@RequestMapping("bindEmail")
 	public ModelAndView bindEmail() {
@@ -127,11 +134,7 @@ public class SecurityController {
 
 	@RequestMapping("editEmail")
 	public ModelAndView editEmail() {
-		Map<String, Object> model = new HashMap<String, Object>();
-		UcMembersEditEmailRequest emailRequest = new UcMembersEditEmailRequest();
-		emailRequest.setEmail("178070754@qq.com");
-		model.put("ucMembersEditEmail", emailRequest);
-		return new ModelAndView("user/security/updateEmail", model);
+		return new ModelAndView("user/security/updateEmail");
 	}
 
 	@RequestMapping("bindPhone")
@@ -141,26 +144,45 @@ public class SecurityController {
 
 	@RequestMapping("editPhone")
 	public ModelAndView editPhone() {
-		Map<String, Object> model = new HashMap<String, Object>();
-		UcMembersEditEmailRequest emailRequest = new UcMembersEditEmailRequest();
-		emailRequest.setEmail("178070754@qq.com");
-		model.put("UcMembersEditEmail", emailRequest);
 		return new ModelAndView("user/security/updateMobilePhone");
 	}
 
 	@RequestMapping("updateEmail")
 	@ResponseBody
-	public String updateEmail() {
-		ResponseData<String> responseData = null;
-		responseData = new ResponseData<String>(
-				ResponseData.AJAX_STATUS_SUCCESS, "修改密码成功", "修改密码成功");
-		// IUcMembersSV ucMembersSV =
-		// DubboConsumerFactory.getService(IUcMembersSV.class);
-		ResponseHeader header = new ResponseHeader();
-		header.setIsSuccess(true);
-		header.setResultCode(Constants.SUCCESS_CODE);
-		responseData.setResponseHeader(header);
-		return JSON.toJSONString(responseData);
+	public ResponseData<Boolean>  updateEmail(@RequestParam("email") String email,
+			@RequestParam("code") String code) {
+		String msg = "error";
+		boolean isOK = false;
+		try {
+			UcMembersEditEmailRequest req = new UcMembersEditEmailRequest();
+			req.setTenantId(Constants.DEFAULT_TENANT_ID);
+			req.setEmail(email);
+			req.setOperationcode(code);;
+			req.setUid(Integer.parseInt(UserUtil.getUserId()));
+
+			IUcMembersSV iUcMembersSV = DubboConsumerFactory
+					.getService(IUcMembersSV.class);
+			UcMembersResponse res = iUcMembersSV.ucEditEmail(req);
+			ResponseCode responseCode = res == null ? null : res.getCode();
+			Integer codeNumber = responseCode == null ? null : responseCode
+					.getCodeNumber();
+			LOG.info("--------修改邮箱返回 :" + JSON.toJSONString(res));
+			if (codeNumber != null && codeNumber == 1) {
+				isOK = true;
+				 msg = "ok";
+				 GeneralSSOClientUser user =UserUtil.getSsoUser();
+				 user.setEmail(email);
+				 UserUtil.saveSsoUser(user);
+			} else {
+				msg = responseCode.getCodeMessage();
+			}
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
+
+		ResponseData<Boolean> responseData = new ResponseData<Boolean>(
+				ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
+		return responseData;
 	}
 
 	@RequestMapping("updatePhone")
@@ -186,6 +208,9 @@ public class SecurityController {
 			if (codeNumber != null && codeNumber == 1) {
 				isOK = true;
 				 msg = "ok";
+				 GeneralSSOClientUser user =UserUtil.getSsoUser();
+				 user.setMobile(phone);
+				 UserUtil.saveSsoUser(user);
 			} else {
 				msg = responseCode.getCodeMessage();
 			}
@@ -207,8 +232,9 @@ public class SecurityController {
 		try {
 			String checkType = request.getParameter("checkType");
 			String checkVal = request.getParameter("checkVal");
-			String msg = "帐号已存在";
-			Boolean canUse = checkPhoneOrEmail(checkType, checkVal);
+			Object[] result = checkPhoneOrEmail(checkType, checkVal);
+			Boolean canUse = (Boolean) result[0];
+			String msg =  (String) result[1];
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 					msg, canUse);
 		} catch (Exception e) {
@@ -221,7 +247,7 @@ public class SecurityController {
 	/**
 	 * 校验手机或邮箱可用
 	 */
-	private Boolean checkPhoneOrEmail(String checkType, String checkVal) {
+	private Object[] checkPhoneOrEmail(String checkType, String checkVal) {
 		UcMembersResponse res = null;
 		try {
 			IUcMembersSV sv = DubboConsumerFactory
@@ -243,13 +269,17 @@ public class SecurityController {
 		} catch (Exception e) {
 			LOG.info(e.getMessage(), e);
 		}
-		if (res != null && res.getMessage() != null
-				&& res.getMessage().isSuccess() && res.getCode() != null
-				&& res.getCode().getCodeNumber() != null
-				&& res.getCode().getCodeNumber() == 1) {
-			return true;
+		ResponseCode responseCode = res == null ? null : res.getCode();
+		Integer codeNumber = responseCode == null ? null : responseCode
+				.getCodeNumber();
+		boolean falg =false;
+		String msg ="ok";
+		if (codeNumber != null && codeNumber == 1) {
+			falg = true;
+		} else {
+			msg = responseCode.getCodeMessage();
 		}
-		return false;
+		return new Object[]{falg,msg};
 	}
 
 }

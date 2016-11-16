@@ -24,7 +24,6 @@ import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.PhoneVerify;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
-import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
 import com.alibaba.fastjson.JSONObject;
 
@@ -215,7 +214,7 @@ public class VerifyUtil {
 			String cacheKey = PictureVerify.VERIFY_IMAGE_KEY
 					+ request.getSession().getId();
 			String imgCode = request.getParameter("imgCode");
-			Boolean isRight = checkImageVerifyCode(Register.CACHE_NAMESPACE,
+			Boolean isRight = checkImageVerifyCode(Constants.DEFAULT_YC_CACHE_NAMESPACE,
 					cacheKey, imgCode);
 			if (isRight) {
 				errorMsg = "ok";
@@ -264,8 +263,17 @@ public class VerifyUtil {
 			codeKey = PhoneVerify.UPDATE_DATA_PHONE_CODE + phone;
 		}
 		if (StringUtil.isBlank(codeKey)) {
+			delRedisValue(codeKey);
+		}
+	}
+	/**
+	 * 删除redis值
+	 * @param key
+	 */
+	public static void delRedisValue(String key){
+		if (StringUtil.isBlank(key)) {
 			ICacheClient iCacheClient = AiPassUitl.getCacheClient();
-			iCacheClient.del(codeKey);
+			iCacheClient.del(key);
 		}
 	}
 	/**

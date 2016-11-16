@@ -67,6 +67,8 @@ import com.ai.yc.order.api.orderquery.param.QueryOrderRsponse;
 import com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV;
 import com.alibaba.fastjson.JSONObject;
 
+import sun.util.LocaleServiceProviderPool.LocalizedObjectGetter;
+
 /**
  * 客户订单
  * Created by liutong on 16/11/3.
@@ -138,7 +140,7 @@ public class CustomerOrderController {
         String pageSize = request.getParameter("pageSize");
         
         try {
-            //用户名
+            //用户id
             String userId = UserUtil.getUserId();
             
             QueryOrderRequest orderReq = new QueryOrderRequest();
@@ -175,27 +177,35 @@ public class CustomerOrderController {
         return resData;
     }
     
+    /**
+     * 取消订单，在未支付的情况下取消
+     * @param orderId
+     * @return
+     * @author mimw
+     */
     @RequestMapping("/cancelOrder")
     @ResponseBody
     public ResponseData<String> cancelOrder(String orderId) {
         ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
 
-//        try {
-//            IOrderCancelSV iOrderCancelSV = DubboConsumerFactory.getService(IOrderCancelSV.class);
-//            OrderCancelRequest cancelReq = new OrderCancelRequest();
-//            cancelReq.setOrderId(Long.valueOf(orderId));
-//            BaseResponse baseRes = iOrderCancelSV.handCancelNoPayOrder(cancelReq);
-//            ResponseHeader resHeader = baseRes.getResponseHeader();
-//            //如果返回值为空,或返回信息中包含错误信息,返回失败
-//            if (baseRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-//                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"取消订单失败");
-//            } else {
-//                resData.setData("取消成功");
-//             }
-//        } catch(Exception e) {
-//            LOGGER.error("取消订单失败：", e);
-//            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"取消订单失败");
-//        }
+        try {
+            IOrderCancelSV iOrderCancelSV = DubboConsumerFactory.getService(IOrderCancelSV.class);
+            OrderCancelRequest cancelReq = new OrderCancelRequest();
+            cancelReq.setOrderId(Long.valueOf(orderId));
+            cancelReq.setOperId(UserUtil.getUserId()); //操作员id 传入的是用户id
+            BaseResponse baseRes = iOrderCancelSV.handCancelNoPayOrder(cancelReq);
+            ResponseHeader resHeader = baseRes.getResponseHeader();
+            LOGGER.info("取消订单返回 ："+JSONObject.toJSONString(baseRes));
+            //如果返回值为空,或返回信息中包含错误信息,返回失败
+            if (baseRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
+                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"取消订单失败");
+            } else {
+                resData.setData("取消成功");
+             }
+        } catch(Exception e) {
+            LOGGER.error("取消订单失败：", e);
+            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"取消订单失败");
+        }
         
         return resData;
     }

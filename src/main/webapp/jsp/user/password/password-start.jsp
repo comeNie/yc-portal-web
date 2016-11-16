@@ -255,7 +255,7 @@
  							<li>
  								<p class="word">验证码:</p>
  								<p><input type="text" class="int-text int-in radius" id="emailIdentifyCode"></p>
- 								<p><input type="button" class="btn biu-btn radius btn-medium" value="发送验证邮件" id="sendEmailBtn"></p>
+ 								<p><input type="button" class="btn border-green border-sma radius btn-medium" value="发送验证邮件" id="sendEmailBtn"></p>
  								<p><a href="#" id="goEmail">立即进入邮箱</a></p>
  							</li>
  						</ul>

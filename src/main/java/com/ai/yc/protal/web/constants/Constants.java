@@ -4,7 +4,8 @@ public final class Constants {
 
 	private Constants() {
 	}
-
+	/** 默认缓存命名空间 */
+	public static final String DEFAULT_YC_CACHE_NAMESPACE = "com.ai.yc.protal.web.default.cache";
 	public static final java.lang.String SUCCESS_CODE = "000000";
 
 	public static final String ERROR_CODE = "111111";
@@ -39,8 +40,6 @@ public final class Constants {
 
 		/** 验证码ccs配置路径 */
 		public static final String VERIFICATION_CCS_NAMESPACE = "/com/ai/opt/verification-code-config";
-		/** 缓存命名空间 */
-		public static final String CACHE_NAMESPACE = "com.ai.yc.protal.web.register.cache";
 		/** 注册邮件中文模版 */
 		public static final String REGISTER_EMAIL_ZH_CN_TEMPLATE = "email/template/yc-register_zh_cn-mail.xml";
 		/** 注册邮件英文模版 */

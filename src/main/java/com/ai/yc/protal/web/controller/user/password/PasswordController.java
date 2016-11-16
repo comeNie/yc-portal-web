@@ -52,6 +52,7 @@ public class PasswordController {
 		return new ModelAndView("/user/password/password-start");
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/checkAccountInfo")
 	@ResponseBody
 	public ResponseData<Map<Object,Object>> checkAccountInfo(String account) {
@@ -62,9 +63,10 @@ public class PasswordController {
 					.getService(IUcMembersSV.class);
 			UcMembersGetRequest membersGetRequest = new UcMembersGetRequest();
 			membersGetRequest.setUsername(account);
-			membersGetRequest.setGetmode("4");
+			membersGetRequest.setGetmode("5");
 			UcMembersGetResponse getResponse = ucMembersSV
 					.ucGetMember(membersGetRequest);
+			@SuppressWarnings("rawtypes")
 			Map getDate = getResponse.getDate();
 			if (getDate == null) {
 				header = new ResponseHeader(false, Constants.ERROR_CODE, "失败");

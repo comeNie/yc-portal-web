@@ -26,8 +26,8 @@ define("app/jsp/user/security/updateEmail",
 							//手机验证身份下一步
 							"click #next-bt1":"_checkPhoneDynamicode",
 							//校验邮箱地址
-							"blur #phoneUEmail":"_pcheckEmail",
-							//校验手机合法性
+							//"blur #phoneUEmail":"_pcheckEmail",
+							//手机方式验证后发送新邮箱
 							"click #phone-send-email-btn":"_psendEmail",
 							//校验手机和动态码是否匹配
 							"click #pnext-bt2":"_submitEmailValue",
@@ -37,7 +37,7 @@ define("app/jsp/user/security/updateEmail",
 							/**
 							 * 通过邮箱修改邮箱
 							 */
-							//验证身份发送邮件
+							//邮箱方式验证身份发送邮件
 							"click #sendEmailBtn" : "_sendEmail",
 							//邮箱验证下一步
 							"click #next-bt4":"_checkEmailImageCode",
@@ -127,7 +127,7 @@ define("app/jsp/user/security/updateEmail",
 							ajaxController.ajax({
 								type : "POST",
 								data : {
-									"email": "178070754@qq.com",
+									"email": email,
 									"type":"5"
 								},
 								dataType: 'json',
@@ -170,12 +170,19 @@ define("app/jsp/user/security/updateEmail",
 						 * 发送邮件
 						 */
 						_psendEmail:function(){
+							var emailVal = $("#phoneUEmail").val();
+							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
+									.test(emailVal)) {
+								$("#phoneUEmailErrMgs").show();
+								$("#phoneUEmailErrMgs").text("邮箱格式不正确");
+								return;
+							}
 							var _this = this;
 							$("#phone-send-email-btn").attr("disabled", true);
 							ajaxController.ajax({
 								type : "POST",
 								data : {
-									"email": "178070754@qq.com",
+									"email": emailVal,
 									"type":"5"
 								},
 								dataType: 'json',
@@ -202,7 +209,6 @@ define("app/jsp/user/security/updateEmail",
 							                clearInterval(_res);//清除setInterval
 							                }
 							            },1000);
-							            //window.location.href = _base+"/user/bandEmail/sendBandEmailSuccess?email="+$("#email").val();
 										
 									}
 								},
@@ -355,22 +361,19 @@ define("app/jsp/user/security/updateEmail",
 				    				});
 						},
 						/* 邮箱校验 */
-						_checkEmail : function() {
-							var email = $("#emailUpdateEmail");
+						_checkEmail : function(id) {
+							var email = $("#"+id);
 							var emailVal = email.val();
 							if ($.trim(emailVal) == "") {
-								$("#emailUErrMsg").show();
-								$("#emailUErrMsg").text("请输入邮箱地址");
+								alert("请输入邮箱地址");
 								//email.focus();
 								return false;
 							}
 							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
 									.test(emailVal)) {
-								$("#emailUErrMsg").show();
-								$("#emailUErrMsg").text("请输入合法邮箱地址");
+								alert("请输入合法邮箱地址");
 								return false;
 							}
-							$("#emailUErrMsg").hide();
 							return true;
 						},
 						_pcheckEmail:function(){
@@ -488,7 +491,7 @@ define("app/jsp/user/security/updateEmail",
 						 * 邮箱修改手机号，获取动态码
 						 */
 						_sendEmailUDynamiCode:function(){
-							if (this._checkEmail()) {
+							if (this._checkEmail('emailUpdateEmail')) {
 								  this._sendEmailUEmailDynamiCode();
 							  }
 						},
@@ -506,7 +509,7 @@ define("app/jsp/user/security/updateEmail",
 								type:"post",
 			    				url:_base+"/userCommon/checkEmailCode",
 			    				data:{
-			    					email:"178070754@qq.com",
+			    					email:email,
 			    					code:$("#emailIdentifyCode").val(),
 			    				},
 			    		        success: function(data) {
@@ -536,41 +539,19 @@ define("app/jsp/user/security/updateEmail",
 								 return false;
 							 }
 							 ajaxController.ajax({
-								    type:"post",
-				    				url:_base+"/userCommon/checkEmailCode",
-				    				data:{
-				    					email:$("#emailUpdateEmail").val(),
+    		        			 type:"post",
+				    			 url:_base+"/p/security/updateEmail",
+				    			 data:{
+				    				 	email:$("#emailUpdateEmail").val(),
 				    					type:"5",
 				    					code:$("#uEmailCode").val(),
 				    				},
-				    		        success: function(data) {
-				    		        	if(!data.data){
-				    		        		$("#emailUErrMsg").show();
-											$("#emailUErrMsg").text(data.statusInfo);
-											return false;
-				    		        	}else{
-				    		        		 ajaxController.ajax({
-				    		        			 type:"post",
-								    			 url:_base+"/p/security/updateEmail",
-								    			 data:{
-								    				 	email:$("#emailUpdateEmail").val(),
-								    					type:"5",
-								    					code:$("#uEmailCode").val(),
-								    				},
-								    				success: function(data) {
-								    					var jsonData = JSON.parse(data);
-								    		        	if(jsonData.statusCode!="1"){
-								    		        		alert("修改失败")
-															return false;
-								    		        	}else{
-								    		        		$("#next5").hide();
-								    		        		$("#next6").show();
-								    		        	}
-								    		          },
-								    				error: function(error) {
-								    						alert("error:"+ error);
-								    					}
-								    				});
+				    				success: function(json) {
+				    					if(!json.data){
+				    		        		alert(json.statusInfo)
+										}else{
+				    		        		$("#next5").hide();
+				    		        		$("#next6").show();
 				    		        	}
 				    		          },
 				    				error: function(error) {
@@ -589,41 +570,19 @@ define("app/jsp/user/security/updateEmail",
 								 return false;
 							 }
 							 ajaxController.ajax({
-								    type:"post",
-				    				url:_base+"/userCommon/checkEmailCode",
-				    				data:{
-				    					email:$("#phoneUEmail").val(),
-				    					type:"5",
-				    					code:$("#phoneUEmailCode").val(),
+    		        			 type:"post",
+				    			 url:_base+"/p/security/updateEmail",
+				    			 data:{
+				    				 	'email':$("#phoneUEmail").val(),
+				    					'code':$("#phoneUEmailCode").val()
 				    				},
-				    		        success: function(data) {
-				    		        	if(!data.data){
-				    		        		$("#phoneUEmailErrMgs").show();
-											$("#phoneUEmailErrMgs").text(data.statusInfo);
-											return false;
+				    				success: function(json) {
+				    					if(!json.data){
+				    		        		alert(json.statusInfo)
+											return;
 				    		        	}else{
-				    		        		 ajaxController.ajax({
-				    		        			 type:"post",
-								    			 url:_base+"/p/security/updateEmail",
-								    			 data:{
-								    				 	email:$("#phoneUEmail").val(),
-								    					type:"5",
-								    					code:$("#phoneUEmailCode").val(),
-								    				},
-								    				success: function(data) {
-								    					var jsonData = JSON.parse(data);
-								    		        	if(jsonData.statusCode!="1"){
-								    		        		alert("修改失败")
-															return false;
-								    		        	}else{
-								    		        		$("#next2").hide();
-								    		        		$("#next3").show();
-								    		        	}
-								    		          },
-								    				error: function(error) {
-								    						alert("error:"+ error);
-								    					}
-								    				});
+				    		        		$("#next2").hide();
+				    		        		$("#next3").show();
 				    		        	}
 				    		          },
 				    				error: function(error) {

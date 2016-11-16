@@ -86,7 +86,7 @@
   					<li id="pay_password_icon_color"  class="red"><i id="pay_password_icon" class="icon-remove-sign"></i></li>
   					<li class="word"><spring:message code="ycaccountcenter.setting.paypassword"/></li>
   					<li id="pay_password_text"><spring:message code="ycaccountcenter.setting.paypassword.unset"/></li>
-  					<li class="right"><a href="#"><spring:message code="ycaccountcenter.setting.set"/></a></li>
+  					<li class="right"><a href="${_base}/p/security/updatePayPassword"><spring:message code="ycaccountcenter.setting.set"/></a></li>
   				</ul>
   			</div>
  			

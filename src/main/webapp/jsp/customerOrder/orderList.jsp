@@ -147,7 +147,7 @@
 	<tr>
  		<th colspan="6" class="text-l">
  			<div class="table-thdiv">
- 				<p>{{:orderTime}}</p>
+ 				<p>{{:~timesToFmatter(orderTime)}}</p>
  				<p name="orderId"><spring:message code="myOrder.Ordernumber"/>：<span>{{:orderId}}</span></p>
 				{{if  displayFlag == '11'}}
 					<!-- 剩余2天23小时59分钟  待支付-->
@@ -179,7 +179,7 @@
 					{{/if}}
 				{{/for}}
 			</td>
-            <td>{{:totalFee}}
+            <td>{{:~liToYuan(totalFee)}}
 				{{if  currencyUnit == '1'}}
 					<spring:message code="myOrder.rmb"/>
 				{{else }}
@@ -265,7 +265,7 @@ var pager;
 	   
 	   //订单详情 点击订单标题
        $('#searchOrderData').delegate("td[name='translateName']", 'click', function () {
-       	  window.location.href="${_base}/p/customer/order/"+$(this).parent().parent().find("input[name='orderId']").val() +"?displayFlag="+$(this).parent().parent().find("input[name='displayFlag']").val();
+       	  window.location.href="${_base}/p/customer/order/"+$(this).parent().parent().find("input[name='orderId']").val();
        });
 	   
        //订单详情 点击订单号
