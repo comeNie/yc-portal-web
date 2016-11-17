@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,6 +45,7 @@ import com.ai.opt.sdk.components.dss.DSSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.dss.base.interfaces.IDSSClient;
+import com.ai.paas.ipaas.i18n.ZoneContextHolder;
 import com.ai.yc.order.api.orderclose.interfaces.IOrderCancelSV;
 import com.ai.yc.order.api.orderclose.param.OrderCancelRequest;
 import com.ai.yc.order.api.orderdetails.interfaces.IQueryOrderDetailsSV;
@@ -144,11 +146,19 @@ public class CustomerOrderController {
             //TODO 现在是假名字 test， 用户id也暂时关闭
             orderReq.setUserName("test");
 //            orderReq.setUserId("userId");
+            
+            //获取当前用户所处时区
+            TimeZone timeZone = TimeZone.getTimeZone(ZoneContextHolder.getZone());
+            
             if (StringUtils.isNotEmpty(orderTimeStart)) {
-                orderReq.setOrderTimeStart(Timestamp.valueOf(orderTimeStart + " 00:00:00"));
+                String dateTmp = orderTimeStart+" 00:00:00";
+                Timestamp date =DateUtil.getTimestamp(dateTmp,DateUtil.DATETIME_FORMAT,timeZone);
+                orderReq.setOrderTimeStart(date);
             }
             if (StringUtils.isNotEmpty(orderTimeEnd)) {
-                orderReq.setOrderTimeEnd(Timestamp.valueOf(orderTimeEnd + " 23:59:59"));
+                String dateTmp = orderTimeEnd+" 00:00:00";
+                Timestamp date =DateUtil.getTimestamp(dateTmp,DateUtil.DATETIME_FORMAT,timeZone);
+                orderReq.setOrderTimeEnd(date);
             }
             if (StringUtils.isNotEmpty(stateListStr)) {
                 List<Object> states = JSONArray.parseArray(stateListStr);
@@ -335,8 +345,8 @@ public class CustomerOrderController {
     @RequestMapping("/{orderId}")
     public String orderInfoView(@PathVariable("orderId") String orderId, Model uiModel){
         
-        //TODO 跳转错误页面
         if (StringUtils.isEmpty(orderId)) {
+            return "/404";
         }
         
         try {

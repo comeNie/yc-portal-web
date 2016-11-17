@@ -116,7 +116,6 @@ public class TransOrderController {
      */
     @RequestMapping("/{orderId}")
     public String orderInfoView(@PathVariable("orderId") String orderId, Model uiModel){
-        //TODO 跳转错误页面
         if (StringUtils.isEmpty(orderId)) {
             return "/404";
         }
@@ -220,8 +219,9 @@ public class TransOrderController {
             IOrderStateUpdateSV iOrderStateUpdateSV = DubboConsumerFactory.getService(IOrderStateUpdateSV.class);
             OrderStateUpdateRequest stateReq = new OrderStateUpdateRequest();
             stateReq.setOrderId(orderId);
-            stateReq.setState("24"); //已提交
-           
+            stateReq.setState("40"); //已提交
+            stateReq.setDisplayFlag("23");
+            
             OrderStateUpdateResponse stateRes = iOrderStateUpdateSV.updateState(stateReq);
             resHeader = stateRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息
@@ -295,13 +295,15 @@ public class TransOrderController {
      */
     @RequestMapping("/updateState")
     @ResponseBody
-    public ResponseData<String> updateOrderState(@RequestParam("orderId") Long orderId, @RequestParam("state") String state) {
+    public ResponseData<String> updateOrderState(@RequestParam("orderId") Long orderId, @RequestParam("state") String state
+            ,@RequestParam("displayFlag") String displayFlag) {
         ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "OK");
         try {
             IOrderStateUpdateSV iOrderStateUpdateSV = DubboConsumerFactory.getService(IOrderStateUpdateSV.class);
             OrderStateUpdateRequest stateReq = new OrderStateUpdateRequest();
             stateReq.setOrderId(orderId);
             stateReq.setState(state);
+            stateReq.setDisplayFlag(displayFlag);
            
             OrderStateUpdateResponse stateRes = iOrderStateUpdateSV.updateState(stateReq);
             ResponseHeader resHeader = stateRes.getResponseHeader();
@@ -327,7 +329,7 @@ public class TransOrderController {
      */
     @RequestMapping(value="/deleteFile", method=RequestMethod.POST)
     @ResponseBody 
-    public ResponseData<String> fileUpload(@RequestParam("orderId") Long orderId, @RequestParam("fileId") String fileId){
+    public ResponseData<String> deleteFile(@RequestParam("orderId") Long orderId, @RequestParam("fileId") String fileId){
         ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "OK");
         
         try {

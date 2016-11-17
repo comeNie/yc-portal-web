@@ -87,6 +87,26 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
     		});
         },
         
+        //确认订单
+        _confirm:function(orderId) {
+        	ajaxController.ajax({
+				type: "post",
+				url: _base + "/p/trans/order/updateState",
+				data: {
+					orderId: orderId,
+					state: "51",
+					displayFlag: "52",
+				},
+				success: function (data) {
+					if ("1" === data.statusCode) {
+						//成功
+						//刷新页面
+			    		window.location.reload();
+					}
+				}
+			});
+        },
+        
         //取消订单
         _cancelOrder:function(orderId) {
         	ajaxController.ajax({
