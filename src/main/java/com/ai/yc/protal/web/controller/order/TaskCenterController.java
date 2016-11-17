@@ -131,7 +131,7 @@ public class TaskCenterController {
             searchInfo.setTranslateName("1.下单流程中的“支付”环节，");
             searchInfo.setLanguagePairName("中文-英文");
             searchInfo.setLanguageNameEn("ch-en");
-            searchInfo.setOrderTime(DateUtil.getFutureTime());
+            searchInfo.setOrderTime(new Timestamp(System.currentTimeMillis()));
             searchInfo.setTotalFee(1000000l);
             searchInfo.setTakeDay("1");
             searchInfo.setTakeTime("2");
@@ -185,6 +185,8 @@ public class TaskCenterController {
                         header==null?"null":header.getIsSuccess(),header==null?"null":header.getResultMessage());
                 throw new BusinessException("","");
             }
+            //如果是领取订单数达到上限,则进行提示 TODO...
+            rb.getMessage("order.info.claim.max");
         }catch (Exception e){
             LOGGER.error("Claim order is fail",e);
             //领取失败
