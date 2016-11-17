@@ -114,7 +114,8 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				url: _base + "/p/trans/order/updateState",
 				data: {
 					orderId: $("#orderId").val(),
-					state: "23"
+					state: "23",
+					displayFlag: "23",
 				},
 				success: function (data) {
 					if ("1" === data.statusCode) {

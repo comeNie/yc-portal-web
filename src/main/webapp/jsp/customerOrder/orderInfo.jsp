@@ -309,9 +309,17 @@
                         	<!-- 订单金额 -->
                             <li class="width-large">
                                 <p class="word"><spring:message code="myOrder.Amount"/>:</p>
-                                <p><fmt:formatNumber value="${OrderDetails.orderFee.paidFee/1000}" pattern="#,##0.00#"/>
-                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb"/></c:if>
-                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar"/></c:if></p>
+                                <c:choose>
+                                	<c:when test="${OrderDetails.displayFlag=='13'}">
+                                		<!-- 待报价-->
+                                		<p>————</p>
+                                	</c:when>
+                                	<c:otherwise>
+                                		 <p><fmt:formatNumber value="${OrderDetails.orderFee.paidFee/1000}" pattern="#,##0.00#"/>
+		                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb"/></c:if>
+		                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar"/></c:if></p>
+                                	</c:otherwise>
+                                </c:choose>
                             </li>
                             <!--  
                             <li class="width-large">

@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>译员-我的订单</title>
     <%@ include file="/inc/inc.jsp" %>
+    <title><spring:message code="myOrder.myorders"/></title>
     <script src="${_base}/resources/spm_modules/my97DatePicker/WdatePicker.js"></script>
 </head>
 <body>
@@ -27,9 +27,12 @@
 			<div class="right-list mt-0">
 	 			<div class="oder-table">
 	 				<ul>
-	 					<li><a href="javaScript:void(0);"  class="current" state="">全部订单</a></li>
-	 					<li><a href="javaScript:void(0);" state="21">已领取(${ReceivedCount})</a></li>
-	 					<li><a href="javaScript:void(0);" state="23">翻译中(${TranteCount})</a></li>
+	 					<!--  全部订单 -->
+	 					<li><a href="javaScript:void(0);"  class="current" state=""><spring:message code="myOrder.allOrder"/></a></li>
+	 					<!-- 已领取  -->
+	 					<li><a href="javaScript:void(0);" state="21"><spring:message code="myOrder.status.Claimed"/>(${ReceivedCount})</a></li>
+	 					<!-- 翻译中 -->
+	 					<li><a href="javaScript:void(0);" state="23"><spring:message code="myOrder.status.translating"/>(${TranteCount})</a></li>
 	 				</ul>
 	 			</div>
 	 			<div id="table-da1">
@@ -37,30 +40,46 @@
 		 			<div class="oder-form-lable mt-20">
 		 				<ul>
 		 					<li class="mb-20">
-		 						<p>订单状态</p>
+		 						<!-- 订单状态 -->
+  								<p><spring:message code="myOrder.orderStatus"/></p> 
 		 						<p>
 		 							<select class="select select-small radius"  name="state" id="state">
-		 								<option value="">全部</option>
-		 								<option value="21">已领取</option>
-		 								<!-- <option value="211">已分配</option> -->
-		 								<option value="23">翻译中</option>
-		 								<option value="52">待审核</option>
-		 								<option value="50">待确认</option>
-		 								<option value="90">已完成</option>
-		 								<!-- <option value="53">已评价</option> -->
-		 								<option value="25">修改中</option>
-		 								<option value="92">已退款</option>
+		 								<!-- 全部  -->
+		 								<option value=""><spring:message code="myOrder.translatingContent.all"/></option>
+		 								<!-- 已领取 -->
+		 								<option value="21"><spring:message code="myOrder.status.Claimed"/></option>
+		 								<!-- 已分配  -->
+		 								<!-- <option value="211"><spring:message code="myOrder.status.Assigned"/></option> -->
+		 								<!-- 翻译中 -->
+		 								<option value="23"><spring:message code="myOrder.status.translating"/></option>
+		 								<!-- 待审核 -->
+		 								<option value="52"><spring:message code="myOrder.status.Review"/></option>
+		 								<!-- 待确认 -->
+		 								<option value="50"><spring:message code="myOrder.status.tobeConfirm"/></option>
+		 								<!--  已完成-->
+		 								<option value="90"><spring:message code="myOrder.status.Completed"/></option>
+		 								<!--已评价  -->
+		 								<!-- <option value="53"><spring:message code="myOrder.status.Evaluated"/></option> -->
+		 								<!-- 修改中 -->
+		 								<option value="25"><spring:message code="myOrder.status.Modification"/></option>
+		 								<!-- 已退款 -->
+		 								<option value="92"><spring:message code="myOrder.status.Refunded"/></option>
 		 							</select>
 		 						</p>
-		 						<p>订单阶段</p>
+		 						<!-- 订单阶段 -->
+		 						<p><spring:message code="myOrder.OrderStage"/></p>
 		 						<p>
 		 							<select class="select select-small radius"  name="stateListStr" id="stateListStr">
-		 								<option value="">全部</option>
-		 								<option value="['211','23']">翻译</option>
-		 								<option value="['40','41','42']">审校</option>
+		 								<!-- 全部  -->
+		 								<option value=""><spring:message code="myOrder.translatingContent.all"/></option>
+		 								<!-- 翻译  -->
+		 								<option value="['211','23']"><spring:message code="myOrder.Translate"/></option>
+		 								<!-- 审校  -->
+		 								<option value="['40','41','42']"><spring:message code="myOrder.Proofread"/></option>
 		 							</select>
 		 						</p>
-		 						<p>翻译领域</p>
+		 						<!-- 翻译领域 -->
+		 						<p><spring:message code="myOrder.field"/></p>
 		 						<p>
 		 							<select class="select select-small radius" name="fieldCode" id="fieldCode">
 		 								<c:forEach items="${domainList}" var="domain">
@@ -73,13 +92,15 @@
 		 								</c:forEach>
 		 							</select>
 		 						</p>
-		 						<p>订单时间</p>
+		 						<!-- 订单时间 -->
+		 						<p><spring:message code="myOrder.orderTime"/></p>
 		 						<p><input id="orderTimeStart" name="orderTimeStartStr" type="text" class="int-text int-small radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'orderTimeEnd\')}'})" readonly="readonly"></p>
   								<p>－</p>
   								<p><input id="orderTimeEnd" name="orderTimeEndStr" type="text" class="int-text int-small radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'orderTimeStart\')}',onpicked:function(dp){endtime();}})" readonly="readonly"></p>
 		 					</li>
 		 					<li class="mb-20">
-		 						<p>翻译用途</p>
+		 						<!--翻译用途  -->
+		 						<p><spring:message code="myOrder.purpose"/></p>
 		 						<p>
 			 						<select class="select select-small radius" name="useCode" id="useCode">
 			 							<c:forEach items="${purpostList}" var="purpose">
@@ -104,12 +125,18 @@
 		 				<table class="table table-hover table-bg">
 		                   <thead>
 		                      <tr>
-		                           <th width="16.666%">任务名称</th>
-		                           <th width="16.666%">翻译语言</th>
-		                           <th width="16.666%">金额(元)</th>
-		                           <th width="16.666%">阶段</th>
-		                           <th width="16.666%">状态</th>
-		                           <th width="16.666%">操作</th>
+		                      	   <!-- 任务名称 -->
+		                           <th width="16.666%"><spring:message code="myOrder.TaskName"/></th>
+		                           <!-- 翻译语言 -->
+		                           <th width="16.666%"><spring:message code="myOrder.Language"/></th>
+		                           <!-- 金额(元) -->
+		                           <th width="16.666%"><spring:message code="myOrder.Amount"/></th>
+		                           <!-- 阶段 -->
+		                           <th width="16.666%"><spring:message code="myOrder.Stage"/></th>
+		                           <!-- 状态 -->
+		                           <th width="16.666%"><spring:message code="myOrder.Status"/></th>
+		                           <!-- 操作 -->
+		                           <th width="16.666%"><spring:message code="myOrder.Operate"/></th>
 		                     </tr>
 		              		</thead>
 		          		 </table>
@@ -123,8 +150,10 @@
 		                           <th colspan="6" class="text-l">
 		                           		<div class="table-thdiv">
 		                           			<p>{{:~timesToFmatter(orderTime)}}</p>
-		                           			<p name="orderId">订单号：<span>{{:orderId}}</span></p>
-		                           			<p class="right">剩余2天23小时59分钟</p>
+		                           			<p name="orderId"><spring:message code="myOrder.Ordernumber"/>：<span>{{:orderId}}</span></p>
+		                           			<!-- 剩余2天23小时59分钟 -->
+    										<p class="right"><spring:message
+                                    						code="myOrder.Remaining" arguments="1,2,3"/></p>
 		                           		</div>
 		                           </th>
 		                     </tr>
@@ -152,60 +181,66 @@
 										{{/if}}
 								   </td>
 		                           <td>
+										<!-- 翻译  审校-->
 								   		{{if state  == '211' || state  == '23'}}
-											翻译
+											<spring:message code="myOrder.Translate"/>
 										{{else state  == '40' || state  == '41' || state  == '42'}}
-											审校
+											<spring:message code="myOrder.Proofread"/>
 										{{/if}}
 								   </td>
 								   {{if  state  == '21'}}
-								   		<td>已领取</td>
+										<!-- 已领取 -->
+								   		<td><spring:message code="myOrder.status.Claimed"/></td>
 		                           		<td>
 		                           			<!-- <input type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="分 配"> -->
-		                           			<input name="trans" type="button"  class="btn biu-btn btn-auto-25 btn-green radius10"  value="翻 译">
+											<!-- 翻 译 -->
+		                           			<input name="trans" type="button"  class="btn biu-btn btn-auto-25 btn-green radius10"  value="<spring:message code="myOrder.Translate"/>">
 		                          		</td>
 								   {{else state  == '221'}}
-										<td>已分配</td>
+										<!-- 已分配 -->
+										<td><spring:message code="myOrder.status.Assigned"/></td>
 		                           		<td>
 		                           			<!-- <input name="assigne" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="分 配"> -->
 		                          		</td>
 								   {{else state  == '23'}}
 									<!-- 翻译中 -->
-										<td>翻译中</td>
+										<td><spring:message code="myOrder.status.translating"/></td>
 		                           		<td>
-		                           			<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="提交">
+											<!-- 提交 -->
+		                           			<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="<spring:message code="myOrder.Submit"/>">
 		                          		</td>
 								   {{else state  == '40'}}
 									<!-- 待审核 -->
-										<td>待审核</td>
+										<td><spring:message code="myOrder.status.Review"/></td>
 		                           		<td>
 		                           			<!--<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="提交"> -->
 		                          		</td>
 								  {{else state  == '50'}}
 									<!-- 待确认 -->
-										<td>待确认</td>
+										<td><spring:message code="myOrder.status.tobeConfirm"/></td>
 		                           		<td>
 		                          		</td>
 								   {{else state  == '90'}}
 									<!-- 已完成 -->
-										<td>已完成</td>
+										<td><spring:message code="myOrder.status.Completed"/></td>
 		                           		<td>
 		                          		</td>
 								  {{else state  == '53'}}
 									<!-- 已评价 -->
-										<td>已评价</td>
+										<td><spring:message code="myOrder.status.Evaluated"/></td>
 		                           		<td>
 											<!-- <input name="evaluated" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="已评价"> -->
 		                          		</td>
 								  {{else state  == '25'}}
 									<!-- 修改中 -->
-										<td>修改中</td>
+										<td><spring:message code="myOrder.status.Modification"/></td>
 		                           		<td>
-											<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="提交">
+											<!-- 提交 -->
+											<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="<spring:message code="myOrder.Submit"/>">
 		                          		</td>
 								  {{else state  == '92'}}
 									<!-- 已退款 -->
-										<td>已退款</td>
+										<td><spring:message code="myOrder.status.Refunded"/></td>
 		                           		<td>
 		                          		</td>
 								   {{else }}

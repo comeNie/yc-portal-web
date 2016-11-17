@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>译员-订单详情</title>
     <%@ include file="/inc/inc.jsp" %>
+    <title><spring:message code="myOrder.Orderdetails"/></title>
 </head>
 <body>
 <!--头部-->
@@ -29,7 +29,8 @@
 	 			<p><spring:message code="myOrder.Ordernumber"/>：${OrderDetails.orderId}</p>
 	 		</div>
 	 		<c:if test="${OrderDetails.state =='92'}">
-	 			<div class="step-big small-hi">订单已退款</div>
+	 			<!-- myOrder.OrderHrefunded -->
+	 			<div class="step-big small-hi"><spring:message code="myOrder.OrderHrefunded"/></div>
 	 		</c:if>
 			<!--订单table-->
 			<div class="confirmation-table mt-20"  <c:if test="${OrderDetails.translateType == '2'}">style="display: none"</c:if> > 
@@ -61,7 +62,9 @@
 				 						<!-- 有译文的情况 -->
 				 						<ul>
 						 					<!-- 译文  -->
-						 					<li class="title"><spring:message code="myOrder.Translatedtext"/>:<input id="editText" class="btn border-blue-small btn-auto radius20" type="button" value="修改"></li>
+						 					<li class="title"><spring:message code="myOrder.Translatedtext"/>:
+						 						<!-- 修改 -->
+						 						<input id="editText" class="btn border-blue-small btn-auto radius20" type="button" value="<spring:message code="myOrder.modify"/>"></li>
 						 					<!-- 更多 -->
 						 					<li class="word">${fn:substring(OrderDetails.prod.translateInfo, 0, 150)}
 				                            	<span style="display: none;">${fn:substring(OrderDetails.prod.translateInfo, 150, fn:length(OrderDetails.prod.translateInfo))}</span>
@@ -70,7 +73,8 @@
 					 					</ul>
 				 						<ul style="display: none">
 											<li class="right mr-5">
-												<input id="textSave" name="textSave" class="btn border-blue-small btn-auto radius20" type="button" value="保存">
+												<!-- 保存 -->
+												<input id="textSave" name="textSave" class="btn border-blue-small btn-auto radius20" type="button" value="<spring:message code="myOrder.sava"/>">
 											</li>
 										</ul>
 				 						</c:when>
@@ -83,7 +87,7 @@
 						 				</ul>
 						 				<ul>
 											<li class="right mr-5">
-												<input id="textSave" name="textSave" class="btn border-blue-small btn-auto radius20" type="button" value="保存">
+												<input id="textSave" name="textSave" class="btn border-blue-small btn-auto radius20" type="button" value="<spring:message code="myOrder.sava"/>">
 											</li>
 										</ul>
 				 						</c:otherwise>
@@ -121,7 +125,8 @@
 				                            	<li>${prodFile.fileTranslateName}</li>
 				  								<li class="right mr-5">
 					  								<input name="download" fileId="${prodFile.fileTranslateId}" fileName="${prodFile.fileTranslateName}" type="button" class="btn border-blue-small btn-auto radius20" value="<spring:message code="myOrder.downLoad"/>">
-					  								<input name="delFile" class="btn border-blue-small btn-auto radius20" type="button" value="删除">
+					  								<!-- 删除 -->
+					  								<input name="delFile" class="btn border-blue-small btn-auto radius20" type="button" value="<spring:message code="myOrder.delete"/>">
 				  								</li>
 				                            	
 				                    	</ul>
@@ -172,13 +177,15 @@
 						</ul>
 						<c:if test="${OrderDetails.translateType != '2'}">
 						<!-- 非口译显示 -->
-							<span>字数</span>
+							<span><spring:message code="myOrder.Words"/></span>
 							<ul>
 								<li>
-									<p>${OrderDetails.prod.translateSum}字/词</p>
+									<p><spring:message
+                                   		code="myOrder.tranteNeedTime" arguments="${OrderDetails.prod.translateSum}"/></p>
 								</li>
 							</ul>
-							<span>预计交稿:</span>
+							<!-- 预计交稿 -->
+							<span><spring:message code="myOrder.ExpectedSubmTime"/>:</span>
 							<ul>
 								<li>
 									<p>2015-04-07 09:53:51</p>
@@ -326,27 +333,30 @@
 		 		<div class="recharge-btn order-btn">
 		 			<c:choose>
 		 				<c:when test="${OrderDetails.state =='20'}">
-		 					<!-- 待领取 -->
-							<input id="received" name="received" type="button" class="btn btn-green btn-xxxlarge radius10" value="领取">
+		 					<!-- 待领取 领取-->
+							<input id="received" name="received" type="button" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="myOrder.Claim"/>">
 		 				</c:when>
 		 				<c:when test="${OrderDetails.state =='21'}">
-		 					<!-- 已领取  -->
-							<input id="trans" name="trans" class="btn btn-green btn-xxxlarge radius10" type="button" value="翻译">
+		 					<!-- 已领取  翻译-->
+							<input id="trans" name="trans" class="btn btn-green btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.Translate"/>">
 							<!-- 暂无 <input id="recharge-popo" class="btn btn-yellow btn-xxxlarge radius10 ml-20" type="button" value="分配">-->
 		 				</c:when>
 		 				<c:when test="${OrderDetails.state =='23' && not empty OrderDetails.prod.translateInfo}">
 		 					<!-- 文本 翻译中  有译文-->
-			 				<input id="submit" name="submit" class="btn btn-green btn-xxxlarge radius10" type="button" value="提交">
+		 					<!-- 提交 -->
+			 				<input id="submit" name="submit" class="btn btn-green btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.Submit"/>">
 							<!-- <input id="check" name="check" class="btn btn-yellow btn-xxxlarge radius10 ml-20" type="button" value="审校">-->
 		 				</c:when>
 		 				<c:when test="${OrderDetails.state =='23' && OrderDetails.translateType == '1'}">
 		 					<!-- 文档  翻译中 -->
 		 						<c:if test="${UUploadCount > 0}">
 		 						<!-- 可以上传 -->
-		 							<input class="btn btn-green btn-xxxlarge radius10" type="button" value="上传译文" onclick="clp();" >
+		 							<!-- 上传译文 -->
+		 							<input class="btn btn-green btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.Upload"/>" onclick="clp();" >
 		 						</c:if>
 		 						<c:if test="${UUploadCount < fn:length(OrderDetails.prodFiles)}">
-		 						<input id="recharge-popo" name="submit" class="btn btn-green btn-xxxlarge radius10" type="button" value="提交">
+		 						<!-- 提交 -->
+		 						<input id="recharge-popo" name="submit" class="btn btn-green btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.Submit"/>">
 		 						</c:if>
 		 						
 		 						<form  id="uploadForm" method="POST" enctype="multipart/form-data" action="${_base}/p/trans/order/upload">
@@ -357,7 +367,8 @@
 		 				</c:when>
 		 				<c:when test="${OrderDetails.state =='25'}">
 		 					<!-- 修改中 -->
-			 				<input name="submit" class="btn btn-green btn-xxxlarge radius10" type="button" value="提交">
+		 					<!-- 提交 -->
+			 				<input name="submit" class="btn btn-green btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.Submit"/>">
 		 				</c:when>
 		 				<c:otherwise>
 		 				<!-- 翻译中无译文 待确认  已完成 已退款 -->
@@ -367,7 +378,8 @@
 				
 				<c:if test="${OrderDetails.state =='20' && not empty OrderDetails.lspId }">
 				<!-- 已领取状态，并且是lsp 展示此信息 -->
-					<div class="info-center">（选择自己翻译或分配给团队译员翻译，选择后不可修改）</div>
+					<!-- （选择自己翻译或分配给团队译员翻译，选择后不可修改） -->
+					<div class="info-center"><spring:message code="myOrder.lsoChooseInfo"/></div>
 				</c:if>
 			</div>
  		</div>

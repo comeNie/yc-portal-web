@@ -179,13 +179,19 @@
 					{{/if}}
 				{{/for}}
 			</td>
-            <td>{{:~liToYuan(totalFee)}}
-				{{if  currencyUnit == '1'}}
-					<spring:message code="myOrder.rmb"/>
-				{{else }}
-					<spring:message code="myOrder.dollar"/>
-				{{/if}}
-			</td>
+
+			{{if displayFlag == '13'}}
+				<td>————</td>
+			{{else }}
+           		 <td>{{:~liToYuan(totalFee)}}
+					{{if  currencyUnit == '1'}}
+						<spring:message code="myOrder.rmb"/>
+					{{else }}
+						<spring:message code="myOrder.dollar"/>
+					{{/if}}
+				</td>
+			{{/if}}
+
 			{{if  displayFlag == '11'}}
 				<!-- 待支付  -->
 				<td><spring:message code="myOrder.status.tobePay"/></td>
@@ -212,7 +218,7 @@
 					<!-- 确认 -->
 					<input name="confirmOrder" class="btn biu-btn btn-auto-25 btn-green radius10" type="button" value="<spring:message code="myOrder.confirm"/>">
 					<!-- 延时确认-->
-					<input name="lateConfirmOrder" class="btn biu-btn btn-auto-25 btn-red radius10" type="button" value="<spring:message code="myOrder.Delayed"/>">
+					<--<input name="lateConfirmOrder" class="btn biu-btn btn-auto-25 btn-red radius10" type="button" value="<spring:message code="myOrder.Delayed"/>">-->
 				</td>
 			{{else displayFlag == '52'}}
 				<!-- 待评价  -->
@@ -287,12 +293,11 @@ var pager;
        
        <%-- 确认订单 --%>
        $("#confirmOrder").delegate("input[name='confirmOrder']","click",function(){
-       	
+       		pager._confirm($(this).parents("table").find("input[name='orderId']").val());
        });
        <%-- 延迟确认订单 --%>
-       $("#confirmOrder").delegate("input[name='lateConfirmOrder']","click",function(){
-       	
-       });
+       //$("#confirmOrder").delegate("input[name='lateConfirmOrder']","click",function(){
+       //});
       
 })();
 
