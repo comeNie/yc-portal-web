@@ -85,6 +85,11 @@ define("app/jsp/user/userIndex",function(require, exports, module) {
 		    	            		var template = $.templates("#orderTemple1");
 		    	            	    var htmlOutput = template.render(data);
 		    	            	    $("#order_list").html(htmlOutput);
+		    	            	    if(false){
+		    	            	    	$("table th[order_mode='hide']").remove();
+		    	            	    	$("#order_list table td[order_mode='hide']").remove();
+		    	            	    	$("#order_list table th[order_mode_colspan='hide']").attr("colspan","5");
+		    	            	    }
 		    	            	    $("#no_order_container").hide();
 		    	            		$("#have_order_container").show();
 		    	            	}else{
