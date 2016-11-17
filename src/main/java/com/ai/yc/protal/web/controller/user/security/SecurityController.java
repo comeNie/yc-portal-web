@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +26,9 @@ import com.ai.yc.order.api.orderquery.param.QueryOrdCountRequest;
 import com.ai.yc.order.api.orderquery.param.QueryOrdCountResponse;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.Register;
+import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
 import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
+import com.ai.yc.protal.web.service.BalanceService;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
@@ -57,14 +59,33 @@ public class SecurityController {
 	private static final String ERROR_PAGE = "user/error";
 	private static final String UPDATE_PAY_PASSWORD = "user/security/updatePayPassword";
 	private static final String INDEX = "user/userIndex";
+	@Autowired
+	BalanceService balanceService;
 	@RequestMapping("/index")
 	public ModelAndView toRegister() {
 		ModelAndView modelView = new ModelAndView(INDEX);
+		 long balance =0;
+		AccountBalanceInfo balanceInfo = queryBalanceInfo();
+		if(balanceInfo!=null){
+			balance = balanceInfo.getBalance();
+		}
+		modelView.addObject("balance", balance);
 		return modelView;
+	}
+	@RequestMapping("/queryBalanceInfo")
+	@ResponseBody
+	public AccountBalanceInfo queryBalanceInfo(){
+		 AccountBalanceInfo balanceInfo =null;;
+		try {
+			balanceInfo = balanceService.queryOfUser();
+		} catch (Exception e) {
+			LOG.error(e.getMessage(),e);
+		}
+		 return balanceInfo;
 	}
 	@RequestMapping("/orderStatusCount")
 	@ResponseBody
-    public Map<String,Integer> OrderStatusCount(){
+    public Map<String,Integer> orderStatusCount(){
         //查询 订单数量
         int unPaidCount =0;
         int translateCount=0;

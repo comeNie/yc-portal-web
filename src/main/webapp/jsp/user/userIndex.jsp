@@ -44,11 +44,12 @@
 							<ul class="word-li">
 								<li>
 									<p>余额:</p>
-									<p class="red">351,575</p>
+									<p class="red"><fmt:formatNumber
+											value="${balance/1000}" pattern="#,##0.00#"/></p>
 								</li>
-								<li>
+								<li style="display: none;">
 									<p>积分:</p>
-									<p class="red">8,782</p>
+									<p class="red"></p>
 								</li>
 							</ul>
 						</div>
@@ -73,7 +74,7 @@
 					</div>
 				</div>
 				<!--右侧第二块-->
-				<div class="right-list">
+				<div class="right-list" id="have_order_container" style="display: none;">
 					<div class="right-list-title pb-10 pl-20">
 						<p>我的订单</p>
 						<p class="right">
@@ -96,187 +97,137 @@
 						</table>
 
 					</div>
-					<div class="right-list-table">
-						<table class="table  table-bg tb-border mb-20">
-							<thead>
-								<tr>
-									<th colspan="6" class="text-l">
-										<div class="table-thdiv">
-											<p>2015-04-07 09:53:51</p>
-											<p>
-												订单号：<span>198409857093246</span>
-											</p>
-											<p class="right">剩余2天23小时59分钟</p>
-										</div>
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="width-16">
-									<td class="text-l pl-20">我要翻译一段话，不超过15……</td>
-									<td>admin</td>
-									<td>中文→西班牙语</td>
-									<td>1000.00</td>
-									<td>待支付</td>
-									<td class="text-r"><input type="button"
-										class="btn biu-btn btn-auto-25 btn-green radius10" value="支 付">
-										<input type="button"
-										class="btn biu-btn btn-auto-25 btn-red radius10" value="取 消">
-									</td>
-								</tr>
-							</tbody>
-						</table>
-
-						<table class="table  table-bg tb-border mb-20">
-							<thead>
-								<tr>
-									<th colspan="6" class="text-l">
-										<div class="table-thdiv">
-											<p>2015-04-07 09:53:51</p>
-											<p>
-												订单号：<span>198409857093246</span>
-											</p>
-											<p class="right">剩余2天23小时59分钟</p>
-										</div>
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="width-16">
-									<td class="text-l pl-20">我要翻译一段话，不超过15……</td>
-									<td>admin</td>
-									<td>中文→西班牙语</td>
-									<td>1000.00</td>
-									<td>待支付</td>
-									<td class="text-r"><input type="button"
-										class="btn biu-btn btn-auto-25 btn-green radius10" value="支 付">
-										<input type="button"
-										class="btn biu-btn btn-auto-25 btn-red radius10" value="取 消">
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						<table class="table  table-bg tb-border mb-20">
-							<thead>
-								<tr>
-									<th colspan="6" class="text-l">
-										<div class="table-thdiv">
-											<p>2015-04-07 09:53:51</p>
-											<p>
-												订单号：<span>198409857093246</span>
-											</p>
-											<p class="right">剩余2天23小时59分钟</p>
-										</div>
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="width-16">
-									<td class="text-l pl-20">我要翻译一段话，不超过15……</td>
-									<td>admin</td>
-									<td>中文→西班牙语</td>
-									<td>1000.00</td>
-									<td>待支付</td>
-									<td class="text-r"><input type="button"
-										class="btn biu-btn btn-auto-25 btn-green radius10" value="支 付">
-										<input type="button"
-										class="btn biu-btn btn-auto-25 btn-red radius10" value="取 消">
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						<table class="table  table-bg tb-border mb-20">
-							<thead>
-								<tr>
-									<th colspan="6" class="text-l">
-										<div class="table-thdiv">
-											<p>2015-04-07 09:53:51</p>
-											<p>
-												订单号：<span>198409857093246</span>
-											</p>
-											<p class="right">剩余2天23小时59分钟</p>
-										</div>
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="width-16">
-									<td class="text-l pl-20">我要翻译一段话，不超过15……</td>
-									<td>admin</td>
-									<td>中文→西班牙语</td>
-									<td>1000.00</td>
-									<td>待支付</td>
-									<td class="text-r"><input type="button"
-										class="btn biu-btn btn-auto-25 btn-green radius10" value="确 认">
-										<input type="button"
-										class="btn biu-btn btn-auto-25 btn-red radius10" value="延时确认">
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						<table class="table  table-bg tb-border mb-20">
-							<thead>
-								<tr>
-									<th colspan="6" class="text-l">
-										<div class="table-thdiv">
-											<p>2015-04-07 09:53:51</p>
-											<p>
-												订单号：<span>198409857093246</span>
-											</p>
-											<p class="right">剩余2天23小时59分钟</p>
-										</div>
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="width-16">
-									<td class="text-l pl-20">我要翻译一段话，不超过15……</td>
-									<td>admin</td>
-									<td>中文→西班牙语</td>
-									<td>1000.00</td>
-									<td>待支付</td>
-									<td class="text-r"><input type="button"
-										class="btn biu-btn btn-auto-25 btn-red radius10" value="取 消">
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						<table class="table  table-bg tb-border mb-20">
-							<thead>
-								<tr>
-									<th colspan="6" class="text-l">
-										<div class="table-thdiv">
-											<p>2015-04-07 09:53:51</p>
-											<p>
-												订单号：<span>198409857093246</span>
-											</p>
-											<p class="right">剩余2天23小时59分钟</p>
-										</div>
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="width-16">
-									<td>我要翻译一段话，不超过15……</td>
-									<td>admin</td>
-									<td>中文→西班牙语</td>
-									<td>1000.00</td>
-									<td>待支付</td>
-									<td class="text-r"><input type="button"
-										class="btn biu-btn btn-auto-25 btn-green radius10" value="评 价">
-									</td>
-								</tr>
-							</tbody>
-						</table>
+					<div class="right-list-table" id="order_list">
 					</div>
-
-				</div>
+    </div>
+    <div class="right-list" id="no_order_container" style="display: none;">
+  			<!--没下过订单-->
+			<div class="no-order">
+				<ul>
+					<li><img src="${uedroot}/images/none-d.jpg" /></li>
+					<li class="mt-t50">您还没有任何订单交易</li>
+					<li class="right mt-t50"><input type="button"  class="btn border-blue btn-large radius20 blue" value="立即下单"></li>
+				</ul>
+			</div>
+			<div class="no-step"><img src="${uedroot}/images/step.jpg" /></div>
+	</div>	
 			</div>
 
 
 		</div>
 
 	</div>
+	<script id="orderTemple1" type="text/template">
+				<table class="table  table-bg tb-border mb-20">
+				<thead>
+					<tr>
+						<th colspan="6" class="text-l">
+							<div class="table-thdiv">
+								<p>{{:~timesToFmatter(orderTime)}}</p>
+								<p name="orderId" style="cursor:pointer;">
+									<spring:message code="myOrder.Ordernumber"/>：<span>{{:orderId}}</span>
+								</p>
+								{{if  displayFlag == '11'}}
+					              <!-- 剩余2天23小时59分钟  待支付-->
+					              <p class="right"><spring:message
+                                    code="myOrder.Remaining" arguments="1,2,3"/></p>
+					            {{/if}}
+								{{if  displayFlag == '50'}}
+									<!-- 剩余2天23小时59分钟   待确认-->
+    				    				<p class="right"><spring:message
+                                    code="myOrder.Remaining" arguments="{{:confirmTakeDays}},{{:confirmTakeHours}},{{:confirmTakeMinutes}}"/></p>
+    				    	   {{/if}}
+							</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+                    <input type="hidden" name="orderId" value="{{:orderId}}">
+		            <input type="hidden" name="unit" value="{{:currencyUnit}}">
+		            <input type="hidden" name="displayFlag" value="{{:displayFlag}}">
+					<tr class="width-16">
+						<td name="translateName" orderId="{{:orderId}}" class="text-l pl-20">
+                          {{:translateName}}
+                        </td>
+						<td>{{:userName}}</td>
+						<td>
+                            {{for ordProdExtendList}}
+							 {{if #parent.parent.data.currentLan == 'zh_CN'}}
+								  {{:langungePairChName}}
+					          {{else}}
+						          {{:langungePairEnName}}
+					         {{/if}}
+				          {{/for}}
+                        </td>
+						<td>
+                             {{:~liToYuan(totalFee)}}
+				             {{if  currencyUnit == '1'}}
+					         <spring:message code="myOrder.rmb"/>
+				              {{else }}
+					          <spring:message code="myOrder.dollar"/>
+				             {{/if}}
+                        </td>
+						{{if  displayFlag == '11'}}
+				<!-- 待支付  -->
+				<td><spring:message code="myOrder.status.tobePay"/></td>
+			 	<td>
+					<!-- 支 付  -->
+            		<input type="button" name="payOrder" class="btn biu-btn btn-auto-25 btn-green radius10" value="<spring:message code="myOrder.Pay"/>">
+            		<!-- 取 消 -->
+					<input type="button" name="cancelOrder" class="btn biu-btn btn-auto-25 btn-red radius10"  value="<spring:message code="myOrder.Cancell"/>">
+           		</td>
+			{{else displayFlag == '13'}}
+				<!-- 待报价  -->
+				<td><spring:message code="myOrder.status.tobeQuoted"/></td>
+				<td>
+					<!-- 取 消 -->
+					<input name="cancelOrder" class="btn biu-btn btn-auto-25 btn-red radius10" type="button" value="<spring:message code="myOrder.Cancell"/>">
+				</td>
+			{{else displayFlag == '23'}}
+				<!-- 翻译中  -->
+				<td><spring:message code="myOrder.status.translating"/></td>
+			{{else displayFlag == '50'}}
+				<!-- 待确认  -->
+				<td><spring:message code="myOrder.status.tobeConfirm"/></td>
+				<td>
+					<!-- 确认 -->
+					<input name="confirmOrder" class="btn biu-btn btn-auto-25 btn-green radius10" type="button" value="<spring:message code="myOrder.confirm"/>">
+					<!-- 延时确认-->
+					<input name="lateConfirmOrder" class="btn biu-btn btn-auto-25 btn-red radius10" type="button" value="<spring:message code="myOrder.Delayed"/>">
+				</td>
+			{{else displayFlag == '52'}}
+				<!-- 待评价  -->
+				<td><spring:message code="myOrder.status.tobeEvaluated"/></td>
+				<td></td>
+				<!-- 
+				<td>待评价</td>
+				<td>
+					<input class="btn biu-btn btn-auto-25 btn-green radius10" type="button" value="评 价">
+				</td>
+				-->
+			{{else displayFlag == '90'}}
+				<!-- 完成  -->
+				<td><spring:message code="myOrder.status.Completed"/></td>
+				<td></td>
+				<!-- 
+				td>完成</td>
+				<td>
+					<input class="btn biu-btn btn-auto-25 btn-green radius10" type="button" value="评 价">
+				</td>
+				-->
+			{{else displayFlag == '91'}}	
+				<!-- 关闭  -->
+				<td><spring:message code="myOrder.status.Close"/></td>
+				<td></td>
+			{{else }}
+				<!-- 已退款  -->
+				<td><spring:message code="myOrder.status.Refunded"/></td>
+				<td></td>
+			{{/if}}
+					</tr>
+				</tbody>
+			</table>
+	</script>
 	<script type="text/javascript">
 	var pager;
 	(function() {
@@ -286,6 +237,36 @@
 			});
 			pager.render();
 		});
+		 //订单详情 点击订单标题
+	       $('#order_list').delegate("td[name='translateName']", 'click', function () {
+	       	  window.location.href="${_base}/p/customer/order/"+$(this).parent().parent().find("input[name='orderId']").val();
+	       });
+		   
+	       //订单详情 点击订单号
+	       $('#order_list').delegate("p[name='orderId']", 'click', function () {
+	       	  window.location.href="${_base}/p/customer/order/"+$(this).parents("table").find("input[name='orderId']").val();
+	       });
+	       
+	       <%-- 支付订单 --%>
+	       $("#order_list").delegate("input[name='payOrder']","click",function(){
+	       		window.location.href="${_base}/p/customer/order/payOrder/"
+	       		+ $(this).parent().parent().parent().find("input[name='orderId']").val()
+	       		+ "?unit="+$(this).parent().parent().parent().find("input[name='unit']").val();
+	       });
+	       
+	       <%-- 取消订单 --%>
+	       $("#order_list").delegate("input[name='cancelOrder']","click",function(){
+	    		pager._cancelOrder($(this).parent().parent().parent().find("input[name='orderId']").val());
+	       });
+	       
+	       <%-- 确认订单 --%>
+	       $("#confirmOrder").delegate("input[name='confirmOrder']","click",function(){
+	       	
+	       });
+	       <%-- 延迟确认订单 --%>
+	       $("#confirmOrder").delegate("input[name='lateConfirmOrder']","click",function(){
+	       	
+	       });
 	})();
 	</script>
 </body>
