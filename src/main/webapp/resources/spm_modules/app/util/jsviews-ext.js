@@ -56,12 +56,14 @@ $.views.helpers({
 });
 
 /**
- * 毫秒转时间
+ * 毫秒转时间(带时区)
+ * times: 毫秒数。参数必传
+ * timeZone 时区 如-5,8等，参数可不传
  */
 $.views.helpers({
-	"timesToFmatter":function(times){
-		var format = function(time, format){ 
-			var t = new Date(time); 
+	"timesToFmatter":function(times,timeZone){
+		var format = function(time, format,timeZone){ 
+			var t = new Date(time+timeZone*3600*1000); 
 			var tf = function(i){return (i < 10 ? '0' : '') + i}; 
 			return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a){ 
 			switch(a){ 
@@ -86,7 +88,10 @@ $.views.helpers({
 			}; 
 			}); 
 			}; 
-		return format(times,"yyyy-MM-dd HH:mm:ss");
+			if(timeZone==undefined || ""=timeZone){
+				timeZone=0;
+			}
+		return format(times,"yyyy-MM-dd HH:mm:ss",timeZone);
 	}
 });
 
