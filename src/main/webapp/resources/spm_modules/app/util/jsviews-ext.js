@@ -88,7 +88,7 @@ $.views.helpers({
 			}; 
 			}); 
 			}; 
-			if(timeZone==undefined || ""=timeZone){
+			if(timeZone==undefined || ""==timeZone){
 				timeZone=0;
 			}
 		return format(times,"yyyy-MM-dd HH:mm:ss",timeZone);
@@ -101,7 +101,7 @@ $.views.helpers({
  */
 $.views.helpers({
 	"formatDate":function(applyTime,timeZone){
-		if(timeZone==undefined || ""=timeZone){
+		if(timeZone==undefined || ""==timeZone){
 			timeZone=0;
 		}
 		var millisecond = applyTime.time;
@@ -216,7 +216,7 @@ RegExp.prototype.liToYuan = function(li) {
 $.views.helpers({
 	"timestampToDate":function(format, timestamp,timeZone){
 		if(timestamp!=null){
-			if(timeZone==undefined || ""=timeZone){
+			if(timeZone==undefined || ""==timeZone){
 				timeZone=0;
 			}
 			return (new Date(parseFloat(timestamp)+timeZone*3600*1000)).format(format);
