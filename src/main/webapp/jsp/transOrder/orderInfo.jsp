@@ -6,7 +6,6 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>译员-订单详情</title>
     <%@ include file="/inc/inc.jsp" %>
-    <link rel="stylesheet" type="text/css" href="${_base}/resources/spm_modules/webuploader/webuploader.css">
 </head>
 <body>
 <!--头部-->
@@ -22,14 +21,18 @@
 	 	<!--右侧内容-->
 	 	<!--右侧大块-->
 	 	<div class="right-wrapper">
+	 		<input id="orderId" type="hidden" value="${OrderDetails.orderId}">
 	 		<div class="breadcrumb">
 	 			<!-- 我的订单 -->
 	 			<p><spring:message code="myOrder.myorders"/>></p>
 	 			<!-- 订单号 -->
 	 			<p><spring:message code="myOrder.Ordernumber"/>：${OrderDetails.orderId}</p>
 	 		</div>
+	 		<c:if test="${OrderDetails.state =='92'}">
+	 			<div class="step-big small-hi">订单已退款</div>
+	 		</c:if>
 			<!--订单table-->
-			<div class="confirmation-table"> 
+			<div class="confirmation-table mt-20"  <c:if test="${OrderDetails.translateType == '2'}">style="display: none"</c:if> > 
 					<div class="oder-table">
 			 				<ul>
 			 					<!-- 翻译内容 -->
@@ -51,27 +54,32 @@
 		                            	<A name="more" href="javaScript:void(0);">[<spring:message code="myOrder.more"/>]</A></li>
 				 				</ul>
 				 				
-				 				<c:if test="${OrderDetails.state =='21' || OrderDetails.state =='25' }">
+				 				<c:if test="${OrderDetails.state =='23' || OrderDetails.state =='25' }">
 				 				<!-- 翻译中 修改中 -->
 				 					<c:choose>
 				 						<c:when test="${not empty OrderDetails.prod.translateInfo}">
 				 						<!-- 有译文的情况 -->
 				 						<ul>
 						 					<!-- 译文  -->
-						 					<li class="title"><spring:message code="myOrder.Translatedtext"/>:<input class="btn border-blue-small btn-auto radius20" type="button" value="修改"></li>
+						 					<li class="title"><spring:message code="myOrder.Translatedtext"/>:<input id="editText" class="btn border-blue-small btn-auto radius20" type="button" value="修改"></li>
 						 					<!-- 更多 -->
 						 					<li class="word">${fn:substring(OrderDetails.prod.translateInfo, 0, 150)}
 				                            	<span style="display: none;">${fn:substring(OrderDetails.prod.translateInfo, 150, fn:length(OrderDetails.prod.translateInfo))}</span>
 				                            	<A name="more" href="javaScript:void(0);">[<spring:message code="myOrder.more"/>]</A></li>
+				                            <li class="word" style="display: none"><textarea id="transTextArea" class="int-text radius text-150">${OrderDetails.prod.translateInfo}</textarea></li>
 					 					</ul>
-				 						
+				 						<ul style="display: none">
+											<li class="right mr-5">
+												<input id="textSave" name="textSave" class="btn border-blue-small btn-auto radius20" type="button" value="保存">
+											</li>
+										</ul>
 				 						</c:when>
 				 						<c:otherwise>
 				 						<!-- 无译文的情况 -->
 			 							<ul>
 						 					<!-- 译文  -->
 						 					<li class="title"><spring:message code="myOrder.Translatedtext"/>:</li>
-						 					<li class="word"><textarea class="int-text radius text-150"></textarea></li>
+						 					<li class="word"><textarea id="transTextArea" class="int-text radius text-150"></textarea></li>
 						 				</ul>
 						 				<ul>
 											<li class="right mr-5">
@@ -105,18 +113,19 @@
 								<c:if test="${OrderDetails.state =='23' || OrderDetails.state =='25' }">
 				 				<!-- 翻译中 修改中 -->
 				 					 <c:forEach items="${OrderDetails.prodFiles}" var="prodFile" varStatus="status">
+				                        <c:if test="${not empty prodFile.fileTranslateName}">
 				                        <ul class="mt-30">
 				                        	<!-- 译文 文档-->
 				                            <li class="title"><spring:message code="myOrder.Translatedtext"/>:</li>
 				                            	<!-- 文档类型翻译 文档list -->
-				                            	<c:if test="${not empty prodFile.fileTranslateName}">
-				                            		<li>${prodFile.fileTranslateName}</li>
+				                            	<li>${prodFile.fileTranslateName}</li>
 				  								<li class="right mr-5">
-					  								<input name="download" fileId="${prodFile.fileTraslateId}" fileName="${prodFile.fileTranslateName}" type="button" class="btn border-blue-small btn-auto radius20" value="<spring:message code="myOrder.downLoad"/>">
-					  								<input class="btn border-blue-small btn-auto radius20" type="button" value="修改">
+					  								<input name="download" fileId="${prodFile.fileTranslateId}" fileName="${prodFile.fileTranslateName}" type="button" class="btn border-blue-small btn-auto radius20" value="<spring:message code="myOrder.downLoad"/>">
+					  								<input name="delFile" class="btn border-blue-small btn-auto radius20" type="button" value="删除">
 				  								</li>
-				                            	</c:if>
+				                            	
 				                    	</ul>
+				                    	</c:if>
 	                   				</c:forEach>
 				 				</c:if>
 							</div>
@@ -161,108 +170,155 @@
                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar"/></c:if></p>
 							</li>
 						</ul>
-						<span>字数</span>
-						<ul>
-							<li>
-								<p>${OrderDetails.prod.translateSum}字/词</p>
-							</li>
-						</ul>
-						<span>预计交稿时间:</span>
-						<ul>
-							<li>
-								<p>2015-04-07 09:53:51</p>
-							</li>
-						</ul>
+						<c:if test="${OrderDetails.translateType != '2'}">
+						<!-- 非口译显示 -->
+							<span>字数</span>
+							<ul>
+								<li>
+									<p>${OrderDetails.prod.translateSum}字/词</p>
+								</li>
+							</ul>
+							<span>预计交稿:</span>
+							<ul>
+								<li>
+									<p>2015-04-07 09:53:51</p>
+								</li>
+							</ul>
+						</c:if>
 		 			</div>
 		 			<!--第一列信息结束-->
 		 			<div class="info-list">
-		 			<!-- 订单信息 -->
-		  			<span><spring:message code="myOrder.Orderinformation"/></span>
-		  			<ul>
-		  				<li>
-	  						<!-- 订单号 -->
-		  					<p class="word"><spring:message code="myOrder.Ordernumber"/>:</p>
-		  					<p>${OrderDetails.orderId}</p>
-		  				</li>
-		  				<li>
-		  					<!-- 翻译主题 -->
-		  					<p class="word"><spring:message code="myOrder.SubjectTrante"/>:</p>
-                            <p>${OrderDetails.translateName}</p>
-		  				</li>
-		  				<li>
-		  					<!-- 翻译语言 -->
-                             <p class="word"><spring:message code="myOrder.Language"/>:</p>
-                             <p>
-                             	<c:forEach items="${OrderDetails.prodExtends}" var="prodExtends">
-	                             	<c:choose>
-										<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${prodExtends.langungePairName}</c:when>
-										<c:otherwise>${prodExtends.langungeNameEn}</c:otherwise>
-									</c:choose>
-                             	</c:forEach>
-                             </p>
-		  				</li>
-		  				<li>
-		  					<!-- 翻译级别 -->
-                            <p class="word"><spring:message code="myOrder.Trantegrade"/>:</p>
-                            <p>
-                            	<!-- 依次是 标准级  专业级  出版级-->
-                            	<c:forEach items="${OrderDetails.prodLevels}" var="prodLevels">
-                            		<c:if test="${prodLevels.translateLevel == '100210'}"><spring:message code="order.Standard"/></c:if>
-                            		<c:if test="${prodLevels.translateLevel == '100220'}"><spring:message code="order.Professional"/></c:if>
-                            		<c:if test="${prodLevels.translateLevel == '100230'}"><spring:message code="order.Publishing"/></c:if>
-                            	</c:forEach>
-                            </p>
-		  				</li>
-		  				<li>
-		  					<!-- 用途 -->
-                            <p class="word"><spring:message code="myOrder.Purpose"/>:</p>
-                            <p>
-	                            <c:choose>
-									<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${OrderDetails.prod.useCn}</c:when>
-									<c:otherwise>${OrderDetails.prod.useEn}</c:otherwise>
-								</c:choose>
-                            </p>
-		  				</li>
-		  				<li>
-	  						<!-- 领域-->
-                             <p class="word"><spring:message code="myOrder.Field"/>:</p>
-                             <p>
-                             	<c:choose>
-									<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${OrderDetails.prod.fieldCn}</c:when>
-									<c:otherwise>${OrderDetails.prod.fieldEn}</c:otherwise>
-								</c:choose>
-                             </p>
-		  				</li>
-		  				<li>
-		  					<!-- 创建时间-->
-                            <p class="word"><spring:message code="myOrder.Creationtime"/>:</p>
-                            <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${OrderDetails.orderTime}"/> </p>
-		  				</li>
-		  				<li>
-		  					<!-- 预计翻译耗时 -->
-                            <p class="word"><spring:message code="myOrder.Estimatedtime"/>:</p>
-                            <p><spring:message
-                                code="myOrder.tranteNeedTime" arguments="${OrderDetails.prod.takeDay},${OrderDetails.prod.takeTime}"/></p>
-                 
-		  				</li>
-		  				<li>
-		  					<!-- 其他  -->
-                            <p class="word"><spring:message code="myOrder.Others"/>:</p>
-                            <!-- 加急;需要排版 -->
-                            <p><c:if test="${OrderDetails.prod.isUrgent == '1'}">
-                            	<spring:message code="myOrder.Urgent"/>;
-                            	</c:if>
-                            	<c:if test="${OrderDetails.prod.isSetType == '1'}">
-                            	<spring:message code="myOrder.Layout"/>
-                            	</c:if>
-                            </p>
-		  				</li>
-		  				<li class="width-large">
-		  					<!-- 需求备注 -->
-                            <p class="word"><spring:message code="myOrder.Demandnotes"/>:</p>
-                            <p class="p-large">${OrderDetails.remark}</p>
-		  				</li>
-		  			</ul>
+			 			<!-- 订单信息 -->
+			  			<span><spring:message code="myOrder.Orderinformation"/></span>
+			  			<ul>
+			  				<li>
+		  						<!-- 订单号 -->
+			  					<p class="word"><spring:message code="myOrder.Ordernumber"/>:</p>
+			  					<p>${OrderDetails.orderId}</p>
+			  				</li>
+			  				<li>
+			  					<!-- 翻译主题 -->
+			  					<p class="word"><spring:message code="myOrder.SubjectTrante"/>:</p>
+	                            <p>${OrderDetails.translateName}</p>
+			  				</li>
+			  				<li>
+			  					<!-- 翻译语言 -->
+	                             <p class="word"><spring:message code="myOrder.Language"/>:</p>
+	                             <p>
+	                             	<c:forEach items="${OrderDetails.prodExtends}" var="prodExtends">
+		                             	<c:choose>
+											<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${prodExtends.langungePairName}</c:when>
+											<c:otherwise>${prodExtends.langungeNameEn}</c:otherwise>
+										</c:choose>
+	                             	</c:forEach>
+	                             </p>
+			  				</li>
+			  				<li>
+			  					<!-- 翻译级别 -->
+	                            <p class="word"><spring:message code="myOrder.Trantegrade"/>:</p>
+	                            <p>
+	                            	<!-- 依次是 标准级  专业级  出版级-->
+	                            	<c:forEach items="${OrderDetails.prodLevels}" var="prodLevels">
+	                            		<c:if test="${prodLevels.translateLevel == '100210'}"><spring:message code="order.Standard"/></c:if>
+	                            		<c:if test="${prodLevels.translateLevel == '100220'}"><spring:message code="order.Professional"/></c:if>
+	                            		<c:if test="${prodLevels.translateLevel == '100230'}"><spring:message code="order.Publishing"/></c:if>
+	                            	</c:forEach>
+	                            </p>
+			  				</li>
+			  				
+			  				<c:if test="${OrderDetails.translateType != '2'}">
+			  					<!-- 文本、文档 类订单信息 -->
+				  				<li>
+				  					<!-- 用途 -->
+		                            <p class="word"><spring:message code="myOrder.Purpose"/>:</p>
+		                            <p>
+			                            <c:choose>
+											<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${OrderDetails.prod.useCn}</c:when>
+											<c:otherwise>${OrderDetails.prod.useEn}</c:otherwise>
+										</c:choose>
+		                            </p>
+				  				</li>
+				  				<li>
+			  						<!-- 领域-->
+		                             <p class="word"><spring:message code="myOrder.Field"/>:</p>
+		                             <p>
+		                             	<c:choose>
+											<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${OrderDetails.prod.fieldCn}</c:when>
+											<c:otherwise>${OrderDetails.prod.fieldEn}</c:otherwise>
+										</c:choose>
+		                             </p>
+				  				</li>
+				  				<li>
+				  					<!-- 创建时间-->
+		                            <p class="word"><spring:message code="myOrder.Creationtime"/>:</p>
+		                            <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${OrderDetails.orderTime}"/> </p>
+				  				</li>
+				  				<li>
+				  					<!-- 预计翻译耗时 -->
+		                            <p class="word"><spring:message code="myOrder.Estimatedtime"/>:</p>
+		                            <p><spring:message
+		                                code="myOrder.tranteNeedTime" arguments="${OrderDetails.prod.takeDay},${OrderDetails.prod.takeTime}"/></p>
+		                 
+				  				</li>
+				  				<li>
+				  					<!-- 其他  -->
+		                            <p class="word"><spring:message code="myOrder.Others"/>:</p>
+		                            <!-- 加急;需要排版 -->
+		                            <p><c:if test="${OrderDetails.prod.isUrgent == '1'}">
+		                            	<spring:message code="myOrder.Urgent"/>;
+		                            	</c:if>
+		                            	<c:if test="${OrderDetails.prod.isSetType == '1'}">
+		                            	<spring:message code="myOrder.Layout"/>
+		                            	</c:if>
+		                            </p>
+				  				</li>
+			  				</c:if>
+			  				
+			  				<c:if test="${OrderDetails.translateType == '2'}">
+			  					<!-- 口译类信息 -->
+			  					<li>
+	                             	<!-- 会议开始时间 -->
+	                                <p class="word"><spring:message code="myOrder.meetStartTime"/>:</p>
+	                                <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${OrderDetails.prod.stateTime}"/> </p>
+                           		</li>
+                           		<li>
+	                            	<!-- 会议结束时间-->
+	                                <p class="word"><spring:message code="myOrder.meetEndTime"/>:</p>
+	                                <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${OrderDetails.prod.endTime}"/> </p>
+                           		</li>
+                           		<li>
+	                            	<!-- 创建时间-->
+	                                <p class="word"><spring:message code="myOrder.Creationtime"/>:</p>
+	                                <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${OrderDetails.orderTime}"/> </p>
+                           		</li>
+	                            <li>
+	                            	<!-- 译员数量 -->
+	                                <p class="word"><spring:message code="myOrder.interpreterNum"/>:</p>
+	                                <p>${OrderDetails.prod.interperSum}</p>
+	                            </li>
+	                             <li>
+	                            	<!-- 会议地点 -->
+	                                <p class="word"><spring:message code="myOrder.place"/>:</p>
+	                              	<p>${OrderDetails.prod.meetingAddress}</p>
+	                            </li>
+	                              <li>
+	                            	<!-- 会场数量 -->
+	                                <p class="word"><spring:message code="myOrder.venueNum"/>:</p>
+	                                <p>${OrderDetails.prod.meetingSum}</p>
+	                            </li>
+	                             <li>
+	                            	<!-- 译员性别 -->
+	                                <p class="word"><spring:message code="myOrder.Gender"/>:</p>
+	                                <p>${OrderDetails.prod.interperGen}</p>
+	                            </li>
+			  				</c:if>
+			  				
+			  				<li class="width-large">
+			  					<!-- 需求备注 -->
+	                            <p class="word"><spring:message code="myOrder.Demandnotes"/>:</p>
+	                            <p class="p-large">${OrderDetails.remark}</p>
+			  				</li>
+			  			</ul>
 		 			</div>
 		
 		 		</div>
@@ -273,7 +329,7 @@
 		 					<!-- 待领取 -->
 							<input id="received" name="received" type="button" class="btn btn-green btn-xxxlarge radius10" value="领取">
 		 				</c:when>
-		 				<c:when test="${OrderDetails.state =='20'}">
+		 				<c:when test="${OrderDetails.state =='21'}">
 		 					<!-- 已领取  -->
 							<input id="trans" name="trans" class="btn btn-green btn-xxxlarge radius10" type="button" value="翻译">
 							<!-- 暂无 <input id="recharge-popo" class="btn btn-yellow btn-xxxlarge radius10 ml-20" type="button" value="分配">-->
@@ -281,18 +337,27 @@
 		 				<c:when test="${OrderDetails.state =='23' && not empty OrderDetails.prod.translateInfo}">
 		 					<!-- 文本 翻译中  有译文-->
 			 				<input id="submit" name="submit" class="btn btn-green btn-xxxlarge radius10" type="button" value="提交">
-							<input id="check" name="check" class="btn btn-yellow btn-xxxlarge radius10 ml-20" type="button" value="审校">
+							<!-- <input id="check" name="check" class="btn btn-yellow btn-xxxlarge radius10 ml-20" type="button" value="审校">-->
 		 				</c:when>
 		 				<c:when test="${OrderDetails.state =='23' && OrderDetails.translateType == '1'}">
 		 					<!-- 文档  翻译中 -->
-		 					<!-- <div id="selectFile">上传译文</div> -->
-		 					<input class="btn btn-green btn-xxxlarge radius10" type="button" value="上传译文">
-			 				<input id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" type="button" value="提交">
+		 						<c:if test="${UUploadCount > 0}">
+		 						<!-- 可以上传 -->
+		 							<input class="btn btn-green btn-xxxlarge radius10" type="button" value="上传译文" onclick="clp();" >
+		 						</c:if>
+		 						<c:if test="${UUploadCount < fn:length(OrderDetails.prodFiles)}">
+		 						<input id="recharge-popo" name="submit" class="btn btn-green btn-xxxlarge radius10" type="button" value="提交">
+		 						</c:if>
+		 						
+		 						<form  id="uploadForm" method="POST" enctype="multipart/form-data" action="${_base}/p/trans/order/upload">
+								   <input id="upload" name="file"  type="file" hidden="">
+								   <input name="orderId" type="hidden" value="${OrderDetails.orderId}">  
+								</form>　   
 							<!--<input id="tran-popo" class="btn btn-yellow btn-xxxlarge radius10 ml-20" type="button" value="CAT翻译">-->
 		 				</c:when>
 		 				<c:when test="${OrderDetails.state =='25'}">
 		 					<!-- 修改中 -->
-			 				<input id="submit" name="submit" class="btn btn-green btn-xxxlarge radius10" type="button" value="提交">
+			 				<input name="submit" class="btn btn-green btn-xxxlarge radius10" type="button" value="提交">
 		 				</c:when>
 		 				<c:otherwise>
 		 				<!-- 翻译中无译文 待确认  已完成 已退款 -->
@@ -312,8 +377,7 @@
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript" src="${uedroot}/scripts/modular/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
-<script type="text/javascript" src="${_base}/resources/spm_modules/webuploader/webuploader.js"></script>
-<script type="text/javascript" src="${_base}/resources/spm_modules/app/jsp/transOrder/upload.js"></script>
+
 <script type="text/javascript">
 var pager;
 var lspId="${lspId}";
@@ -334,17 +398,15 @@ var orderId = "${OrderDetails.orderId}";
 		 pager._downLoad($(this).attr('fileId'), $(this).attr('fileName'));
 	});
 	
-	//提交
-	$("input[name='submit']").click(function(){
+	//删除
+	$("input[name='delFile']").click(function(){
+		 pager._delFile($(this).parent().find("input[name='download']").attr('fileid'));
 	});
 	
-	//textSave
-	$("#textSave").click(function() {
-		//保存
-		window.location.reload();
-	});
 	
 })();
-   
+function clp(){
+	   return  $("#upload").click();
+	}
 </script>
 </html>

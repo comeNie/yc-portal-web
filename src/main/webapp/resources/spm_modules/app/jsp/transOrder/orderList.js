@@ -86,6 +86,22 @@ define('app/jsp/transOrder/orderList', function (require, exports, module) {
     		});
         },
         
+        //提交订单
+        _orderSubmit:function(orderId) {
+        	ajaxController.ajax({
+				type: "post",
+				url: _base + "/p/trans/order/save",
+				data: {
+					orderId: orderId,
+				},
+				success: function (data) {
+					if ("1" === data.statusCode) {
+						//提交成功
+					}
+				}
+			});
+        },
+        
         //把毫秒数转为 x天x小时x分钟x秒
         ftimeDHS:function(ts) {
         	var res = {};
