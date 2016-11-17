@@ -87,11 +87,14 @@ $.views.helpers({
 			break; 
 			}; 
 			}); 
-			}; 
-			if(timeZone==undefined || ""=timeZone){
-				timeZone=0;
+			};
+			var zoneTmp = timeZone;
+			if(timeZone==undefined || ""==timeZone|| "null"==timeZone){
+				zoneTmp=0;
+			}else {
+				zoneTmp = timeZone.substring(3);//获取时区时间，带符号
 			}
-		return format(times,"yyyy-MM-dd HH:mm:ss",timeZone);
+		return format(times,"yyyy-MM-dd HH:mm:ss",zoneTmp);
 	}
 });
 
@@ -101,12 +104,15 @@ $.views.helpers({
  */
 $.views.helpers({
 	"formatDate":function(applyTime,timeZone){
-		if(timeZone==undefined || ""=timeZone){
-			timeZone=0;
+		var zoneTmp = timeZone;
+		if(timeZone==undefined || ""==timeZone|| "null"==timeZone){
+			zoneTmp=0;
+		}else {
+			zoneTmp = timeZone.substring(3);//获取时区时间，带符号
 		}
 		var millisecond = applyTime.time;
 		//构造日期对象
-		var dateObj = new Date(millisecond+timeZone*3600*1000);
+		var dateObj = new Date(millisecond+zoneTmp*3600*1000);
 		
 		var year = 0;
 		var month = 0;
@@ -216,10 +222,13 @@ RegExp.prototype.liToYuan = function(li) {
 $.views.helpers({
 	"timestampToDate":function(format, timestamp,timeZone){
 		if(timestamp!=null){
-			if(timeZone==undefined || ""=timeZone){
-				timeZone=0;
+			var zoneTmp = timeZone;
+			if(timeZone==undefined || ""==timeZone || "null"==timeZone){
+				zoneTmp=0;
+			}else {
+				zoneTmp = timeZone.substring(3);//获取时区时间，带符号
 			}
-			return (new Date(parseFloat(timestamp)+timeZone*3600*1000)).format(format);
+			return (new Date(parseFloat(timestamp)+zoneTmp*3600*1000)).format(format);
 		}else{
 			return null;
 		}

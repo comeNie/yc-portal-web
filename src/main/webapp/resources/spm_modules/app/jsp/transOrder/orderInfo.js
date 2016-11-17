@@ -41,7 +41,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 		//领取订单
 		_getOrder:function(){
 			new Dialog({
-				content:"订单领取需按时完成,确认领取?",
+				content:$.i18n.prop('order.info.claimed.confirm'),
 				icon:'prompt',
 				okValue: $.i18n.prop('order.info.dialog.ok'),
 				cancelValue:$.i18n.prop('order.info.dialog.cancel'),
