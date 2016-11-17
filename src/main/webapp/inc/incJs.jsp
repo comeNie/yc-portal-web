@@ -40,7 +40,7 @@
 	$.post(_base+"/timezone.htm?offset="+today.stdTimezoneOffset());
 
 
-    /*
+    //我的帐户页面要用到日期格式化
     Date.prototype.format = function(format) {
         var date = {
                "M+": this.getMonth() + 1,
@@ -62,5 +62,5 @@
         }
         return format;
   }
-    */
+
 </script>
