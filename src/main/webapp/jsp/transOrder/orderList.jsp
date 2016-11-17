@@ -179,7 +179,7 @@
 									<!-- 待审核 -->
 										<td>待审核</td>
 		                           		<td>
-		                           			<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="提交">
+		                           			<!--<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="提交"> -->
 		                          		</td>
 								  {{else state  == '50'}}
 									<!-- 待确认 -->
@@ -260,8 +260,8 @@ var pager;
 	});
        
 	//提交按钮
-	$('#searchOrderData').delegate("input[name='translateName']", 'click', function () {
-	 
+	$('#searchOrderData').delegate("input[name='submit']", 'click', function () {
+		pager._orderSubmit($(this).parents("table").find("input[name='orderId']").val());
 	});
 	
 	//翻译按钮
