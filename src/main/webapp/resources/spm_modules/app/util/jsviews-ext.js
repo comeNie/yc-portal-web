@@ -97,12 +97,16 @@ $.views.helpers({
 
 /**
  * 对订单的受理时间进行格式化.
+ * timeZone 时区 如-5,8等，参数可不传
  */
 $.views.helpers({
-	"formatDate":function(applyTime){
+	"formatDate":function(applyTime,timeZone){
+		if(timeZone==undefined || ""=timeZone){
+			timeZone=0;
+		}
 		var millisecond = applyTime.time;
 		//构造日期对象
-		var dateObj = new Date(millisecond);
+		var dateObj = new Date(millisecond+timeZone*3600*1000);
 		
 		var year = 0;
 		var month = 0;
@@ -206,12 +210,16 @@ RegExp.prototype.liToYuan = function(li) {
  * Timestamp转化为指定格式的时间字符串
  * @param  {string} format    格式 
  * @param  {int}    timestamp 要格式化的时间
+ * @param timeZone 时区 如-5,8等，参数可不传
  * @return {string}           格式化后的时间字符串 
  */
 $.views.helpers({
-	"timestampToDate":function(format, timestamp){
+	"timestampToDate":function(format, timestamp,timeZone){
 		if(timestamp!=null){
-			return (new Date(parseFloat(timestamp))).format(format);
+			if(timeZone==undefined || ""=timeZone){
+				timeZone=0;
+			}
+			return (new Date(parseFloat(timestamp)+timeZone*3600*1000)).format(format);
 		}else{
 			return null;
 		}
