@@ -23,7 +23,8 @@
             <!--右侧第二块-->
             <div class="right-list mt-0">
                 <div class="right-list-title pb-10 pl-20">
-                    <p>订单大厅</p>
+                    <%--订单大厅--%>
+                    <p><spring:message code="task.center.title"/></p>
                 </div>
                 <div class="oder-form-lable mt-20">
                     <form id="orderQuery">
@@ -37,25 +38,30 @@
                         <input type="hidden" name="sortField" id="sortField" value="0">
                     <ul>
                         <li class="mb-20">
-                            <p>领域</p>
+                            <%--领域--%>
+                            <p><spring:message  code="order.Fields"/></p>
                             <p><select name="fieldCode" id="fieldCode" class="select select-small radius">
-                                <option value="">全部</option>
+                                <%--全部--%>
+                                <option value=""><spring:message code="task.center.select.all"/></option>
                                 <c:forEach var="obj" items="${domainList}">
                                     <option value="${obj.domainId}"><c:choose><c:when
                                             test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${obj.domainCn}</c:when><c:otherwise>${obj.domainEn}</c:otherwise>
                                     </c:choose></option>
                                 </c:forEach>
                             </select></p>
-                            <p>用途</p>
+                            <%--用途--%>
+                            <p><spring:message code="order.purpose"/></p>
                             <p><select name="useCode" id="useCode" class="select select-small radius">
-                                <option value="">全部</option>
+                                <%--全部--%>
+                                <option value=""><spring:message code="task.center.select.all"/></option>
                                 <c:forEach var="obj" items="${purposeList}">
                                     <option value="${obj.purposeId}"><c:choose><c:when
                                             test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${obj.purposeCn}</c:when><c:otherwise>${obj.purposeEn}</c:otherwise>
                                     </c:choose></option>
                                 </c:forEach>
                             </select></p>
-                            <p>订单时间</p>
+                                <%--订单时间--%>
+                            <p><spring:message code="task.center.order.date"/></p>
                             <p><input id="startDate" name="startDateStr" class="int-text int-small radius"
                                        readonly type="text"
                                       onfocus="WdatePicker({el:id,readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\');}'})"/>
@@ -79,19 +85,26 @@
                     <table class="table table-hover table-bg">
                         <thead>
                         <tr id="headDiv">
-                            <th width="16.666%" class="dinda">订单主题<i class="icon-caret-down"></i></th>
-                            <th width="16.666%">翻译语言</th>
-                            <th width="16.666%">金额（元）<a href="javaScript:void(0);" id="feeSort"
+                            <%--订单主题--%>
+                            <th width="16.666%" class="dinda"><spring:message code="task.center.order.subject"/><i class="icon-caret-down"></i></th>
+                                <%--翻译语言--%>
+                                <th width="16.666%"><spring:message code="task.center.order.language"/></th>
+                                <%--金额（元）--%>
+                            <th width="16.666%"><spring:message code="task.center.order.amount"/><a href="javaScript:void(0);" id="feeSort"
                                                         sortFlag="0"><i class="icon iconfont" >&#xe615;</i></a></th>
-                            <th width="16.666%">剩余时间 <a href="javaScript:void(0);" id="endSort"
+                                <%--剩余时间--%>
+                            <th width="16.666%"><spring:message code="task.center.time.remaining"/><a href="javaScript:void(0);" id="endSort"
                                                         sortFlag="0"><i class="icon iconfont" >&#xe615;</i></a></th>
-                            <th width="16.666%">操作</th>
+                                <%--操作--%>
+                            <th width="16.666%"><spring:message code="task.center.order.operate"/> </th>
                         </tr>
                         <div class="table-show">
-                            <ul>
-                                <li><a href="javaScript:void(0);">订单主题</a></li>
-                                <li><a href="javaScript:void(0);" id="pdateAec">发布时间升序</a></li>
-                                <li><a href="javaScript:void(0);" id="pdateDesc">发布时间降序</a></li>
+                            <ul> <%--订单主题--%>
+                                <li><a href="javaScript:void(0);"><spring:message code="task.center.order.subject"/></a></li>
+                                <%--发布时间升序--%>
+                                <li><a href="javaScript:void(0);" id="pdateAec"><spring:message code="task.center.release.time.asc"/> </a></li>
+                                <%--发布时间降序--%>
+                                <li><a href="javaScript:void(0);" id="pdateDesc"><spring:message code="task.center.release.time.desc"/> </a></li>
                             </ul>
                         </div>
                         </thead>
@@ -112,20 +125,22 @@
                             <th colspan="6" class="text-l">
                                 <div class="table-thdiv">
                                     <p>{{:~timestampToDate(orderTime,'yyyy-MM-dd HH:mm:ss')}}</p>
-                                    <p>订单号：<span>{{:orderId}}</span></p>
+                                    <%--订单号--%>
+                                    <p><spring:message code="task.center.order.id"/><span>{{:orderId}}</span></p>
                                 </div>
                             </th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr class="width-16">
-                            <td>{{:translateName}}</td>
+                            <td class="text-l pl-20">{{:translateName}}</td>
                             <td>{{if <%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>}}{{:languagePairName}}{{else}}{{:languageNameEn}}{{/if}}</td>
                             <td>{{:~liToYuan(totalFee)}}</td>
-                            <td>{{:takeDay}}天{{:takeTime}}小时</td>
-                            <td>
+                            <td>{{:takeDay}}<spring:message code="task.center.time.day"/> {{:takeTime}}<spring:message code="task.center.time.hour"/> </td>
+                            <td  class="text-r">
+                                <%--领取--%>
                                 <input type="button" name="getOrder" orderId="{{:orderId}}"
-                                       class="btn biu-btn btn-auto-25 btn-green radius10" value="领 取">
+                                       class="btn biu-btn btn-auto-25 btn-green radius10" value="<spring:message code='task.center.order.claim'/>">
                             </td>
                         </tr>
                         </tbody>
