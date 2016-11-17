@@ -330,6 +330,8 @@
 
 <script type="text/javascript">
 var pager;
+var lspId="${lspId}";
+var orderId = "${OrderDetails.orderId}";
 (function () {
 	seajs.use('app/jsp/transOrder/orderInfo', function(orderInfoPage) {
 		pager = new orderInfoPage({element : document.body});

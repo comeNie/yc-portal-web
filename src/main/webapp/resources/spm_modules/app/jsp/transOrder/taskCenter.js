@@ -109,33 +109,7 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
 	            	}
 	            }
     		});
-        },
-		//领取订单
-		_getOrder:function(intObj,orderId){
-			new Dialog({
-				content:"订单领取需按时完成,确认领取?",
-				icon:'prompt',
-				okValue: '确 定',
-				cancelValue:'取 消',
-				title: '领取订单',
-				ok:function(){
-					ajaxController.ajax({
-						type: "post",
-						url: _base+"/p/taskcenter/claim",
-						data: {'orderId': orderId,"lspId":lspId},
-						success: function(data){
-							//领取成功
-							if("1"===data.statusCode){
-								intObj.parent().html($.i18n.prop('task.center.claimed'));
-							}
-						}
-					});
-				},
-				cancel:function(){
-					this.close();
-				}
-			}).show();
-		}
+        }
     });
     module.exports = taskCenterPage;
 });

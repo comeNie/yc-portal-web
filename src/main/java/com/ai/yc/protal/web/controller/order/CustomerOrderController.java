@@ -148,7 +148,7 @@ public class CustomerOrderController {
                 orderReq.setOrderTimeStart(Timestamp.valueOf(orderTimeStart + " 00:00:00"));
             }
             if (StringUtils.isNotEmpty(orderTimeEnd)) {
-                orderReq.setOrderTimeEnd(Timestamp.valueOf(orderTimeEnd + " 00:00:00"));
+                orderReq.setOrderTimeEnd(Timestamp.valueOf(orderTimeEnd + " 23:59:59"));
             }
             if (StringUtils.isNotEmpty(stateListStr)) {
                 List<Object> states = JSONArray.parseArray(stateListStr);

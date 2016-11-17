@@ -7,6 +7,7 @@ import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
+import com.ai.paas.ipaas.i18n.ZoneContextHolder;
 import com.ai.yc.order.api.orderquery.param.OrdOrderVo;
 import com.ai.yc.order.api.orderquery.param.OrdProdExtendVo;
 import com.ai.yc.order.api.orderquery.param.QueryOrderRsponse;
@@ -36,6 +37,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * 订单大厅
@@ -99,16 +101,18 @@ public class TaskCenterController {
             //若没有页面,则使用第1页为默认
             if (orderReq.getPageNo()==null || orderReq.getPageNo()<1)
                 orderReq.setPageNo(1);
+            //获取当前用户所处时区
+            TimeZone timeZone = TimeZone.getTimeZone(ZoneContextHolder.getZone());
             //添加下单开始时间
             if (StringUtils.isNotBlank(startDateStr)){
                 String dateTmp = startDateStr+" 00:00:00";
-                Timestamp date =DateUtil.getTimestamp(dateTmp,DateUtil.DATETIME_FORMAT);
+                Timestamp date =DateUtil.getTimestamp(dateTmp,DateUtil.DATETIME_FORMAT,timeZone);
                 orderReq.setStartStateTime(date);
             }
             //添加下单结束时间
             if (StringUtils.isNotBlank(endDateStr)){
                 String dateTmp = endDateStr+" 23:59:59";
-                Timestamp date =DateUtil.getTimestamp(dateTmp,DateUtil.DATETIME_FORMAT);
+                Timestamp date =DateUtil.getTimestamp(dateTmp,DateUtil.DATETIME_FORMAT,timeZone);
                 orderReq.setEndStateTime(date);
             }
 //            IOrderWaitReceiveSV iOrderQuerySV = DubboConsumerFactory.getService(IOrderWaitReceiveSV.class);
@@ -123,7 +127,7 @@ public class TaskCenterController {
 
             List<OrderWaitReceiveSearchInfo> orderLisst = new ArrayList<>();
             OrderWaitReceiveSearchInfo searchInfo = new OrderWaitReceiveSearchInfo();
-            searchInfo.setOrderId(2000000026089247l);
+            searchInfo.setOrderId(2000000027736428l);
             searchInfo.setTranslateName("1.下单流程中的“支付”环节，");
             searchInfo.setLanguagePairName("中文-英文");
             searchInfo.setLanguageNameEn("ch-en");

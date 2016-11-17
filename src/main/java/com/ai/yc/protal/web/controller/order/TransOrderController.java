@@ -30,19 +30,19 @@ import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.service.OrderService;
 import com.ai.yc.protal.web.utils.UserUtil;
-import com.alibaba.dubbo.common.json.JSON;
+
 import com.alibaba.fastjson.JSONArray;
+
+import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
+
 import com.alibaba.fastjson.JSONObject;
 
-import sun.net.ftp.FtpClient.TransferType;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.collections.iterators.LoopingIterator;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -118,6 +118,7 @@ public class TransOrderController {
     public String orderInfoView(@PathVariable("orderId") String orderId, Model uiModel){
         //TODO 跳转错误页面
         if (StringUtils.isEmpty(orderId)) {
+            return "/404";
         }
         
         try {
@@ -141,11 +142,33 @@ public class TransOrderController {
             }
             
             uiModel.addAttribute("UUploadCount", uUploadCount);
+            orderDetailsRes.setState("20");//TODO... 模拟待领取
+            orderDetailsRes.setDisplayFlag("20");//TODO... 模拟待领取
+            //若是待领取,则获取用户信息
+            if ("20".equals(orderDetailsRes.getDisplayFlag())){
+                getUserInfo(uiModel);
+            }
             uiModel.addAttribute("OrderDetails", orderDetailsRes);
         } catch (Exception e) {
             LOGGER.error("查询订单详情失败:",e);
         }
         return "transOrder/orderInfo";
+    }
+
+    private void getUserInfo(Model uiModel){
+//        IYCUserServiceSV userServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
+//        SearchYCTranslatorSkillListRequest searchYCUserReq = new SearchYCTranslatorSkillListRequest();
+//        searchYCUserReq.setTenantId(Constants.DEFAULT_TENANT_ID);
+//        searchYCUserReq.setUserId(userId);
+//        YCTranslatorSkillListResponse userInfoResponse = userServiceSV.getTranslatorSkillList(searchYCUserReq);
+        //包括译员的等级,是否为LSP译员,LSP中的角色,支持的语言对
+//        uiModel.addAttribute("lspId",userInfoResponse.getLspId());//lsp标识
+//        uiModel.addAttribute("lspRole",userInfoResponse.getLspRole());//lsp角色
+//        uiModel.addAttribute("vipLevel",userInfoResponse.getVipLevel());//译员等级
+        //TODO... 模拟数据
+        uiModel.addAttribute("lspId","");//lsp标识
+        uiModel.addAttribute("lspRole","1");//lsp角色
+        uiModel.addAttribute("vipLevel","4");//译员等级
     }
     
     /**
