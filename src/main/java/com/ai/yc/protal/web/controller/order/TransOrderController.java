@@ -25,12 +25,8 @@ import com.ai.yc.order.api.orderstate.param.OrderStateUpdateResponse;
 import com.ai.yc.order.api.translatesave.interfaces.ITranslateSaveSV;
 import com.ai.yc.order.api.translatesave.param.SaveTranslateInfoRequest;
 import com.ai.yc.order.api.translatesave.param.TranslateFileVo;
-import com.ai.yc.order.api.updateorder.interfaces.IUpdateOrderSV;
-import com.ai.yc.order.api.updateorder.param.UProdFileVo;
-import com.ai.yc.order.api.updateorder.param.UProdVo;
-import com.ai.yc.order.api.updateorder.param.UpdateOrderRequest;
-import com.ai.yc.order.api.updateorder.param.UpdateOrderResponse;
 import com.ai.yc.protal.web.constants.Constants;
+import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
 import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.service.OrderService;
 import com.ai.yc.protal.web.utils.UserUtil;
@@ -38,7 +34,8 @@ import com.ai.yc.protal.web.utils.UserUtil;
 import com.alibaba.fastjson.JSONArray;
 
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
-
+import com.ai.yc.user.api.userservice.param.SearchYCTranslatorRequest;
+import com.ai.yc.user.api.userservice.param.YCTranslatorInfoResponse;
 import com.alibaba.fastjson.JSONObject;
 
 
@@ -83,32 +80,57 @@ public class TransOrderController {
      */
     @RequestMapping("/list/view")
     public String orderListView(Model uiModel){
-        List<SysDomain> domainList = cacheServcie.getAllDomain(rb.getDefaultLocale());
-        List<SysPurpose> purpostList = cacheServcie.getAllPurpose(rb.getDefaultLocale());
-        
-        uiModel.addAttribute("domainList", domainList); //领域
-        uiModel.addAttribute("purpostList", purpostList); //用途
-        
-        String userId = UserUtil.getUserId();
-        IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
-        QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
-        ordCountReq.setUserId(userId);
-        
-        // 21：已领取
-        ordCountReq.setDisplayFlag("21");
-        QueryOrdCountResponse ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-        uiModel.addAttribute("ReceivedCount", ordCountRes.getCountNumber());
-        
-        //211：已分配 
-        ordCountReq.setDisplayFlag("211");
-        ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-        uiModel.addAttribute("AssignedCount", ordCountRes.getCountNumber());
-        
-        //23：翻译中 
-        ordCountReq.setDisplayFlag("23");
-        ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-        uiModel.addAttribute("TranteCount", ordCountRes.getCountNumber());
-        
+        try {
+            List<SysDomain> domainList = cacheServcie.getAllDomain(rb.getDefaultLocale());
+            List<SysPurpose> purpostList = cacheServcie.getAllPurpose(rb.getDefaultLocale());
+            
+            uiModel.addAttribute("domainList", domainList); //领域
+            uiModel.addAttribute("purpostList", purpostList); //用途
+            
+            String userId = UserUtil.getUserId();
+            IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
+            QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
+            ordCountReq.setUserId(userId);
+            
+            // 21：已领取
+            ordCountReq.setDisplayFlag("21");
+            QueryOrdCountResponse ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+            uiModel.addAttribute("ReceivedCount", ordCountRes.getCountNumber());
+            
+            //211：已分配 
+            ordCountReq.setDisplayFlag("211");
+            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+            uiModel.addAttribute("AssignedCount", ordCountRes.getCountNumber());
+            
+            //23：翻译中 
+            ordCountReq.setDisplayFlag("23");
+            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+            uiModel.addAttribute("TranteCount", ordCountRes.getCountNumber());
+            
+            //查询译员信息 TODO暂时关闭
+//            IYCUserServiceSV iycUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
+//            SearchYCTranslatorRequest ycReq = new SearchYCTranslatorRequest();
+//            ycReq.setUserId(UserUtil.getUserId());
+//            YCTranslatorInfoResponse ycRes = iycUserServiceSV.searchYCTranslatorInfo(ycReq);
+//            ResponseHeader resHeader = ycRes.getResponseHeader();
+//            LOGGER.info("译员信息: "+JSONObject.toJSONString(ycRes));
+//            //如果返回值为空,或返回信息中包含错误信息
+//            if (ycRes==null|| (resHeader!=null && (!resHeader.isSuccess())) ){
+//                return "/404";
+//            }
+//            "10、译员
+//            11、项目经理
+//            12、超级管理员"
+            YCTranslatorInfoResponse ycRes = new YCTranslatorInfoResponse();
+            ycRes.setUserId(UserUtil.getUserId());
+            ycRes.setLspId("10001");
+            ycRes.setLspRole("10");
+            
+            uiModel.addAttribute("interperInfo", ycRes);
+        } catch (Exception e) {
+           LOGGER.info("查询译员信息失败：", e);
+        }
+      
         return "transOrder/orderList";
     }
     
