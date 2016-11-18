@@ -172,6 +172,8 @@
 		<!-- 联系人 -->
 		<%@ include file="/jsp/order/oralOrderContact.jsp" %>
 		</form>
+	<!--底部-->
+	<%@include file="/inc/indexFoot.jsp"%>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">

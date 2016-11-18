@@ -99,7 +99,7 @@ dependencies {
     //订单领取
     compile 'com.ai.yc.order:orderreceive:1.0-SNAPSHOT'
     //更新订单信息
-    compile 'com.ai.yc.order:updateorder:1.0-SNAPSHOT'
+    compile 'com.ai.yc.order:translatesave:1.0-SNAPSHOT'
     //更新订单状态
     compile 'com.ai.yc.order:orderstate:1.0-SNAPSHOT'
 

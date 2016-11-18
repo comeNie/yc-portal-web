@@ -7,22 +7,23 @@ define("app/jsp/user/security/bindEmail",
 			var imgCodeFlag = false;
 			var isBandPhone = false;
 			var isBandEmail = false;
-			var showInfoMsg = function(msg){
-		    	var d = Dialog({
-					content:msg,
-					icon:'success',
-					okValue: '确 定',
-					title: '提示',
-					ok:function(){
-						this.close();
-					}
-				});
-				d.show();
-		    }
+			
 			var $ = require('jquery'), 
 			Widget = require('arale-widget/1.2.0/widget'), 
 			Dialog = require("optDialog/src/dialog"), 
 			AjaxController = require('opt-ajax/1.0.0/index');
+			var showMsg = function(msg){
+		    	var d = Dialog({
+					content:msg,
+					icon:'fail',
+					okValue: showOkValueMsg,
+					title: showTitleMsg,
+					ok:function(){
+						d.close();
+					}
+				});
+				d.show();
+		    };
 			// 实例化AJAX控制处理对象
 			var ajaxController = new AjaxController();
 			// 定义页面组件类
@@ -49,14 +50,14 @@ define("app/jsp/user/security/bindEmail",
 							var emailVal = email.val();
 							if ($.trim(emailVal) == "") {
 								$("#emailUErrMsg").show();
-								$("#emailUErrMsg").text("请输入邮箱地址");
+								$("#emailUErrMsg").text(emailUErrPleaseMsg);
 								//email.focus();
 								return false;
 							}
 							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
 									.test(emailVal)) {
 								$("#emailUErrMsg").show();
-								$("#emailUErrMsg").text("请输入合法邮箱地址");
+								$("#emailUErrMsg").text(emailUErrLegalMsg);
 								return false;
 							}
 							$("#emailUErrMsg").hide();
@@ -64,7 +65,7 @@ define("app/jsp/user/security/bindEmail",
 							ajaxController.ajax({
 								type : "post",
 								processing : false,
-								message : "保存中，请等待...",
+								message : saveingMsg,
 								url : _base + "/p/security/checkPhoneOrEmail",
 								data : {
 									'checkType' : 'email',
@@ -72,7 +73,7 @@ define("app/jsp/user/security/bindEmail",
 								},
 								success : function(json) {
 									if (!json.data) {
-										showInfoMsg(json.statusInfo);
+										showMsg(json.statusInfo);
 									}
 								}
 							});
@@ -92,7 +93,7 @@ define("app/jsp/user/security/bindEmail",
 									.ajax({
 										type : "post",
 										processing : false,
-										message : "保存中，请等待...",
+										message : saveingMsg,
 										url : _base + "/userCommon/sendEmail",
 										data : {
 											'email' : $("#bindEmail").val(),
@@ -103,20 +104,20 @@ define("app/jsp/user/security/bindEmail",
 												$("#dynamicodeErrMsg").show();
 												$("#dynamicodeErrMsg").text(data.statusInfo);
 												$("#email-sendCode-btn").removeAttr("disabled"); //移除disabled属性
-									            $('#email-sendCode-btn').val('获取验证码');
+									            $('#email-sendCode-btn').val(getOperationCode);
 												return;
 											}else{
 												if(data.data){
 													var step = 59;
-										            $('#email-sendCode-btn').val('重新发送60');
+										            $('#email-sendCode-btn').val(resend60);
 										            $("#email-sendCode-btn").attr("disabled", true);
 										            var _res = setInterval(function(){
 										                $("#email-sendCode-btn").attr("disabled", true);//设置disabled属性
-										                $('#email-sendCode-btn').val('重新发送'+step);
+										                $('#email-sendCode-btn').val(resend+step);
 										                step-=1;
 										                if(step <= 0){
 										                $("#email-sendCode-btn").removeAttr("disabled"); //移除disabled属性
-										                $('#email-sendCode-btn').val('获取验证码');
+										                $('#email-sendCode-btn').val(inputOperationCode);
 										                clearInterval(_res);//清除setInterval
 										                }
 										            },1000);
@@ -135,7 +136,7 @@ define("app/jsp/user/security/bindEmail",
 							 var emailDynamicode = $("#emailValue").val();
 							 if(emailDynamicode==null||emailDynamicode==""){
 								 $("#dynamicodeErrMsg").show();
-								 $("#dynamicodeErrMsg").text("请输入验证码");
+								 $("#dynamicodeErrMsg").text(pleaseInputOC);
 								 return false;
 							 }
 							 ajaxController.ajax({
@@ -163,10 +164,10 @@ define("app/jsp/user/security/bindEmail",
 								    				success: function(data) {
 								    					var jsonData = JSON.parse(data);
 								    		        	if(jsonData.statusCode!="1"){
-								    		        		alert("修改失败")
+								    		        		alert(bindFail)
 															return false;
 								    		        	}else{
-								    		        		alert("绑定成功")
+								    		        		alert(bingSuccess)
 								    		        	}
 								    		          },
 								    				error: function(error) {

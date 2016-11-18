@@ -43,7 +43,7 @@ define('app/jsp/transOrder/orderList', function (require, exports, module) {
         
         //根据状态查询订单
         _orderListByType:function(state) {
-        	var reqdata = {'state': state}
+        	var reqdata = {'state': state};
         	this._getOrderList(reqdata);
         },
         

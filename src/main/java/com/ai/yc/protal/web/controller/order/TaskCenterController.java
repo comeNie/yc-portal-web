@@ -120,8 +120,8 @@ public class TaskCenterController {
             //TODO... 模拟数据
             OrderWaitReceiveSearchResponse orderRes = new OrderWaitReceiveSearchResponse();
             PageInfo<OrderWaitReceiveSearchInfo> pageInfo = new  PageInfo<OrderWaitReceiveSearchInfo>();
-            pageInfo.setCount(8);
-            pageInfo.setPageCount(1);
+            pageInfo.setCount(200);
+            pageInfo.setPageCount(20);
             pageInfo.setPageNo(1);
             pageInfo.setPageSize(10);
 

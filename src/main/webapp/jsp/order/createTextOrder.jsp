@@ -275,6 +275,8 @@
 		<!-- 联系人 -->
 		<%@ include file="/jsp/order/textOrderContact.jsp" %>
 		</form>
+	<!--底部-->
+	<%@include file="/inc/indexFoot.jsp"%>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript" src="${uedroot}/scripts/modular/drop-down.js"></script>

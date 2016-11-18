@@ -1,15 +1,17 @@
 //导航下拉
 $(function () {
     var st = 100;
-    $('.cloud-breadcrumb ul .user .yonh').mouseenter(function () {
+    $('.cloud-breadcrumb ul .user .yonh').mouseover(function () {
 		$('.show').show(1);
+		 $(this).children('i').rotate({animateTo:180});
     })
 		$(".show").click(function () {
                 $(this).hide(1);
             });
 			
-		$('.cloud-breadcrumb').mouseleave(function () {
+		$('.cloud-breadcrumb').mouseout(function () {
         $('.show').hide(1);
+         $(this).children('i').rotate({animateTo:0});
     });	
   });
 
@@ -203,31 +205,52 @@ $(".attachment ul li i").click(function () {
 	});
 	}); 
 	
-
-//旋转
-$(document).ready(function(){
-$("#icon1").rotate({ 
-   bind: 
-     { 
-        mouseover : function() { 
-            $(this).rotate({animateTo:180});
-        },
-        mouseout : function() { 
-            $(this).rotate({animateTo:0});
-        }
-     } 
-   
+//下单
+$(function(){
+  $("#st1-btn").click(function(){
+  $("#st1").hide();
+  $("#st2").show();
+  });
+  $("#st1-btn1").click(function(){
+  $("#st2").hide();
+  $("#st3").show();
+  });
+  $("#st1-btn2").click(function(){
+  $("#st3").hide();
+  $("#st4").show();
+  });
+  
 });
-$("#icon2").rotate({ 
-   bind: 
-     { 
-        mouseover : function() { 
-            $(this).rotate({animateTo:180});
-        },
-        mouseout : function() { 
-            $(this).rotate({animateTo:0});
-        }
-     } 
-   
-});
-});
+////旋转
+//$(document).ready(function(){
+//$("#icon1").rotate({ 
+// bind: 
+//   { 
+//      mouseover : function() { 
+//          $(this).rotate({animateTo:180});
+//      },
+//      mouseout : function() { 
+//          $(this).rotate({animateTo:0});
+//      }
+//   } 
+// 
+//});
+//$("#icon2").rotate({ 
+// bind: 
+//   { 
+//      mouseover : function() { 
+//          $(this).rotate({animateTo:180});
+//      },
+//      mouseout : function() { 
+//          $(this).rotate({animateTo:0});
+//      }
+//   } 
+// 
+//});
+//});
+//$(document).ready(function(){
+//$(".static-tab ul li a").click(function(){
+// $(this).children("#tab-icon2").show();
+// $(this).children("#tab-icon1").hide();
+//});
+//});

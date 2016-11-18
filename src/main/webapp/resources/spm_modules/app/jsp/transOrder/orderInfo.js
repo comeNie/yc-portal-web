@@ -54,11 +54,19 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 							//保存成功
 							//刷新页面
 				    		window.location.reload();
-						}
+					 }
+
+					 if ("FAIL" == data.statusInfo) {
+						 alert($.i18n.prop('order.submit.fail'));
+					 } else if ("FAIL_0" == data.statusInfo) {
+						 alert($.i18n.prop('order.submit.reason.transNull'));
+					 } else { //FAIL_1
+						 alert($.i18n.prop('order.submit.reason.transFileNull'));
+					 }
 		         },  
 		         error: function (data) {  
-		             alert(data.data);  
-		         }  
+					 alert($.i18n.prop('order.submit.fail'));
+		         }
 		    });  
     	},
     	
