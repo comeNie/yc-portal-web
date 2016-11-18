@@ -87,7 +87,7 @@
 							<thead>
 								<tr>
 									<th width="16.666%">订单主题</th>
-									<th width="16.666%">下单人</th>
+									<th order_mode="hide" width="16.666%">下单人</th>
 									<th width="16.666%">翻译语言</th>
 									<th width="16.666%">金额（元）</th>
 									<th width="16.666%">状态</th>
@@ -121,7 +121,7 @@
 				<table class="table  table-bg tb-border mb-20">
 				<thead>
 					<tr>
-						<th colspan="6" class="text-l">
+						<th order_mode_colspan="hide" colspan="6" class="text-l">
 							<div class="table-thdiv">
 								<p>{{:~timesToFmatter(orderTime)}}</p>
 								<p name="orderId" style="cursor:pointer;">
@@ -149,7 +149,7 @@
 						<td name="translateName" orderId="{{:orderId}}" class="text-l pl-20">
                           {{:translateName}}
                         </td>
-						<td>{{:userName}}</td>
+						<td order_mode="hide" >{{:userName}}</td>
 						<td>
                             {{for ordProdExtendList}}
 							 {{if #parent.parent.data.currentLan == 'zh_CN'}}

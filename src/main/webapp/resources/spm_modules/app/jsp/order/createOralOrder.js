@@ -210,6 +210,8 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 				baseInfo.orderType = "1";
 				baseInfo.flag = "1";//业务标识 0:国内业务 1：国际业务 ??
 				baseInfo.chlId = "1";
+				
+				feeInfo.currencyUnit = "2";	//"1：RMB 2：$"
 			}
 			
 			baseInfo.orderType = "1"; //??
@@ -262,10 +264,6 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 			contactInfo.contactName=$("#saveContactDiv").find('input').eq(0).val();
 	    	contactInfo.contactTel="+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val();
 			contactInfo.contactEmail=$("#saveContactDiv").find('input').eq(2).val();
-			
-			var feeInfo = {};
-			feeInfo.totalFee = 100;
-			feeInfo.currencyUnit = $("#selectDuad").find("option:selected").val();
 			
 			ajaxController.ajax({
 				type: "post",

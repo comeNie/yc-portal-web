@@ -15,6 +15,8 @@
 	      	    mimeTypes: '.rar,.zip,.doc,.xls,.docx,.xlsx,.pdf,.jpg,.png,.jif'
 	      		},
              resize : false,
+             // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
+             disableGlobalDnd: true,
              fileNumLimit: 10,
              fileSizeLimit: 100 * 1024 * 1024,    // 100 M
          });
@@ -135,6 +137,7 @@
 
          //上传出错时触发
          uploader.on( "uploadError", function( obj, reason  ) {
+        	 console.log('----error');
                var errorMessage = response.message;
                    alert(reason,3); 
            });
