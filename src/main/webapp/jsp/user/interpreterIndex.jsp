@@ -70,7 +70,7 @@
   		
   			
   		<!--右侧第二块-->
-  		<div class="right-list">
+  		<div id="have_order_container" class="right-list" style="display: none;">
   			<div class="right-list-title pb-10 pl-20">
   				<p>我的订单</p>
   				<p class="right"><input type="button" class="btn  btn-od-large btn-blue radius20" value="全部订单"></p>
@@ -86,49 +86,22 @@
                             <th>操作</th>
                       </tr>
                		</thead>
-                    <tbody>
-						<tr>
-                            <td><div  class="fy-sm">我要翻译一段话我要翻译一段话段话段话</div></td>
-                            <td>1000.00</td>
-                            <td>2015-04-07  09:53:51</td>
-                            <td>翻译中</td>
-                            <td><input type="button" class="btn biu-btn btn-auto-25 btn-green radius10" value="翻译"></td>
-						</tr>
-						<tr>
-                            <td><div  class="fy-sm">我要翻译一段话我要翻译一段话段话段话</div></td>
-                            <td>1000.00</td>
-                            <td>2015-04-07  09:53:51</td>
-                            <td>翻译中</td>
-                            <td><input type="button" class="btn biu-btn btn-auto-25 btn-green radius10" value="翻译"></td>
-						</tr>
-						<tr>
-                            <td><div  class="fy-sm">我要翻译一段话我要翻译一段话段话段话</div></td>
-                            <td>1000.00</td>
-                            <td>2015-04-07  09:53:51</td>
-                            <td>翻译中</td>
-                            <td><input type="button" class="btn biu-btn btn-auto-25 btn-green radius10" value="翻译"></td>
-						</tr>
-						<tr>
-                            <td><div  class="fy-sm">我要翻译一段话我要翻译一段话段话段话</div></td>
-                            <td>1000.00</td>
-                            <td>2015-04-07  09:53:51</td>
-                            <td>翻译中</td>
-                            <td><input type="button" class="btn biu-btn btn-auto-25 btn-green radius10" value="翻译"></td>
-						</tr>
+                    <tbody id="order_list">
+						
 				    </tbody>
             </table>   		
 		</div>
 		<div class="renz-list">没有正在进行中的任务，可以去<a href="#">订单大厅</a>领取适合自己的任务</div>
   		</div>
-    <div class="right-list" style="display: none;">
+    <div id="no_order_container" class="right-list" style="display: none;">
 			<div class="no-order no-order-cl">
 				<ul>
-					<li><img src="../images/none-d1.jpg" /></li>
+					<li><img src="${uedroot}/images/none-d1.jpg" /></li>
 					<li class="mt-50">您好，您还没有通过认证<br>无法领取任务，请先认证</li>
 					<li class="right mt-t500"><input type="button"  class="btn border-blue btn-large radius20 blue" value="认证议员"></li>
 				</ul>
 			</div>
-			<div class="no-step"><img src="../images/step1.jpg" /></div>
+			<div class="no-step"><img src="${uedroot}/images/step1.jpg" /></div>
   	</div>
   	
   	</div>
@@ -137,7 +110,21 @@
   </div>
   		
   </div>
-
+<script id="orderTemple" type="text/template">
+ <tr>
+                            <td><div  class="fy-sm"> {{:translateName}}</div></td>
+                            <td>
+                           {{:~liToYuan(totalFee)}}
+				             {{if  currencyUnit == '1'}}
+					         <spring:message code="myOrder.rmb"/>
+				              {{else }}
+					          <spring:message code="myOrder.dollar"/>
+				             {{/if}}</td>
+                            <td>{{:endTime}}</td>
+                            <td>翻译中</td>
+                            <td><input type="button" class="btn biu-btn btn-auto-25 btn-green radius10" value="翻译"></td>
+</tr>
+</script>
 <script type="text/javascript">
 	var pager;
 	(function() {

@@ -18,6 +18,7 @@ define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, mo
 				/* 初始化 */
 				_init:function(){
 					this._orderStatusCount();
+					this._queryOrder();
 				},
 				/* 获取订单数量 */
 				_orderStatusCount:function(){
@@ -29,6 +30,54 @@ define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, mo
 		    		        	//data = {"21":3,"23":4};
 		    		        	$("#receiveCount").html(data['21']);
 		    		        	$("#translateCount").html(data['23']);
+		    		        }
+		    		});
+				},
+				//把毫秒数转为 x天x小时x分钟x秒
+		        ftimeDHS:function(ts) {
+		        	var res = {};
+		        	res.days = parseInt( ts / (1000 * 60 * 60 * 24) );
+		        	res.hours = parseInt( (ts % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) );
+		        	res.minutes = parseInt( (ts % (1000 * 60 * 60)) / (1000 * 60) );
+		        	res.seconds = parseInt( (ts % (1000 * 60)) / 1000 );
+		        	
+		        	return res;
+		        },
+				/* 获取订单 */
+				_queryOrder:function(){
+					var _this = this;
+					ajaxController.ajax({
+						 type:"post",
+		    				url:_base+"/p/customer/order/orderList",
+		    				data:{
+		    					'pageSize':10,
+		    					'pageNo':1
+		    					},
+		    		        success: function(json) {
+		    		        	var data = json.data;
+		    		        	if(data){
+		    		        		data =data.result;
+		    		        	}
+		    		        	if(data != null && data != undefined && data.length>0){
+		    	            		//把返回结果转换
+		    		            	for(var i=0;i<data.length;i++){
+		    		            		//确认截止时间转为 剩余x天x小时x分
+		    		            		var remainingTime = _this.ftimeDHS(data[i].remainingTime);
+		    		            		data[i].confirmTakeDays = remainingTime.days;
+		    		            		data[i].confirmTakeHours = remainingTime.hours;
+		    		            		data[i].confirmTakeMinutes =  remainingTime.minutes;
+		    		            		
+		    		            		data[i].currentLan = currentLan; //当前语言
+		    		            	}
+		    	            		var template = $.templates("#orderTemple");
+		    	            	    var htmlOutput = template.render(data);
+		    	            	    $("#order_list").html(htmlOutput);
+		    	            	    $("#no_order_container").hide();
+		    	            		$("#have_order_container").show();
+		    	            	}else{
+		    	            		$("#no_order_container").show();
+		    	            		$("#have_order_container").hide();
+		    	            	}
 		    		        }
 		    		});
 				},
