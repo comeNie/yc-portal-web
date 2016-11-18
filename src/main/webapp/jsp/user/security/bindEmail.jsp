@@ -29,7 +29,7 @@
   		<!--右侧第二块-->
   		<div class="right-list mt-0">
   			<div class="right-list-title pb-10 pl-20">
-  				<p>绑定邮箱</p>	
+  				<p> <spring:message code="ycaccountcenter.bindemial.right.title"/> </p>	
   			</div>
   			<!--充值-->
  			<div class="recharge mt-30">
@@ -38,14 +38,14 @@
  						<ul>
  							<li><label class="ml-70" id="emailUErrMsg" style="display: none;"></label></li>
  							<li>
- 								<p class="word">邮箱:</p>
+ 								<p class="word"><spring:message code="ycaccountcenter.bindemial.label.word1"/></p>
  								<p><input type="text" class="int-text int-large radius" id="bindEmail"></p>
  							</li>
  							<li>
- 								<p class="word">验证码:</p>
+ 								<p class="word"><spring:message code="ycaccountcenter.bindemial.label.word2"/></p>
  								<p><input type="text" class="int-text int-in radius" id="emailValue"></p>
- 								<p><input type="button" class="btn border-green border-sma radius btn-medium" id="email-sendCode-btn" value="获取验证码"></p>
- 								<p><a id="goEmail" href="javascript:void(0);">立即进入邮箱</a></p>
+ 								<p><input type="button" class="btn border-green border-sma radius btn-medium" id="email-sendCode-btn" value='<spring:message code="ycaccountcenter.bindemial.getcode"/>'></p>
+ 								<p><a id="goEmail" href="javascript:void(0);"><spring:message code="ycaccountcenter.bindemial.enteremail"/></a></p>
  							</li>
  						</ul>
  					</div>
@@ -53,7 +53,7 @@
  				</div>
  				<!--按钮-->
  				<div class="recharge-btn">
- 						<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" id="bandEmailSubmit" value="提 交">
+ 						<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" id="bandEmailSubmit" value='<spring:message code="ycaccountcenter.bindemial.submit"/>'>
  					</div>
  			</div>
   		</div>	
@@ -73,6 +73,21 @@
 			$emailHandle.openEmail($("#bindEmail").val());
 		});
 	});
+	
+	var emailBindMsg = {
+		showOkValueMsg	: '<spring:message code="ycaccountcenter.js.showOkValueMsg"/>',
+		showTitleMsg : '<spring:message code="ycaccountcenter.js.showTitleMsg"/>',
+		emailUErrPleaseMsg : '<spring:message code="ycaccountcenter.js.emailUErrPleaseMsg"/>',
+		emailUErrLegalMsg : '<spring:message code="ycaccountcenter.js.emailUErrLegalMsg"/>',
+		saveingMsg : '<spring:message code="ycaccountcenter.js.saveingMsg"/>',
+		getOperationCode : '<spring:message code="ycaccountcenter.js.getOperationCode"/>',
+		resend60 : '<spring:message code="ycaccountcenter.js.resend60"/>',
+		resend : '<spring:message code="ycaccountcenter.js.resend"/>',
+		inputOperationCode : '<spring:message code="ycaccountcenter.js.inputOperationCode"/>',
+		pleaseInputOC : '<spring:message code="ycaccountcenter.js.pleaseInputOC"/>',
+		bindFail : '<spring:message code="ycaccountcenter.js.bindFail"/>',
+		bingSuccess : '<spring:message code="ycaccountcenter.js.bingSuccess"/>'
+	};
 	
 	var pager;
 	(function() {
