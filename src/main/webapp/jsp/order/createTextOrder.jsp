@@ -57,21 +57,26 @@
 	  				<select id="selectDuad" t="${sessionScope.orderInfo.productInfo.translateInfo}" name="<%=response.getLocale()%>" tabindex="5" class="dropdown" data-settings='{"cutOff": 12}' >
 						<c:forEach items="${duadList}" var="duad">
 	  						<c:if test="${duad.orderType != 2}">
-		  					 	<option value="${duad.duadId}"  currency="${duad.currency}" 
-								ordinary="${duad.ordinary}"  ordinaryUrgent="${duad.ordinaryUrgent}" 
-								professional="${duad.professional}"  professionalUrgent="${duad.professionalUrgent}"  
-								publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}" 
-								sourceEn="${duad.sourceEn}" duadId="${duad.duadId}" currency="${duad.currency}";
-								<c:if test="${sessionScope.orderInfo.productInfo.languagePairInfoList[0].languagePairId==duad.duadId}">
-									 selected = "selected"
-								</c:if>
-								>
-									<c:choose>
-										<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${duad.sourceCn}→${duad.targetCn}</c:when>
-										<c:otherwise>${duad.sourceEn}→${duad.targetEn}</c:otherwise>
-									</c:choose>
-									
-								</option>
+	  							<c:choose>
+	  								<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">
+	  									<option value="${duad.duadId}"
+	  										ordinary="${duad.ordinary}"  ordinaryUrgent="${duad.ordinaryUrgent}" 
+											professional="${duad.professional}"  professionalUrgent="${duad.professionalUrgent}"  
+											publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}" 
+											source="${duad.sourceEn}" targert="${duad.targetEn}"
+	  									>
+	  										${duad.sourceCn}→${duad.targetCn}</option>
+	  								</c:when>
+	  								<c:otherwise>
+	  									<option value="${duad.duadId}"
+	  										ordinary="${duad.ordinaryDollar}"  ordinaryUrgent="${duad.ourgentDollar}" 
+											professional="${duad.professionalDollar}"  professionalUrgent="${duad.purgentDollar}"  
+											publish="${duad.publishDollar}"  publishUrgent="${duad.puburgentDollar}" 
+											source="${duad.sourceCn}" targert="${duad.targetCn}"
+	  									>
+	  										${duad.sourceEn}→${duad.targetEn}</option>
+	  								</c:otherwise>
+	  							</c:choose>
 							</c:if>
 						</c:forEach>
 					</select>
@@ -132,7 +137,13 @@
 							<p><spring:message code="order.stanInstruction"/></p>
 						</li>
 						<li>
-							<p><span id="stanPrice"></span><a></a><spring:message code="order.thousandWords"/></p>
+							<!-- 价格 -->
+							<p><span id="stanPrice"></span>
+								<c:choose>
+									<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>"><spring:message code="order.yuan"/></c:when>
+									<c:otherwise><spring:message code="order.meiyuan"/></c:otherwise>
+								</c:choose>
+								<spring:message code="order.thousandWords"/></p>
 							<p class="ml-30"><span>1</span><spring:message code="order.freeChanges"/></p>
 						</li>
 						<li class="green-li">
@@ -158,7 +169,13 @@
 							<p><spring:message code="order.proInstruction"/></p>
 						</li>
 						<li>
-							<p><span id="proPrice"></span><a></a><spring:message code="order.thousandWords"/></p>
+							<!-- 价格 -->
+							<p><span id="proPrice"></span>
+								<c:choose>
+									<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>"><spring:message code="order.yuan"/></c:when>
+									<c:otherwise><spring:message code="order.meiyuan"/></c:otherwise>
+								</c:choose>
+								<spring:message code="order.thousandWords"/></p>
 							<p class="ml-30"><span>1</span><spring:message code="order.freeChanges"/></p>
 						</li>
 						<li class="green-li">
@@ -185,7 +202,10 @@
 						<li>
 							<!-- 元/千字 -->
 							<p><span id="pubPrice"></span>
-								<a></a>
+								<c:choose>
+									<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>"><spring:message code="order.yuan"/></c:when>
+									<c:otherwise><spring:message code="order.meiyuan"/></c:otherwise>
+								</c:choose>
 								<spring:message code="order.thousandWords"/></p>
 							<p class="ml-30"><span>1</span><spring:message code="order.freeChanges"/></p>
 						</li>

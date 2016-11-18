@@ -67,6 +67,12 @@ public class CacheServcie {
         sysDuad1.setProfessionalUrgent("250");
         sysDuad1.setPublish("300");
         sysDuad1.setPublishUrgent("350");
+        sysDuad1.setOrdinaryDollar("10");
+        sysDuad1.setOurgentDollar("20");
+        sysDuad1.setProfessionalDollar("30");
+        sysDuad1.setPurgentDollar("40");
+        sysDuad1.setPublishDollar("50");
+        sysDuad1.setPuburgentDollar("60");
         duadList.add(sysDuad);
         duadList.add(sysDuad1);
         return duadList;

@@ -355,20 +355,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
         		if (val ==  $(".dropdown .selected").attr('value')) {
         			var selected = $(this);
 
-        			var currencyStr;
-        			var currency = selected.attr("currency");
         			var ordinary = selected.attr("ordinary");
         			var ordinaryUrgent = selected.attr("ordinaryUrgent");
         			var professional = selected.attr("professional");
         			var professionalUrgent = selected.attr("professionalUrgent");
         			var publish = selected.attr("publish");
         			var publishUrgent = selected.attr("publishUrgent");
-        			
-        			if (currency == "1") {
-        				currencyStr = $.i18n.prop('order.yuan');
-        			} else {
-        				currencyStr = $.i18n.prop('order.meiyuan');
-        			}
         			
         			if ($("#urgentOrder").is(':checked') ) {
         				$("#stanPrice").html(professionalUrgent);
@@ -380,10 +372,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
         				$("#pubPrice").html(publish);
         			}
         			
-        			$("#stanPrice").next('a').html(currencyStr);
-    				$("#proPrice").next('a').html(currencyStr);
-    				$("#pubPrice").next('a').html(currencyStr);
-        		
         		}
             });
 		
