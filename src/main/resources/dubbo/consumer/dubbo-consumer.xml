@@ -33,6 +33,8 @@
 		interface="com.ai.yc.order.api.orderstate.interfaces.IOrderStateUpdateSV" />
 	<dubbo:reference id="IUpdateOrderSV" registry="ycRegistry"
 		interface="com.ai.yc.order.api.updateorder.interfaces.IUpdateOrderSV" />
+	<dubbo:reference id="ITranslateSaveSV" registry="ycRegistry"
+		interface="com.ai.yc.order.api.translatesave.interfaces.ITranslateSaveSV" />
 	<!-- 注册 -->
 	<dubbo:reference id="iYCUserServiceSV" registry="ycRegistry"
 		interface="com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV" />

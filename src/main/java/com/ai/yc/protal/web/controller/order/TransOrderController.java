@@ -1,5 +1,6 @@
 package com.ai.yc.protal.web.controller.order;
 
+import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.components.dss.DSSClientFactory;
@@ -21,6 +22,9 @@ import com.ai.yc.order.api.orderquery.param.QueryOrderRsponse;
 import com.ai.yc.order.api.orderstate.interfaces.IOrderStateUpdateSV;
 import com.ai.yc.order.api.orderstate.param.OrderStateUpdateRequest;
 import com.ai.yc.order.api.orderstate.param.OrderStateUpdateResponse;
+import com.ai.yc.order.api.translatesave.interfaces.ITranslateSaveSV;
+import com.ai.yc.order.api.translatesave.param.SaveTranslateInfoRequest;
+import com.ai.yc.order.api.translatesave.param.TranslateFileVo;
 import com.ai.yc.order.api.updateorder.interfaces.IUpdateOrderSV;
 import com.ai.yc.order.api.updateorder.param.UProdFileVo;
 import com.ai.yc.order.api.updateorder.param.UProdVo;
@@ -240,7 +244,7 @@ public class TransOrderController {
     }
     
     /**
-     * 修改订单信息,保存译文、上传文件
+     * 修改订单信息,保存译文
      * @return
      * @author mimw
      */
@@ -253,26 +257,16 @@ public class TransOrderController {
         String translateInfo = request.getParameter("translateInfo");
         
         try {
-            IUpdateOrderSV iUpdateOrderSV = DubboConsumerFactory.getService(IUpdateOrderSV.class);
-            
-            UpdateOrderRequest updateReq = new UpdateOrderRequest();
+            ITranslateSaveSV iTranslateSaveSV = DubboConsumerFactory.getService(ITranslateSaveSV.class);
+            SaveTranslateInfoRequest updateReq = new SaveTranslateInfoRequest();
             updateReq.setOrderId(Long.valueOf(orderId));
-            updateReq.setOperId(UserUtil.getUserId());
             
             if (StringUtils.isNotEmpty(translateInfo)) {
-                UProdVo prod = new UProdVo();
-                prod.setTranslateInfo(translateInfo);
-                updateReq.setProd(prod);
+                updateReq.setTranslateInfo(translateInfo);
             }
+            updateReq.setOrderId(Long.valueOf(orderId));
             
-//            List<UProdFileVo> prodFiles = new ArrayList<>();
-//            UProdFileVo fileVo = new UProdFileVo();
-//            fileVo.setFileTranslateId("");
-//            fileVo.setFileTranslateName("");
-//            prodFiles.add(fileVo);
-//            updateReq.setProdFiles(prodFiles );
-            
-            UpdateOrderResponse updateRes = iUpdateOrderSV.updateOrderInfo(updateReq);
+            BaseResponse updateRes = iTranslateSaveSV.saveTranslateInfo(updateReq);
             ResponseHeader resHeader = updateRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息
             if (updateRes==null|| (updateRes!=null && (!resHeader.isSuccess()))){
@@ -348,15 +342,14 @@ public class TransOrderController {
             }
             
             //保存文件信息到订单中
-            IUpdateOrderSV iUpdateOrderSV = DubboConsumerFactory.getService(IUpdateOrderSV.class);
+            ITranslateSaveSV iTranslateSaveSV = DubboConsumerFactory.getService(ITranslateSaveSV.class);
             
-            UpdateOrderRequest updateReq = new UpdateOrderRequest();
+            SaveTranslateInfoRequest updateReq = new SaveTranslateInfoRequest();
             updateReq.setOrderId(orderId);
-            updateReq.setOperId(UserUtil.getUserId());
-            List<UProdFileVo> uProdFileVo = JSONArray.parseArray(JSONObject.toJSONString(prodFiles), UProdFileVo.class)  ;
-            updateReq.setProdFiles(uProdFileVo);
+            List<TranslateFileVo> uProdFileVo = JSONArray.parseArray(JSONObject.toJSONString(prodFiles), TranslateFileVo.class)  ;
+            updateReq.setFileVos(uProdFileVo);
             
-            UpdateOrderResponse updateRes = iUpdateOrderSV.updateOrderInfo(updateReq);
+            BaseResponse updateRes = iTranslateSaveSV.saveTranslateInfo(updateReq);
             ResponseHeader resHeader = updateRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息
             if (updateRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
@@ -425,15 +418,14 @@ public class TransOrderController {
             }
             
             //保存文件信息到订单中
-            IUpdateOrderSV iUpdateOrderSV = DubboConsumerFactory.getService(IUpdateOrderSV.class);
+            ITranslateSaveSV iTranslateSaveSV = DubboConsumerFactory.getService(ITranslateSaveSV.class);
             
-            UpdateOrderRequest updateReq = new UpdateOrderRequest();
+            SaveTranslateInfoRequest updateReq = new SaveTranslateInfoRequest();
             updateReq.setOrderId(Long.valueOf(orderId));
-            updateReq.setOperId(UserUtil.getUserId());
-            List<UProdFileVo> uProdFileVo = JSONArray.parseArray(JSONObject.toJSONString(prodFiles), UProdFileVo.class)  ;
-            updateReq.setProdFiles(uProdFileVo );
+            List<TranslateFileVo> uProdFileVo = JSONArray.parseArray(JSONObject.toJSONString(prodFiles), TranslateFileVo.class)  ;
+            updateReq.setFileVos(uProdFileVo);
             
-            UpdateOrderResponse updateRes = iUpdateOrderSV.updateOrderInfo(updateReq);
+            BaseResponse updateRes = iTranslateSaveSV.saveTranslateInfo(updateReq);
             ResponseHeader resHeader = updateRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息
             if (updateRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){

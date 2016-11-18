@@ -24,7 +24,6 @@ define('app/jsp/home', function (require, exports, module) {
             "click #toCreateOrder":"_toCreateOrder",
             "click #trante": "_mt",
             "click #playControl": "_text2audio",
-            "blur #int-before": "_verifyTranslateLan",
 			"click #humanTranBtn":"_goTextOrder"
         },
 
@@ -93,24 +92,6 @@ define('app/jsp/home', function (require, exports, module) {
 	        }
         },
         
-        //检测语言
-        _verifyTranslateLan:function() {
-        	ajaxController.ajax({
-				type: "post",
-				url: _base + "/translateLan",
-				data: {
-					text: $("#int-before").val(),
-				},
-				success: function (data) {
-					if ("1" === data.statusCode) {
-						console.log(data.data);
-						//alert("保存成功");
-						//保存成功,回退到进入的列表页
-//						window.history.go(-1)
-					}
-				}
-			});
-        }
         
     });
 
