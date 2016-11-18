@@ -77,5 +77,7 @@
         </div>
     </div>
 </div>
+<!--底部-->
+<%@include file="/inc/indexFoot.jsp"%>
 </body>
 </html>
