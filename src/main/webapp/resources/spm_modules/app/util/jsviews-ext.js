@@ -56,12 +56,14 @@ $.views.helpers({
 });
 
 /**
- * 毫秒转时间
+ * 毫秒转时间(带时区)
+ * times: 毫秒数。参数必传
+ * timeZone 时区 如-5,8等，参数可不传
  */
 $.views.helpers({
-	"timesToFmatter":function(times){
-		var format = function(time, format){ 
-			var t = new Date(time); 
+	"timesToFmatter":function(times,timeZone){
+		var format = function(time, format,timeZone){ 
+			var t = new Date(time+timeZone*3600*1000); 
 			var tf = function(i){return (i < 10 ? '0' : '') + i}; 
 			return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a){ 
 			switch(a){ 
@@ -85,19 +87,32 @@ $.views.helpers({
 			break; 
 			}; 
 			}); 
-			}; 
-		return format(times,"yyyy-MM-dd HH:mm:ss");
+			};
+			var zoneTmp = timeZone;
+			if(timeZone==undefined || ""==timeZone|| "null"==timeZone){
+				zoneTmp=0;
+			}else {
+				zoneTmp = timeZone.substring(3);//获取时区时间，带符号
+			}
+		return format(times,"yyyy-MM-dd HH:mm:ss",zoneTmp);
 	}
 });
 
 /**
  * 对订单的受理时间进行格式化.
+ * timeZone 时区 如-5,8等，参数可不传
  */
 $.views.helpers({
-	"formatDate":function(applyTime){
+	"formatDate":function(applyTime,timeZone){
+		var zoneTmp = timeZone;
+		if(timeZone==undefined || ""==timeZone|| "null"==timeZone){
+			zoneTmp=0;
+		}else {
+			zoneTmp = timeZone.substring(3);//获取时区时间，带符号
+		}
 		var millisecond = applyTime.time;
 		//构造日期对象
-		var dateObj = new Date(millisecond);
+		var dateObj = new Date(millisecond+zoneTmp*3600*1000);
 		
 		var year = 0;
 		var month = 0;
@@ -201,12 +216,19 @@ RegExp.prototype.liToYuan = function(li) {
  * Timestamp转化为指定格式的时间字符串
  * @param  {string} format    格式 
  * @param  {int}    timestamp 要格式化的时间
+ * @param timeZone 时区 如-5,8等，参数可不传
  * @return {string}           格式化后的时间字符串 
  */
 $.views.helpers({
-	"timestampToDate":function(format, timestamp){
+	"timestampToDate":function(format, timestamp,timeZone){
 		if(timestamp!=null){
-			return (new Date(parseFloat(timestamp))).format(format);
+			var zoneTmp = timeZone;
+			if(timeZone==undefined || ""==timeZone || "null"==timeZone){
+				zoneTmp=0;
+			}else {
+				zoneTmp = timeZone.substring(3);//获取时区时间，带符号
+			}
+			return (new Date(parseFloat(timestamp)+zoneTmp*3600*1000)).format(format);
 		}else{
 			return null;
 		}

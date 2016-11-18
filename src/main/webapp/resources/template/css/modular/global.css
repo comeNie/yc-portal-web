@@ -318,7 +318,7 @@ pre ol.linenums li {
 .table tr .red{color:#fe6b6b}
 .table tr .green{color:#39d5b0}
 /************************按钮************************/
-.btn{cursor:pointer;text-align:center;outline:none;font-size:14px;font-weight:bold;}
+.btn{cursor:pointer;text-align:center;outline:none;font-size:14px;}
 /*默认——灰色 通常用于取消*/
 .biu-btn{display:inline-block;cursor:pointer;text-align:center; font-weight:400;white-space:nowrap; outline:none;background:#e6e6e6;color:#6a6c6f}
 /*颜色 蓝色*/
@@ -393,6 +393,7 @@ pre ol.linenums li {
 .btn-auto{padding:0 6px;height:22px;line-height:20px;}
 .btn-auto-25{padding:0 10px;height:24px;line-height:22px;font-size:12px}
 .btn-120{width:120px;height:36px;line-height:36px;font-size:14px}
+.btn-100{width:120px;height:36px;line-height:36px;font-size:14px}
 .btn-60{width:60px;height:36px;line-height:36px;font-size:14px}
 .blue{color:#2361ea}
 .btn-od-large{width:109px;height:28px;font-size:14px;}
@@ -400,6 +401,7 @@ pre ol.linenums li {
 .btn-280{width:116px;height:44px;}
 .btn-415{width:420px;height:44px;font-size:18px}
 .btn-80{width:80px;height:25px;font-size:12px;color:#2965e6;border:1px solid #2361ea}
+.btn-50{width:50px;height:25px;font-size:12px;color:#2965e6;border:1px solid #2361ea}
 .btn-trans{width:80px;height:26px;font-weight:normal;}
 .btn-trans-b{width:80px;height:26px;font-weight:normal;border:1px solid #2361ea;color:#2965e6}
 .trans-btn-zh{width:104px;height:37px;}
@@ -409,8 +411,8 @@ pre ol.linenums li {
 .int-text{border:1px solid #e6e6e6;background:#fff; outline:none;line-height:26px;color:#6a6c6f;font-size:14px;}
 .int-text:hover{border:1px solid #52dc90;}
 .int-mini{width:102px;height:26px;padding:0 20px;line-height:26px;font-size:12px}
-.int-small{width:109px;height:26px;padding:0 20px;line-height:26px;}
-.int-medium{width:170px;height:26px;padding:0 30px 0 20px;}
+.int-small{width:105px;height:26px;padding:0 10px;line-height:26px;font-size:12px;}
+.int-medium{width:160px;height:26px;padding:0 30px 0 20px;}
 
 .int-in{width:164px;height:44px;padding:0  20px;line-height:44px;}
 .int-in-bi{width:240px;height:44px;padding:0 20px;line-height:44px;}
@@ -449,6 +451,7 @@ padding:0 10px;-moz-appearance:none;-webkit-appearance:none;
  background:url(../../images/icon-s.jpg) no-repeat scroll right  #fff;}
 select::-ms-expand { display: none; }
 /**.select:hover{border:1px solid #e6e6e6;}**/
+.select option{ padding-left:20px;}
 .select-mini{width:102px;height:32px;padding-left:4px;}
 .select-small{width:107px;height:26px;padding-left:4px;}
 .select-medium{width:190px;height:44px;padding-left:20px;}

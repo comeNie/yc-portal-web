@@ -7,18 +7,28 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.slp.balance.api.accountmaintain.interfaces.IAccountMaintainSV;
+import com.ai.slp.balance.api.accountmaintain.param.AccountUpdateParam;
+import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
+import com.ai.yc.order.api.orderquery.param.QueryOrdCountRequest;
+import com.ai.yc.order.api.orderquery.param.QueryOrdCountResponse;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.Register;
+import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
 import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
+import com.ai.yc.protal.web.service.BalanceService;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
@@ -27,7 +37,9 @@ import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckEmailRequest;
 import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckeMobileRequest;
 import com.ai.yc.ucenter.api.members.param.editemail.UcMembersEditEmailRequest;
 import com.ai.yc.ucenter.api.members.param.editmobile.UcMembersEditMobileRequest;
+import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
+import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
 import com.alibaba.fastjson.JSON;
 
 /**
@@ -46,7 +58,78 @@ public class SecurityController {
 	private static final String UPDATE_PASSWORD = "user/security/updatePassword";
 	private static final String ERROR_PAGE = "user/error";
 	private static final String UPDATE_PAY_PASSWORD = "user/security/updatePayPassword";
-
+	private static final String INDEX = "user/userIndex";
+	@Autowired
+	BalanceService balanceService;
+	@RequestMapping("/index")
+	public ModelAndView toRegister() {
+		ModelAndView modelView = new ModelAndView(INDEX);
+		 long balance =0;
+		AccountBalanceInfo balanceInfo = queryBalanceInfo();
+		if(balanceInfo!=null){
+			balance = balanceInfo.getBalance();
+		}
+		modelView.addObject("balance", balance);
+		return modelView;
+	}
+	@RequestMapping("/queryBalanceInfo")
+	@ResponseBody
+	public AccountBalanceInfo queryBalanceInfo(){
+		 AccountBalanceInfo balanceInfo =null;;
+		try {
+			balanceInfo = balanceService.queryOfUser();
+		} catch (Exception e) {
+			LOG.error(e.getMessage(),e);
+		}
+		 return balanceInfo;
+	}
+	@RequestMapping("/orderStatusCount")
+	@ResponseBody
+    public Map<String,Integer> orderStatusCount(){
+        //查询 订单数量
+        int unPaidCount =0;
+        int translateCount=0;
+        int unConfirmCount =0;
+        int unEvaluateCount =0;
+        QueryOrdCountResponse ordCountRes =null;
+       try {
+            String userId = UserUtil.getUserId();
+            IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
+            QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
+            ordCountReq.setUserId(userId);
+            
+            //待支付
+            ordCountReq.setDisplayFlag("11");
+            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+            unPaidCount=ordCountRes.getCountNumber();
+            
+            //翻译中
+            ordCountReq.setDisplayFlag("23");
+            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+            translateCount = ordCountRes.getCountNumber();
+            
+            //待确认
+            ordCountReq.setDisplayFlag("50");
+            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+            unConfirmCount =ordCountRes.getCountNumber();
+            
+            //待评价
+            ordCountReq.setDisplayFlag("52");
+            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+            unEvaluateCount =ordCountRes.getCountNumber();
+        } catch (Exception e) {
+        	LOG.error("查询订单数量失败:",e);
+        	if(ordCountRes!=null){
+        		LOG.error("查询订单数量失败:",JSON.toJSONString(ordCountRes));
+        	}
+        }
+       Map<String,Integer> countMap = new HashMap<>();
+       countMap.put("unPaidCount", unPaidCount);
+       countMap.put("translateCount", translateCount);
+       countMap.put("unConfirmCount", unConfirmCount);
+       countMap.put("unEvaluateCount", unEvaluateCount);    
+       return countMap;
+    }
 	@RequestMapping("seccenter")
 	public ModelAndView init() {
 		if (LOG.isDebugEnabled()) {
@@ -114,12 +197,62 @@ public class SecurityController {
 		modelView.addObject("user", UserUtil.getSsoUser());
 		return modelView;
 	}
-	
+
 	@RequestMapping("updatePayPassword")
-	public ModelAndView updatePayPwd() {
+	public ModelAndView updatePayPassword() {
 		ModelAndView modelView = new ModelAndView(UPDATE_PAY_PASSWORD);
 		modelView.addObject("user", UserUtil.getSsoUser());
 		return modelView;
+	}
+
+	@RequestMapping(value = "/sendPayPassword", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseData<Boolean> sendPayPassword(
+			@RequestParam("payPwd") String payPwd) {
+		String msg = "error";
+		boolean isOK = false;
+		if (StringUtil.isBlank(payPwd)) {
+			msg = "param is null";
+			ResponseData<Boolean> responseData = new ResponseData<Boolean>(
+					ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
+			return responseData;
+		}
+		try {
+			SearchYCUserRequest sReq = new SearchYCUserRequest();
+			sReq.setUserId(UserUtil.getUserId());
+			YCUserInfoResponse res = DubboConsumerFactory.getService(
+					IYCUserServiceSV.class).searchYCUserInfo(sReq);
+			ResponseHeader responseHeader =res ==null?null:res.getResponseHeader();
+			boolean isSuccess = responseHeader==null?false:responseHeader.isSuccess();
+			msg = responseHeader==null?"error":responseHeader.getResultMessage();
+			if(!isSuccess){
+				ResponseData<Boolean> responseData = new ResponseData<Boolean>(
+						ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
+				return responseData;
+			}
+			Long accountId = res.getAccountId();
+			if(accountId==null||accountId==0){
+				msg = "accountId is null";
+				ResponseData<Boolean> responseData = new ResponseData<Boolean>(
+						ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
+				return responseData;
+			}
+			AccountUpdateParam req = new AccountUpdateParam();
+			req.setTenantId(Constants.DEFAULT_TENANT_ID);
+			req.setAcctId(accountId);
+			req.setPayPassword(payPwd);
+			IAccountMaintainSV iAccountMaintainSV = DubboConsumerFactory
+					.getService(IAccountMaintainSV.class);
+			iAccountMaintainSV.updateAccount(req);
+			isOK = true;
+			msg = "ok";
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
+
+		ResponseData<Boolean> responseData = new ResponseData<Boolean>(
+				ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
+		return responseData;
 	}
 
 	@RequestMapping("bindEmail")
@@ -147,9 +280,10 @@ public class SecurityController {
 		return new ModelAndView("user/security/updateMobilePhone");
 	}
 
-	@RequestMapping("updateEmail")
+	@RequestMapping(value = "/updateEmail", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseData<Boolean>  updateEmail(@RequestParam("email") String email,
+	public ResponseData<Boolean> updateEmail(
+			@RequestParam("email") String email,
 			@RequestParam("code") String code) {
 		String msg = "error";
 		boolean isOK = false;
@@ -157,7 +291,7 @@ public class SecurityController {
 			UcMembersEditEmailRequest req = new UcMembersEditEmailRequest();
 			req.setTenantId(Constants.DEFAULT_TENANT_ID);
 			req.setEmail(email);
-			req.setOperationcode(code);;
+			req.setOperationcode(code);
 			req.setUid(Integer.parseInt(UserUtil.getUserId()));
 
 			IUcMembersSV iUcMembersSV = DubboConsumerFactory
@@ -169,10 +303,10 @@ public class SecurityController {
 			LOG.info("--------修改邮箱返回 :" + JSON.toJSONString(res));
 			if (codeNumber != null && codeNumber == 1) {
 				isOK = true;
-				 msg = "ok";
-				 GeneralSSOClientUser user =UserUtil.getSsoUser();
-				 user.setEmail(email);
-				 UserUtil.saveSsoUser(user);
+				msg = "ok";
+				GeneralSSOClientUser user = UserUtil.getSsoUser();
+				user.setEmail(email);
+				UserUtil.saveSsoUser(user);
 			} else {
 				msg = responseCode.getCodeMessage();
 			}
@@ -185,9 +319,10 @@ public class SecurityController {
 		return responseData;
 	}
 
-	@RequestMapping("updatePhone")
+	@RequestMapping(value = "/updatePhone", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseData<Boolean> updatePhone(@RequestParam("phone") String phone,
+	public ResponseData<Boolean> updatePhone(
+			@RequestParam("phone") String phone,
 			@RequestParam("code") String code, @RequestParam("type") String type) {
 		String msg = "error";
 		boolean isOK = false;
@@ -207,10 +342,10 @@ public class SecurityController {
 			LOG.info("--------绑定手机返回 :" + JSON.toJSONString(res));
 			if (codeNumber != null && codeNumber == 1) {
 				isOK = true;
-				 msg = "ok";
-				 GeneralSSOClientUser user =UserUtil.getSsoUser();
-				 user.setMobile(phone);
-				 UserUtil.saveSsoUser(user);
+				msg = "ok";
+				GeneralSSOClientUser user = UserUtil.getSsoUser();
+				user.setMobile(phone);
+				UserUtil.saveSsoUser(user);
 			} else {
 				msg = responseCode.getCodeMessage();
 			}
@@ -234,7 +369,7 @@ public class SecurityController {
 			String checkVal = request.getParameter("checkVal");
 			Object[] result = checkPhoneOrEmail(checkType, checkVal);
 			Boolean canUse = (Boolean) result[0];
-			String msg =  (String) result[1];
+			String msg = (String) result[1];
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 					msg, canUse);
 		} catch (Exception e) {
@@ -272,14 +407,14 @@ public class SecurityController {
 		ResponseCode responseCode = res == null ? null : res.getCode();
 		Integer codeNumber = responseCode == null ? null : responseCode
 				.getCodeNumber();
-		boolean falg =false;
-		String msg ="ok";
+		boolean falg = false;
+		String msg = "ok";
 		if (codeNumber != null && codeNumber == 1) {
 			falg = true;
 		} else {
 			msg = responseCode.getCodeMessage();
 		}
-		return new Object[]{falg,msg};
+		return new Object[] { falg, msg };
 	}
 
 }

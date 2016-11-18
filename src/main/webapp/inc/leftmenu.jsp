@@ -19,8 +19,8 @@
   		</div>
   		<div class="left-list" id="left_menu_list">
   			<ul>
-  				<li class="current">
-  					<a href="我的订单-下过订单.html">
+  				<li id="index" class="current">
+  					<a href="${_base}/p/security/index">
   					<span><i class="icon iconfont">&#xe600;</i></span>
   					<span><spring:message code="ycleftmenu.mymainpage"/></span>
   					</a>

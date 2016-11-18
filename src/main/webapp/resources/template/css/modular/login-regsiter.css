@@ -6,7 +6,7 @@
 .login-headr .word{font-size:20px;color:#2361ea;padding:5px 0 0 20px;font-weight:bold;}
 .login-wrapper{width:100%;float:left}
 .login-left{width:500px;height:264px;float:left;margin:200px 0 0 0;}
-.login-right{width:460px;float:left;background:#fff;margin:50px 0 0 100px;padding:20px 30px;}
+.login-right{width:460px;float:left;background:#fff;margin:50px 0 0 230px;padding:20px 30px;}
 .login-title{width:100%;float:left;border-bottom:1px solid #2361ea;padding-bottom:20px;text-align:center;font-size:18px;color:#2361ea;font-weight:bold;}
 .login-form-title{width:100%;float:left;padding:30px;}
 .login-form-title label{float:left;color:#fe6b6b;font-size:12px;}
@@ -54,11 +54,11 @@
 .register-right ul li .img{height:44px;margin:0;}
 .register-right ul li .word{width:70px;text-align: right;margin-right:20px;}
 .radio{width: 14px;height: 14px;margin-right:10px;}
-.register-right ul .ml-100{margin-left:100px;}
+.register-right ul .ml-100{margin-left:90px;}
 .register-right ul .ml-70{margin-left:70px;}
 .register-right ul .alink,.register-right ul .alink a{font-size:12px}
 .register-right ul .alink a{color:#2361ea}
-.register-right ul .alink .right{float:right}
+.register-right ul .alink .right{float:right;margin-right:8px;}
 /**注册邮箱验证**/
 .verification{width:100%;float:left;padding-bottom:160px;}
 .verification ul{width:100%;float:left;margin-top:160px;}

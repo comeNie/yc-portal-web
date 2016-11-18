@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,6 +45,7 @@ import com.ai.opt.sdk.components.dss.DSSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.dss.base.interfaces.IDSSClient;
+import com.ai.paas.ipaas.i18n.ZoneContextHolder;
 import com.ai.yc.order.api.orderclose.interfaces.IOrderCancelSV;
 import com.ai.yc.order.api.orderclose.param.OrderCancelRequest;
 import com.ai.yc.order.api.orderdetails.interfaces.IQueryOrderDetailsSV;
@@ -65,9 +67,10 @@ import com.ai.yc.order.api.orderquery.param.QueryOrdCountResponse;
 import com.ai.yc.order.api.orderquery.param.QueryOrderRequest;
 import com.ai.yc.order.api.orderquery.param.QueryOrderRsponse;
 import com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
-import sun.util.LocaleServiceProviderPool.LocalizedObjectGetter;
+import com.alibaba.fastjson.TypeReference;
 
 /**
  * 客户订单
@@ -129,36 +132,39 @@ public class CustomerOrderController {
      */
     @RequestMapping("/orderList")
     @ResponseBody
-    public ResponseData<PageInfo<OrdOrderVo> > orderList(HttpServletRequest request){
+    public ResponseData<PageInfo<OrdOrderVo> > orderList(HttpServletRequest request,  QueryOrderRequest orderReq){
         ResponseData<PageInfo<OrdOrderVo>> resData = new ResponseData<PageInfo<OrdOrderVo>>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-        String displayFlag = request.getParameter("displayFlag");   //订单状态
-        String orderTimeStart = request.getParameter("orderTimeStart");  //订单查询开始时间
-        String orderTimeEnd = request.getParameter("orderTimeEnd"); //订单查询结束时间
-        String translateName = request.getParameter("translateName"); //订单主题
-        String translateType = request.getParameter("translateType"); //订单类型
-        String pageNo = request.getParameter("pageNo");
-        String pageSize = request.getParameter("pageSize");
+
+        String orderTimeStart = request.getParameter("orderTimeStartStr");  //订单查询开始时间
+        String orderTimeEnd = request.getParameter("orderTimeEndStr"); //订单查询结束时间
+        String stateListStr = request.getParameter("stateListStr"); //后台、译员 订单状态
         
         try {
             //用户id
             String userId = UserUtil.getUserId();
             
-            QueryOrderRequest orderReq = new QueryOrderRequest();
-            
             //TODO 现在是假名字 test， 用户id也暂时关闭
             orderReq.setUserName("test");
 //            orderReq.setUserId("userId");
-            orderReq.setDisplayFlag(displayFlag);
+            
+            //获取当前用户所处时区
+            TimeZone timeZone = TimeZone.getTimeZone(ZoneContextHolder.getZone());
+            
             if (StringUtils.isNotEmpty(orderTimeStart)) {
-                orderReq.setOrderTimeStart(Timestamp.valueOf(orderTimeStart + " 00:00:00"));
+                String dateTmp = orderTimeStart+" 00:00:00";
+                Timestamp date =DateUtil.getTimestamp(dateTmp,DateUtil.DATETIME_FORMAT,timeZone);
+                orderReq.setOrderTimeStart(date);
             }
             if (StringUtils.isNotEmpty(orderTimeEnd)) {
-                orderReq.setOrderTimeEnd(Timestamp.valueOf(orderTimeEnd + " 00:00:00"));
+                String dateTmp = orderTimeEnd+" 00:00:00";
+                Timestamp date =DateUtil.getTimestamp(dateTmp,DateUtil.DATETIME_FORMAT,timeZone);
+                orderReq.setOrderTimeEnd(date);
             }
-            orderReq.setTranslateName(translateName);
-            orderReq.setTranslateType(translateType);
-            orderReq.setPageNo(Integer.valueOf(pageNo));
-            orderReq.setPageSize(Integer.valueOf(pageSize));
+            if (StringUtils.isNotEmpty(stateListStr)) {
+                List<Object> states = JSONArray.parseArray(stateListStr);
+                orderReq.setStateList(states);
+            }
+            LOGGER.info("订单列表查询数据：" +JSONObject.toJSONString(orderReq));
             
             IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
             QueryOrderRsponse orderRes = iOrderQuerySV.queryOrder(orderReq);
@@ -339,8 +345,8 @@ public class CustomerOrderController {
     @RequestMapping("/{orderId}")
     public String orderInfoView(@PathVariable("orderId") String orderId, Model uiModel){
         
-        //TODO 跳转错误页面
         if (StringUtils.isEmpty(orderId)) {
+            return "/404";
         }
         
         try {

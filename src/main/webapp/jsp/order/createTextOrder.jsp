@@ -93,22 +93,24 @@
   					<label></label>		
   				</div>
   				<div class="translate-int radius bj-ash" id="fy2" style="display: block;">
-  					<!--文件列表  -->
-  					<div class="attachment" id="fileList">
-  					</div>
-  					<div class="attachment-btn">
-  						<ul>
-  							<!-- 上传文档 -->
-  							<li class="pp">
-  							<!--
-  							<input id="uploadFile" type="button" class="btn border-green btn-large radius20" value="<spring:message code="order.uploadDoc"/>">
-  							   -->
-  							 	<div id="selectFile" >选择文件</div>
-  							<!--<input id="uploadAll" type="file" class="att-file">  -->
-  							</p></li>
-  							<!-- 将文件拖拽至此区域可上传 -->
-  							<li class="word"> <div><spring:message code="order.dragFileInfo"/></div></lil>
-  						</ul>
+  					<div class="limit-height">
+	  					<!--文件列表  -->
+	  					<div class="attachment" id="fileList">
+	  					</div>
+	  					<div class="attachment-btn">
+	  						<ul>
+	  							<!-- 上传文档 -->
+	  							<li class="pp">
+	  							<!--
+	  							<input id="uploadFile" type="button" class="btn border-green btn-large radius20" value="<spring:message code="order.uploadDoc"/>">
+	  							   -->
+	  							 	<div id="selectFile" >选择文件</div>
+	  							<!--<input id="uploadAll" type="file" class="att-file">  -->
+	  							</p></li>
+	  							<!-- 将文件拖拽至此区域可上传 -->
+	  							<li class="word"> <div><spring:message code="order.dragFileInfo"/></div></lil>
+	  						</ul>
+	  					</div>
   					</div>
   					<div class="shur-btn">
   						<p class="right mr-0"><input type="button" class="btn border-blue radius20 btn-80 " value="输入文字"  id="fy-btn1"></p>

@@ -1,4 +1,4 @@
-define('app/jsp/customerOrder/orderList', function (require, exports, module) {
+define('app/jsp/transOrder/orderList', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
@@ -24,8 +24,10 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
     	//事件代理
     	events: {
 			"click #submitQuery":"_orderList",
-			"change #displayFlag":"_getOrderList",
-			"change #translateType":"_orderList"
+			"change #state":"_orderList",
+			"change #fieldCode":"_orderList",
+			"change #useCode":"_orderList",
+			"change #stateListStr":"_orderList",	
     	},
     	
       	//重写父类
@@ -36,15 +38,12 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
     	
         //表单查询订单列表
         _orderList:function() {
-        	if($('#translateName').val().length > 50) {
-        		alert("不能超过50个字");
-        	}
         	this._getOrderList();
         },
         
         //根据状态查询订单
-        _orderListByType:function(displayFlag) {
-        	var reqdata = {'displayFlag': displayFlag}
+        _orderListByType:function(state) {
+        	var reqdata = {'state': state}
         	this._getOrderList(reqdata);
         },
         
@@ -87,35 +86,17 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
     		});
         },
         
-        //确认订单
-        _confirm:function(orderId) {
+        //提交订单
+        _orderSubmit:function(orderId) {
         	ajaxController.ajax({
 				type: "post",
-				url: _base + "/p/trans/order/updateState",
+				url: _base + "/p/trans/order/save",
 				data: {
 					orderId: orderId,
-					state: "51",
-					displayFlag: "52",
 				},
 				success: function (data) {
 					if ("1" === data.statusCode) {
-						//成功
-						//刷新页面
-			    		window.location.reload();
-					}
-				}
-			});
-        },
-        
-        //取消订单
-        _cancelOrder:function(orderId) {
-        	ajaxController.ajax({
-				type: "post",
-				url: _base+"/p/customer/order/cancelOrder",
-				data: {'orderId': orderId},
-				success: function(data){
-					//取消成功
-					if("1"===data.statusCode){
+						//提交成功
 					}
 				}
 			});

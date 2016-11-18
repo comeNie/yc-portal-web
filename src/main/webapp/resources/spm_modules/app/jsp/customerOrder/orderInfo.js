@@ -21,15 +21,7 @@ define('app/jsp/customerOrder/orderInfo', function (require, exports, module) {
     	
 //    	下载文件
     	_downLoad:function(fileId, fileName) {
-    		
     		window.open(_base + "/p/customer/order/download?fileId="+fileId+"&fileName="+fileName);
-//    		ajaxController.ajax({
-//				type: "get",
-//				url: _base+"/p/customer/order/download",
-//				data: {'fileId': fileId, 'fileName': fileName},
-//				success: function(data){
-//				}
-//			});
     	}
         
     });
