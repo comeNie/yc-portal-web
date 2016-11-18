@@ -37,6 +37,12 @@
 	 			</div>
 	 			<div id="table-da1">
 	 				<form id="orderQuery">
+	 				
+	 				<input id="interperId" name="interperId" hidden="" type="text" value="${interperInfo.userId}">
+	 				<c:if test="${interperInfo.lspRole == '12' || interperInfo.lspRole == '11'}">
+	 					<input id="lspId"  name="lspId" hidden="" type="text" value="${interperInfo.lspId}">
+	 				</c:if>
+	 				
 		 			<div class="oder-form-lable mt-20">
 		 				<ul>
 		 					<li class="mb-20">

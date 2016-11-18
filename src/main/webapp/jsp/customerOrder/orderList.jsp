@@ -42,7 +42,9 @@
   				</ul>
   			</div>
   			<div id="table-da1">
+  			
   			<form id="orderQuery">
+  			<input id="userId" name="userId" hidden="" type="text" value="${userId}">
   			<div class="oder-form-lable mt-20">
   				<ul>
   					<li class="mb-20">

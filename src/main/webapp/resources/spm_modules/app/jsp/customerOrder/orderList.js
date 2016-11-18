@@ -35,7 +35,7 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
     		this._orderList();
 
 			$.i18n.properties({//加载资浏览器语言对应的资源文件
-				name: ["payOrder"], //资源文件名称，可以是数组
+				name: ["orderInfo"], //资源文件名称，可以是数组
 				path: _i18n_res, //资源文件路径
 				mode: 'both',
 				language: currentLan,
@@ -53,7 +53,9 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
         
         //根据状态查询订单
         _orderListByType:function(displayFlag) {
-        	var reqdata = {'displayFlag': displayFlag};
+        	var reqdata = {'displayFlag': displayFlag,
+        					'userId': $("#userId").val()
+        	};
         	this._getOrderList(reqdata);
         },
         

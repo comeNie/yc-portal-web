@@ -61,7 +61,7 @@
 								ordinary="${duad.ordinary}"  ordinaryUrgent="${duad.ordinaryUrgent}" 
 								professional="${duad.professional}"  professionalUrgent="${duad.professionalUrgent}"  
 								publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}" 
-								sourceEn="${duad.sourceEn}" duadId="${duad.duadId}"
+								sourceEn="${duad.sourceEn}" duadId="${duad.duadId}" currency="${duad.currency}";
 								<c:if test="${sessionScope.orderInfo.productInfo.languagePairInfoList[0].languagePairId==duad.duadId}">
 									 selected = "selected"
 								</c:if>
@@ -81,9 +81,9 @@
 			<!--白色背景-->
 			<div class="white-bj">
 				<div class="right-list-title pb-20 pl-20 none-border">
-  					<p>翻译内容</p>
+  					<p><spring:message code="order.translateLan"/></p>
   				</div>
-  				<div class="translate-int radius" id="fy1">
+  				<div class="translate-int radius" id="fy1" class="">
   					<p>
   					<!--  翻译内容--> 
   					<textarea id="translateContent" name="translateContent" class="int-text textarea-xlarge-100 radius">
@@ -92,7 +92,7 @@
   					<p class="right"><input type="button" class="btn border-blue radius20 btn-80" value="<spring:message code="order.uploadDoc"/>"  id="fy-btn"></p>
   					<label></label>		
   				</div>
-  				<div class="translate-int radius bj-ash" id="fy2" style="display: block;">
+  				<div class="translate-int radius bj-ash placeholder" id="fy2" style="display: block;">
   					<div class="limit-height">
 	  					<!--文件列表  -->
 	  					<div class="attachment" id="fileList">
@@ -104,16 +104,18 @@
 	  							<!--
 	  							<input id="uploadFile" type="button" class="btn border-green btn-large radius20" value="<spring:message code="order.uploadDoc"/>">
 	  							   -->
-	  							 	<div id="selectFile" >选择文件</div>
+	  							   	<!-- 选择文件 -->
+	  							 	<div id="selectFile" ><spring:message code="order.choosefile"/></div>
 	  							<!--<input id="uploadAll" type="file" class="att-file">  -->
 	  							</p></li>
 	  							<!-- 将文件拖拽至此区域可上传 -->
-	  							<li class="word"> <div><spring:message code="order.dragFileInfo"/></div></lil>
+	  							<li class="word" id="dragFile"> <div><spring:message code="order.dragFileInfo"/></div></lil>
 	  						</ul>
 	  					</div>
   					</div>
   					<div class="shur-btn">
-  						<p class="right mr-0"><input type="button" class="btn border-blue radius20 btn-80 " value="输入文字"  id="fy-btn1"></p>
+  						<!-- 输入文字 -->
+  						<p class="right mr-0"><input type="button" class="btn border-blue radius20 btn-80 " value="<spring:message code="order.Entertext"/>"  id="fy-btn1"></p>
   					</div>
   				</div>
   			</div>
@@ -181,7 +183,10 @@
 							<p><spring:message code="order.pubInstruction"/></p>
 						</li>
 						<li>
-							<p><span id="pubPrice"></span><a></a><spring:message code="order.thousandWords"/></p>
+							<!-- 元/千字 -->
+							<p><span id="pubPrice"></span>
+								<a></a>
+								<spring:message code="order.thousandWords"/></p>
 							<p class="ml-30"><span>1</span><spring:message code="order.freeChanges"/></p>
 						</li>
 						<li class="green-li">
