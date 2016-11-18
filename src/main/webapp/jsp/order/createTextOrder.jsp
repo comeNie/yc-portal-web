@@ -88,7 +88,7 @@
 				<div class="right-list-title pb-20 pl-20 none-border">
   					<p><spring:message code="order.translateLan"/></p>
   				</div>
-  				<div class="translate-int radius" id="fy1" class="">
+  				<div class="translate-int radius" id="fy1">
   					<p>
   					<!--  翻译内容--> 
   					<textarea id="translateContent" name="translateContent" class="int-text textarea-xlarge-100 radius">

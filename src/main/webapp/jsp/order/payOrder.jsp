@@ -4,22 +4,26 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>口译下单页</title>
+    <title><spring:message code="pay.order.payment"/> </title>
 	<%@ include file="/inc/inc.jsp" %>
 </head>
 <body>
 <!--弹出-->
 <div class="eject-big">
 	<div class="prompt-samll" id="rechargepop">
-		<div class="prompt-samll-title">支付</div>
+		<%--支付--%>
+		<div class="prompt-samll-title"><spring:message code="pay.order.payment"/> </div>
 		<!--确认删除-->
 		<div class="prompt-samll-confirm">
 			<ul>
-				<li>请输入支付密码，完成订单支付</li>
+				<%--请输入支付密码，完成订单支付--%>
+				<li><spring:message code="pay.order.passwd.prompt"/></li>
 				<li><input id="payPass" type="password" class="int-text int-large radius" maxlength="16"></li>
 				<li class="eject-btn">
-					<input type="button" id="completed" class="btn btn-green btn-120 radius20" value="确 定">
-					<input type="button" id="close-completed" class="btn border-green btn-120 radius20" value="取 消">
+					<%--确 定--%>
+					<input type="button" id="completed" class="btn btn-green btn-120 radius20" value="<spring:message code="pay.order.ok"/>">
+					<%--取 消--%>
+					<input type="button" id="close-completed" class="btn border-green btn-120 radius20" value="<spring:message code="pay.order.cancell"/>">
 				</li>
 			</ul>
 		</div>
@@ -150,7 +154,8 @@
 							<c:if test="${balanceInfo!=null}">
 							<ul payType="YE" class="none-ml">
 								<li class="payment-balance">
-									<p>账户余额</p>
+									<%--账户余额--%>
+									<p><spring:message code="pay.order.account.balance"/> </p>
 									<p class="word">支付余额：<fmt:formatNumber
 											value="${balanceInfo.balance/1000}" pattern="#,##0.00#"/>元</p>
 								</li>
@@ -185,7 +190,9 @@
 					<%--人民币订单,且余额不足--%>
 					<c:if test="${orderFee.currencyUnit == '1'&&needPay==true}">
   					<ul>
-  						<li>余额不足，可先<input type="button" class="btn radius20 border-blue btn-80 ml-10" value="充 值"></li>
+						<%--余额不足，可先--%>
+  						<li><spring:message code="pay.order.balance.insufficient"/>
+							<input type="button" id="depositBtn" class="btn radius20 border-blue btn-80 ml-10" value="<spring:message code="pay.order.balance.recharge"/>"></li>
   					</ul>
 					</c:if>
   				</div>

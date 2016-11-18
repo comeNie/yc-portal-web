@@ -10,6 +10,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
     	events: {
 			"click #recharge-popo":"_payOrder",
 			"click #payment-method ul":"_changePayType",
+			"click #depositBtn":"_toDeposit",
 			"click #completed":"_submitYEpay",//余额支付确认
 			"click #close-completed":"_closeCompleted"//余额支付取消
            	},
@@ -85,6 +86,10 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 			$("#balancePass").val(payPass);
 			//提交
 			$("#yePayForm").submit();
+		},
+		//调转到充值页面
+		_toDeposit:function(){
+			window.location.href=_base+"/balance/depositFund";
 		}
 		
     });
