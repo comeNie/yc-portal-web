@@ -206,7 +206,7 @@ public class CustomerOrderController {
                 resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"取消订单失败");
             } else {
                 resData.setData("取消成功");
-             }
+            }
         } catch(Exception e) {
             LOGGER.error("取消订单失败：", e);
             resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"取消订单失败");

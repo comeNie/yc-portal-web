@@ -87,7 +87,7 @@
   					<p>
   					<!--  翻译内容--> 
   					<textarea id="translateContent" name="translateContent" class="int-text textarea-xlarge-100 radius">
-  					${sessionScope.orderInfo.productInfo.translateInfo}</textarea></p>
+  					<c:if test="${sessionScope.orderInfo!=null}">${sessionScope.orderInfo.productInfo.translateInfo}</c:if></textarea></p>
   					<!-- 上传文档btn -->
   					<p class="right"><input type="button" class="btn border-blue radius20 btn-80" value="<spring:message code="order.uploadDoc"/>"  id="fy-btn"></p>
   					<label></label>		
@@ -108,7 +108,7 @@
 	  							<!--<input id="uploadAll" type="file" class="att-file">  -->
 	  							</p></li>
 	  							<!-- 将文件拖拽至此区域可上传 -->
-	  							<li class="word"> <div><spring:message code="order.dragFileInfo"/></div></lil>
+	  							<li class="word"> <div><spring:message code="order.dragFileInfo"/></div></li>
 	  						</ul>
 	  					</div>
   					</div>

@@ -79,7 +79,7 @@ public class OrderController {
      * @return
      */
     @RequestMapping("/create/text")
-    public String createTextView(Model uiModel,String selPurpose){
+    public String createTextView(Model uiModel, String selPurpose){
         uiModel.addAttribute("duadList", cacheServcie.getAllDuad(rb.getDefaultLocale()));
         uiModel.addAttribute("domainList", cacheServcie.getAllDomain(rb.getDefaultLocale()));
         uiModel.addAttribute("purposeList", cacheServcie.getAllPurpose(rb.getDefaultLocale()));
