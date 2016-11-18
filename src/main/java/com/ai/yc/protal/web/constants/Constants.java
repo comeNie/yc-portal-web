@@ -149,4 +149,18 @@ public final class Constants {
 		/** 邮箱验证码超时时间 */
 		public static final String EMAIL_VERIFICATION_OVER_TIME = "email_verification_code_over_time";
 	}
+	public final class Order {
+		private Order() {
+		}
+		/** 待支付 */
+		public static final String ORDER_STATUS_UNPAID = "11";
+		/** 翻译中*/
+		public static final String ORDER_STATUS_TRANSLATE = "23";
+		/** 待确认*/
+		public static final String ORDER_STATUS_UNCONFIRM = "50";
+		/** 待评价*/
+		public static final String ORDER_STATUS_UNEVALUATE = "52";
+		/** 已领取*/
+		public static final String ORDER_STATUS_RECEIVE = "21";
+	}
 }

@@ -37,12 +37,13 @@ define("app/jsp/user/userIndex",function(require, exports, module) {
 					ajaxController.ajax({
 						 type:"post",
 		    				url:_base+"/p/security/orderStatusCount",
-		    				data:{},
+		    				data:{'statusList':'11,23,50,52'},
 		    		        success: function(data) {
-		    		        	for(var key in data)
-		    		        	{
-		    		        	    $("#"+key).html(data[key]);
-		    		        	}
+		    		        	//data = {"52":1,"23":2,"11":3,"50":4};
+		    		        	$("#unPaidCount").html(data['11']);
+		    		        	$("#translateCount").html(data['23']);
+		    		        	$("#unConfirmCount").html(data['50']);
+		    		        	$("#unEvaluateCount").html(data['52']);
 		    		        }
 		    		});
 				},

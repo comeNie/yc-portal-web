@@ -59,77 +59,82 @@ public class SecurityController {
 	private static final String ERROR_PAGE = "user/error";
 	private static final String UPDATE_PAY_PASSWORD = "user/security/updatePayPassword";
 	private static final String INDEX = "user/userIndex";
+	private static final String INTERPRETER_INDEX = "user/interpreterIndex";
 	@Autowired
 	BalanceService balanceService;
-	@RequestMapping("/index")
+
+	// 译员首页
+	@RequestMapping("/interpreterIndex")
 	public ModelAndView toRegister() {
-		ModelAndView modelView = new ModelAndView(INDEX);
-		 long balance =0;
+		ModelAndView modelView = new ModelAndView(INTERPRETER_INDEX);
+		long balance = 0;
 		AccountBalanceInfo balanceInfo = queryBalanceInfo();
-		if(balanceInfo!=null){
+		if (balanceInfo != null) {
 			balance = balanceInfo.getBalance();
 		}
 		modelView.addObject("balance", balance);
 		return modelView;
 	}
+
+	@RequestMapping("/index")
+	public ModelAndView toIndex() {
+		ModelAndView modelView = new ModelAndView(INDEX);
+		long balance = 0;
+		AccountBalanceInfo balanceInfo = queryBalanceInfo();
+		if (balanceInfo != null) {
+			balance = balanceInfo.getBalance();
+		}
+		modelView.addObject("balance", balance);
+		return modelView;
+	}
+
 	@RequestMapping("/queryBalanceInfo")
 	@ResponseBody
-	public AccountBalanceInfo queryBalanceInfo(){
-		 AccountBalanceInfo balanceInfo =null;;
+	public AccountBalanceInfo queryBalanceInfo() {
+		AccountBalanceInfo balanceInfo = null;
+		;
 		try {
 			balanceInfo = balanceService.queryOfUser();
 		} catch (Exception e) {
-			LOG.error(e.getMessage(),e);
+			LOG.error(e.getMessage(), e);
 		}
-		 return balanceInfo;
+		return balanceInfo;
 	}
+
+	private int queryOrderStatusCount(String status) {
+		int result = 0;
+		QueryOrdCountResponse ordCountRes = null;
+		try {
+			String userId = UserUtil.getUserId();
+			IOrderQuerySV iOrderQuerySV = DubboConsumerFactory
+					.getService(IOrderQuerySV.class);
+			QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
+			ordCountReq.setUserId(userId);
+			ordCountReq.setDisplayFlag(status);
+			ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+			result = ordCountRes.getCountNumber();
+		} catch (Exception e) {
+			LOG.error("查询订单数量失败:", e);
+			if (ordCountRes != null) {
+				LOG.error("查询订单数量失败:", JSON.toJSONString(ordCountRes));
+			}
+		}
+		return result;
+	}
+
 	@RequestMapping("/orderStatusCount")
 	@ResponseBody
-    public Map<String,Integer> orderStatusCount(){
-        //查询 订单数量
-        int unPaidCount =0;
-        int translateCount=0;
-        int unConfirmCount =0;
-        int unEvaluateCount =0;
-        QueryOrdCountResponse ordCountRes =null;
-       try {
-            String userId = UserUtil.getUserId();
-            IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
-            QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
-            ordCountReq.setUserId(userId);
-            
-            //待支付
-            ordCountReq.setDisplayFlag("11");
-            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            unPaidCount=ordCountRes.getCountNumber();
-            
-            //翻译中
-            ordCountReq.setDisplayFlag("23");
-            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            translateCount = ordCountRes.getCountNumber();
-            
-            //待确认
-            ordCountReq.setDisplayFlag("50");
-            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            unConfirmCount =ordCountRes.getCountNumber();
-            
-            //待评价
-            ordCountReq.setDisplayFlag("52");
-            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            unEvaluateCount =ordCountRes.getCountNumber();
-        } catch (Exception e) {
-        	LOG.error("查询订单数量失败:",e);
-        	if(ordCountRes!=null){
-        		LOG.error("查询订单数量失败:",JSON.toJSONString(ordCountRes));
-        	}
-        }
-       Map<String,Integer> countMap = new HashMap<>();
-       countMap.put("unPaidCount", unPaidCount);
-       countMap.put("translateCount", translateCount);
-       countMap.put("unConfirmCount", unConfirmCount);
-       countMap.put("unEvaluateCount", unEvaluateCount);    
-       return countMap;
-    }
+	public Map<String, Integer> orderStatusCount(@RequestParam("statusList") String statusList) {
+		Map<String, Integer> countMap = new HashMap<>();
+		// 查询 订单数量
+		if(statusList!=null&&statusList.length()>0){
+			for(String status:statusList.split(",")){
+				int count = queryOrderStatusCount(status);
+				countMap.put(status, count);
+			}
+		}
+		return countMap;
+	}
 	@RequestMapping("seccenter")
 	public ModelAndView init() {
 		if (LOG.isDebugEnabled()) {
@@ -222,16 +227,19 @@ public class SecurityController {
 			sReq.setUserId(UserUtil.getUserId());
 			YCUserInfoResponse res = DubboConsumerFactory.getService(
 					IYCUserServiceSV.class).searchYCUserInfo(sReq);
-			ResponseHeader responseHeader =res ==null?null:res.getResponseHeader();
-			boolean isSuccess = responseHeader==null?false:responseHeader.isSuccess();
-			msg = responseHeader==null?"error":responseHeader.getResultMessage();
-			if(!isSuccess){
+			ResponseHeader responseHeader = res == null ? null : res
+					.getResponseHeader();
+			boolean isSuccess = responseHeader == null ? false : responseHeader
+					.isSuccess();
+			msg = responseHeader == null ? "error" : responseHeader
+					.getResultMessage();
+			if (!isSuccess) {
 				ResponseData<Boolean> responseData = new ResponseData<Boolean>(
 						ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
 				return responseData;
 			}
 			Long accountId = res.getAccountId();
-			if(accountId==null||accountId==0){
+			if (accountId == null || accountId == 0) {
 				msg = "accountId is null";
 				ResponseData<Boolean> responseData = new ResponseData<Boolean>(
 						ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
