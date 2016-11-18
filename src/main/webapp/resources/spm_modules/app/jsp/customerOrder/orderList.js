@@ -7,7 +7,6 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
     require("jsviews/jsviews.min");
     require("app/util/jsviews-ext");
 	require("opt-paging/aiopt.pagination");
-	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
 
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
@@ -25,7 +24,7 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
     	//事件代理
     	events: {
 			"click #submitQuery":"_orderList",
-			"change #displayFlag":"_getOrderList",
+			"change #displayFlag":"_orderList",
 			"change #translateType":"_orderList"
     	},
     	
@@ -33,40 +32,29 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
     	setup: function () {
     		orderListPage.superclass.setup.call(this);
     		this._orderList();
-
-			$.i18n.properties({//加载资浏览器语言对应的资源文件
-				name: ["orderInfo"], //资源文件名称，可以是数组
-				path: _i18n_res, //资源文件路径
-				mode: 'both',
-				language: currentLan,
-				async: true
-			});
     	},
     	
         //表单查询订单列表
         _orderList:function() {
-        	if($('#translateName').val().length > 50) {
-        		alert($.i18n.prop('order.search.name.long'));
-        	}
         	this._getOrderList();
         },
         
         //根据状态查询订单
         _orderListByType:function(displayFlag) {
-        	var reqdata = {'displayFlag': displayFlag,
+        	var req = {'displayFlag': displayFlag,
         					'userId': $("#userId").val()
         	};
-        	this._getOrderList(reqdata);
+        	this._getOrderList(req);
         },
         
         //查询订单 reqdata不传时，表单数据序列化
-        _getOrderList:function(reqdata) {
+        _getOrderList:function(reqdatadf) {
         	var _this = this;
         	var data;
-        	if (reqdata == undefined)
+        	if (reqdatadf == undefined)
         		data = $('#orderQuery').serializeArray();
         	else
-        		data = reqdata;
+        		data = reqdatadf;
         	
           	$("#pagination-ul").runnerPagination({
 	 			url: _base+"/p/customer/order/orderList",
