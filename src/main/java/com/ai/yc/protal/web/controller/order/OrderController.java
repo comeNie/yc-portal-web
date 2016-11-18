@@ -80,56 +80,7 @@ public class OrderController {
      */
     @RequestMapping("/create/text")
     public String createTextView(Model uiModel,String selPurpose){
-        
-        List<SysDuad> duadList = new ArrayList<SysDuad>();
-        //TODO ：服务不可用，暂时关闭
-        String duadStr,domainStr,purposeStr;
-         //获取cache客户端
-       /*ICacheClient iCacheClient = AiPassUitl.getCacheClient();
-       
-       if (rb.getDefaultLocale().getLanguage().equals(Locale.SIMPLIFIED_CHINESE)) {
-            duadStr = iCacheClient.get(CacheKey.CN_DUAD_KEY);
-        } else {
-            duadStr = iCacheClient.get(CacheKey.EN_DUAD_KEY);
-        }
-        
-        duadList = JSONObject.parseArray(duadStr, SysDuad.class);
-        */
-
-        //模拟数据
-        //语言对
-        SysDuad sysDuad = new SysDuad();
-        sysDuad.setDuadId("1");
-        sysDuad.setLanguage("zh");
-        sysDuad.setSourceCn("中文");
-        sysDuad.setSourceEn("zh");
-        sysDuad.setTargetCn("英文");
-        sysDuad.setTargetEn("en");
-        sysDuad.setCurrency("1");
-        sysDuad.setOrdinary("100");
-        sysDuad.setOrdinaryUrgent("150");
-        sysDuad.setProfessional("200");
-        sysDuad.setProfessionalUrgent("250");
-        sysDuad.setPublish("300");
-        sysDuad.setPublishUrgent("350");
-        SysDuad sysDuad1 = new SysDuad();
-        sysDuad1.setDuadId("1");
-        sysDuad1.setLanguage("zh");
-        sysDuad1.setSourceCn("中文2");
-        sysDuad1.setSourceEn("zh");
-        sysDuad1.setTargetCn("英文3");
-        sysDuad1.setTargetEn("en");
-        sysDuad1.setCurrency("1");
-        sysDuad1.setOrdinary("100");
-        sysDuad1.setOrdinaryUrgent("150");
-        sysDuad1.setProfessional("200");
-        sysDuad1.setProfessionalUrgent("250");
-        sysDuad1.setPublish("300");
-        sysDuad1.setPublishUrgent("350");
-        duadList.add(sysDuad);
-        duadList.add(sysDuad1);
-
-        uiModel.addAttribute("duadList", duadList);
+        uiModel.addAttribute("duadList", cacheServcie.getAllDuad(rb.getDefaultLocale()));
         uiModel.addAttribute("domainList", cacheServcie.getAllDomain(rb.getDefaultLocale()));
         uiModel.addAttribute("purposeList", cacheServcie.getAllPurpose(rb.getDefaultLocale()));
         uiModel.addAttribute("selPurpose",selPurpose);

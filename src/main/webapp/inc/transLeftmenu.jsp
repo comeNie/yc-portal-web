@@ -15,13 +15,13 @@
 	</div>
 	<div class="left-list">
 		<ul>
-			<li>
-				<a href="#">
+			<li id="index" class="current">
+				<a href="${_base}/p/security/interpreterIndex">
 					<span><i class="icon iconfont">&#xe600;</i></span>
 					<span>我的首页</span>
 				</a>
 			</li>
-			<li class="current">
+			<li >
 				<a href="#">
 					<span><i class="icon iconfont">&#xe68e;</i></span>
 					<span>发现订单</span>

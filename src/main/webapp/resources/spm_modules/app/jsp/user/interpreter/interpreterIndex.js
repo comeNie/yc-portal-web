@@ -1,4 +1,4 @@
-define("app/jsp/user/userIndex",function(require, exports, module) {
+define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, module) {
 	var $ = require('jquery'), 
 	Widget = require('arale-widget/1.2.0/widget'), 
 	Dialog = require("optDialog/src/dialog"), 
@@ -9,7 +9,7 @@ define("app/jsp/user/userIndex",function(require, exports, module) {
 	// 实例化AJAX控制处理对象
 	var ajaxController = new AjaxController();
 	// 定义页面组件类
-	var userIndexPager = Widget
+	var interpreterIndexPager = Widget
 			.extend({
 				/* 事件代理 */
 				events : {
@@ -19,31 +19,17 @@ define("app/jsp/user/userIndex",function(require, exports, module) {
 				_init:function(){
 					this._orderStatusCount();
 					this._queryOrder();
-					//this._queryBalanceInfo();
-				},
-				/*查询余额*/
-				_queryBalanceInfo:function(){
-					ajaxController.ajax({
-						 type:"post",
-		    				url:_base+"/p/security/queryBalanceInfo",
-		    				data:{},
-		    		        success: function(data) {
-		    		        	
-		    		        }
-		    		});
 				},
 				/* 获取订单数量 */
 				_orderStatusCount:function(){
 					ajaxController.ajax({
 						 type:"post",
 		    				url:_base+"/p/security/orderStatusCount",
-		    				data:{'statusList':'11,23,50,52'},
+		    				data:{'statusList':'21,23'},
 		    		        success: function(data) {
-		    		        	//data = {"52":1,"23":2,"11":3,"50":4};
-		    		        	$("#unPaidCount").html(data['11']);
+		    		        	//data = {"21":3,"23":4};
+		    		        	$("#receiveCount").html(data['21']);
 		    		        	$("#translateCount").html(data['23']);
-		    		        	$("#unConfirmCount").html(data['50']);
-		    		        	$("#unEvaluateCount").html(data['52']);
 		    		        }
 		    		});
 				},
@@ -83,14 +69,9 @@ define("app/jsp/user/userIndex",function(require, exports, module) {
 		    		            		
 		    		            		data[i].currentLan = currentLan; //当前语言
 		    		            	}
-		    	            		var template = $.templates("#orderTemple1");
+		    	            		var template = $.templates("#orderTemple");
 		    	            	    var htmlOutput = template.render(data);
 		    	            	    $("#order_list").html(htmlOutput);
-		    	            	    if(false){
-		    	            	    	$("table th[order_mode='hide']").remove();
-		    	            	    	$("#order_list table td[order_mode='hide']").remove();
-		    	            	    	$("#order_list table th[order_mode_colspan='hide']").attr("colspan","5");
-		    	            	    }
 		    	            	    $("#no_order_container").hide();
 		    	            		$("#have_order_container").show();
 		    	            	}else{
@@ -102,9 +83,9 @@ define("app/jsp/user/userIndex",function(require, exports, module) {
 				},
 				/* 重写父类 */
 				setup : function() {
-					userIndexPager.superclass.setup.call(this);
+					interpreterIndexPager.superclass.setup.call(this);
 					this._init();
 				}
 			});
-	module.exports = userIndexPager;
+	module.exports = interpreterIndexPager;
 });

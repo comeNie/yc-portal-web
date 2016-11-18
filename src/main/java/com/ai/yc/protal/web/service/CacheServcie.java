@@ -3,6 +3,7 @@ package com.ai.yc.protal.web.service;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.yc.common.api.cachekey.key.CacheKey;
 import com.ai.yc.common.api.cachekey.model.SysDomain;
+import com.ai.yc.common.api.cachekey.model.SysDuad;
 import com.ai.yc.common.api.cachekey.model.SysPurpose;
 import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.alibaba.fastjson.JSON;
@@ -20,18 +21,60 @@ import java.util.Locale;
 public class CacheServcie {
 
     /**
-     * 查询指定语言下的领域信息集合ß
+     * 获取指定语言下订单的语言对
+     * @param locale
+     * @return
+     */
+    public List<SysDuad> getAllDuad(Locale locale){
+        List<SysDuad> duadList = new ArrayList<SysDuad>();
+        /*
+        ICacheClient iCacheClient = AiPassUitl.getCacheClient();
+        String duadStr = iCacheClient.get(CacheKey.CN_DUAD_KEY);
+        duadList = JSONObject.parseArray(duadStr, SysDuad.class);
+        */
+        //TODO...模拟数据
+        SysDuad sysDuad = new SysDuad();
+        sysDuad.setDuadId("1");
+        sysDuad.setLanguage("zh");
+        sysDuad.setSourceCn("中文");
+        sysDuad.setSourceEn("zh");
+        sysDuad.setTargetCn("英文");
+        sysDuad.setTargetEn("en");
+        sysDuad.setCurrency("1");
+        sysDuad.setOrdinary("100");
+        sysDuad.setOrdinaryUrgent("150");
+        sysDuad.setProfessional("200");
+        sysDuad.setProfessionalUrgent("250");
+        sysDuad.setPublish("300");
+        sysDuad.setPublishUrgent("350");
+        SysDuad sysDuad1 = new SysDuad();
+        sysDuad1.setDuadId("1");
+        sysDuad1.setLanguage("zh");
+        sysDuad1.setSourceCn("中文2");
+        sysDuad1.setSourceEn("zh");
+        sysDuad1.setTargetCn("英文3");
+        sysDuad1.setTargetEn("en");
+        sysDuad1.setCurrency("1");
+        sysDuad1.setOrdinary("100");
+        sysDuad1.setOrdinaryUrgent("150");
+        sysDuad1.setProfessional("200");
+        sysDuad1.setProfessionalUrgent("250");
+        sysDuad1.setPublish("300");
+        sysDuad1.setPublishUrgent("350");
+        duadList.add(sysDuad);
+        duadList.add(sysDuad1);
+        return duadList;
+    }
+
+    /**
+     * 查询指定语言下的领域信息集合
      * @return
      */
     public List<SysDomain> getAllDomain(Locale locale){
         ICacheClient iCacheClient = AiPassUitl.getCacheClient();
         String domainStr;
-        //若为中文
-        /*if(Locale.SIMPLIFIED_CHINESE.equals(locale)){
-            domainStr = iCacheClient.get(CacheKey.CN_DOMAIN_KEY);
-        }else {
-            domainStr = iCacheClient.get(CacheKey.EN_DOMAIN_KEY);
-        }*/
+        //目前全部为中文数据
+//        domainStr = iCacheClient.get(CacheKey.CN_DOMAIN_KEY);
 //        return JSON.parseArray(domainStr,SysDomain.class);
         List<SysDomain> domainList = new ArrayList<SysDomain>();
         //领域 TODO... 模拟数据
@@ -51,13 +94,8 @@ public class CacheServcie {
      */
     public List<SysPurpose> getAllPurpose(Locale locale){
         ICacheClient iCacheClient = AiPassUitl.getCacheClient();
-//        String purposeStr;
-//        //若为中文
-//        if(Locale.SIMPLIFIED_CHINESE.equals(locale)){
-//            purposeStr = iCacheClient.get(CacheKey.CN_PURPOSE_KEY);
-//        }else {
-//            purposeStr = iCacheClient.get(CacheKey.EN_PURPOSE_KEY);
-//        }
+        //目前全部为中文数据
+//        String purposeStr = iCacheClient.get(CacheKey.CN_PURPOSE_KEY);
 //        return JSON.parseArray(purposeStr,SysPurpose.class);
         List<SysPurpose> purposeList = new ArrayList<SysPurpose>();
         //TODO... 模拟数据
