@@ -158,8 +158,16 @@
 		                           			<p>{{:~timesToFmatter(orderTime)}}</p>
 		                           			<p name="orderId"><spring:message code="myOrder.Ordernumber"/>：<span>{{:orderId}}</span></p>
 		                           			<!-- 剩余2天23小时59分钟 -->
-    										<p class="right"><spring:message
-                                    						code="myOrder.Remaining" arguments="1,2,3"/></p>
+											{{if state!='50' || state!='51' || state!='52' || state!='53' || state!='90' || state!='91' || state!='92'}}
+    										<p class="right">
+												{{if finishRemTime < 0}}
+														<!-- 已超时 -->
+														<spring:message	code="myOrder.timedout" />
+												{{else}}
+													<spring:message	code="myOrder.Remaining" arguments="{{:finishTakeDays}},{{:finishTakeHours}},{{:finishTakeMinutes}}"/>
+												{{/if}}
+											</p>
+											{{/if}}
 		                           		</div>
 		                           </th>
 		                     </tr>
@@ -179,11 +187,11 @@
 										{{/if}}
 									{{/for}}
 								   </td>
-		                           <td>{{:~liToYuan(totalFee)}}
+		                           <td>
 										{{if  currencyUnit == '1'}}
-											<spring:message code="myOrder.rmb"/>
+											<spring:message code="myOrder.rmbSame" arguments="{{:~liToYuan(totalFee)}}" />
 										{{else }}
-											<spring:message code="myOrder.dollar"/>
+											<spring:message code="myOrder.dollarSame" arguments="{{:~liToYuan(totalFee)}}" />
 										{{/if}}
 								   </td>
 		                           <td>

@@ -80,15 +80,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     				translateContent: {
     					required:true,
     					maxlength:2000,
-    					remote:{
-						   url: _base + "/verifyTranslateLan",
-			                type:"post",
-			                dataType:"json",
-			                data:{
-			                		lan: $("#selectDuad").find("option:selected").attr("sourceEn"), 
-			                		text: $("#translateContent").val()
-			                	}
-    					}
     				},
     				isAgree: {
     					required:true,
@@ -109,7 +100,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     				translateContent: {
     					required:"请输入翻译内容",
     					maxlength:"最大长度不能超过{0}",
-    					remote: "您输入的内容和源语言不一致"
     				},
     				isAgree: {
     					required: "请阅读并同意翻译协议",
@@ -141,10 +131,40 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				return;
 			}
 			
+			//验证输入内容
+		   var sourceLan;
+           $("#selectDuad option").each(function() {
+				if ($(".selected").attr("value") == $(this).val()) {
+					sourceLan =  $(this).attr('source');
+					return false;
+				}
+			});
+	           
+			ajaxController.ajax({
+				type: "post",
+				url: _base + "/translateLan",
+				data: {
+            		text: $("#translateContent").val()
+				},
+				success: function (data) {
+					if ("1" === data.statusCode) {
+						if(data.data != lan) { 
+							alert("您输入的内容和源语言不一致");
+						}
+					}
+				}
+			});
+			
+			//查询报价
 			this._queryAutoOffer();
 			
-			var tableFirstLine = $("#textOrderTable tbody tr").eq(0).find("td")
-			tableFirstLine.eq(0).html($("#translateContent").val().substring(0,15));
+			var tableFirstLine = $("#textOrderTable tbody tr").eq(0).find("td");
+			if($("li[fileid]").length == 0) {
+				tableFirstLine.eq(0).html($("#translateContent").val().substring(0,15));
+			} else {
+				tableFirstLine.eq(0).html($("#fileList").find('li:first').text().substring(0,15));
+			}
+			
 			tableFirstLine.eq(1).html($("#selectDuad").find("option:selected").text());
 			tableFirstLine.eq(2).html($("#selectPurpose").find("option:selected").text());
 			tableFirstLine.eq(3).html($("#selectDomain").find("option:selected").text());
@@ -278,37 +298,37 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		
 		//查询报价
 		_queryAutoOffer:function() {
+			var _this = this;
 			if($("li[fileid]").length > 0) {
 				$("#price").html("<span>请耐心等待报价！</span>");
 				return;
 			}
 			
-			var req={};
-			req.wordNum = CountWordsUtil.count($("#translateContent").val());
-		    req.duadId = $("#selectDuad").find("option:selected").val();
-		    req.purposeId = $("#selectPurpose").find("option:selected").val();
-		    
-		    req.translateLevel = $(".none-ml.current").attr('name');
-		   
+		   var isUrgent;
 	    	if ( $("#urgentOrder").is(':checked') ) 
-	    		req.isUrgent  = "1";
+	    		isUrgent = true;
 			else 
-				req.isUrgent  = "0";
+				isUrgent = false;
 		    
 			ajaxController.ajax({
 				type: "post",
 				url: _base + "/order/queryAutoOffer",
 				data: {
-					reqParams: JSON.stringify(req),
+					wordNum: CountWordsUtil.count($("#translateContent").val()),
+					duadId: $("#selectDuad").find("option:selected").val(),
+					purposeId: $("#selectPurpose").find("option:selected").val(),
+				    language: $(".dropdown .selected").attr('value'),
+				    translateLevel: $(".none-ml.current").attr('name'),
+				    isUrgent: isUrgent,
 				},
 				success: function (data) {
 					if ("1" === data.statusCode) {
 						var unit;
-						if (data.data.currencyUnit === "1")
+						if (data.data.currencyUnit === "1") 
 							unit = $.i18n.prop('order.yuan');
 						else
 							unit = $.i18n.prop('order.meiyuan');
-						$("#price").html("<span>"+ data.data.price +"</span>"+ unit);
+						$("#price").html("<span>"+ _this.fmoney(data.data.price/1000,2) +"</span>"+ unit);
 					}
 				}
 			});
@@ -455,8 +475,25 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		_setPattern:function() {
 			var pattern = $("#saveContactDiv").find('option:selected').attr('exp');
 			$("#phoneNum").attr('pattern',pattern);
-		}
+		},
 		
+		//格式化金钱
+		fmoney:function (s, n) {
+			var result = '0.00';
+			if(isNaN(s) || !s){
+				return result;
+			}
+			
+			n = n > 0 && n <= 20 ? n : 2;
+			s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
+			var l = s.split(".")[0].split("").reverse(),
+			r = s.split(".")[1];
+			var t = "";
+			for(var i = 0; i < l.length; i ++ ){   
+				t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
+			}
+			return t.split("").reverse().join("") + "." + r;
+		}
     });
     
     module.exports = textOrderAddPager;

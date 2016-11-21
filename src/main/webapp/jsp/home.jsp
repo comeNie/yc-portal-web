@@ -42,7 +42,7 @@
                 <li>
                     <select tabindex="5" class="dropdown" id="showa" data-settings='{"cutOff": 100}'>
                         <%--自动检测--%>
-                        <option value="auto"><spring:message code="home.trans_language_auto"/></option>
+                        <option value="auto" selected = "selected"><spring:message code="home.trans_language_auto"/></option>
                             <%--中文简体--%>
                             <option value="zh"><spring:message code="home.trans_language_zh"/></option>
                             <%--英语--%>
@@ -55,7 +55,7 @@
                             <option value="pt"><spring:message code="home.trans_language_pt"/></option>
                     </select>
                 </li>
-                <li class="change"><a href="#"><i class="icon-exchange"></i></a></li>
+                <li class="change"><a href="javaScript:void(0)"><i class="icon-exchange"></i></a></li>
                 <li>
                     <select tabindex="5" class="dropdown" id="showb" data-settings='{"cutOff": 12}'>
                         <%--中文简体--%>

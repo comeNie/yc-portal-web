@@ -73,12 +73,13 @@ define('app/jsp/transOrder/orderList', function (require, exports, module) {
 	            	if(data != null && data != 'undefined' && data.length>0){
 	            		//把返回结果转换
 		            	for(var i=0;i<data.length;i++){
-		            		//确认截止时间转为 剩余x天x小时x分
-		            		var remainingTime = _this.ftimeDHS(data[i].remainingTime);
-		            		data[i].confirmTakeDays = remainingTime.days;
-		            		data[i].confirmTakeHours = remainingTime.hours;
-		            		data[i].confirmTakeMinutes =  remainingTime.minutes;
-		            		
+		            		//订单完成剩余时间 转为 剩余x天x小时x分
+		            		var remainingTime = _this.ftimeDHS(data[i].endTime - new Date().getTime());
+		            		data[i].finishRemTime = remainingTime;
+		            		data[i].finishTakeDays = remainingTime.days;
+		            		data[i].finishTakeHours = remainingTime.hours;
+		            		data[i].finishTakeMinutes =  remainingTime.minutes;
+		            	    
 		            		data[i].currentLan = currentLan; //当前语言
 		            	}
 	            		var template = $.templates("#searchOrderTemple");
