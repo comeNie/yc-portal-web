@@ -114,7 +114,7 @@
 			                        </ul>
 			                    </c:forEach>
 								
-								<c:if test="${OrderDetails.state =='20' || OrderDetails.state =='25' }">
+								<c:if test="${OrderDetails.state =='23' || OrderDetails.state =='25' }">
 				 				<!-- 翻译中 修改中 -->
 				 					 <c:forEach items="${OrderDetails.prodFiles}" var="prodFile" varStatus="status">
 				                        <c:if test="${not empty prodFile.fileTranslateName}">
@@ -290,7 +290,10 @@
 		                            	<spring:message code="myOrder.Urgent"/>;
 		                            	</c:if>
 		                            	<c:if test="${OrderDetails.prod.isSetType == '1'}">
-		                            	<spring:message code="myOrder.Layout"/>
+		                            	<spring:message code="myOrder.Layout"/>;
+		                            	</c:if>
+		                            	<c:if test="${not empty OrderDetails.prod.typeDesc}">
+		                            		<spring:message code="order.formatConv" />${OrderDetails.prod.typeDesc}
 		                            	</c:if>
 		                            </p>
 				  				</li>
