@@ -36,7 +36,7 @@
   				<div class="right-title-left-tu"><img src="${uedroot}/images/icon1.jpg"></div>
   				<div class="right-title-left-word">
 	  				<ul>
-	  					<li class="word-black">大脸盼爱大脸</li>
+	  					<li class="word-black">${sessionScope.user_session_key.username}</li>
 	  					<li class="c-red">存在风险</li>
 	  				</ul>
 	  				<ul>
