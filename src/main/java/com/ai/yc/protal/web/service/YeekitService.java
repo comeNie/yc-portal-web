@@ -28,15 +28,15 @@ public class YeekitService {
     private static final Logger LOGGER = LoggerFactory.getLogger(YeekitService.class);
 
     //语言检测
-    @Value("${yee.detection.url}")
+    @Value("#{yeeSetting['yee.detection.url']}")
     private String TRANSLAN_URL;
 
     //机器翻译
-    @Value("${yeekit.translate.url}")
+    @Value("#{yeeSetting['yeekit.translate.url']}")
     private String SERVER_URL;
-    @Value("${yeekit.translate.appkid}")
+    @Value("#{yeeSetting['yeekit.translate.appkid']}")
     private String APP_KID;
-    @Value("${yeekit.translate.appkey}")
+    @Value("#{yeeSetting['yeekit.translate.appkey']}")
     private String APP_KEY ;
     @Autowired
     private CloseableHttpClient client;

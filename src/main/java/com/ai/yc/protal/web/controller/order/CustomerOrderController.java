@@ -141,16 +141,14 @@ public class CustomerOrderController {
         String stateListStr = request.getParameter("stateListStr"); //后台、译员 订单状态
         String lspRole = request.getParameter("lspRole"); //译员角色
         try {
-            if (StringUtils.isNotEmpty("lspRole")) {
                 //如果是管理员和经理,只传lspId 用户、译员id不传。
-                if (lspRole.equals("12") || lspRole.equals("11")) {
-                    orderReq.setInterperId(null);
-                    orderReq.setUserId(null);
-                } else {
-                    orderReq.setLspId(null);
-                }
+            if ("12".equals(lspRole) || "11".equals(lspRole)) {
+                orderReq.setInterperId(null);
+                orderReq.setUserId(null);
+            } else {
+                orderReq.setLspId(null);
             }
-            
+
             //获取当前用户所处时区
             TimeZone timeZone = TimeZone.getTimeZone(ZoneContextHolder.getZone());
             
@@ -160,7 +158,7 @@ public class CustomerOrderController {
                 orderReq.setOrderTimeStart(date);
             }
             if (StringUtils.isNotEmpty(orderTimeEnd)) {
-                String dateTmp = orderTimeEnd+" 00:00:00";
+                String dateTmp = orderTimeEnd+" 23:59:59";
                 Timestamp date =DateUtil.getTimestamp(dateTmp,DateUtil.DATETIME_FORMAT,timeZone);
                 orderReq.setOrderTimeEnd(date);
             }
@@ -176,6 +174,7 @@ public class CustomerOrderController {
             LOGGER.info("订单列表查询 ：" + JSONObject.toJSONString(orderRes));
             //如果返回值为空,或返回信息中包含错误信息,返回失败
             if (orderRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
+
             } else {
                 //返回订单分页信息
                 resData.setData(orderRes.getPageInfo());
@@ -247,7 +246,7 @@ public class CustomerOrderController {
 
         //若是人民币,需要获取账户余额
         if(Constants.CURRENCTY_UNIT_RMB.equals(orderFeeInfo.getCurrencyUnit())){
-            AccountBalanceInfo balanceInfo = balanceService.queryOfUser();
+            AccountBalanceInfo balanceInfo = balanceService.queryOfUser(UserUtil.getUserId());
             //账户余额信息
             uiModel.addAttribute("balanceInfo",balanceInfo);
             //是否显示待充值信息
@@ -388,14 +387,14 @@ public class CustomerOrderController {
 //        prod.setMeetingAddress("北京");
 //        prod.setInterperGen("不限"); //
 //        orderDetailsRes.setProd(prod);
-//        
+//
 //        orderDetailsRes.setRemark("速度翻译");//备注
 //        orderDetailsRes.setOrderId(Long.valueOf(orderId));
 //        orderDetailsRes.setTranslateName("翻译主题");
 //        orderDetailsRes.setOrderTime(new Timestamp(System.currentTimeMillis()));//下单时间
 //        orderDetailsRes.setDisplayFlag(displayFlag);
 //        orderDetailsRes.setTranslateType("2"); //翻译类型 0：文本翻译 1：文档翻译 2：口译翻译
-//        
+//
 //        List<ProdFileVo> prodFiles = new ArrayList<>();//文档
 //        ProdFileVo prodFileVo = new ProdFileVo();
 //        prodFileVo.setFileName("原文名字");
@@ -404,7 +403,7 @@ public class CustomerOrderController {
 //        prodFileVo.setFileTranslateName("译文名字");
 //        prodFiles.add(prodFileVo);
 //        orderDetailsRes.setProdFiles(prodFiles);
-//        
+//
 //        List<ProdExtendVo> prodExtendVos = new ArrayList<>();
 //        ProdExtendVo prodExtendVo =  new ProdExtendVo();
 //        prodExtendVo.setLangungePair("1");
@@ -412,25 +411,25 @@ public class CustomerOrderController {
 //        prodExtendVo.setLangungePairName("英-中");
 //        prodExtendVos.add(prodExtendVo);
 //        orderDetailsRes.setProdExtends(prodExtendVos);
-//        
+//
 //        List<ProdLevelVo> prodLevels = new ArrayList<>();//peitong
 //        ProdLevelVo prodLevelVo = new ProdLevelVo();
 //        prodLevelVo.setTranslateLevel("1");
 //        prodLevels.add(prodLevelVo);
 //        orderDetailsRes.setProdLevels(prodLevels);
-//        
+//
 //        OrderFeeVo orderFeeVo = new OrderFeeVo();
 //        orderFeeVo.setCurrencyUnit("1");//1：RMB 2：$
 //        orderFeeVo.setPaidFee((long) 100);
 //        orderFeeVo.setDiscountFee((long) 10);
 //        orderDetailsRes.setOrderFee(orderFeeVo);
-//      
+//
 //        ContactsVo contact = new ContactsVo();
 //        contact.setContactName("王五");
 //        contact.setContactTel("+86 13844987323");
 //        contact.setContactEmail("1231@qq.com");
 //        orderDetailsRes.setContacts(contact);
-//        
+//
 //        List<OrderStateChgVo> chgList = new ArrayList<>();
 //        OrderStateChgVo stateChgVo = new OrderStateChgVo();
 //        stateChgVo.setStateChgTime(new Timestamp(System.currentTimeMillis()));
@@ -438,7 +437,7 @@ public class CustomerOrderController {
 //        stateChgVo.setChgDescEn("The order has been received by the interpreter, is in translation, please be patient");
 //        chgList.add(stateChgVo);
 //        orderDetailsRes.setOrderStateChgs(chgList);
-//       
+//
 //        uiModel.addAttribute("OrderDetails", orderDetailsRes);
         return "customerOrder/orderInfo";
     }

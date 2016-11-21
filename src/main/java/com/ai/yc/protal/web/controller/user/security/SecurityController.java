@@ -94,7 +94,7 @@ public class SecurityController {
 		AccountBalanceInfo balanceInfo = null;
 		;
 		try {
-			balanceInfo = balanceService.queryOfUser();
+			balanceInfo = balanceService.queryOfUser(UserUtil.getUserId());
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}
