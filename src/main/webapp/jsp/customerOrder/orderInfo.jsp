@@ -92,7 +92,7 @@
 		                            	<!-- 文档类型翻译 文档list -->
 		                            	<c:if test="${not empty prodFile.fileTranslateName}">
 		                            		<li>${prodFile.fileTranslateName}</li>
-		  								<li class="right mr-5"><input name="download" fileId="${prodFile.fileTraslateId}" fileName="${prodFile.fileTranslateName}" type="button" class="btn border-blue-small btn-auto radius20" value="<spring:message code="myOrder.downLoad"/>"></li>
+		  								<li class="right mr-5"><input name="download" fileId="${prodFile.fileTranslateId}" fileName="${prodFile.fileTranslateName}" type="button" class="btn border-blue-small btn-auto radius20" value="<spring:message code="myOrder.downLoad"/>"></li>
 		                            	</c:if>
 		                    	</ul>
 	                   		</c:forEach>
@@ -208,6 +208,9 @@
                                 	<c:if test="${OrderDetails.prod.isSetType == '1'}">
                                 	<spring:message code="myOrder.Layout"/>
                                 	</c:if>
+                                	<c:if test="${not empty OrderDetails.prod.typeDesc}">
+		                            		<spring:message code="order.formatConv"/>${OrderDetails.prod.typeDesc}
+		                            </c:if>
                                 </p>
                             </li>
                             <li class="width-large">
@@ -315,9 +318,10 @@
                                 		<p>————</p>
                                 	</c:when>
                                 	<c:otherwise>
-                                		 <p><fmt:formatNumber value="${OrderDetails.orderFee.paidFee/1000}" pattern="#,##0.00#"/>
-		                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb"/></c:if>
-		                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar"/></c:if></p>
+                                		 <p>
+                                		 	<c:set var="totalFee"><fmt:formatNumber value="${OrderDetails.orderFee.totalFee/1000}" pattern="#,##0.00#"/></c:set>
+		                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb"  arguments="${totalFee}"/></c:if>
+		                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar" arguments="${totalFee}"/></c:if></p>
                                 	</c:otherwise>
                                 </c:choose>
                             </li>
@@ -334,16 +338,18 @@
                             <li class="width-large">
                                 <!-- 优惠券 -->
                                 <p class="word"><spring:message code="myOrder.Coupons"/>:</p>
-                                <p><fmt:formatNumber value="${OrderDetails.orderFee.discountFee/1000}" pattern="#,##0.00#"/>
-                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb"/></c:if>
-                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar"/></c:if></p>
+                                <p>
+                                	<c:set var="discountFee"><fmt:formatNumber value="${OrderDetails.orderFee.discountFee/1000}" pattern="#,##0.00#"/></c:set>
+                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb"  arguments="${discountFee}"/></c:if>
+                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar"  arguments="${discountFee}"/></c:if></p>
                             </li>
                             <li class="width-large red">
                             	<!-- 实付金额 -->
                                 <p class="word"><spring:message code="myOrder.Amountpaid"/>:</p>
-                                <p><b><fmt:formatNumber value="${OrderDetails.orderFee.paidFee/1000}" pattern="#,##0.00#"/>
-                               		</b><c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb"/></c:if>
-                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar"/></c:if>
+                                <p><b>
+                                	<c:set var="paidFee"><fmt:formatNumber value="${OrderDetails.orderFee.paidFee/1000}" pattern="#,##0.00#"/></c:set>  
+                               		</b><c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb" arguments="${paidFee}" /> </c:if>
+                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar" arguments="${paidFee}"/> </c:if>
                                	</p>
                             </li>
                         </ul>
@@ -363,7 +369,7 @@
                         <ul>
                             <li class="width-large">
                             	<!-- 发票类型 -->
-                                <p class="word"><spring:message code="myOrder.Invoice"/>:</p>
+                                <p class="word"><spring:message code="myOrder.InvoiceType"/>:</p>
                                 <!-- 不开发票 -->
                                 <p><spring:message code="myOrder.Noinvoice"/></p>
                             </li>

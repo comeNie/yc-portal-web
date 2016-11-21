@@ -144,7 +144,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
         _emailNext1:function(){
         	var emailIdentifyCode = $("#emailIdentifyCode").val();
 			if($.trim(emailIdentifyCode)==""){
-				this._showMsg("请输入动态码");
+				this._showMsg(updatePasswordMsg.dynamicCodeEmpty);
 				return;
 			}
 			var _this = this;
@@ -243,13 +243,13 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 						$("#emailErrMsg").text("发送邮件失败");
 					}else{
 						var step = 59;
-						sendEmailBtn.val('重新发送60');
+						sendEmailBtn.val('60 s');
 			            var _res = setInterval(function(){
-			            	sendEmailBtn.val('重新发送'+step);
+			            	sendEmailBtn.val(step+" s");
 			                step-=1;
 			                if(step <= 0){
 			                sendEmailBtn.removeAttr("disabled"); //移除disabled属性
-			                sendEmailBtn.val('获取验证码');
+			                sendEmailBtn.val(updatePasswordMsg.sendEmailCode);
 			                clearInterval(_res);//清除setInterval
 			                }
 			            },1000);						

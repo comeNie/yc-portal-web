@@ -132,6 +132,20 @@
 				                    	</ul>
 				                    	</c:if>
 	                   				</c:forEach>
+	                   				
+                   					<c:if test="${UUploadCount > 0}">
+			 						<!-- 可以上传 -->
+			 							<!-- 上传译文 -->
+										<form  id="uploadForm" method="POST" enctype="multipart/form-data" action="${_base}/p/trans/order/upload">
+								   			<p>
+									   			<input class="btn border-blue-small btn-80 radius20" type="button" value="<spring:message code="myOrder.Upload"/>">
+									   			<input id="upload" name="file" class="fany-file" type="file">
+									   			<input name="orderId" type="hidden" value="${OrderDetails.orderId}">
+								   			</p>  
+										</form>　   
+			 						</c:if>
+			 						
+			 						
 				 				</c:if>
 							</div>
 			 			</c:if>
@@ -170,9 +184,10 @@
 	  					<span><spring:message code="myOrder.Amount"/>:</span>
 						<ul>
 							<li>
-							<p><fmt:formatNumber value="${OrderDetails.orderFee.paidFee/1000}" pattern="#,##0.00#"/>
-                              		<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb"/></c:if>
-                              		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar"/></c:if></p>
+							<p>
+								<c:set var="totalFee"><fmt:formatNumber value="${OrderDetails.orderFee.totalFee/1000}" pattern="#,##0.00#"/></c:set>
+                           		<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb" arguments="${totalFee}"/></c:if>
+                           		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar" arguments="${totalFee}"/></c:if></p>
 							</li>
 						</ul>
 						<c:if test="${OrderDetails.translateType != '2'}">
@@ -181,7 +196,7 @@
 							<ul>
 								<li>
 									<p><spring:message
-                                   		code="myOrder.tranteNeedTime" arguments="${OrderDetails.prod.translateSum}"/></p>
+                                   		code="myOrder.WordWord" arguments="${OrderDetails.prod.translateSum}"/></p>
 								</li>
 							</ul>
 							<!-- 预计交稿 -->
@@ -275,7 +290,10 @@
 		                            	<spring:message code="myOrder.Urgent"/>;
 		                            	</c:if>
 		                            	<c:if test="${OrderDetails.prod.isSetType == '1'}">
-		                            	<spring:message code="myOrder.Layout"/>
+		                            	<spring:message code="myOrder.Layout"/>;
+		                            	</c:if>
+		                            	<c:if test="${not empty OrderDetails.prod.typeDesc}">
+		                            		<spring:message code="order.formatConv" />${OrderDetails.prod.typeDesc}
 		                            	</c:if>
 		                            </p>
 				  				</li>
@@ -349,20 +367,11 @@
 		 				</c:when>
 		 				<c:when test="${OrderDetails.state =='23' && OrderDetails.translateType == '1'}">
 		 					<!-- 文档  翻译中 -->
-		 						<c:if test="${UUploadCount > 0}">
-		 						<!-- 可以上传 -->
-		 							<!-- 上传译文 -->
-		 							<input class="btn btn-green btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.Upload"/>" onclick="clp();" >
-		 						</c:if>
+		 					
 		 						<c:if test="${UUploadCount < fn:length(OrderDetails.prodFiles)}">
 		 						<!-- 提交 -->
 		 						<input id="recharge-popo" name="submit" class="btn btn-green btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.Submit"/>">
 		 						</c:if>
-		 						
-		 						<form  id="uploadForm" method="POST" enctype="multipart/form-data" action="${_base}/p/trans/order/upload">
-								   <input id="upload" name="file"  type="file" hidden="">
-								   <input name="orderId" type="hidden" value="${OrderDetails.orderId}">  
-								</form>　   
 							<!--<input id="tran-popo" class="btn btn-yellow btn-xxxlarge radius10 ml-20" type="button" value="CAT翻译">-->
 		 				</c:when>
 		 				<c:when test="${OrderDetails.state =='25'}">
@@ -417,8 +426,6 @@ var orderId = "${OrderDetails.orderId}";
 	
 	
 })();
-function clp(){
-	   return  $("#upload").click();
-	}
+
 </script>
 </html>

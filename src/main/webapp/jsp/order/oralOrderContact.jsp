@@ -42,7 +42,7 @@
 						<li>
 							<p><input id="contactName" name="contactName" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterName"/>"></p>
 							<p><select id="globalRome" name="globalRome" class="select int-in radius"></select></p>
-							<p><input id="phoneNum" name="phoneNum" pattern="^(86){0,1}1\\d{10}$" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterPhone"/>"></p>
+							<p><input id="phoneNum" name="phoneNum" pattern="^(86){0,1}1\d{10}$" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterPhone"/>"></p>
 							<p class="mr-0"><input id="email" name="email" type="text" class="int-text int-large-mail radius" placeholder="<spring:message code="order.EnterEmail"/>"></p>
 						</li>
 						<li class="right-btn"><input id="saveContact" type="button" class="btn radius20 border-blue btn-80" value="<spring:message code="order.Save"/>"></li>

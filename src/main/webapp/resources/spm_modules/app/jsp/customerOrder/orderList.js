@@ -76,6 +76,12 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
 		            		data[i].confirmTakeHours = remainingTime.hours;
 		            		data[i].confirmTakeMinutes =  remainingTime.minutes;
 		            		
+		            		//支付截止时间转为 剩余x天x小时x分
+		            		var payRemTime = _this.ftimeDHS(data[i].endChgTime - new Date().getTime());
+		            	    data[i].payTakeDays = payRemTime.days;
+		            	    data[i].payTakeHours = payRemTime.hours;
+		            	    data[i].payTakeMinutes = payRemTime.minutes;
+		            		
 		            		data[i].currentLan = currentLan; //当前语言
 		            	}
 	            		var template = $.templates("#searchOrderTemple");

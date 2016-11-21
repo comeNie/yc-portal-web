@@ -24,7 +24,8 @@ define('app/jsp/home', function (require, exports, module) {
             "click #toCreateOrder":"_toCreateOrder",
             "click #trante": "_mt",
             "click #playControl": "_text2audio",
-			"click #humanTranBtn":"_goTextOrder"
+			"click #humanTranBtn":"_goTextOrder",
+			"click .change": "_change",
         },
 
         //重写父类
@@ -72,6 +73,28 @@ define('app/jsp/home', function (require, exports, module) {
 			});
         },
         
+        _change:function() {
+        	var srcValue = $(".selected").eq(0).attr('value');
+        	var srcText = $(".selected").eq(0).html();
+        	var disValue = $(".selected").eq(1).attr('value');
+        	var disText = $(".selected").eq(1).html();
+        	
+        	if ($(".selected").eq(0).attr('value') == 'auto') {
+        		$("#showb option").each(function() {
+        			if ($(this).attr('value') != disValue) {
+        				srcValue = $(this).val();
+        				srcText = $(this).text();
+        				return false;
+        			}
+        		});
+        	}
+        		
+        	$(".selected").eq(0).attr('value', disValue);
+        	$(".selected").eq(0).html(disText);
+        	$(".selected").eq(1).attr('value', srcValue);
+        	$(".selected").eq(1).html(srcText);
+        	
+        },
         //文本转音频
         _text2audio:function() {
 			//获取目标语言编码
