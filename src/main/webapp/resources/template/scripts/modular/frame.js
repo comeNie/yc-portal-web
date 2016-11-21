@@ -146,6 +146,7 @@ $(function(){
   });
 });
 
+
 //设置密码 table
 $(function(){
 $(".set-up a").click(function () {

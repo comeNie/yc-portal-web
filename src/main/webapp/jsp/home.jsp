@@ -122,88 +122,88 @@
         <div class="explain-wapper">
             <div class="explain-cont">
                 <div class="item2">
-                    <img src="${uedroot}/images/explain1.jpg"/>
+                    <div class="img"></div>
                     <div class="item2-txt">
                         <%--翻译论文、稿件--%>
                         <span class="word"><spring:message code="home.paper_translation_tips"/></span>
-                            <%--提供各种论文、稿件的翻译、审校、排版等服务，不满意免费修改--%>
-                        <span><spring:message code="home.paper_translation_content_tips"/></span>
+                        <span class="exp-icon1"></span>
                             <%--立即下单--%>
-                        <span><input type="button" class="btn btn-blue place-btn radius20" purpose="1"
+                        <span><input type="button" class="btn border-blue place-btn-none radius20" purpose="1"
                                      value="<spring:message code="home.manual_order_now_btn"/>"></span>
                     </div>
-                    <div class="caption" purpose="1">
+                    <div class="caption caption1" purpose="1">
                         <%--翻译论文、稿件--%>
                         <p class="title"><spring:message code="home.paper_translation_tips"/></p>
-                        <p class="exp-icon1"></p>
-                        <%--立即下单--%>
-                        <p><input type="button" class="btn border-blue place-btn-none radius20" purpose="1"
+                            <%--提供各种论文、稿件的翻译、审校、排版等服务，不满意免费修改--%>
+                        <p class="text-l"><spring:message code="home.paper_translation_content_tips"/></p>
+                            <%--立即下单--%>
+                        <p><input type="button" class="btn btn-blue place-btn radius20" purpose="1"
                                   value="<spring:message code="home.manual_order_now_btn"/>"></p>
                     </div>
                 </div>
             </div>
             <div class="explain-cont ml-20">
                 <div class="item2">
-                    <img src="${uedroot}/images/explain2.jpg"/>
+                    <div class="img"></div>
                     <div class="item2-txt">
                         <%--翻译中英文简历--%>
                         <span class="word"><spring:message code="home.resume_translation_tips"/></span>
-                            <%--按模板填写简历内容，简单、便捷、译审结合，不满意免费修改--%>
-                        <span><spring:message code="home.resume_translation_content_tips"/></span>
-                        <%--立即下单--%>
-                        <span><input type="button" class="btn btn-blue place-btn radius20" purpose="2"
+                        <span class="exp-icon2"></span>
+                            <%--立即下单--%>
+                        <span><input type="button" class="btn border-blue place-btn-none radius20" purpose="2"
                                      value="<spring:message code="home.manual_order_now_btn"/>"></span>
                     </div>
-                    <div class="caption" purpose="2">
+                    <div class="caption caption2" purpose="2">
                         <%--翻译中英文简历--%>
                         <p class="title"><spring:message code="home.resume_translation_tips"/></p>
-                        <p class="exp-icon2"></p>
-                        <%--立即下单--%>
-                        <p><input type="button" class="btn border-blue place-btn-none radius20" purpose="2"
+                            <%--按模板填写简历内容，简单、便捷、译审结合，不满意免费修改--%>
+                        <p class="text-l"><spring:message code="home.resume_translation_content_tips"/></p>
+                            <%--立即下单--%>
+                        <p><input type="button" class="btn btn-blue place-btn radius20" purpose="2"
                                   value="<spring:message code="home.manual_order_now_btn"/>"></p>
                     </div>
                 </div>
             </div>
             <div class="explain-cont ml-20">
                 <div class="item2">
-                    <img src="${uedroot}/images/explain3.jpg"/>
+                    <div class="img"></div>
                     <div class="item2-txt">
                         <%--翻译产品说明--%>
                         <span class="word"><spring:message code="home.manual_translation_tips"/></span>
-                            <%--提供最快速最精准的翻译服务，译员时刻待命，立等可取--%>
-                        <span><spring:message code="home.manual_translation_content_tips"/></span>
-                        <%--立即下单--%>
-                        <span><input type="button" class="btn btn-blue place-btn radius20" purpose="3"
+                        <span class="exp-icon3"></span>
+                            <%--立即下单--%>
+                        <span><input type="button" class="btn border-blue place-btn-none radius20" purpose="3"
                                      value="<spring:message code="home.manual_order_now_btn"/>"></span>
                     </div>
-                    <div class="caption" purpose="3">
+                    <div class="caption caption3" purpose="3">
                         <%--翻译产品说明--%>
                         <p class="title"><spring:message code="home.manual_translation_tips"/></p>
-                        <p class="exp-icon3"></p>
-                        <%--立即下单--%>
-                        <p><input type="button" class="btn border-blue place-btn-none radius20" purpose="3"
+                            <%--提供最快速最精准的翻译服务，译员时刻待命，立等可取--%>
+                        <p class="text-l"><spring:message code="home.manual_translation_content_tips"/></p>
+                            <%--立即下单--%>
+                        <p><input type="button" class="btn btn-blue place-btn radius20" purpose="3"
                                   value="<spring:message code="home.manual_order_now_btn"/>"></p>
                     </div>
                 </div>
             </div>
             <div class="explain-cont ml-20">
                 <div class="item2">
-                    <img src="${uedroot}/images/explain4.jpg"/>
+                    <div class="img"></div>
                     <div class="item2-txt">
                         <%--翻译各种证件--%>
                         <span class="word"><spring:message code="home.certificate_translation_tips"/></span>
-                            <%--提供身份证、护照、驾照等证件的翻译服务，可加盖公章--%>
-                            <span><spring:message code="home.certificate_translation_content_tips"/></span>
-                        <%--立即下单--%>
-                        <span><input type="button" class="btn btn-blue place-btn radius20" purpose="5"
+                        <span class="exp-icon4"></span>
+                            <%--立即下单--%>
+                        <span><input type="button" class="btn border-blue place-btn-none radius20" purpose="4"
                                      value="<spring:message code="home.manual_order_now_btn"/>"></span>
                     </div>
-                    <div class="caption" purpose="5">
+                    <div class="caption caption4" purpose="4">
                         <%--翻译各种证件--%>
                         <p class="title"><spring:message code="home.certificate_translation_tips"/></p>
-                        <p class="exp-icon4"></p>
-                        <%--立即下单--%>
-                        <p><input type="button" class="btn border-blue place-btn-none radius20" purpose="5"
+                            <%--提供身份证、护照、驾照等证件的翻译服务，可加盖公章--%>
+                        <p class="text-l"><spring:message code="home.certificate_translation_content_tips"/></p>
+                            <%--立即下单--%>
+                        <p><input type="button" class="btn btn-blue place-btn radius20"
                                   value="<spring:message code="home.manual_order_now_btn"/>"></p>
                     </div>
                 </div>
