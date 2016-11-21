@@ -11,6 +11,18 @@ define("app/jsp/user/security/bindPhone",
 			Widget = require('arale-widget/1.2.0/widget'), 
 			Dialog = require("optDialog/src/dialog"), 
 			AjaxController = require('opt-ajax/1.0.0/index');
+			var showMsg = function(msg){
+		    	var d = Dialog({
+					content:msg,
+					icon:'fail',
+					okValue: phoneBindMsg.showOkValueMsg,
+					title: phoneBindMsg.showTitleMsg,
+					ok:function(){
+						d.close();
+					}
+				});
+				d.show();
+		    };
 			// 实例化AJAX控制处理对象
 			var ajaxController = new AjaxController();
 			// 定义页面组件类
@@ -97,8 +109,9 @@ define("app/jsp/user/security/bindPhone",
 									},
 									success : function(data) {
 										if(data.data==false){
-											$("#dynamicode").show();
-											$("#dynamicode").text(data.statusInfo);
+											//$("#dynamicode").show();
+											//$("#dynamicode").text(data.statusInfo);
+											showMsg(data.statusInfo);
 											_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
 											_dynamicode_btn.val('获取验证码');
 											return;
@@ -129,8 +142,9 @@ define("app/jsp/user/security/bindPhone",
 						_checkPhoneDynamicode:function(){
 							 var phoneDynamicode = $("#phoneDynamicode").val();
 							 if(phoneDynamicode==null||phoneDynamicode==""){
-								 $("#dynamicode").show();
-								 $("#dynamicode").text("请输入验证码");
+								 //$("#dynamicode").show();
+								 //$("#dynamicode").text("请输入验证码");
+								 showMsg("请输入验证码");
 								 return false;
 							 }
 							 ajaxController.ajax({
@@ -164,9 +178,10 @@ define("app/jsp/user/security/bindPhone",
 							var phone = $("#telephone");
 							var phoneVal = phone.val();
 							if ($.trim(phoneVal) == "") {
-								$("#telephoneErrMsg").show();
-								$("#telephoneErrMsg").html("手机不能为空");
-								phone.focus();
+								//$("#telephoneErrMsg").show();
+								//$("#telephoneErrMsg").html("手机不能为空");
+								//phone.focus();
+								showMsg("手机不能为空");
 								return false;
 							}else{
 								$("#telephoneErrMsg").hide();

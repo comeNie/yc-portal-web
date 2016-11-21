@@ -17,8 +17,15 @@ define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, mo
 				},
 				/* 初始化 */
 				_init:function(){
-					this._orderStatusCount();
-					this._queryOrder();
+					var interperId = $("#interperId").val();
+					if(interperId){//译员ok
+						this._orderStatusCount();
+						this._queryOrder();
+						this._queryLspInfo();
+					}else{
+						 $("#no_order_container").show();
+ 	            	}
+					
 				},
 				/* 获取订单数量 */
 				_orderStatusCount:function(){
@@ -46,13 +53,24 @@ define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, mo
 				/* 获取订单 */
 				_queryOrder:function(){
 					var _this = this;
+					var interperId = $("#interperId").val();
+					var lspId = $("#lspId").val();
+					var lspRole = $("#lspRole").val();
+					var sendData ={};
+					sendData.pageSize=10;
+					sendData.pageNo=1;
+					sendData.interperId=interperId;
+					sendData.lspId=lspId;
+					sendData.lspRole=lspRole;
+					if(!interperId){
+						var userId = $("#userId").val();
+						sendData.interperId=userId;
+					}
+					
 					ajaxController.ajax({
 						 type:"post",
 		    				url:_base+"/p/customer/order/orderList",
-		    				data:{
-		    					'pageSize':10,
-		    					'pageNo':1
-		    					},
+		    				data:sendData,
 		    		        success: function(json) {
 		    		        	var data = json.data;
 		    		        	if(data){
@@ -72,12 +90,27 @@ define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, mo
 		    	            		var template = $.templates("#orderTemple");
 		    	            	    var htmlOutput = template.render(data);
 		    	            	    $("#order_list").html(htmlOutput);
-		    	            	    $("#no_order_container").hide();
-		    	            		$("#have_order_container").show();
-		    	            	}else{
-		    	            		$("#no_order_container").show();
-		    	            		$("#have_order_container").hide();
+		    	            	    $("#have_order_container").show();
 		    	            	}
+		    		        }
+		    		});
+				},
+				/* 获取lsp信息 */
+				_queryLspInfo:function(){
+					var lspId = $("#lspId").val();
+					if(!lspId){
+						return;
+					}
+					ajaxController.ajax({
+						 type:"post",
+		    				url:_base+"/p/security/queryLspInfo",
+		    				data:{'lspId':lspId},
+		    		        success: function(json) {
+		    		        	if(json.statusCode=="1"){
+		    		        		if(json.data&&json.data.length>0){
+		    		        			$("#lspName").html(json.data[0].lspName);
+		    		        		}
+		    		        	}
 		    		        }
 		    		});
 				},
