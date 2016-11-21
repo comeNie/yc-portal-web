@@ -139,14 +139,17 @@ public class CustomerOrderController {
         String orderTimeStart = request.getParameter("orderTimeStartStr");  //订单查询开始时间
         String orderTimeEnd = request.getParameter("orderTimeEndStr"); //订单查询结束时间
         String stateListStr = request.getParameter("stateListStr"); //后台、译员 订单状态
-        
+        String lspRole = request.getParameter("lspRole"); //译员角色
         try {
-            //用户id
-            String userId = UserUtil.getUserId();
-            
-            //TODO 现在是假名字 test， 用户id也暂时关闭
-            orderReq.setUserName("test");
-//            orderReq.setUserId("userId");
+            if (StringUtils.isNotEmpty("lspRole")) {
+                //如果是管理员和经理,只传lspId 用户、译员id不传。
+                if (lspRole.equals("12") || lspRole.equals("11")) {
+                    orderReq.setInterperId(null);
+                    orderReq.setUserId(null);
+                } else {
+                    orderReq.setLspId(null);
+                }
+            }
             
             //获取当前用户所处时区
             TimeZone timeZone = TimeZone.getTimeZone(ZoneContextHolder.getZone());

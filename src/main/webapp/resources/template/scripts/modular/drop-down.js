@@ -33,7 +33,7 @@
 			if(self.$options.length){
 				self.$options.each(function(i){
 					var $option = $(this);
-					if($option.is(':selected')){
+					if($option.attr('selected') =='selected'){
 						self.selected = {
 							index: i,
 							title: $option.text(),
