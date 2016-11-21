@@ -271,7 +271,7 @@ public class VerifyUtil {
 	 * @param key
 	 */
 	public static void delRedisValue(String key){
-		if (StringUtil.isBlank(key)) {
+		if (!StringUtil.isBlank(key)) {
 			ICacheClient iCacheClient = AiPassUitl.getCacheClient();
 			iCacheClient.del(key);
 		}

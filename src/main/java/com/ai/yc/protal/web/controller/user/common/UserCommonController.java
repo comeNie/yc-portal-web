@@ -355,7 +355,10 @@ public class UserCommonController {
 		if (!isOk) {
 			msg = rb.getMessage("ycregisterMsg.verificationCodeError");
 		}
-
+		String isRemove = request.getParameter("isRemove");
+		if(isOk && "true".equals(isRemove)){
+			VerifyUtil.delRedisValue(codeKey);
+		}
 		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg,
 				isOk);
 	}

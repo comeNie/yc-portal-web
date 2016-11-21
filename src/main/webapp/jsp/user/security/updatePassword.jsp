@@ -316,7 +316,7 @@
 								<div class="recharge-success mt-40">
 									<ul>
 										<li><img src="${uedroot}/images/rech-win.png"></li>
-										<li class="word">修改密码成功</li>
+										<li class="word"><spring:message code="ycaccountcenter.updatePassword.success"/></li>
 									</ul>
 								</div>
 
@@ -341,7 +341,12 @@
     		"sendEmailCode":'<spring:message code="ycaccountcenter.updatePassword.sendEmailCode"/>',
     		"dynamicCodeEmpty":'<spring:message code="ycaccountcenter.updatePassword.dynamicCodeEmpty"/>',
     		"showOkValueMsg" : '<spring:message code="ycaccountcenter.js.showOkValueMsg"/>',
-    		"showTitleMsg" : '<spring:message code="ycaccountcenter.js.showTitleMsg"/>'
+    		"showTitleMsg" : '<spring:message code="ycaccountcenter.js.showTitleMsg"/>',
+    		"notBindingPhone" : '<spring:message code="ycaccountcenter.updatePassword.notBindingPhone"/>',
+    		"notBindingEmail" : '<spring:message code="ycaccountcenter.updatePassword.notBindingEmail"/>',
+    		"passwordEmpty" : '<spring:message code="ycregisterMsg.passwordEmpty"/>',
+    		"passwordError" : '<spring:message code="ycregisterMsg.passwordError"/>',
+    		"confirmPasswordError" : '<spring:message code="ycregisterMsg.confirmPasswordError"/>'
     };
 	var phone = "${user.mobile}";
 	var email = "${user.email}";
