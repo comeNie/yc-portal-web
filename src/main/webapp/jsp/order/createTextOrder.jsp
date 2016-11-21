@@ -91,8 +91,7 @@
   				<div class="translate-int radius" id="fy1">
   					<p>
   					<!--  翻译内容--> 
-  					<textarea id="translateContent" name="translateContent" class="int-text textarea-xlarge-100 radius">
-  					${sessionScope.orderInfo.productInfo.translateInfo}</textarea></p>
+  					<textarea id="translateContent" name="translateContent" class="int-text textarea-xlarge-100 radius">${sessionScope.orderInfo.productInfo.translateInfo}</textarea></p>
   					<!-- 上传文档btn -->
   					<p class="right"><input type="button" class="btn border-blue radius20 btn-80" value="<spring:message code="order.uploadDoc"/>"  id="fy-btn"></p>
   					<label></label>		
@@ -261,7 +260,8 @@
 							<p>
 							<!-- 排版 无排版 -->
 							<select id="selectAddedSer" class="select select-medium radius" disabled>
-								<option><spring:message code="order.layout"/></option><option><spring:message code="order.noLayout"/></option>
+								<option value="1"><spring:message code="order.layout"/></option>
+								<option value="2" selected="selected"><spring:message code="order.noLayout"/></option>
 							</select>
 							</p>
 						</li>
@@ -270,7 +270,7 @@
 							<p>
 								<select id="selectFormatConv" class="select select-medium radius" disabled>
 									<option><spring:message code="order.formatConv"/></option>
-									<option><spring:message code="order.noFormatConv"/></option>
+									<option selected="selected"><spring:message code="order.noFormatConv"/></option>
 								</select>
 							</p>
 							<p class="ml-20"><input id="inputFormatConv" style="display: none" type="text" class="int-text int-in-bi radius"></p>
@@ -292,7 +292,7 @@
 			</div>	
 			<div class="recharge-btn order-btn placeorder-btn ml-0">
  				<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="order.subTranslation"/>">
- 				<p><input name="isAgree" type="checkbox" class="radio" checked=""><spring:message code="order.Agreement"/><a href="#"><spring:message code="order.AgreementInfo"/></a></p>
+ 				<p><input name="isAgree" type="checkbox" class="radio" checked=""><spring:message code="order.Agreement"/><a href="javaScript:void(0);"><spring:message code="order.AgreementInfo"/></a></p>
  			</div>
 		</div>
 		</div>

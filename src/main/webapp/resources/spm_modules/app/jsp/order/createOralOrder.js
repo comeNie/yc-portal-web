@@ -206,6 +206,8 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 				baseInfo.orderType = "0";
 				baseInfo.flag = "0";
 				baseInfo.chlId = "0";
+				
+				feeInfo.currencyUnit = "1";	//"1：RMB 2：$"
 			}else {
 				baseInfo.orderType = "1";
 				baseInfo.flag = "1";//业务标识 0:国内业务 1：国际业务 ??
@@ -247,8 +249,8 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 			$('input[name="duad"]:checked').each(function(){   
 				var tempObj = {};
 				tempObj.languagePairId =$(this).val();
-				//languagePairName =
-				//languageNameEn =
+				tempObj.languagePairName = $(this).attr('duadZh');
+				tempObj.languageNameEn = $(this).attr('duadEn');
 				duadList.push(tempObj);    
 			});
 			productInfo.languagePairInfoList = duadList;
@@ -278,7 +280,8 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 				},
 				success: function (data) {
 					if ("OK" === data.statusInfo) {
-						//跳到待报价页面，暂缺
+						//跳到待报价页面
+						window.location.href =  _base + "/p/customer/order/orderOffer";
 					} else { //用户未登陆
 						window.location.href = _base + "/p/order/orderSubmit?orderType=oral";
 					}
