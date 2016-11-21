@@ -25,11 +25,11 @@ import java.util.Date;
 public class HcicloudService {
     private static final Logger LOGGER = LoggerFactory.getLogger(HcicloudService.class);
 
-    @Value("${hcicloud.appkey}")
+    @Value("#{hciSetting['hcicloud.appkey']}")
     private String APPKEY;
-    @Value("${hcicloud.devkey}")
+    @Value("#{hciSetting['hcicloud.devkey']}")
     private String DEVKEY;
-    @Value("${hcicloud.url}")
+    @Value("#{hciSetting['hcicloud.url']}")
     private String SERVER_URL;
     private static final  byte[] WAVHEAD8K = {82, 73, 70, 70, 2, 70, 0, 0, 87, 65, 86, 69, 102, 109, 116, 32, 16, 0, 0, 0, 1, 0, 1, 0, 64, 31, 0, 0, -128, 62, 0, 0, 2, 0, 16, 0, 100, 97, 116, 97, -34, 69, 0, 0};
     @Autowired

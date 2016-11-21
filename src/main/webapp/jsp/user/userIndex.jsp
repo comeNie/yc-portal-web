@@ -35,7 +35,7 @@
 						</div>
 						<div class="right-title-left-word">
 							<ul>
-								<li class="word-red">大脸盼爱大脸</li>
+								<li class="word-red">${sessionScope.user_session_key.username}</li>
 								<li class="c-red">存在风险</li>
 							</ul>
 							<ul>

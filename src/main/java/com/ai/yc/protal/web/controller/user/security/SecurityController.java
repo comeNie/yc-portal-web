@@ -38,8 +38,12 @@ import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckeMobileRequest;
 import com.ai.yc.ucenter.api.members.param.editemail.UcMembersEditEmailRequest;
 import com.ai.yc.ucenter.api.members.param.editmobile.UcMembersEditMobileRequest;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
+import com.ai.yc.user.api.userservice.param.SearchYCTranslatorRequest;
 import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
+import com.ai.yc.user.api.userservice.param.YCLSPInfoReponse;
+import com.ai.yc.user.api.userservice.param.YCTranslatorInfoResponse;
 import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
+import com.ai.yc.user.api.userservice.param.searchYCLSPInfoRequest;
 import com.alibaba.fastjson.JSON;
 
 /**
@@ -73,9 +77,54 @@ public class SecurityController {
 			balance = balanceInfo.getBalance();
 		}
 		modelView.addObject("balance", balance);
+        String userId = UserUtil.getUserId();
+        modelView.addObject("userId", userId);
+		// 查询译员信息
+		IYCUserServiceSV iycUserServiceSV = DubboConsumerFactory
+				.getService(IYCUserServiceSV.class);
+		SearchYCTranslatorRequest ycReq = new SearchYCTranslatorRequest();
+		ycReq.setUserId(userId);
+		YCTranslatorInfoResponse ycRes = null;
+		try {
+			ycRes = iycUserServiceSV.searchYCTranslatorInfo(ycReq);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
+		ResponseHeader resHeader = ycRes == null ? null : ycRes
+				.getResponseHeader();
+		if (resHeader != null && resHeader.isSuccess()) {
+			modelView.addObject("interperInfo", ycRes);
+		} else {
+			LOG.error("获取译员信息: " + JSON.toJSONString(ycRes));
+
+		}
 		return modelView;
 	}
-
+	@RequestMapping("/queryLspInfo")
+	@ResponseBody
+	public ResponseData<Object> queryLspInfo(@RequestParam("lspId") String lspId) {
+		searchYCLSPInfoRequest req = new searchYCLSPInfoRequest();
+		Object data = null;
+		req.setLspId(lspId);
+		YCLSPInfoReponse res =null;
+		String status = ResponseData.AJAX_STATUS_SUCCESS;
+		String msg ="ok";
+		try {
+			res= DubboConsumerFactory.getService(IYCUserServiceSV.class).searchLSPInfo(req);
+			ResponseHeader responseHeader =res==null?null:res.getResponseHeader();
+			if(responseHeader!=null&&responseHeader.isSuccess()){
+				data = res.getUsrLspList();
+			}else{
+				msg = responseHeader==null?"ok":responseHeader.getResultMessage();
+			}
+		} catch (Exception e) {
+			status = ResponseData.AJAX_STATUS_FAILURE;
+			 msg ="error";
+			 LOG.error("获取lsp信息: " ,e);
+		}
+		
+		return new ResponseData<Object>(status, msg, data);
+	}
 	@RequestMapping("/index")
 	public ModelAndView toIndex() {
 		ModelAndView modelView = new ModelAndView(INDEX);
@@ -85,6 +134,7 @@ public class SecurityController {
 			balance = balanceInfo.getBalance();
 		}
 		modelView.addObject("balance", balance);
+
 		return modelView;
 	}
 
@@ -92,9 +142,9 @@ public class SecurityController {
 	@ResponseBody
 	public AccountBalanceInfo queryBalanceInfo() {
 		AccountBalanceInfo balanceInfo = null;
-		;
+
 		try {
-			balanceInfo = balanceService.queryOfUser();
+			balanceInfo = balanceService.queryOfUser(UserUtil.getUserId());
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}
@@ -124,17 +174,19 @@ public class SecurityController {
 
 	@RequestMapping("/orderStatusCount")
 	@ResponseBody
-	public Map<String, Integer> orderStatusCount(@RequestParam("statusList") String statusList) {
+	public Map<String, Integer> orderStatusCount(
+			@RequestParam("statusList") String statusList) {
 		Map<String, Integer> countMap = new HashMap<>();
 		// 查询 订单数量
-		if(statusList!=null&&statusList.length()>0){
-			for(String status:statusList.split(",")){
+		if (statusList != null && statusList.length() > 0) {
+			for (String status : statusList.split(",")) {
 				int count = queryOrderStatusCount(status);
 				countMap.put(status, count);
 			}
 		}
 		return countMap;
 	}
+
 	@RequestMapping("seccenter")
 	public ModelAndView init() {
 		if (LOG.isDebugEnabled()) {

@@ -160,7 +160,8 @@
 		"phone_registered" : '<spring:message code="ycregister.register.phone" />',
 		"email_registered" : '<spring:message code="ycregister.register.email" />',
 		"sms_code_empty":'<spring:message code="ycregisterMsg.smsEmpty"/>',
-		"sms_code_error":'<spring:message code="ycregisterMsg.smsError"/>'
+		"sms_code_error":'<spring:message code="ycregisterMsg.smsError"/>',
+		"getDynamiCode":'<spring:message code="ycregister.getDynamiCode"/>'
 	};
 </script>
 

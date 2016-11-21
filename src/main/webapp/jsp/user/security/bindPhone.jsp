@@ -68,6 +68,10 @@
 </body>
 <%@ include file="/inc/incJs.jsp"%>
 <script type="text/javascript">
+var phoneBindMsg = {
+		showOkValueMsg	: '<spring:message code="ycaccountcenter.js.showOkValueMsg"/>',
+		showTitleMsg : '<spring:message code="ycaccountcenter.js.showTitleMsg"/>'
+		};
 	var pager;
 	(function() {
 		seajs.use('app/jsp/user/security/bindPhone', function(updatePhonePager) {

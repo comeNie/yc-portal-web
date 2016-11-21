@@ -11,6 +11,9 @@ import com.ai.yc.protal.web.constants.BalanceConstants;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
 import com.ai.yc.protal.web.utils.UserUtil;
+import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
+import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
+import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,20 +28,21 @@ public class BalanceService {
      *
      * @return 若没有余额信息,则返回null
      */
-    public AccountBalanceInfo queryOfUser(){
-        String userId = UserUtil.getUserId();
+    public AccountBalanceInfo queryOfUser(String userId){
         AccountBalanceInfo accountBalanceInfo = null;
         //获取当前用户
-        /* TODO... 等待获取用户账号
+        /* TODO... 等待获取用户账号*/
         IYCUserServiceSV userServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
         SearchYCUserRequest searchYCUserReq = new SearchYCUserRequest();
         searchYCUserReq.setTenantId(Constants.DEFAULT_TENANT_ID);
         searchYCUserReq.setUserId(userId);
         YCUserInfoResponse userInfoResponse = userServiceSV.searchYCUserInfo(searchYCUserReq);
         //若没有账户信息,直接返回null
-        */
+        if (userInfoResponse==null||userInfoResponse.getAccountId()==null){
+            return null;
+        }
         //用户账户
-        long accountId = 11531l;
+        long accountId = userInfoResponse.getAccountId();
 
         //查询用户余额
         IFundQuerySV fundQuerySV = DubboConsumerFactory.getService(IFundQuerySV.class);
