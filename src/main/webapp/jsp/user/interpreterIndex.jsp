@@ -26,7 +26,11 @@
   	<!--右侧内容-->
   	<!--右侧大块-->
   	<div class="right-wrapper">	
-  		<!--右侧第一块-->
+  	<input id="interperId" name="interperId" type="hidden" value="${interperInfo.userId}"/>
+  	<input id="lspId"  name="lspId" type="hidden" value="${interperInfo.lspId}"/>
+  	<input id="lspRole"  name="lspRole" type="hidden" value="${interperInfo.lspRole}"/>
+  	<input id="userId"  name="userId" type="hidden" value="${userId}"/>
+	<!--右侧第一块-->
   		<div class="right-title">
   			<div class="right-title-left">
   				<div class="right-title-left-tu"><img src="${uedroot}/images/icon1.jpg"></div>
@@ -36,7 +40,7 @@
 	  					<li class="c-red">存在风险</li>
 	  				</ul>
 	  				<ul>
-	  					<li class="bule">LSP团队名称</li>
+	  					<li class="bule" id="lspName"></li>
 	  				</ul>
 	  				<ul class="word-li">
 	  					<li>
@@ -54,13 +58,13 @@
   			</div>
   			<div class="right-title-right">
   				<p>
-  					<a href="#">
+  					<a href="javascript:void(0);">
   					<span class="tp1"></span>
   					<span>已领取<b id="receiveCount">0</b></span>
   					</a>
   				</p>
   				<p>
-  					<a href="#">
+  					<a href="javascript:void(0);">
   					<span class="tp2"></span>
   					<span>翻译中<b id="translateCount">0</b></span>
   					</a>
