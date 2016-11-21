@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title><spring:message code="pay.order.payment"/> </title>
+    <title><spring:message code="pay.order.payment"/></title>
 	<%@ include file="/inc/inc.jsp" %>
 </head>
 <body>
@@ -107,15 +107,17 @@
 							<%--<p><input type="text" class="int-text int-in-300 radius" placeholder="请输入会场数量"></p>--%>
 						<%--</li>--%>
 					</ul>
+					<c:set var="isEn" value="<%=Locale.US.equals(response.getLocale())%>"/>
 					<ul>
 						<li class="none-ml line-none line-20">
 							<%--订单金额--%>
 							<p class="word"><spring:message code="pay.order.amount.title"/></p>
 							<%--金额--%>
 							<p><spring:message code="pay.order.amount.order"/>：<c:if
-									test="${orderFee.currencyUnit == '2'}">$</c:if><fmt:formatNumber
+									test="${orderFee.currencyUnit == '2'}">$</c:if><c:if
+									test="${orderFee.currencyUnit == '1' && isEn==true}">¥</c:if><fmt:formatNumber
 									value="${orderFee.totalFee/1000}" pattern="#,##0.00#"/><c:if
-									test="${orderFee.currencyUnit == '1'}">元</c:if></p>
+									test="${orderFee.currencyUnit == '1' && isEn!=true}">元</c:if></p>
 						</li>
 						<%--<li class="line-none line-20">--%>
 						<%--<p class="word">&nbsp;</p>--%>
@@ -125,9 +127,10 @@
 							<p class="word">&nbsp;</p>
 							<%--应付金额--%>
 							<p><spring:message code="pay.order.payable.order"/>：<c:if
-									test="${orderFee.currencyUnit == '2'}">$</c:if><span><fmt:formatNumber
+									test="${orderFee.currencyUnit == '2'}">$</c:if><c:if
+									test="${orderFee.currencyUnit == '1' && isEn==true}">¥</c:if><span><fmt:formatNumber
 									value="${orderFee.totalFee/1000}" pattern="#,##0.00#"/></span><c:if
-									test="${orderFee.currencyUnit == '1'}">元</c:if></p>
+									test="${orderFee.currencyUnit == '1'&& isEn!=true}">元</c:if></p>
 						</li>
 					</ul>
 				</div>
@@ -155,9 +158,12 @@
 							<ul payType="YE" class="none-ml">
 								<li class="payment-balance">
 									<%--账户余额--%>
-									<p><spring:message code="pay.order.account.balance"/> </p>
-									<p class="word">支付余额：<fmt:formatNumber
-											value="${balanceInfo.balance/1000}" pattern="#,##0.00#"/>元</p>
+									<p><spring:message code="pay.order.account.balance"/></p>
+							<%--支付余额--%>
+									<p class="word"><spring:message code="pay.order.pay.balance" />：<c:if
+											test="${isEn==true}">¥</c:if><fmt:formatNumber
+											value="${balanceInfo.balance/1000}" pattern="#,##0.00#"/><c:if
+											test="${isEn!=true}">元</c:if></p>
 								</li>
 							</ul>
 							<%--余额支付--%>
