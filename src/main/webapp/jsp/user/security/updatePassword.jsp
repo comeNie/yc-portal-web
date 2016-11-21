@@ -338,7 +338,10 @@
 
 <script type="text/javascript">
     var updatePasswordMsg ={
-    		"sendEmailCode":'<spring:message code="ycaccountcenter.updatePassword.sendEmailCode"/>'
+    		"sendEmailCode":'<spring:message code="ycaccountcenter.updatePassword.sendEmailCode"/>',
+    		"dynamicCodeEmpty":'<spring:message code="ycaccountcenter.updatePassword.dynamicCodeEmpty"/>',
+    		"showOkValueMsg" : '<spring:message code="ycaccountcenter.js.showOkValueMsg"/>',
+    		"showTitleMsg" : '<spring:message code="ycaccountcenter.js.showTitleMsg"/>'
     };
 	var phone = "${user.mobile}";
 	var email = "${user.email}";

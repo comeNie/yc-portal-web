@@ -144,7 +144,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
         _emailNext1:function(){
         	var emailIdentifyCode = $("#emailIdentifyCode").val();
 			if($.trim(emailIdentifyCode)==""){
-				this._showMsg("请输入动态码");
+				this._showMsg(updatePasswordMsg.dynamicCodeEmpty);
 				return;
 			}
 			var _this = this;
