@@ -6,6 +6,8 @@ public final class Constants {
 	}
 	/** 默认缓存命名空间 */
 	public static final String DEFAULT_YC_CACHE_NAMESPACE = "com.ai.yc.protal.web.default.cache";
+	/** 公共缓存命名空间*/
+	public static final String DEFAULT_COMMON_CACHE_NAMESPACE = "com.ai.yc.common.default.cache";
 	public static final java.lang.String SUCCESS_CODE = "000000";
 
 	public static final String ERROR_CODE = "111111";

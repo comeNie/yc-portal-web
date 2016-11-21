@@ -80,7 +80,7 @@ public class OrderController {
      */
     @RequestMapping("/create/text")
     public String createTextView(Model uiModel, String selPurpose){
-        uiModel.addAttribute("duadList", cacheServcie.getAllDuad(rb.getDefaultLocale()));
+        uiModel.addAttribute("duadList", cacheServcie.getAllDuad(rb.getDefaultLocale(),CacheKey.OrderType.ORDER_TYPE_DOC));
         uiModel.addAttribute("domainList", cacheServcie.getAllDomain(rb.getDefaultLocale()));
         uiModel.addAttribute("purposeList", cacheServcie.getAllPurpose(rb.getDefaultLocale()));
         uiModel.addAttribute("selPurpose",selPurpose);
@@ -94,32 +94,7 @@ public class OrderController {
      */
     @RequestMapping("/create/oral")
     public String createOralView(Model uiModel){
-        List<SysDuad> duadList = new ArrayList<SysDuad>();
-        String duadStr;
-        
-        //TODO 暂时关闭
-        /*ICacheClient iCacheClient = AiPassUitl.getCacheClient();
-        if (rb.getDefaultLocale().getLanguage().equals(Locale.SIMPLIFIED_CHINESE)) {
-            duadStr = iCacheClient.get(CacheKey.CN_DUAD_KEY);
-        } else {
-            duadStr = iCacheClient.get(CacheKey.EN_DUAD_KEY);
-        }
-        duadList = JSONObject.parseArray(duadStr, SysDuad.class);*/
-        
-        //模拟数据
-        SysDuad sysDuad = new SysDuad();
-        sysDuad.setDuadId("1");
-        sysDuad.setLanguage("zh");
-        sysDuad.setOrderType("2"); //口译类型
-        sysDuad.setLanguage("zh");
-        sysDuad.setSourceCn("中文");
-        sysDuad.setSourceEn("zh");
-        sysDuad.setTargetCn("英文");
-        sysDuad.setTargetEn("en");
-        duadList.add(sysDuad);
-        duadList.add(sysDuad);
-        
-        uiModel.addAttribute("duadList", duadList);
+        uiModel.addAttribute("duadList", cacheServcie.getAllDuad(rb.getDefaultLocale(),CacheKey.OrderType.ORDER_TYPE_ORAL));
         return "order/createOralOrder";
     }
     

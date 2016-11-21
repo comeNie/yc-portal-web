@@ -19,6 +19,18 @@ public final class OrderConstants {
     //用户类型 代理人
     public static final String USER_TYPE_AGENT = "12";
 
+    private static class ErrorCode{
+        private ErrorCode(){}
+
+        /**
+         * 订单领取到达上限
+         */
+        public static final String NUM_MAX_LIMIT = "100001";
+        /**
+         * 订单已被领取
+         */
+        public static final String ALREADY_CLAIM = "100002";
+    }
     /**
      * 客户端显示状态
      */

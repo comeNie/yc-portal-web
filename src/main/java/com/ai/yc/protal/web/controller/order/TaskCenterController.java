@@ -115,10 +115,10 @@ public class TaskCenterController {
                 Timestamp date =DateUtil.getTimestamp(dateTmp,DateUtil.DATETIME_FORMAT,timeZone);
                 orderReq.setEndStateTime(date);
             }
-//            IOrderWaitReceiveSV iOrderQuerySV = DubboConsumerFactory.getService(IOrderWaitReceiveSV.class);
-//            OrderWaitReceiveSearchResponse orderRes = iOrderQuerySV.pageSearchWaitReceive(orderReq);
+            IOrderWaitReceiveSV iOrderQuerySV = DubboConsumerFactory.getService(IOrderWaitReceiveSV.class);
+            OrderWaitReceiveSearchResponse orderRes = iOrderQuerySV.pageSearchWaitReceive(orderReq);
             //TODO... 模拟数据
-            OrderWaitReceiveSearchResponse orderRes = new OrderWaitReceiveSearchResponse();
+            /*OrderWaitReceiveSearchResponse orderRes = new OrderWaitReceiveSearchResponse();
             PageInfo<OrderWaitReceiveSearchInfo> pageInfo = new  PageInfo<OrderWaitReceiveSearchInfo>();
             pageInfo.setCount(200);
             pageInfo.setPageCount(20);
@@ -137,7 +137,7 @@ public class TaskCenterController {
             searchInfo.setTakeTime("2");
             orderLisst.add(searchInfo);
             pageInfo.setResult(orderLisst);
-            orderRes.setPageInfo(pageInfo);
+            orderRes.setPageInfo(pageInfo);*/
 
             ResponseHeader resHeader = orderRes==null?null:orderRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息,返回失败
@@ -176,7 +176,7 @@ public class TaskCenterController {
         baseInfo.setLspId(lspId);
         baseInfo.setLockTime(DateUtil.getFutureTime());
         receiveRequest.setBaseInfo(baseInfo);
-        /*try {
+        try {
             IOrderReceiveSV iOrderReceiveSV = DubboConsumerFactory.getService(IOrderReceiveSV.class);
             OrderReceiveResponse receiveResponse = iOrderReceiveSV.orderReceive(receiveRequest);
             ResponseHeader header =receiveResponse==null?null:receiveResponse.getResponseHeader();
@@ -191,7 +191,7 @@ public class TaskCenterController {
             LOGGER.error("Claim order is fail",e);
             //领取失败
             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,rb.getMessage(""));
-        }*/
+        }
         return responseData;
     }
 }
