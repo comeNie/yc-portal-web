@@ -360,6 +360,12 @@ pre ol.linenums li {
 .btn-primary-hollow:focus,
 .btn-primary-hollow:active,
 .btn-primary-hollow.active{color:#333;border-color:#c7c7c7}
+/**边框按钮蓝色**/
+.border-white{border:2px solid #fff;background:none;color:#fff;font-size:18px;}
+.border-white:hover{border:2px solid #2361ea;background:#2361ea;color:#fff;}
+/**边框按钮蓝色无背景**/
+.card-border-blue{border:2px solid #2361ea;background:none;color:#2965e6;font-size:18px}
+.card-border-blue:hover{background:#2361ea;color:#fff;}
 /**边框按钮默认**/
 .border-default{border:1px solid #c7c7c7;background:#fff;}
 .border-default:hover{background:#c7c7c7;}
@@ -400,15 +406,17 @@ pre ol.linenums li {
 .login-btn{width:340px;height:44px;font-size:18px}
 .btn-280{width:116px;height:44px;}
 .btn-415{width:420px;height:44px;font-size:18px}
-.btn-80{width:80px;height:25px;font-size:12px;color:#2965e6;border:1px solid #2361ea}
+.btn-80{width:80px;height:25px;font-size:12px;color:#2965e6;border:1px solid #2361ea;}
 .btn-50{width:50px;height:25px;font-size:12px;color:#2965e6;border:1px solid #2361ea}
 .btn-trans{width:80px;height:26px;font-weight:normal;}
 .btn-trans-b{width:80px;height:26px;font-weight:normal;border:1px solid #2361ea;color:#2965e6}
 .trans-btn-zh{width:104px;height:37px;}
-.place-btn{width:132px;height:40px;font-size:18px;color:#fff;margin-top:50px;-webkit-box-shadow: #3292f8 0px 0px 6px;-moz-box-shadow: #3292f8 0px 0px 6px;box-shadow: #3292f8 0px 0px 6px;margin-left:24px;}
-.place-btn-none{width:132px;height:40px;font-size:18px;margin-top:45px;color:#2965e6}
+.place-btn{width:132px;height:40px;font-size:18px;color:#fff;margin-top:45px;-webkit-box-shadow: #3292f8 0px 0px 6px;-moz-box-shadow: #3292f8 0px 0px 6px;box-shadow: #3292f8 0px 0px 6px;margin-left:5px;}
+.place-btn-none{width:132px;height:40px;font-size:18px;margin-top:50px;margin-left:20px;color:#2965e6}
+.btn-230{width:236px;height:50px;}
+.btn-168{width:168px;height:50px;}
 /************************表单************************/
-.int-text{border:1px solid #e6e6e6;background:#fff; outline:none;line-height:26px;color:#6a6c6f;font-size:14px;}
+.int-text{border:1px solid #e6e6e6;background:#fff; outline:none;line-height:26px;color:#6a6c6f;font-size:14px;resize:none;}
 .int-text:hover{border:1px solid #52dc90;}
 .int-mini{width:102px;height:26px;padding:0 20px;line-height:26px;font-size:12px}
 .int-small{width:105px;height:26px;padding:0 10px;line-height:26px;font-size:12px;}
@@ -439,8 +447,8 @@ pre ol.linenums li {
 .int-red:hover{width:1140px;height:44px;padding:0 20px;border:1px solid #fe6b6b}
 .int-in-250{width:250px;height:44px;padding:0 20px;line-height:44px;}
 .int-in-300{width:250px;height:44px;padding:0 20px;line-height:44px;}
-.int-before{width:100%;height:198px;outline:none;line-height:22px;color:#666;word-break:break-all;font-size:14px;border-radius:3px;}
-.int-post{width:100%;height:166px;outline:none;line-height:22px;color:#666;word-break:break-all;font-size:14px;border-radius:3px;}
+.int-before{width:100%;height:198px;outline:none;line-height:22px;color:#666;word-break:break-all;font-size:14px;border-radius:3px;resize:none;}
+.int-post{width:100%;height:166px;outline:none;line-height:22px;color:#666;word-break:break-all;font-size:14px;border-radius:3px;resize:none;}
 .text-150{width:100%;height:150px;padding:0 10px 0 10px;line-height:28px;}
 /************************checkbox************************/
 .skin-minimal .checkbox-1,.checkbox-2,.checkbox-disabled,.checkbox-disabled-checked{width:16px;height:16px;float:left}

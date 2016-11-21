@@ -154,7 +154,7 @@
 				{{if  displayFlag == '11'}}
 					<!-- 剩余2天23小时59分钟  待支付-->
     				<p class="right"><spring:message
-                                    code="myOrder.Remaining" arguments="1,2,3"/></p>
+                                    code="myOrder.Remaining" arguments="{{:payTakeDays}},{{:payTakeHours}},{{:payTakeMinutes}}"/></p>
 				{{/if}}
 				{{if  displayFlag == '50'}}
 					<!-- 剩余2天23小时59分钟   待确认-->
@@ -185,11 +185,11 @@
 			{{if displayFlag == '13'}}
 				<td>————</td>
 			{{else }}
-           		 <td>{{:~liToYuan(totalFee)}}
+           		 <td>
 					{{if  currencyUnit == '1'}}
-						<spring:message code="myOrder.rmb"/>
+						<spring:message code="myOrder.rmbSame" arguments="{{:~liToYuan(totalFee)}}" />
 					{{else }}
-						<spring:message code="myOrder.dollar"/>
+						<spring:message code="myOrder.dollarSame" arguments="{{:~liToYuan(totalFee)}}" />
 					{{/if}}
 				</td>
 			{{/if}}

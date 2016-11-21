@@ -171,11 +171,14 @@
 .confirmation-list{width:100%;float:left;margin:20px 0 0 0;}
 .confirmation-list ul{width:100%;float:left;margin-bottom:10px;}
 .confirmation-list ul li{float:left;line-height:25px;}
-.confirmation-list ul .title{width:80px;padding-left:20px;float:left;color:#2c3e50;font-weight:bold;}
+.confirmation-list ul .title{width:80px;padding-left:20px;float:left;color:#2c3e50;font-weight:bold;display: block;}
+.confirmation-list ul .ml-80{margin-left:80px;}
 .confirmation-list ul .word{width:790px;word-wrap:break-word;}
 .confirmation-list ul .word a{font-size:12px;color:#2361ea;margin-left:4px;}
 .confirmation-list ul .right{float:right}
 .confirmation-list ul .right .btn{float:right;margin-left:20px;}
+.confirmation-list p{ padding-left:80px;position:relative;float:left}
+.confirmation-list p .fany-file{width:80px;height:25px;position:absolute;left:80px;top:0;background:#000;filter:alpha(opacity=0);-moz-opacity:0;-khtml-opacity:0;opacity: 0;}
 .info-center{width:100%;float:left;text-align:center;margin-top:20px;}
 .tracking-list{width:100%;float:left;margin-top:20px;}
 .tracking-list ul li{width:100%;float:left;line-height:28px;padding-left:20px;}
@@ -447,3 +450,101 @@
 .fourhundred{width:100%;margin:0 auto;text-align: center;}
 /****/
 .limit-height{height:250px;}
+/**下单指南**/
+.static-body{background:#fff;}
+.place-baner{width:100%;height:418px;float:left;background:url(../../images/place-banner.jpg) no-repeat center;min-width:1200px;text-align: center;}
+.place-list{width:1200px;margin:0 auto;}
+.place-list ul{width:630px;margin:0 auto;margin-top:115px;}
+.place-list ul li{width:100%;float:left;}
+.place-list ul li p{float:left;color:#fff;}
+.place-list ul li p span{width:100%;float:left;font-size:18px}
+.place-list ul li .word{width:350px;float:left;margin:0 20px;}
+.place-list ul li .word .large{font-size:30px}
+.place-list ul li .line{float:left;margin-top:40px;}
+.place-list ul .pacbtn{float:left;margin-top:100px;}
+
+.static-wrapper{width:1200px;margin:0 auto;}
+.static-title{width:100%;float:left;margin-top:60px;color:#2c3e50;font-size:24px;text-align:center;}
+.static-title .line{width:58px;height:4px;float:left;background:#2965e6;margin:10px 0 0 578px;}
+.static-title .line1{width:58px;height:4px;float:left;background:#2965e6;margin:10px 0 0 572px;}
+.static-tab{width:100%;float:left;margin:30px 0 0 0;padding:0 0 0 135px;}
+.static-tab ul{width:100%;float:left}
+.static-tab ul li{float:left;width:150px;text-align: center;}
+.static-tab ul li a{margin-bottom:15px;width:150px;float:left;height:150px;}
+.static-tab ul li .word{color:#2c3e50;}
+.static-tab ul .current .word-font{color:#2965e6;font-weight:bold;}
+.static-tab ul .current a{width:150px;height:150px;float:left;background:url(../../images/yuanq.jpg) no-repeat;
+}
+.static-tab ul .icon1{width:70px;height:70px;background:url(../../images/icon-big.png) no-repeat -78px -503px;margin:40px 0 0 40px;}
+.static-tab ul .icon2{width:70px;height:70px;background:url(../../images/icon-big.png) no-repeat -78px -585px;margin:40px 0 0 40px;}
+.static-tab ul .icon3{width:70px;height:70px;background:url(../../images/icon-big.png) no-repeat -168px -503px;margin:40px 0 0 40px;}
+.static-tab ul .icon4{width:70px;height:70px;background:url(../../images/icon-big.png) no-repeat -168px -585px;margin:40px 0 0 40px;}
+.static-tab ul .icon5{width:70px;height:70px;background:url(../../images/icon-big.png) no-repeat -258px -503px;margin:40px 0 0 40px;}
+.static-tab ul .icon6{width:70px;height:70px;background:url(../../images/icon-big.png) no-repeat -258px -585px;margin:40px 0 0 40px;}
+.static-tab ul .icon7{width:70px;height:70px;background:url(../../images/icon-big.png) no-repeat -348px -503px;margin:40px 0 0 40px;}
+.static-tab ul .icon8{width:70px;height:70px;background:url(../../images/icon-big.png) no-repeat -348px -585px;margin:40px 0 0 40px;}
+.static-tab ul .icon9{width:70px;height:70px;background:url(../../images/icon-big.png) no-repeat -76px -708px;margin:40px 0 0 40px;}
+.static-tab ul .icon10{width:70px;height:70px;background:url(../../images/icon-big.png) no-repeat -76px -786px;margin:40px 0 0 40px;}
+.static-tab ul .icon11{width:70px;height:70px;background:url(../../images/icon-big.png) no-repeat -165px -708px;margin:40px 0 0 40px;}
+.static-tab ul .icon12{width:70px;height:70px;background:url(../../images/icon-big.png) no-repeat -165px -786px;margin:40px 0 0 40px;}
+
+.static-tab .line{width:58px;height:19px;background:url(../../images/icon-big.png) no-repeat -80px -677px;float:left;margin:62px 32px 0 32px;}
+.static-tab .line1{width:58px;height:19px;background:url(../../images/icon-big.png) no-repeat -165px -677px;float:left;margin:62px 32px 0 32px;}
+
+.static-list{width:947px;float:left;height:180px;background:#f5f7fb;margin:40px 0 40px 135px;}
+.static-list ul{width:100%;float:left;padding:40px 60px;}
+.static-list ul li{color:#2c3e50;font-size:14px;margin-bottom:10px;line-height:26px;}
+.static-list ul .word{font-size:18px;font-weight:bold;}
+.static-list ul .word span{color:#2965e6}
+#st2{display:none;}
+#st3{display:none;}
+#st4{display:none;}
+/**译者认证**/
+.card-banner{width:100%;height:418px;float:left;background:url(../../images/card-banner.jpg) no-repeat center;min-width:1200px;text-align: center;}
+.card-list{width:1200px;margin:0 auto;}
+.card-list ul{width:630px;margin:0 auto;margin-top:115px;}
+.card-list ul li{width:100%;float:left;font-size:18px;color:#2c3e50;text-indent:2em;}
+.card-list ul li span{font-size:30px;color:#2c3e50;margin-bottom:10px;}
+.card-list ul .pacbtn{margin-top:100px;}
+.card-tab{width:100%;float:left;margin:30px 0 0 0;padding:0 0 0 260px;}
+/**合作客户**/
+.cooperation-banner{width:100%;height:418px;float:left;background:url(../../images/hez-banner.jpg) no-repeat center;min-width:1200px;}
+.cooperation-big{width:1200px;margin:0 auto;}
+.cooperation-title{width:100%;float:left;font-size:26px;color:#fff;text-align:right; padding:60px 140px 0 0 ;}
+.cooperation-list{width:900px;height:120px;float:left;margin-top:50px;margin-left:160px; overflow: hidden; }
+.cooperation-list ul{width:900px;float:left;height:120px;}
+.cooperation-list ul li{width:900px;line-height:25px;display: inline-block;}
+.cooperation-list ul li p{margin-top:10px;}
+.cooperation-list ul .img-icon{width:120px;height:120px;float:left;}
+.cooperation-list ul .img-icon img{width:120px;height:120px;border-radius:50%;border:1px solid #7d92bb;padding:5px;}
+.cooperation-list ul .word{width:730px;margin-left:36px;color:#fff;font-size:14px;display: inline-block;}
+.cooperation-list ul .word .bigword{font-size:18px;font-weight:bold;}
+.cooperation-icon{width:100%;text-align:center;margin-top:70px;display: inline-block;}
+.cooperation-logo{width:1200px;float:left;padding:0 37px;margin:55px 0 40px 0;}
+.cooperation-logo ul{width:100%;float:left;}
+.cooperation-logo ul li{width:225px;float:left;height:146px;line-height:;}
+.cooperation-logo ul li a{width:225px;float:left;height:146px;color:#2965e6}
+.cooperation-logo ul .bj{background:#f3f6fb;}
+.cooperation-logo ul li p{}
+.cooperation-logo ul .c-icon1{width:98px;height:46px;background:url(../../images/icon-big.png) no-repeat -170px -1130px;margin:50px auto;}
+.cooperation-logo ul .c-icon2{width:41px;height:50px;background:url(../../images/icon-big.png) no-repeat -311px -1130px;margin:50px auto;}
+.cooperation-logo ul .c-icon3{width:111px;height:39px;background:url(../../images/icon-big.png) no-repeat -382px -1130px;margin:55px auto;}
+.cooperation-logo ul .c-icon4{width:92px;height:52px;background:url(../../images/icon-big.png) no-repeat -513px -1125px;margin:45px auto;}
+.cooperation-logo ul .c-icon5{width:150px;height:44px;background:url(../../images/icon-big.png) no-repeat -165px -1207px;margin:55px auto;}
+.cooperation-logo ul .c-icon6{width:108px;height:32px;background:url(../../images/icon-big.png) no-repeat -347px -1207px;margin:60px auto;}
+.cooperation-logo ul .c-icon7{width:114px;height:40px;background:url(../../images/icon-big.png) no-repeat -502px -1207px;margin:60px auto;}
+.cooperation-logo ul .c-icon8{width:49px;height:53px;background:url(../../images/icon-big.png) no-repeat -166px -1276px;margin:45px auto;}
+.cooperation-logo ul .c-icon9{width:130px;height:34px;background:url(../../images/icon-big.png) no-repeat -254px -1276px;margin:60px auto;}
+.cooperation-logo ul .c-icon10{width:160px;height:20px;background:url(../../images/icon-big.png) no-repeat -409px -1275px;margin:65px auto;}
+.cooperation-logo ul .c-icon11{width:125px;height:27px;background:url(../../images/icon-big.png) no-repeat -163px -1360px;margin:65px auto;}
+.cooperation-logo ul .c-icon12{width:57px;height:50px;background:url(../../images/icon-big.png) no-repeat -331px -1360px;margin:50px auto;}
+.cooperation-logo ul .c-icon13{width:160px;height:27px;background:url(../../images/icon-big.png) no-repeat -409px -1360px;margin:65px auto;}
+.cooperation-logo ul .c-icon14{width:132px;height:21px;background:url(../../images/icon-big.png) no-repeat -164px -1436px;margin:65px auto;}
+.cooperation-logo ul .c-icon15{margin:55px 0 0 90px;font-size:30px}
+/**关于我们**/
+.about-banner{width:100%;height:418px;float:left;background:url(../../images/about-banner.jpg) no-repeat center;min-width:1200px;}
+.about-list{width:1200px;margin:0 auto;}
+.about-list ul{width:630px;margin:0 auto;margin-top:115px;}
+.about-list ul li{width:100%;float:left;text-align: center;}
+.about-list ul .word{font-size:32px;color:#fff}
+.about-list ul .pacbtn{margin-top:90px;}

@@ -141,7 +141,7 @@ public class CustomerOrderController {
         String stateListStr = request.getParameter("stateListStr"); //后台、译员 订单状态
         String lspRole = request.getParameter("lspRole"); //译员角色
         try {
-                //如果是管理员和经理,只传lspId 用户、译员id不传。
+
             if ("12".equals(lspRole) || "11".equals(lspRole)) {
                 orderReq.setInterperId(null);
                 orderReq.setUserId(null);
