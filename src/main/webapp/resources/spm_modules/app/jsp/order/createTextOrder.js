@@ -7,6 +7,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 
     require("jquery-validation/1.15.1/jquery.validate");
 	require("app/util/aiopt-validate-ext");
+	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');	
     var CountWordsUtil = require("app/util/countWords");
     
     //实例化AJAX控制处理对象
@@ -44,6 +45,14 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			this._transPrice();
 			this._globalRome();
 			this._initPage();
+			
+			//初始化国际化
+			$.i18n.properties({//加载资浏览器语言对应的资源文件
+				name: ["orderInfo"], //资源文件名称，可以是数组
+				path: _i18n_res, //资源文件路径
+				mode: 'both',
+				language: currentLan,
+			});
     	},
         
         _initValidate:function(){
@@ -296,9 +305,9 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 					if ("1" === data.statusCode) {
 						var unit;
 						if (data.data.currencyUnit === "1")
-							unit = "元";
+							unit = $.i18n.prop('order.yuan');
 						else
-							unit = "$";
+							unit = $.i18n.prop('order.meiyuan');
 						$("#price").html("<span>"+ data.data.price +"</span>"+ unit);
 					}
 				}
@@ -346,7 +355,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
         		if (val ==  $(".dropdown .selected").attr('value')) {
         			var selected = $(this);
 
-        			var currency;
         			var ordinary = selected.attr("ordinary");
         			var ordinaryUrgent = selected.attr("ordinaryUrgent");
         			var professional = selected.attr("professional");
@@ -354,14 +362,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
         			var publish = selected.attr("publish");
         			var publishUrgent = selected.attr("publishUrgent");
         			
-        			if (currentLan.indexOf("zh") >= 0) {
-        				currency = "元";
-        			} else {
-        				currency = "美元";
-        			}
-        			
         			if ($("#urgentOrder").is(':checked') ) {
-        				$("#stanPrice").html(professionalUrgent).after(currency);
+        				$("#stanPrice").html(professionalUrgent);
         				$("#proPrice").html(professionalUrgent);
         				$("#pubPrice").html(publishUrgent);
         			} else {
@@ -370,10 +372,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
         				$("#pubPrice").html(publish);
         			}
         			
-        			$("#stanPrice").next('a').html(currency);
-    				$("#proPrice").next('a').html(currency);
-    				$("#pubPrice").next('a').html(currency);
-        		
         		}
             });
 		

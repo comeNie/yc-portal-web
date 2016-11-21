@@ -40,13 +40,20 @@ public class CacheServcie {
         sysDuad.setSourceEn("zh");
         sysDuad.setTargetCn("英文");
         sysDuad.setTargetEn("en");
-        sysDuad.setCurrency("1");
         sysDuad.setOrdinary("100");
         sysDuad.setOrdinaryUrgent("150");
         sysDuad.setProfessional("200");
         sysDuad.setProfessionalUrgent("250");
         sysDuad.setPublish("300");
         sysDuad.setPublishUrgent("350");
+        sysDuad.setOrdinaryDollar("10");
+        sysDuad.setOurgentDollar("20");
+        sysDuad.setProfessionalDollar("30");
+        sysDuad.setPurgentDollar("40");
+        sysDuad.setPublishDollar("50");
+        sysDuad.setPuburgentDollar("60");
+        
+        
         SysDuad sysDuad1 = new SysDuad();
         sysDuad1.setDuadId("1");
         sysDuad1.setLanguage("zh");
@@ -54,13 +61,18 @@ public class CacheServcie {
         sysDuad1.setSourceEn("zh");
         sysDuad1.setTargetCn("英文3");
         sysDuad1.setTargetEn("en");
-        sysDuad1.setCurrency("1");
         sysDuad1.setOrdinary("100");
         sysDuad1.setOrdinaryUrgent("150");
         sysDuad1.setProfessional("200");
         sysDuad1.setProfessionalUrgent("250");
         sysDuad1.setPublish("300");
         sysDuad1.setPublishUrgent("350");
+        sysDuad1.setOrdinaryDollar("10");
+        sysDuad1.setOurgentDollar("20");
+        sysDuad1.setProfessionalDollar("30");
+        sysDuad1.setPurgentDollar("40");
+        sysDuad1.setPublishDollar("50");
+        sysDuad1.setPuburgentDollar("60");
         duadList.add(sysDuad);
         duadList.add(sysDuad1);
         return duadList;

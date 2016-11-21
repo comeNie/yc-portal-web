@@ -79,7 +79,7 @@ public class OrderController {
      * @return
      */
     @RequestMapping("/create/text")
-    public String createTextView(Model uiModel,String selPurpose){
+    public String createTextView(Model uiModel, String selPurpose){
         uiModel.addAttribute("duadList", cacheServcie.getAllDuad(rb.getDefaultLocale()));
         uiModel.addAttribute("domainList", cacheServcie.getAllDomain(rb.getDefaultLocale()));
         uiModel.addAttribute("purposeList", cacheServcie.getAllPurpose(rb.getDefaultLocale()));
@@ -116,7 +116,6 @@ public class OrderController {
         sysDuad.setSourceEn("zh");
         sysDuad.setTargetCn("英文");
         sysDuad.setTargetEn("en");
-        sysDuad.setCurrency("rmb");
         duadList.add(sysDuad);
         duadList.add(sysDuad);
         
@@ -133,7 +132,7 @@ public class OrderController {
     public ResponseData<QueryAutoOfferRes> queryAutoOffer(HttpServletRequest request){
         ResponseData<QueryAutoOfferRes> resData = new ResponseData<QueryAutoOfferRes>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         LOGGER.info(request.getParameter("reqParams"));
-        /*try {
+        try {
             IQueryAutoOfferSV iQueryAutoOfferSV = DubboConsumerFactory.getService(IQueryAutoOfferSV.class);
             QueryAutoOfferReq offerInfo =  JSON.parseObject(request.getParameter("reqParams"), QueryAutoOfferReq.class);;
             QueryAutoOfferRes offerRes = iQueryAutoOfferSV.queryAutoOffer(offerInfo);
@@ -145,11 +144,7 @@ public class OrderController {
         } catch(Exception e) {
             LOGGER.error("系统自动报价:",e);
             resData = new ResponseData<QueryAutoOfferRes>(ResponseData.AJAX_STATUS_FAILURE,rb.getMessage(""));
-        }*/
-        QueryAutoOfferRes offerRes = new QueryAutoOfferRes();
-        offerRes.setCurrencyUnit("1");//币种 1：RMB 2：$
-        offerRes.setPrice(new BigDecimal(100.22));
-        resData.setData(offerRes);
+        }
         return resData;
     }
 

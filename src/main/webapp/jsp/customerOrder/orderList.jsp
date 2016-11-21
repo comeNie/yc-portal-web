@@ -42,7 +42,9 @@
   				</ul>
   			</div>
   			<div id="table-da1">
+  			
   			<form id="orderQuery">
+  			<input id="userId" name="userId" hidden="" type="text" value="${userId}">
   			<div class="oder-form-lable mt-20">
   				<ul>
   					<li class="mb-20">
@@ -88,7 +90,7 @@
   							
   							</select>
   						</p>
-  						<p class="iocn-oder"><input id="translateName" name="translateName" type="text" class="int-text int-medium radius pr-30">
+  						<p class="iocn-oder"><input id="translateName" name="translateName" type="text" maxlength='50' class="int-text int-medium radius pr-30">
   						<i id="submitQuery" href="javaScript:void(0)" class=" icon-search"></i>
   						</p>
   					</li>
