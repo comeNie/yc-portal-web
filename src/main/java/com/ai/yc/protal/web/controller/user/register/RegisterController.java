@@ -93,7 +93,9 @@ public class RegisterController {
 					rb.getMessage("ycregisterMsg.passwordEmpty"), false);
 		}
 		 Object [] checkResult =null;
+		 boolean isPhone = false;
 		if (!StringUtil.isBlank(req.getMobilePhone())) {
+			isPhone = true;
 			checkResult =checkPhoneOrEmail(Register.CHECK_TYPE_PHONE,req.getMobilePhone());
 		}
 		if (!StringUtil.isBlank(req.getEmail())) {
@@ -117,6 +119,9 @@ public class RegisterController {
 				String cacheKey = PictureVerify.VERIFY_IMAGE_KEY
 						+ request.getSession().getId();
 				VerifyUtil.delRedisValue(cacheKey);//清除验证码
+				if(isPhone){//清除手机动态码
+					VerifyUtil.delRedisValue( PhoneVerify.REGISTER_PHONE_CODE + req.getMobilePhone());//清除验证码
+				}
 				sendRegisterEmaial(res.getUserId(), req.getEmail(),res.getOperationcode());
 				return new ResponseData<Boolean>(
 						ResponseData.AJAX_STATUS_SUCCESS, msg, true);

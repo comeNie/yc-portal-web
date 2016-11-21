@@ -6,8 +6,8 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
     	var d = Dialog({
 			content:msg,
 			icon:'fail',
-			okValue: '确 定',
-			title: '提示',
+			okValue: updatePasswordMsg.showOkValueMsg,
+			title: updatePasswordMsg.showTitleMsg,
 			ok:function(){
 				d.close();
 			}
@@ -37,10 +37,10 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
         /*判断邮箱和手机方式*/
         _initUpdateType:function(){
         	if(phone==""){
-        		$("#set-table1").html("<div class='recharge-success mt-40'><ul><li class='word'>未绑定手机，无法验证</li></ul></div>");
+        		$("#set-table1").html("<div class='recharge-success mt-40'><ul><li class='word'>"+updatePasswordMsg.notBindingPhone+"</li></ul></div>");
             }
         	if(email==""){
-        		$("#set-table2").html("<div class='recharge-success mt-40'><ul><li class='word'>未绑定邮箱，无法验证</li></ul></div>");
+        		$("#set-table2").html("<div class='recharge-success mt-40'><ul><li class='word'>"+updatePasswordMsg.notBindingEmail+"</li></ul></div>");
              }
         	if(phone==""&&email!=""){
         		$("#emailVerification").click();
@@ -155,6 +155,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 				data:{
 					email:$("#passwordEmail").html(),
 					code:codeVal,
+					isRemove:'true'
 				},
 		        success: function(json) {
 		        	if(!json.data){
@@ -172,29 +173,33 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 			var password = $("#emailPassword");
 			var passwordVal = password.val();
 			if ($.trim(passwordVal) == "") {
-				$("#emailPasswordErrMsg").show();
-				$("#emailPasswordErrMsg").text("密码不能为空");
-				password.focus();
+				//$("#emailPasswordErrMsg").show();
+				//$("#emailPasswordErrMsg").text("密码不能为空");
+				//password.focus();
+				showMsg(updatePasswordMsg.passwordEmpty);
 				return false;
 			}
 			if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
 					.test(passwordVal)) {
-				$("#emailPasswordErrMsg").text("密码格式错误");
-				$("#emailPasswordErrMsg").show();
-				password.focus();
+				//$("#emailPasswordErrMsg").text("密码格式错误");
+				//$("#emailPasswordErrMsg").show();
+				//password.focus();
+				showMsg(updatePasswordMsg.passwordError);
 				return false;
 			}
 			// 确认密码
 			var confirmPassword = $("#emailConfirmPassword");
 			var confirmPasswordVal = confirmPassword.val();
 			if ($.trim(confirmPasswordVal) == "") {
-				$("#emailPasswordErrMsg").text("确认密码为空");
-				$("#emailPasswordErrMsg").show();
+				//$("#emailPasswordErrMsg").text("确认密码为空");
+				//$("#emailPasswordErrMsg").show();
+				showMsg(updatePasswordMsg.passwordEmpty);
 				return false;
 			}
 			if (confirmPasswordVal != passwordVal) {
-				$("#emailPasswordErrMsg").text("密码不一致");
-				$("#emailPasswordErrMsg").show();
+				//$("#emailPasswordErrMsg").text("密码不一致");
+				//$("#emailPasswordErrMsg").show();
+				showMsg(confirmPasswordError);
 				return false;
 			}
 			ajaxController.ajax({
@@ -206,7 +211,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 				},
 		        success: function(json) {
 		        	if(!json.data){
-		        		alert("保存失败");
+		        		showMsg(json.statusInfo);
 		        		return false;
 		        	}else if(json.data){
 		        		$("#next5").hide();
@@ -214,7 +219,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 		        	}
 		          },
 				error: function(error) {
-						alert("error:"+ error);
+						//alert("error:"+ error);
 					}
 				});
 		},
