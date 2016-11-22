@@ -26,6 +26,9 @@ define('app/jsp/home', function (require, exports, module) {
             "click #playControl": "_text2audio",
 			"click #humanTranBtn":"_goTextOrder",
 			"click .change": "_change",
+			"click #error-oc": "_saveText",
+			"click #preser-close": "_cancelSave",
+			"click #error": "_transError",
         },
 
         //重写父类
@@ -62,13 +65,18 @@ define('app/jsp/home', function (require, exports, module) {
 					text: $("#int-before").val()
 				},
 				success: function (data) {
-					$("#transRes").val(data.data.text);
+					if("1" === data.statusCode) {
+						$("#transRes").val(data.data.text);
 
-					//翻译后的文字超过1000，隐藏播放喇叭
-					if ($("#transRes").val().length > 1000)
-						$("#playControl").hide();
-					else
-						$("#playControl").show();
+						//翻译后的文字超过1000，隐藏播放喇叭
+						if ($("#transRes").val().length > 1000)
+							$("#playControl").hide();
+						else
+							$("#playControl").show();
+					} else {
+						alert("抱歉，该翻译失败，请选择人工翻译");
+					}
+					
 				}
 			});
         },
@@ -115,6 +123,20 @@ define('app/jsp/home', function (require, exports, module) {
 	        }
         },
         
+        //保存
+        _saveText:function() {
+        	$("#transRes").attr("readonly","readonly");
+        },
+        
+        //取消
+        _cancelSave:function() {
+        	$("#transRes").attr("readonly","readonly");
+        },
+        
+        //翻译有误
+        _transError:function() {
+        	$("#transRes").removeAttr("readonly");
+        }
         
     });
 

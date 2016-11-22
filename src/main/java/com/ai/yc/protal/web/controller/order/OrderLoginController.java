@@ -33,11 +33,12 @@ public class OrderLoginController {
      * @return
      */
     @RequestMapping(value = "/orderSubmit")
-    public String submitTextView(String orderType, HttpSession session){
+    public String submitTextView(HttpSession session){
         Long orderId;
+        OrderSubmissionRequest subReq = new OrderSubmissionRequest();
         try {
             String userId = UserUtil.getUserId();
-            OrderSubmissionRequest subReq = (OrderSubmissionRequest) session.getAttribute("orderInfo");
+            subReq = (OrderSubmissionRequest) session.getAttribute("orderInfo");
             subReq.getBaseInfo().setUserId(userId);
             
             IOrderSubmissionSV orderSubmissionSV = DubboConsumerFactory.getService(IOrderSubmissionSV.class);
@@ -53,13 +54,20 @@ public class OrderLoginController {
             orderId = subRes.getOrderId();
         }catch (BusinessException e){
             LOGGER.error("提交订单失败:",e);
-            if (orderType.equalsIgnoreCase("text")) {
-                return "order/createTextOrder"; 
-            } else {
+            if (subReq.getBaseInfo().getTranslateType().equalsIgnoreCase("2")) {
                 return "order/createOralOrder"; 
+            } else {
+                return "order/createTextOrder"; 
             }
         }
+        
+        //快速翻译，跳转支付页面
+        if (subReq.getBaseInfo().getTranslateType().equalsIgnoreCase("0")) {
+            return "redirect:/p/customer/order/payOrder/"+orderId;
+        } else { //跳转待报价
+            return "redirect:/p/customer/order/orderOffer";
+        }
 
-        return "redirect:/p/customer/order/payOrder/"+orderId;
+        
     }
 }

@@ -52,6 +52,8 @@
   						<p><spring:message code="myOrder.orderStatus"/></p> 
   						<p>
 	  						<select class="select select-small radius" name="displayFlag" id="displayFlag">
+	  							<!-- 全部 -->
+	  							<option value="" selected="selected"><spring:message code="myOrder.allOrder"/></option>
 	  							<!-- 待支付 -->
 	  							<option value="11"><spring:message code="myOrder.status.tobePay"/></option>
   								<!--待报价 -->
@@ -213,6 +215,7 @@
 			{{else displayFlag == '23'}}
 				<!-- 翻译中  -->
 				<td><spring:message code="myOrder.status.translating"/></td>
+				<td></td>
 			{{else displayFlag == '50'}}
 				<!-- 待确认  -->
 				<td><spring:message code="myOrder.status.tobeConfirm"/></td>

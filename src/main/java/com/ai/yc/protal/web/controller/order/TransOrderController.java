@@ -90,15 +90,26 @@ public class TransOrderController {
             uiModel.addAttribute("purpostList", purpostList); //用途
             
             String userId = UserUtil.getUserId();
+            //查询译员信息
+            getUserInfo(uiModel);
+            
+            //查询订单数
             IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
             QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
             ordCountReq.setInterperId(userId);//设置译员编码
+         
+            //如果是LSP的管理员或项目经理
+            if ("12".equals(uiModel.asMap().get("lspRole")) || "11".equals(uiModel.asMap().get("lspRole"))) {
+                ordCountReq.setLspId((String) uiModel.asMap().get("lspId"));
+                ordCountReq.setInterperId(null);
+            }
+            
             QueryOrdCountResponse ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
 
             Map<String,Integer> stateCount = ordCountRes.getCountMap();;
             // 21：已领取
             uiModel.addAttribute("ReceivedCount", stateCount.get("21"));
-            
+
             //211：已分配 
             uiModel.addAttribute("AssignedCount", stateCount.get("211"));
             

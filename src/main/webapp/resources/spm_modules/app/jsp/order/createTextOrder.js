@@ -30,6 +30,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			"click #fy-btn": "_uploadFile",
 			"click #fy-btn1": "_inputText",
 			"click #globalRome": "_setPattern",
+			"click #clear-btn": "_clearText"
            	},
             
     	//重写父类
@@ -37,9 +38,11 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     		textOrderAddPager.superclass.setup.call(this);
 			
 			var formValidator=this._initValidate();
+		
 			$(":input").bind("focusout",function(){
 				formValidator.element(this);
 			});
+			
 			
 			this._transGrade();
 			this._transPrice();
@@ -54,9 +57,19 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				language: currentLan,
 			});
     	},
-        
+    	
         _initValidate:function(){
+        	var sourlan;
+        	$("#selectDuad option").each(function() {
+        		if ($(".selected").attr('value') == $(this).val()) {
+        			sourlan = $(this).attr("sourceEn");
+        			return false;
+        		}
+        			
+        	});
+        	
         	var formValidator=$("#textOrderForm").validate({
+        		onkeyup:false,
         		errorPlacement: function(error, element) {
 					if (element.is(":checkbox")) {
 						error.appendTo(element.parent().parent().parent());
@@ -80,6 +93,21 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     				translateContent: {
     					required:true,
     					maxlength:2000,
+    					remote:{                                          //验证检查语言
+    			　　               type:"POST",
+    			　　               url:  _base + "/translateLan",         
+    			　　               data:{
+	    			　　            	lan: sourlan,
+	    			　　                text: $("#translateContent").val(),
+    			　　               },
+    			　　               dataFilter: function (data, type) {//判断控制器返回的内容
+			                     if ( "1" == data.statusCode && sourlan == data.data) {
+			                         return true;   
+			                     } else {
+			                         return false;
+			                     }
+    			           }
+    			　　        }
     				},
     				isAgree: {
     					required:true,
@@ -100,6 +128,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     				translateContent: {
     					required:"请输入翻译内容",
     					maxlength:"最大长度不能超过{0}",
+    					remote:"您输入的内容和源语言不一致"
     				},
     				isAgree: {
     					required: "请阅读并同意翻译协议",
@@ -130,30 +159,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				//alert('验证不通过！！！！！');
 				return;
 			}
-			
-			//验证输入内容
-		   var sourceLan;
-           $("#selectDuad option").each(function() {
-				if ($(".selected").attr("value") == $(this).val()) {
-					sourceLan =  $(this).attr('source');
-					return false;
-				}
-			});
-
-			ajaxController.ajax({
-				type: "post",
-				url: _base + "/translateLan",
-				data: {
-            		text: $("#translateContent").val()
-				},
-				success: function (data) {
-					if ("1" === data.statusCode) {
-						if(data.data != lan) {
-							alert("您输入的内容和源语言不一致");
-						}
-					}
-				}
-			});
 
 			//查询报价
 			this._queryAutoOffer();
@@ -259,13 +264,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
         		if (val ==  $(".dropdown .selected").attr('value')) {
         			var selected = $(this);
 
-        			if (currentLan.indexOf("zh") >= 0 ){
-        				tempLanPairObj.languagePairName = $(".dropdown .selected").text();
-            			tempLanPairObj.languageNameEn = selected.attr('source') + "→" + selected.attr('targert');
-        			} else {
-        				tempLanPairObj.languagePairName = selected.attr('source') + "→" + selected.attr('targert');
-            			tempLanPairObj.languageNameEn = $(".dropdown .selected").text();
-        			}
+    				tempLanPairObj.languagePairName = selected.attr('sourceCn') + "→" + selected.attr('targertCn');
+        			tempLanPairObj.languageNameEn = selected.attr('sourceEn') + "→" + selected.attr('targertEn');
         			return false;
         		}
 			});
@@ -503,6 +503,11 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		_setPattern:function() {
 			var pattern = $("#saveContactDiv").find('option:selected').attr('exp');
 			$("#phoneNum").attr('pattern',pattern);
+		},
+		
+		//清空输入文字
+		_clearText:function() {
+			$("#translateContent").val("");
 		},
 
 		//格式化金钱

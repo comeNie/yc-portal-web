@@ -96,7 +96,12 @@ public class CustomerOrderController {
             IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
             QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
             ordCountReq.setUserId(userId);
+
             QueryOrdCountResponse ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+
+            LOGGER.info(JSONObject.toJSONString(ordCountRes));
+            uiModel.addAttribute("CountMap", ordCountRes.getCountMap());
+
             Map<String,Integer> stateCount = ordCountRes.getCountMap();
             //待支付
             uiModel.addAttribute("UnPaidCount", stateCount.get("11"));
