@@ -198,6 +198,16 @@ public class UserCommonController {
 		if (!isOk) {
 			msg = rb.getMessage("ycregisterMsg.verificationCodeError");
 		}
+		String isRemove = request.getParameter("isRemove");
+		if(isOk &&"true".equals(isRemove)){
+			String codeKey="";
+			if (PhoneVerify.PHONE_CODE_REGISTER_OPERATION.equals(type)) {// 注册
+				codeKey = PhoneVerify.REGISTER_PHONE_CODE + phone;
+			} else if (PhoneVerify.PHONE_CODE_UPDATE_DATA_OPERATION.equals(type)) {// 修改资料
+				codeKey = PhoneVerify.UPDATE_DATA_PHONE_CODE + phone;
+			}
+			VerifyUtil.delRedisValue(codeKey);
+		}
 		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg,
 				isOk);
 	}
@@ -355,7 +365,10 @@ public class UserCommonController {
 		if (!isOk) {
 			msg = rb.getMessage("ycregisterMsg.verificationCodeError");
 		}
-
+		String isRemove = request.getParameter("isRemove");
+		if(isOk && "true".equals(isRemove)){
+			VerifyUtil.delRedisValue(codeKey);
+		}
 		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg,
 				isOk);
 	}
