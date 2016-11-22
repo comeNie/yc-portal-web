@@ -118,27 +118,6 @@ public class TaskCenterController {
             }
             IOrderWaitReceiveSV iOrderQuerySV = DubboConsumerFactory.getService(IOrderWaitReceiveSV.class);
             OrderWaitReceiveSearchResponse orderRes = iOrderQuerySV.pageSearchWaitReceive(orderReq);
-            //TODO... 模拟数据
-            /*OrderWaitReceiveSearchResponse orderRes = new OrderWaitReceiveSearchResponse();
-            PageInfo<OrderWaitReceiveSearchInfo> pageInfo = new  PageInfo<OrderWaitReceiveSearchInfo>();
-            pageInfo.setCount(200);
-            pageInfo.setPageCount(20);
-            pageInfo.setPageNo(1);
-            pageInfo.setPageSize(10);
-
-            List<OrderWaitReceiveSearchInfo> orderLisst = new ArrayList<>();
-            OrderWaitReceiveSearchInfo searchInfo = new OrderWaitReceiveSearchInfo();
-            searchInfo.setOrderId(2000000027736428l);
-            searchInfo.setTranslateName("1.下单流程中的“支付”环节，");
-            searchInfo.setLanguagePairName("中文-英文");
-            searchInfo.setLanguageNameEn("ch-en");
-            searchInfo.setOrderTime(new Timestamp(System.currentTimeMillis()));
-            searchInfo.setTotalFee(1000000l);
-            searchInfo.setTakeDay("1");
-            searchInfo.setTakeTime("2");
-            orderLisst.add(searchInfo);
-            pageInfo.setResult(orderLisst);
-            orderRes.setPageInfo(pageInfo);*/
 
             ResponseHeader resHeader = orderRes==null?null:orderRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息,返回失败

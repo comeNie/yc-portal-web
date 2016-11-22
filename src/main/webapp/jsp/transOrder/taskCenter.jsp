@@ -158,6 +158,7 @@
 <script type="text/javascript" src="${uedroot}/scripts/modular/jqueryrotate.2.3.js"></script>
 <script type="text/javascript">
     var pager;
+    var current = "taskCenter";
     var lspId="${lspId}";
     (function () {
         //订单领取
