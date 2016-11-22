@@ -19,6 +19,7 @@ import com.ai.yc.order.api.orderreceivesearch.interfaces.IOrderWaitReceiveSV;
 import com.ai.yc.order.api.orderreceivesearch.param.OrderWaitReceiveSearchInfo;
 import com.ai.yc.order.api.orderreceivesearch.param.OrderWaitReceiveSearchRequest;
 import com.ai.yc.order.api.orderreceivesearch.param.OrderWaitReceiveSearchResponse;
+import com.ai.yc.protal.web.constants.OrderConstants;
 import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.utils.UserUtil;
 import org.apache.commons.lang.StringUtils;
@@ -180,13 +181,23 @@ public class TaskCenterController {
             IOrderReceiveSV iOrderReceiveSV = DubboConsumerFactory.getService(IOrderReceiveSV.class);
             OrderReceiveResponse receiveResponse = iOrderReceiveSV.orderReceive(receiveRequest);
             ResponseHeader header =receiveResponse==null?null:receiveResponse.getResponseHeader();
-            if (header == null || !header.isSuccess()){
+            //出现错误
+            if(header!=null && !header.isSuccess()){
                 LOGGER.error("receiveOrder fail,head status:{},head info:{}",
                         header==null?"null":header.getIsSuccess(),header==null?"null":header.getResultMessage());
-                throw new BusinessException("","");
+                //订单领取达到上限
+                if (OrderConstants.ErrorCode.NUM_MAX_LIMIT.equals(header.getResultCode())){
+                    //领取失败
+                    responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
+                            rb.getMessage("order.info.claim.max"));
+                }//订单已被领取
+                else if (OrderConstants.ErrorCode.ALREADY_CLAIM.equals(header.getResultCode())){
+                    //领取失败
+                    responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
+                            rb.getMessage("order.info.already.claim"));
+                }
             }
-            //如果是领取订单数达到上限,则进行提示 TODO...
-            rb.getMessage("order.info.claim.max");
+
         }catch (Exception e){
             LOGGER.error("Claim order is fail",e);
             //领取失败

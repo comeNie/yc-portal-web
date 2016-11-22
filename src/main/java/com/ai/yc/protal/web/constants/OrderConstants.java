@@ -19,7 +19,7 @@ public final class OrderConstants {
     //用户类型 代理人
     public static final String USER_TYPE_AGENT = "12";
 
-    private static class ErrorCode{
+    public static class ErrorCode{
         private ErrorCode(){}
 
         /**

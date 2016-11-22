@@ -40,7 +40,9 @@ import com.alibaba.fastjson.JSONObject;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -90,22 +92,18 @@ public class TransOrderController {
             String userId = UserUtil.getUserId();
             IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
             QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
-            ordCountReq.setUserId(userId);
-            
-            // 21：已领取
-            ordCountReq.setDisplayFlag("21");
+            ordCountReq.setInterperId(userId);//设置译员编码
             QueryOrdCountResponse ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            uiModel.addAttribute("ReceivedCount", ordCountRes.getCountNumber());
+
+            Map<String,Integer> stateCount = ordCountRes.getCountMap();;
+            // 21：已领取
+            uiModel.addAttribute("ReceivedCount", stateCount.get("21"));
             
             //211：已分配 
-            ordCountReq.setDisplayFlag("211");
-            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            uiModel.addAttribute("AssignedCount", ordCountRes.getCountNumber());
+            uiModel.addAttribute("AssignedCount", stateCount.get("211"));
             
             //23：翻译中 
-            ordCountReq.setDisplayFlag("23");
-            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            uiModel.addAttribute("TranteCount", ordCountRes.getCountNumber());
+            uiModel.addAttribute("TranteCount", stateCount.get("23"));
             
             //查询译员信息 TODO暂时关闭
 //            IYCUserServiceSV iycUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
@@ -198,7 +196,7 @@ public class TransOrderController {
     
     /**
      * 译员提交订单
-     * @param request
+     * @param orderId
      * @return
      * @author mimw
      */
