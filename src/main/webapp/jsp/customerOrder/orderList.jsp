@@ -38,7 +38,7 @@
   					<!-- 待确认 -->
   					<li><a href="javaScript:void(0);" name="displayFlagA" value="50"><spring:message code="myOrder.status.tobeConfirm"/>(${UnConfirmCount})</a></li>
   					<!-- 待评价 -->
-  					<li><a href="javaScript:void(0);" name="displayFlagA" value="52"><spring:message code="myOrder.status.tobeEvaluated"/>(${UnEvaluateCount})</a></li>	
+  					<!--  <li><a href="javaScript:void(0);" name="displayFlagA" value="52"><spring:message code="myOrder.status.tobeEvaluated"/>(${UnEvaluateCount})</a></li>-->	
   				</ul>
   			</div>
   			<div id="table-da1">
@@ -63,7 +63,7 @@
 	  							<!-- 待确认 -->
 	  							<option value="50"><spring:message code="myOrder.status.tobeConfirm"/></option>
 	  							<!-- 待评价 -->
-	  							<option value="52"><spring:message code="myOrder.status.tobeEvaluated"/></option>
+	  							<!--  <option value="52"><spring:message code="myOrder.status.tobeEvaluated"/></option>-->
 	  							<!-- 完成 -->
 	  							<option value="90"><spring:message code="myOrder.status.Completed"/></option>
 	  							<!-- 已取消-->
