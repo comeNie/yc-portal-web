@@ -18,11 +18,12 @@
 			<li id="index" class="current">
 				<a href="${_base}/p/security/interpreterIndex">
 					<span><i class="icon iconfont">&#xe600;</i></span>
-					<span>我的首页</span>
+					<%--我的首页--%>
+					<span><spring:message code="ycleftmenu.mymainpage"/></span>
 				</a>
 			</li>
 			<li >
-				<a href="#">
+				<a href="${_base}/p/taskcenter/view">
 					<span><i class="icon iconfont">&#xe68e;</i></span>
 					<span>发现订单</span>
 				</a>
@@ -30,9 +31,10 @@
 			<div class="list-p current"><a href="#" class="">订单大厅<span> (99+)</span></a></div>
 			<div class="list-p"><a href="#">分配订单 <span> (7)</span></a></div>
 			<li>
-				<a href="#">
+				<a href="${_base}/p/trans/order/list/view">
 					<span><i class="icon iconfont">&#xe602;</i></span>
-					<span>我的订单</span>
+					<%--我的订单--%>
+					<span><spring:message code="ycleftmenu.myorder"/></span>
 				</a>
 			</li>
 			<li>
@@ -78,7 +80,8 @@
 		<div class="left-phone">
 			<p><i class="icon iconfont">&#xe60d;</i></p>
 			<p class="phone-word">
-				<span>早9:00-晚7:00</span>
+				<%--早9:00-晚7:00--%>
+				<span><spring:message code="ycleftmenu.time"/></span>
 				<span class="red">400-119-8080</span>
 			</p>
 		</div>
