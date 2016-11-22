@@ -74,14 +74,15 @@ public class YeekitController {
     public ResponseData<String> translateLan(String text) {  
         ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         //TODO 
-        String lan = "English";
+        String lan = "en";
         try {
             lan = yeekitService.detection(text);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"");
         }
-        
+        //TODO
+        resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         resData.setData(lan);
         return resData;
     }
