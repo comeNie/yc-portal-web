@@ -202,7 +202,7 @@ public class TransOrderController {
 //        uiModel.addAttribute("vipLevel",userInfoResponse.getVipLevel());//译员等级
         //TODO... 模拟数据
         uiModel.addAttribute("lspId","");//lsp标识
-        uiModel.addAttribute("lspRole","1");//lsp角色
+        uiModel.addAttribute("lspRole","12");//lsp角色
         uiModel.addAttribute("vipLevel","4");//译员等级
     }
     

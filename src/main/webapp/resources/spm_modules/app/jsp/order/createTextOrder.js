@@ -236,6 +236,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			baseInfo.orderLevel = "1";
 			baseInfo.userType = "10"; //"10：个人 11：企业 12：代理人 "??
 			baseInfo.remark = $("#remark").val(); //备注 给译员留言
+			baseInfo.orderDesc=$("#inputFormatConv").val();//格式转换
 			//baseInfo.corporaId
 			//baseInfo.accountId
 				
