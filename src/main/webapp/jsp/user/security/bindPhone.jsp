@@ -1,15 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html;charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <title></title>
 <%@ include file="/inc/inc.jsp"%>
 </head>
 <body>
 	<!--头部-->
-	<jsp:include page="/inc/userTopMenu.jsp"/>
+	<%@ include file="/inc/userTopMenu.jsp"%>
 	<!--二级主体-->
 	<!--外侧背景-->
 	<div class="cloud-container">
@@ -17,9 +17,7 @@
 		<div class="cloud-wrapper">
 			<!--左侧菜单-->
 			<div class="left-subnav">
-				<jsp:include page="/inc/leftmenu.jsp">
-  	            <jsp:param name="current" value="seccenterSettings" />
-  	            </jsp:include>
+				<%@ include file="/inc/leftmenu.jsp"%>
 			</div>
 			<!--右侧内容-->
 			<!--右侧大块-->
@@ -68,6 +66,7 @@
 </body>
 <%@ include file="/inc/incJs.jsp"%>
 <script type="text/javascript">
+var current = "seccenterSettings";
 var phoneBindMsg = {
 		showOkValueMsg	: '<spring:message code="ycaccountcenter.js.showOkValueMsg"/>',
 		showTitleMsg : '<spring:message code="ycaccountcenter.js.showTitleMsg"/>'
