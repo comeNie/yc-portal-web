@@ -54,31 +54,21 @@
   					<p><spring:message code="order.translateLan"/></p>
   				</div>
   				<div class="placeorder-translate">
-	  				<select id="selectDuad" t="${sessionScope.orderInfo.productInfo.translateInfo}" name="<%=response.getLocale()%>" tabindex="5" class="dropdown" data-settings='{"cutOff": 12}' >
+	  				<select id="selectDuad" t="${sessionScope.orderInfo.productInfo.translateInfo}"
+							name="<%=response.getLocale()%>" tabindex="5"
+							class="dropdown" data-settings='{"cutOff": 12}' >
 						<c:forEach items="${duadList}" var="duad">
-	  						<c:if test="${duad.orderType != 2}">
-	  							<c:choose>
-	  								<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">
-	  									<option value="${duad.duadId}"
-	  										ordinary="${duad.ordinary}"  ordinaryUrgent="${duad.ordinaryUrgent}" 
-											professional="${duad.professional}"  professionalUrgent="${duad.professionalUrgent}"  
-											publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}" 
-											sourceEn="${duad.sourceEn}" targertEn="${duad.targetEn}"
-											sourceCn="${duad.sourceCn}" targertCn="${duad.targetCn}"
-	  									>
-	  										${duad.sourceCn}→${duad.targetCn}</option>
-	  								</c:when>
-	  								<c:otherwise>
-	  									<option value="${duad.duadId}"
-	  										ordinary="${duad.ordinaryDollar}"  ordinaryUrgent="${duad.ourgentDollar}" 
-											professional="${duad.professionalDollar}"  professionalUrgent="${duad.purgentDollar}"  
-											publish="${duad.publishDollar}"  publishUrgent="${duad.puburgentDollar}" 
-											sourceEn="${duad.sourceEn}" targertEn="${duad.targetEn}"
-											sourceCn="${duad.sourceCn}" targertCn="${duad.targetCn}"
-	  									>
-	  										${duad.sourceEn}→${duad.targetEn}</option>
-	  								</c:otherwise>
-	  							</c:choose>
+							<c:if test="${duad.orderType != 2}">
+								<option value="${duad.duadId}"
+								ordinary="${duad.ordinaryDollar}" ordinaryUrgent="${duad.ourgentDollar}"
+								professional="${duad.professionalDollar}" professionalUrgent="${duad.purgentDollar}"
+								publish="${duad.publishDollar}" publishUrgent="${duad.puburgentDollar}"
+								sourceEn="${duad.sourceEn}" targertEn="${duad.targetEn}"
+								sourceCn="${duad.sourceCn}" targertCn="${duad.targetCn}"
+								><c:choose>
+									<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${duad.sourceCn}→${duad.targetCn}</c:when>
+									<c:otherwise>${duad.sourceEn}→${duad.targetEn}</c:otherwise>
+								</c:choose></option>
 							</c:if>
 						</c:forEach>
 					</select>

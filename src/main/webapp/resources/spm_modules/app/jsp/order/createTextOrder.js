@@ -36,26 +36,22 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     	//重写父类
     	setup: function () {
     		textOrderAddPager.superclass.setup.call(this);
-			
-			var formValidator=this._initValidate();
-		
-			$(":input").bind("focusout",function(){
-				formValidator.element(this);
-			});
-			
-			
-			this._transGrade();
-			this._transPrice();
-			this._globalRome();
-			this._initPage();
-			
 			//初始化国际化
 			$.i18n.properties({//加载资浏览器语言对应的资源文件
 				name: ["orderInfo"], //资源文件名称，可以是数组
 				path: _i18n_res, //资源文件路径
 				mode: 'both',
-				language: currentLan,
+				language: currentLan
 			});
+			var formValidator=this._initValidate();
+			$(":input").bind("focusout",function(){
+				formValidator.element(this);
+			});
+
+			this._transGrade();
+			this._transPrice();
+			this._globalRome();
+			this._initPage();
     	},
     	
         _initValidate:function(){
@@ -65,7 +61,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
         			sourlan = $(this).attr("sourceEn");
         			return false;
         		}
-        			
         	});
         	
         	var formValidator=$("#textOrderForm").validate({
@@ -89,44 +84,44 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 					$('ul li p label').remove()//删除所有隐藏的li p label标签
 					this.defaultShowErrors();
 				},
-    			rules: {
-    				translateContent: {
-    					required:true,
-    					maxlength:2000,
-    					remote:{                                          //验证检查语言
-    			　　               type:"POST",
-    			　　               url:  _base + "/translateLan",         
-    			　　               data:{
-	    			　　            	lan: sourlan,
-	    			　　                text: $("#translateContent").val(),
-    			　　               },
-    			　　               dataFilter: function (data, type) {//判断控制器返回的内容
-			                     if ( "1" == data.statusCode && sourlan == data.data) {
-			                         return true;   
-			                     } else {
-			                         return false;
-			                     }
-    			           }
-    			　　        }
-    				},
-    				isAgree: {
-    					required:true,
-    				},
-    				contactName: {
-    					required:true,
-    					maxlength:15
-    				},
-    				phoneNum: {
-    					required:true,
-    				},
-    				email: {
-    					required:true,
-    					email:true
-    				}
-    			},
+				rules: {
+					translateContent: {
+						required: true,
+						maxlength: 2000,
+						remote: {                                          //验证检查语言
+							type: "POST",
+							url: _base + "/translateLan",
+							data: {
+								lan: sourlan,
+								text: $("#translateContent").val(),
+							},
+							dataFilter: function (data, type) {//判断控制器返回的内容
+								if ("1" == data.statusCode && sourlan == data.data) {
+									return true;
+								} else {
+									return false;
+								}
+							}
+						}
+					},
+					isAgree: {
+						required: true,
+					},
+					contactName: {
+						required: true,
+						maxlength: 15
+					},
+					phoneNum: {
+						required: true,
+					},
+					email: {
+						required: true,
+						email: true
+					}
+				},
     			messages: {
     				translateContent: {
-    					required: $.i18n.prop("order.place.error.translation"), //"请输入翻译内容",
+    					required: $.i18n.prop('order.place.error.translation'), //"请输入翻译内容",
     					maxlength: $.i18n.prop('order.place.error.Maximum'),//"最大长度不能超过{0}",
     					remote:  $.i18n.prop('order.place.error.contentConsis')//"您输入的内容和源语言不一致"
     				},
