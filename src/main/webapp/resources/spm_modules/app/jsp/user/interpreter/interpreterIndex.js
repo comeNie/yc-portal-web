@@ -32,7 +32,10 @@ define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, mo
 					ajaxController.ajax({
 						 type:"post",
 		    				url:_base+"/p/security/orderStatusCount",
-		    				data:{'statusList':'21,23'},
+		    				data:{
+		    					'statusList':'21,23',
+		    					'isInterpreter':'true'
+		    					},
 		    		        success: function(data) {
 		    		        	//data = {"21":3,"23":4};
 		    		        	$("#receiveCount").html(data['21']);
