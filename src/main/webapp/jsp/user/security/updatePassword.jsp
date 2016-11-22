@@ -130,13 +130,13 @@
 								<div class="recharge-form-label mt-30 ">
 									<ul>
 									<li>
-		 								<label class="ml-70" id="passwordMsg" style="display: none;">输入账号错误</label>
+		 								<label class="ml-70" id="passwordMsg" style="display: none;"></label>
 		 								<p class="word"><spring:message code="ycregister.password" /></p>
-		 								<p><input type="password" class="int-text int-xlarge radius" id="password"></p>
+		 								<p><input type="password" maxlength="16" class="int-text int-xlarge radius" id="password"></p>
 		 							</li>
 		 							<li>
 		 								<p class="word"><spring:message code="ycregister.confirmPassword" /></p>
-		 								<p><input type="password" class="int-text int-xlarge radius" id="confirmPassword"></p>
+		 								<p><input type="password" maxlength="16" class="int-text int-xlarge radius" id="confirmPassword"></p>
 		 							</li>
 									</ul>
 								</div>
@@ -178,7 +178,7 @@
 								<div class="recharge-success mt-40">
 									<ul>
 										<li><img src="${uedroot}/images/rech-win.png"></li>
-										<li class="word"><spring:message code="ycaccountcenter.updatePassword.step2"/>成功</li>
+										<li class="word"><spring:message code="ycaccountcenter.updatePassword.success"/></li>
 									</ul>
 								</div>
 
@@ -270,11 +270,11 @@
 										<li>
 			 								<label class="ml-70" id="emailPasswordErrMsg" style="display: none;"></label>
 			 								<p class="word"><spring:message code="ycregister.password" /></p>
-			 								<p><input type="password" class="int-text int-xlarge radius" id="emailPassword"></p>
+			 								<p><input type="password" maxlength="16" class="int-text int-xlarge radius" id="emailPassword"></p>
 	 									</li>
 			 							<li>
 			 								<p class="word"><spring:message code="ycregister.confirmPassword" /></p>
-			 								<p><input type="password" class="int-text int-xlarge radius" id="emailConfirmPassword"></p>
+			 								<p><input type="password" maxlength="16" class="int-text int-xlarge radius" id="emailConfirmPassword"></p>
 			 							</li>
 									</ul>
 								</div>
@@ -346,7 +346,9 @@
     		"notBindingEmail" : '<spring:message code="ycaccountcenter.updatePassword.notBindingEmail"/>',
     		"passwordEmpty" : '<spring:message code="ycregisterMsg.passwordEmpty"/>',
     		"passwordError" : '<spring:message code="ycregisterMsg.passwordError"/>',
-    		"confirmPasswordError" : '<spring:message code="ycregisterMsg.confirmPasswordError"/>'
+    		"confirmPasswordError" : '<spring:message code="ycregisterMsg.confirmPasswordError"/>',
+    		'getDynamiCode':'<spring:message code="ycregister.getDynamiCode"/>',
+    		'sendMailError':'<spring:message code="ycaccountcenter.updatePassword.sendMailError"/>'
     };
 	var phone = "${user.mobile}";
 	var email = "${user.email}";
