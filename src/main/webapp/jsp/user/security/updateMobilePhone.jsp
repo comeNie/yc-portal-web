@@ -1,18 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<c:set var="_base" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>修改手机</title>
    <%@ include file="/inc/inc.jsp" %>
 </head>
 <body>
 	<!--头部-->
-	<jsp:include page="/inc/userTopMenu.jsp"/>
+	<%@ include file="/inc/userTopMenu.jsp"%>
   <!--二级主体-->
   <!--外侧背景-->
   <div class="cloud-container">
@@ -20,9 +17,7 @@
   <div class="cloud-wrapper">
   	<!--左侧菜单-->
   	<div class="left-subnav">
-  	<jsp:include page="/inc/leftmenu.jsp">
-  	  <jsp:param name="current" value="seccenterSettings" />
-  	</jsp:include>
+  	<%@ include file="/inc/leftmenu.jsp"%>
   	</div>
   	<!--右侧内容-->
   	<!--右侧大块-->
@@ -340,6 +335,7 @@
   </div>
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
+var current = "seccenterSettings";
 var pager;
 (function() {
 	seajs.use('app/jsp/user/security/updateMobilePhone', function(updatePhonePager) {
