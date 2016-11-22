@@ -73,7 +73,7 @@
   						<c:forEach items="${duadList}" var="duad">
   						<c:if test="${duad.orderType == 2}">
 	  						<p>
-	  							<span><input name="duad" type="checkbox" class="radio" value="${duad.duadId}" duadZh="${duad.sourceCn}${duad.targetCn}" duadEn="${duad.sourceEn}${duad.targetEn}"></span>
+	  							<span><input name="duad" type="checkbox" class="radio" value="${duad.duadId}" duadZh="${duad.sourceCn}-${duad.targetCn}" duadEn="${duad.sourceEn}-${duad.targetEn}"></span>
 	  							<c:choose>
 		  							<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">
 		  								<span name="${duad.duadId}">${duad.sourceCn}${duad.targetCn}</span>
@@ -96,17 +96,17 @@
   					<li>
   						<p>
   							<!-- 陪同翻译 -->
-  							<span><input name="interpretationType" type="checkbox" class="radio"  value="0"></span>
+  							<span><input name="interpretationType" type="checkbox" class="radio"  value="100110"></span>
   							<span><spring:message code="order.interpretationType1"/></span>
   						</p>
   						<p>
   							<!-- 交替传译 -->
-  							<span><input name="interpretationType" type="checkbox" class="radio" value="1"></span>
+  							<span><input name="interpretationType" type="checkbox" class="radio" value="100120"></span>
   							<span><spring:message code="order.interpretationType2"/></span>
   						</p>
   						<p>
   							<!-- 同声传译  -->
-  							<span><input name="interpretationType" type="checkbox" class="radio" value="2"></span>
+  							<span><input name="interpretationType" type="checkbox" class="radio" value="100130"></span>
   							<span><spring:message code="order.interpretationType3"/></span>
   						</p>
   					</li>
