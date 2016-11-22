@@ -28,7 +28,7 @@
   		<!--右侧第二块-->
   		<div class="right-list mt-0">
   			<div class="right-list-title pb-10 pl-20">
-  				<p>绑定手机</p>	
+  				<p><spring:message code="ycaccountcenter.bindphone.title"/></p>	
   			</div>
   			<!--充值-->
  			<div class="recharge mt-30">
@@ -36,16 +36,16 @@
  					<div class="recharge-form-label mt-20">
  						<ul>
  							<li>
- 							   <p class="word">手机号:</p>
+ 							   <p class="word"><spring:message code="ycaccountcenter.bindphone.phonenumber"/></p>
  								<p><select id="country" class="select select-in"></select></p>
  								<p><input id="telephone" type="text" class="int-text int-large radius"></p>
  								<label id="telephoneErrMsg"></label>
  								
  							</li>
  							<li>
- 								<p class="word">动态码:</p>
+ 								<p class="word"><spring:message code="ycaccountcenter.bindphone.dynamicnumber"/></p>
  								<p><input id="dynamicode" type="text" class="int-text int-in radius"></p>
- 								<p><input type="button" id="send_dynamicode_btn" class="btn border-green border-sma radius btn-medium" value="获取动态码"></p>
+ 								<p><input type="button" id="send_dynamicode_btn" class="btn border-green border-sma radius btn-medium" value='<spring:message code="ycaccountcenter.bindphone.getdynamiccode"/>'></p>
  							   <label id="dynamicodeErrMsg"></label>
  							</li>
  						</ul>
@@ -54,7 +54,7 @@
  				</div>
  				<!--按钮-->
  				<div class="recharge-btn">
- 						<input type="button" id="submitPhoneBtn" class="btn btn-green btn-xxxlarge radius10" value="提 交">
+ 						<input type="button" id="submitPhoneBtn" class="btn btn-green btn-xxxlarge radius10" value='<spring:message code="ycaccountcenter.bindphone.submit"/>'>
  					</div>
  			</div>
  			</div>
@@ -69,7 +69,17 @@
 var current = "seccenterSettings";
 var phoneBindMsg = {
 		showOkValueMsg	: '<spring:message code="ycaccountcenter.js.showOkValueMsg"/>',
-		showTitleMsg : '<spring:message code="ycaccountcenter.js.showTitleMsg"/>'
+		showTitleMsg : '<spring:message code="ycaccountcenter.js.showTitleMsg"/>',
+		saveingMsg : '<spring:message code="ycaccountcenter.js.saveingMsg"/>',
+		getOperationCode : '<spring:message code="ycaccountcenter.js.getOperationCode"/>',
+		resend60 : '<spring:message code="ycaccountcenter.js.resend60"/>',
+		resend : '<spring:message code="ycaccountcenter.js.resend"/>',
+		inputOperationCode : '<spring:message code="ycaccountcenter.js.inputOperationCode"/>',
+		pleaseInputOC : '<spring:message code="ycaccountcenter.js.pleaseInputOC"/>',
+		bindFail : '<spring:message code="ycaccountcenter.js.bindFail"/>',
+		bingSuccess : '<spring:message code="ycaccountcenter.js.bingSuccess"/>',
+		phoneNumCanNotEmpty :'<spring:message code="ycaccountcenter.js.phoneNumCanNotEmpty"/>',
+		pleaseInputRightPhoneNum:'<spring:message code="ycaccountcenter.js.pleaseInputRightPhoneNum"/>'
 		};
 	var pager;
 	(function() {
