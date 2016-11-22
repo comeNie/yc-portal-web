@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html;charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +11,7 @@
 </head>
 <body>
 	<!--头部-->
-	<jsp:include page="/inc/userTopMenu.jsp"/>
+	<%@ include file="/inc/userTopMenu.jsp"%>
 	<!--二级主体-->
 	<!--外侧背景-->
 	<div class="cloud-container">
@@ -20,9 +19,7 @@
 		<div class="cloud-wrapper">
 			<!--左侧菜单-->
 			<div class="left-subnav">
-				<jsp:include page="/inc/leftmenu.jsp">
-  	              <jsp:param name="current" value="index" />
-  	           </jsp:include>
+				<%@ include file="/inc/leftmenu.jsp"%>
 			</div>
 			<!--右侧内容-->
 			<!--右侧大块-->
@@ -233,6 +230,7 @@
 	</script>
 	<script type="text/javascript">
 	var pager;
+	var current ="index";
 	(function() {
 		seajs.use('app/jsp/user/userIndex', function(userIndexPager) {
 			pager = new userIndexPager({

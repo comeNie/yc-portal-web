@@ -15,14 +15,14 @@
 	</div>
 	<div class="left-list">
 		<ul>
-			<li id="index" class="current">
+			<li id="index">
 				<a href="${_base}/p/security/interpreterIndex">
 					<span><i class="icon iconfont">&#xe600;</i></span>
 					<%--我的首页--%>
 					<span><spring:message code="ycleftmenu.mymainpage"/></span>
 				</a>
 			</li>
-			<li >
+			<li id="taskCenter">
 				<a href="${_base}/p/taskcenter/view">
 					<span><i class="icon iconfont">&#xe68e;</i></span>
 					<span>发现订单</span>
@@ -30,7 +30,7 @@
 			</li>
 			<div class="list-p current"><a href="#" class="">订单大厅<span> (99+)</span></a></div>
 			<div class="list-p"><a href="#">分配订单 <span> (7)</span></a></div>
-			<li>
+			<li id="orderList">
 				<a href="${_base}/p/trans/order/list/view">
 					<span><i class="icon iconfont">&#xe602;</i></span>
 					<%--我的订单--%>

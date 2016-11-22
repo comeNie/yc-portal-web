@@ -94,7 +94,6 @@
 		</div>
   	</div>
   	<script type="text/javascript">
-  	  var current ="${param.current}";
   	  $(function(){
   		var currentEle = $("#"+current);
     	  if(current!=""&&currentEle){

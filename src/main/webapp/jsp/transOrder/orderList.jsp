@@ -283,6 +283,7 @@
 
 <script type="text/javascript">
 var pager;
+var current = "orderList";
 (function () {
 	seajs.use('app/jsp/transOrder/orderList', function(oderListPage) {
 		pager = new oderListPage({element : document.body});
