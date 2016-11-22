@@ -411,7 +411,7 @@ pre ol.linenums li {
 .btn-trans{width:80px;height:26px;font-weight:normal;}
 .btn-trans-b{width:80px;height:26px;font-weight:normal;border:1px solid #2361ea;color:#2965e6}
 .trans-btn-zh{width:104px;height:37px;}
-.place-btn{width:132px;height:40px;font-size:18px;color:#fff;margin-top:45px;-webkit-box-shadow: #3292f8 0px 0px 6px;-moz-box-shadow: #3292f8 0px 0px 6px;box-shadow: #3292f8 0px 0px 6px;margin-left:5px;}
+.place-btn{width:132px;height:40px;font-size:18px;color:#fff;bottom:28px;left:76px;position:absolute;-webkit-box-shadow: #3292f8 0px 0px 6px;-moz-box-shadow: #3292f8 0px 0px 6px;box-shadow: #3292f8 0px 0px 6px;margin-left:5px;}
 .place-btn-none{width:132px;height:40px;font-size:18px;margin-top:50px;margin-left:20px;color:#2965e6}
 .btn-230{width:236px;height:50px;}
 .btn-168{width:168px;height:50px;}

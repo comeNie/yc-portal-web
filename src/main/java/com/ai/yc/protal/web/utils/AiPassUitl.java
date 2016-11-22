@@ -23,6 +23,14 @@ public class AiPassUitl {
 				.getCacheClient(Constants.DEFAULT_YC_CACHE_NAMESPACE);
 		return iCacheClient;
 	}
+
+	/**
+	 * 获取公共缓存
+	 * @return
+     */
+	public static ICacheClient getCommonCacheClient(){
+		return MCSClientFactory.getCacheClient(Constants.DEFAULT_COMMON_CACHE_NAMESPACE);
+	}
     /**
      * 获取验证码配置
      * @return

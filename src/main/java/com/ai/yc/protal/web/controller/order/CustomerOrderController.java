@@ -187,6 +187,16 @@ public class CustomerOrderController {
     }
     
     /**
+     * 待报价页面
+     * @return
+     */
+    @RequestMapping("/orderOffer")
+    public String orderOffer(){
+        return "order/orderOffer";
+    }
+    
+    
+    /**
      * 取消订单，在未支付的情况下取消
      * @param orderId
      * @return

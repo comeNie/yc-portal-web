@@ -139,7 +139,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 					return false;
 				}
 			});
-	           
+
 			ajaxController.ajax({
 				type: "post",
 				url: _base + "/translateLan",
@@ -148,13 +148,13 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				},
 				success: function (data) {
 					if ("1" === data.statusCode) {
-						if(data.data != lan) { 
+						if(data.data != lan) {
 							alert("您输入的内容和源语言不一致");
 						}
 					}
 				}
 			});
-			
+
 			//查询报价
 			this._queryAutoOffer();
 			
@@ -164,7 +164,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			} else {
 				tableFirstLine.eq(0).html($("#fileList").find('li:first').text().substring(0,15));
 			}
-			
+
 			tableFirstLine.eq(1).html($("#selectDuad").find("option:selected").text());
 			tableFirstLine.eq(2).html($("#selectPurpose").find("option:selected").text());
 			tableFirstLine.eq(3).html($("#selectDomain").find("option:selected").text());
@@ -230,6 +230,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			}
 			baseInfo.orderLevel = "1";
 			baseInfo.userType = "10"; //"10：个人 11：企业 12：代理人 "??
+			baseInfo.remark = $("#remark").val(); //备注 给译员留言
 			//baseInfo.corporaId
 			//baseInfo.accountId
 				
@@ -239,7 +240,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			productInfo.translateSum = totalWords;
 			productInfo.useCode = "222";
 			productInfo.fieldCode = "222";
-			productInfo.isSetType = "1";
+
+			if($("#selectAddedSer").val() == 1)
+				productInfo.isSetType = "Y"; //是否排版
+			else
+				productInfo.isSetType = "N";
+
 			if ( $("#urgentOrder").is(':checked') )
 				productInfo.isUrgent = "Y";
 			else 
@@ -248,8 +254,22 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			var duadList =[];    
 			var tempLanPairObj = {};
 			tempLanPairObj.languagePairId = $(".dropdown .selected").attr('value');
-			tempLanPairObj.languagePairName =  $(".dropdown .selected").text();
-			tempLanPairObj.languageNameEn = currentLan.indexOf("zh") >= 0 ? 'zh':'en';
+			$("#selectDuad").find('option').each(function() {
+        		var val = $(this).val();
+        		if (val ==  $(".dropdown .selected").attr('value')) {
+        			var selected = $(this);
+
+        			if (currentLan.indexOf("zh") >= 0 ){
+        				tempLanPairObj.languagePairName = $(".dropdown .selected").text();
+            			tempLanPairObj.languageNameEn = selected.attr('source') + "→" + selected.attr('targert');
+        			} else {
+        				tempLanPairObj.languagePairName = selected.attr('source') + "→" + selected.attr('targert');
+            			tempLanPairObj.languageNameEn = $(".dropdown .selected").text();
+        			}
+        			return false;
+        		}
+			});
+
 			duadList.push(tempLanPairObj);
 			productInfo.languagePairInfoList = duadList;
 			
@@ -286,8 +306,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 						if(baseInfo.translateType == 0) { //文字翻译
 							window.location.href =  _base + "/p/customer/order/payOrder/"+data.data;
 						} else {
-							
-							//文档翻译，跳到待报价页面，暂缺
+							//文档翻译，跳到待报价页面
+							window.location.href =  _base + "/p/customer/order/orderOffer";
 						}
 					} else { //用户未登陆
 						window.location.href = _base + "/p/order/orderSubmit?orderType=text";
@@ -324,7 +344,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				success: function (data) {
 					if ("1" === data.statusCode) {
 						var unit;
-						if (data.data.currencyUnit === "1") 
+						if (data.data.currencyUnit === "1")
 							unit = $.i18n.prop('order.yuan');
 						else
 							unit = $.i18n.prop('order.meiyuan');
@@ -427,6 +447,14 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		},
 		
 		_saveContact:function() {
+			var _this= this;
+        	var formValidator=_this._initValidate();
+			formValidator.form();
+			if(!$("#textOrderForm").valid()){
+				//alert('验证不通过！！！！！');
+				return;
+			}
+
 			$("#saveContactDiv").hide();
 			
 			$("#editContactDiv").find('p').eq(0).html($("#saveContactDiv").find('input').eq(0).val());
@@ -476,20 +504,20 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			var pattern = $("#saveContactDiv").find('option:selected').attr('exp');
 			$("#phoneNum").attr('pattern',pattern);
 		},
-		
+
 		//格式化金钱
 		fmoney:function (s, n) {
 			var result = '0.00';
 			if(isNaN(s) || !s){
 				return result;
 			}
-			
+
 			n = n > 0 && n <= 20 ? n : 2;
 			s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
 			var l = s.split(".")[0].split("").reverse(),
 			r = s.split(".")[1];
 			var t = "";
-			for(var i = 0; i < l.length; i ++ ){   
+			for(var i = 0; i < l.length; i ++ ){
 				t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
 			}
 			return t.split("").reverse().join("") + "." + r;

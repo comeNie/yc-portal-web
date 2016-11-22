@@ -73,7 +73,7 @@
   						<c:forEach items="${duadList}" var="duad">
   						<c:if test="${duad.orderType == 2}">
 	  						<p>
-	  							<span><input name="duad" type="checkbox" class="radio" value="${duad.duadId}"></span>
+	  							<span><input name="duad" type="checkbox" class="radio" value="${duad.duadId}" duadZh="${duad.sourceCn}${duad.targetCn}" duadEn="${duad.sourceEn}${duad.targetEn}"></span>
 	  							<c:choose>
 		  							<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">
 		  								<span name="${duad.duadId}">${duad.sourceCn}${duad.targetCn}</span>
