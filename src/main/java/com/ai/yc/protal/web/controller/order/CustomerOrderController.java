@@ -237,25 +237,19 @@ public class CustomerOrderController {
     public String createTextView(
             @PathVariable("orderId") Long orderId, @RequestParam(value = "unit",required = false) String unit,
             Model uiModel){
-
+        String resultView = "order/payOrder";//订单支付页面
         IOrderFeeQuerySV iOrderFeeQuerySV = DubboConsumerFactory.getService(IOrderFeeQuerySV.class);
         OrderFeeQueryRequest feeQueryRequest = new OrderFeeQueryRequest();
         feeQueryRequest.setOrderId(orderId);
         OrderFeeQueryResponse feeQueryResponse = iOrderFeeQuerySV.orderFeeQuery(feeQueryRequest);
         OrderFeeInfo orderFeeInfo = feeQueryResponse.getOrderFeeInfo();
 
-//TODO... 模拟数据
-//        OrderFeeQueryResponse feeQueryResponse = new OrderFeeQueryResponse();
-//        OrderFeeInfo orderFeeInfo = new OrderFeeInfo();
-//        //获取订单价格,币种
-//        feeQueryResponse.setOrderFeeInfo(orderFeeInfo);
-//        //模拟币种
-//        orderFeeInfo.setCurrencyUnit(unit);
-//        //总费用
-//        orderFeeInfo.setTotalFee(100000l);
-
+        //若订单金额等于0,则表示待报价
+        if(orderFeeInfo.getTotalFee().equals(0l)){
+            resultView = "order/orderOffer";
+        }
         //若是人民币,需要获取账户余额
-        if(Constants.CURRENCTY_UNIT_RMB.equals(orderFeeInfo.getCurrencyUnit())){
+        else if(Constants.CURRENCTY_UNIT_RMB.equals(orderFeeInfo.getCurrencyUnit())){
             AccountBalanceInfo balanceInfo = balanceService.queryOfUser(UserUtil.getUserId());
             //账户余额信息
             uiModel.addAttribute("balanceInfo",balanceInfo);
@@ -267,7 +261,7 @@ public class CustomerOrderController {
         uiModel.addAttribute("orderId",orderId);
         //订单信息
         uiModel.addAttribute("orderFee",feeQueryResponse.getOrderFeeInfo());
-        return "order/payOrder";
+        return resultView;
     }
 
     /**
