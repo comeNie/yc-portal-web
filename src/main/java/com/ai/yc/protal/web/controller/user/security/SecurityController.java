@@ -220,17 +220,17 @@ public class SecurityController {
 		model.put("isexistpaypassword", isexistloginpassword);
 
 		if (isexistemail == true) {
-			securitylevel += 25;
+			securitylevel += 33;
 		}
 		if (isexistphone == true) {
-			securitylevel += 25;
+			securitylevel += 33;
 		}
 		if (isexistloginpassword == true) {
-			securitylevel += 25;
+			securitylevel += 34;
 		}
-		if (isexistpaypassword == true) {
-			securitylevel += 25;
-		}
+//		if (isexistpaypassword == true) {
+//			securitylevel += 25;
+//		}
 
 		// sec level
 		model.put("securitylevel", securitylevel);
