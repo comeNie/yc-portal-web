@@ -32,13 +32,13 @@
   					<!-- 全部订单 -->
   					<li><a href="javaScript:void(0);" name="displayFlagA" class="current"  value=""><spring:message code="myOrder.allOrder"/></a></li>
   					<!-- 待支付 -->
-  					<li><a href="javaScript:void(0);" name="displayFlagA" value="11"><spring:message code="myOrder.status.tobePay"/>(${UnPaidCount})</a></li>
+  					<li><a href="javaScript:void(0);" name="displayFlagA" value="11"><spring:message code="myOrder.status.tobePay"/>(${CountMap["11"]})</a></li>
   					<!-- 翻译中 -->
-  					<li><a href="javaScript:void(0);" name="displayFlagA" value="23"><spring:message code="myOrder.status.translating"/>(${TranslateCount})</a></li>
+  					<li><a href="javaScript:void(0);" name="displayFlagA" value="23"><spring:message code="myOrder.status.translating"/>(${CountMap["23"]})</a></li>
   					<!-- 待确认 -->
-  					<li><a href="javaScript:void(0);" name="displayFlagA" value="50"><spring:message code="myOrder.status.tobeConfirm"/>(${UnConfirmCount})</a></li>
+  					<li><a href="javaScript:void(0);" name="displayFlagA" value="50"><spring:message code="myOrder.status.tobeConfirm"/>(${CountMap["50"]})</a></li>
   					<!-- 待评价 -->
-  					<li><a href="javaScript:void(0);" name="displayFlagA" value="52"><spring:message code="myOrder.status.tobeEvaluated"/>(${UnEvaluateCount})</a></li>	
+  					<li><a href="javaScript:void(0);" name="displayFlagA" value="52"><spring:message code="myOrder.status.tobeEvaluated"/>(${CountMap["52"]})</a></li>	
   				</ul>
   			</div>
   			<div id="table-da1">
@@ -52,6 +52,8 @@
   						<p><spring:message code="myOrder.orderStatus"/></p> 
   						<p>
 	  						<select class="select select-small radius" name="displayFlag" id="displayFlag">
+	  							<!-- 全部 -->
+	  							<option value="" selected="selected"><spring:message code="myOrder.allOrder"/></option>
 	  							<!-- 待支付 -->
 	  							<option value="11"><spring:message code="myOrder.status.tobePay"/></option>
   								<!--待报价 -->
@@ -213,6 +215,7 @@
 			{{else displayFlag == '23'}}
 				<!-- 翻译中  -->
 				<td><spring:message code="myOrder.status.translating"/></td>
+				<td></td>
 			{{else displayFlag == '50'}}
 				<!-- 待确认  -->
 				<td><spring:message code="myOrder.status.tobeConfirm"/></td>

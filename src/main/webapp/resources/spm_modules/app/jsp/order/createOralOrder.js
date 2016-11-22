@@ -280,7 +280,7 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 				},
 				success: function (data) {
 					if ("OK" === data.statusInfo) {
-						//跳到待报价页面
+						//跳到 待报价页面
 						window.location.href =  _base + "/p/customer/order/orderOffer";
 					} else { //用户未登陆
 						window.location.href = _base + "/p/order/orderSubmit?orderType=oral";

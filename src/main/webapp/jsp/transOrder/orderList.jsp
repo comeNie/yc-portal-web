@@ -30,9 +30,9 @@
 	 					<!--  全部订单 -->
 	 					<li><a href="javaScript:void(0);"  class="current" state=""><spring:message code="myOrder.allOrder"/></a></li>
 	 					<!-- 已领取  -->
-	 					<li><a href="javaScript:void(0);" state="21"><spring:message code="myOrder.status.Claimed"/>(${ReceivedCount})</a></li>
+	 					<li><a href="javaScript:void(0);" state="21"><spring:message code="myOrder.status.Claimed"/>(${CountMap["21"]})</a></li>
 	 					<!-- 翻译中 -->
-	 					<li><a href="javaScript:void(0);" state="23"><spring:message code="myOrder.status.translating"/>(${TranteCount})</a></li>
+	 					<li><a href="javaScript:void(0);" state="23"><spring:message code="myOrder.status.translating"/>(${CountMap["23"]})</a></li>
 	 				</ul>
 	 			</div>
 	 			<div id="table-da1">
@@ -51,7 +51,7 @@
 		 						<p>
 		 							<select class="select select-small radius"  name="state" id="state">
 		 								<!-- 全部  -->
-		 								<option value=""><spring:message code="myOrder.translatingContent.all"/></option>
+		 								<option value="" selected="selected"><spring:message code="myOrder.translatingContent.all"/></option>
 		 								<!-- 已领取 -->
 		 								<option value="21"><spring:message code="myOrder.status.Claimed"/></option>
 		 								<!-- 已分配  -->

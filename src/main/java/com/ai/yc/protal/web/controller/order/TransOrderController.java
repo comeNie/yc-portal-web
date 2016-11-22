@@ -92,20 +92,9 @@ public class TransOrderController {
             QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
             ordCountReq.setUserId(userId);
             
-            // 21：已领取
-            ordCountReq.setDisplayFlag("21");
             QueryOrdCountResponse ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            uiModel.addAttribute("ReceivedCount", ordCountRes.getCountNumber());
+            uiModel.addAttribute("CountMap", ordCountRes.getCountMap());
             
-            //211：已分配 
-            ordCountReq.setDisplayFlag("211");
-            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            uiModel.addAttribute("AssignedCount", ordCountRes.getCountNumber());
-            
-            //23：翻译中 
-            ordCountReq.setDisplayFlag("23");
-            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            uiModel.addAttribute("TranteCount", ordCountRes.getCountNumber());
             
             //查询译员信息 TODO暂时关闭
 //            IYCUserServiceSV iycUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);

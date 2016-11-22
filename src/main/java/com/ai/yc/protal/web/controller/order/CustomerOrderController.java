@@ -97,25 +97,9 @@ public class CustomerOrderController {
             QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
             ordCountReq.setUserId(userId);
             
-            //待支付
-            ordCountReq.setDisplayFlag("11");
             QueryOrdCountResponse ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            uiModel.addAttribute("UnPaidCount", ordCountRes.getCountNumber());
-            
-            //翻译中
-            ordCountReq.setDisplayFlag("23");
-            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            uiModel.addAttribute("TranslateCount", ordCountRes.getCountNumber());
-            
-            //待确认
-            ordCountReq.setDisplayFlag("50");
-            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            uiModel.addAttribute("UnConfirmCount", ordCountRes.getCountNumber());
-            
-            //待评价
-            ordCountReq.setDisplayFlag("52");
-            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            uiModel.addAttribute("UnEvaluateCount", ordCountRes.getCountNumber());
+            LOGGER.info(JSONObject.toJSONString(ordCountRes));
+            uiModel.addAttribute("CountMap", ordCountRes.getCountMap());
             
             uiModel.addAttribute("userId", UserUtil.getUserId());
         } catch (Exception e) {
@@ -141,11 +125,12 @@ public class CustomerOrderController {
         String stateListStr = request.getParameter("stateListStr"); //后台、译员 订单状态
         String lspRole = request.getParameter("lspRole"); //译员角色
         try {
-
+            //如果是LSP的管理员或项目经理
             if ("12".equals(lspRole) || "11".equals(lspRole)) {
                 orderReq.setInterperId(null);
                 orderReq.setUserId(null);
-            } else {
+            } //如果不是LSP的管理员或项目经理,则清除LSP的标识
+            else {
                 orderReq.setLspId(null);
             }
 
@@ -237,25 +222,19 @@ public class CustomerOrderController {
     public String createTextView(
             @PathVariable("orderId") Long orderId, @RequestParam(value = "unit",required = false) String unit,
             Model uiModel){
-
+        String resultView = "order/payOrder";//订单支付页面
         IOrderFeeQuerySV iOrderFeeQuerySV = DubboConsumerFactory.getService(IOrderFeeQuerySV.class);
         OrderFeeQueryRequest feeQueryRequest = new OrderFeeQueryRequest();
         feeQueryRequest.setOrderId(orderId);
         OrderFeeQueryResponse feeQueryResponse = iOrderFeeQuerySV.orderFeeQuery(feeQueryRequest);
         OrderFeeInfo orderFeeInfo = feeQueryResponse.getOrderFeeInfo();
 
-//TODO... 模拟数据
-//        OrderFeeQueryResponse feeQueryResponse = new OrderFeeQueryResponse();
-//        OrderFeeInfo orderFeeInfo = new OrderFeeInfo();
-//        //获取订单价格,币种
-//        feeQueryResponse.setOrderFeeInfo(orderFeeInfo);
-//        //模拟币种
-//        orderFeeInfo.setCurrencyUnit(unit);
-//        //总费用
-//        orderFeeInfo.setTotalFee(100000l);
-
+        //若订单金额等于0,则表示待报价
+        if(orderFeeInfo.getTotalFee().equals(0l)){
+            resultView = "order/orderOffer";
+        }
         //若是人民币,需要获取账户余额
-        if(Constants.CURRENCTY_UNIT_RMB.equals(orderFeeInfo.getCurrencyUnit())){
+        else if(Constants.CURRENCTY_UNIT_RMB.equals(orderFeeInfo.getCurrencyUnit())){
             AccountBalanceInfo balanceInfo = balanceService.queryOfUser(UserUtil.getUserId());
             //账户余额信息
             uiModel.addAttribute("balanceInfo",balanceInfo);
@@ -267,7 +246,7 @@ public class CustomerOrderController {
         uiModel.addAttribute("orderId",orderId);
         //订单信息
         uiModel.addAttribute("orderFee",feeQueryResponse.getOrderFeeInfo());
-        return "order/payOrder";
+        return resultView;
     }
 
     /**
