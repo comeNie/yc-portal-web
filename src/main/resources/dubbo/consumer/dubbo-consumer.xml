@@ -35,8 +35,6 @@
 		interface="com.ai.yc.order.api.autooffer.interfaces.IQueryAutoOfferSV" />
 	<dubbo:reference id="ITranslateSaveSV" registry="ycRegistry"
 		interface="com.ai.yc.order.api.translatesave.interfaces.ITranslateSaveSV" />
-	<dubbo:reference id="iQueryAutoOfferSV" registry="ycRegistry"
-			interface="com.ai.yc.order.api.autooffer.interfaces.IQueryAutoOfferSV"/>
 	<!-- 注册 -->
 	<dubbo:reference id="iYCUserServiceSV" registry="ycRegistry"
 		interface="com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV" />
