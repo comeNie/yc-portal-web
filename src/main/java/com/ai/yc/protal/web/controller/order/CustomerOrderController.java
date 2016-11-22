@@ -96,26 +96,16 @@ public class CustomerOrderController {
             IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
             QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
             ordCountReq.setUserId(userId);
-            
-            //待支付
-            ordCountReq.setDisplayFlag("11");
             QueryOrdCountResponse ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            uiModel.addAttribute("UnPaidCount", ordCountRes.getCountNumber());
-            
+            Map<String,Integer> stateCount = ordCountRes.getCountMap();
+            //待支付
+            uiModel.addAttribute("UnPaidCount", stateCount.get("11"));
             //翻译中
-            ordCountReq.setDisplayFlag("23");
-            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            uiModel.addAttribute("TranslateCount", ordCountRes.getCountNumber());
-            
+            uiModel.addAttribute("TranslateCount", stateCount.get("23"));
             //待确认
-            ordCountReq.setDisplayFlag("50");
-            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            uiModel.addAttribute("UnConfirmCount", ordCountRes.getCountNumber());
-            
+            uiModel.addAttribute("UnConfirmCount", stateCount.get("50"));
             //待评价
-            ordCountReq.setDisplayFlag("52");
-            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            uiModel.addAttribute("UnEvaluateCount", ordCountRes.getCountNumber());
+            uiModel.addAttribute("UnEvaluateCount", stateCount.get("52"));
             
             uiModel.addAttribute("userId", UserUtil.getUserId());
         } catch (Exception e) {
@@ -141,11 +131,12 @@ public class CustomerOrderController {
         String stateListStr = request.getParameter("stateListStr"); //后台、译员 订单状态
         String lspRole = request.getParameter("lspRole"); //译员角色
         try {
-
+            //如果是LSP的管理员或项目经理
             if ("12".equals(lspRole) || "11".equals(lspRole)) {
                 orderReq.setInterperId(null);
                 orderReq.setUserId(null);
-            } else {
+            }//如果不是LSP的管理员或项目经理,则清除LSP的标识
+            else {
                 orderReq.setLspId(null);
             }
 
