@@ -79,14 +79,14 @@
 											<p id="telephone">${user.mobile}</p>
 										</li>
 										<li>
-											<p class="word">动态码:</p>
+											<p class="word"><spring:message code="ycregister.dynamiCode" /></p>
 											<p>
 												<input id="phoneDynamicode" type="text" class="int-text int-in radius">
 											</p>
 											<p>
 												<input type="button" id="send_dynamicode_btn"
 													class="btn border-green border-sma radius btn-medium"
-													value="获取动态码">
+													value="<spring:message code="ycregister.getDynamiCode"/>">
 											</p>
 										</li>
 									</ul>
@@ -96,7 +96,7 @@
 								<!--按钮-->
 								<div class="recharge-btn">
 									<input type="button" id="next-bt1"
-										class="btn btn-green btn-xxxlarge radius10" value="下一步">
+										class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycaccountcenter.updatePassword.next"/>">
 								</div>
 							</div>
 							<div class="binding" id="next2">
@@ -131,20 +131,20 @@
 								<div class="recharge-form-label mt-30 ">
 									<ul>
 									<li>
-		 								<label class="ml-70" id="passwordMsg" style="display: none;">输入账号错误</label>
-		 								<p class="word">密码:</p>
-		 								<p><input type="password" class="int-text int-xlarge radius" id="password"></p>
+		 								<label class="ml-70" id="passwordMsg" style="display: none;"></label>
+		 								<p class="word"><spring:message code="ycregister.password" /></p>
+		 								<p><input type="password" maxlength="16" class="int-text int-xlarge radius" id="password"></p>
 		 							</li>
 		 							<li>
-		 								<p class="word">确认密码:</p>
-		 								<p><input type="password" class="int-text int-xlarge radius" id="confirmPassword"></p>
+		 								<p class="word"><spring:message code="ycregister.confirmPassword" /></p>
+		 								<p><input type="password" maxlength="16"  class="int-text int-xlarge radius" id="confirmPassword"></p>
 		 							</li>
 									</ul>
 								</div>
 								<!--按钮-->
 								<div class="recharge-btn">
 									<input type="button" id="next-bt2"
-										class="btn btn-green btn-xxxlarge radius10" value="提交">
+										class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycaccountcenter.updatePassword.submit"/>">
 								</div>
 							</div>
 							<div class="binding" id="next3">
@@ -179,7 +179,7 @@
 								<div class="recharge-success mt-40">
 									<ul>
 										<li><img src="${uedroot}/images/rech-win.png"></li>
-										<li class="word"><spring:message code="ycaccountcenter.updatePassword.step2"/>成功</li>
+										<li class="word"><spring:message code="ycaccountcenter.updatePayPassword.success"/></li>
 									</ul>
 								</div>
 
@@ -222,7 +222,7 @@
 											<p id="passwordEmail">${user.email}</p>
 										</li>
 										<li>
-											<p class="word">验证码:</p>
+											<p class="word"><spring:message code="ycregister.dynamiCode" /></p>
  								            <p><input type="text" class="int-text int-in radius" id="emailIdentifyCode"></p>
  								            <p><input type="button" class="btn border-green border-sma radius btn-medium" value="<spring:message code="ycaccountcenter.updatePassword.sendEmailCode"/>" id="sendEmailBtn"></p>
  								            <p><a href="javascript:void(0);" id="goEmail"><spring:message code="ycaccountcenter.updatePassword.goEmail"/></a></p>
@@ -234,7 +234,7 @@
 								<!--按钮-->
 								<div class="recharge-btn">
 									<input type="button" id="next-bt4"
-										class="btn btn-green btn-xxxlarge radius10" value="下一步">
+										class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycaccountcenter.updatePassword.next"/>">
 								</div>
 							</div>
 							<div class="binding" id="next5">
@@ -270,19 +270,19 @@
 									<ul>
 										<li>
 			 								<label class="ml-70" id="emailPasswordErrMsg" style="display: none;"></label>
-			 								<p class="word">密码:</p>
-			 								<p><input type="password" class="int-text int-xlarge radius" id="emailPassword"></p>
+			 								<p class="word"><spring:message code="ycregister.password" /></p>
+			 								<p><input maxlength="16" type="password" class="int-text int-xlarge radius" id="emailPassword"></p>
 	 									</li>
 			 							<li>
-			 								<p class="word">确认密码:</p>
-			 								<p><input type="password" class="int-text int-xlarge radius" id="emailConfirmPassword"></p>
+			 								<p class="word"><spring:message code="ycregister.confirmPassword" /></p>
+			 								<p><input maxlength="16" type="password" class="int-text int-xlarge radius" id="emailConfirmPassword"></p>
 			 							</li>
 									</ul>
 								</div>
 								<!--按钮-->
 								<div class="recharge-btn">
 									<input type="button" id="next-bt5"
-										class="btn btn-green btn-xxxlarge radius10" value="提交">
+										class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycaccountcenter.updatePassword.submit"/>">
 								</div>
 							</div>
 							<div class="binding" id="next6">
@@ -317,7 +317,7 @@
 								<div class="recharge-success mt-40">
 									<ul>
 										<li><img src="${uedroot}/images/rech-win.png"></li>
-										<li class="word">修改支付密码成功</li>
+										<li class="word"><spring:message code="ycaccountcenter.updatePayPassword.success"/></li>
 									</ul>
 								</div>
 
@@ -340,6 +340,19 @@
 <script type="text/javascript">
 	var phone = "${user.mobile}";
 	var email = "${user.email}";
+	 var updatePayPasswordMsg ={
+	    		"sendEmailCode":'<spring:message code="ycaccountcenter.updatePassword.sendEmailCode"/>',
+	    		"dynamicCodeEmpty":'<spring:message code="ycaccountcenter.updatePassword.dynamicCodeEmpty"/>',
+	    		"showOkValueMsg" : '<spring:message code="ycaccountcenter.js.showOkValueMsg"/>',
+	    		"showTitleMsg" : '<spring:message code="ycaccountcenter.js.showTitleMsg"/>',
+	    		"notBindingPhone" : '<spring:message code="ycaccountcenter.updatePassword.notBindingPhone"/>',
+	    		"notBindingEmail" : '<spring:message code="ycaccountcenter.updatePassword.notBindingEmail"/>',
+	    		"passwordEmpty" : '<spring:message code="ycregisterMsg.passwordEmpty"/>',
+	    		"passwordError" : '<spring:message code="ycregisterMsg.passwordError"/>',
+	    		"confirmPasswordError" : '<spring:message code="ycregisterMsg.confirmPasswordError"/>',
+	    		'getDynamiCode':'<spring:message code="ycregister.getDynamiCode"/>',
+	    		'sendMailError':'<spring:message code="ycaccountcenter.updatePassword.sendMailError"/>'
+	    };
 	var pager;
 	(function() {
 		seajs.use('app/jsp/user/security/updatePayPassword', function(updatePayPasswordPager) {

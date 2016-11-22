@@ -206,7 +206,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 			if (confirmPasswordVal != passwordVal) {
 				//$("#emailPasswordErrMsg").text("密码不一致");
 				//$("#emailPasswordErrMsg").show();
-				showMsg(confirmPasswordError);
+				showMsg(updatePasswordMsg.confirmPasswordError);
 				return false;
 			}
 			ajaxController.ajax({
