@@ -30,9 +30,9 @@
 	 					<!--  全部订单 -->
 	 					<li><a href="javaScript:void(0);"  class="current" state=""><spring:message code="myOrder.allOrder"/></a></li>
 	 					<!-- 已领取  -->
-	 					<li><a href="javaScript:void(0);" state="21"><spring:message code="myOrder.status.Claimed"/>(${CountMap["21"]})</a></li>
+	 					<li><a href="javaScript:void(0);" state="21"><spring:message code="myOrder.status.Claimed"/>(${ReceivedCount})</a></li>
 	 					<!-- 翻译中 -->
-	 					<li><a href="javaScript:void(0);" state="23"><spring:message code="myOrder.status.translating"/>(${CountMap["23"]})</a></li>
+	 					<li><a href="javaScript:void(0);" state="23"><spring:message code="myOrder.status.translating"/>(${TranteCount})</a></li>
 	 				</ul>
 	 			</div>
 	 			<div id="table-da1">
@@ -283,6 +283,7 @@
 
 <script type="text/javascript">
 var pager;
+var current = "orderList";
 (function () {
 	seajs.use('app/jsp/transOrder/orderList', function(oderListPage) {
 		pager = new oderListPage({element : document.body});

@@ -160,9 +160,10 @@ public class SecurityController {
 					.getService(IOrderQuerySV.class);
 			QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
 			ordCountReq.setUserId(userId);
-			ordCountReq.setDisplayFlag(status);
+			
 			ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-			result = ordCountRes.getCountNumber();
+			
+			
 		} catch (Exception e) {
 			LOG.error("查询订单数量失败:", e);
 			if (ordCountRes != null) {

@@ -32,13 +32,13 @@
   					<!-- 全部订单 -->
   					<li><a href="javaScript:void(0);" name="displayFlagA" class="current"  value=""><spring:message code="myOrder.allOrder"/></a></li>
   					<!-- 待支付 -->
-  					<li><a href="javaScript:void(0);" name="displayFlagA" value="11"><spring:message code="myOrder.status.tobePay"/>(${CountMap["11"]})</a></li>
+  					<li><a href="javaScript:void(0);" name="displayFlagA" value="11"><spring:message code="myOrder.status.tobePay"/>(${UnPaidCount})</a></li>
   					<!-- 翻译中 -->
-  					<li><a href="javaScript:void(0);" name="displayFlagA" value="23"><spring:message code="myOrder.status.translating"/>(${CountMap["23"]})</a></li>
+  					<li><a href="javaScript:void(0);" name="displayFlagA" value="23"><spring:message code="myOrder.status.translating"/>(${TranslateCount})</a></li>
   					<!-- 待确认 -->
-  					<li><a href="javaScript:void(0);" name="displayFlagA" value="50"><spring:message code="myOrder.status.tobeConfirm"/>(${CountMap["50"]})</a></li>
+  					<li><a href="javaScript:void(0);" name="displayFlagA" value="50"><spring:message code="myOrder.status.tobeConfirm"/>(${UnConfirmCount})</a></li>
   					<!-- 待评价 -->
-  					<li><a href="javaScript:void(0);" name="displayFlagA" value="52"><spring:message code="myOrder.status.tobeEvaluated"/>(${CountMap["52"]})</a></li>	
+  					<li><a href="javaScript:void(0);" name="displayFlagA" value="52"><spring:message code="myOrder.status.tobeEvaluated"/>(${UnEvaluateCount})</a></li>	
   				</ul>
   			</div>
   			<div id="table-da1">
@@ -260,6 +260,7 @@
 </script>
 <script type="text/javascript">
 var pager;
+var current = "orderList";
 (function () {
 	seajs.use('app/jsp/customerOrder/orderList', function(oderListPage) {
 		pager = new oderListPage({element : document.body});

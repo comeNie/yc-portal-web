@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html;charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title><spring:message code="ycaccountcenter.title"/> </title>
 
@@ -12,7 +12,7 @@
 </head>
 <body>
   <!--头部-->
-  <jsp:include page="/inc/userTopMenu.jsp"/>
+ <%@ include file="/inc/userTopMenu.jsp"%>
 
   <!--二级主体-->
   <!--外侧背景-->
@@ -21,9 +21,7 @@
   <div class="cloud-wrapper">
   	<!--左侧菜单-->
   	<div class="left-subnav">
-  	<jsp:include page="/inc/leftmenu.jsp">
-  	<jsp:param name="current" value="seccenterSettings" />
-  	</jsp:include>
+  	<%@ include file="/inc/leftmenu.jsp"%>
   	</div>
   	<!--右侧内容-->
   	<!--右侧大块-->
@@ -104,7 +102,7 @@
 <script src="${_base}/resources/spm_modules/radia/radialIndicator.js"></script>
 
 <script type="text/javascript">
-
+   var current = "seccenterSettings";
 	var pager;
 	(function() {
 		seajs.use('app/jsp/user/security/securitycenter', function(secXXXPager) {

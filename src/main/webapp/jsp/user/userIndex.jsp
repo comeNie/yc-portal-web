@@ -1,18 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html;charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>首页</title>
+<title></title>
 <%@ include file="/inc/inc.jsp"%>
 <%@ include file="/inc/incJs.jsp"%>
 </head>
 <body>
 	<!--头部-->
-	<jsp:include page="/inc/userTopMenu.jsp"/>
+	<%@ include file="/inc/userTopMenu.jsp"%>
 	<!--二级主体-->
 	<!--外侧背景-->
 	<div class="cloud-container">
@@ -20,9 +19,7 @@
 		<div class="cloud-wrapper">
 			<!--左侧菜单-->
 			<div class="left-subnav">
-				<jsp:include page="/inc/leftmenu.jsp">
-  	              <jsp:param name="current" value="index" />
-  	           </jsp:include>
+				<%@ include file="/inc/leftmenu.jsp"%>
 			</div>
 			<!--右侧内容-->
 			<!--右侧大块-->
@@ -159,15 +156,18 @@
 					         {{/if}}
 				          {{/for}}
                         </td>
+					{{if displayFlag == '13'}}
+					 <td>————</td>
+					{{else }}
 						<td>
-                             {{:~liToYuan(totalFee)}}
-				             {{if  currencyUnit == '1'}}
-					         <spring:message code="myOrder.rmb"/>
+                            {{if  currencyUnit == '1'}}
+					        <spring:message code="myOrder.rmbSame" arguments="{{:~liToYuan(totalFee)}}" />
 				              {{else }}
-					          <spring:message code="myOrder.dollar"/>
+					          <spring:message code="myOrder.dollarSame" arguments="{{:~liToYuan(totalFee)}}" />
 				             {{/if}}
                         </td>
-						{{if  displayFlag == '11'}}
+                    {{/if}}
+				{{if  displayFlag == '11'}}
 				<!-- 待支付  -->
 				<td><spring:message code="myOrder.status.tobePay"/></td>
 			 	<td>
@@ -230,6 +230,7 @@
 	</script>
 	<script type="text/javascript">
 	var pager;
+	var current ="index";
 	(function() {
 		seajs.use('app/jsp/user/userIndex', function(userIndexPager) {
 			pager = new userIndexPager({
@@ -237,7 +238,7 @@
 			});
 			pager.render();
 		});
-		 //订单详情 点击订单标题
+		//订单详情 点击订单标题
 	       $('#order_list').delegate("td[name='translateName']", 'click', function () {
 	       	  window.location.href="${_base}/p/customer/order/"+$(this).parent().parent().find("input[name='orderId']").val();
 	       });
@@ -260,12 +261,8 @@
 	       });
 	       
 	       <%-- 确认订单 --%>
-	       $("#confirmOrder").delegate("input[name='confirmOrder']","click",function(){
-	       	
-	       });
-	       <%-- 延迟确认订单 --%>
-	       $("#confirmOrder").delegate("input[name='lateConfirmOrder']","click",function(){
-	       	
+	       $("#order_list").delegate("input[name='confirmOrder']","click",function(){
+	       		pager._confirm($(this).parents("table").find("input[name='orderId']").val());
 	       });
 	})();
 	</script>

@@ -96,10 +96,21 @@ public class CustomerOrderController {
             IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
             QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
             ordCountReq.setUserId(userId);
-            
+
             QueryOrdCountResponse ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+
             LOGGER.info(JSONObject.toJSONString(ordCountRes));
             uiModel.addAttribute("CountMap", ordCountRes.getCountMap());
+
+            Map<String,Integer> stateCount = ordCountRes.getCountMap();
+            //待支付
+            uiModel.addAttribute("UnPaidCount", stateCount.get("11"));
+            //翻译中
+            uiModel.addAttribute("TranslateCount", stateCount.get("23"));
+            //待确认
+            uiModel.addAttribute("UnConfirmCount", stateCount.get("50"));
+            //待评价
+            uiModel.addAttribute("UnEvaluateCount", stateCount.get("52"));
             
             uiModel.addAttribute("userId", UserUtil.getUserId());
         } catch (Exception e) {
@@ -129,7 +140,7 @@ public class CustomerOrderController {
             if ("12".equals(lspRole) || "11".equals(lspRole)) {
                 orderReq.setInterperId(null);
                 orderReq.setUserId(null);
-            } //如果不是LSP的管理员或项目经理,则清除LSP的标识
+            }//如果不是LSP的管理员或项目经理,则清除LSP的标识
             else {
                 orderReq.setLspId(null);
             }

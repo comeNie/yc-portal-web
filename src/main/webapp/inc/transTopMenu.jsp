@@ -11,8 +11,8 @@
   		<!--导航-->
   		<div class="cloud-nav">
   			<ul>
-  				<li ><a href="#"><spring:message code="user.topMenu.iClient"/></a></li>
-  				<li class="current"><a href="#"><spring:message code="user.topMenu.iLsp"/></a></li>
+  				<li ><a href="${_base}/p/security/index"><spring:message code="user.topMenu.iClient"/></a></li>
+  				<li class="current"><a href="${_base}/p/security/interpreterIndex"><spring:message code="user.topMenu.iLsp"/></a></li>
   			</ul>
   		</div>
   		<!--导航-->
