@@ -83,23 +83,35 @@
             <div class="before-translation ml-20">
                 <textarea  class="int-post"  id="transRes" readonly="readonly"></textarea>
                 <div class="post-cion">
-               		<!-- 播放器 -->
+                	<!-- 播放器 -->
                 	<audio src="" controls="controls" id="audioPlay" hidden>
 						Your browser does not support the audio tag.
 					</audio>
-                    <p>
-                        <a id="copyText" href="javaScript:void(0)" class="ord-icon" data-clipboard-target="transRes"><i class="icon iconfont">&#xe62e;</i></a>
-                        <a id="playControl" href="javaScript:void(0)" class="radio-icon"><i class="icon iconfont">&#xe61b;</i></a>
-                        <%--<a href="javaScript:void(0)" class="stars-icon"><i class="icon iconfont">&#xe754;</i></a>--%>
-                    </p>
-                    <p class="right">
-                        <a href="javaScript:void(0)" class="edit-icon">
-                            <span><i class="icon iconfont">&#xe62a;</i></span>
-                            <%--翻译有误--%>
-                            <span><spring:message code="home.translation_error_btn"/>?</span>
-                        </a>
-                    </p>
-                </div>
+					<p>
+						<a id="copyText" href="javaScript:void(0)" class="ord-icon"><i class="icon iconfont">&#xe62e;</i></a>
+						<a  id="playControl" href="javaScript:void(0)" class="radio-icon"><i class="icon iconfont">&#xe61b;</i></a>
+						 <!--<a href="javaScript:void(0)" class="stars-icon"><i class="icon iconfont">&#xe754;</i></a>-->
+					</p>
+					<p class="right" id="error">
+						<a href="javaScript:void(0)" class="edit-icon">
+							<span><i class="icon iconfont">&#xe62a;</i></span>
+							<!-- 翻译有误 -->
+							<span><spring:message code="home.translation_error_btn"/>?</span>
+						</a>
+					</p>
+					<p class="right" id="error-oc"  style="display: none;">
+						<a href="javaScript:void(0)" class="edit-icon" id="preser-btn">
+							<span><i class="icon iconfont">&#xe612;</i></span>
+							<!-- 保存 -->
+							<span><spring:message code="home.save"/></span>
+						</a>
+						<a href="javaScript:void(0)"  class="edit-icon"  id="preser-close">
+							<span><i class="icon iconfont">&#xe611;</i></span>
+							<!-- 取消 -->
+							<span><spring:message code="home.cancel"/></span>
+						</a>
+					</p>
+				</div>
             </div>
         </div>
         <!--file-->

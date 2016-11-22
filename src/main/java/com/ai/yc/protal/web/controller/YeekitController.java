@@ -73,7 +73,8 @@ public class YeekitController {
     @RequestMapping(value = "/translateLan")  
     public ResponseData<String> translateLan(String text) {  
         ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-        String lan = "";
+        //TODO 
+        String lan = "English";
         try {
             lan = yeekitService.detection(text);
         } catch (Exception e) {
@@ -84,25 +85,5 @@ public class YeekitController {
         resData.setData(lan);
         return resData;
     }
-    
-    /**
-     * 检测语言和文本是否一致，一致返回true，用于jquery remote验证
-     * @param text
-     * @param lan
-     * @return
-     * @author mimw
-     */
-    @ResponseBody
-    @RequestMapping(value = "/verifyTranslateLan")  
-    public boolean verifyTranslateLan(String text, String lan) {
-        try {
-            if (yeekitService.detection(text).equalsIgnoreCase(lan)) {
-                return true;
-            } 
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            return false;
-        }
-        return false;
-    }
+  
 }

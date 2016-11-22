@@ -24,7 +24,7 @@ define('app/jsp/transOrder/orderList', function (require, exports, module) {
     	//事件代理
     	events: {
 			"click #submitQuery":"_orderList",
-			"change #state":"_orderList",
+			"change #state":"_change",
 			"change #fieldCode":"_orderList",
 			"change #useCode":"_orderList",
 			"change #stateListStr":"_orderList",	
@@ -34,6 +34,13 @@ define('app/jsp/transOrder/orderList', function (require, exports, module) {
     	setup: function () {
     		orderListPage.superclass.setup.call(this);
     		this._orderList();
+    	},
+    	
+    	//状态改变并查询
+    	_change:function() {
+	    	$(".oder-table a").removeClass('current');
+			$(".oder-table a").eq(0).addClass('current');
+			this._getOrderList();
     	},
     	
         //表单查询订单列表
@@ -47,6 +54,7 @@ define('app/jsp/transOrder/orderList', function (require, exports, module) {
         			'interperId': $("#interperId").val(),
         			'lspId': $("#lspId").val()
         		};
+        	$("#state").val(state);
         	this._getOrderList(reqdata);
         },
         

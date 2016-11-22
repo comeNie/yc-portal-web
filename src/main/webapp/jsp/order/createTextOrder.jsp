@@ -63,7 +63,8 @@
 	  										ordinary="${duad.ordinary}"  ordinaryUrgent="${duad.ordinaryUrgent}" 
 											professional="${duad.professional}"  professionalUrgent="${duad.professionalUrgent}"  
 											publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}" 
-											source="${duad.sourceEn}" targert="${duad.targetEn}"
+											sourceEn="${duad.sourceEn}" targertEn="${duad.targetEn}"
+											sourceCn="${duad.sourceCn}" targertCn="${duad.targetCn}"
 	  									>
 	  										${duad.sourceCn}→${duad.targetCn}</option>
 	  								</c:when>
@@ -72,7 +73,8 @@
 	  										ordinary="${duad.ordinaryDollar}"  ordinaryUrgent="${duad.ourgentDollar}" 
 											professional="${duad.professionalDollar}"  professionalUrgent="${duad.purgentDollar}"  
 											publish="${duad.publishDollar}"  publishUrgent="${duad.puburgentDollar}" 
-											source="${duad.sourceCn}" targert="${duad.targetCn}"
+											sourceEn="${duad.sourceEn}" targertEn="${duad.targetEn}"
+											sourceCn="${duad.sourceCn}" targertCn="${duad.targetCn}"
 	  									>
 	  										${duad.sourceEn}→${duad.targetEn}</option>
 	  								</c:otherwise>
@@ -94,6 +96,8 @@
   					<textarea id="translateContent" name="translateContent" class="int-text textarea-xlarge-100 radius">${sessionScope.orderInfo.productInfo.translateInfo}</textarea></p>
   					<!-- 上传文档btn -->
   					<p class="right"><input type="button" class="btn border-blue radius20 btn-80" value="<spring:message code="order.uploadDoc"/>"  id="fy-btn"></p>
+  					<!-- 清空 -->
+  					<p class="right"><input type="button" class="btn border-blue radius20 btn-80" value="<spring:message code="order.clear" />" id="clear-btn"></p>
   					<label></label>		
   				</div>
   				<div class="translate-int radius bj-ash placeholder" id="fy2" style="display: block;">

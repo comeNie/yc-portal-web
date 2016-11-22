@@ -24,7 +24,7 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
     	//事件代理
     	events: {
 			"click #submitQuery":"_orderList",
-			"change #displayFlag":"_orderList",
+			"change #displayFlag":"_change",
 			"change #translateType":"_orderList"
     	},
     	
@@ -32,6 +32,13 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
     	setup: function () {
     		orderListPage.superclass.setup.call(this);
     		this._orderList();
+    	},
+    	
+    	//改变状态并查询
+    	_change:function() {
+    		$(".oder-table a").removeClass('current');
+    		$(".oder-table a").eq(0).addClass('current');
+    		this._getOrderList();
     	},
     	
         //表单查询订单列表
@@ -44,6 +51,7 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
         	var req = {'displayFlag': displayFlag,
         					'userId': $("#userId").val()
         	};
+        	$("#displayFlag").val(displayFlag);
         	this._getOrderList(req);
         },
         

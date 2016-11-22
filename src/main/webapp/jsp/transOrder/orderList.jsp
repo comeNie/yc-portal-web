@@ -51,7 +51,7 @@
 		 						<p>
 		 							<select class="select select-small radius"  name="state" id="state">
 		 								<!-- 全部  -->
-		 								<option value=""><spring:message code="myOrder.translatingContent.all"/></option>
+		 								<option value="" selected="selected"><spring:message code="myOrder.translatingContent.all"/></option>
 		 								<!-- 已领取 -->
 		 								<option value="21"><spring:message code="myOrder.status.Claimed"/></option>
 		 								<!-- 已分配  -->

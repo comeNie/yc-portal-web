@@ -25,11 +25,14 @@
 			<li id="taskCenter">
 				<a href="${_base}/p/taskcenter/view">
 					<span><i class="icon iconfont">&#xe68e;</i></span>
-					<span>发现订单</span>
+					<%--发现订单--%>
+					<span><spring:message code="ycleftmenu.look.orders"/> </span>
 				</a>
 			</li>
-			<div class="list-p current"><a href="#" class="">订单大厅<span> (99+)</span></a></div>
-			<div class="list-p"><a href="#">分配订单 <span> (7)</span></a></div>
+			<%--订单大厅--%>
+			<div class="list-p"><a href="#" class=""><spring:message code="ycleftmenu.task.center"/><span> (99+)</span></a></div>
+			<%--分配订单--%>
+			<%--<div class="list-p"><a href="#"><spring:message code="ycleftmenu.assign.orders"/><span> (7)</span></a></div>--%>
 			<li id="orderList">
 				<a href="${_base}/p/trans/order/list/view">
 					<span><i class="icon iconfont">&#xe602;</i></span>
@@ -89,7 +92,6 @@
 	</div>
 </div>
   	<script type="text/javascript">
-  	  var current ="${param.current}";
   	  $(function(){
   		var currentEle = $("#"+current);
     	  if(current!=""&&currentEle){
