@@ -6,8 +6,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>翻译下单页</title>
 	<%@ include file="/inc/inc.jsp" %>
+	 <title><spring:message code="order.Translatepage"/></title>
 	<link rel="stylesheet" type="text/css" href="${_base}/resources/spm_modules/webuploader/webuploader.css">
 </head>
 <body>	

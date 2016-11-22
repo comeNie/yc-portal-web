@@ -26,6 +26,7 @@ import com.ai.yc.order.api.translatesave.interfaces.ITranslateSaveSV;
 import com.ai.yc.order.api.translatesave.param.SaveTranslateInfoRequest;
 import com.ai.yc.order.api.translatesave.param.TranslateFileVo;
 import com.ai.yc.protal.web.constants.Constants;
+import com.ai.yc.protal.web.constants.OrderConstants;
 import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
 import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.service.OrderService;
@@ -108,13 +109,13 @@ public class TransOrderController {
 
             Map<String,Integer> stateCount = ordCountRes.getCountMap();;
             // 21：已领取
-            uiModel.addAttribute("ReceivedCount", stateCount.get("21"));
+            uiModel.addAttribute("ReceivedCount", stateCount.get(OrderConstants.State.RECEIVE));
 
             //211：已分配 
-            uiModel.addAttribute("AssignedCount", stateCount.get("211"));
+            uiModel.addAttribute("AssignedCount", stateCount.get(OrderConstants.State.ASSIGNED));
             
             //23：翻译中 
-            uiModel.addAttribute("TranteCount", stateCount.get("23"));
+            uiModel.addAttribute("TranteCount", stateCount.get(OrderConstants.State.TRANSLATING));
             
             //查询译员信息 TODO暂时关闭
 //            IYCUserServiceSV iycUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
@@ -201,7 +202,7 @@ public class TransOrderController {
 //        uiModel.addAttribute("vipLevel",userInfoResponse.getVipLevel());//译员等级
         //TODO... 模拟数据
         uiModel.addAttribute("lspId","");//lsp标识
-        uiModel.addAttribute("lspRole","1");//lsp角色
+        uiModel.addAttribute("lspRole","12");//lsp角色
         uiModel.addAttribute("vipLevel","4");//译员等级
     }
     
@@ -254,8 +255,8 @@ public class TransOrderController {
             IOrderStateUpdateSV iOrderStateUpdateSV = DubboConsumerFactory.getService(IOrderStateUpdateSV.class);
             OrderStateUpdateRequest stateReq = new OrderStateUpdateRequest();
             stateReq.setOrderId(orderId);
-            stateReq.setState("40"); //已提交
-            stateReq.setDisplayFlag("23");
+            stateReq.setState(OrderConstants.State.SUBMITTED); //已提交
+            stateReq.setDisplayFlag(OrderConstants.State.TRANSLATING);
             
             OrderStateUpdateResponse stateRes = iOrderStateUpdateSV.updateState(stateReq);
             resHeader = stateRes.getResponseHeader();

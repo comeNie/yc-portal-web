@@ -126,23 +126,23 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     			},
     			messages: {
     				translateContent: {
-    					required:"请输入翻译内容",
-    					maxlength:"最大长度不能超过{0}",
-    					remote:"您输入的内容和源语言不一致"
+    					required: $.i18n.prop("order.place.error.translation"), //"请输入翻译内容",
+    					maxlength: $.i18n.prop('order.place.error.Maximum'),//"最大长度不能超过{0}",
+    					remote:  $.i18n.prop('order.place.error.contentConsis')//"您输入的内容和源语言不一致"
     				},
     				isAgree: {
-    					required: "请阅读并同意翻译协议",
+    					required: $.i18n.prop('order.place.error.contentConsis')//"请阅读并同意翻译协议",
     				},
     				contactName: {
-    					required: "请输入姓名",
+    					required: $.i18n.prop('order.place.error.name')//"请输入姓名",
     				},
     				phoneNum: {
-    					required:"请输入手机号",
-    					pattern: "请输入正确的手机号"
+    					required: $.i18n.prop('order.place.error.phone'),//"请输入手机号",
+    					pattern: $.i18n.prop('order.place.error.phone1')//"请输入正确的手机号"
     				},
     				email: {
-    					required:"请输入邮箱",
-    					email:"请输入正确的邮箱"
+    					required: $.i18n.prop('order.place.error.email'),//"请输入邮箱",
+    					email: $.i18n.prop('order.place.error.email1')//"请输入正确的邮箱"
     				}
     			}
     		});
@@ -236,6 +236,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			baseInfo.orderLevel = "1";
 			baseInfo.userType = "10"; //"10：个人 11：企业 12：代理人 "??
 			baseInfo.remark = $("#remark").val(); //备注 给译员留言
+			baseInfo.orderDesc=$("#inputFormatConv").val();//格式转换
 			//baseInfo.corporaId
 			//baseInfo.accountId
 				
@@ -320,7 +321,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		_queryAutoOffer:function() {
 			var _this = this;
 			if($("li[fileid]").length > 0) {
-				$("#price").html("<span>请耐心等待报价！</span>");
+				$("#price").html("<span>"+ $.i18n.prop("order.place.waitPrice")+ "</span>");
 				return;
 			}
 			

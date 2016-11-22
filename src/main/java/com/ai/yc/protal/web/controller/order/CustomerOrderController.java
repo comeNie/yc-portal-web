@@ -19,6 +19,7 @@ import com.ai.slp.balance.api.deduct.param.ForegiftDeduct;
 import com.ai.yc.order.api.orderfee.interfaces.IOrderFeeQuerySV;
 import com.ai.yc.order.api.orderfee.param.*;
 import com.ai.yc.protal.web.constants.Constants;
+import com.ai.yc.protal.web.constants.OrderConstants;
 import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
 import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
 import com.ai.yc.protal.web.service.BalanceService;
@@ -104,13 +105,13 @@ public class CustomerOrderController {
 
             Map<String,Integer> stateCount = ordCountRes.getCountMap();
             //待支付
-            uiModel.addAttribute("UnPaidCount", stateCount.get("11"));
+            uiModel.addAttribute("UnPaidCount", stateCount.get(OrderConstants.DisplayState.UN_PAID));
             //翻译中
-            uiModel.addAttribute("TranslateCount", stateCount.get("23"));
+            uiModel.addAttribute("TranslateCount", stateCount.get(OrderConstants.DisplayState.TRANSLATING));
             //待确认
-            uiModel.addAttribute("UnConfirmCount", stateCount.get("50"));
+            uiModel.addAttribute("UnConfirmCount", stateCount.get(OrderConstants.DisplayState.UN_CONFIRM));
             //待评价
-            uiModel.addAttribute("UnEvaluateCount", stateCount.get("52"));
+            uiModel.addAttribute("UnEvaluateCount", stateCount.get(OrderConstants.DisplayState.UN_EVALUATE));
             
             uiModel.addAttribute("userId", UserUtil.getUserId());
         } catch (Exception e) {
@@ -241,7 +242,7 @@ public class CustomerOrderController {
         OrderFeeInfo orderFeeInfo = feeQueryResponse.getOrderFeeInfo();
 
         //若订单金额等于0,则表示待报价
-        if(orderFeeInfo.getTotalFee().equals(0l)){
+        if(orderFeeInfo.getTotalFee().equals(0)){
             resultView = "order/orderOffer";
         }
         //若是人民币,需要获取账户余额
