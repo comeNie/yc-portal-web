@@ -151,41 +151,31 @@ public class SecurityController {
 		return balanceInfo;
 	}
 
-	private int queryOrderStatusCount(String status) {
-		int result = 0;
+	@RequestMapping("/orderStatusCount")
+	@ResponseBody
+	public Map<String, Integer> orderStatusCount(HttpServletRequest request) {
+		String statusList = request.getParameter("statusList");
+		String isInterpreter = request.getParameter("isInterpreter");
 		QueryOrdCountResponse ordCountRes = null;
+		Map<String,Integer> stateCount =null;
 		try {
 			String userId = UserUtil.getUserId();
-			IOrderQuerySV iOrderQuerySV = DubboConsumerFactory
-					.getService(IOrderQuerySV.class);
-			QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
-			ordCountReq.setUserId(userId);
-			
-			ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-			
-			
-		} catch (Exception e) {
+            IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
+            QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
+            if("true".equals(isInterpreter)){
+            	ordCountReq.setInterperId(userId);
+            }else{
+            	ordCountReq.setUserId(userId);
+            }
+            ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+            stateCount = ordCountRes.getCountMap();
+        } catch (Exception e) {
 			LOG.error("查询订单数量失败:", e);
 			if (ordCountRes != null) {
 				LOG.error("查询订单数量失败:", JSON.toJSONString(ordCountRes));
 			}
 		}
-		return result;
-	}
-
-	@RequestMapping("/orderStatusCount")
-	@ResponseBody
-	public Map<String, Integer> orderStatusCount(
-			@RequestParam("statusList") String statusList) {
-		Map<String, Integer> countMap = new HashMap<>();
-		// 查询 订单数量
-		if (statusList != null && statusList.length() > 0) {
-			for (String status : statusList.split(",")) {
-				int count = queryOrderStatusCount(status);
-				countMap.put(status, count);
-			}
-		}
-		return countMap;
+		return stateCount;
 	}
 
 	@RequestMapping("seccenter")
