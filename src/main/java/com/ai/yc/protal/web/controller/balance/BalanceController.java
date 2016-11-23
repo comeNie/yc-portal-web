@@ -45,7 +45,7 @@ public class BalanceController {
     @RequestMapping("/account")
     public String toMyAccount(Model uiModel){
         //帐户余额
-        AccountBalanceInfo balanceInfo =  balanceService.queryOfUser("1234");
+        AccountBalanceInfo balanceInfo =  balanceService.queryOfUser("405411");
 //        if (balanceInfo.equals(null)){
 //
 //        }
@@ -64,7 +64,7 @@ public class BalanceController {
                                                             @RequestParam(value = "pageSize")int pageSize){
         ResponseData<PageInfo<IncomeDetail>> resData =
                 new ResponseData<PageInfo<IncomeDetail>>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-        AccountBalanceInfo balanceInfo =  balanceService.queryOfUser("456");
+        AccountBalanceInfo balanceInfo =  balanceService.queryOfUser("405411");
         IncomeOutQuerySV incomeOutQuerySV =  DubboConsumerFactory.getService(IncomeOutQuerySV.class);
         incomeQueryRequest.setAccountId(balanceInfo.getAccountId());
         incomeQueryRequest.setTenantId(Constants.DEFAULT_TENANT_ID);
