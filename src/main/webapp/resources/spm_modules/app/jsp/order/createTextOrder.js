@@ -31,7 +31,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			"click #fy-btn1": "_inputText",
 			"click #globalRome": "_setPattern",
 			"click #clear-btn": "_clearText",
-			"change #translateContent": "_clearControl",
+			"keyup #translateContent": "_clearControl",
 			"change #selectFormatConv": "_formatControl",
            	},
             
@@ -505,6 +505,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			$("#selectAddedSer").attr("disabled",true);
 			$("#selectFormatConv").attr("disabled",true);
 			$("#inputFormatConv").hide();
+			$("#inputFormatConv").val("");
 		},
 	
 		//上传文档，js控制
@@ -537,10 +538,14 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 
 		//input 格式转换控制
 		_formatControl:function() {
-			if (1 == $("#selectFormatConv").val())
+			if (1 == $("#selectFormatConv").val()) {
 				$("#inputFormatConv").show();
-			else
+			} else {
 				$("#inputFormatConv").hide();
+				$("#inputFormatConv").val("");
+			}
+				
+			
 		},
 
 		//格式化金钱

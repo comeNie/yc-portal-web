@@ -82,6 +82,7 @@
             </div>
             <div class="before-translation ml-20">
                 <textarea  class="int-post"  id="transRes" readonly="readonly"></textarea>
+                <textarea  class="int-post"  id="transResBak" hidden=""></textarea>
                 <div class="post-cion">
                 	<!-- 播放器 -->
                 	<audio src="" controls="controls" id="audioPlay" hidden>
