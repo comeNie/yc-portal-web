@@ -32,8 +32,8 @@
 						</div>
 						<div class="right-title-left-word">
 							<ul>
-								<li class="word-red">${sessionScope.user_session_key.username}</li>
-								<li class="c-red" id="accLevelInfo"></li>
+								<li class="word-red" style="cursor:pointer;" onclick="location.reload();">${sessionScope.user_session_key.username}</li>
+								<li class="c-red" style="cursor:pointer;" onclick="location.href='${_base}/p/security/seccenter'" id="accLevelInfo"></li>
 							</ul>
 							<ul>
 								<li class="bule"></li>
@@ -41,7 +41,7 @@
 							<ul class="word-li">
 								<li>
 									<p><spring:message code="ycaccountcenter.userIndex.balance"/>:</p>
-									<p class="red"><fmt:formatNumber
+									<p class="red" style="cursor:pointer;" onclick="location.href='${_base}/p/balance/account'"><fmt:formatNumber
 											value="${balance/1000}" pattern="#,##0.00#"/></p>
 								</li>
 								<li style="display: none;">
@@ -53,19 +53,19 @@
 					</div>
 					<div class="right-title-right">
 						<p>
-							<a href="javascript:void(0);"> <span class="tp1"></span> <span><spring:message code="myOrder.status.tobePay"/><b id="unPaidCount">0</b></span>
+							<a href="${_base}/p/customer/order/list/view?displayFlag=11"> <span class="tp1"></span> <span><spring:message code="myOrder.status.tobePay"/><b id="unPaidCount">0</b></span>
 							</a>
 						</p>
 						<p>
-							<a href="javascript:void(0);"> <span class="tp2"></span> <span><spring:message code="myOrder.status.translating"/><b id="translateCount">0</b></span>
+							<a href="${_base}/p/customer/order/list/view?displayFlag=23"> <span class="tp2"></span> <span><spring:message code="myOrder.status.translating"/><b id="translateCount">0</b></span>
 							</a>
 						</p>
 						<p>
-							<a href="javascript:void(0);"> <span class="tp3"></span> <span><spring:message code="myOrder.status.tobeConfirm"/><b id="unConfirmCount">0</b></span>
+							<a href="${_base}/p/customer/order/list/view?displayFlag=50"> <span class="tp3"></span> <span><spring:message code="myOrder.status.tobeConfirm"/><b id="unConfirmCount">0</b></span>
 							</a>
 						</p>
 						<p>
-							<a href="javascript:void(0);"> <span class="tp4"></span> <span><spring:message code="myOrder.status.tobeEvaluated"/><b id="unEvaluateCount">0</b></span>
+							<a href="${_base}/p/customer/order/list/view?displayFlag=52"> <span class="tp4"></span> <span><spring:message code="myOrder.status.tobeEvaluated"/><b id="unEvaluateCount">0</b></span>
 							</a>
 						</p>
 					</div>
