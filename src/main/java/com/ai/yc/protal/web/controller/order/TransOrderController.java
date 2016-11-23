@@ -82,7 +82,7 @@ public class TransOrderController {
      * @return
      */
     @RequestMapping("/list/view")
-    public String orderListView(Model uiModel){
+    public String orderListView(Model uiModel, String state){
         try {
             List<SysDomain> domainList = cacheServcie.getAllDomain(rb.getDefaultLocale());
             List<SysPurpose> purpostList = cacheServcie.getAllPurpose(rb.getDefaultLocale());
@@ -137,6 +137,7 @@ public class TransOrderController {
             ycRes.setLspRole("10");
             
             uiModel.addAttribute("interperInfo", ycRes);
+            uiModel.addAttribute("state", state);
         } catch (Exception e) {
            LOGGER.info("查询译员信息失败：", e);
         }

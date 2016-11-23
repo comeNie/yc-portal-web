@@ -31,8 +31,19 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
       	//重写父类
     	setup: function () {
     		orderListPage.superclass.setup.call(this);
-    		this._orderList();
+
+			this._initPage();
     	},
+
+		//页面初始化查询
+		_initPage:function() {
+			var displayFlag = $("#displayFlagP").val();
+			if (displayFlag == '') {
+				this._orderList();
+			} else {
+				this._orderListByType(displayFlag);
+			}
+		},
     	
     	//改变状态并查询
     	_change:function() {
