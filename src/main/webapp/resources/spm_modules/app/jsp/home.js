@@ -78,6 +78,7 @@ define('app/jsp/home', function (require, exports, module) {
 					if("OK" === data.statusInfo) {
 						$("#transRes").val(data.data);
 						$("#transResBak").val(data.data);
+						$("#transError").html('');
 
 						//翻译后的文字超过1000，隐藏播放喇叭
 						if ($("#transRes").val().length > 1000)
@@ -85,7 +86,8 @@ define('app/jsp/home', function (require, exports, module) {
 						else
 							$("#playControl").show();
 					} else {
-						alert($.i18n.prop("home.error.trans"));
+						$("#transError").html($.i18n.prop("home.error.trans"));
+						//alert($.i18n.prop("home.error.trans"));
 					}
 					
 				}
