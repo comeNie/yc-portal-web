@@ -1,8 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<c:set var="uedroot" value="${pageContext.request.contextPath}/resources/template"/>
-<c:set var="_base" value="${pageContext.request.contextPath}"/>
 <script src="${_base}/resources/spm_modules/jquery/1.9.1/jquery.min.js"></script>
    <!--二级主体-->
   <!--外侧背景-->

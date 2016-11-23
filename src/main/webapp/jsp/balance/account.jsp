@@ -16,9 +16,7 @@
     <!--内侧内容区域-->
     <div class="cloud-wrapper">
         <!--左侧菜单-->
-        <jsp:include page="/inc/leftmenu.jsp">
-            <jsp:param name="current" value="myaccount" />
-        </jsp:include>
+        <%@ include file="/inc/leftmenu.jsp"%>
         <!--右侧内容-->
         <!--右侧大块-->
         <div class="right-wrapper">
@@ -143,6 +141,7 @@
 <%@ include file="/inc/incJs.jsp" %>
 
 <script type="text/javascript">
+    var current = "myaccount";
     var pager;
     (function () {
         seajs.use('app/jsp/balance/account', function(accountListPage) {
