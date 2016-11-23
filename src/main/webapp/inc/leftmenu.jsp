@@ -28,7 +28,7 @@
   					</a>
   				</li>
 				<li id="myaccount">
-					<a href="${_base}/balance/account">
+					<a href="${_base}/p/balance/account">
 						<span><i class="icon iconfont">&#xe602;</i></span>
 						<span><spring:message code="ycleftmenu.myaccount"/></span>
 					</a>
