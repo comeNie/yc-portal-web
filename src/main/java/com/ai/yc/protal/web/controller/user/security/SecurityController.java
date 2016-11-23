@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.axis2.i18n.RB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,7 +159,7 @@ public class SecurityController {
 	@RequestMapping("/orderStatusCount")
 	@ResponseBody
 	public Map<String, Integer> orderStatusCount(HttpServletRequest request) {
-		String statusList = request.getParameter("statusList");
+		//String statusList = request.getParameter("statusList");
 		String isInterpreter = request.getParameter("isInterpreter");
 		QueryOrdCountResponse ordCountRes = null;
 		Map<String,Integer> stateCount =null;
@@ -290,7 +289,8 @@ public class SecurityController {
 			}
 			
 			String password =getResponse.getDate().get("password").toString();
-			if(Md5Utils.md5(payPwd).equals(password)){
+			String salt =getResponse.getDate().get("salt").toString();
+			if(Md5Utils.md5(Md5Utils.md5(payPwd).concat(salt)).equals(password)){
 				msg = rb.getMessage("ycaccountcenter.updatePayPassword.info1");
 				ResponseData<Boolean> responseData = new ResponseData<Boolean>(
 						ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
