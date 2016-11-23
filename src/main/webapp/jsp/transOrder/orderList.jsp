@@ -37,6 +37,7 @@
 	 				</ul>
 	 			</div>
 	 			<div id="table-da1">
+					<input id="stateP" name="stateP" hidden="" type="text" value="${state}">
 	 				<form id="orderQuery">
 	 				
 	 				<input id="interperId" name="interperId" hidden="" type="text" value="${interperInfo.userId}">

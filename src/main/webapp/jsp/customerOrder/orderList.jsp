@@ -41,7 +41,8 @@
   				</ul>
   			</div>
   			<div id="table-da1">
-  			
+
+                <input id="displayFlagP" name="displayFlagP" hidden="" type="text" value="${displayFlag}">
   			<form id="orderQuery">
   			<input id="userId" name="userId" hidden="" type="text" value="${userId}">
   			<div class="oder-form-lable mt-20">

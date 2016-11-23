@@ -89,7 +89,7 @@ public class CustomerOrderController {
      * @return
      */
     @RequestMapping("/list/view")
-    public String orderListView(Model uiModel){
+    public String orderListView(Model uiModel, String displayFlag){
         //查询 订单数量
         //待支付数量
         try {
@@ -114,6 +114,7 @@ public class CustomerOrderController {
             uiModel.addAttribute("UnEvaluateCount", stateCount.get(OrderConstants.DisplayState.UN_EVALUATE));
             
             uiModel.addAttribute("userId", UserUtil.getUserId());
+            uiModel.addAttribute("displayFlag", displayFlag);
         } catch (Exception e) {
             LOGGER.error("查询订单数量:",e);
         }
