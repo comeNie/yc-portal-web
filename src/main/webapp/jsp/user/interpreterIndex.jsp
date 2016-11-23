@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>译员中心-通过认证</title>
+    <title></title>
     <%@ include file="/inc/inc.jsp" %>
     <%@ include file="/inc/incJs.jsp" %>
 </head>
@@ -33,16 +33,16 @@
                     <div class="right-title-left-tu"><img src="${uedroot}/images/icon1.jpg"></div>
                     <div class="right-title-left-word">
                         <ul>
-                            <li class="word-black">${sessionScope.user_session_key.username}</li>
-                            <li class="c-red">存在风险</li>
-                        </ul>
-                        <ul>
+								<li class="word-red" style="cursor:pointer;" onclick="location.reload();">${sessionScope.user_session_key.username}</li>
+								<li class="c-red" style="cursor:pointer;" onclick="location.href='${_base}/p/security/seccenter'" id="accLevelInfo"></li>
+							</ul>
+						<ul>
                             <li class="bule" id="lspName"></li>
                         </ul>
                         <ul class="word-li">
                             <li>
-                                <p>余额:</p>
-                                <p class="red">
+                                <p><spring:message code="ycaccountcenter.userIndex.balance"/>:</p>
+                                <p class="red" style="cursor:pointer;" onclick="location.href='${_base}/p/balance/account'">
                                     <fmt:formatNumber
                                             value="${balance/1000}" pattern="#,##0.00#"/></p>
                             </li>
@@ -55,15 +55,15 @@
                 </div>
                 <div class="right-title-right">
                     <p>
-                        <a href="javascript:void(0);">
+                        <a href="${_base}/p/trans/order/list/view?state=21">
                             <span class="tp1"></span>
-                            <span>已领取<b id="receiveCount">0</b></span>
+                            <span><spring:message code="myOrder.status.Claimed"/><b id="receiveCount">0</b></span>
                         </a>
                     </p>
                     <p>
-                        <a href="javascript:void(0);">
+                        <a href="${_base}/p/trans/order/list/view?state=23">
                             <span class="tp2"></span>
-                            <span>翻译中<b id="translateCount">0</b></span>
+                            <span><spring:message code="myOrder.status.translating"/><b id="translateCount">0</b></span>
                         </a>
                     </p>
                 </div>
@@ -73,18 +73,22 @@
             <!--右侧第二块-->
             <div id="have_order_container" class="right-list" style="display: none;">
                 <div class="right-list-title pb-10 pl-20">
-                    <p>我的订单</p>
-                    <p class="right"><input type="button" class="btn  btn-od-large btn-blue radius20" value="全部订单"></p>
+                    <p><spring:message code="myOrder.myorders"/></p>
+                    <p class="right">
+                    <input type="button"
+                     onclick="location.href='${_base}/p/trans/order/list/view'"
+                     class="btn  btn-od-large btn-blue radius20" value="<spring:message code="myOrder.allOrder"/>">
+                    </p>
                 </div>
                 <div class="right-list-table">
                     <table class="table table-bg  table-striped-even table-height50">
                         <thead>
                         <tr>
-                            <th width="20%">订单主题</th>
-                            <th>金额（元）</th>
-                            <th>预计交稿时间</th>
-                            <th>状态</th>
-                            <th>操作</th>
+                            <th width="20%"><spring:message code="myOrder.SubjectOrder"/></th>
+                            <th><spring:message code="myOrder.Amount"/></th>
+                            <th><spring:message code="myOrder.DeliveryTime"/></th>
+                            <th><spring:message code="myOrder.Status"/></th>
+                            <th><spring:message code="myOrder.Operate"/></th>
                         </tr>
                         </thead>
                         <tbody id="order_list">
@@ -92,9 +96,12 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="renz-list">没有正在进行中的任务，可以去<a href="#">订单大厅</a>领取适合自己的任务</div>
+                
             </div>
-            <div id="no_order_container" class="right-list" style="display: none;">
+            <div id="no_order_container" class="right-list" style="display: none;" >
+            <div class="renz-list">没有正在进行中的任务，可以去<a href="#">订单大厅</a>领取适合自己的任务</div>
+            </div>
+            <div id="no_rz_container" class="right-list" style="display: none;">
                 <div class="no-order no-order-cl">
                     <ul>
                         <li><img src="${uedroot}/images/none-d1.jpg"/></li>
@@ -141,6 +148,22 @@
             pager.render();
         });
     })();
+	$(function(){
+		var securitylevel = "${securitylevel}";
+		var accLevelInfo = $("#accLevelInfo");
+		if(parseInt(securitylevel) < 60)
+		{
+			accLevelInfo.html('<spring:message code="ycaccountcenter.acc.level.danger"/>');
+		}
+		if(parseInt(securitylevel) >= 60 && parseInt(securitylevel) < 100)
+		{
+			accLevelInfo.html('<spring:message code="ycaccountcenter.acc.level.warn"/>');
+		}
+		if(parseInt(securitylevel) == 100)
+		{
+			accLevelInfo.html('<spring:message code="ycaccountcenter.acc.level.safe"/>');
+		}
+	});
 </script>
 </body>
 </html>

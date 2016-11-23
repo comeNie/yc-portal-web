@@ -103,6 +103,7 @@ public class SecurityController {
 			LOG.error("获取译员信息: " + JSON.toJSONString(ycRes));
 
 		}
+		modelView.addObject("securitylevel", UserUtil.getUserSecurityLevel());
 		return modelView;
 	}
 	@RequestMapping("/queryLspInfo")
@@ -139,18 +140,9 @@ public class SecurityController {
 			balance = balanceInfo.getBalance();
 		}
 		modelView.addObject("balance", balance);
-		GeneralSSOClientUser userSSOInfo = UserUtil.getSsoUser();
-		int securitylevel=0;
-		if (StringUtil.isBlank(userSSOInfo.getEmail())) {
-			securitylevel += 33;
-		}
-
-		if (StringUtil.isBlank(userSSOInfo.getMobile())) {
-			securitylevel += 33;
-		}
-		securitylevel += 34;
+		
         // sec level
-		modelView.addObject("securitylevel", securitylevel);
+		modelView.addObject("securitylevel", UserUtil.getUserSecurityLevel());
 		return modelView;
 	}
 
