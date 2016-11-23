@@ -32,7 +32,13 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
       	//重写父类
     	setup: function () {
     		orderListPage.superclass.setup.call(this);
-
+			$.i18n.properties({//加载资浏览器语言对应的资源文件
+				name: ["commonRes"], //资源文件名称，可以是数组
+				path: _i18n_res, //资源文件路径
+				mode: 'both',
+				language: currentLan,
+				async: true
+			});
 			this._initPage();
     	},
 
