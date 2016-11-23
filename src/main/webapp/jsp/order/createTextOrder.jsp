@@ -54,13 +54,15 @@
   					<p><spring:message code="order.translateLan"/></p>
   				</div>
   				<div class="placeorder-translate">
-	  				<select id="selectDuad" t="${sessionScope.orderInfo.productInfo.translateInfo}" name="<%=response.getLocale()%>" tabindex="5" class="dropdown" data-settings='{"cutOff": 12}' >
+	  				<select id="selectDuad" t="${sessionScope.orderInfo.productInfo.translateInfo}"
+							name="<%=response.getLocale()%>" tabindex="5"
+							class="dropdown" data-settings='{"cutOff": 12}' >
 						<c:forEach items="${duadList}" var="duad">
 	  						<c:if test="${duad.orderType != 2}">
   								<option value="${duad.duadId}"
-  										ordinary="${duad.ordinary}"  ordinaryUrgent="${duad.ordinaryUrgent}" 
-										professional="${duad.professional}"  professionalUrgent="${duad.professionalUrgent}"  
-										publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}" 
+  										ordinary="${duad.ordinary}"  ordinaryUrgent="${duad.ordinaryUrgent}"
+										professional="${duad.professional}"  professionalUrgent="${duad.professionalUrgent}"
+										publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}"
 										sourceEn="${duad.sourceEn}" targertEn="${duad.targetEn}"
 										sourceCn="${duad.sourceCn}" targertCn="${duad.targetCn}"
 										sourceCode="${duad.sourceCode}" targetCode="${duad.targetCode}"
