@@ -16,9 +16,7 @@
     <!--内侧内容区域-->
     <div class="cloud-wrapper">
         <!--左侧菜单-->
-        <jsp:include page="/inc/leftmenu.jsp">
-            <jsp:param name="current" value="myaccount" />
-        </jsp:include>
+        <%@ include file="/inc/leftmenu.jsp"%>
         <!--右侧内容-->
         <!--右侧大块-->
         <div class="right-wrapper">
@@ -31,7 +29,7 @@
                         </ul>
                         <ul>
                             <li class="word"><span>${balance}</span>CNY</li>
-                            <li class="c-bj-bule"><a href="${_base}/balance/depositFund">充值余额</a></li>
+                            <li class="c-bj-bule"><a href="${_base}/p/balance/depositFund">充值余额</a></li>
                         </ul>
                         <ul class="word-li">
                             <li>为保证账户安全，如需提现，请致电译云客服进行申请和审核：400-119-8080</li>
@@ -143,6 +141,7 @@
 <%@ include file="/inc/incJs.jsp" %>
 
 <script type="text/javascript">
+    var current = "myaccount";
     var pager;
     (function () {
         seajs.use('app/jsp/balance/account', function(accountListPage) {

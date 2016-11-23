@@ -32,7 +32,7 @@ import java.util.*;
  * Created by lixiaokui on 16/11/14.
  */
 @Controller
-@RequestMapping("/balance")
+@RequestMapping("/p/balance")
 public class BalanceController {
     private static final Logger LOGGER = LoggerFactory.getLogger(BalanceController.class);
     @Autowired

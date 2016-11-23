@@ -1,8 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<c:set var="uedroot" value="${pageContext.request.contextPath}/resources/template"/>
-<c:set var="_base" value="${pageContext.request.contextPath}"/>
 <script src="${_base}/resources/spm_modules/jquery/1.9.1/jquery.min.js"></script>
    <!--二级主体-->
   <!--外侧背景-->
@@ -32,7 +28,7 @@
   					</a>
   				</li>
 				<li id="myaccount">
-					<a href="${_base}/balance/account">
+					<a href="${_base}/p/balance/account">
 						<span><i class="icon iconfont">&#xe602;</i></span>
 						<span><spring:message code="ycleftmenu.myaccount"/></span>
 					</a>

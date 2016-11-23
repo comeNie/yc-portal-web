@@ -56,7 +56,7 @@ define('app/jsp/balance/account', function (require, exports, module) {
 		_getIncomerList:function() {
         	var _this = this;
           	$("#pagination-ul").runnerPagination({
-	 			url: _base+"/balance/accountList",
+	 			url: _base+"/p/balance/accountList",
 	 			method: "POST",
 	 			dataType: "json",
 	 			renderId:"searchAccountData",
