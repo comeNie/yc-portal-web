@@ -33,10 +33,10 @@
 						<div class="right-title-left-word">
 							<ul>
 								<li class="word-red">${sessionScope.user_session_key.username}</li>
-								<li class="c-red">存在风险</li>
+								<li class="c-red" id="accLevelInfo"></li>
 							</ul>
 							<ul>
-								<li class="bule">中译语通科技有限公司</li>
+								<li class="bule"></li>
 							</ul>
 							<ul class="word-li">
 								<li>
@@ -266,6 +266,22 @@
 	       		pager._confirm($(this).parents("table").find("input[name='orderId']").val());
 	       });
 	})();
+	$(function(){
+		var securitylevel = "${securitylevel}";
+		var accLevelInfo = $("#accLevelInfo");
+		if(parseInt(securitylevel) < 60)
+		{
+			accLevelInfo.html('<spring:message code="ycaccountcenter.acc.level.danger"/>');
+		}
+		if(parseInt(securitylevel) >= 60 && parseInt(securitylevel) < 100)
+		{
+			accLevelInfo.html('<spring:message code="ycaccountcenter.acc.level.warn"/>');
+		}
+		if(parseInt(securitylevel) == 100)
+		{
+			accLevelInfo.html('<spring:message code="ycaccountcenter.acc.level.safe"/>');
+		}
+	});
 	</script>
 </body>
 </html>

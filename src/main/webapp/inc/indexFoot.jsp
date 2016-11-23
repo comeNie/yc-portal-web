@@ -74,9 +74,9 @@
                         <p><img src="${uedroot}/images/erwm.png" /></p>
                     </li>
                     <li class="shaw">
-                        <p class="shaw-a"><a href="javascript:"></a></p>
-                        <p class="shaw-b"><a href="javascript:"></a></p>
-                        <p class="shaw-c"><a href="javascript:"></a></p>
+                        <p class="shaw-a"><a href="http://twitter.com/GTC_YeeCloud"></a></p>
+                        <p class="shaw-b"><a href="http://www.facebook.com/yeecloud"></a></p>
+                        <p class="shaw-c"><a href="http://weibo.com/u/3628864670"></a></p>
                     </li>
                 </ul>
             </div>
