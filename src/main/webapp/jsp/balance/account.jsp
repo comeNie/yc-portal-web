@@ -29,7 +29,7 @@
                         </ul>
                         <ul>
                             <li class="word"><span>${balance}</span>CNY</li>
-                            <li class="c-bj-bule"><a href="${_base}/balance/depositFund">充值余额</a></li>
+                            <li class="c-bj-bule"><a href="${_base}/p/balance/depositFund">充值余额</a></li>
                         </ul>
                         <ul class="word-li">
                             <li>为保证账户安全，如需提现，请致电译云客服进行申请和审核：400-119-8080</li>
