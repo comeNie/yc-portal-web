@@ -13,9 +13,9 @@
                     <c:choose>
                         <c:when test="${loginUser !=null}">${loginUser.username}
                             <%--退出--%>
-                            <a href="#"><spring:message code="user.topMenu.exit"/></a>
+                            <a href="${_base}/ssologout"><spring:message code="user.topMenu.exit"/></a>
                         </c:when>
-                        <c:otherwise><a href="#"><spring:message code="topMenue.Login"/></a>
+                        <c:otherwise><a href="${_base}/p/index"><spring:message code="topMenue.Login"/></a>
                             <a href="${_base}/reg/toRegister" class="blue"><spring:message code="topMenue.Regist"/></a>
                         </c:otherwise>
                     </c:choose>
