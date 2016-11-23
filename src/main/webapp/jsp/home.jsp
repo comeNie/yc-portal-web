@@ -121,8 +121,10 @@
                 <li>
                     <%--<p><input type="button" class="btn btn-blue btn-trans radius2" value="上传文档"><input type="file"  class="pop-file"></p>
                     <p>（支持5000字以内的.doc（X）.TXT文件）</p>--%>
+                    
                 </li>
                 <li class="right">
+                	<p id="transError"></p>
                     <%--人工翻译--%>
                     <input id="humanTranBtn" type="button" class="btn border-blue btn-trans-b radius2"
                                          value="<spring:message code="home.human_translation_btn"/>">
