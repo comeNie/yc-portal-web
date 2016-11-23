@@ -99,15 +99,15 @@
                 
             </div>
             <div id="no_order_container" class="right-list" style="display: none;" >
-            <div class="renz-list">没有正在进行中的任务，可以去<a href="#">订单大厅</a>领取适合自己的任务</div>
+            <div class="renz-list"><spring:message code="ycaccountcenter.interpreterIndex.noTaskMsg" arguments="${_base}/p/taskcenter/view"/></div>
             </div>
             <div id="no_rz_container" class="right-list" style="display: none;">
                 <div class="no-order no-order-cl">
                     <ul>
                         <li><img src="${uedroot}/images/none-d1.jpg"/></li>
-                        <li class="mt-50">您好，您还没有通过认证<br>无法领取任务，请先认证</li>
+                        <li class="mt-50"><spring:message code="ycaccountcenter.interpreterIndex.noCertificationMsg"/></li>
                         <li class="right mt-t500"><input type="button" class="btn border-blue btn-large radius20 blue"
-                                                         value="认证议员"></li>
+                                                         value="<spring:message code="ycaccountcenter.interpreterIndex.certification.interpreter"/>"></li>
                     </ul>
                 </div>
                 <div class="no-step"><img src="${uedroot}/images/step1.jpg"/></div>
