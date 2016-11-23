@@ -3,14 +3,22 @@ define("app/jsp/user/password/password",
 			var smsObj; // timer变量，控制时间
 			var count = 5; // 间隔函数，1秒执行
 			var curCount;// 当前剩余秒数
-			var accountFlag = false;
-			var imgCodeFlag = false;
-			var isBindPhone = false;
-			var isBindEmail = false;
 			var $ = require('jquery'), 
 			Widget = require('arale-widget/1.2.0/widget'), 
 			Dialog = require("optDialog/src/dialog"), 
 			AjaxController = require('opt-ajax/1.0.0/index');
+			var showMsg = function(msg){
+		    	var d = Dialog({
+					content:msg,
+					icon:'fail',
+					okValue: passwordMsg.showOkValueMsg,
+					title: passwordMsg.showTitleMsg,
+					ok:function(){
+						d.close();
+					}
+				});
+				d.show();
+		    };
 			// 实例化AJAX控制处理对象
 			var ajaxController = new AjaxController();
 			// 定义页面组件类
@@ -22,14 +30,6 @@ define("app/jsp/user/password/password",
 							 * 刷新验证码
 							 */
 							"click #refreshVerificationCode" : "_refreshVerificationCode",
-							/**
-							 * 校验验证码
-							 */
-							//"blur #verifyCodeImg" : "_checkImageCode",
-							/**
-							 * 校验账号
-							 */
-							//"blur #userName" : "_checkAccount",
 							/**
 							 * 发送邮件
 							 */
@@ -51,25 +51,9 @@ define("app/jsp/user/password/password",
 							 */
 							"click #next-bt2":"_checkPassword",
 							/**
-							 * 校验密码
-							 */
-							"blur #password":"_checkPasswordValue",
-							/**
-							 * 校验验证码
-							 */
-							"blur  #confirmPassword":"_checkConfirmPasswordValue",
-							/**
 							 * 邮箱验证下一步
 							 */
 							"click #next-bt4":"_checkEmailImageCode",
-							/**
-							 * 邮箱密码
-							 */
-							"blur #emailPassword":"_checkEmailPasswordValue",
-							/**
-							 * 邮箱确认密码
-							 */
-							"blur #emailConfirmPassword":"_checkEmailConfirmPasswordValue",
 							/**
 							 * 邮件密码
 							 */
@@ -143,44 +127,6 @@ define("app/jsp/user/password/password",
 							_img.attr("src", url);
 
 						},
-						/* 异步校验图形验证码 */
-						_checkImageCode : function() {
-							var imgCode = $("#verifyCodeImg");
-							var imgCodeVal = imgCode.val();
-							if(imgCodeVal==null||imgCodeVal==""){
-								$("#verifyCodeImgErrMsg").show();
-								$("#verifyCodeImgErrMsg").text("");
-								$("#verifyCodeImgErrMsg").text("请输入验证码");
-								$("#back-pass").show();
-								$("#back-pass1").hide();
-								return;
-							}
-							if ($.trim(imgCodeVal).length < 4) {
-								return;
-							}
-							var _this = this;
-							ajaxController.ajax({
-								type : "post",
-								processing : false,
-								message : "保存中，请等待...",
-								async: false,
-								url : _base + "/userCommon/checkImageVerifyCode",
-								data : {
-									'imgCode' : imgCodeVal
-								},
-								success : function(json) {
-									if (!json.data) {
-										imgCode.focus();
-										$("#verifyCodeImgErrMsg").show();
-										$("#verifyCodeImgErrMsg").text("校验码信息错误")
-									}else{
-										$("#verifyCodeImgErrMsg").hide();
-										$("#verifyCodeImgErrMsg").text("");
-										imgCodeFlag = true;
-									}
-								}
-							});
-						},
 						/**
 						 * 发送邮件
 						 */
@@ -198,22 +144,21 @@ define("app/jsp/user/password/password",
 								dataType: 'json',
 								url :_base+"/userCommon/sendEmail",
 								processing: true,
-								message : "正在处理中，请稍候...",
+								message : "...",
 								success : function(data) {
 									var resultCode = data.data;
 									if(!resultCode){
-										$("#emailErrMsg").show();
-										$("#emailErrMsg").text("发送邮件失败");
+										showMsg(passwordMsg.sendMailError);
 										sendEmailBtn.removeAttr("disabled"); //移除disabled属性
 									}else{
 										var step = 59;
-										sendEmailBtn.val('重新发送60');
+										sendEmailBtn.val('60 s');
 							            var _res = setInterval(function(){
-							            	sendEmailBtn.val('重新发送'+step);
+							            	sendEmailBtn.val(step+" s");
 							                step-=1;
 							                if(step <= 0){
 							                	sendEmailBtn.removeAttr("disabled"); //移除disabled属性
-							                	sendEmailBtn.val('获取验证码');
+							                	sendEmailBtn.val(passwordMsg.getDynamiCode);
 							                clearInterval(_res);//清除setInterval
 							                }
 							            },1000);
@@ -221,120 +166,85 @@ define("app/jsp/user/password/password",
 								},
 								failure : function(){
 									sendEmailBtn.removeAttr("disabled"); //移除disabled属性
-								},
-								error : function(){
-									alert("网络连接超时!");
 								}
 							});
-						},
-						/**
-						 * 校验账号
-						 */
-						_checkAccount:function(){
-							var userName = $("#userName");
-							var userNameValue = $("#userName").val();
-							if(userNameValue==""||userNameValue==null){
-								$("#userNameErrMsg").show();
-								$("#userNameText").text("请输入账号");
-								return false;
-							}else{
-								$("#userNameErrMsg").hide();
-								$("#userNameText").text("");
-								ajaxController.ajax({
-									type : "post",
-									processing : false,
-									async: false,
-									message : "保存中，请等待...",
-									url : _base + "/password/checkAccountInfo",
-									data : {
-										'account' : $("#userName").val()
-									},
-									success : function(jsonData) {
-										if(jsonData.responseHeader.resultCode=="111111"){
-											$("#userNameErrMsg").show();
-											$("#userNameText").text("用户不存在");
-											accountFlag = false;
-										}
-										if(jsonData.responseHeader.resultCode=="000000"){
-											
-											$("#userNameErrMsg").hide();
-											$("#userNameText").text("");
-											/**
-											 * 保存用户id
-											 */
-											var userId = jsonData.data.uid;
-											$("#userId").val(userId);
-											/**
-											 * 查看邮箱和手机号是否绑定
-											 */
-											var telphone = jsonData.data.mobilephone;
-											$("#telephone").html(telphone);
-											var passwordEmail = jsonData.data.email;
-											$("#passwordEmail").html(passwordEmail);
-											if(telphone!=null&&telphone!=""){
-												 isBindPhone = true;
-											}
-											if(passwordEmail!=null&&passwordEmail!=""){
-												 isBindEmail = true;
-											}
-											if(isBindPhone||isBindEmail){//绑定任意一个则有帐号
-												accountFlag = true;
-											}else{
-												accountFlag = false;
-											}
-											
-										}
-									}
-								});
-							}
-							
 						},
 					  /**
 					   * 账号下一步
 					   */
 				       _nextStep:function(){
-				    	   this._checkAccount();
-						   this._checkImageCode();
-						   /**
-						    * 如果手机号绑定邮箱没有绑定是不能找回密码的
-						    * 如果邮箱绑定手机号没有绑定是不能找回密码的
-						    */
-				    	   if(accountFlag&&imgCodeFlag){
-				    		   if(isBindEmail&&!isBindPhone){
-				    			   $('#set-table2').show();
-								   $('#set-table1').hide();
-								   $("#set-table1").html("<div class='recharge-success mt-40'><ul><li class='word'>没有绑定手机,无法通过手机号找回密码</li></ul></div>");
-				    		       $("#phoneVerification a").removeClass("current");
-				    		       $("#emailVerification a").addClass("current");
-				    		   }
-				    		   if(!isBindEmail&&isBindPhone){
-				    			   $('#set-table1').show();
-								   $('#set-table2').hide();
-								   $("#set-table2").html("<div class='recharge-success mt-40'><ul><li class='word'>没有绑定邮箱,无法通过邮箱地址找回密码</li></ul></div>");
-				    		   }
-				    		   if(!isBindEmail&&!isBindPhone){
-				    			   $('#set-table1').show();
-								   $('#set-table2').hide();
-								   $("#set-table1").html("<div class='recharge-success mt-40'><ul><li class='word'>没有绑定手机,无法通过手机号找回密码</li></ul></div>");
-								   $("#set-table2").html("<div class='recharge-success mt-40'><ul><li class='word'>没有绑定邮箱,无法通过邮箱地址找回密码</li></ul></div>");
-				    		   }
-				    		   $("#back-pass").hide();
-							   $("#back-pass1").show();
+				    	 var userNameVal= $("#userName").val();
+						if($.trim(userNameVal)==""){
+							showMsg(passwordMsg.account_empty);
+							return false;
+						 }  
+						var imgCodeVal = $("#verifyCodeImg").val();
+						if($.trim(imgCodeVal)==""){
+							showMsg(passwordMsg.verify_code_img_empty);
+							return false;
+						}
+						ajaxController.ajax({
+							type : "post",
+							processing : true,
+							message : "...",
+							url : _base + "/password/checkAccountInfo",
+							data : {
+								'imgCode' : imgCodeVal,
+								'account' : userNameVal
+							},
+							success : function(json) {
+								var data = json.data;
+								if (!data.isOk) {
+									showMsg(json.statusInfo);
+								}else{
+									var userId = data.uid;
+									$("#userId").val(userId);
+									var telphone =data.mobilephone;
+									$("#telephone").html(telphone);
+									var passwordEmail = data.email;
+									$("#passwordEmail").html(passwordEmail);
+									var isBindPhone =false;
+									if(telphone!=null&&telphone!=""){
+										 isBindPhone = true;
+									}
+									var isBindEmail =false;
+									if(passwordEmail!=null&&passwordEmail!=""){
+										 isBindEmail = true;
+									}
+									var accountFlag =false;
+									if(isBindPhone||isBindEmail){//绑定任意一个则有帐号
+										accountFlag = true;
+									}else{
+										location.href=_base + "/password/notBind";
+										return;
+									}
+									if(!isBindPhone){//没有绑定手机
+										$("#set-table1").html("<div class='recharge-success mt-40'><ul><li class='word'>"+passwordMsg.notBindingPhone+"</li></ul></div>");	
+									}
+                                    if(!isBindEmail){//没有绑定邮箱
+                                    	 $("#set-table2").html("<div class='recharge-success mt-40'><ul><li class='word'>"+passwordMsg.notBindingEmail+"</li></ul></div>");
+                                     }
+                                    $("#back-pass").hide();
+     							    $("#back-pass1").show();
+     							   if(isBindEmail&&!isBindPhone){
+     								  $("#emailVerification a").click(); 
+     							   }
+     							}
 							}
-						},
+						});
+						
+						
+				       },
 						/* 发送验证码 */
 					  _sendDynamiCode : function() {
 						var _this = this;
 						var btn = $("#send_dynamicode_btn");
-						if (btn.hasClass("biu-btn")) {
-							return;
-						}
-						curCount = count;
-						ajaxController
+						btn.attr("disabled", true);
+			            ajaxController
 							.ajax({
 								type : "post",
 								processing : false,
-								message : "保存中，请等待...",
+								message : "...",
 								url : _base + "/userCommon/sendSmsCode",
 								data : {
 									'phone' : $("#telephone").html(),
@@ -342,32 +252,25 @@ define("app/jsp/user/password/password",
 									'uid':$("#userId").val()
 								},
 								success : function(data) {
-									if(data.data==false){
-										$("#dynamicode").show();
-										$("#dynamicode").text(data.statusInfo);
-										$("#send_dynamicode_btn").removeAttr("disabled"); //移除disabled属性
-							            $('#send_dynamicode_btn').val('获取验证码');
+									if(!data.data){
+										showMsg(data.statusInfo);
+										btn.removeAttr("disabled"); //移除disabled属性
+										btn.val(passwordMsg.getDynamiCode);
 										return;
 									}else{
-										if(data.data){
-											var step = 59;
-								            $('#send_dynamicode_btn').val('重新发送60');
-								            $("#send_dynamicode_btn").attr("disabled", true);
-								            var _res = setInterval(function(){
-								                $("#send_dynamicode_btn").attr("disabled", true);//设置disabled属性
-								                $('#send_dynamicode_btn').val('重新发送'+step);
-								                step-=1;
-								                if(step <= 0){
-								                $("#send_dynamicode_btn").removeAttr("disabled"); //移除disabled属性
-								                $('#send_dynamicode_btn').val('获取验证码');
-								                clearInterval(_res);//清除setInterval
-								                }
-								            },1000);
-								            $("#dynamicode").hide();
-										}else{
-											$("#send_dynamicode_btn").removeAttr("disabled");
-										}
-								  }
+                                        var step = 59;
+										btn.val('60 s');
+							            var _res = setInterval(function(){
+							            	btn.attr("disabled", true);//设置disabled属性
+							            	btn.val(step+" s");
+							                step-=1;
+							                if(step <= 0){
+							                btn.removeAttr("disabled"); //移除disabled属性
+							                btn.val(passwordMsg.getDynamiCode);
+							                clearInterval(_res);//清除setInterval
+							                }
+							            },1000);
+							      }
 								}
 							});
 						},
@@ -376,9 +279,10 @@ define("app/jsp/user/password/password",
 						 */
 						_checkDynamicode:function(){
 							 var phoneDynamicode = $("#phoneDynamicode").val();
-							 if(phoneDynamicode==null||phoneDynamicode==""){
-								 $("#dynamicode").show();
-								 $("#dynamicode").text("请输入验证码");
+							 if($.trim(phoneDynamicode)==""){
+								 //$("#dynamicode").show();
+								 //$("#dynamicode").text("请输入验证码");
+								 showMsg(passwordMsg.smsCodeEmpty);
 								 return false;
 							 }
 							 ajaxController.ajax({
@@ -388,21 +292,18 @@ define("app/jsp/user/password/password",
 				    					phone:$("#telephone").html(),
 				    					type:"2",
 				    					code:$("#phoneDynamicode").val(),
+				    					isRemove:'true'
 				    				},
 				    		        success: function(data) {
 				    		        	if(!data.data){
-				    		        		$("#dynamicode").show();
-											$("#dynamicode").text(data.statusInfo);
+				    		        		showMsg(data.statusInfo);
 											return false;
 				    		        	}else{
 				    		        		 $("#tcode").val(phoneDynamicode);
 				    		        		 $("#next1").hide();
 				 						     $("#next2").show();
 				    		        	}
-				    		          },
-				    				error: function(error) {
-				    						alert("error:"+ error);
-				    					}
+				    		          }
 				    				});
 							 
 						},
@@ -414,29 +315,23 @@ define("app/jsp/user/password/password",
 							var password = $("#password");
 							var passwordVal = password.val();
 							if ($.trim(passwordVal) == "") {
-								this._showCheckMsg(passwordMsg.password_empty);
-								$("#passwordMsg").show();
-								password.focus();
+								showMsg(passwordMsg.password_empty);
 								return false;
 							}
 							if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
 									.test(passwordVal)) {
-								this._showCheckMsg(passwordMsg.password_error);
-								$("#passwordMsg").show();
-								password.focus();
+								showMsg(passwordMsg.password_error);
 								return false;
 							}
 							// 确认密码
 							var confirmPassword = $("#confirmPassword");
 							var confirmPasswordVal = confirmPassword.val();
 							if ($.trim(confirmPasswordVal) == "") {
-								this._showCheckMsg(passwordMsg.confirm_password_empty);
-								$("#passwordMsg").show();
+								showMsg(passwordMsg.confirm_password_empty);
 								return false;
 							}
 							if (confirmPasswordVal != passwordVal) {
-								this._showCheckMsg(passwordMsg.confirm_password_error);
-								$("#passwordMsg").show();
+								showMsg(passwordMsg.confirm_password_error);
 								return false;
 							}
 							ajaxController.ajax({
@@ -449,16 +344,13 @@ define("app/jsp/user/password/password",
 			    				},
 			    		        success: function(json) {
 			    		        	if(!json.data){
-			    		        		alert("保存失败");
+			    		        		showMsg(json.statusInfo);
 			    		        		return false;
 			    		        	}else if(json.data){
 			    		        		$("#next2").hide();
 										$("#next3").show();
 			    		        	}
-			    		          },
-			    				error: function(error) {
-			    						alert("error:"+ error);
-			    					}
+			    		          }
 			    				});
 						},
 						/**
@@ -505,9 +397,8 @@ define("app/jsp/user/password/password",
 						 */
 						_checkEmailImageCode:function(){
 							var emailIdentifyCode = $("#emailIdentifyCode").val();
-							if(emailIdentifyCode==""||emailIdentifyCode==null){
-								$("#emailErrMsg").show();
-								$("#emailErrMsg").text("请输入验证码");
+							if($.trim(emailIdentifyCode)==""){
+								showMsg(passwordMsg.emailCodeEmpty);
 								return;
 							}
 							ajaxController.ajax({
@@ -516,20 +407,18 @@ define("app/jsp/user/password/password",
 			    				data:{
 			    					'email':$("#passwordEmail").html(),
 			    					'code':$("#emailIdentifyCode").val(),
+			    					'isRemove':'true'
 			    				},
 			    		        success: function(data) {
 			    		        	if(!data.data){
-			    		        		alert("保存失败");
+			    		        		showMsg(data.statusInfo);
 			    		        		return false;
 			    		        	}else{
 			    		        		$("#next4").hide();
 										$("#next5").show();
 										$("#tcode").val($("#emailIdentifyCode").val());
 			    		        	}
-			    		          },
-			    				error: function(error) {
-			    						alert("error:"+ error);
-			    					}
+			    		          }
 			    				});
 							
 						},
@@ -541,16 +430,12 @@ define("app/jsp/user/password/password",
 							var emailPassword = $("#emailPassword");
 							var emailPasswordVal = emailPassword.val();
 							if ($.trim(emailPasswordVal) == "") {
-								$("#emailPasswordErrMsg").show();
-								$("#emailPasswordErrMsg").html(passwordMsg.password_empty)
-								password.focus();
+								showMsg(passwordMsg.password_empty)
 								return false;
 							}
 							if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
 									.test(emailPasswordVal)) {
-								$("#emailPasswordErrMsg").show();
-								$("#emailPasswordErrMsg").html(passwordMsg.password_error);
-								password.focus();
+								showMsg(passwordMsg.password_error);
 								return false;
 							}
 							$("#emailPasswordErrMsg").hide();
@@ -563,8 +448,7 @@ define("app/jsp/user/password/password",
 							var emailConfirmPassword = $("#emailConfirmPassword");
 							var confirmPasswordVal = emailConfirmPassword.val();
 							if ($.trim(confirmPasswordVal) == "") {
-								$("#emailPasswordErrMsg").html(passwordMsg.confirm_password_error)
-								$("#emailPasswordErrMsg").show();
+								showMsg(passwordMsg.confirm_password_error)
 								return false;
 							}
 							$("#emailPasswordErrMsg").hide();
@@ -577,31 +461,23 @@ define("app/jsp/user/password/password",
 							var password = $("#emailPassword");
 							var passwordVal = password.val();
 							if ($.trim(passwordVal) == "") {
-								this._showCheckMsg(passwordMsg.password_empty);
-								$("#emailPasswordErrMsg").show();
-								$("#emailPasswordErrMsg").text("密码不能为空");
-								password.focus();
+								showMsg(passwordMsg.password_empty);
 								return false;
 							}
 							if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
 									.test(passwordVal)) {
-								this._showCheckMsg(passwordMsg.password_error);
-								$("#emailPasswordErrMsg").text(passwordMsg.password_error);
-								$("#emailPasswordErrMsg").show();
-								password.focus();
+								showMsg(passwordMsg.password_error);
 								return false;
 							}
 							// 确认密码
 							var confirmPassword = $("#emailConfirmPassword");
 							var confirmPasswordVal = confirmPassword.val();
 							if ($.trim(confirmPasswordVal) == "") {
-								this._showCheckMsg(passwordMsg.confirm_password_empty);
-								$("#emailPasswordErrMsg").show();
+								showMsg(passwordMsg.confirm_password_empty);
 								return false;
 							}
 							if (confirmPasswordVal != passwordVal) {
-								this._showCheckMsg("两次密码不一致");
-								$("#emailPasswordErrMsg").show();
+								showMsg(passwordMsg.confirm_password_error);
 								return false;
 							}
 							ajaxController.ajax({
@@ -614,16 +490,13 @@ define("app/jsp/user/password/password",
 			    				},
 			    		        success: function(json) {
 			    		        	if(!json.data){
-			    		        		alert("保存失败");
+			    		        		showMsg(data.statusInfo);
 			    		        		return false;
-			    		        	}else if(json.data){
+			    		        	}else{
 			    		        		$("#next5").hide();
 			    		        		$("#next6").show();
 			    		        	}
-			    		          },
-			    				error: function(error) {
-			    						alert("error:"+ error);
-			    					}
+			    		          }
 			    				});
 						},
 					});

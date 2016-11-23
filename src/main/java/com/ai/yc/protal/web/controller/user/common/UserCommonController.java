@@ -196,7 +196,7 @@ public class UserCommonController {
 		boolean isOk = VerifyUtil.checkSmsCode(phone, type, ckValue);
 		String msg = "ok";
 		if (!isOk) {
-			msg = rb.getMessage("ycregisterMsg.verificationCodeError");
+			msg = rb.getMessage("ycfindpassword.smsCodeError");
 		}
 		String isRemove = request.getParameter("isRemove");
 		if(isOk &&"true".equals(isRemove)){
@@ -363,7 +363,7 @@ public class UserCommonController {
 		boolean isOk = VerifyUtil.checkRedisValue(codeKey, ckValue);
 		String msg = "ok";
 		if (!isOk) {
-			msg = rb.getMessage("ycregisterMsg.verificationCodeError");
+			msg = rb.getMessage("ycfindpassword.emailCodeError");
 		}
 		String isRemove = request.getParameter("isRemove");
 		if(isOk && "true".equals(isRemove)){
