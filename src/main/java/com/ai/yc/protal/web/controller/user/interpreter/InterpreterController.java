@@ -1,5 +1,6 @@
 package com.ai.yc.protal.web.controller.user.interpreter;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,10 +20,12 @@ import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.components.idps.IDPSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.DateUtil;
+import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.util.UUIDUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.image.IImageClient;
 import com.ai.yc.protal.web.constants.Constants;
+import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
 import com.ai.yc.user.api.userservice.param.UpdateYCUserRequest;
@@ -30,7 +33,7 @@ import com.ai.yc.user.api.userservice.param.YCUpdateUserResponse;
 import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
 import com.alibaba.fastjson.JSON;
 
-@RequestMapping("/interpreter")
+@RequestMapping("/p/interpreter")
 @RestController
 public class InterpreterController {
 	
@@ -40,14 +43,18 @@ public class InterpreterController {
 	public ModelAndView toInterpreterBaseInfo(String userId){
 		IYCUserServiceSV ucUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
 		SearchYCUserRequest userRequest = new SearchYCUserRequest();
-		userRequest.setUserId("000000000000003081");
+		userRequest.setUserId(UserUtil.getUserId());
 		YCUserInfoResponse response = ucUserServiceSV.searchYCUserInfo(userRequest);
 		Map<String, Object> model = new HashMap<String, Object>();
 		String idpsns = "yc-portal-web";
 		IImageClient im = IDPSClientFactory.getImageClient(idpsns);
 		String url = im.getImageUrl(response.getPortraitId(), ".jpg", "100x100");
 		model.put("interpreterInfo", response);
-		model.put("birthday", DateUtil.getDateString(response.getBirthday(),"yyyy-MM-dd"));
+		if(response.getBirthday()!=null){
+			model.put("birthday", DateUtil.getDateString(response.getBirthday(),"yyyy-MM-dd"));
+		}else{
+			model.put("birthday", "");
+		}
 		model.put("portraitId", url);
 		return new ModelAndView("/user/authentication/interpreter_info",model);
 	}

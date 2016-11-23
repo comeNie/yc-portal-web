@@ -30,7 +30,9 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			"click #fy-btn": "_uploadFile",
 			"click #fy-btn1": "_inputText",
 			"click #globalRome": "_setPattern",
-			"click #clear-btn": "_clearText"
+			"click #clear-btn": "_clearText",
+			"change #translateContent": "_clearControl",
+			"change #selectFormatConv": "_formatControl",
            	},
             
     	//重写父类
@@ -43,6 +45,15 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				mode: 'both',
 				language: currentLan
 			});
+
+    		//初始化国际化
+			$.i18n.properties({//加载资浏览器语言对应的资源文件
+				name: ["orderInfo"], //资源文件名称，可以是数组
+				path: _i18n_res, //资源文件路径
+				mode: 'both',
+				language: currentLan,
+			});
+
 			var formValidator=this._initValidate();
 			$(":input").bind("focusout",function(){
 				formValidator.element(this);
@@ -55,14 +66,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     	},
     	
         _initValidate:function(){
-        	var sourlan;
-        	$("#selectDuad option").each(function() {
-        		if ($(".selected").attr('value') == $(this).val()) {
-        			sourlan = $(this).attr("sourceEn");
-        			return false;
-        		}
-        	});
-        	
+        	var _this = this;
         	var formValidator=$("#textOrderForm").validate({
         		onkeyup:false,
         		errorPlacement: function(error, element) {
@@ -84,41 +88,53 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 					$('ul li p label').remove()//删除所有隐藏的li p label标签
 					this.defaultShowErrors();
 				},
-				rules: {
-					translateContent: {
-						required: true,
-						maxlength: 2000,
-						remote: {                                          //验证检查语言
-							type: "POST",
-							url: _base + "/translateLan",
-							data: {
-								lan: sourlan,
-								text: $("#translateContent").val(),
-							},
-							dataFilter: function (data, type) {//判断控制器返回的内容
-								if ("1" == data.statusCode && sourlan == data.data) {
-									return true;
-								} else {
-									return false;
-								}
-							}
-						}
-					},
-					isAgree: {
-						required: true,
-					},
-					contactName: {
-						required: true,
-						maxlength: 15
-					},
-					phoneNum: {
-						required: true,
-					},
-					email: {
-						required: true,
-						email: true
-					}
-				},
+    			rules: {
+    				translateContent: {
+    					required:true,
+    					maxlength:2000,
+    					remote:{                                          //验证检查语言
+    			　　               type:"POST",
+    			　　               url:  _base + "/translateLan",         
+    			　　               data:{
+	    			　　                text: function(){return $("#translateContent").val();}
+    			　　               },
+    			　　               dataType:'json',
+    			　　               dataFilter: function (data) {//判断控制器返回的内容
+    			　　            	  	data = jQuery.parseJSON(data);
+    			　　
+    			　　            	  	var sourlan;
+    			　　           		$("#selectDuad").find('option').each(function() {
+	    			　　               		var val = $(this).val();
+	    			　　               		if (val ==  $(".dropdown .selected").attr('value')) {
+	    			　　               			var selected = $(this);
+	    			　　               			sourlan = selected.attr("sourceCode");
+	    			　　               			return false;
+	    			　　               		}
+	    			　　           	});
+    			　　
+			                     if (sourlan == data.data) {
+			                         return true;   
+			                     } else {
+			                         return false;
+			                     }
+    			           }
+    			　　        }
+    				},
+    				isAgree: {
+    					required:true,
+    				},
+    				contactName: {
+    					required:true,
+    					maxlength:15
+    				},
+    				phoneNum: {
+    					required:true,
+    				},
+    				email: {
+    					required:true,
+    					email:true
+    				}
+    			},
     			messages: {
     				translateContent: {
     					required: $.i18n.prop('order.place.error.translation'), //"请输入翻译内容",
@@ -144,7 +160,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     		
     		return formValidator;
         },
-            
+
+
     	//提交文本订单
 		_addTextOrderTemp:function(){
 			var _this= this;
@@ -483,6 +500,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		
 		//文字输入，js控制
 		_inputText:function() {
+			$("#selectAddedSer").val(2);
+			$("#selectFormatConv").val(2);
 			$("#selectAddedSer").attr("disabled",true);
 			$("#selectFormatConv").attr("disabled",true);
 			$("#inputFormatConv").hide();
@@ -492,7 +511,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		_uploadFile:function() {
 			$("#selectAddedSer").attr("disabled",false);
 			$("#selectFormatConv").attr("disabled",false);
-			$("#inputFormatConv").show();
 		},
 		
 		//根据国家设置号码匹配规则
@@ -504,6 +522,25 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		//清空输入文字
 		_clearText:function() {
 			$("#translateContent").val("");
+			$("#clear-btn").hide();
+		},
+
+		//清空 按钮出现控制
+		_clearControl:function() {
+			var variable = $("#translateContent").val();
+			if (variable !== '')  {
+				$("#clear-btn").show();
+			} else {
+				$("#clear-btn").hide();
+			}
+		},
+
+		//input 格式转换控制
+		_formatControl:function() {
+			if (1 == $("#selectFormatConv").val())
+				$("#inputFormatConv").show();
+			else
+				$("#inputFormatConv").hide();
 		},
 
 		//格式化金钱

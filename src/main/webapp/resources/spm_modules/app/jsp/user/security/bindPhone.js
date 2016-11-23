@@ -49,8 +49,8 @@ define("app/jsp/user/security/bindPhone",
 						    	var d = Dialog({
 									content:msg,
 									icon:'fail',
-									okValue: '确 定',
-									title: '提示',
+									okValue: phoneBindMsg.showOkValueMsg,
+									title: phoneBindMsg.showTitleMsg,
 									ok:function(){
 										this.close();
 									}
@@ -63,7 +63,7 @@ define("app/jsp/user/security/bindPhone",
 							ajaxController.ajax({
 								type : "post",
 								processing : false,
-								message : "保存中，请等待...",
+								message : phoneBindMsg.saveingMsg,
 								url : _base + "/userCommon/loadCountry",
 								data : {},
 								success : function(json) {
@@ -101,7 +101,7 @@ define("app/jsp/user/security/bindPhone",
 								.ajax({
 									type : "post",
 									processing : false,
-									message : "保存中，请等待...",
+									message : phoneBindMsg.saveingMsg,
 									url : _base + "/userCommon/sendSmsCode",
 									data : {
 										'phone' : $("#telephone").val(),
@@ -113,18 +113,18 @@ define("app/jsp/user/security/bindPhone",
 											//$("#dynamicode").text(data.statusInfo);
 											showMsg(data.statusInfo);
 											_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
-											_dynamicode_btn.val('获取验证码');
+											_dynamicode_btn.val(phoneBindMsg.getOperationCode);
 											return;
 										}else{
 											if(data.data){
 												var step = 59;
-												_dynamicode_btn.val('重新发送60');
+												_dynamicode_btn.val(phoneBindMsg.resend60);
 									            var _res = setInterval(function(){
-									            	_dynamicode_btn.val('重新发送'+step);
+									            	_dynamicode_btn.val(phoneBindMsg.resend+step);
 									                step-=1;
 									                if(step <= 0){
 									                _dynamicode_btn.removeAttr("disabled"); //移除disabled属性
-									                _dynamicode_btn.val('获取验证码');
+									                _dynamicode_btn.val(phoneBindMsg.inputOperationCode);
 									                clearInterval(_res);//清除setInterval
 									                }
 									            },1000);
@@ -144,7 +144,7 @@ define("app/jsp/user/security/bindPhone",
 							 if(phoneDynamicode==null||phoneDynamicode==""){
 								 //$("#dynamicode").show();
 								 //$("#dynamicode").text("请输入验证码");
-								 showMsg("请输入验证码");
+								 showMsg(phoneBindMsg.pleaseInputOC);
 								 return false;
 							 }
 							 ajaxController.ajax({
@@ -181,14 +181,14 @@ define("app/jsp/user/security/bindPhone",
 								//$("#telephoneErrMsg").show();
 								//$("#telephoneErrMsg").html("手机不能为空");
 								//phone.focus();
-								showMsg("手机不能为空");
+								showMsg(phoneBindMsg.phoneNumCanNotEmpty);
 								return false;
 							}else{
 								$("#telephoneErrMsg").hide();
 								reg = eval('/' + reg + '/');
 								if (!reg.test(phoneVal)) {
 									$("#telephoneErrMsg").show();
-									$("#telephoneErrMsg").html("请输入正确的手机号");
+									$("#telephoneErrMsg").html(phoneBindMsg.pleaseInputRightPhoneNum);
 									phone.focus();
 									return false;
 								}else{
@@ -196,7 +196,7 @@ define("app/jsp/user/security/bindPhone",
 									ajaxController.ajax({
 										type : "post",
 										processing : false,
-										message : "保存中，请等待...",
+										message : phoneBindMsg.saveingMsg,
 										url : _base + "/reg/checkPhoneOrEmail",
 										data : {
 											'checkType' : "phone",
@@ -222,7 +222,7 @@ define("app/jsp/user/security/bindPhone",
 							 var phoneDynamicode = $("#dynamicode").val();
 							 if(phoneDynamicode==null||phoneDynamicode==""){
 								 $("#dynamicodeErrMsg").show();
-								 $("#dynamicodeErrMsg").text("请输入验证码");
+								 $("#dynamicodeErrMsg").text(phoneBindMsg.pleaseInputOC);
 								 return false;
 							 }
 							 ajaxController.ajax({
@@ -252,7 +252,7 @@ define("app/jsp/user/security/bindPhone",
 								    		        		alert(json.statusInfo);
 															return false;
 								    		        	}else{
-								    		        		alert("绑定成功");
+								    		        		alert(phoneBindMsg.bingSuccess);
 								    		        	}
 								    		          },
 								    				error: function(error) {

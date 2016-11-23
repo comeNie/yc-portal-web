@@ -29,7 +29,7 @@
   		<!--右侧第二块-->
   		<div class="right-list mt-0">
   			<div class="right-list-title pb-10 pl-20">
-  				<p>绑定手机</p>	
+  				<p><spring:message code="ycaccountcenter.bindphone.title"/></p>	
   			</div>
   			<!--绑定手机-->
  			<div class="recharge mt-30">
@@ -37,7 +37,7 @@
  					<div class="recharge-success mt-170">
  						<ul>
  							<li><img src="${uedroot}/images/rech-win.png" /></li>
- 							<li class="word">绑定手机成功</li>
+ 							<li class="word"><spring:message code="ycaccountcenter.bindphone.success"/></li>
  						</ul>
  					</div>
  			</div>
