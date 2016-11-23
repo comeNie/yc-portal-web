@@ -1,7 +1,9 @@
 package com.ai.yc.protal.web.utils;
 
+import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sso.client.filter.SSOClientConstants;
 import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
+
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -39,5 +41,22 @@ public class UserUtil {
     public static void saveSsoUser(GeneralSSOClientUser user){
         HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
         session.setAttribute(SSOClientConstants.USER_SESSION_KEY,user);
+    }
+    /**
+     * 获取用户安全级别
+     * @return
+     */
+    public static int getUserSecurityLevel(){
+    	GeneralSSOClientUser userSSOInfo = UserUtil.getSsoUser();
+		int securitylevel=0;
+		if (StringUtil.isBlank(userSSOInfo.getEmail())) {
+			securitylevel += 33;
+		}
+
+		if (StringUtil.isBlank(userSSOInfo.getMobile())) {
+			securitylevel += 33;
+		}
+		securitylevel += 34;//默认有密码
+		return securitylevel;
     }
 }

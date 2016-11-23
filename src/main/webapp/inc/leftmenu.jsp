@@ -8,7 +8,7 @@
   			<ul>
   				<li class="user"><img src="${uedroot}/images/icon.jpg" /></li>
   				<li class="word">
-  					<p>${userinfo.username}</p>
+  					<p>${user_session_key.username}</p>
   					<p class="vip1"></p>
   				</li>
   			</ul>

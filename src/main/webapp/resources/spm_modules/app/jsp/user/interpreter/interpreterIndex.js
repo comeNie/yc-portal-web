@@ -23,7 +23,7 @@ define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, mo
 						this._queryOrder();
 						this._queryLspInfo();
 					}else{
-						 $("#no_order_container").show();
+						 $("#no_rz_container").show();
  	            	}
 					
 				},
@@ -94,6 +94,10 @@ define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, mo
 		    	            	    var htmlOutput = template.render(data);
 		    	            	    $("#order_list").html(htmlOutput);
 		    	            	    $("#have_order_container").show();
+		    	            	    $("#no_order_container").hide();
+		    	            	}else{
+		    	            		$("#have_order_container").hide();
+		    	            		$("#no_order_container").show();
 		    	            	}
 		    		        }
 		    		});
