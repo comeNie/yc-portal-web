@@ -1,7 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<c:set var="_base" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,15 +9,15 @@
 </head>
 <body>
 	<!--头部-->
-	<jsp:include page="/inc/userTopMenu.jsp"/>
-  <!--二级主体-->
+	<%@ include file="/inc/userTopMenu.jsp" %>
+	 <!--二级主体-->
   <!--外侧背景-->
   <div class="cloud-container">
   <!--内侧内容区域-->
   <div class="cloud-wrapper">
   	<!--左侧菜单-->
   	<div class="left-subnav">
-  		<jsp:include page="/inc/leftmenu.jsp"/>
+  	 <%@ include file="/inc/leftmenu.jsp" %>
   	</div>
   	<!--右侧内容-->
   	<!--右侧大块-->
@@ -140,6 +137,7 @@
   </div>
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
+    var current ="";
 	var pager;
 	(function() {
 		<%-- 展示日历 --%>

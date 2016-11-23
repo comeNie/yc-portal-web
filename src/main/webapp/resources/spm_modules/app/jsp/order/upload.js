@@ -65,6 +65,10 @@
              $( '#'+file.id ).find('.progress').fadeOut();
          });
          
+         //上传出错时触发
+         uploader.on( "uploadError", function( file, reason  ) {
+         });
+         
          // 拖拽时不接受 js, txt 文件。
 //         uploader.on( 'dndAccept', function( items ) {
 //             var denied = false,
@@ -134,13 +138,6 @@
 			 var file = uploader.getFile(id);
 			 uploader.removeFile(file);
 		 });
-
-         //上传出错时触发
-         uploader.on( "uploadError", function( obj, reason  ) {
-        	 console.log('----error');
-               var errorMessage = response.message;
-                   alert(reason,3); 
-           });
     });
 
 })( jQuery );

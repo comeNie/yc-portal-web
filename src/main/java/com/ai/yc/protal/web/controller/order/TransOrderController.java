@@ -177,8 +177,8 @@ public class TransOrderController {
             }
             
             uiModel.addAttribute("UUploadCount", uUploadCount);
-            orderDetailsRes.setState("20");//TODO... 模拟待领取
-            orderDetailsRes.setDisplayFlag("20");//TODO... 模拟待领取
+//            orderDetailsRes.setState("20");//TODO... 模拟待领取
+//            orderDetailsRes.setDisplayFlag("20");//TODO... 模拟待领取
             //若是待领取,则获取用户信息
             if ("20".equals(orderDetailsRes.getDisplayFlag())){
                 getUserInfo(uiModel);

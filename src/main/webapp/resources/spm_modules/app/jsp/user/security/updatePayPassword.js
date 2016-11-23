@@ -129,10 +129,9 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 			}
 			ajaxController.ajax({
 				type:"post",
-				url:_base+"/password/updatePassword",
+				url:_base+"/p/security/sendPayPassword",
 				data:{
-					'newpw':passwordVal,
-					'checke_code':$("#code").val()
+					'payPwd':passwordVal
 				},
 		        success: function(json) {
 		        	if(!json.data){

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.axis2.i18n.RB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.slp.balance.api.accountmaintain.interfaces.IAccountMaintainSV;
 import com.ai.slp.balance.api.accountmaintain.param.AccountUpdateParam;
 import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
@@ -29,6 +31,7 @@ import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
 import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
 import com.ai.yc.protal.web.service.BalanceService;
+import com.ai.yc.protal.web.utils.PasswordMD5Util.Md5Utils;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
@@ -37,6 +40,8 @@ import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckEmailRequest;
 import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckeMobileRequest;
 import com.ai.yc.ucenter.api.members.param.editemail.UcMembersEditEmailRequest;
 import com.ai.yc.ucenter.api.members.param.editmobile.UcMembersEditMobileRequest;
+import com.ai.yc.ucenter.api.members.param.get.UcMembersGetRequest;
+import com.ai.yc.ucenter.api.members.param.get.UcMembersGetResponse;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.SearchYCTranslatorRequest;
 import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
@@ -66,7 +71,8 @@ public class SecurityController {
 	private static final String INTERPRETER_INDEX = "user/interpreterIndex";
 	@Autowired
 	BalanceService balanceService;
-
+	@Autowired
+	ResWebBundle rb;
 	// 译员首页
 	@RequestMapping("/interpreterIndex")
 	public ModelAndView toRegister() {
@@ -266,6 +272,30 @@ public class SecurityController {
 			return responseData;
 		}
 		try {
+			IUcMembersSV ucMembersSV = DubboConsumerFactory
+					.getService(IUcMembersSV.class);
+			UcMembersGetRequest membersGetRequest = new UcMembersGetRequest();
+			membersGetRequest.setUsername(UserUtil.getUserId());
+			membersGetRequest.setGetmode("1");
+			UcMembersGetResponse getResponse = ucMembersSV
+					.ucGetMember(membersGetRequest);
+			ResponseCode responseCode = getResponse == null ? null : getResponse.getCode();
+			Integer codeNumber = responseCode == null ? null : responseCode
+					.getCodeNumber();
+			if (codeNumber == null || codeNumber != 1) {// 成功
+				msg = responseCode.getCodeMessage();
+				ResponseData<Boolean> responseData = new ResponseData<Boolean>(
+						ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
+				return responseData;
+			}
+			
+			String password =getResponse.getDate().get("password").toString();
+			if(Md5Utils.md5(payPwd).equals(password)){
+				msg = rb.getMessage("ycaccountcenter.updatePayPassword.info1");
+				ResponseData<Boolean> responseData = new ResponseData<Boolean>(
+						ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
+				return responseData;
+			}
 			SearchYCUserRequest sReq = new SearchYCUserRequest();
 			sReq.setUserId(UserUtil.getUserId());
 			YCUserInfoResponse res = DubboConsumerFactory.getService(

@@ -31,14 +31,21 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			"click #fy-btn1": "_inputText",
 			"click #globalRome": "_setPattern",
 			"click #clear-btn": "_clearText",
-			"change #translateContent": "_clearControl",
+			"keyup #translateContent": "_clearControl",
 			"change #selectFormatConv": "_formatControl",
            	},
             
     	//重写父类
     	setup: function () {
     		textOrderAddPager.superclass.setup.call(this);
-			
+			//初始化国际化
+			$.i18n.properties({//加载资浏览器语言对应的资源文件
+				name: ["orderInfo"], //资源文件名称，可以是数组
+				path: _i18n_res, //资源文件路径
+				mode: 'both',
+				language: currentLan
+			});
+
     		//初始化国际化
 			$.i18n.properties({//加载资浏览器语言对应的资源文件
 				name: ["orderInfo"], //资源文件名称，可以是数组
@@ -46,14 +53,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				mode: 'both',
 				language: currentLan,
 			});
-			
+
 			var formValidator=this._initValidate();
-		
 			$(":input").bind("focusout",function(){
 				formValidator.element(this);
 			});
-			
-			
+
 			this._transGrade();
 			this._transPrice();
 			this._globalRome();
@@ -96,7 +101,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     			　　               dataType:'json',
     			　　               dataFilter: function (data) {//判断控制器返回的内容
     			　　            	  	data = jQuery.parseJSON(data);
-    			　　            	  	
+    			　　
     			　　            	  	var sourlan;
     			　　           		$("#selectDuad").find('option').each(function() {
 	    			　　               		var val = $(this).val();
@@ -106,7 +111,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 	    			　　               			return false;
 	    			　　               		}
 	    			　　           	});
-    			　　           		
+    			　　
 			                     if (sourlan == data.data) {
 			                         return true;   
 			                     } else {
@@ -132,7 +137,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     			},
     			messages: {
     				translateContent: {
-    					required: $.i18n.prop("order.place.error.translation"), //"请输入翻译内容",
+    					required: $.i18n.prop('order.place.error.translation'), //"请输入翻译内容",
     					maxlength: $.i18n.prop('order.place.error.Maximum'),//"最大长度不能超过{0}",
     					remote:  $.i18n.prop('order.place.error.contentConsis')//"您输入的内容和源语言不一致"
     				},
@@ -155,8 +160,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     		
     		return formValidator;
         },
-        
-            
+
+
     	//提交文本订单
 		_addTextOrderTemp:function(){
 			var _this= this;
@@ -500,6 +505,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			$("#selectAddedSer").attr("disabled",true);
 			$("#selectFormatConv").attr("disabled",true);
 			$("#inputFormatConv").hide();
+			$("#inputFormatConv").val("");
 		},
 	
 		//上传文档，js控制
@@ -519,7 +525,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			$("#translateContent").val("");
 			$("#clear-btn").hide();
 		},
-		
+
 		//清空 按钮出现控制
 		_clearControl:function() {
 			var variable = $("#translateContent").val();
@@ -532,12 +538,16 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 
 		//input 格式转换控制
 		_formatControl:function() {
-			if (1 == $("#selectFormatConv").val())
+			if (1 == $("#selectFormatConv").val()) {
 				$("#inputFormatConv").show();
-			else
+			} else {
 				$("#inputFormatConv").hide();
+				$("#inputFormatConv").val("");
+			}
+				
+			
 		},
-		
+
 		//格式化金钱
 		fmoney:function (s, n) {
 			var result = '0.00';
