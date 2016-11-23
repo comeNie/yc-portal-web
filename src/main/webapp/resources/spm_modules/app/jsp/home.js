@@ -77,6 +77,7 @@ define('app/jsp/home', function (require, exports, module) {
 				success: function (data) {
 					if("OK" === data.statusInfo) {
 						$("#transRes").val(data.data);
+						$("#transResBak").val(data.data);
 
 						//翻译后的文字超过1000，隐藏播放喇叭
 						if ($("#transRes").val().length > 1000)
@@ -140,6 +141,7 @@ define('app/jsp/home', function (require, exports, module) {
         
         //取消
         _cancelSave:function() {
+        	$("#transRes").val($("#transResBak").val());
         	$("#transRes").attr("readonly","readonly");
         },
         
