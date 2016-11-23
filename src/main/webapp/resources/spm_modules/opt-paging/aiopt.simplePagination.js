@@ -1,8 +1,10 @@
-define("opt-paging/aiopt.pagination", ["jquery","twbs-pagination/jquery.twbsPagination.min"], function(require, exports, module){
+define("opt-paging/aiopt.simplePagination", ["jquery","simplePagination/jquery.simplePagination"], function(require, exports, module){
 	 var AjaxController=require('opt-ajax/1.0.0/index');
 	//实例化AJAX控制处理对象
 	 var ajaxController = new AjaxController();
-	require("twbs-pagination/jquery.twbsPagination.min");
+	require("simplePagination/jquery.simplePagination");
+
+	
 	/*!
  * jQuery runner pagination plugin v1.0.0
  * based on jquery.pagController.js  jquery.twbsPagination.js
@@ -11,7 +13,7 @@ define("opt-paging/aiopt.pagination", ["jquery","twbs-pagination/jquery.twbsPagi
  * http://apache.org/licenses/LICENSE-2.0.html
  */
 (function ($, window, document, undefined) {
-//初始化国际化
+
     'use strict';
 
     var old = $.fn.runnerPagination;
@@ -183,22 +185,33 @@ define("opt-paging/aiopt.pagination", ["jquery","twbs-pagination/jquery.twbsPagi
         	if(this._tp){
         		return;
         	}
-            var _tp = this.$element.twbsPagination({
-                totalPages: totalPages,
-                startPage: opt.startPage,
-                visiblePages: opt.visiblePages,
-                first: $.i18n.prop('com.page.first.label'),
-                prev: "<",
-                next: ">",
-				nextClass:"prev-up",
-				prevClass:"next-down",
-                last: $.i18n.prop('com.page.last.label'),
-                loop: opt.loop,
-                paginationClass: opt.paginationClass?opt.paginationClass:"pagination",
-                onPageClick: function (event, pageNo) {
-                    _this.loadData(pageNo);
-                }
-            });
+            //var _tp = this.$element.twbsPagination({
+            //    totalPages: totalPages,
+            //    startPage: opt.startPage,
+            //    visiblePages: opt.visiblePages,
+            //    first: opt.first,
+            //    prev: opt.prev,
+            //    next: opt.next,
+            //    last: opt.last,
+            //    loop: opt.loop,
+            //    paginationClass: opt.paginationClass?opt.paginationClass:"pagination",
+            //    onPageClick: function (event, pageNo) {
+            //        _this.loadData(pageNo);
+            //    }
+            //});
+			var _tp = this.$element.pagination({
+				items: 30,
+				itemsOnPage: 10,
+				displayedPages: 10,
+				pages:3,
+				currentPage:2,
+				prevText:"<",
+				nextText:">",
+				cssStyle:'compact-theme',
+				onPageClick: function (pageNo, event) {
+					_this.loadData(pageNo);
+				}
+			});
         	this._tp= _tp;
         }
 

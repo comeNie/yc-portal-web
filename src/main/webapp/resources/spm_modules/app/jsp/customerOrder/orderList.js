@@ -3,10 +3,11 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
 	    AjaxController = require('opt-ajax/1.0.0/index');
-    require("jsviews/jsrender.min");
+	require("jsviews/jsrender.min");
     require("jsviews/jsviews.min");
     require("app/util/jsviews-ext");
 	require("opt-paging/aiopt.pagination");
+	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
 
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
@@ -31,6 +32,13 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
       	//重写父类
     	setup: function () {
     		orderListPage.superclass.setup.call(this);
+			$.i18n.properties({//加载资浏览器语言对应的资源文件
+				name: ["commonRes"], //资源文件名称，可以是数组
+				path: _i18n_res, //资源文件路径
+				mode: 'both',
+				language: currentLan,
+				async: true
+			});
     		this._orderList();
     	},
     	

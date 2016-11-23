@@ -46,14 +46,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				language: currentLan
 			});
 
-    		//初始化国际化
-			$.i18n.properties({//加载资浏览器语言对应的资源文件
-				name: ["orderInfo"], //资源文件名称，可以是数组
-				path: _i18n_res, //资源文件路径
-				mode: 'both',
-				language: currentLan,
-			});
-
 			var formValidator=this._initValidate();
 			$(":input").bind("focusout",function(){
 				formValidator.element(this);
