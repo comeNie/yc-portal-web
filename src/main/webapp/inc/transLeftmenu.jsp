@@ -8,7 +8,7 @@
 		<ul>
 			<li class="user"><img src="${uedroot}/images/icon.jpg" /></li>
 			<li class="word">
-				<p>大脸盼爱大脸</p>
+				<p>${user_session_key.username}</p>
 				<p class="vip1"></p>
 			</li>
 		</ul>
@@ -70,8 +70,8 @@
 					<span>个人信息</span>
 				</a>
 			</li>
-			<li>
-				<a href="#">
+			<li id="seccenterSettings">
+				<a  href="${_base}/p/security/seccenter">
 					<span><i class="icon iconfont">&#xe609;</i></span>
 					<span>安全设置</span>
 				</a>
