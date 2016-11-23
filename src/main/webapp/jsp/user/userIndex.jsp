@@ -33,14 +33,14 @@
 						<div class="right-title-left-word">
 							<ul>
 								<li class="word-red">${sessionScope.user_session_key.username}</li>
-								<li class="c-red">存在风险</li>
+								<li class="c-red" id="accLevelInfo"></li>
 							</ul>
 							<ul>
-								<li class="bule">中译语通科技有限公司</li>
+								<li class="bule"></li>
 							</ul>
 							<ul class="word-li">
 								<li>
-									<p>余额:</p>
+									<p><spring:message code="ycaccountcenter.userIndex.balance"/>:</p>
 									<p class="red"><fmt:formatNumber
 											value="${balance/1000}" pattern="#,##0.00#"/></p>
 								</li>
@@ -53,19 +53,19 @@
 					</div>
 					<div class="right-title-right">
 						<p>
-							<a href="javascript:void(0);"> <span class="tp1"></span> <span>待支付<b id="unPaidCount">0</b></span>
+							<a href="javascript:void(0);"> <span class="tp1"></span> <span><spring:message code="myOrder.status.tobePay"/><b id="unPaidCount">0</b></span>
 							</a>
 						</p>
 						<p>
-							<a href="javascript:void(0);"> <span class="tp2"></span> <span>翻译中<b id="translateCount">0</b></span>
+							<a href="javascript:void(0);"> <span class="tp2"></span> <span><spring:message code="myOrder.status.translating"/><b id="translateCount">0</b></span>
 							</a>
 						</p>
 						<p>
-							<a href="javascript:void(0);"> <span class="tp3"></span> <span>待确认<b id="unConfirmCount">0</b></span>
+							<a href="javascript:void(0);"> <span class="tp3"></span> <span><spring:message code="myOrder.status.tobeConfirm"/><b id="unConfirmCount">0</b></span>
 							</a>
 						</p>
 						<p>
-							<a href="javascript:void(0);"> <span class="tp4"></span> <span>待评价<b id="unEvaluateCount">0</b></span>
+							<a href="javascript:void(0);"> <span class="tp4"></span> <span><spring:message code="myOrder.status.tobeEvaluated"/><b id="unEvaluateCount">0</b></span>
 							</a>
 						</p>
 					</div>
@@ -73,22 +73,23 @@
 				<!--右侧第二块-->
 				<div class="right-list" id="have_order_container" style="display: none;">
 					<div class="right-list-title pb-10 pl-20">
-						<p>我的订单</p>
+						<p><spring:message code="myOrder.myorders"/></p>
 						<p class="right">
 							<input type="button" class="btn  btn-od-large btn-blue radius20"
-								value="全部订单">
+							   onclick="location.href='${_base}/p/customer/order/list/view'"
+								value="<spring:message code="myOrder.allOrder"/>">
 						</p>
 					</div>
 					<div class="right-list-table">
 						<table class="table table-hover table-bg">
 							<thead>
 								<tr>
-									<th width="16.666%">订单主题</th>
-									<th order_mode="hide" width="16.666%">下单人</th>
-									<th width="16.666%">翻译语言</th>
-									<th width="16.666%">金额（元）</th>
-									<th width="16.666%">状态</th>
-									<th width="16.666%">操作</th>
+									<th width="16.666%"><spring:message code="myOrder.SubjectOrder"/></th>
+									<th order_mode="hide" width="16.666%"><spring:message code="myOrder.Orderedby"/></th>
+									<th width="16.666%"><spring:message code="myOrder.translatingContent"/></th>
+									<th width="16.666%"><spring:message code="myOrder.Amount"/></th>
+									<th width="16.666%"><spring:message code="myOrder.Status"/></th>
+									<th width="16.666%"><spring:message code="myOrder.Operate"/></th>
 								</tr>
 							</thead>
 						</table>
@@ -265,6 +266,22 @@
 	       		pager._confirm($(this).parents("table").find("input[name='orderId']").val());
 	       });
 	})();
+	$(function(){
+		var securitylevel = "${securitylevel}";
+		var accLevelInfo = $("#accLevelInfo");
+		if(parseInt(securitylevel) < 60)
+		{
+			accLevelInfo.html('<spring:message code="ycaccountcenter.acc.level.danger"/>');
+		}
+		if(parseInt(securitylevel) >= 60 && parseInt(securitylevel) < 100)
+		{
+			accLevelInfo.html('<spring:message code="ycaccountcenter.acc.level.warn"/>');
+		}
+		if(parseInt(securitylevel) == 100)
+		{
+			accLevelInfo.html('<spring:message code="ycaccountcenter.acc.level.safe"/>');
+		}
+	});
 	</script>
 </body>
 </html>

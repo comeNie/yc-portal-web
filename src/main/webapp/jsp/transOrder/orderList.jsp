@@ -1,3 +1,4 @@
+<%@ page import="com.ai.paas.ipaas.i18n.ZoneContextHolder" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -155,7 +156,7 @@
 		                      <tr>
 		                           <th colspan="6" class="text-l">
 		                           		<div class="table-thdiv">
-		                           			<p>{{:~timesToFmatter(orderTime)}}</p>
+											<p>{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',orderTime,'<%=ZoneContextHolder.getZone()%>')}}</p>
 		                           			<p name="orderId"><spring:message code="myOrder.Ordernumber"/>：<span>{{:orderId}}</span></p>
 		                           			<!-- 剩余2天23小时59分钟 -->
 											{{if state!='50' || state!='51' || state!='52' || state!='53' || state!='90' || state!='91' || state!='92'}}
