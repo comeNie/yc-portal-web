@@ -26,7 +26,18 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
-
+    var showMsg = function(msg){
+    	var d = Dialog({
+			content:msg,
+			icon:'fail',
+			okValue: interpreterInfoMsg.showOkValueMsg,
+			title: interpreterInfoMsg.showTitleMsg,
+			ok:function(){
+				d.close();
+			}
+		});
+		d.show();
+    };
     //定义页面组件类
     var InterPreterInfoPager = Widget.extend({
     	//属性，使用时由类的构造函数传入
@@ -57,61 +68,46 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 			if(!$("#dataForm").valid()){
 				return false;
 			}else{
-				this._checkNickNameValue();
-				if(nickNameFlag!="0"){
-					ajaxController.ajax({
-						type:"post",
-	    				url:_base+"/interpreter/saveInfo",
-	    				data:{
-	    					userId:"000000000000003081",
-	    					userName:$("#userName").val(),
-							fullName:$("#fullName").val(),
-							nickname:$("#nickname").val(),
-							sex:$("input[name='sex']").val(),
-							birthdayTmp:$("#startTime").val(),
-							qq:$("#qq").val(),
-							portraitId:$("#portraitId").val(),
-	    				},
-	    		        success: function(data) {
-	    		        	if(data.responseHeader.resultCode=="111111"){
-	    		        		alert("保存失败");
-	    		        		return false;
-	    		        	}else if(data.responseHeader.resultCode=="000000"){
-	    		        		alert("保存成功");
-	    		        	}
-	    		          },
-	    				error: function(error) {
-	    						alert("error:"+ error);
-	    					}
-	    				});
-				}
+             ajaxController.ajax({
+					type:"post",
+    				url:_base+"/p/interpreter/saveInfo",
+    				data:{
+    					'userName':$("#userName").val(),
+						'fullName':$("#fullName").val(),
+						'nickname':$("#nickname").val(),
+						'sex':$("input[name='sex']:checked").val(),
+						'birthdayTmp':$("#startTime").val(),
+						'qq':$("#qq").val(),
+						'portraitId':$("#portraitId").val(),
+						'originalNickname':originalNickname
+    				},
+    		        success: function(json) {
+    		        	if(!json.data){
+    		        		showMsg(json.statusInfo);
+    		        	}
+    		          }
+    				});
+			
 			}
 		},
 		_checkNickNameValue:function(){
+			var nickname =  $("#nickname").val();
+			if(originalNickname==nickname){//昵称未改变无需校验
+				return;
+			}
 			ajaxController.ajax({
 				type:"post",
-				url:_base+"/interpreter/checkNickName",
+				url:_base+"/p/interpreter/checkNickName",
 				data:{
-					userId:"000000000000003081",
-					nickName:$("#nickname").val()
+					'nickName':nickname
 				},
-		        success: function(data) {
-		        	 var jsonData = JSON.parse(data);
-		        	if(jsonData.responseHeader.resultCode=="111111"){
-		        		$("#nickNameErrMsg").show();
-		        		$("#nickNameText").show();
-		        		$("#nickNameText").text("昵称名称已被注册");
-		        		$("#nickNameFlag").val("0");
-		        		return false;
-		        	}else if(jsonData.responseHeader.resultCode=="000000"){
-		        		$("#nickNameErrMsg").hide();
-		        		$("#nickNameText").hide();
-		        		$("#nickNameFlag").val("1");
-		        	}
-		          },
-				error: function(error) {
-						alert("error:"+ error);
-					}
+		        success: function(json) {
+		        	 if(!json.data){
+		        		 $("#nickNameErrMsg").show().html("<span>"+json.statusInfo+"</span>");
+		        	 }else{
+		        		 $("#nickNameErrMsg").hide().html(""); 
+		        	 }
+		          }
 				});
 		},
     	_initValidate:function(){
