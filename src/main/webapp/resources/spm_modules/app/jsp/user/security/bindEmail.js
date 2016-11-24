@@ -24,6 +24,19 @@ define("app/jsp/user/security/bindEmail",
 				});
 				d.show();
 		    };
+		    
+		    var showMsg2 = function(msg){
+		    	var d = Dialog({
+					content:msg,
+					icon:'success',
+					okValue: emailBindMsg.showOkValueMsg,
+					title: emailBindMsg.showTitleMsg,
+					ok:function(){
+						d.close();
+					}
+				});
+				d.show();
+			}
 			// 实例化AJAX控制处理对象
 			var ajaxController = new AjaxController();
 			// 定义页面组件类
@@ -167,13 +180,13 @@ define("app/jsp/user/security/bindEmail",
 								    					code:emailDynamicode,
 								    				},
 								    				success: function(data) {
-								    					var jsonData = JSON.parse(data);
-								    		        	if(jsonData.statusCode!="1"){
-								    		        		alert(emailBindMsg.bindFail)
+								    					if(!data.data){
+								    		        		showMsg(data.statusInfo);
 															return false;
 								    		        	}else{
-								    		        		alert(emailBindMsg.bingSuccess)
+								    		        		showMsg2(emailBindMsg.bingSuccess);
 								    		        	}
+								    					
 								    		          },
 								    				error: function(error) {
 								    						alert("error:"+ error);

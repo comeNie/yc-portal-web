@@ -1,11 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: jackieliu
-  Date: 16/11/2
-  Time: 下午2:17
-  To change this template use File | Settings | File Templates.
-  通用页头
---%>
 <%@page import="java.util.Locale"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!--主导航-->
