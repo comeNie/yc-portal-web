@@ -34,7 +34,8 @@ define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, mo
 		    				url:_base+"/p/security/orderStatusCount",
 		    				data:{
 		    					'statusList':'21,23',
-		    					'isInterpreter':'true'
+		    					'isInterpreter':'true',
+		    					'lspRole':$("#lspRole").val()
 		    					},
 		    		        success: function(data) {
 		    		        	//data = {"21":3,"23":4};
