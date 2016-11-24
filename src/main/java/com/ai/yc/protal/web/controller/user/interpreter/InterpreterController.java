@@ -40,7 +40,8 @@ public class InterpreterController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(InterpreterController.class);
 	
 	@RequestMapping("/interpreterInfoPager")
-	public ModelAndView toInterpreterBaseInfo(String userId){
+	public ModelAndView toInterpreterBaseInfo(HttpServletRequest request){
+		String source = request.getParameter("source");
 		IYCUserServiceSV ucUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
 		SearchYCUserRequest userRequest = new SearchYCUserRequest();
 		userRequest.setUserId(UserUtil.getUserId());
@@ -56,6 +57,7 @@ public class InterpreterController {
 			model.put("birthday", "");
 		}
 		model.put("portraitId", url);
+		model.put("source", source);
 		return new ModelAndView("/user/authentication/interpreter_info",model);
 	}
 	

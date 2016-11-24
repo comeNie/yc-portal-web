@@ -4,12 +4,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>个人信息-译员认证前</title>
+    <title></title>
    <%@ include file="/inc/inc.jsp" %>
 </head>
 <body>
 	<!--头部-->
-	<%@ include file="/inc/userTopMenu.jsp" %>
+	<c:if test="${source=='user'}">
+      <%@ include file="/inc/userTopMenu.jsp"%>
+  </c:if>
+  <c:if test="${source=='interpreter'}">
+      <%@ include file="/inc/transTopMenu.jsp"%>
+  </c:if>
 	 <!--二级主体-->
   <!--外侧背景-->
   <div class="cloud-container">
@@ -17,7 +22,12 @@
   <div class="cloud-wrapper">
   	<!--左侧菜单-->
   	<div class="left-subnav">
-  	 <%@ include file="/inc/leftmenu.jsp" %>
+  	 <c:if test="${source=='user'}">
+  	<%@ include file="/inc/leftmenu.jsp"%>
+  	</c:if>
+     <c:if test="${source=='interpreter'}">
+    <%@ include file="/inc/transLeftmenu.jsp"%>
+  </c:if>
   	</div>
   	<!--右侧内容-->
   	<!--右侧大块-->
@@ -71,26 +81,14 @@
   						<p class="word">
   							<spring:message code="interpreter.sex" />
   						</p>
-  						<c:if test="${interpreterInfo.sex==0}">
-	  						<p>
-	  							<span><input type="radio" name="sex" class="radio" checked="checked" value="0"/></span>
+  						   <p>
+	  							<span><input type="radio" name="sex" class="radio" <c:if test="${interpreterInfo.sex==0}">checked="checked"</c:if> value="0"/></span>
 	  							<span><spring:message code="interpreter.sex.man" /></span>
 	  						</p>
 	  						<p>
-	  							<span><input type="radio" name="sex" class="radio" value="1"/></span>
+	  							<span><input type="radio" name="sex" class="radio" <c:if test="${interpreterInfo.sex==1}">checked="checked"</c:if> value="1"/></span>
 	  							<span><span><spring:message code="interpreter.sex.women" /></span></span>
 	  						</p>
-  						</c:if>
-  						<c:if test="${interpreterInfo.sex==1}">
-	  						<p>
-	  							<span><input type="radio" name="sex" class="radio"  value="0"/></span>
-	  							<span><spring:message code="interpreter.sex.man" /></span>
-	  						</p>
-	  						<p>
-	  							<span><input type="radio" name="sex" class="radio" checked="checked" value="1"/></span>
-	  							<span><spring:message code="interpreter.sex.women" /></span>
-	  						</p>
-  						</c:if>
   					</li>
   					<li>
   						<p class="word"><spring:message code="interpreter.birthday" /></p>
@@ -101,13 +99,13 @@
   					</li>
   					<li>
   						<p class="word"><spring:message code="interpreter.email" /></p>
-  						<p  class="rightword">ceshi@gtcom.com.cn</p>
-  						<p><a href="#"><spring:message code="interpreter.update" /></a></p>
+  						<p  class="rightword">${user_session_key.email}</p>
+  						<p><a href="${_base}/p/security/seccenter?source=${source}"><spring:message code="interpreter.update" /></a></p>
   					</li>
   					<li>
   						<p class="word"><spring:message code="interpreter.mobilePhone" /></p>
-  						<p  class="rightword">需到安全中心进行绑111定</p>
-  						<p><a href="#"><spring:message code="interpreter.setting" /></a></p>
+  						<p  class="rightword">${user_session_key.mobile}</p>
+  						<p><a href="${_base}/p/security/seccenter?source=${source}"><spring:message code="interpreter.setting" /></a></p>
   					</li>
   					<li>
   						<p class="word">QQ:</p>
@@ -137,7 +135,7 @@
   </div>
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
-    var current ="";
+    var current ="interpreterInfo";
 	var pager;
 	(function() {
 		<%-- 展示日历 --%>

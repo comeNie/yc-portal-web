@@ -63,7 +63,7 @@
   					<span><spring:message code="ycleftmenu.companycenter"/></span>
   					</a>
   				</li>
-  				<li>
+  				<li id="interpreterInfo">
   					<a href="${_base}/p/interpreter/interpreterInfoPager?source=user">
   					<span><i class="icon iconfont">&#xe60c;</i></span>
   					<span><spring:message code="ycleftmenu.myinfo"/></span>
