@@ -13,19 +13,22 @@
                     <c:choose>
                         <c:when test="${loginUser !=null}">${loginUser.username}
                             <%--退出--%>
-                            <a href="#"><spring:message code="user.topMenu.exit"/></a>
+                            <a href="${_base}/ssologout"><spring:message code="user.topMenu.exit"/></a>
                         </c:when>
-                        <c:otherwise><a href="#"><spring:message code="topMenue.Login"/></a>
-                            <a href="#" class="blue"><spring:message code="topMenue.Regist"/></a>
+                        <c:otherwise><a href="${_base}/p/index"><spring:message code="topMenue.Login"/></a>
+                            <a href="${_base}/reg/toRegister" class="blue"><spring:message code="topMenue.Regist"/></a>
                         </c:otherwise>
                     </c:choose>
-                    </p>
+                </p>
                 <%--我的订单--%>
                 <p><a href="${_base}/p/customer/order/list/view"><spring:message code="topMenue.myOrder"/></a></p>
+                <%--我是客户--%>
                 <p><a href="${_base}/p/security/index"><spring:message code="topMenue.Customers"/></a></p>
                 <%--我是服务商--%>
                 <p><a href="${_base}/p/security/interpreterIndex"><spring:message code="topMenue.Suppliers"/></a></p>
-                <p class="none-border"><i class="icon iconfont">&#xe60b;</i><a href="#"><spring:message code="topMenue.Mobile"/></a></p>
+                <%--手机版--%>
+                <p class="none-border"><i class="icon iconfont">&#xe60b;</i>
+                    <a href="${_base}/findyee"><spring:message code="topMenue.Mobile"/></a></p>
                 <p class="none-border none-top">
                     <select id="langHeadSel" class="select select-topmini none-select ash-select"
                             onchange="changeLang()">

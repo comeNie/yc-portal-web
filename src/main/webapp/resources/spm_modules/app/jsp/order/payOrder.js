@@ -89,7 +89,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 		},
 		//调转到充值页面
 		_toDeposit:function(){
-			window.location.href=_base+"/balance/depositFund";
+			window.location.href=_base+"/p/balance/depositFund";
 		}
 		
     });

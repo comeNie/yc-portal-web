@@ -54,35 +54,25 @@
   					<p><spring:message code="order.translateLan"/></p>
   				</div>
   				<div class="placeorder-translate">
-	  				<select id="selectDuad" t="${sessionScope.orderInfo.productInfo.translateInfo}" name="<%=response.getLocale()%>" tabindex="5" class="dropdown" data-settings='{"cutOff": 12}' >
+	  				<select id="selectDuad" t="${sessionScope.orderInfo.productInfo.translateInfo}"
+							name="<%=response.getLocale()%>" tabindex="5"
+							class="dropdown" data-settings='{"cutOff": 12}' >
 						<c:forEach items="${duadList}" var="duad">
 	  						<c:if test="${duad.orderType != 2}">
-	  							<c:choose>
-	  								<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">
-	  									<option value="${duad.duadId}"
-	  										ordinary="${duad.ordinary}"  ordinaryUrgent="${duad.ordinaryUrgent}" 
-											professional="${duad.professional}"  professionalUrgent="${duad.professionalUrgent}"  
-											publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}" 
-											sourceEn="${duad.sourceEn}" targertEn="${duad.targetEn}"
-											sourceCn="${duad.sourceCn}" targertCn="${duad.targetCn}"
-	  									>
-	  										${duad.sourceCn}→${duad.targetCn}</option>
-	  								</c:when>
-	  								<c:otherwise>
-	  									<option value="${duad.duadId}"
-	  										ordinary="${duad.ordinaryDollar}"  ordinaryUrgent="${duad.ourgentDollar}" 
-											professional="${duad.professionalDollar}"  professionalUrgent="${duad.purgentDollar}"  
-											publish="${duad.publishDollar}"  publishUrgent="${duad.puburgentDollar}" 
-											sourceEn="${duad.sourceEn}" targertEn="${duad.targetEn}"
-											sourceCn="${duad.sourceCn}" targertCn="${duad.targetCn}"
-	  									>
-	  										${duad.sourceEn}→${duad.targetEn}</option>
-	  								</c:otherwise>
-	  							</c:choose>
+  								<option value="${duad.duadId}"
+  										ordinary="${duad.ordinary}"  ordinaryUrgent="${duad.ordinaryUrgent}"
+										professional="${duad.professional}"  professionalUrgent="${duad.professionalUrgent}"
+										publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}"
+										sourceEn="${duad.sourceEn}" targertEn="${duad.targetEn}"
+										sourceCn="${duad.sourceCn}" targertCn="${duad.targetCn}"
+										sourceCode="${duad.sourceCode}" targetCode="${duad.targetCode}"
+  									>
+  										<c:if test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${duad.sourceCn}→${duad.targetCn}</c:if>
+  										<c:if test="<%=!Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${duad.sourceEn}→${duad.targetEn}</c:if>
+  									</option>
 							</c:if>
 						</c:forEach>
 					</select>
-	  				<!--  <label>请输入翻译内容</label> -->
   				</div>
 			</div>
 			<!--白色背景-->
@@ -97,7 +87,7 @@
   					<!-- 上传文档btn -->
   					<p class="right"><input type="button" class="btn border-blue radius20 btn-80" value="<spring:message code="order.uploadDoc"/>"  id="fy-btn"></p>
   					<!-- 清空 -->
-  					<p class="right"><input type="button" class="btn border-blue radius20 btn-80" value="<spring:message code="order.clear" />" id="clear-btn"></p>
+  					<p class="right"><input hidden="" type="button" class="btn border-blue radius20 btn-80" value="<spring:message code="order.clear" />" id="clear-btn"></p>
   					<label></label>		
   				</div>
   				<div class="translate-int radius bj-ash placeholder" id="fy2" style="display: block;">
@@ -141,11 +131,10 @@
 						</li>
 						<li>
 							<!-- 价格 -->
-							<p><span id="stanPrice"></span>
-								<c:choose>
-									<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>"><spring:message code="order.yuan"/></c:when>
-									<c:otherwise><spring:message code="order.meiyuan"/></c:otherwise>
-								</c:choose>
+							<p>
+								<c:if test="<%=!Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>"><spring:message code="order.meiyuan"/></c:if>
+								<span id="stanPrice"></span>
+								<c:if test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>"><spring:message code="order.yuan"/></c:if>
 								<spring:message code="order.thousandWords"/></p>
 							<p class="ml-30"><span>1</span><spring:message code="order.freeChanges"/></p>
 						</li>
@@ -173,11 +162,10 @@
 						</li>
 						<li>
 							<!-- 价格 -->
-							<p><span id="proPrice"></span>
-								<c:choose>
-									<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>"><spring:message code="order.yuan"/></c:when>
-									<c:otherwise><spring:message code="order.meiyuan"/></c:otherwise>
-								</c:choose>
+							<p>
+								<c:if test="<%=!Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>"><spring:message code="order.meiyuan"/></c:if>
+								<span id="proPrice"></span>
+								<c:if test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>"><spring:message code="order.yuan"/></c:if>
 								<spring:message code="order.thousandWords"/></p>
 							<p class="ml-30"><span>1</span><spring:message code="order.freeChanges"/></p>
 						</li>
@@ -204,11 +192,10 @@
 						</li>
 						<li>
 							<!-- 元/千字 -->
-							<p><span id="pubPrice"></span>
-								<c:choose>
-									<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>"><spring:message code="order.yuan"/></c:when>
-									<c:otherwise><spring:message code="order.meiyuan"/></c:otherwise>
-								</c:choose>
+							<p>
+								<c:if test="<%=!Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>"><spring:message code="order.meiyuan"/></c:if>
+								<span id="pubPrice"></span>
+								<c:if test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>"><spring:message code="order.yuan"/></c:if>
 								<spring:message code="order.thousandWords"/></p>
 							<p class="ml-30"><span>1</span><spring:message code="order.freeChanges"/></p>
 						</li>
@@ -273,11 +260,11 @@
 							<p class="word"><spring:message code="order.formatConv"/></p>
 							<p>
 								<select id="selectFormatConv" class="select select-medium radius" disabled>
-									<option><spring:message code="order.formatConv"/></option>
-									<option selected="selected"><spring:message code="order.noFormatConv"/></option>
+									<option value="1"><spring:message code="order.formatConv"/></option>
+									<option value="2" selected="selected"><spring:message code="order.noFormatConv"/></option>
 								</select>
 							</p>
-							<p class="ml-20"><input id="inputFormatConv" style="display: none" type="text" class="int-text int-in-bi radius"></p>
+							<p class="ml-20"><input id="inputFormatConv" hidden="" type="text" class="int-text int-in-bi radius"></p>
 						</li>
 					</ul>
 				</div>

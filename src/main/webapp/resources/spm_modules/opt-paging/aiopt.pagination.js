@@ -2,8 +2,7 @@ define("opt-paging/aiopt.pagination", ["jquery","twbs-pagination/jquery.twbsPagi
 	 var AjaxController=require('opt-ajax/1.0.0/index');
 	//实例化AJAX控制处理对象
 	 var ajaxController = new AjaxController();
-	require("twbs-pagination/jquery.twbsPagination.min");	
-	
+	require("twbs-pagination/jquery.twbsPagination.min");
 	/*!
  * jQuery runner pagination plugin v1.0.0
  * based on jquery.pagController.js  jquery.twbsPagination.js
@@ -12,7 +11,7 @@ define("opt-paging/aiopt.pagination", ["jquery","twbs-pagination/jquery.twbsPagi
  * http://apache.org/licenses/LICENSE-2.0.html
  */
 (function ($, window, document, undefined) {
-
+//初始化国际化
     'use strict';
 
     var old = $.fn.runnerPagination;
@@ -184,13 +183,15 @@ define("opt-paging/aiopt.pagination", ["jquery","twbs-pagination/jquery.twbsPagi
         	if(this._tp){
         		return;
         	}
-        	var _tp = this.$element.twbsPagination({
+            var _tp = this.$element.twbsPagination({
                 totalPages: totalPages,
                 startPage: opt.startPage,
                 visiblePages: opt.visiblePages,
                 first: opt.first,
-                prev: opt.prev,
-                next: opt.next,
+                prev: "<",
+                next: ">",
+				nextClass:"prev-up",
+				prevClass:"next-down",
                 last: opt.last,
                 loop: opt.loop,
                 paginationClass: opt.paginationClass?opt.paginationClass:"pagination",

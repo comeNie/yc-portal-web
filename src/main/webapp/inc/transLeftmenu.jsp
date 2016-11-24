@@ -8,7 +8,7 @@
 		<ul>
 			<li class="user"><img src="${uedroot}/images/icon.jpg" /></li>
 			<li class="word">
-				<p>大脸盼爱大脸</p>
+				<p>${user_session_key.username}</p>
 				<p class="vip1"></p>
 			</li>
 		</ul>
@@ -23,14 +23,15 @@
 				</a>
 			</li>
 			<li id="taskCenter">
-				<a href="${_base}/p/taskcenter/view">
+				<a href="javaScript:void(0);">
 					<span><i class="icon iconfont">&#xe68e;</i></span>
 					<%--发现订单--%>
 					<span><spring:message code="ycleftmenu.look.orders"/> </span>
 				</a>
 			</li>
 			<%--订单大厅--%>
-			<div class="list-p"><a href="#" class=""><spring:message code="ycleftmenu.task.center"/><span> (99+)</span></a></div>
+			<div class="list-p"><a href="${_base}/p/taskcenter/view"
+								   class=""><spring:message code="ycleftmenu.task.center"/><span><c:if test="${taskNum!=null}"> (${taskNum})</c:if></span></a></div>
 			<%--分配订单--%>
 			<%--<div class="list-p"><a href="#"><spring:message code="ycleftmenu.assign.orders"/><span> (7)</span></a></div>--%>
 			<li id="orderList">
@@ -38,12 +39,6 @@
 					<span><i class="icon iconfont">&#xe602;</i></span>
 					<%--我的订单--%>
 					<span><spring:message code="ycleftmenu.myorder"/></span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<span><i class="icon iconfont">&#xe603;</i></span>
-					<span>优惠券</span>
 				</a>
 			</li>
 			<li>
@@ -59,21 +54,21 @@
 				</a>
 			</li>
 			<li>
+				<a href="${_base}/p/security/seccenter?source=interpreter">
+					<span><i class="icon iconfont">&#xe60c;</i></span>
+					<span><spring:message code="ycleftmenu.myinfo"/></span>
+				</a>
+			</li>
+			<li id="seccenterSettings">
+				<a  href="${_base}/p/security/seccenter?source=interpreter">
+					<span><i class="icon iconfont">&#xe609;</i></span>
+					<span><spring:message code="ycleftmenu.mysecurity"/></span>
+				</a>
+			</li>
+			<li>
 				<a href="#">
 					<span><i class="icon iconfont">&#xe606;</i></span>
 					<span>LSP管理</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<span><i class="icon iconfont">&#xe60c;</i></span>
-					<span>个人信息</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<span><i class="icon iconfont">&#xe609;</i></span>
-					<span>安全设置</span>
 				</a>
 			</li>
 		</ul>

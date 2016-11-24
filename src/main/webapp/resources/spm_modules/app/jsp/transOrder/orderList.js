@@ -33,8 +33,18 @@ define('app/jsp/transOrder/orderList', function (require, exports, module) {
       	//重写父类
     	setup: function () {
     		orderListPage.superclass.setup.call(this);
-    		this._orderList();
+			this._initPage();
     	},
+
+		//初始化页面查询
+		_initPage:function () {
+			var state = $("#stateP").val();
+			if (state == '') {
+				this._orderList();
+			} else {
+				this._orderListByType(state);
+			}
+		},
     	
     	//状态改变并查询
     	_change:function() {

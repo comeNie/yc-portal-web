@@ -1,20 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<c:set var="_base" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/inc/inc.jsp" %>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>忘记密码</title>
-   <%@ include file="/inc/inc.jsp" %>
-   <link href="${uedroot}/css/modular/login-regsiter.css" rel="stylesheet"
-	type="text/css" />
+    <title><spring:message code="ycfindpassword.forgetPassword"/></title>
+    <link href="${uedroot}/css/modular/login-regsiter.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-	<!--头部-->
-	<jsp:include page="/inc/userTopMenu.jsp"/>
   <!--二级主体-->
   <!--外侧背景-->
   <div class="cloud-container">
@@ -29,7 +23,7 @@
   		<!--右侧第二块-->
   		<form method="post">
   		<div class="login-big">
-			<div class="login-headr"><p><img src="${uedroot }/images/login-logo.png" /></p><p class="word">忘记密码</p></div>
+			<div class="login-headr"><p><img src="${uedroot }/images/login-logo.png" /></p><p class="word"><spring:message code="ycfindpassword.forgetPassword" /></p></div>
 			
 			<div class="password-bj">
 				<!--输入账号-->
@@ -40,13 +34,13 @@
  							<li>
  								<input type="hidden" id="userId" name="uid"/>
  								<input type="hidden" id="tcode"/>
- 								<p class="word">账号:</p>
+ 								<p class="word"><spring:message code="ycfindpassword.account"/></p>
  								<p><input type="text" class="int-text int-in-big radius" name="userName" id="userName"></p>
  								<label id="userNameErrMsg" style="display: none;"><span class="ash" id="userNameText"></span></label>
  								
  							</li>
  							<li>
- 								<p class="word">验证码:</p>
+ 								<p class="word"><spring:message code="ycfindpassword.captcha"/></p>
  								<p><input type="text" class="int-text int-large radius" id="verifyCodeImg"></p>
  								<p><img id="refreshVerificationCode"
 										src="${_base}/userCommon/imageVerifyCode" height="44"
@@ -58,7 +52,7 @@
  				</div>
  				
  				<div class="recharge-btn">
- 						<input type="button" id="back-btn" class="btn btn-green btn-xxxlarge radius10" value="下一步">
+ 						<input type="button" id="back-btn" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycfindpassword.next" />">
  			 	</div>
  			 	</div>
  				<!--输入账号结束-->
@@ -66,8 +60,8 @@
 				<div class="forget" id="back-pass1">
 					<div class="recharge-unionPay set-up">
  						<ul>
- 							<li id="phoneVerification"><a href="#" class="current"><i class="icon iconfont def">&#xe60b;</i><br>通过已验证手机验证<label></label></a></li>
- 							<li id="emailVerification"><a href="#" class="ml-50"><i class="icon iconfont def">&#xe62f;</i><br>通过已验证邮箱验证<label></label></a></li>
+ 							<li id="phoneVerification"><a href="javascript:void(0);" class="current"><i class="icon iconfont def">&#xe60b;</i><br><spring:message code="ycfindpassword.byPhone"/><label></label></a></li>
+ 							<li id="emailVerification"><a href="javascript:void(0);" class="ml-50"><i class="icon iconfont def">&#xe62f;</i><br><spring:message code="ycfindpassword.byMail"/><label></label></a></li>
  						</ul>
  					</div>
  				<!--tab1-->	
@@ -79,7 +73,7 @@
 			 		<div class="place-step-none adopt-stgreen-bj shezh-line">
 			 			<ul>
 			 				<li class="circle">1</li>
-			 				<li class="word">验证身份</li>
+			 				<li class="word"><spring:message code="ycfindpassword.step1"/></li>
 			 			</ul>
 			 			<p class="line"></p>
 			 		</div>
@@ -87,7 +81,7 @@
 			 		<div class="place-step-none adopt-stash-bj shezh-line">
 			 			<ul>
 			 				<li class="circle">2</li>
-			 				<li class="word">设置密码</li>
+			 				<li class="word"><spring:message code="ycfindpassword.step2"/></li>
 			 			</ul>
 			 			<p class="line"></p>
 			 		</div>
@@ -95,7 +89,7 @@
 			 		<div class="place-step-none adopt-stash-bj shezh-line">
 			 			<ul>
 			 				<li class="circle">3</li>
-			 				<li class="word">完成</li>
+			 				<li class="word"><spring:message code="ycfindpassword.step3"/></li>
 			 			</ul>
 			 			<p class="line"></p>
 			 		</div>
@@ -105,7 +99,7 @@
  						<ul>
  							<li>
  								<label class="ml-70" id="dynamicode" style="display: none;"></label>
- 								<p class="word">手机:</p>
+ 								<p class="word"><spring:message code="ycfindpassword.phoneLabel"/></p>
  								<p>
 									<select id="country" class="select select-in radius"></select>
 								</p>
@@ -113,9 +107,9 @@
  								<p id="telephone"></p>
  							</li>
  							<li>
- 								<p class="word">动态码:</p>
+ 								<p class="word"><spring:message code="ycfindpassword.dynamicCodeLabel"/></p>
  								<p><input type="text" class="int-text int-in radius" id="phoneDynamicode"></p>
- 								<p><input type="button" class="btn border-green border-sma radius btn-medium" id="send_dynamicode_btn" value="获取动态码">
+ 								<p><input type="button" class="btn border-green border-sma radius btn-medium" id="send_dynamicode_btn" value="<spring:message code="ycfindpassword.dynamicCodeBtn"/>">
  								</p>
  								
  							</li>
@@ -124,7 +118,7 @@
  				
  				<!--按钮-->
  				<div class="recharge-btn btn40">
- 						<input type="button" id="next-bt1" class="btn btn-green btn-xxxlarge radius10" value="下一步">
+ 						<input type="button" id="next-bt1" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycfindpassword.next" />">
  				</div>	
 				</div>
 					<div id="next2">
@@ -134,7 +128,7 @@
 				 		<div class="place-step-none adopt-lightgreen-bj shezh-line">
 				 			<ul>
 				 				<li class="circle">1</li>
-				 				<li class="word">验证身份</li>
+				 				<li class="word"><spring:message code="ycfindpassword.step1"/></li>
 				 			</ul>
 				 			<p class="line"></p>
 				 		</div>
@@ -142,7 +136,7 @@
 				 		<div class="place-step-none adopt-stgreen-bj shezh-line">
 				 			<ul>
 				 				<li class="circle">2</li>
-				 				<li class="word">设置密码</li>
+				 				<li class="word"><spring:message code="ycfindpassword.step2"/></li>
 				 			</ul>
 				 			<p class="line"></p>
 				 		</div>
@@ -150,7 +144,7 @@
 				 		<div class="place-step-none adopt-stash-bj shezh-line">
 				 			<ul>
 				 				<li class="circle">3</li>
-				 				<li class="word">完成</li>
+				 				<li class="word"><spring:message code="ycfindpassword.step3"/></li>
 				 			</ul>
 				 			<p class="line"></p>
 				 		</div>
@@ -159,20 +153,20 @@
 	 					<div class="recharge-form-label mt-30 ">
 	 						<ul>
 	 							<li>
-	 								<label class="ml-70" id="passwordMsg" style="display: none;">输入账号错误</label>
-	 								<p class="word">密码:</p>
-	 								<p><input type="password" class="int-text int-xlarge radius" id="password"></p>
+	 								<label class="ml-70" id="passwordMsg" style="display: none;"></label>
+	 								<p class="word"><spring:message code="ycfindpassword.password"/></p>
+	 								<p><input type="password" maxlength="16" class="int-text int-xlarge radius" id="password"></p>
 	 							</li>
 	 							<li>
-	 								<p class="word">确认密码:</p>
-	 								<p><input type="password" class="int-text int-xlarge radius" id="confirmPassword"></p>
+	 								<p class="word"><spring:message code="ycfindpassword.confirmPassword"/></p>
+	 								<p><input type="password" maxlength="16" class="int-text int-xlarge radius" id="confirmPassword"></p>
 	 							</li>
 	 						</ul>
 	 					</div>
 	 				
 	 				<!--按钮-->
 	 				<div class="recharge-btn btn40">
-	 						<input type="button" id="next-bt2" class="btn btn-green btn-xxxlarge radius10" value="下一步">
+	 						<input type="button" id="next-bt2" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycfindpassword.next" />">
 	 				</div>	
 					</div>
 
@@ -183,7 +177,7 @@
 			 		<div class="place-step-none adopt-lightgreen-bj shezh-line">
 			 			<ul>
 			 				<li class="circle">1</li>
-			 				<li class="word">验证身份</li>
+			 				<li class="word"><spring:message code="ycfindpassword.step1"/></li>
 			 			</ul>
 			 			<p class="line"></p>
 			 		</div>
@@ -191,7 +185,7 @@
 			 		<div class="place-step-none adopt-lightgreen-bj shezh-line">
 			 			<ul>
 			 				<li class="circle">2</li>
-			 				<li class="word">设置密码</li>
+			 				<li class="word"><spring:message code="ycfindpassword.step2"/></li>
 			 			</ul>
 			 			<p class="line"></p>
 			 		</div>
@@ -199,7 +193,7 @@
 			 		<div class="place-step-none adopt-stgreen-bj shezh-line">
 			 			<ul>
 			 				<li class="circle">3</li>
-			 				<li class="word">完成</li>
+			 				<li class="word"><spring:message code="ycfindpassword.step3"/></li>
 			 			</ul>
 			 			<p class="line"></p>
 			 		</div>
@@ -208,7 +202,7 @@
  					<div class="recharge-success mt-40">
  						<ul>
  							<li><img src="${uedroot }/images/rech-win.png"></li>
- 							<li class="word">密码设置成功</li>
+ 							<li class="word"><spring:message code="ycfindpassword.success"/></li>
  						</ul>
  					</div>
  				
@@ -223,7 +217,7 @@
 			 		<div class="place-step-none adopt-stgreen-bj shezh-line">
 			 			<ul>
 			 				<li class="circle">1</li>
-			 				<li class="word">验证身份</li>
+			 				<li class="word"><spring:message code="ycfindpassword.step1"/></li>
 			 			</ul>
 			 			<p class="line"></p>
 			 		</div>
@@ -231,7 +225,7 @@
 			 		<div class="place-step-none adopt-stash-bj shezh-line">
 			 			<ul>
 			 				<li class="circle">2</li>
-			 				<li class="word">设置密码</li>
+			 				<li class="word"><spring:message code="ycfindpassword.step2"/></li>
 			 			</ul>
 			 			<p class="line"></p>
 			 		</div>
@@ -239,7 +233,7 @@
 			 		<div class="place-step-none adopt-stash-bj shezh-line">
 			 			<ul>
 			 				<li class="circle">3</li>
-			 				<li class="word">完成</li>
+			 				<li class="word"><spring:message code="ycfindpassword.step3"/></li>
 			 			</ul>
 			 			<p class="line"></p>
 			 		</div>
@@ -249,21 +243,21 @@
  						<ul>
  							<li>
  								<label class="ml-70" id="emailErrMsg" style="display: none;"></label>
- 								<p class="word">邮箱:</p>
+ 								<p class="word"><spring:message code="ycfindpassword.emailLabel"/></p>
  								<p id="passwordEmail"></p>
  							</li>
  							<li>
- 								<p class="word">验证码:</p>
+ 								<p class="word"><spring:message code="ycfindpassword.dynamicCodeLabel"/></p>
  								<p><input type="text" class="int-text int-in radius" id="emailIdentifyCode"></p>
- 								<p><input type="button" class="btn border-green border-sma radius btn-medium" value="发送验证邮件" id="sendEmailBtn"></p>
- 								<p><a href="#" id="goEmail">立即进入邮箱</a></p>
+ 								<p><input type="button" class="btn border-green border-sma radius btn-medium" value="<spring:message code="ycfindpassword.dynamicCodeBtn"/>" id="sendEmailBtn"></p>
+ 								<p><a href="javascript:void(0);" id="goEmail"><spring:message code="ycfindpassword.goEmail"/></a></p>
  							</li>
  						</ul>
  					</div>
  				
  				<!--按钮-->
  				<div class="recharge-btn btn40">
- 						<input type="button" id="next-bt4" class="btn btn-green btn-xxxlarge radius10" value="下一步">
+ 						<input type="button" id="next-bt4" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycfindpassword.next" />">
  				</div>	
 				</div>
 					<div id="next5">
@@ -273,7 +267,7 @@
 				 		<div class="place-step-none adopt-lightgreen-bj shezh-line" >
 				 			<ul>
 				 				<li class="circle">1</li>
-				 				<li class="word">验证身份</li>
+				 				<li class="word"><spring:message code="ycfindpassword.step1"/></li>
 				 			</ul>
 				 			<p class="line"></p>
 				 		</div>
@@ -281,7 +275,7 @@
 				 		<div class="place-step-none adopt-stgreen-bj shezh-line">
 				 			<ul>
 				 				<li class="circle">2</li>
-				 				<li class="word">设置密码</li>
+				 				<li class="word"><spring:message code="ycfindpassword.step2"/></li>
 				 			</ul>
 				 			<p class="line"></p>
 				 		</div>
@@ -289,7 +283,7 @@
 				 		<div class="place-step-none adopt-stash-bj shezh-line">
 				 			<ul>
 				 				<li class="circle">3</li>
-				 				<li class="word">完成</li>
+				 				<li class="word"><spring:message code="ycfindpassword.step3"/></li>
 				 			</ul>
 				 			<p class="line"></p>
 				 		</div>
@@ -299,11 +293,11 @@
 	 						<ul>
 	 							<li>
 	 								<label class="ml-70" id="emailPasswordErrMsg" style="display: none;"></label>
-	 								<p class="word">密码:</p>
+	 								<p class="word"><spring:message code="ycfindpassword.password"/></p>
 	 								<p><input type="password" class="int-text int-xlarge radius" id="emailPassword"></p>
 	 							</li>
 	 							<li>
-	 								<p class="word">确认密码:</p>
+	 								<p class="word"><spring:message code="ycfindpassword.confirmPassword"/></p>
 	 								<p><input type="password" class="int-text int-xlarge radius" id="emailConfirmPassword"></p>
 	 							</li>
 	 						</ul>
@@ -311,7 +305,7 @@
 	 				
 	 				<!--按钮-->
 	 				<div class="recharge-btn btn40">
-	 						<input type="button" id="next-bt5" class="btn btn-green btn-xxxlarge radius10" value="下一步">
+	 						<input type="button" id="next-bt5" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycfindpassword.next" />">
 	 				</div>	
 					</div>
 
@@ -322,7 +316,7 @@
 			 		<div class="place-step-none adopt-lightgreen-bj shezh-line">
 			 			<ul>
 			 				<li class="circle">1</li>
-			 				<li class="word">验证身份</li>
+			 				<li class="word"><spring:message code="ycfindpassword.step1"/></li>
 			 			</ul>
 			 			<p class="line"></p>
 			 		</div>
@@ -330,7 +324,7 @@
 			 		<div class="place-step-none adopt-lightgreen-bj shezh-line">
 			 			<ul>
 			 				<li class="circle">2</li>
-			 				<li class="word">设置密码</li>
+			 				<li class="word"><spring:message code="ycfindpassword.step2"/></li>
 			 			</ul>
 			 			<p class="line"></p>
 			 		</div>
@@ -338,7 +332,7 @@
 			 		<div class="place-step-none adopt-stgreen-bj shezh-line">
 			 			<ul>
 			 				<li class="circle">3</li>
-			 				<li class="word">完成</li>
+			 				<li class="word"><spring:message code="ycfindpassword.step3"/></li>
 			 			</ul>
 			 			<p class="line"></p>
 			 		</div>
@@ -347,7 +341,7 @@
  					<div class="recharge-success mt-40">
  						<ul>
  							<li><img src="${uedroot }/images/rech-win.png"></li>
- 							<li class="word">密码设置成功</li>
+ 							<li class="word"><spring:message code="ycfindpassword.success"/></li>
  						</ul>
  					</div>
  			
@@ -382,17 +376,23 @@ var pager;
 		});
 	});
 	var passwordMsg = {
-			"account_empty" : '<spring:message code="ycregisterMsg.accountEmpty" />',
-			"account_error" : '<spring:message code="ycregisterMsg.accountError" />',
-			"password_empty" : '<spring:message code="ycregisterMsg.passwordEmpty" />',
-			"password_error" : '<spring:message code="ycregisterMsg.passwordError" />',
-			"confirm_password_empty" : '<spring:message code="ycregisterMsg.passwordEmpty" />',
-			"confirm_password_error" : '<spring:message code="ycregisterMsg.confirmPasswordError" />',
-			"verify_code_img_empty" : '<spring:message code="ycregisterMsg.verificationCodeEmpty" />',
-			"verify_code_img_error" : '<spring:message code="ycregisterMsg.verificationCodeError" />',
-			"agreement" : '<spring:message code="ycregisterMsg.agreement" />',
-			"phone_registered" : '<spring:message code="ycregister.register.phone" />',
-			"email_registered" : '<spring:message code="ycregister.register.email" />',
+			"showOkValueMsg" : '<spring:message code="ycaccountcenter.js.showOkValueMsg"/>',
+    		"showTitleMsg" : '<spring:message code="ycaccountcenter.js.showTitleMsg"/>',
+    		"notBindingPhone" : '<spring:message code="ycaccountcenter.updatePassword.notBindingPhone"/>',
+    		"notBindingEmail" : '<spring:message code="ycaccountcenter.updatePassword.notBindingEmail"/>',
+    		'sendMailError':'<spring:message code="ycaccountcenter.updatePassword.sendMailError"/>',
+			"account_empty" : '<spring:message code="ycfindpassword.accountEmpty" />',
+			"account_not_exist" : '<spring:message code="ycfindpassword.accountNotExist" />',
+			"password_empty" : '<spring:message code="ycfindpassword.passwordEmpty" />',
+			"password_error" : '<spring:message code="ycfindpassword.passwordError" />',
+			"confirm_password_empty" : '<spring:message code="ycfindpassword.passwordEmpty" />',
+			"confirm_password_error" : '<spring:message code="ycfindpassword.confirmPasswordError" />',
+			"verify_code_img_empty" : '<spring:message code="ycfindpassword.captchaEmpty" />',
+			"verify_code_img_error" : '<spring:message code="ycfindpassword.captchaError" />',
+			"smsCodeEmpty" : '<spring:message code="ycfindpassword.smsCodeEmpty" />',
+			"smsCodeError" : '<spring:message code="ycfindpassword.smsCodeError" />',
+			"emailCodeEmpty" : '<spring:message code="ycfindpassword.emailCodeEmpty" />',
+			"emailCodeError" : '<spring:message code="ycfindpassword.emailCodeError" />',
 			"getDynamiCode":'<spring:message code="ycregister.getDynamiCode"/>'
 		};
 </script>

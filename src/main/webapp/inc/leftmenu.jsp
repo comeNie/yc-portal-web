@@ -1,8 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<c:set var="uedroot" value="${pageContext.request.contextPath}/resources/template"/>
-<c:set var="_base" value="${pageContext.request.contextPath}"/>
 <script src="${_base}/resources/spm_modules/jquery/1.9.1/jquery.min.js"></script>
    <!--二级主体-->
   <!--外侧背景-->
@@ -12,7 +8,7 @@
   			<ul>
   				<li class="user"><img src="${uedroot}/images/icon.jpg" /></li>
   				<li class="word">
-  					<p>${userinfo.username}</p>
+  					<p>${user_session_key.username}</p>
   					<p class="vip1"></p>
   				</li>
   			</ul>
@@ -32,7 +28,7 @@
   					</a>
   				</li>
 				<li id="myaccount">
-					<a href="${_base}/balance/account">
+					<a href="${_base}/p/balance/account">
 						<span><i class="icon iconfont">&#xe602;</i></span>
 						<span><spring:message code="ycleftmenu.myaccount"/></span>
 					</a>
@@ -68,13 +64,13 @@
   					</a>
   				</li>
   				<li>
-  					<a href="个人信息.html">
+  					<a href="${_base}/p/interpreter/interpreterInfoPager?source=user">
   					<span><i class="icon iconfont">&#xe60c;</i></span>
   					<span><spring:message code="ycleftmenu.myinfo"/></span>
   					</a>
   				</li>
   				<li id="seccenterSettings">
-  					<a  href="${_base}/p/security/seccenter">
+  					<a  href="${_base}/p/security/seccenter?source=user">
   					<span><i class="icon iconfont">&#xe609;</i></span>
   					<span><spring:message code="ycleftmenu.mysecurity"/></span>
   					</a>

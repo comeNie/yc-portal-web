@@ -7,6 +7,8 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 
     require("jquery-validation/1.15.1/jquery.validate");
 	require("app/util/aiopt-validate-ext");
+	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');	
+	
     var SendMessageUtil = require("app/util/sendMessage");
     
     //实例化AJAX控制处理对象
@@ -32,6 +34,14 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
     	//重写父类
     	setup: function () {
     		textOrderAddPager.superclass.setup.call(this);
+    		
+    		//初始化国际化
+			$.i18n.properties({//加载资浏览器语言对应的资源文件
+				name: ["orderInfo"], //资源文件名称，可以是数组
+				path: _i18n_res, //资源文件路径
+				mode: 'both',
+				language: currentLan,
+			});
     		
     		this._globalRome();
     		
@@ -107,46 +117,46 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
     			},
     			messages: {
     				transSubject: {
-    					required:"请填写翻译主题",
-    					maxlength:"最大长度不能超过{0}"
+    					required: $.i18n.prop('order.place.error.subject'), //"请填写翻译主题",
+    					maxlength: $.i18n.prop('order.place.error.Maximum') //"最大长度不能超过{0}"
     				},
     				duad: {
-    					required:"请选择语言"
+    					required: $.i18n.prop('order.place.error.lan')//"请选择语言"
     				},
     				interpretationType: {
-    					required:"请选择口译类型"
+    					required: $.i18n.prop('order.place.error.interType') //"请选择口译类型"
     				},
     				begin_time: {
-    					required: "请选择开始时间"   
+    					required: $.i18n.prop('order.place.error.startTime') //"请选择开始时间"   
     				},
     				end_time: {
-    					required:"请选择结束时间"
+    					required: $.i18n.prop('order.place.error.endTime') //"请选择结束时间"
     				},
     				meetingAmount: {
-    					required: "请输入会议场数",
-    					digits: "请输入整数",
-    					min:"最小值为{0}",
-    					max:"最大值为{0}"
+    					required: $.i18n.prop('order.place.error.meetNum'),//"请输入会议场数",
+    					digits: $.i18n.prop('order.place.error.integer'),//"请输入整数",
+    					min: $.i18n.prop('order.place.error.min'),//"最小值为{0}",
+    					max: $.i18n.prop('order.place.error.max')//"最大值为{0}"
     				},
     				interpreterNum: {
-    					required: "请输入译员数量",
-    					digits: "请输入整数",
-    					min:"最小值为{0}",
-    					max:"最大值为{0}"
+    					required: $.i18n.prop('order.place.error.interNum'),//"请输入译员数量",
+    					digits: $.i18n.prop('order.place.error.integer'),//"请输入整数",
+    					min: $.i18n.prop('order.place.error.min'),//"最小值为{0}",
+    					max: $.i18n.prop('order.place.error.max')//"最大值为{0}"
     				},
     				isAgree: {
-    					required: "请阅读并同意翻译协议",
+    					required: $.i18n.prop('order.place.error.contentConsis')//"请阅读并同意翻译协议",
     				},
     				contactName: {
-    					required: "请输入姓名",
+    					required: $.i18n.prop('order.place.error.name')//"请输入姓名",
     				},
     				phoneNum: {
-    					required:"请输入手机号",
-    					pattern: "请输入正确的手机号"
+    					required: $.i18n.prop('order.place.error.phone'),//"请输入手机号",
+    					pattern: $.i18n.prop('order.place.error.phone1')//"请输入正确的手机号"
     				},
     				email: {
-    					required:"请输入邮箱",
-    					email:"请输入正确的邮箱"
+    					required: $.i18n.prop('order.place.error.email'),//"请输入邮箱",
+    					email: $.i18n.prop('order.place.error.email1')//"请输入正确的邮箱"
     				}
     			}
     		});

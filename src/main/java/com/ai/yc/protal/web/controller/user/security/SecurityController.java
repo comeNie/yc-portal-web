@@ -19,6 +19,7 @@ import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.slp.balance.api.accountmaintain.interfaces.IAccountMaintainSV;
 import com.ai.slp.balance.api.accountmaintain.param.AccountUpdateParam;
 import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
@@ -29,6 +30,7 @@ import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
 import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
 import com.ai.yc.protal.web.service.BalanceService;
+import com.ai.yc.protal.web.utils.PasswordMD5Util.Md5Utils;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
@@ -37,6 +39,8 @@ import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckEmailRequest;
 import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckeMobileRequest;
 import com.ai.yc.ucenter.api.members.param.editemail.UcMembersEditEmailRequest;
 import com.ai.yc.ucenter.api.members.param.editmobile.UcMembersEditMobileRequest;
+import com.ai.yc.ucenter.api.members.param.get.UcMembersGetRequest;
+import com.ai.yc.ucenter.api.members.param.get.UcMembersGetResponse;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.SearchYCTranslatorRequest;
 import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
@@ -66,7 +70,8 @@ public class SecurityController {
 	private static final String INTERPRETER_INDEX = "user/interpreterIndex";
 	@Autowired
 	BalanceService balanceService;
-
+	@Autowired
+	ResWebBundle rb;
 	// 译员首页
 	@RequestMapping("/interpreterIndex")
 	public ModelAndView toRegister() {
@@ -98,6 +103,7 @@ public class SecurityController {
 			LOG.error("获取译员信息: " + JSON.toJSONString(ycRes));
 
 		}
+		modelView.addObject("securitylevel", UserUtil.getUserSecurityLevel());
 		return modelView;
 	}
 	@RequestMapping("/queryLspInfo")
@@ -134,7 +140,9 @@ public class SecurityController {
 			balance = balanceInfo.getBalance();
 		}
 		modelView.addObject("balance", balance);
-
+		
+        // sec level
+		modelView.addObject("securitylevel", UserUtil.getUserSecurityLevel());
 		return modelView;
 	}
 
@@ -154,7 +162,7 @@ public class SecurityController {
 	@RequestMapping("/orderStatusCount")
 	@ResponseBody
 	public Map<String, Integer> orderStatusCount(HttpServletRequest request) {
-		String statusList = request.getParameter("statusList");
+		//String statusList = request.getParameter("statusList");
 		String isInterpreter = request.getParameter("isInterpreter");
 		QueryOrdCountResponse ordCountRes = null;
 		Map<String,Integer> stateCount =null;
@@ -179,14 +187,15 @@ public class SecurityController {
 	}
 
 	@RequestMapping("seccenter")
-	public ModelAndView init() {
+	public ModelAndView init(HttpServletRequest request) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("-------进入安全设置界面-------");
 		}
+		String source = request.getParameter("source");//区分来源
 		Map<String, Object> model = new HashMap<String, Object>();
 		// IYCUserServiceSV iYCUserServiceSV =
 		// DubboConsumerFactory.getService(IYCUserServiceSV.class);
-		SearchYCUserRequest request = new SearchYCUserRequest();
+		SearchYCUserRequest req = new SearchYCUserRequest();
 		// request.setUserId("000000000000003211");
 		GeneralSSOClientUser userSSOInfo = UserUtil.getSsoUser();
 		Boolean isexistemail = true;
@@ -205,7 +214,7 @@ public class SecurityController {
 			ModelAndView modelView = new ModelAndView(ERROR_PAGE);
 			return modelView;
 		}
-		request.setUserId(userSSOInfo.getUserId());
+		req.setUserId(userSSOInfo.getUserId());
 		// YCUserInfoResponse response =
 		// iYCUserServiceSV.searchYCUserInfo(request);
 		model.put("userinfo", userSSOInfo);
@@ -234,7 +243,7 @@ public class SecurityController {
 
 		// sec level
 		model.put("securitylevel", securitylevel);
-
+		model.put("source", source);
 		ModelAndView modelView = new ModelAndView(INIT, model);
 		return modelView;
 	}
@@ -266,6 +275,31 @@ public class SecurityController {
 			return responseData;
 		}
 		try {
+			IUcMembersSV ucMembersSV = DubboConsumerFactory
+					.getService(IUcMembersSV.class);
+			UcMembersGetRequest membersGetRequest = new UcMembersGetRequest();
+			membersGetRequest.setUsername(UserUtil.getUserId());
+			membersGetRequest.setGetmode("1");
+			UcMembersGetResponse getResponse = ucMembersSV
+					.ucGetMember(membersGetRequest);
+			ResponseCode responseCode = getResponse == null ? null : getResponse.getCode();
+			Integer codeNumber = responseCode == null ? null : responseCode
+					.getCodeNumber();
+			if (codeNumber == null || codeNumber != 1) {// 成功
+				msg = responseCode.getCodeMessage();
+				ResponseData<Boolean> responseData = new ResponseData<Boolean>(
+						ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
+				return responseData;
+			}
+			
+			String password =getResponse.getDate().get("password").toString();
+			String salt =getResponse.getDate().get("salt").toString();
+			if(Md5Utils.md5(Md5Utils.md5(payPwd).concat(salt)).equals(password)){
+				msg = rb.getMessage("ycaccountcenter.updatePayPassword.info1");
+				ResponseData<Boolean> responseData = new ResponseData<Boolean>(
+						ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
+				return responseData;
+			}
 			SearchYCUserRequest sReq = new SearchYCUserRequest();
 			sReq.setUserId(UserUtil.getUserId());
 			YCUserInfoResponse res = DubboConsumerFactory.getService(

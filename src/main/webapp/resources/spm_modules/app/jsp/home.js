@@ -7,6 +7,7 @@ define('app/jsp/home', function (require, exports, module) {
 	require("zeroclipboard/ZeroClipboard.min");
     require("jquery-validation/1.15.1/jquery.validate");
     require("app/util/aiopt-validate-ext");
+	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');	
     var SendMessageUtil = require("app/util/sendMessage");
 
     //实例化AJAX控制处理对象
@@ -34,6 +35,15 @@ define('app/jsp/home', function (require, exports, module) {
         //重写父类
         setup: function () {
             homePage.superclass.setup.call(this);
+            
+        	//初始化国际化
+			$.i18n.properties({//加载资浏览器语言对应的资源文件
+				name: ["home"], //资源文件名称，可以是数组
+				path: _i18n_res, //资源文件路径
+				mode: 'both',
+				language: currentLan,
+			});
+			
 			// 定义一个新的复制对象
 			var clip = new ZeroClipboard( document.getElementById("copyText"), {
 				moviePath: "ZeroClipboard.swf"
@@ -65,8 +75,10 @@ define('app/jsp/home', function (require, exports, module) {
 					text: $("#int-before").val()
 				},
 				success: function (data) {
-					if("1" === data.statusCode) {
-						$("#transRes").val(data.data.text);
+					if("OK" === data.statusInfo) {
+						$("#transRes").val(data.data);
+						$("#transResBak").val(data.data);
+						$("#transError").html('');
 
 						//翻译后的文字超过1000，隐藏播放喇叭
 						if ($("#transRes").val().length > 1000)
@@ -74,7 +86,8 @@ define('app/jsp/home', function (require, exports, module) {
 						else
 							$("#playControl").show();
 					} else {
-						alert("抱歉，该翻译失败，请选择人工翻译");
+						$("#transError").html($.i18n.prop("home.error.trans"));
+						//alert($.i18n.prop("home.error.trans"));
 					}
 					
 				}
@@ -130,6 +143,7 @@ define('app/jsp/home', function (require, exports, module) {
         
         //取消
         _cancelSave:function() {
+        	$("#transRes").val($("#transResBak").val());
         	$("#transRes").attr("readonly","readonly");
         },
         

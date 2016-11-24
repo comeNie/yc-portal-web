@@ -82,23 +82,20 @@ public class TransOrderController {
      * @return
      */
     @RequestMapping("/list/view")
-    public String orderListView(Model uiModel){
+    public String orderListView(Model uiModel, String state){
         try {
-            List<SysDomain> domainList = cacheServcie.getAllDomain(rb.getDefaultLocale());
-            List<SysPurpose> purpostList = cacheServcie.getAllPurpose(rb.getDefaultLocale());
-            
-            uiModel.addAttribute("domainList", domainList); //领域
-            uiModel.addAttribute("purpostList", purpostList); //用途
-            
+            uiModel.addAttribute("domainList", cacheServcie.getAllDomain(rb.getDefaultLocale())); //领域
+            uiModel.addAttribute("purpostList", cacheServcie.getAllPurpose(rb.getDefaultLocale())); //用途
+
+            IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
+            QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
+
+            //查询订单大厅数量
+            QueryOrdCountResponse taskNumRes = iOrderQuerySV.queryOrderCount(ordCountReq);
             String userId = UserUtil.getUserId();
             //查询译员信息
             getUserInfo(uiModel);
-            
-            //查询订单数
-            IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
-            QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
             ordCountReq.setInterperId(userId);//设置译员编码
-         
             //如果是LSP的管理员或项目经理
             if ("12".equals(uiModel.asMap().get("lspRole")) || "11".equals(uiModel.asMap().get("lspRole"))) {
                 ordCountReq.setLspId((String) uiModel.asMap().get("lspId"));
@@ -106,15 +103,13 @@ public class TransOrderController {
             }
             
             QueryOrdCountResponse ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+            Map<String,Integer> stateCount = ordCountRes.getCountMap();
 
-            Map<String,Integer> stateCount = ordCountRes.getCountMap();;
             // 21：已领取
             uiModel.addAttribute("ReceivedCount", stateCount.get(OrderConstants.State.RECEIVE));
-
-            //211：已分配 
+            //211：已分配
             uiModel.addAttribute("AssignedCount", stateCount.get(OrderConstants.State.ASSIGNED));
-            
-            //23：翻译中 
+            //23：翻译中
             uiModel.addAttribute("TranteCount", stateCount.get(OrderConstants.State.TRANSLATING));
             
             //查询译员信息 TODO暂时关闭
@@ -137,6 +132,7 @@ public class TransOrderController {
             ycRes.setLspRole("10");
             
             uiModel.addAttribute("interperInfo", ycRes);
+            uiModel.addAttribute("state", state);
         } catch (Exception e) {
            LOGGER.info("查询译员信息失败：", e);
         }
@@ -177,8 +173,8 @@ public class TransOrderController {
             }
             
             uiModel.addAttribute("UUploadCount", uUploadCount);
-            orderDetailsRes.setState("20");//TODO... 模拟待领取
-            orderDetailsRes.setDisplayFlag("20");//TODO... 模拟待领取
+//            orderDetailsRes.setState("20");//TODO... 模拟待领取
+//            orderDetailsRes.setDisplayFlag("20");//TODO... 模拟待领取
             //若是待领取,则获取用户信息
             if ("20".equals(orderDetailsRes.getDisplayFlag())){
                 getUserInfo(uiModel);

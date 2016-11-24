@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ai.yc.protal.web.utils.HttpUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.yc.order.api.ordersubmission.param.OrderSubmissionResponse;
-import com.ai.yc.protal.web.common.InvokeResult;
 import com.ai.yc.protal.web.exception.HttpStatusException;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -44,23 +43,22 @@ public class YeekitController {
      */
     @ResponseBody
     @RequestMapping(value = "/mt")  
-    public InvokeResult mt(String from, String to, String text) {  
-        Map<String,String> result = new HashMap<>();
+    public ResponseData<String> mt(String from, String to, String text) {  
+        ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         try {
             String fromTmp = from;
             //判断是否是自动检测
             if ("auto".equals(from))
                 fromTmp = yeekitService.detection(text);
-            result.put("text",yeekitService.dotranslate(fromTmp,to,text));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return InvokeResult.failure("失败");
-        } catch (HttpStatusException e) {
-            e.printStackTrace();
-            return InvokeResult.failure("网络异常");
-        }
+            resData.setData(yeekitService.dotranslate(fromTmp,to,text));
+        } catch (Exception e) {
+            LOGGER.error("机器翻译失败：", e);
+            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"FAIL"); 
+            resData.setData("机器翻译失败");
+            return resData;
+        } 
         
-        return InvokeResult.dataSuccess(result);
+        return resData;
     }
     
     /**
@@ -74,14 +72,15 @@ public class YeekitController {
     public ResponseData<String> translateLan(String text) {  
         ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         //TODO 
-        String lan = "English";
+        String lan = "en";
         try {
             lan = yeekitService.detection(text);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"");
         }
-        
+        //TODO
+        resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         resData.setData(lan);
         return resData;
     }

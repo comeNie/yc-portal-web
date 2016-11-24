@@ -7,6 +7,7 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
     require("jsviews/jsviews.min");
     require("app/util/jsviews-ext");
 	require("opt-paging/aiopt.pagination");
+	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
 
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
@@ -31,8 +32,25 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
       	//重写父类
     	setup: function () {
     		orderListPage.superclass.setup.call(this);
-    		this._orderList();
+			$.i18n.properties({//加载资浏览器语言对应的资源文件
+				name: ["commonRes"], //资源文件名称，可以是数组
+				path: _i18n_res, //资源文件路径
+				mode: 'both',
+				language: currentLan,
+				async: true
+			});
+			this._initPage();
     	},
+
+		//页面初始化查询
+		_initPage:function() {
+			var displayFlag = $("#displayFlagP").val();
+			if (displayFlag == '') {
+				this._orderList();
+			} else {
+				this._orderListByType(displayFlag);
+			}
+		},
     	
     	//改变状态并查询
     	_change:function() {

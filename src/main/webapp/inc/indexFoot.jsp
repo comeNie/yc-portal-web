@@ -5,44 +5,65 @@
         <div class="footer-about">
             <div class="footer-about-left">
                 <ul>
-                    <li class="title">关于我们</li>
+                	<!-- 关于我们 -->
+                    <li class="title"><spring:message code="indexFoot.about"/></li>
                     <li>
-                        <p><a href="#">公司介绍</a></p>
-                        <p><a href="#">合作客户</a></p>
-                        <p><a href="#">意见反馈</a></p>
-                        <p><a href="#">协议规则</a></p>
+                    	<!-- 公司介绍 -->
+                        <p><a href="#"><spring:message code="indexFoot.Company"/></a></p>
+                        <!-- 合作客户 -->
+                        <p><a href="#"><spring:message code="indexFoot.Clients"/></a></p>
+                        <!-- 意见反馈 -->
+                        <p><a href="#"><spring:message code="indexFoot.Feedback"/></a></p>
+                        <!-- 协议规则 -->
+                        <p><a href="#"><spring:message code="indexFoot.Agreement"/></a></p>
                     </li>
                 </ul>
                 <ul>
-                    <li class="title">我是客户</li>
+                	<!-- 我是客户 -->
+                    <li class="title"><spring:message code="indexFoot.ForClients"/></li>
                     <li>
-                        <p><a href="#">下单指南</a></p>
-                        <p><a href="#">常见问题</a></p>
-                        <p><a href="#">服务说明</a></p>
+                    	<!-- 下单指南 -->
+                        <p><a href="#"><spring:message code="indexFoot.Guide"/></a></p>
+                        <!-- 常见问题 -->
+                        <p><a href="#"><a href="#"><spring:message code="indexFoot.FAQ"/></a></p>
+                        <!-- 服务说明 -->
+                        <p><a href="#"><spring:message code="indexFoot.ServiceDesc"/></a></p>
                     </li>
                 </ul>
                 <ul>
-                    <li class="title">我是译者</li>
+                	<!-- 我是译者 -->
+                    <li class="title"><spring:message code="indexFoot.ForTranslators"/></li>
                     <li>
-                        <p><a href="#">译者认证</a></p>
-                        <p><a href="#">译者咨询</a></p>
+                      	 <!-- 译者认证 -->
+                        <p><a href="#"><spring:message code="indexFoot.Certification"/></a></p>
+                        <!-- 译者咨询 -->
+                        <p><a href="#"><spring:message code="indexFoot.Q&A"/></a></p>
                     </li>
                 </ul>
                 <ul>
-                    <li class="title">产品链接</li>
+                	<!-- 产品链接 -->
+                    <li class="title"><spring:message code="indexFoot.ProductLink"/></li>
                     <li>
-                        <p><a href="#">译库</a></p>
-                        <p><a href="#">找翻译APP</a></p>
-                        <p><a href="#">字幕通</a></p>
-                        <p><a href="#">译库网页翻译</a></p>
+                    	<!-- 译库 -->
+                        <p><a href="https://www.yeekit.com/"><spring:message code="indexFoot.YeeKit"/></a></p>
+                        <!-- 找翻译APP -->
+                        <p><a href="#"><spring:message code="indexFoot.FindYee"/></a></p>
+                        <!-- 字幕通 -->
+                        <p><a href="#"><spring:message code="indexFoot.YeeCaption"/></a></p>
+                        <!-- 译库网页翻译 -->
+                        <p><a href="http://web.yeekit.com/"><spring:message code="indexFoot.YeeWeb"/></a></p>
                     </li>
                 </ul>
                 <ul>
-                    <li class="title">友情链接</li>
+                	<!-- 友情链接 -->
+                    <li class="title"><spring:message code="indexFoot.Links"/></li>
                     <li>
-                        <p><a href="#">中译语通</a></p>
-                        <p><a href="#">译库</a></p>
-                        <p><a href="#">译世界</a></p>
+                    	<!-- 中译语通 -->
+                        <p><a href="#"><spring:message code="indexFoot.GTC"/></a></p>
+                        <!-- 译库 -->
+                        <p><a href="#"><spring:message code="indexFoot.YeeKit"/></a></p>
+                        <!-- 译世界 -->
+                        <p><a href="#"><spring:message code="indexFoot.YeeWorld"/></a></p>
                     </li>
                 </ul>
             </div>
@@ -53,17 +74,19 @@
                         <p><img src="${uedroot}/images/erwm.png" /></p>
                     </li>
                     <li class="shaw">
-                        <p class="shaw-a"><a href="javascript:"></a></p>
-                        <p class="shaw-b"><a href="javascript:"></a></p>
-                        <p class="shaw-c"><a href="javascript:"></a></p>
+                        <p class="shaw-a"><a href="http://twitter.com/GTC_YeeCloud"></a></p>
+                        <p class="shaw-b"><a href="http://www.facebook.com/yeecloud"></a></p>
+                        <p class="shaw-c"><a href="http://weibo.com/u/3628864670"></a></p>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="footer-list">
             <ul>
-                <li class="di-icon">译云专业语言服务平台 版权所有<img src="${uedroot}/images/di-icon.png" /></li>
-                <li>Copyright ©2015 www.yeecloud.com All rights reserved. 京ICP备13002826号-7</li>
+            	<!--译云专业语言服务平台 版权所有  -->
+                <li class="di-icon"><spring:message code="indexFoot.companyName"/><img src="${uedroot}/images/di-icon.png" /></li>
+              	<!-- 京ICP备13002826号-7 -->
+                <li>Copyright ©2015 www.yeecloud.com All rights reserved. <spring:message code="indexFoot.BeijingICP"/></li>
             </ul>
         </div>
     </div>

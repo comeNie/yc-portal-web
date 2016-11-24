@@ -1,5 +1,6 @@
 package com.ai.yc.protal.web.controller.user.password;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.UcenterOperation;
 import com.ai.yc.protal.web.utils.PasswordMD5Util.Md5Utils;
 import com.ai.yc.protal.web.utils.UserUtil;
+import com.ai.yc.protal.web.utils.VerifyUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
 import com.ai.yc.ucenter.api.members.param.base.ResponseCode;
@@ -39,26 +41,30 @@ public class PasswordController {
 
 	@RequestMapping("/passwordPager")
 	public ModelAndView toInterpreterBaseInfo() {
-		/*
-		 * IUcMembersSV ucMembersSV = DubboConsumerFactory
-		 * .getService(IUcMembersSV.class); UcMembersGetRequest
-		 * membersGetRequest = new UcMembersGetRequest();
-		 * membersGetRequest.setUsername("18518162319");
-		 * membersGetRequest.setGetmode("0"); UcMembersGetResponse getResponse =
-		 * ucMembersSV .ucGetMember(membersGetRequest); Map<String, Object>
-		 * model = new HashMap<String, Object>(); model.put("data",
-		 * getResponse);
-		 */
 		return new ModelAndView("/user/password/password-start");
 	}
-
-	@SuppressWarnings("unchecked")
+	@RequestMapping("/notBind")
+	public ModelAndView notBind() {
+		return new ModelAndView("/user/password/notBindAccountInfo");
+	}
 	@RequestMapping("/checkAccountInfo")
 	@ResponseBody
-	public ResponseData<Map<Object,Object>> checkAccountInfo(String account) {
+	public ResponseData<Map<Object,Object>> checkAccountInfo(HttpServletRequest request) {
 		ResponseData<Map<Object,Object>> responseData = null;
-		ResponseHeader header = null;
+		Map<Object,Object> resultMap = new HashMap<>();
+		boolean isOk = false;
+		String msg ="ok";
 		try {
+			ResponseData<Boolean> result = VerifyUtil.checkImageVerifyCode(request,
+					msg);
+			if (ResponseData.AJAX_STATUS_FAILURE.equals(result.getStatusCode())
+					|| !result.getData()) {// 图片验证码校验
+				 msg = rb.getMessage("ycfindpassword.captchaError");
+				responseData = new ResponseData<Map<Object,Object>>(
+						ResponseData.AJAX_STATUS_SUCCESS, msg, resultMap);
+				return responseData;
+			}
+			String account =  request.getParameter("account");
 			IUcMembersSV ucMembersSV = DubboConsumerFactory
 					.getService(IUcMembersSV.class);
 			UcMembersGetRequest membersGetRequest = new UcMembersGetRequest();
@@ -66,28 +72,19 @@ public class PasswordController {
 			membersGetRequest.setGetmode("5");
 			UcMembersGetResponse getResponse = ucMembersSV
 					.ucGetMember(membersGetRequest);
-			@SuppressWarnings("rawtypes")
-			Map getDate = getResponse.getDate();
-			if (getDate == null) {
-				header = new ResponseHeader(false, Constants.ERROR_CODE, "失败");
-				responseData = new ResponseData<Map<Object,Object>>(
-						ResponseData.AJAX_STATUS_FAILURE, "失败", null);
-				
-			} else {
-				header = new ResponseHeader(true, Constants.SUCCESS_CODE, "成功");
-				responseData = new ResponseData<Map<Object,Object>>(
-						ResponseData.AJAX_STATUS_SUCCESS, "成功", null);
+			if(getResponse.getDate()!=null){
+				isOk = true;
+				resultMap.putAll(getResponse.getDate());
+			}else{
+				 msg = rb.getMessage("ycfindpassword.accountNotExist");
 			}
-			responseData.setResponseHeader(header);
-			responseData.setData(getDate);
+			
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(),e);
-			header = new ResponseHeader(false, Constants.ERROR_CODE, "失败");
-			responseData = new ResponseData<Map<Object,Object>>(
-					ResponseData.AJAX_STATUS_FAILURE, "失败", null);
-			responseData.setResponseHeader(header);
 		}
-		return responseData;
+		resultMap.put("isOk", isOk);
+		return new ResponseData<Map<Object,Object>>(
+				ResponseData.AJAX_STATUS_SUCCESS,msg, resultMap);
 	}
 
 	/**

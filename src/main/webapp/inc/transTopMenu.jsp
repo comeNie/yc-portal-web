@@ -34,7 +34,7 @@
   						<ul>
   							<li><i class="icon-user"></i><a href="#"><spring:message code="user.topMenu.perProfile"/></a></li>
   							<li><i class="icon-lock"></i><a href="#"><spring:message code="user.topMenu.secSetting"/></a></li>
-  							<li><i class="icon-off"></i><a href="#"><spring:message code="user.topMenu.exit"/></a></li>
+  							<li><i class="icon-off"></i><a href="${_base}/ssologout"><spring:message code="user.topMenu.exit"/></a></li>
   						</ul>
   					</div>
   				</li>

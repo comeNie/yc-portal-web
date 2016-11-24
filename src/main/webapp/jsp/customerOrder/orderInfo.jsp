@@ -418,6 +418,7 @@
 <script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
 <script type="text/javascript">
 var pager;
+var current = "orderList";
 (function () {
 	seajs.use('app/jsp/customerOrder/orderInfo', function(orderInfoPage) {
 		pager = new orderInfoPage({element : document.body});
