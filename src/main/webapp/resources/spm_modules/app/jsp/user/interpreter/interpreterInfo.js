@@ -199,7 +199,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     })
     module.exports = InterPreterInfoPager
 });
-function uploadImg11(uploadImgFile){
+function uploadPortraitImg(uploadImgFile){
 	
 	var image = $("#uploadImg").val();
 	if(!/\.(gif|jpg|png|jpeg|bmp|GIF|JPG|PNG|JPEG|BMP)$/.test(image)){
@@ -222,7 +222,7 @@ function uploadImg11(uploadImgFile){
 	}
 	
 	 $.ajaxFileUpload({  
-         url:_base+"/interpreter/uploadImage",  
+         url:_base+"/p/interpreter/uploadImage",  
          secureuri:false,  
          fileElementId:uploadImgFile,//file标签的id  
          dataType: "text",//返回数据的类型  

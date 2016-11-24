@@ -30,18 +30,3 @@ $(function(){
 		}
 	);
 });
-//设置密码
-$(function(){
-  $("#error").click(function(){
-  $("#error").hide();
-  $("#error-oc").show();
-  });
-  $("#preser-btn").click(function(){
-  $("#error-oc").hide();
-  $("#error").show();
-  });
-  $("#preser-close").click(function(){
-  $("#error-oc").hide();
-  $("#error").show();
-  });
-});

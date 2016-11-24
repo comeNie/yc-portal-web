@@ -13,7 +13,6 @@
 .cloud-breadcrumb ul li{float:left;position: relative;margin-left:20px;}
 .none-select{background:none;border: none;color:#fff; outline:none;appearance:none;-moz-appearance:none;-webkit-appearance:none;}
 .cloud-breadcrumb ul li .icon-caret-down{position: absolute;top:10px;right:6px;color:#fff;}
-.cloud-breadcrumb ul li .btg{position: absolute;top:10px;right:-6px;color:#fff;}
 .cloud-breadcrumb ul li .message{width:16px;height:16px;position: absolute;top:-5px;right:-4px;font-size:12px;background:#fe6b6b;border-radius:50%;text-align:center;color:#fff;line-height:16px;}
 .cloud-breadcrumb ul .user{padding:0 16px;float:left}
 .cloud-breadcrumb ul .user a{font-size:14px;color:#fff;line-height:35px;}
@@ -50,7 +49,7 @@
 /**下单主导航**/
 .placeorder-subnav-big{width:100%;height:60px;background:#2965e6;min-width:1200px;}
 .placeorder-subnav{width:1200px;margin:0 auto;}
-.placeorder-subnav ul{width:100%;float:left;height:60px;}
+.placeorder-subnav ul{width:100%;float:left}
 .placeorder-subnav ul li{float:left}
 .placeorder-subnav ul .logo{margin-top:14px;margin-left:0;}
 .placeorder-subnav ul .right{float:right}
