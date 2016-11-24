@@ -31,7 +31,7 @@
 			</li>
 			<%--订单大厅--%>
 			<div class="list-p"><a href="${_base}/p/taskcenter/view"
-								   class=""><spring:message code="ycleftmenu.task.center"/><span> (99+)</span></a></div>
+								   class=""><spring:message code="ycleftmenu.task.center"/><span><c:if test="${taskNum!=null}"> (${taskNum})</c:if></span></a></div>
 			<%--分配订单--%>
 			<%--<div class="list-p"><a href="#"><spring:message code="ycleftmenu.assign.orders"/><span> (7)</span></a></div>--%>
 			<li id="orderList">
