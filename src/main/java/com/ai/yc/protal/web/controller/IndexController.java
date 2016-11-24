@@ -2,6 +2,7 @@ package com.ai.yc.protal.web.controller;
 
 import com.ai.opt.sso.client.filter.SSOClientConstants;
 import com.ai.opt.sso.client.filter.SSOClientUtil;
+import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.yc.common.api.cachekey.key.CacheKey;
 import com.ai.yc.common.api.cachekey.model.HomeDataConfig;
@@ -11,6 +12,7 @@ import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Locale;
 
 /**
  * Created by liutong on 16/11/5.
@@ -25,7 +28,8 @@ import java.io.IOException;
 @Controller
 public class IndexController {
     private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
-
+    @Autowired
+    ResWebBundle rb;
     /**
      * 首页
      * @return
@@ -103,6 +107,11 @@ public class IndexController {
      */
     @RequestMapping("/aboutus")
     public String aboutus(){
-        return "/static/about";
+        return staticUrl()+"/about";
+    }
+
+
+    private String staticUrl(){
+        return Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale())?"/static":"/staticEs";
     }
 }
