@@ -187,14 +187,15 @@ public class SecurityController {
 	}
 
 	@RequestMapping("seccenter")
-	public ModelAndView init() {
+	public ModelAndView init(HttpServletRequest request) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("-------进入安全设置界面-------");
 		}
+		String source = request.getParameter("source");//区分来源
 		Map<String, Object> model = new HashMap<String, Object>();
 		// IYCUserServiceSV iYCUserServiceSV =
 		// DubboConsumerFactory.getService(IYCUserServiceSV.class);
-		SearchYCUserRequest request = new SearchYCUserRequest();
+		SearchYCUserRequest req = new SearchYCUserRequest();
 		// request.setUserId("000000000000003211");
 		GeneralSSOClientUser userSSOInfo = UserUtil.getSsoUser();
 		Boolean isexistemail = true;
@@ -213,7 +214,7 @@ public class SecurityController {
 			ModelAndView modelView = new ModelAndView(ERROR_PAGE);
 			return modelView;
 		}
-		request.setUserId(userSSOInfo.getUserId());
+		req.setUserId(userSSOInfo.getUserId());
 		// YCUserInfoResponse response =
 		// iYCUserServiceSV.searchYCUserInfo(request);
 		model.put("userinfo", userSSOInfo);
@@ -242,7 +243,7 @@ public class SecurityController {
 
 		// sec level
 		model.put("securitylevel", securitylevel);
-
+		model.put("source", source);
 		ModelAndView modelView = new ModelAndView(INIT, model);
 		return modelView;
 	}

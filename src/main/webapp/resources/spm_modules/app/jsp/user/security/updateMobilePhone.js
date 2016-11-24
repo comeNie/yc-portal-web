@@ -82,21 +82,14 @@ define("app/jsp/user/security/updateMobilePhone",
 							   $('#set-table1').hide();
 							   }
 							});
-							if(phone!=""&&email==""){
-								 $('#set-table1').show();
-								 $('#set-table2').hide();
-								 $("#set-table1").html("<div class='recharge-success mt-40'><ul><li class='word'>没有绑定手机,无法手机号</li></ul></div>");
+							if(phone==""){
+								 $("#set-table1").html("<div class='recharge-success mt-40'><ul><li class='word'>没有绑定手机,无法验证身份/li></ul></div>");
+							}
+							if(email==""){
+								$("#set-table2").html("<div class='recharge-success mt-40'><ul><li class='word'>没有绑定邮箱,无法验证身份</li></ul></div>");
 							}
 							if(phone==""&&email!=""){
-								 $('#set-table1').show();
-								 $('#set-table2').hide();
-								 $("#set-table2").html("<div class='recharge-success mt-40'><ul><li class='word'>没有绑定手机,无法手机号</li></ul></div>");
-							}
-							if(phone==""&&email==""){
-								 $('#set-table1').show();
-								 $('#set-table2').hide();
-								 $("#set-table1").html("<div class='recharge-success mt-40'><ul><li class='word'>没有绑定手机,无法手机号</li></ul></div>");
-								 $("#set-table2").html("<div class='recharge-success mt-40'><ul><li class='word'>没有绑定手机,无法手机号</li></ul></div>");
+								$("#emailVerification a").click();
 							}
 
 						},
