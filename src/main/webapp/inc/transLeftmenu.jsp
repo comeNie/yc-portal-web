@@ -54,9 +54,9 @@
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="${_base}/p/security/seccenter?source=interpreter">
 					<span><i class="icon iconfont">&#xe60c;</i></span>
-					<span>个人信息</span>
+					<span><spring:message code="ycleftmenu.myinfo"/></span>
 				</a>
 			</li>
 			<li id="seccenterSettings">

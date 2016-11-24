@@ -64,7 +64,7 @@
   					</a>
   				</li>
   				<li>
-  					<a href="个人信息.html">
+  					<a href="${_base}/p/interpreter/interpreterInfoPager?source=user">
   					<span><i class="icon iconfont">&#xe60c;</i></span>
   					<span><spring:message code="ycleftmenu.myinfo"/></span>
   					</a>
