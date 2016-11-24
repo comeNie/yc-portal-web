@@ -30,3 +30,47 @@ $(function(){
 		}
 	);
 });
+//设置密码
+$(function(){
+  $("#error").click(function(){
+  $("#error").hide();
+  $("#error-oc").show();preser-btn
+  });
+  $("#preser-btn").click(function(){
+  $("#error-oc").hide();
+  $("#error").show();
+  });
+  $("#preser-close").click(function(){
+  $("#error-oc").hide();
+  $("#error").show();
+  });
+});
+//首页信息提示
+$(function () {
+    var st = 100;
+    $('.post-cion #sus-top').mouseenter(function () {
+		$('.suspension').show(1);
+    })
+    	$('#sus-top').mouseleave(function () {
+        $('.suspension').hide(1);
+   }); 
+   $('.post-cion #sus-top1').mouseenter(function () {
+		$('.suspension1').show(1);
+    })
+		$('#sus-top1').mouseleave(function () {
+        $('.suspension1').hide(1);
+   });
+    $('.post-cion #sus-top2').mouseenter(function () {
+		$('.suspension2').show(1);
+    })
+		$('#sus-top2').mouseleave(function () {
+        $('.suspension2').hide(1);
+   });
+   $('.post-cion #sus-top3').mouseenter(function () {
+		$('.suspension3').show(1);
+    })
+		$('#sus-top3').mouseleave(function () {
+        $('.suspension3').hide(1);
+   });
+    
+  });

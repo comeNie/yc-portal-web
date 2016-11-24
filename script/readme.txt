@@ -59,12 +59,12 @@ docker run -d --name yc-portal-web-v1.0  -p 14101:8080  \
 -e "yeecloudUser=yeecloud" \
 -e "yeecloudPassword=yee123" \
 -e "MessageFormYeecloud=yeecloud" \
-10.19.13.18:5000/yc-portal-web:v1.0_2
+10.19.13.18:5000/yc-portal-web:v1.0_4 /bin/bash
 
 #查看镜像启动日志
-docker logs yc-protal-web-v1.0
+docker logs yc-portal-web-v1.0
 #进入容器，查看镜像内部的情况
-docker exec -it yc-protal-web-v1.0 /bin/bash
+docker exec -it yc-portal-web-v1.0 /bin/bash
 #删除运行的容器
 docker rm -fv yc-protal-web-v1.0
 
