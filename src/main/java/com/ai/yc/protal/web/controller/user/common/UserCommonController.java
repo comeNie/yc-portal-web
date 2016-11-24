@@ -39,6 +39,7 @@ import com.ai.yc.protal.web.constants.Constants.UcenterOperation;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
 import com.ai.yc.protal.web.model.sms.SmsRequest;
 import com.ai.yc.protal.web.utils.AiPassUitl;
+import com.ai.yc.protal.web.utils.SmsSenderUtil;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.protal.web.utils.VerifyUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersOperationSV;
@@ -239,8 +240,8 @@ public class UserCommonController {
 		}
 		String randomStr = (String) ucenterRes[1];// RandomUtil.randomNum(6);
 		req.setContent("短信验证码:" + randomStr);
-		boolean sendOk = true;// SmsSenderUtil.sendMessage(phone,
-								// req.getContent());
+		boolean sendOk =  SmsSenderUtil.sendMessage(phone,
+								 req.getContent());
 		if (sendOk) {
 			if (UcenterOperation.OPERATION_TYPE_PHONE_ACTIVATE.equals(type)) {// 手机注册操作有uid
 			    request.getSession().setAttribute(req.getCodeKey()+PhoneVerify.PHONE_CODE_REGISTER_UID, ucenterRes[3]);
