@@ -39,7 +39,7 @@
   		<div class="right-list mt-0">
   			<div class="right-list-title pb-10 pl-20">
   				<p>基本信息</p>
-  				<p class="right"><input type="button" class="btn  btn-od-large btn-blue radius20" value="译云认证"></p>
+  				<!-- <p class="right"><input type="button" class="btn  btn-od-large btn-blue radius20" value="译云认证"></p> -->
   			</div>
   			<form id="dataForm" method="post" >
   			<div class="form-lable">
@@ -52,7 +52,7 @@
   							<img src="${portraitId}" id="portraitFileId" />
   							<div class="portrait-file">
   								<a href="#"><spring:message code="interpreter.updatePortrait" /></a>
-  								<input type="file"  class="file-opacity" id="uploadImg" name="uploadImg" onchange="uploadImg11('uploadImg')"/>
+  								<input type="file"  class="file-opacity" id="uploadImg" name="uploadImg" onchange="uploadPortraitImg('uploadImg')"/>
   							</div>
   						</p>
   						<label id="uploadImgErrMsg" style="display: none;"><span class="ash" id="uploadImgText"></span></label>
