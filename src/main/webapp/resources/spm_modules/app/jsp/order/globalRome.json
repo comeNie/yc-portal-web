@@ -6,7 +6,7 @@
         "COUNTRY_NAME_EN": "China",
         "COUNTRY_VALUE": "CN",
         "COUNTRY_CODE": "86",
-        "REGULAR_EXPRESSION": "^(86){0,1}1\\d{10}$"
+        "REGULAR_EXPRESSION": "^1\\d{10}$"
       },
       {
         "ID": "2",
@@ -14,7 +14,7 @@
         "COUNTRY_NAME_EN": "Taiwan",
         "COUNTRY_VALUE": "TW",
         "COUNTRY_CODE": "886",
-        "REGULAR_EXPRESSION": "^(00){0,1}(886){1}0{0,1}[6,7,9](?:\\d{7}|\\d{8}|\\d{10})$"
+        "REGULAR_EXPRESSION": "^0{0,1}[6,7,9](?:\\d{7}|\\d{8}|\\d{10})$"
       },
       {
         "ID": "3",
@@ -22,7 +22,7 @@
         "COUNTRY_NAME_EN": "Hong Kong",
         "COUNTRY_VALUE": "HK",
         "COUNTRY_CODE": "852",
-        "REGULAR_EXPRESSION": "^(00){0,1}(852){1}0{0,1}[1,5,6,9](?:\\d{7}|\\d{8}|\\d{12})$"
+        "REGULAR_EXPRESSION": "^0{0,1}[1,5,6,9](?:\\d{7}|\\d{8}|\\d{12})$"
       },
       {
         "ID": "4",
@@ -30,7 +30,7 @@
         "COUNTRY_NAME_EN": "Malaysia",
         "COUNTRY_VALUE": "MY",
         "COUNTRY_CODE": "60",
-        "REGULAR_EXPRESSION": "^(00){0,1}(60){1}1\\d{8,9}$"
+        "REGULAR_EXPRESSION": "^1\\d{8,9}$"
       },
       {
         "ID": "5",
@@ -38,7 +38,7 @@
         "COUNTRY_NAME_EN": "Singapore",
         "COUNTRY_VALUE": "SG",
         "COUNTRY_CODE": "65",
-        "REGULAR_EXPRESSION": "^(00){0,1}(65){1}[13689]\\d{6,7}$"
+        "REGULAR_EXPRESSION": "^[13689]\\d{6,7}$"
       },
       {
         "ID": "6",
@@ -46,7 +46,7 @@
         "COUNTRY_NAME_EN": "Japan",
         "COUNTRY_VALUE": "JP",
         "COUNTRY_CODE": "81",
-        "REGULAR_EXPRESSION": "^(00){0,1}(81){1}0{0,1}[7,8,9](?:\\d{8}|\\d{9})$"
+        "REGULAR_EXPRESSION": "^0{0,1}[7,8,9](?:\\d{8}|\\d{9})$"
       },
       {
         "ID": "7",
@@ -54,7 +54,7 @@
         "COUNTRY_NAME_EN": "South Korea",
         "COUNTRY_VALUE": "KR",
         "COUNTRY_CODE": "82",
-        "REGULAR_EXPRESSION": "^(00){0,1}(82){1}0{0,1}[7,1](?:\\d{8}|\\d{9})$"
+        "REGULAR_EXPRESSION": "^0{0,1}[7,1](?:\\d{8}|\\d{9})$"
       },
       {
         "ID": "8",
@@ -62,7 +62,7 @@
         "COUNTRY_NAME_EN": "United States",
         "COUNTRY_VALUE": "US",
         "COUNTRY_CODE": "1",
-        "REGULAR_EXPRESSION": "^(00){0,1}(1){1}\\d{10,12}$"
+        "REGULAR_EXPRESSION": "^\\d{10,12}$"
       },
       {
         "ID": "9",
@@ -70,7 +70,7 @@
         "COUNTRY_NAME_EN": "Canada",
         "COUNTRY_VALUE": "CA",
         "COUNTRY_CODE": "1",
-        "REGULAR_EXPRESSION": "^(00){0,1}(1){1}\\d{10}$"
+        "REGULAR_EXPRESSION": "^\\d{10}$"
       },
       {
         "ID": "10",
@@ -78,7 +78,7 @@
         "COUNTRY_NAME_EN": "Australia",
         "COUNTRY_VALUE": "AU",
         "COUNTRY_CODE": "61",
-        "REGULAR_EXPRESSION": "^(00){0,1}(61){1}4\\d{8,9}$"
+        "REGULAR_EXPRESSION": "^4\\d{8,9}$"
       },
       {
         "ID": "11",
@@ -86,7 +86,7 @@
         "COUNTRY_NAME_EN": "New Zealand",
         "COUNTRY_VALUE": "NZ",
         "COUNTRY_CODE": "64",
-        "REGULAR_EXPRESSION": "^(00){0,1}(64){1}[278]\\d{7,9}$"
+        "REGULAR_EXPRESSION": "^[278]\\d{7,9}$"
       },
       {
         "ID": "12",
@@ -94,7 +94,7 @@
         "COUNTRY_NAME_EN": "Argentina",
         "COUNTRY_VALUE": "AR",
         "COUNTRY_CODE": "54",
-        "REGULAR_EXPRESSION": "^(00){0,1}(54){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "13",
@@ -102,7 +102,7 @@
         "COUNTRY_NAME_EN": "United Arab Emirates",
         "COUNTRY_VALUE": "AE",
         "COUNTRY_CODE": "971",
-        "REGULAR_EXPRESSION": "^(00){0,1}(971){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "14",
@@ -110,7 +110,7 @@
         "COUNTRY_NAME_EN": "Ireland",
         "COUNTRY_VALUE": "IE",
         "COUNTRY_CODE": "353",
-        "REGULAR_EXPRESSION": "^(00){0,1}(353){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "15",
@@ -118,7 +118,7 @@
         "COUNTRY_NAME_EN": "Egypt",
         "COUNTRY_VALUE": "EG",
         "COUNTRY_CODE": "20",
-        "REGULAR_EXPRESSION": "^(00){0,1}(20){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "16",
@@ -126,7 +126,7 @@
         "COUNTRY_NAME_EN": "Estonia",
         "COUNTRY_VALUE": "EE",
         "COUNTRY_CODE": "372",
-        "REGULAR_EXPRESSION": "^(00){0,1}(372){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "17",
@@ -134,7 +134,7 @@
         "COUNTRY_NAME_EN": "Austria",
         "COUNTRY_VALUE": "AT",
         "COUNTRY_CODE": "43",
-        "REGULAR_EXPRESSION": "^(00){0,1}(43){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "18",
@@ -142,7 +142,7 @@
         "COUNTRY_NAME_EN": "Macau",
         "COUNTRY_VALUE": "MO",
         "COUNTRY_CODE": "853",
-        "REGULAR_EXPRESSION": "^(00){0,1}(853){1}6\\d{7}$"
+        "REGULAR_EXPRESSION": "^6\\d{7}$"
       },
       {
         "ID": "19",
@@ -150,7 +150,7 @@
         "COUNTRY_NAME_EN": "Bahamas",
         "COUNTRY_VALUE": "BS",
         "COUNTRY_CODE": "1242",
-        "REGULAR_EXPRESSION": "^(00){0,1}(1242){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "20",
@@ -158,7 +158,7 @@
         "COUNTRY_NAME_EN": "Panama",
         "COUNTRY_VALUE": "PA",
         "COUNTRY_CODE": "507",
-        "REGULAR_EXPRESSION": "^(00){0,1}(507){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "21",
@@ -166,7 +166,7 @@
         "COUNTRY_NAME_EN": "Brazil",
         "COUNTRY_VALUE": "BR",
         "COUNTRY_CODE": "55",
-        "REGULAR_EXPRESSION": "^(00){0,1}(55){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "22",
@@ -174,7 +174,7 @@
         "COUNTRY_NAME_EN": "Belarus",
         "COUNTRY_VALUE": "BY",
         "COUNTRY_CODE": "375",
-        "REGULAR_EXPRESSION": "^(00){0,1}(375){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "23",
@@ -182,7 +182,7 @@
         "COUNTRY_NAME_EN": "Bulgaria",
         "COUNTRY_VALUE": "BG",
         "COUNTRY_CODE": "359",
-        "REGULAR_EXPRESSION": "^(00){0,1}(359){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "25",
@@ -190,7 +190,7 @@
         "COUNTRY_NAME_EN": "Poland",
         "COUNTRY_VALUE": "PL",
         "COUNTRY_CODE": "48",
-        "REGULAR_EXPRESSION": "^(00){0,1}(48){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "26",
@@ -198,7 +198,7 @@
         "COUNTRY_NAME_EN": "Belize",
         "COUNTRY_VALUE": "BZ",
         "COUNTRY_CODE": "501",
-        "REGULAR_EXPRESSION": "^(00){0,1}(501){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "27",
@@ -206,7 +206,7 @@
         "COUNTRY_NAME_EN": "Denmark",
         "COUNTRY_VALUE": "DK",
         "COUNTRY_CODE": "45",
-        "REGULAR_EXPRESSION": "^(00){0,1}(45){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "28",
@@ -214,7 +214,7 @@
         "COUNTRY_NAME_EN": "Germany",
         "COUNTRY_VALUE": "DE",
         "COUNTRY_CODE": "49",
-        "REGULAR_EXPRESSION": "^(00){0,1}(49){1}1(\\d{5,6}|\\d{9,12})$"
+        "REGULAR_EXPRESSION": "^1(\\d{5,6}|\\d{9,12})$"
       },
       {
         "ID": "29",
@@ -222,7 +222,7 @@
         "COUNTRY_NAME_EN": "Russia",
         "COUNTRY_VALUE": "RU",
         "COUNTRY_CODE": "7",
-        "REGULAR_EXPRESSION": "^(00){0,1}(7){1}[13489]\\d{9,11}$"
+        "REGULAR_EXPRESSION": "^[13489]\\d{9,11}$"
       },
       {
         "ID": "30",
@@ -230,7 +230,7 @@
         "COUNTRY_NAME_EN": "France",
         "COUNTRY_VALUE": "FR",
         "COUNTRY_CODE": "33",
-        "REGULAR_EXPRESSION": "^(00){0,1}(33){1}(\\d{6}|\\d{8,9})$"
+        "REGULAR_EXPRESSION": "^(\\d{6}|\\d{8,9})$"
       },
       {
         "ID": "31",
@@ -238,7 +238,7 @@
         "COUNTRY_NAME_EN": "Philippines",
         "COUNTRY_VALUE": "PH",
         "COUNTRY_CODE": "63",
-        "REGULAR_EXPRESSION": "^(00){0,1}(63){1}[24579](\\d{7,9}|\\d{12})$"
+        "REGULAR_EXPRESSION": "^[24579](\\d{7,9}|\\d{12})$"
       },
       {
         "ID": "32",
@@ -246,7 +246,7 @@
         "COUNTRY_NAME_EN": "Finland",
         "COUNTRY_VALUE": "FI",
         "COUNTRY_CODE": "358",
-        "REGULAR_EXPRESSION": "^(00){0,1}(358){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "33",
@@ -254,7 +254,7 @@
         "COUNTRY_NAME_EN": "Colombia",
         "COUNTRY_VALUE": "CO",
         "COUNTRY_CODE": "57",
-        "REGULAR_EXPRESSION": "^(00){0,1}(57){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "34",
@@ -262,7 +262,7 @@
         "COUNTRY_NAME_EN": "Netherlands",
         "COUNTRY_VALUE": "NL",
         "COUNTRY_CODE": "31",
-        "REGULAR_EXPRESSION": "^(00){0,1}(31){1}6\\d{8}$"
+        "REGULAR_EXPRESSION": "^6\\d{8}$"
       },
       {
         "ID": "35",
@@ -270,7 +270,7 @@
         "COUNTRY_NAME_EN": "Kyrgyzstan",
         "COUNTRY_VALUE": "KG",
         "COUNTRY_CODE": "996",
-        "REGULAR_EXPRESSION": "^(00){0,1}(996){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "36",
@@ -278,7 +278,7 @@
         "COUNTRY_NAME_EN": "Cambodia",
         "COUNTRY_VALUE": "KH",
         "COUNTRY_CODE": "855",
-        "REGULAR_EXPRESSION": "^(00){0,1}(855){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "37",
@@ -286,7 +286,7 @@
         "COUNTRY_NAME_EN": "Qatar",
         "COUNTRY_VALUE": "QA",
         "COUNTRY_CODE": "974",
-        "REGULAR_EXPRESSION": "^(00){0,1}(974){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "38",
@@ -294,7 +294,7 @@
         "COUNTRY_NAME_EN": "Lithuania",
         "COUNTRY_VALUE": "LT",
         "COUNTRY_CODE": "370",
-        "REGULAR_EXPRESSION": "^(00){0,1}(370){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "39",
@@ -302,7 +302,7 @@
         "COUNTRY_NAME_EN": "Luxembourg",
         "COUNTRY_VALUE": "LU",
         "COUNTRY_CODE": "352",
-        "REGULAR_EXPRESSION": "^(00){0,1}(352){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "40",
@@ -310,7 +310,7 @@
         "COUNTRY_NAME_EN": "Romania",
         "COUNTRY_VALUE": "RO",
         "COUNTRY_CODE": "40",
-        "REGULAR_EXPRESSION": "^(00){0,1}(40){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "41",
@@ -318,7 +318,7 @@
         "COUNTRY_NAME_EN": "Maldives",
         "COUNTRY_VALUE": "MV",
         "COUNTRY_CODE": "960",
-        "REGULAR_EXPRESSION": "^(00){0,1}(960){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "42",
@@ -326,7 +326,7 @@
         "COUNTRY_NAME_EN": "Mongolia",
         "COUNTRY_VALUE": "MN",
         "COUNTRY_CODE": "976",
-        "REGULAR_EXPRESSION": "^(00){0,1}(976){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "43",
@@ -334,7 +334,7 @@
         "COUNTRY_NAME_EN": "Peru",
         "COUNTRY_VALUE": "PE",
         "COUNTRY_CODE": "51",
-        "REGULAR_EXPRESSION": "^(00){0,1}(51){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "44",
@@ -342,7 +342,7 @@
         "COUNTRY_NAME_EN": "Morocco",
         "COUNTRY_VALUE": "MA",
         "COUNTRY_CODE": "212",
-        "REGULAR_EXPRESSION": "^(00){0,1}(212){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "45",
@@ -350,7 +350,7 @@
         "COUNTRY_NAME_EN": "Mexico",
         "COUNTRY_VALUE": "MX",
         "COUNTRY_CODE": "52",
-        "REGULAR_EXPRESSION": "^(00){0,1}(52){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "46",
@@ -358,7 +358,7 @@
         "COUNTRY_NAME_EN": "South Africa",
         "COUNTRY_VALUE": "ZA",
         "COUNTRY_CODE": "27",
-        "REGULAR_EXPRESSION": "^(00){0,1}(27){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "47",
@@ -366,7 +366,7 @@
         "COUNTRY_NAME_EN": "Nigeria",
         "COUNTRY_VALUE": "NG",
         "COUNTRY_CODE": "234",
-        "REGULAR_EXPRESSION": "^(00){0,1}(234){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "48",
@@ -374,7 +374,7 @@
         "COUNTRY_NAME_EN": "Norway",
         "COUNTRY_VALUE": "NO",
         "COUNTRY_CODE": "47",
-        "REGULAR_EXPRESSION": "^(00){0,1}(47){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "49",
@@ -382,7 +382,7 @@
         "COUNTRY_NAME_EN": "Portugal",
         "COUNTRY_VALUE": "PT",
         "COUNTRY_CODE": "351",
-        "REGULAR_EXPRESSION": "^(00){0,1}(351){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "50",
@@ -390,7 +390,7 @@
         "COUNTRY_NAME_EN": "Sweden",
         "COUNTRY_VALUE": "SE",
         "COUNTRY_CODE": "46",
-        "REGULAR_EXPRESSION": "^(00){0,1}(46){1}[124-7](\\d{8}|\\d{10}|\\d{12})$"
+        "REGULAR_EXPRESSION": "^[124-7](\\d{8}|\\d{10}|\\d{12})$"
       },
       {
         "ID": "51",
@@ -398,7 +398,7 @@
         "COUNTRY_NAME_EN": "Switzerland",
         "COUNTRY_VALUE": "CH",
         "COUNTRY_CODE": "41",
-        "REGULAR_EXPRESSION": "^(00){0,1}(41){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "52",
@@ -406,7 +406,7 @@
         "COUNTRY_NAME_EN": "Serbia and Montenegro",
         "COUNTRY_VALUE": "RS",
         "COUNTRY_CODE": "381",
-        "REGULAR_EXPRESSION": "^(00){0,1}(381){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "53",
@@ -414,7 +414,7 @@
         "COUNTRY_NAME_EN": "Seychells",
         "COUNTRY_VALUE": "SC",
         "COUNTRY_CODE": "248",
-        "REGULAR_EXPRESSION": "^(00){0,1}(248){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "54",
@@ -422,7 +422,7 @@
         "COUNTRY_NAME_EN": "Saudi Arabia",
         "COUNTRY_VALUE": "SA",
         "COUNTRY_CODE": "966",
-        "REGULAR_EXPRESSION": "^(00){0,1}(966){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "55",
@@ -430,7 +430,7 @@
         "COUNTRY_NAME_EN": "Sri Lanka",
         "COUNTRY_VALUE": "LK",
         "COUNTRY_CODE": "94",
-        "REGULAR_EXPRESSION": "^(00){0,1}(94){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "56",
@@ -438,7 +438,7 @@
         "COUNTRY_NAME_EN": "Thailand",
         "COUNTRY_VALUE": "TH",
         "COUNTRY_CODE": "66",
-        "REGULAR_EXPRESSION": "^(00){0,1}(66){1}[13456789]\\d{7,8}$"
+        "REGULAR_EXPRESSION": "^[13456789]\\d{7,8}$"
       },
       {
         "ID": "57",
@@ -446,7 +446,7 @@
         "COUNTRY_NAME_EN": "Turkey",
         "COUNTRY_VALUE": "TR",
         "COUNTRY_CODE": "90",
-        "REGULAR_EXPRESSION": "^(00){0,1}(90){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "58",
@@ -454,7 +454,7 @@
         "COUNTRY_NAME_EN": "Tunisia",
         "COUNTRY_VALUE": "TN",
         "COUNTRY_CODE": "216",
-        "REGULAR_EXPRESSION": "^(00){0,1}(216){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "59",
@@ -462,7 +462,7 @@
         "COUNTRY_NAME_EN": "Venezuela",
         "COUNTRY_VALUE": "VE",
         "COUNTRY_CODE": "58",
-        "REGULAR_EXPRESSION": "^(00){0,1}(58){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "60",
@@ -470,7 +470,7 @@
         "COUNTRY_NAME_EN": "Ukraine",
         "COUNTRY_VALUE": "UA",
         "COUNTRY_CODE": "380",
-        "REGULAR_EXPRESSION": "^(00){0,1}(380){1}[3-79]\\d{8,9}$"
+        "REGULAR_EXPRESSION": "^[3-79]\\d{8,9}$"
       },
       {
         "ID": "61",
@@ -478,7 +478,7 @@
         "COUNTRY_NAME_EN": "Spain",
         "COUNTRY_VALUE": "ES",
         "COUNTRY_CODE": "34",
-        "REGULAR_EXPRESSION": "^(00){0,1}(34){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "62",
@@ -486,7 +486,7 @@
         "COUNTRY_NAME_EN": "Greece",
         "COUNTRY_VALUE": "GR",
         "COUNTRY_CODE": "30",
-        "REGULAR_EXPRESSION": "^(00){0,1}(30){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "63",
@@ -494,7 +494,7 @@
         "COUNTRY_NAME_EN": "Republic of Hungary",
         "COUNTRY_VALUE": "HU",
         "COUNTRY_CODE": "36",
-        "REGULAR_EXPRESSION": "^(00){0,1}(36){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "64",
@@ -502,7 +502,7 @@
         "COUNTRY_NAME_EN": "Republic of Italy",
         "COUNTRY_VALUE": "IT",
         "COUNTRY_CODE": "39",
-        "REGULAR_EXPRESSION": "^(00){0,1}(39){1}[37]\\d{8,11}$"
+        "REGULAR_EXPRESSION": "^[37]\\d{8,11}$"
       },
       {
         "ID": "65",
@@ -510,7 +510,7 @@
         "COUNTRY_NAME_EN": "Israel",
         "COUNTRY_VALUE": "IL",
         "COUNTRY_CODE": "972",
-        "REGULAR_EXPRESSION": "^(00){0,1}(972){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "66",
@@ -518,7 +518,7 @@
         "COUNTRY_NAME_EN": "India",
         "COUNTRY_VALUE": "IN",
         "COUNTRY_CODE": "91",
-        "REGULAR_EXPRESSION": "^(00){0,1}(91){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "67",
@@ -526,7 +526,7 @@
         "COUNTRY_NAME_EN": "Indonesia",
         "COUNTRY_VALUE": "ID",
         "COUNTRY_CODE": "62",
-        "REGULAR_EXPRESSION": "^(00){0,1}(62){1}[2-9]\\d{7,11}$"
+        "REGULAR_EXPRESSION": "^[2-9]\\d{7,11}$"
       },
       {
         "ID": "68",
@@ -534,7 +534,7 @@
         "COUNTRY_NAME_EN": "United Kingdom",
         "COUNTRY_VALUE": "GB",
         "COUNTRY_CODE": "44",
-        "REGULAR_EXPRESSION": "^(00){0,1}(44){1}[347-9](\\d{8,9}|\\d{11,12})$"
+        "REGULAR_EXPRESSION": "^[347-9](\\d{8,9}|\\d{11,12})$"
       },
       {
         "ID": "69",
@@ -542,7 +542,7 @@
         "COUNTRY_NAME_EN": "Virgin Islands, British",
         "COUNTRY_VALUE": "VG",
         "COUNTRY_CODE": "1284",
-        "REGULAR_EXPRESSION": "^(00){0,1}(1284){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "70",
@@ -550,7 +550,7 @@
         "COUNTRY_NAME_EN": "Jordan",
         "COUNTRY_VALUE": "JO",
         "COUNTRY_CODE": "962",
-        "REGULAR_EXPRESSION": "^(00){0,1}(962){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "71",
@@ -558,7 +558,7 @@
         "COUNTRY_NAME_EN": "Vietnam",
         "COUNTRY_VALUE": "VN",
         "COUNTRY_CODE": "84",
-        "REGULAR_EXPRESSION": "^(00){0,1}(84){1}[1-9]\\d{6,9}$"
+        "REGULAR_EXPRESSION": "^[1-9]\\d{6,9}$"
       },
       {
         "ID": "72",
@@ -566,7 +566,7 @@
         "COUNTRY_NAME_EN": "Chile",
         "COUNTRY_VALUE": "CL",
         "COUNTRY_CODE": "56",
-        "REGULAR_EXPRESSION": "^(00){0,1}(56){1}\\d{6,12}$"
+        "REGULAR_EXPRESSION": "^\\d{6,12}$"
       },
       {
         "ID": "73",

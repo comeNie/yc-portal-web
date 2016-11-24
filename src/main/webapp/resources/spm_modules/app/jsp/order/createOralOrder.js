@@ -71,6 +71,10 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 				showErrors:function(errorMap,errorList) {
 					$('ul li p label').remove()//删除所有隐藏的li p label标签
 					this.defaultShowErrors();
+					$('ul li p label').each(function (index,element) {
+						if (index > 0)
+							element.remove();
+					});
 				},
     			rules: {
     				transSubject: {
@@ -305,6 +309,14 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 		},
 		
 		_saveContact:function() {
+			var _this= this;
+			var formValidator=_this._initValidate();
+			formValidator.form();
+			if(!$("#oralOrderForm").valid()){
+				//alert('验证不通过！！！！！');
+				return;
+			}
+
 			$("#saveContactDiv").hide();
 			
 			$("#editContactDiv").find('p').eq(0).html($("#saveContactDiv").find('input').eq(0).val());

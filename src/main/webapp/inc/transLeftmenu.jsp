@@ -53,8 +53,8 @@
 					<span>工作记录</span>
 				</a>
 			</li>
-			<li>
-				<a href="${_base}/p/security/seccenter?source=interpreter">
+			<li id="interpreterInfo">
+				<a href="${_base}/p/interpreter/interpreterInfoPager?source=interpreter">
 					<span><i class="icon iconfont">&#xe60c;</i></span>
 					<span><spring:message code="ycleftmenu.myinfo"/></span>
 				</a>

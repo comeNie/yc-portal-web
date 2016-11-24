@@ -1,19 +1,10 @@
 //导航下拉
 $(function () {
-    var st = 100;
-    $('.cloud-breadcrumb ul .user .yonh').mouseover(function () {
-		$('.show').show(1);
-		 $(this).children('i').rotate({animateTo:180});
-    })
-		$(".show").click(function () {
-                $(this).hide(1);
-            });
-			
-		$('.cloud-breadcrumb').mouseout(function () {
-        $('.show').hide(1);
-         $(this).children('i').rotate({animateTo:0});
-    });	
-  });
+    $(".cloud-breadcrumb ul .user .yonh").click(function () {
+		$(this).children('i').toggleClass(" icon-caret-down   icon-caret-up");
+		$(this).parent().children('.show').slideToggle(100);
+    });
+});	
 
 //左侧菜单关闭
 $(function(){
@@ -146,7 +137,6 @@ $(function(){
   });
 });
 
-
 //设置密码 table
 $(function(){
 $(".set-up a").click(function () {
@@ -167,33 +157,6 @@ $('.set-up a').click(function(){
    }
   }); 
 });
-//翻译 table
-$(function(){
-$(".prompt-center-title ul li a").click(function () {
-                $(".prompt-center-title ul li a").each(function () {
-                    $(this).removeClass("current");
-                });
-                $(this).addClass("current");
-            });
-$('.prompt-center-title ul li a').click(function(){
-  var index=$('.prompt-center-title ul li a').index(this);
-     if(index==0){
-     $('#tran-tab1').show();
-  	 $('#tran-tab2').hide();
-  	 $('#tran-tab3').hide();
-   }
-   if(index==1){
-   $('#tran-tab2').show();
-   $('#tran-tab1').hide();
-   $('#tran-tab3').hide();
-   }
-   if(index==2){
-   $('#tran-tab3').show();
-   $('#tran-tab2').hide();
-   $('#tran-tab1').hide();
-   }
-  }); 
-});
 
 /**翻译下单去掉最后的线条**/
 $(function () {
@@ -205,53 +168,3 @@ $(".attachment ul li i").click(function () {
 	$(this).parent().parent('ul').hide();
 	});
 	}); 
-	
-//下单
-$(function(){
-  $("#st1-btn").click(function(){
-  $("#st1").hide();
-  $("#st2").show();
-  });
-  $("#st1-btn1").click(function(){
-  $("#st2").hide();
-  $("#st3").show();
-  });
-  $("#st1-btn2").click(function(){
-  $("#st3").hide();
-  $("#st4").show();
-  });
-  
-});
-////旋转
-//$(document).ready(function(){
-//$("#icon1").rotate({ 
-// bind: 
-//   { 
-//      mouseover : function() { 
-//          $(this).rotate({animateTo:180});
-//      },
-//      mouseout : function() { 
-//          $(this).rotate({animateTo:0});
-//      }
-//   } 
-// 
-//});
-//$("#icon2").rotate({ 
-// bind: 
-//   { 
-//      mouseover : function() { 
-//          $(this).rotate({animateTo:180});
-//      },
-//      mouseout : function() { 
-//          $(this).rotate({animateTo:0});
-//      }
-//   } 
-// 
-//});
-//});
-//$(document).ready(function(){
-//$(".static-tab ul li a").click(function(){
-// $(this).children("#tab-icon2").show();
-// $(this).children("#tab-icon1").hide();
-//});
-//});
