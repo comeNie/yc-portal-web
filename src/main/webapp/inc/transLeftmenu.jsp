@@ -43,12 +43,6 @@
 			</li>
 			<li>
 				<a href="#">
-					<span><i class="icon iconfont">&#xe603;</i></span>
-					<span>优惠券</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
 					<span><i class="icon iconfont">&#xe604;</i></span>
 					<span>译员级别</span>
 				</a>
@@ -61,12 +55,6 @@
 			</li>
 			<li>
 				<a href="#">
-					<span><i class="icon iconfont">&#xe606;</i></span>
-					<span>LSP管理</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
 					<span><i class="icon iconfont">&#xe60c;</i></span>
 					<span>个人信息</span>
 				</a>
@@ -75,6 +63,12 @@
 				<a  href="${_base}/p/security/seccenter">
 					<span><i class="icon iconfont">&#xe609;</i></span>
 					<span>安全设置</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<span><i class="icon iconfont">&#xe606;</i></span>
+					<span>LSP管理</span>
 				</a>
 			</li>
 		</ul>
