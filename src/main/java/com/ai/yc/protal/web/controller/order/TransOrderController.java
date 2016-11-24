@@ -1,24 +1,18 @@
 package com.ai.yc.protal.web.controller.order;
 
 import com.ai.opt.base.vo.BaseResponse;
-import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.components.dss.DSSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.dss.base.interfaces.IDSSClient;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
-import com.ai.yc.common.api.cachekey.model.SysDomain;
-import com.ai.yc.common.api.cachekey.model.SysPurpose;
 import com.ai.yc.order.api.orderdetails.interfaces.IQueryOrderDetailsSV;
 import com.ai.yc.order.api.orderdetails.param.ProdFileVo;
 import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsResponse;
 import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
-import com.ai.yc.order.api.orderquery.param.OrdOrderVo;
 import com.ai.yc.order.api.orderquery.param.QueryOrdCountRequest;
 import com.ai.yc.order.api.orderquery.param.QueryOrdCountResponse;
-import com.ai.yc.order.api.orderquery.param.QueryOrderRequest;
-import com.ai.yc.order.api.orderquery.param.QueryOrderRsponse;
 import com.ai.yc.order.api.orderstate.interfaces.IOrderStateUpdateSV;
 import com.ai.yc.order.api.orderstate.param.OrderStateUpdateRequest;
 import com.ai.yc.order.api.orderstate.param.OrderStateUpdateResponse;
@@ -27,39 +21,27 @@ import com.ai.yc.order.api.translatesave.param.SaveTranslateInfoRequest;
 import com.ai.yc.order.api.translatesave.param.TranslateFileVo;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.OrderConstants;
-import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
 import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.service.OrderService;
 import com.ai.yc.protal.web.utils.UserUtil;
-
-import com.alibaba.fastjson.JSONArray;
-
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.SearchYCTranslatorRequest;
 import com.ai.yc.user.api.userservice.param.YCTranslatorInfoResponse;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -93,25 +75,7 @@ public class TransOrderController {
             //查询订单大厅数量
             QueryOrdCountResponse taskNumRes = iOrderQuerySV.queryOrderCount(ordCountReq);
             String userId = UserUtil.getUserId();
-            //查询译员信息
-            getUserInfo(uiModel);
-            ordCountReq.setInterperId(userId);//设置译员编码
-            //如果是LSP的管理员或项目经理
-            if ("12".equals(uiModel.asMap().get("lspRole")) || "11".equals(uiModel.asMap().get("lspRole"))) {
-                ordCountReq.setLspId((String) uiModel.asMap().get("lspId"));
-                ordCountReq.setInterperId(null);
-            }
-            
-            QueryOrdCountResponse ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            Map<String,Integer> stateCount = ordCountRes.getCountMap();
 
-            // 21：已领取
-            uiModel.addAttribute("ReceivedCount", stateCount.get(OrderConstants.State.RECEIVE));
-            //211：已分配
-            uiModel.addAttribute("AssignedCount", stateCount.get(OrderConstants.State.ASSIGNED));
-            //23：翻译中
-            uiModel.addAttribute("TranteCount", stateCount.get(OrderConstants.State.TRANSLATING));
-            
             //查询译员信息 TODO暂时关闭
 //            IYCUserServiceSV iycUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
 //            SearchYCTranslatorRequest ycReq = new SearchYCTranslatorRequest();
@@ -126,10 +90,28 @@ public class TransOrderController {
 //            "10、译员
 //            11、项目经理
 //            12、超级管理员"
+
             YCTranslatorInfoResponse ycRes = new YCTranslatorInfoResponse();
             ycRes.setUserId(UserUtil.getUserId());
             ycRes.setLspId("10001");
             ycRes.setLspRole("10");
+
+            ordCountReq.setInterperId(userId);//设置译员编码
+            //如果是LSP的管理员或项目经理
+            if ("12".equals(ycRes.getLspRole()) || "11".equals(ycRes.getLspRole())) {
+                ordCountReq.setLspId((String) uiModel.asMap().get("lspId"));
+                ordCountReq.setInterperId(null);
+            }
+            
+            QueryOrdCountResponse ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+            Map<String,Integer> stateCount = ordCountRes.getCountMap();
+
+            // 21：已领取
+            uiModel.addAttribute("ReceivedCount", stateCount.get(OrderConstants.State.RECEIVE));
+            //211：已分配
+            uiModel.addAttribute("AssignedCount", stateCount.get(OrderConstants.State.ASSIGNED));
+            //23：翻译中
+            uiModel.addAttribute("TranteCount", stateCount.get(OrderConstants.State.TRANSLATING));
             
             uiModel.addAttribute("interperInfo", ycRes);
             uiModel.addAttribute("state", state);
@@ -189,16 +171,15 @@ public class TransOrderController {
     private void getUserInfo(Model uiModel){
 //        IYCUserServiceSV userServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
 //        SearchYCTranslatorSkillListRequest searchYCUserReq = new SearchYCTranslatorSkillListRequest();
-//        searchYCUserReq.setTenantId(Constants.DEFAULT_TENANT_ID);
-//        searchYCUserReq.setUserId(userId);
+//        searchYCUserReq.setUserId(UserUtil.getUserId());
 //        YCTranslatorSkillListResponse userInfoResponse = userServiceSV.getTranslatorSkillList(searchYCUserReq);
-        //包括译员的等级,是否为LSP译员,LSP中的角色,支持的语言对
+//        //包括译员的等级,是否为LSP译员,LSP中的角色,支持的语言对
 //        uiModel.addAttribute("lspId",userInfoResponse.getLspId());//lsp标识
 //        uiModel.addAttribute("lspRole",userInfoResponse.getLspRole());//lsp角色
 //        uiModel.addAttribute("vipLevel",userInfoResponse.getVipLevel());//译员等级
         //TODO... 模拟数据
-        uiModel.addAttribute("lspId","");//lsp标识
-        uiModel.addAttribute("lspRole","12");//lsp角色
+        uiModel.addAttribute("lspId","10086");//lsp标识
+        uiModel.addAttribute("lspRole","10");//lsp角色
         uiModel.addAttribute("vipLevel","4");//译员等级
     }
     
