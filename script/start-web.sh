@@ -1,6 +1,6 @@
 #!/bin/sh
 #env
-APP_NAME="slp.product.web"
+APP_NAME="yc.portal.web"
 
 #set base home
 RESOURCES_HOME=${CATALINA_HOME}/webapps/ROOT/WEB-INF/classes

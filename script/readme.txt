@@ -32,7 +32,7 @@ docker run -d --name yc-protal-web-v1.0  -p 14145:8080  \
 -e "PAAS_CCS_PWD=123456" \
 -e "REST_REGISTRY_ADDR=10.19.13.13:29181"  \
 -e "whitelist=changhong.com" \
-10.19.13.18:5000/slp-product-web:v1.0
+10.19.13.18:5000/yc-protal-web:v1.0
 
 #查看镜像启动日志
 docker logs yc-protal-web-v1.0
