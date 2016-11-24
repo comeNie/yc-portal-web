@@ -6,14 +6,14 @@ gradle build -x test
 
 2.生成镜像
 #在本地生成带私服前缀的镜像  (每次打镜像前版本号要更新)
-docker build -t 10.19.13.18:5000/yc-protal-web:v1.0 .
+docker build -t 10.19.13.18:5000/yc-portal-web:v1.0 .
 #将镜像推送到私服
-docker push 10.19.13.18:5000/yc-protal-web:v1.0
+docker push 10.19.13.18:5000/yc-portal-web:v1.0
 
 3. 运行镜像
 #--net=host  表示为主机(host)模式  去掉该配置，默认为桥接(bridge)模式
 #-e 代表需要设置的环境变量
-docker run -d --name yc-protal-web-v1.0  -p 14101:8080  \
+docker run -d --name yc-portal-web-v1.0  -p 14101:8080  \
 -e "casServerLoginUrl=http://10.19.13.24:14105/yc-sso-web/login"  \
 -e "casServerUrlPrefix=http://10.19.13.24:14105/yc-sso-web"   \
 -e "serverName=http://10.19.13.20:14101"   \
@@ -21,7 +21,7 @@ docker run -d --name yc-protal-web-v1.0  -p 14101:8080  \
 -e "logOutBackUrl=http://10.19.13.24:14105/yc-sso-web"   \
 -e "casServerLoginUrl_Inner=http://10.19.13.24:14105/yc-sso-web/login"  \
 -e "casServerUrlPrefix_Inner=http://10.19.13.24:14105/yc-sso-web"   \
--e "serverName_Inner=http://10.19.13.24:14101"   \
+-e "serverName_Inner=http://10.19.13.20:14101"   \
 -e "logOutServerUrl_Inner=http://10.19.13.24:14105/yc-sso-web/logout"   \
 -e "logOutBackUrl_Inner=http://10.19.13.24:14105/yc-sso-web"   \
 -e "SDK_MODE=0" \
@@ -45,6 +45,7 @@ docker run -d --name yc-protal-web-v1.0  -p 14101:8080  \
 -e "TENANT_ID=yeecloud" \
 -e "REQUEST_KEY=7igfgyfwn2jlyjs3bdns6lhysnzy5y7l" \
 -e "ACTION_URL=http://10.19.13.24:14110/opt-pay/pay/gotoPayByOrg" \
+-e "APP_ACTION_URL=http://10.19.13.24:14110/opt-pay/pay/gotoPayByOrg" \
 -e "NOTIFY_URL=http://10.19.13.20:14101/portal-web/pay/payResult" \
 -e "RETURN_URL=http://10.19.13.20:14101/portal-web/pay/payResultView" \
 -e "SoaServerIpAddressA=10.19.13.29" \
@@ -58,7 +59,7 @@ docker run -d --name yc-protal-web-v1.0  -p 14101:8080  \
 -e "yeecloudUser=yeecloud" \
 -e "yeecloudPassword=yee123" \
 -e "MessageFormYeecloud=yeecloud" \
-10.19.13.18:5000/yc-protal-web:v1.0
+10.19.13.18:5000/yc-portal-web:v1.0_2
 
 #查看镜像启动日志
 docker logs yc-protal-web-v1.0
