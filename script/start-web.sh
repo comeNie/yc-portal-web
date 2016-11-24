@@ -63,7 +63,7 @@ sed -i "s%TcpReceivePort=.*%TcpReceivePort=${TcpReceivePort}%g" ./FocusSms.prope
 sed -i "s%soapnamespace=.*%soapnamespace=${soapnamespace}%g" ./FocusSms.properties
 sed -i "s%yeecloudUser=.*%yeecloudUser=${yeecloudUser}%g" ./FocusSms.properties
 sed -i "s%yeecloudPassword=.*%yeecloudPassword=${yeecloudPassword}%g" ./FocusSms.properties
-sed -i "s%MessageFormYeecloud=.*%MessageFormYeecloud=${MessageFormYeecloud}%g" ./config.properties
+sed -i "s%MessageFormYeecloud=.*%MessageFormYeecloud=${MessageFormYeecloud}%g" ./FocusSms.properties
 popd
 
 
