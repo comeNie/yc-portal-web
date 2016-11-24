@@ -61,13 +61,19 @@
   						<p class="word"><b>*</b>
 							<spring:message code="interpreter.userName" />
 						</p>
-  						<p><input type="text" class="int-text int-xlarge radius" id="userName"  name="userName" placeholder="请输入用户名"/></p>
+  						<p><input type="text" class="int-text int-xlarge radius" id="userName"  name="userName" value="${user_session_key.username}"/></p>
   					</li>
   					<li>
   						<p class="word">
   							<spring:message code="interpreter.fullName" />
   						</p>
-  						<p><input type="text" class="int-text int-xlarge radius" name="fullName" id="fullName" /></p>
+  						<p><input value="" type="text" class="int-text int-xlarge radius" name="firstName" id="firstName" /></p>
+  					</li>
+  					<li>
+  						<p class="word">
+  							<spring:message code="interpreter.fullName" />
+  						</p>
+  						<p><input value=""  type="text" class="int-text int-xlarge radius" name="lastName" id="lastName" /></p>
   					</li>
   					<li>
   						<p class="word"><b>*</b>
@@ -75,14 +81,14 @@
   						</p>
   						<p><input type="text" class="int-text int-xlarge radius" name="nickname" id="nickname" value="${interpreterInfo.nickname}"/>
   						</p>
-  						<label id="nickNameErrMsg" style="display: none;"><span  id="nickNameText"></span></label>
+  						<label id="nickNameErrMsg" style="display: none;"></label>
   					</li>
   					<li>
   						<p class="word">
   							<spring:message code="interpreter.sex" />
   						</p>
   						   <p>
-	  							<span><input type="radio" name="sex" class="radio" <c:if test="${interpreterInfo.sex==0}">checked="checked"</c:if> value="0"/></span>
+	  							<span><input type="radio" name="sex" class="radio" <c:if test="${interpreterInfo.sex==0 || interpreterInfo.sex==null}">checked="checked"</c:if> value="0"/></span>
 	  							<span><spring:message code="interpreter.sex.man" /></span>
 	  						</p>
 	  						<p>
@@ -136,6 +142,11 @@
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
     var current ="interpreterInfo";
+    var originalNickname="${interpreterInfo.nickname}";
+    var interpreterInfoMsg ={
+    		"showOkValueMsg" : '<spring:message code="ycaccountcenter.js.showOkValueMsg"/>',
+    		"showTitleMsg" : '<spring:message code="ycaccountcenter.js.showTitleMsg"/>'
+    	};
 	var pager;
 	(function() {
 		<%-- 展示日历 --%>
