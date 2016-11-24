@@ -171,7 +171,12 @@ public class SecurityController {
             IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
             QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
             if("true".equals(isInterpreter)){
-            	ordCountReq.setInterperId(userId);
+            	String lspRole = request.getParameter("lspRole");
+            	if("11".equals(lspRole)||"12".equals(lspRole)){//lsp管理员
+            		ordCountReq.setLspId(userId);
+            	}else{//译员
+            		ordCountReq.setInterperId(userId);
+            	}
             }else{
             	ordCountReq.setUserId(userId);
             }
