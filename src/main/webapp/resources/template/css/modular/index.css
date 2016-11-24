@@ -13,7 +13,7 @@
 /**.index-nav ul .right a:hover{border-bottom:2px solid #fff;float:left}**/
 .index-nav ul .right .current{border-bottom:2px solid #fff;float:left}
 /**内容框架**/
-.index-wrapper{width:100%;height:200px;position:absolute;top:365px;left;z-index:99;min-width:1200px;}
+.index-wrapper{width:100%;height:200px;position:absolute;top:365px;z-index:99;min-width:1200px;}
 /**翻译板块**/
 .translate{width:1200px;margin:0 auto;background:#f0f5fb;height:355px;border-radius:8px;padding:20px;}
 .translate-title{width:100%;float:left;}
@@ -132,3 +132,7 @@
 .dropdown li.active{color:#2965e6;font-weight:bold}
 .dropdown li.aa{color:#000;font-weight:bold}
 /****/
+
+/****分词高亮***/
+.before-translation span.b_cur {background: #fff444 none repeat scroll 0 0;
+}

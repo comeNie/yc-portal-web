@@ -78,11 +78,20 @@
         <!--翻译主体-->
         <div class="translate-wapper">
             <div class="before-translation">
-                <textarea class="int-before" id="int-before"></textarea>
+                <div id="srcNew" class="int-before"  style="display: none;">
+                </div>
+                <div id="srcOld" class="int-before"  style="display: block;">
+                    <textarea class="int-before" id="int-before"></textarea>
+                 </div>
+
             </div>
             <div class="before-translation ml-20">
-                <textarea  class="int-post"  id="transRes" readonly="readonly"></textarea>
-                <textarea  class="int-post"  id="transResBak" hidden=""></textarea>
+                <div id="tgtNew" class="int-post" onmousemove="srcMove()" onmouseout="srcOut()"  style="display: none">
+                </div>
+                <div id="tgtOld" class="int-post"  style="display: block;">
+                    <textarea  class="int-post"  id="transRes" readonly="readonly"></textarea>
+                    <textarea  class="int-post"  id="transResBak" hidden=""></textarea>
+                </div>
                 <div class="post-cion">
                 	<!-- 播放器 -->
                 	<audio src="" controls="controls" id="audioPlay" hidden>
@@ -330,4 +339,6 @@
 <script type="text/javascript" src="${uedroot}/scripts/modular/drop-down.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/index.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/digital-scroll.js"></script>
+<script type="text/javascript" src="${spmRes}/app/jsp/index.js"></script>
+
 </html>

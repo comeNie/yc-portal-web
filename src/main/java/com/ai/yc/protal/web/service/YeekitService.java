@@ -55,22 +55,26 @@ public class YeekitService {
     public String dotranslate(String from, String to, String text)
             throws IOException, HttpStatusException {
         Map<String, Object> postParams = new HashMap<>();
-        postParams.put("from", from);// 源语言
-        postParams.put("to", to);// 目标语言
-        postParams.put("app_kid", APP_KID);// 授权APP ID
-        postParams.put("app_key", APP_KEY);// 授权APP KEY
+        postParams.put("srcl", from);// 源语言
+        postParams.put("tgtl", to);// 目标语言
+       // postParams.put("app_kid", APP_KID);// 授权APP ID
+       // postParams.put("app_key", APP_KEY);// 授权APP KEY
+        postParams.put("detoken", true);
+        postParams.put("align", true);
         postParams.put("text", URLEncoder.encode(text, "UTF-8"));// 待翻译文本,UTF-8编码
-        String resultStr = HttpUtil.doPost(client,SERVER_URL, postParams);
+        String resultStr = HttpUtil.doPostSSL(SERVER_URL, postParams);
         LOGGER.info("dotranslate result:{}",resultStr);
-        JSONArray translateds = JSON.parseObject(resultStr).getJSONArray("translation")
-                .getJSONObject(0).getJSONArray("translated");
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < translateds.size(); i++) {
-            JSONObject jsonObject = translateds.getJSONObject(i);
-            sb.append(jsonObject.getString("text").replaceAll("\\s*", ""));
-        }
-        LOGGER.info("response:\r\n" + sb.toString());
-        return URLDecoder.decode(sb.toString(), "UTF-8");
+//        JSONArray translateds = JSON.parseObject(resultStr).getJSONArray("translation")
+//                .getJSONObject(0).getJSONArray("translated");
+//        StringBuffer sb = new StringBuffer();
+//        for (int i = 0; i < translateds.size(); i++) {
+//            JSONObject jsonObject = translateds.getJSONObject(i);
+//            sb.append(jsonObject.getString("text").replaceAll("\\s*", ""));
+//        }
+//        LOGGER.info("response:\r\n" + sb.toString());
+//        return URLDecoder.decode(sb.toString(), "UTF-8");
+
+        return  URLDecoder.decode(resultStr, "UTF-8");
     }
 
     /**

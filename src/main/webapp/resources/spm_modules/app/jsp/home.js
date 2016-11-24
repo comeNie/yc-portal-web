@@ -61,11 +61,17 @@ define('app/jsp/home', function (require, exports, module) {
 
         //翻译
         _mt:function() {
+			var _this=this;
+			var ywText="";
         	var from = $(".dropdown .selected").eq(0).attr("value");
         	var to = $(".dropdown .selected").eq(1).attr("value");
 			if (Window.console){
 				console.log("from:"+from+",to:"+to);
 			}
+
+			$('#tgtNew').empty();
+			$('#srcNew').empty();
+
         	ajaxController.ajax({
 				type: "post",
 				url: _base + "/mt",
@@ -76,8 +82,8 @@ define('app/jsp/home', function (require, exports, module) {
 				},
 				success: function (data) {
 					if("OK" === data.statusInfo) {
-						$("#transRes").val(data.data);
-						$("#transResBak").val(data.data);
+						//$("#transRes").val(data.data);
+						//$("#transResBak").val(data.data);
 						$("#transError").html('');
 
 						//翻译后的文字超过1000，隐藏播放喇叭
@@ -85,6 +91,27 @@ define('app/jsp/home', function (require, exports, module) {
 							$("#playControl").hide();
 						else
 							$("#playControl").show();
+
+						var array=eval("("+data.data+")");
+						var translation = array.translation;
+						if(translation){
+							jQuery.each(translation, function(i,item){
+								var translated  = item.translated;
+								jQuery.each(translated, function(i,item){
+									ywText = ywText+item.text;
+									$("#transRes").val(ywText);
+									$("#transResBak").val(ywText);
+									var alignmentRaw  = item["alignment-raw"];
+									var tgtTokenized  = item["tgt-tokenized"];
+									var srcTokenized  = item["src-tokenized"];
+									if(tgtTokenized){
+										_this._yiwenSpan(alignmentRaw,tgtTokenized,srcTokenized,i+1);
+									}else{
+										$("#tgtNew").append("<span>"+ywText+"</span>");
+									}
+								});
+							});
+						}
 					} else {
 						$("#transError").html($.i18n.prop("home.error.trans"));
 						//alert($.i18n.prop("home.error.trans"));
@@ -150,7 +177,61 @@ define('app/jsp/home', function (require, exports, module) {
         //翻译有误
         _transError:function() {
         	$("#transRes").removeAttr("readonly");
-        }
+			$("#transResBak").val($("#transRes").val());
+			$("#tgtNew").hide();
+			$("#tgtOld").show();
+        },
+
+
+		//截取原文 译文
+		_yiwenSpan:function(alignmentRaw,tgtTokenized,srcTokenized,int){
+			//译文
+			var tgt = tgtTokenized.split(" ");
+			//原文
+			var src = srcTokenized.split(" ");
+			var newTgt = "";
+			var newSrc = "";
+			jQuery.each(alignmentRaw, function(i,item){
+				var srcStart  = item["src-start"];
+				var srcEnd  = item["src-end"];
+
+				var tgtStart  = item["tgt-start"];
+				var tgtEnd  = item["tgt-end"];
+				if(srcStart == srcEnd){
+					var sNewStart = " <span id=src_"+int+""+i+">"+src[srcStart]+"</span> " ;
+					src[srcStart]= sNewStart;
+				}else{
+					var sNewStart = " <span id=src_"+int+""+i+">"+src[srcStart];
+					var sNewEnd = src[srcEnd]+"</span> " ;
+					src[srcStart]= sNewStart;
+					src[srcEnd] = sNewEnd;
+				}
+
+				if(tgtStart == tgtEnd){
+					var tNewStart = "<span class='' id="+int+""+i+"  onmousemove='tgtMove("+int+""+i+")' onmouseout='tgtOut("+int+""+i+")'>"+tgt[tgtStart]+"</span>";
+					tgt[tgtStart]= tNewStart;
+				}else{
+					var tNewStart = "<span class=''  id="+int+""+i+" onmousemove='tgtMove("+int+""+i+")' onmouseout='tgtOut("+int+""+i+")'>"+tgt[tgtStart] ;
+					var tNewEnd = tgt[tgtEnd]+"</span>" ;
+					tgt[tgtStart]= tNewStart;
+					tgt[tgtEnd] = tNewEnd;
+				}
+
+			});
+			for (var int = 0; int < tgt.length; int++) {
+				newTgt=newTgt+tgt[int]+" ";
+
+			}
+			for (var int2 = 0; int2 < src.length; int2++) {
+				newSrc=newSrc+src[int2]+" ";
+			}
+			$("#srcNew").append(newSrc);
+			$("#tgtOld").hide();
+			$("#tgtNew").show();
+			$("#tgtNew").append(newTgt);
+
+		}
+
         
     });
 
