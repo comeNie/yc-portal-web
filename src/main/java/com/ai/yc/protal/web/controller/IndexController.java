@@ -96,4 +96,13 @@ public class IndexController {
     public String oralView(){
         return "forward:/order/create/oral";
     }
+
+    /**
+     * 关于我们
+     * @return
+     */
+    @RequestMapping("/aboutus")
+    public String aboutus(){
+        return "/static/about";
+    }
 }
