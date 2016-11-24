@@ -70,7 +70,7 @@
   					</a>
   				</li>
   				<li id="seccenterSettings">
-  					<a  href="${_base}/p/security/seccenter">
+  					<a  href="${_base}/p/security/seccenter?source=user">
   					<span><i class="icon iconfont">&#xe609;</i></span>
   					<span><spring:message code="ycleftmenu.mysecurity"/></span>
   					</a>
