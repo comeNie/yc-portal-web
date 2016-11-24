@@ -77,8 +77,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				} ,
 				errorClass:"x-label",
 				showErrors:function(errorMap,errorList) {
-					$('ul li p label').remove()//删除所有隐藏的li p label标签
 					this.defaultShowErrors();
+					$('ul li p label').each(function (index,element) {
+						if (index > 0)
+							element.remove();
+					});
+					//$('ul li p label').remove();//删除所有隐藏的li p label标签
 				},
     			rules: {
     				translateContent: {
@@ -168,7 +172,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			this._queryAutoOffer();
 			
 			var tableFirstLine = $("#textOrderTable tbody tr").eq(0).find("td");
-			if($("li[fileid]").length == 0) {
+			if(_this._isTextTransType()) {//快速翻译
 				tableFirstLine.eq(0).html($("#translateContent").val().substring(0,15));
 			} else {
 				tableFirstLine.eq(0).html($("#fileList").find('li:first').text().substring(0,15));
@@ -182,7 +186,15 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			$("#textOrderPage").hide();
 			$("#contactPage").css('display','block'); 
 		},
-		
+
+		//判断是否是文档翻译类型
+		_isTextTransType:function () {
+			if ($("#fy2").css("display") == "none")
+				return true
+			else
+				return false;
+		},
+
 		_addTextOrder:function(){
 			var _this= this;
         	var formValidator=_this._initValidate();
@@ -213,7 +225,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			
 			baseInfo.orderType = "1"; //??
 			baseInfo.busiType = 1;
-			if($("li[fileid]").length > 0) {
+			if(!_this._isTextTransType()) { //文档类型
 				baseInfo.translateType = "1"
 				
 				var fileInfoList = [];
@@ -324,7 +336,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		//查询报价
 		_queryAutoOffer:function() {
 			var _this = this;
-			if($("li[fileid]").length > 0) {
+			if(!_this._isTextTransType()) { //文档类型
 				$("#price").html("<span>"+ $.i18n.prop("order.place.waitPrice")+ "</span>");
 				return;
 			}

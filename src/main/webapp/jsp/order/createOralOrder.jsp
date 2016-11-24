@@ -120,12 +120,10 @@
 						<li class="none-ml">
 							<p class="word"><spring:message code="order.StartingTime"/></p>
 							<p><input id="begin_time" name="begin_time" type="text" class="int-text int-in-250 radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'%y-%M-%d %\H:\%m:%s',maxDate:'#F{$dp.$D(\'end_time\')}'})" readonly="readonly"/></p>
-							<label</label>
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.EngdingTime"/></p>
 							<p><input id="end_time" name="end_time" type="text" class="int-text int-in-250 radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'begin_time\')}'})" readonly="readonly"/></p>
-							<label></label>
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.Place"/></p>

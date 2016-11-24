@@ -90,6 +90,8 @@
 		 						<p><spring:message code="myOrder.field"/></p>
 		 						<p>
 		 							<select class="select select-small radius" name="fieldCode" id="fieldCode">
+										<!--全部 -->
+										<option value="" selected="selected"><spring:message code="myOrder.translatingContent.all"/></option>
 		 								<c:forEach items="${domainList}" var="domain">
 		 									<option value="${domain.domainId}">
 											<c:choose>
@@ -111,6 +113,8 @@
 		 						<p><spring:message code="myOrder.purpose"/></p>
 		 						<p>
 			 						<select class="select select-small radius" name="useCode" id="useCode">
+										<!--全部 -->
+										<option value="" selected="selected"><spring:message code="myOrder.translatingContent.all"/></option>
 			 							<c:forEach items="${purpostList}" var="purpose">
 											<option value="${purpose.purposeId}">
 												<c:choose>

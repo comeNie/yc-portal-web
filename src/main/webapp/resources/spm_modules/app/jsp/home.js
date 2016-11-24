@@ -13,6 +13,7 @@ define('app/jsp/home', function (require, exports, module) {
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
 
+	var sourYiWen="";
     var homePage = Widget.extend({
         //属性，使用时由类的构造函数传入
         attrs: {
@@ -99,6 +100,7 @@ define('app/jsp/home', function (require, exports, module) {
 								var translated  = item.translated;
 								jQuery.each(translated, function(i,item){
 									ywText = ywText+item.text;
+									sourYiWen = sourYiWen+item.text;
 									$("#transRes").val(ywText);
 									$("#transResBak").val(ywText);
 									var alignmentRaw  = item["alignment-raw"];
@@ -166,12 +168,20 @@ define('app/jsp/home', function (require, exports, module) {
         //保存
         _saveText:function() {
         	$("#transRes").attr("readonly","readonly");
+			if ($.trim(sourYiWen) == $("#transRes").val()) {
+				$("#tgtOld").hide();
+				$("#tgtNew").show();
+			}
         },
         
         //取消
         _cancelSave:function() {
         	$("#transRes").val($("#transResBak").val());
         	$("#transRes").attr("readonly","readonly");
+			if ($.trim(sourYiWen) == $("#transRes").val()) {
+				$("#tgtOld").hide();
+				$("#tgtNew").show();
+			}
         },
         
         //翻译有误

@@ -82,7 +82,7 @@
   						<p>
   							<select class="select select-small radius" name="translateType" id="translateType">
   								<!-- 全部 -->
-  								<option value="" check="checked"><spring:message code="myOrder.translatingContent.all"/></option>
+  								<option value="" selected="selected"><spring:message code="myOrder.translatingContent.all"/></option>
   								<!-- 文字 -->
   								<option value="0"><spring:message code="myOrder.translatingContent.words"/></option>
   								<!-- 附件 -->
