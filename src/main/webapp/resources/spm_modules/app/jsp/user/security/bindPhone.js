@@ -157,8 +157,9 @@ define("app/jsp/user/security/bindPhone",
 				    				},
 				    		        success: function(data) {
 				    		        	if(!data.data){
-				    		        		$("#dynamicode").show();
-											$("#dynamicode").text(data.statusInfo);
+				    		        		//$("#dynamicode").show();
+											//$("#dynamicode").text(data.statusInfo);
+				    		        		showMsg(data.statusInfo);
 											return false;
 				    		        	}else{
 				    		        		 $("#next1").hide();
@@ -187,9 +188,10 @@ define("app/jsp/user/security/bindPhone",
 								$("#telephoneErrMsg").hide();
 								reg = eval('/' + reg + '/');
 								if (!reg.test(phoneVal)) {
-									$("#telephoneErrMsg").show();
-									$("#telephoneErrMsg").html(phoneBindMsg.pleaseInputRightPhoneNum);
-									phone.focus();
+									//$("#telephoneErrMsg").show();
+									//$("#telephoneErrMsg").html(phoneBindMsg.pleaseInputRightPhoneNum);
+									//phone.focus();
+									showMsg(phoneBindMsg.pleaseInputRightPhoneNum);
 									return false;
 								}else{
 									$("#telephoneErrMsg").hide();
@@ -204,8 +206,9 @@ define("app/jsp/user/security/bindPhone",
 										},
 										success : function(json) {
 											if (!json.data) {
-												$("#telephoneErrMsg").show();
-												$("#telephoneErrMsg").html(json.statusInfo);
+												//$("#telephoneErrMsg").show();
+												//$("#telephoneErrMsg").html(json.statusInfo);
+												showMsg(json.statusInfo);
 											}else{
 												$("#telephoneErrMsg").hide();
 											}
@@ -221,8 +224,9 @@ define("app/jsp/user/security/bindPhone",
 							 */
 							 var phoneDynamicode = $("#dynamicode").val();
 							 if(phoneDynamicode==null||phoneDynamicode==""){
-								 $("#dynamicodeErrMsg").show();
-								 $("#dynamicodeErrMsg").text(phoneBindMsg.pleaseInputOC);
+								 //$("#dynamicodeErrMsg").show();
+								 //$("#dynamicodeErrMsg").text(phoneBindMsg.pleaseInputOC);
+								 showMsg(phoneBindMsg.pleaseInputOC);
 								 return false;
 							 }
 							 ajaxController.ajax({
@@ -235,8 +239,9 @@ define("app/jsp/user/security/bindPhone",
 				    				},
 				    		        success: function(data) {
 				    		        	if(!data.data){
-				    		        		$("#dynamicodeErrMsg").show();
-											$("#dynamicodeErrMsg").text(data.statusInfo);
+				    		        		//$("#dynamicodeErrMsg").show();
+											//$("#dynamicodeErrMsg").text(data.statusInfo);
+				    		        		showMsg(data.statusInfo);
 											return false;
 				    		        	}else{
 				    		        		 ajaxController.ajax({

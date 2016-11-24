@@ -8,9 +8,8 @@ import com.ai.opt.sdk.util.DateUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.i18n.ZoneContextHolder;
-import com.ai.yc.order.api.orderquery.param.OrdOrderVo;
-import com.ai.yc.order.api.orderquery.param.OrdProdExtendVo;
-import com.ai.yc.order.api.orderquery.param.QueryOrderRsponse;
+import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
+import com.ai.yc.order.api.orderquery.param.*;
 import com.ai.yc.order.api.orderreceive.interfaces.IOrderReceiveSV;
 import com.ai.yc.order.api.orderreceive.param.OrderReceiveBaseInfo;
 import com.ai.yc.order.api.orderreceive.param.OrderReceiveRequest;
@@ -35,10 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * 订单大厅
@@ -73,6 +69,18 @@ public class TaskCenterController {
         uiModel.addAttribute("lspId","");//lsp标识
         uiModel.addAttribute("lspRole","1");//lsp角色
         uiModel.addAttribute("vipLevel","4");//译员等级
+
+        //查询订单大厅数量
+        IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
+        QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
+        ordCountReq.setState(OrderConstants.State.UN_RECEIVE);
+        QueryOrdCountResponse taskNumRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+        Map<String,Integer> taskNumMap = taskNumRes.getCountMap();
+        Integer taskNum = taskNumMap.get(OrderConstants.State.UN_RECEIVE);
+        if (taskNum==null||taskNum<0) {
+            taskNum = 0;
+        }
+        uiModel.addAttribute("taskNum",taskNum>99?"99+":taskNum);
         //获取领域,用途
         uiModel.addAttribute("domainList",cacheServcie.getAllDomain(rb.getDefaultLocale()));
         uiModel.addAttribute("purposeList",cacheServcie.getAllPurpose(rb.getDefaultLocale()));
@@ -98,7 +106,7 @@ public class TaskCenterController {
             String flag = Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale())?"0":"1";
             orderReq.setFlag(flag);
             //订单状态 固定为待领取
-            orderReq.setState("20");
+            orderReq.setState(OrderConstants.State.UN_RECEIVE);
             //若没有页面,则使用第1页为默认
             if (orderReq.getPageNo()==null || orderReq.getPageNo()<1)
                 orderReq.setPageNo(1);

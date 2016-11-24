@@ -49,15 +49,17 @@ define("app/jsp/user/security/bindEmail",
 							var email = $("#bindEmail");
 							var emailVal = email.val();
 							if ($.trim(emailVal) == "") {
-								$("#emailUErrMsg").show();
-								$("#emailUErrMsg").text(emailBindMsg.emailUErrPleaseMsg);
+								//$("#emailUErrMsg").show();
+								//$("#emailUErrMsg").text(emailBindMsg.emailUErrPleaseMsg);
 								//email.focus();
+								showMsg(emailBindMsg.emailUErrPleaseMsg);
 								return false;
 							}
 							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
 									.test(emailVal)) {
-								$("#emailUErrMsg").show();
-								$("#emailUErrMsg").text(emailBindMsg.emailUErrLegalMsg);
+								//$("#emailUErrMsg").show();
+								//$("#emailUErrMsg").text(emailBindMsg.emailUErrLegalMsg);
+								showMsg(emailBindMsg.emailUErrLegalMsg);
 								return false;
 							}
 							$("#emailUErrMsg").hide();
@@ -101,8 +103,9 @@ define("app/jsp/user/security/bindEmail",
 										},
 										success : function(data) {
 											if(data.data==false){
-												$("#dynamicodeErrMsg").show();
-												$("#dynamicodeErrMsg").text(data.statusInfo);
+												//$("#dynamicodeErrMsg").show();
+												//$("#dynamicodeErrMsg").text(data.statusInfo);
+												showMsg(data.statusInfo);
 												$("#email-sendCode-btn").removeAttr("disabled"); //移除disabled属性
 									            $('#email-sendCode-btn').val(emailBindMsg.getOperationCode);
 												return;
@@ -113,7 +116,7 @@ define("app/jsp/user/security/bindEmail",
 										            $("#email-sendCode-btn").attr("disabled", true);
 										            var _res = setInterval(function(){
 										                $("#email-sendCode-btn").attr("disabled", true);//设置disabled属性
-										                $('#email-sendCode-btn').val(emailBindMsg.resend+step);
+										                $('#email-sendCode-btn').val(step + ' s');
 										                step-=1;
 										                if(step <= 0){
 										                $("#email-sendCode-btn").removeAttr("disabled"); //移除disabled属性
@@ -135,8 +138,9 @@ define("app/jsp/user/security/bindEmail",
 							 */
 							 var emailDynamicode = $("#emailValue").val();
 							 if(emailDynamicode==null||emailDynamicode==""){
-								 $("#dynamicodeErrMsg").show();
-								 $("#dynamicodeErrMsg").text(emailBindMsg.pleaseInputOC);
+								 //$("#dynamicodeErrMsg").show();
+								 //$("#dynamicodeErrMsg").text(emailBindMsg.pleaseInputOC);
+								 showMsg(emailBindMsg.pleaseInputOC);
 								 return false;
 							 }
 							 ajaxController.ajax({
@@ -149,8 +153,9 @@ define("app/jsp/user/security/bindEmail",
 				    				},
 				    		        success: function(data) {
 				    		        	if(!data.data){
-				    		        		$("#dynamicodeErrMsg").show();
-											$("#dynamicodeErrMsg").text(data.statusInfo);
+				    		        		//$("#dynamicodeErrMsg").show();
+											//$("#dynamicodeErrMsg").text(data.statusInfo);
+				    		        		showMsg(data.statusInfo);
 											return false;
 				    		        	}else{
 				    		        		 ajaxController.ajax({
