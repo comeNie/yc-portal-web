@@ -4,11 +4,11 @@
 <div class="placeorder-subnav-big">
     <div class="placeorder-subnav">
         <ul>
-            <li class="logo"><a href="${_base}">
+            <li class="logo"><a href="${_base}/">
                 <img src="${pageContext.request.contextPath}/resources/template/images/logo1<%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"_en":""%>.png" /></a></li>
             <li class="right">
                 <%--首页--%>
-                <p><a href="${_base}"><spring:message code="topMenue.home"/></a></p>
+                <p><a href="${_base}/"><spring:message code="topMenue.home"/></a></p>
                     <%--笔译--%>
                 <p><a href="${_base}/written"><spring:message code="topMenue.written"/></a></p>
                     <%--口译--%>
