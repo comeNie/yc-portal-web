@@ -1,4 +1,8 @@
+<%@page import="com.ai.yc.protal.web.utils.UserUtil"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+UserUtil.getUserPortraitImg();
+%>
 <script src="${_base}/resources/spm_modules/jquery/1.9.1/jquery.min.js"></script>
    <!--二级主体-->
   <!--外侧背景-->
@@ -6,7 +10,7 @@
   	<div class="left-subnav">
   		<div class="left-title">
   			<ul>
-  				<li class="user"><img src="${uedroot}/images/icon.jpg" /></li>
+  				<li class="user"><img src="${userPortraitImg}" /></li>
   				<li class="word">
   					<p>${user_session_key.username}</p>
   					<p class="vip1"></p>

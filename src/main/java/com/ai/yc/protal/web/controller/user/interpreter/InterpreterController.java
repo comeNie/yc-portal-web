@@ -51,10 +51,6 @@ public class InterpreterController {
 		YCUserInfoResponse response = ucUserServiceSV
 				.searchYCUserInfo(userRequest);
 		Map<String, Object> model = new HashMap<String, Object>();
-		String idpsns = "yc-portal-web";
-		IImageClient im = IDPSClientFactory.getImageClient(idpsns);
-		String url = im
-				.getImageUrl(response.getPortraitId(), ".jpg", "100x100");
 		model.put("interpreterInfo", response);
 		if (response.getBirthday() != null) {
 			model.put("birthday", DateUtil.getDateString(
@@ -62,7 +58,6 @@ public class InterpreterController {
 		} else {
 			model.put("birthday", "");
 		}
-		model.put("portraitId", url);
 		model.put("source", source);
 		return new ModelAndView("/user/authentication/interpreter_info", model);
 	}
@@ -142,6 +137,10 @@ public class InterpreterController {
 			ResponseHeader responseHeader = res==null?null:res.getResponseHeader();
 			if(responseHeader!=null&&responseHeader.isSuccess()){
 				isOk = true;
+				String userPortraitImg = request.getParameter("userPortraitImg");
+				if(!StringUtil.isBlank(userPortraitImg)){
+					request.getSession().setAttribute("userPortraitImg", userPortraitImg);
+				}
 			}else{
 				msg = responseHeader.getResultMessage();
 			}

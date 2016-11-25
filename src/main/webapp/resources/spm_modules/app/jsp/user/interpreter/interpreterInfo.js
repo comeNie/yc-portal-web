@@ -68,22 +68,31 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 			if(!$("#dataForm").valid()){
 				return false;
 			}else{
+			 var userPortraitImg ="";
+			 if($("#portraitFileId").attr("src")){
+				 userPortraitImg =$("#portraitFileId").attr("src");
+			 }
              ajaxController.ajax({
 					type:"post",
     				url:_base+"/p/interpreter/saveInfo",
     				data:{
+    					'portraitId':$("#portraitId").val(),
     					'userName':$("#userName").val(),
-						'fullName':$("#fullName").val(),
 						'nickname':$("#nickname").val(),
+						'firstname':$("#firstname").val(),
+						'lastname':$("#lastname").val(),
 						'sex':$("input[name='sex']:checked").val(),
 						'birthdayTmp':$("#startTime").val(),
 						'qq':$("#qq").val(),
 						'portraitId':$("#portraitId").val(),
-						'originalNickname':originalNickname
+						'originalNickname':originalNickname,
+						'userPortraitImg':userPortraitImg
     				},
     		        success: function(json) {
     		        	if(!json.data){
     		        		showMsg(json.statusInfo);
+    		        	}else{
+    		        		location.reload();
     		        	}
     		          }
     				});
@@ -229,7 +238,7 @@ function uploadPortraitImg(uploadImgFile){
          data:{uploadImgFile:uploadImgFile},//一同上传的数据  
          success: function (data, status) {
         	 var jsonData = JSON.parse(data);
-        	if(jsonData.isTrue==true){
+        	if(jsonData.isTrue){
         		document.getElementById("portraitFileId").src=jsonData.url;
         		$("#portraitId").val(jsonData.idpsId);
         	 }
