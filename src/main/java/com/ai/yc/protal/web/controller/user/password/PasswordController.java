@@ -101,9 +101,14 @@ public class PasswordController {
 			if (passRequest.getUid() == null) {// 修改密码uid无需传值
 				passRequest.setUid(Integer.parseInt(UserUtil.getUserId()));
 			}
-			String checkeMode = request.getParameter("checkeMode");
-			if(StringUtil.isBlank(checkeMode)){//默认验证码
+			String oldPwd = request.getParameter("oldPwd");
+			String checkeMode="";
+			if(StringUtil.isBlank(oldPwd)){//默认验证码
 				checkeMode = UcenterOperation.OPERATION_TYPE_UPDATE_PWD_CODE;
+				passRequest.setChecke_code(request.getParameter("checke_code"));
+			}else{
+				checkeMode = UcenterOperation.OPERATION_TYPE_UPDATE_PWD_OLDPSD;
+				passRequest.setChecke_code(oldPwd);
 			}
 			passRequest.setChecke_mode(checkeMode);
 			passRequest.setTenantId(Constants.DEFAULT_TENANT_ID);
