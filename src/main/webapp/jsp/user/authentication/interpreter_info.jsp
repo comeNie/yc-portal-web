@@ -61,25 +61,26 @@
   						<p class="word"><b>*</b>
 							<spring:message code="interpreter.userName" />
 						</p>
-  						<p><input type="text" class="int-text int-xlarge radius" id="userName"  name="userName" value="${user_session_key.username}"/></p>
+  						<p><input maxlength="16" type="text" class="int-text int-xlarge radius" id="userName"  name="userName" value="${user_session_key.username}"/></p>
+  					   <label id="userNameErrMsg" style="display: none;"></label>
   					</li>
   					<li>
   						<p class="word">
   							<spring:message code="interpreter.firstName" />
   						</p>
-  						<p><input  type="text" class="int-text int-xlarge radius" name="firstname" id="firstname" value="${interpreterInfo.firstname}" /></p>
+  						<p><input maxlength="50" type="text" class="int-text int-xlarge radius" name="firstname" id="firstname" value="${interpreterInfo.firstname}" /></p>
   					</li>
   					<li>
   						<p class="word">
   							<spring:message code="interpreter.lastName" />
   						</p>
-  						<p><input  type="text" class="int-text int-xlarge radius" name="lastname" id="lastname" value="${interpreterInfo.lastname}" /></p>
+  						<p><input maxlength="100" type="text" class="int-text int-xlarge radius" name="lastname" id="lastname" value="${interpreterInfo.lastname}" /></p>
   					</li>
   					<li>
   						<p class="word"><b>*</b>
   							<spring:message code="interpreter.nickName" />
   						</p>
-  						<p><input type="text" class="int-text int-xlarge radius" name="nickname" id="nickname" value="${interpreterInfo.nickname}"/>
+  						<p><input maxlength="24" type="text" class="int-text int-xlarge radius" name="nickname" id="nickname" value="${interpreterInfo.nickname}"/>
   						</p>
   						<label id="nickNameErrMsg" style="display: none;"></label>
   					</li>
@@ -115,7 +116,7 @@
   					</li>
   					<li>
   						<p class="word">QQ:</p>
-  						<p><input type="text" class="int-text int-xlarge radius" name="qq" id="qq" value="${interpreterInfo.qq}"/></p>
+  						<p><input maxlength="10" type="text" class="int-text int-xlarge radius" name="qq" id="qq" value="${interpreterInfo.qq}"/></p>
   					</li>
   					<li style="display: none;">
   						<p class="word"><spring:message code="interpreter.address" /></p>
@@ -143,9 +144,11 @@
 <script type="text/javascript">
     var current ="interpreterInfo";
     var originalNickname="${interpreterInfo.nickname}";
+    var originalUsername="${user_session_key.username}";
     var interpreterInfoMsg ={
     		"showOkValueMsg" : '<spring:message code="ycaccountcenter.js.showOkValueMsg"/>',
-    		"showTitleMsg" : '<spring:message code="ycaccountcenter.js.showTitleMsg"/>'
+    		"showTitleMsg" : '<spring:message code="ycaccountcenter.js.showTitleMsg"/>',
+    		"uplaodImageMsg" : '<spring:message code="interpreter.uplaodImageMsg"/>'
     	};
 	var pager;
 	(function() {
