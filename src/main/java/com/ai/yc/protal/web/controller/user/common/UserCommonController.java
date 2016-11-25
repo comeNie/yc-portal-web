@@ -5,6 +5,7 @@ package com.ai.yc.protal.web.controller.user.common;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -239,7 +240,16 @@ public class UserCommonController {
 					msg, false);
 		}
 		String randomStr = (String) ucenterRes[1];// RandomUtil.randomNum(6);
-		req.setContent("短信验证码:" + randomStr);
+		Locale locale = rb.getDefaultLocale();
+		//默认中文模版
+		String _template = PhoneVerify.SMS_CODE_TEMPLATE_ZH_CN;
+		if (Locale.SIMPLIFIED_CHINESE.toString().equals(
+				locale.toString())) {
+			_template = PhoneVerify.SMS_CODE_TEMPLATE_ZH_CN;
+		} else if (Locale.US.toString().equals(locale.toString())) {
+			_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
+		}
+		req.setContent(MessageFormat.format(_template,randomStr));
 		boolean sendOk =  SmsSenderUtil.sendMessage(phone,
 								 req.getContent());
 		if (sendOk) {
