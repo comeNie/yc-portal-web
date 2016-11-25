@@ -11,6 +11,64 @@
  	<%@ include file="/inc/inc.jsp"%>
 </head>
 <body>
+<!--弹出-->	
+<div class="eject-big">
+		<div class="prompt-samll" id="modify-password">
+		<div class="prompt-samll-title"><spring:message code="ycaccountcenter.updatePassword.title"/></div>
+		<!--确认删除-->
+		<div class="prompt-samll-confirm">
+			<ul class="pass-list">
+			<li>
+				<p class="word"><spring:message code="ycaccountcenter.updatePassword.currentPassword"/></p>
+				<p><input maxlength="16" id="currentPassword" type="password" class="int-text int-in-200 radius"></p>
+			</li>
+			<li>
+				<p class="word"><spring:message code="ycaccountcenter.updatePassword.newPassword"/></p>
+				<p><input maxlength="16" id="newPassword" type="password" class="int-text int-in-200 radius"></p>
+			</li>
+			<li>
+				<p class="word"><spring:message code="ycaccountcenter.updatePassword.repeatPassword"/></p>
+				<p><input maxlength="16" id="newPassword2" type="password" class="int-text int-in-200 radius"></p>
+			</li>
+			<li class="eject-btn">
+				<input type="button" id="modify-determine" class="btn btn-green btn-120 radius20" value="<spring:message code="ycaccountcenter.updatePassword.confirm"/>">
+				<input type="button" id="modify-close" class="btn border-green btn-120 radius20" value="<spring:message code="ycaccountcenter.updatePassword.cancel"/>">
+			</li>		
+			</ul>
+		</div>
+		</div>	
+	<div class="mask" id="eject-mask"></div>
+</div>
+
+<!--弹出-->	
+<div class="eject-big">
+		<div class="prompt-samll" id="pay_modify-password">
+		<div class="prompt-samll-title"><spring:message code="ycaccountcenter.updatePassword.title"/></div>
+		<!--确认删除-->
+		<div class="prompt-samll-confirm">
+			<ul class="pass-list">
+			<li>
+				<p class="word"><spring:message code="ycaccountcenter.updatePassword.currentPassword"/></p>
+				<p><input maxlength="16" id="pay_currentPassword" type="password" class="int-text int-in-200 radius"></p>
+			</li>
+			<li>
+				<p class="word"><spring:message code="ycaccountcenter.updatePassword.newPassword"/></p>
+				<p><input maxlength="16" id="pay_newPassword" type="password" class="int-text int-in-200 radius"></p>
+			</li>
+			<li>
+				<p class="word"><spring:message code="ycaccountcenter.updatePassword.repeatPassword"/></p>
+				<p><input maxlength="16" id="pay_newPassword2" type="password" class="int-text int-in-200 radius"></p>
+			</li>
+			<li class="eject-btn">
+				<input type="button" id="pay_modify-determine" class="btn btn-green btn-120 radius20" value="<spring:message code="ycaccountcenter.updatePassword.confirm"/>">
+				<input type="button" id="pay_modify-close" class="btn border-green btn-120 radius20" value="<spring:message code="ycaccountcenter.updatePassword.cancel"/>">
+			</li>		
+			</ul>
+		</div>
+		</div>	
+	<div class="mask" id="pay_eject-mask"></div>
+</div>
+<!--/弹出结束-->	
   <!--头部-->
   <c:if test="${source=='user'}">
       <%@ include file="/inc/userTopMenu.jsp"%>
@@ -60,7 +118,7 @@
   					<li class="word"><spring:message code="ycaccountcenter.setting.loginpassword"/></li>
   					<li><spring:message code="ycaccountcenter.setting.loginpassword.tip"/></li>
   					<li class="right">
-  					  <a href="${_base}/p/security/updatePassword"><spring:message code="ycaccountcenter.setting.set"/></a>
+  					  <a href="javascript:void(0)" onclick="showUpdatePwd();"><spring:message code="ycaccountcenter.setting.set"/></a>
   					 </li>
   				</ul>
   				<ul>
@@ -93,7 +151,7 @@
   					<li id="pay_password_icon_color"  class="red"><i id="pay_password_icon" class="icon-remove-sign"></i></li>
   					<li class="word"><spring:message code="ycaccountcenter.setting.paypassword"/></li>
   					<li id="pay_password_text"><spring:message code="ycaccountcenter.setting.paypassword.unset"/></li>
-  					<li class="right"><a href="${_base}/p/security/updatePayPassword"><spring:message code="ycaccountcenter.setting.set"/></a></li>
+  					<li class="right"><a href="javascript:void(0);"onclick="showUpdatePayPwd();"><spring:message code="ycaccountcenter.setting.set"/></a></li>
   				</ul>
   			</div>
  			
@@ -112,6 +170,10 @@
 
 <script type="text/javascript">
    var current = "seccenterSettings";
+   
+   
+   
+   
 	var pager;
 	(function() {
 		seajs.use('app/jsp/user/security/securitycenter', function(secXXXPager) {
@@ -129,6 +191,12 @@
 	var userEmail = "${userinfo.email}"
 	var userMobile = "${userinfo.mobile}";
 	var secCenterMsg = {
+			"showOkValueMsg" : '<spring:message code="ycaccountcenter.js.showOkValueMsg"/>',
+    		"showTitleMsg" : '<spring:message code="ycaccountcenter.js.showTitleMsg"/>',
+    		"currentPasswordEmpty" : '<spring:message code="ycaccountcenter.updatePassword.currentPasswordEmpty"/>',
+    		"newPasswordEmpty" : '<spring:message code="ycaccountcenter.updatePassword.newPasswordEmpty"/>',
+    		"newPasswordError" : '<spring:message code="ycaccountcenter.updatePassword.newPasswordError"/>',
+    		"repeatPasswordError" : '<spring:message code="ycaccountcenter.updatePassword.repeatPasswordError"/>',
 			"email_set"       : '<spring:message code="ycaccountcenter.setting.email.set"/>',
 			"login_phone_set" : '<spring:message code="ycaccountcenter.setting.loginphone.set"/>',
 			"paypassword_set" : '<spring:message code="ycaccountcenter.setting.paypassword.set"/>'
@@ -168,6 +236,22 @@
 		radialObj.animate(parseInt(securitylevel));
 		
 	});
+	function showUpdatePwd(){
+		if(isexistpaypassword){
+			$('#eject-mask').fadeIn(100);
+			$('#modify-password').slideDown(100);
+		}else{
+			location.href="${_base}/p/security/updatePassword";
+		}
+	}
+	function showUpdatePayPwd(){
+		if(isexistpaypassword){
+			$('#pay_eject-mask').fadeIn(100);
+			$('#pay_modify-password').slideDown(100);
+		}else{
+			location.href="${_base}/p/security/updatePayPassword";
+		}
+	}
 </script>
    
 </html>

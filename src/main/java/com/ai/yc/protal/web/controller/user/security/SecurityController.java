@@ -269,10 +269,10 @@ public class SecurityController {
 
 	@RequestMapping(value = "/sendPayPassword", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseData<Boolean> sendPayPassword(
-			@RequestParam("payPwd") String payPwd) {
+	public ResponseData<Boolean> sendPayPassword(HttpServletRequest request) {
 		String msg = "error";
 		boolean isOK = false;
+		String payPwd = request.getParameter("payPwd");
 		if (StringUtil.isBlank(payPwd)) {
 			msg = "param is null";
 			ResponseData<Boolean> responseData = new ResponseData<Boolean>(
@@ -327,6 +327,11 @@ public class SecurityController {
 						ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
 				return responseData;
 			}
+			
+			String oldPwd = request.getParameter("oldPwd");//旧支付密码
+			
+			
+			
 			AccountUpdateParam req = new AccountUpdateParam();
 			req.setTenantId(Constants.DEFAULT_TENANT_ID);
 			req.setAcctId(accountId);
