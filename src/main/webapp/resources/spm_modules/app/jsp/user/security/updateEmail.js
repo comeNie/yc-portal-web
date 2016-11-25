@@ -11,8 +11,8 @@ define("app/jsp/user/security/updateEmail",
 		    	var d = Dialog({
 					content:msg,
 					icon:'fail',
-					okValue: updatePasswordMsg.showOkValueMsg,
-					title: updatePasswordMsg.showTitleMsg,
+					okValue: updateEmailJs.showOkValueMsg,
+					title: updateEmailJs.showTitleMsg,
 					ok:function(){
 						d.close();
 					}
