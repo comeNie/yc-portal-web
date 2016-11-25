@@ -1,10 +1,9 @@
-define("opt-paging/aiopt.pagination", ["jquery","twbs-pagination/jquery.twbsPagination.min"], function(require, exports, module){
+define("opt-paging/aiopt.pagination", ["jquery","twbs-pagination/jquery.twbsPagination"], function(require, exports, module){
 	 var AjaxController=require('opt-ajax/1.0.0/index');
 	//实例化AJAX控制处理对象
 	 var ajaxController = new AjaxController();
-	require("twbs-pagination/jquery.twbsPagination.min");	
-	
-	/*!
+	require("twbs-pagination/jquery.twbsPagination");
+/*!
  * jQuery runner pagination plugin v1.0.0
  * based on jquery.pagController.js  jquery.twbsPagination.js
  * Copyright 2014, Asiainfo
@@ -12,7 +11,7 @@ define("opt-paging/aiopt.pagination", ["jquery","twbs-pagination/jquery.twbsPagi
  * http://apache.org/licenses/LICENSE-2.0.html
  */
 (function ($, window, document, undefined) {
-
+//初始化国际化
     'use strict';
 
     var old = $.fn.runnerPagination;
@@ -88,6 +87,7 @@ define("opt-paging/aiopt.pagination", ["jquery","twbs-pagination/jquery.twbsPagi
  	                //var totalPages=d.pageCount?d.pageCount:1;
  	                if(d.pageCount>0){
  	                	_this.setupTwbsPagination(d.pageCount);
+						_this.showGotoPage();
  	                }
  	            },
  	            failure:function(){
@@ -184,13 +184,15 @@ define("opt-paging/aiopt.pagination", ["jquery","twbs-pagination/jquery.twbsPagi
         	if(this._tp){
         		return;
         	}
-        	var _tp = this.$element.twbsPagination({
+            var _tp = this.$element.twbsPagination({
                 totalPages: totalPages,
                 startPage: opt.startPage,
                 visiblePages: opt.visiblePages,
                 first: opt.first,
-                prev: opt.prev,
-                next: opt.next,
+                prev: "<",
+                next: ">",
+				nextClass:"prev-up",
+				prevClass:"next-down",
                 last: opt.last,
                 loop: opt.loop,
                 paginationClass: opt.paginationClass?opt.paginationClass:"pagination",
@@ -199,7 +201,23 @@ define("opt-paging/aiopt.pagination", ["jquery","twbs-pagination/jquery.twbsPagi
                 }
             });
         	this._tp= _tp;
-        }
+        },
+		/**
+		 * 显示页码跳转部分
+		 */
+		showGotoPage:function(){
+			this.$element.append("<p><span>到</span>&nbsp;&nbsp;<span><input type='text' class='int-verysmall radius' maxlength='8'></span>" +
+				"&nbsp;&nbsp;<span>页</span></p><p class='taiz'><a href='javaScript:void(0);'>跳转</a></p>");
+			var cliPar = this.$element;
+			this.$element.find("p.taiz a").click(function(){
+				var goPage = cliPar.find("p span input:first").val();
+				if(window.console){
+					console.log("goto page " + goPage);
+				}
+				//获取待跳转页码
+
+			});
+		}
 
     };
 
