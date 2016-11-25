@@ -38,6 +38,18 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		});
 		d.show();
     };
+    var showMsg2 = function(msg){
+    	var d = Dialog({
+			content:msg,
+			icon:'success',
+			okValue: interpreterInfoMsg.showOkValueMsg,
+			title: interpreterInfoMsg.showTitleMsg,
+			ok:function(){
+				d.close();
+			}
+		});
+		d.show();
+    };
     //定义页面组件类
     var InterPreterInfoPager = Widget.extend({
     	//属性，使用时由类的构造函数传入
@@ -51,6 +63,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 			//保存数据
     		"click [id='saveButton']":"_saveInterpreterInfo",
     		"blur [id='nickname']":"_checkNickNameValue",
+    		"blur [id='userName']":"_checkUserNameValue"
         },
         //重写父类
     	setup: function () {
@@ -86,13 +99,14 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 						'qq':$("#qq").val(),
 						'portraitId':$("#portraitId").val(),
 						'originalNickname':originalNickname,
+						'originalUsername':originalUsername,
 						'userPortraitImg':userPortraitImg
     				},
     		        success: function(json) {
     		        	if(!json.data){
     		        		showMsg(json.statusInfo);
     		        	}else{
-    		        		location.reload();
+    		        		showMsg2(json.statusInfo);
     		        	}
     		          }
     				});
@@ -119,16 +133,37 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		          }
 				});
 		},
+		_checkUserNameValue:function(){
+			var userName =  $("#userName").val();
+			if(originalUsername==userName){//用户名未改变无需校验
+				return;
+			}
+			ajaxController.ajax({
+				type:"post",
+				url:_base+"/p/interpreter/checkUserName",
+				data:{
+					'userName':userName
+				},
+		        success: function(json) {
+		        	 if(!json.data){
+		        		 $("#userNameErrMsg").show().html("<span>"+json.statusInfo+"</span>");
+		        	 }else{
+		        		 $("#userNameErrMsg").hide().html(""); 
+		        	 }
+		          }
+				});
+		}
+		,
     	_initValidate:function(){
     		var formValidator=$("#dataForm").validate({
     			rules: {
     				//productCatName: "required",
-    				userName: {
+    				/*userName: {
     					required:true,
     					maxlength:16,
     					minlength:6,
     					regexp: /^[a-z0-9A-Z]\w{5,15}$/
-    					},
+    					},*/
     				nickName: {
     					required:true,
     					maxlength:10,
@@ -214,13 +249,13 @@ function uploadPortraitImg(uploadImgFile){
 	if(!/\.(gif|jpg|png|jpeg|bmp|GIF|JPG|PNG|JPEG|BMP)$/.test(image)){
 		$("#uploadImgErrMsg").show();
 		$("#uploadImgText").show();
-		$("#uploadImgText").text('文件格式不对，只允许上传gif、jpg、png、GIF、JPG、PNG');
+		$("#uploadImgText").text(interpreterInfoMsg.uplaodImageMsg);
 		$("#uploadImgFlag").val("0");
 		return false;
 	}else if(document.getElementById("uploadImg").files[0].size>5*1024*1024){
 		$("#uploadImgErrMsg").show();
 		$("#uploadImgText").show();
-		$("#uploadImgText").text('文档太大，不能超过5M');
+		$("#uploadImgText").text(interpreterInfoMsg.uplaodImageMsg);
 		$("#uploadImgFlag").val("0");
 		return false;
 	}else{

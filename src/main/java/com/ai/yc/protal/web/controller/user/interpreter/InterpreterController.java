@@ -26,6 +26,10 @@ import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.image.IImageClient;
 import com.ai.yc.protal.web.utils.UserUtil;
+import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
+import com.ai.yc.ucenter.api.members.param.base.ResponseCode;
+import com.ai.yc.ucenter.api.members.param.get.UcMembersGetRequest;
+import com.ai.yc.ucenter.api.members.param.get.UcMembersGetResponse;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
 import com.ai.yc.user.api.userservice.param.UpdateYCUserRequest;
@@ -109,15 +113,61 @@ public class InterpreterController {
 		}
 		return new  ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,msg, isOk);
 	}
-
+	/**
+	 * 校验用户名
+	 * @param request
+	 * @param userName
+	 * @return
+	 */
+	@RequestMapping("/checkUserName")
+	@ResponseBody
+	public ResponseData<Boolean> checkUserName(HttpServletRequest request,
+			@RequestParam("userName") String userName) {
+		boolean isOk = false;
+		String msg = "ok";
+		try {
+			IUcMembersSV ucMembersSV = DubboConsumerFactory
+					.getService(IUcMembersSV.class);
+			UcMembersGetRequest membersGetRequest = new UcMembersGetRequest();
+			membersGetRequest.setUsername(userName);
+			membersGetRequest.setGetmode("4");
+			UcMembersGetResponse res = ucMembersSV
+					.ucGetMember(membersGetRequest);
+			ResponseCode responseCode = res == null ? null : res.getCode();
+			Integer codeNumber = responseCode == null ? null : responseCode
+					.getCodeNumber();
+			if (codeNumber != null && codeNumber == 1) {// 成功
+				isOk = true;
+			} else {
+				msg= rb.getMessage("interpreter.userName.exist");
+				LOGGER.error(JSON.toJSONString(res));
+			}
+		 } catch (Exception e) {
+			isOk = false;
+			msg = rb.getMessage("interpreter.userName.exist");
+			LOGGER.error(e.getMessage(), e);
+		}
+		return new  ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,msg, isOk);
+	}
 	@RequestMapping("/saveInfo")
 	@ResponseBody
 	public ResponseData<Boolean> saveInfo(HttpServletRequest request,
 			UpdateYCUserRequest ucUserRequest) {
 		String originalNickname = request.getParameter("originalNickname");
+		String originalUsername = request.getParameter("originalUsername");
+		String userName = request.getParameter("userName");
 		boolean isOk = false;
 		String  msg = "ok";
 		try {
+			if(!StringUtil.isBlank(userName)&&!userName.equals(originalUsername)){//用户名发生改变
+				ResponseData<Boolean> res= checkUserName(request,userName);
+				if(!res.getData()){//昵称校验不通过
+					return res;
+				}
+				//调用ucenter
+				//ucUserRequest.setIsChange("1");
+			}
+			
 			ucUserRequest.setUserId(UserUtil.getUserId());
 			String nickname = ucUserRequest.getNickname();
 			if(!originalNickname.equals(nickname) && !StringUtil.isBlank(nickname)){//昵称发生改变
