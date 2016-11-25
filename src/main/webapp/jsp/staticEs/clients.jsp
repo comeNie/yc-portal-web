@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>合作客户</title>
+	<%--合作客户--%>
+    <title>Cooperative client</title>
 	<%@include file="/inc/inc.jsp" %>
 </head>
 <body class="static-body">
@@ -16,20 +17,25 @@
 <!--主体-->
 <div class="cooperation-banner">
 		<div class="cooperation-big">
-		<div class="cooperation-title">他们这样评价译云</div>
+		<%--他们这样评价译云--%>
+		<div class="cooperation-title">They evaluate the translation cloud</div>
 		<div class="cooperation-list" id="scrollDiv">
 			<ul>
 				<li class="img-icon"><img src="${uedroot}/images/Jinshan-icon1.png" /></li>
 				<li class="word">
-					<p class="bigword">金山词霸：</p>
-					<p>现在用户翻译的需求越来越多样化，对质量要求越来越高，简单的机器翻译已经不能满足用户的需求，在这里我们推荐译云的人工翻译服务。它向用户提供了全球上万名译员在线t的人工翻译服务，快速且优质的翻译服务让用户感到惊喜，在这里我们真诚的向您推荐译云翻译。</p>
+					<%--金山词霸--%>
+					<p class="bigword">Kingsoft PowerWord：</p>
+					<%--现在用户翻译的需求越来越多样化，对质量要求越来越高，简单的机器翻译已经不能满足用户的需求，在这里我们推荐译云的人工翻译服务。它向用户提供了全球上万名译员在线t的人工翻译服务，快速且优质的翻译服务让用户感到惊喜，在这里我们真诚的向您推荐译云翻译。--%>
+					<p>Now the translation needs of users more and more diversified, the higher the quality requirements are simple, Machine Translation has been unable to meet the needs of users, here we recommend artificial translation cloud translation service. It provides the global interpreter tens of thousands of online t artificial translation services to users, fast and high-quality translation services let users feel surprise, here we sincerely recommend the translation cloud translation.</p>
 				</li>
 			</ul>
 			<ul>
 				<li class="img-icon"><img src="${uedroot}/images/Jinshan-icon1.png" /></li>
 				<li class="word">
-					<p class="bigword">金山词霸：</p>
-					<p>现在用户翻译的需求越来越多样化，对质量要求越来越高，简单的机器翻译已经不能满足用户的需求，在这里我们推荐译云的人工翻译服务。它向用户提供了全球上万名译员在线t的人工翻译服务，快速且优质的翻译服务让用户感到惊喜，在这里我们真诚的向您推荐译云翻译。</p>
+					<%--金山词霸--%>
+					<p class="bigword">Kingsoft PowerWord：</p>
+					<%--现在用户翻译的需求越来越多样化，对质量要求越来越高，简单的机器翻译已经不能满足用户的需求，在这里我们推荐译云的人工翻译服务。它向用户提供了全球上万名译员在线t的人工翻译服务，快速且优质的翻译服务让用户感到惊喜，在这里我们真诚的向您推荐译云翻译。--%>
+					<p>Now the translation needs of users more and more diversified, the higher the quality requirements are simple, Machine Translation has been unable to meet the needs of users, here we recommend artificial translation cloud translation service. It provides the global interpreter tens of thousands of online t artificial translation services to users, fast and high-quality translation services let users feel surprise, here we sincerely recommend the translation cloud translation.</p>
 				</li>
 			</ul>
 		</div>
@@ -39,7 +45,8 @@
 <div class="static-wrapper">
 	<!--标题-->
 	<div class="static-title">
-		<p>更多客户</p>
+		<%--更多客户--%>
+		<p>More customers</p>
 		<p class="line1"></p>
 	</div>
 	<div class="cooperation-logo">

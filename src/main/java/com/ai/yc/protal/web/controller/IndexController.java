@@ -110,6 +110,32 @@ public class IndexController {
         return staticUrl()+"/about";
     }
 
+    /**
+     * 合作伙伴
+     * @return
+     */
+    @RequestMapping("/client")
+    public String client(){
+        return staticUrl()+"/clients";
+    }
+
+    /**
+     * 下单指南
+     * @return
+     */
+    @RequestMapping("/guide")
+    public String guide(){
+        return staticUrl()+"/guide";
+    }
+
+    /**
+     * 译者认证
+     * @return
+     */
+    @RequestMapping("/tident")
+    public String tident(){
+        return staticUrl() + "/certification";
+    }
 
     private String staticUrl(){
         return Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale())?"/static":"/staticEs";

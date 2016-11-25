@@ -18,15 +18,17 @@
 <div class="about-banner">
     <div class="about-list">
         <ul>
-            <li class="word">全新译云平台 这只是一个开始</li>
-            <li class="pacbtn"><input type="button" class="btn btn-blue btn-168 radius20" value="体验即时翻译"></li>
+            <li class="word">A new yiyun platform this is just a start</li>
+            <%--体验即时翻译 --%>
+            <li class="pacbtn"><input type="button" class="btn btn-blue btn-168 radius20" value="Experience instant translation"></li>
         </ul>
     </div>
 </div>
 <div class="static-wrapper">
     <!--标题-->
     <div class="static-title">
-        <p>译者认证</p>
+        <!-- 译者认证 -->
+        <p>Translator certification</p>
         <p class="line1"></p>
     </div>
 
