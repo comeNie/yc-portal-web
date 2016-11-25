@@ -243,10 +243,7 @@ public class UserCommonController {
 		Locale locale = rb.getDefaultLocale();
 		//默认中文模版
 		String _template = PhoneVerify.SMS_CODE_TEMPLATE_ZH_CN;
-		if (Locale.SIMPLIFIED_CHINESE.toString().equals(
-				locale.toString())) {
-			_template = PhoneVerify.SMS_CODE_TEMPLATE_ZH_CN;
-		} else if (Locale.US.toString().equals(locale.toString())) {
+		if (Locale.US.toString().equals(locale.toString())) {
 			_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
 		}
 		req.setContent(MessageFormat.format(_template,randomStr));
