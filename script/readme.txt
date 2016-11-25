@@ -18,12 +18,12 @@ docker run -d --name yc-portal-web-v1.0  -p 14101:8080  \
 -e "casServerUrlPrefix=http://10.19.13.24:14105/yc-sso-web"   \
 -e "serverName=http://10.19.13.20:14101"   \
 -e "logOutServerUrl=http://10.19.13.24:14105/yc-sso-web/logout"   \
--e "logOutBackUrl=http://10.19.13.24:14105/yc-sso-web"   \
+-e "logOutBackUrl=http://10.19.13.20:14101/"   \
 -e "casServerLoginUrl_Inner=http://10.19.13.24:14105/yc-sso-web/login"  \
 -e "casServerUrlPrefix_Inner=http://10.19.13.24:14105/yc-sso-web"   \
 -e "serverName_Inner=http://10.19.13.20:14101"   \
 -e "logOutServerUrl_Inner=http://10.19.13.24:14105/yc-sso-web/logout"   \
--e "logOutBackUrl_Inner=http://10.19.13.24:14105/yc-sso-web"   \
+-e "logOutBackUrl_Inner=http://10.19.13.20:14101/"   \
 -e "SDK_MODE=0" \
 -e "PAAS_AUTH_URL=http://10.1.245.4:19811/service-portal-uac-web/service/auth" \
 -e "PAAS_AUTH_PID=D14F7D708109471AB6F3084B2ABAE9A6" \
@@ -59,7 +59,7 @@ docker run -d --name yc-portal-web-v1.0  -p 14101:8080  \
 -e "yeecloudUser=yeecloud" \
 -e "yeecloudPassword=yee123" \
 -e "MessageFormYeecloud=yeecloud" \
-10.19.13.18:5000/yc-portal-web:v1.0_5
+10.19.13.18:5000/yc-portal-web:v1.0_7
 
 #查看镜像启动日志
 docker logs yc-portal-web-v1.0
