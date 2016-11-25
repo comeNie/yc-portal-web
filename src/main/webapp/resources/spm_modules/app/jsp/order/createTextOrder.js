@@ -197,7 +197,10 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			//baseInfo.accountId
 
 			var today = new Date();
-			baseInfo.timeZone = 'GMT+'+(0 - today.stdTimezoneOffset()/60);
+			if(today.stdTimezoneOffset()/60 > 0)
+				baseInfo.timeZone = 'GMT-'+Math.abs(today.stdTimezoneOffset()/60);
+			else
+				baseInfo.timeZone = 'GMT+'+Math.abs(today.stdTimezoneOffset()/60);
 
 			productInfo.translateSum = totalWords;
 			productInfo.useCode = $("#selectPurpose").val();  //用途

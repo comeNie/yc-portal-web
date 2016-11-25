@@ -92,23 +92,31 @@
                     <textarea  class="int-post"  id="transRes" readonly="readonly"></textarea>
                     <textarea  class="int-post"  id="transResBak" hidden=""></textarea>
                 </div>
+                <label id="transError"></label>
                 <div class="post-cion">
                 	<!-- 播放器 -->
                 	<audio src="" controls="controls" id="audioPlay" hidden>
 						Your browser does not support the audio tag.
 					</audio>
 					<p>
-						<a id="copyText" href="javaScript:void(0)" class="ord-icon"><i class="icon iconfont">&#xe62e;</i></a>
-						<a  id="playControl" href="javaScript:void(0)" class="radio-icon"><i class="icon iconfont">&#xe61b;</i></a>
-						 <!--<a href="javaScript:void(0)" class="stars-icon"><i class="icon iconfont">&#xe754;</i></a>-->
+						<a id="sus-top1" href="javaScript:void(0)" class="ord-icon"><i class="icon iconfont">&#xe62e;</i>
+                            <span class="suspension1">复制译文</span>
+                        </a>
+						<a  id="sus-top2" href="javaScript:void(0)" class="radio-icon"><i class="icon iconfont">&#xe61b;</i>
+                            <span class="suspension2">朗诵译文</span>
+                        </a>
+						 <!--<a id="sus-top3" href="javaScript:void(0)" class="stars-icon"><i class="icon iconfont">&#xe754;</i>
+						    <span class="suspension3">收藏译文</span>
+						 </a>-->
 					</p>
 					<p class="right" id="error">
-						<a href="javaScript:void(0)" class="edit-icon">
+						<a href="javaScript:void(0)" class="edit-icon" id="sus-top">
 							<span><i class="icon iconfont">&#xe62a;</i></span>
 							<!-- 翻译有误 -->
 							<span><spring:message code="home.translation_error_btn"/>?</span>
 						</a>
-					</p>
+                    <div class="suspension">	修改译文</div>
+                    </p>
 					<p class="right" id="error-oc"  style="display: none;">
 						<a href="javaScript:void(0)" class="edit-icon" id="preser-btn">
 							<span><i class="icon iconfont">&#xe612;</i></span>
@@ -133,7 +141,6 @@
                     
                 </li>
                 <li class="right">
-                	<p id="transError"></p>
                     <%--人工翻译--%>
                     <input id="humanTranBtn" type="button" class="btn border-blue btn-trans-b radius2"
                                          value="<spring:message code="home.human_translation_btn"/>">

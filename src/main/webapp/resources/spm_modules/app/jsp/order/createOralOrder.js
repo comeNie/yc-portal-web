@@ -188,7 +188,10 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 			//baseInfo.corporaId
 			//baseInfo.accountId
 			var today = new Date();
-			baseInfo.timeZone = 'GMT+'+today.stdTimezoneOffset()/60;
+			if(today.stdTimezoneOffset()/60 > 0)
+				baseInfo.timeZone = 'GMT-'+Math.abs(today.stdTimezoneOffset()/60);
+			else
+				baseInfo.timeZone = 'GMT+'+Math.abs(today.stdTimezoneOffset()/60);
 
 			productInfo.meetingSum = $("#meetingAmount").val();
 			productInfo.interperGen = $("#gender").find("option:selected").val();
