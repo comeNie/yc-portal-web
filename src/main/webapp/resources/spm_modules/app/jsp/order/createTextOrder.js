@@ -21,15 +21,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     	//事件代理
     	events: {
 			"click #recharge-popo":"_addTextOrderTemp",
-			"click #submitOrder":"_addTextOrder",
-			"click #toCreateOrder":"_toCreateOrder",
 			"click #urgentOrder":"_transPrice",
 			"click .dropdown":"_transPrice",
 			"click #saveContact":"_saveContact",
 			"click #editContact":"_editContactDiv",
 			"click #fy-btn": "_uploadFile",
 			"click #fy-btn1": "_inputText",
-			"click #globalRome": "_setPattern",
 			"click #clear-btn": "_clearText",
 			"keyup #translateContent": "_clearControl",
 			"change #selectFormatConv": "_formatControl",
@@ -53,7 +50,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 
 			this._transGrade();
 			this._transPrice();
-			this._globalRome();
 			this._initPage();
     	},
     	
@@ -67,13 +63,13 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 					} else {
 						error.insertAfter(element);
 					}
-						
+
 				},
 				highlight: function(element, errorClass) {
-					
-				}, 
+
+				},
 				unhighlight: function(element, errorClass) {
-					
+
 				} ,
 				errorClass:"x-label",
 				showErrors:function(errorMap,errorList) {
@@ -98,7 +94,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     			　　               dataFilter: function (data) {//判断控制器返回的内容
     			　　            	  	data = jQuery.parseJSON(data);
     			　　
-    			　　            	  	var sourlan;
+    			　　            	  	var sourlan = 'en';
     			　　           		$("#selectDuad").find('option').each(function() {
 	    			　　               		var val = $(this).val();
 	    			　　               		if (val ==  $(".dropdown .selected").attr('value')) {
@@ -119,17 +115,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     				isAgree: {
     					required:true,
     				},
-    				contactName: {
-    					required:true,
-    					maxlength:15
-    				},
-    				phoneNum: {
-    					required:true,
-    				},
-    				email: {
-    					required:true,
-    					email:true
-    				}
     			},
     			messages: {
     				translateContent: {
@@ -138,19 +123,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     					remote:  $.i18n.prop('order.place.error.contentConsis')//"您输入的内容和源语言不一致"
     				},
     				isAgree: {
-    					required: $.i18n.prop('order.place.error.contentConsis')//"请阅读并同意翻译协议",
+    					required: $.i18n.prop('order.place.error.agree')//"请阅读并同意翻译协议",
     				},
-    				contactName: {
-    					required: $.i18n.prop('order.place.error.name')//"请输入姓名",
-    				},
-    				phoneNum: {
-    					required: $.i18n.prop('order.place.error.phone'),//"请输入手机号",
-    					pattern: $.i18n.prop('order.place.error.phone1')//"请输入正确的手机号"
-    				},
-    				email: {
-    					required: $.i18n.prop('order.place.error.email'),//"请输入邮箱",
-    					email: $.i18n.prop('order.place.error.email1')//"请输入正确的邮箱"
-    				}
     			}
     		});
     		
@@ -168,52 +142,18 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				return;
 			}
 
-			//查询报价
-			this._queryAutoOffer();
-			
-			var tableFirstLine = $("#textOrderTable tbody tr").eq(0).find("td");
-			if(_this._isTextTransType()) {//快速翻译
-				tableFirstLine.eq(0).html($("#translateContent").val().substring(0,15));
-			} else {
-				tableFirstLine.eq(0).html($("#fileList").find('li:first').text().substring(0,15));
-			}
-
-			tableFirstLine.eq(1).html($("#selectDuad").find("option:selected").text());
-			tableFirstLine.eq(2).html($("#selectPurpose").find("option:selected").text());
-			tableFirstLine.eq(3).html($("#selectDomain").find("option:selected").text());
-			tableFirstLine.eq(4).html($(".none-ml.current").find("p").eq(0).html());
-			
-			$("#textOrderPage").hide();
-			$("#contactPage").css('display','block'); 
-		},
-
-		//判断是否是文档翻译类型
-		_isTextTransType:function () {
-			if ($("#fy2").css("display") == "none")
-				return true
-			else
-				return false;
-		},
-
-		_addTextOrder:function(){
-			var _this= this;
-        	var formValidator=_this._initValidate();
-			formValidator.form();
-			if(!$("#textOrderForm").valid()){
-				//alert('验证不通过！！！！！');
-				return;
-			}
-			
 			//计算字数
-			var transContent = $("#translateContent").val();
 			var totalWords = CountWordsUtil.count($("#translateContent").val());
-			
+
 			var baseInfo = {};
 			var productInfo = {};
-			var contactInfo = {};
-			var feeInfo = {};
+			var orderSummary = {};
+			orderSummary.duadName = $.trim($("#selectDuad").find("option:selected").text());
+			orderSummary.purposeName = $.trim($("#selectPurpose").find("option:selected").text());
+			orderSummary.domainName = $.trim($("#selectDomain").find("option:selected").text());
+			orderSummary.translevel = $.trim($("#transGrade ul.current").find("p").eq(0).html());
 			//区分国内外订单
-			if (currentLan.indexOf("zh") >= 0) { 
+			if (currentLan.indexOf("zh") >= 0) {
 				baseInfo.orderType = "0";
 				baseInfo.flag = "0";
 				baseInfo.chlId = "0";
@@ -222,28 +162,28 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				baseInfo.flag = "1";//业务标识 0:国内业务 1：国际业务 ??
 				baseInfo.chlId = "1";
 			}
-			
+
 			baseInfo.orderType = "1"; //??
 			baseInfo.busiType = 1;
 			if(!_this._isTextTransType()) { //文档类型
 				baseInfo.translateType = "1"
-				
+
 				var fileInfoList = [];
 				//判断是文档翻译
-				$("li[fileid]").each(function(){   
+				$("li[fileid]").each(function(){
 					var tempObj = {};
 					tempObj.fileName = $(this).text();
 					tempObj.fileSaveId = $(this).attr("fileid");
-					fileInfoList.push(tempObj);    
+					fileInfoList.push(tempObj);
 				});
 				productInfo.fileInfoList = fileInfoList;
-				
+
 				baseInfo.subFlag = "1";
 				productInfo.needTranslateInfo = JSON.stringify(fileInfoList);
 				productInfo.translateInfo = "";
 				baseInfo.translateName = $("#fileList").find('li:first').text().substring(0,15);
 			} else {
-				baseInfo.translateType = "0"; //0：快速翻译 1：文档翻译 
+				baseInfo.translateType = "0"; //0：快速翻译 1：文档翻译
 				baseInfo.subFlag = "0"; // "0：系统自动报价 1：人工报价"
 				productInfo.needTranslateInfo = $("#translateContent").val();
 				productInfo.translateInfo = "";
@@ -255,13 +195,13 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			baseInfo.orderDesc=$("#inputFormatConv").val();//格式转换
 			//baseInfo.corporaId
 			//baseInfo.accountId
-				
+
 			var today = new Date();
 			baseInfo.timeZone = 'GMT+'+(0 - today.stdTimezoneOffset()/60);
-			
+
 			productInfo.translateSum = totalWords;
-			productInfo.useCode = "222";
-			productInfo.fieldCode = "222";
+			productInfo.useCode = $("#selectPurpose").val();  //用途
+			productInfo.fieldCode = $("#selectDomain").val();  //领域
 
 			if($("#selectAddedSer").val() == 1)
 				productInfo.isSetType = "Y"; //是否排版
@@ -270,112 +210,58 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 
 			if ( $("#urgentOrder").is(':checked') )
 				productInfo.isUrgent = "Y";
-			else 
+			else
 				productInfo.isUrgent = "N";
-				
-			var duadList =[];    
+
+			var duadList =[];
 			var tempLanPairObj = {};
 			tempLanPairObj.languagePairId = $(".dropdown .selected").attr('value');
 			$("#selectDuad").find('option').each(function() {
-        		var val = $(this).val();
-        		if (val ==  $(".dropdown .selected").attr('value')) {
-        			var selected = $(this);
+				var val = $(this).val();
+				if (val ==  $(".dropdown .selected").attr('value')) {
+					var selected = $(this);
 
-    				tempLanPairObj.languagePairName = selected.attr('sourceCn') + "→" + selected.attr('targertCn');
-        			tempLanPairObj.languageNameEn = selected.attr('sourceEn') + "→" + selected.attr('targertEn');
-        			return false;
-        		}
+					tempLanPairObj.languagePairName = selected.attr('sourceCn') + "→" + selected.attr('targertCn');
+					tempLanPairObj.languageNameEn = selected.attr('sourceEn') + "→" + selected.attr('targertEn');
+					return false;
+				}
 			});
 
 			duadList.push(tempLanPairObj);
 			productInfo.languagePairInfoList = duadList;
-			
+
 			var translateLevelInfoList=[];
 			var tempTranlevObj={};
 			tempTranlevObj.translateLevel = $("#transGrade ul.current").first().attr('name');
 			translateLevelInfoList.push(tempTranlevObj);
-			
+
 			productInfo.translateLevelInfoList = translateLevelInfoList;
-			
-//			contactInfo.contactName =  $("#editContactDiv").find('p').eq(0).html();
-//			contactInfo.contactTel  =  $("#editContactDiv").find('p').eq(1).html();
-//			contactInfo.contactEmail  =  $("#editContactDiv").find('p').eq(2).html();
-			contactInfo.contactName=$("#saveContactDiv").find('input').eq(0).val();
-		    contactInfo.contactTel="+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val();
-			contactInfo.contactEmail=$("#saveContactDiv").find('input').eq(2).val();
-			
-			feeInfo.totalFee = 100000;
-			feeInfo.currencyUnit = $("#selectDuad").find("option:selected").val();
-			
+
+            //创建订单
 			ajaxController.ajax({
 				type: "post",
-				processing: true,
-				message: "保存中，请等待...",
-				url: _base + "/order/save",
+				url: _base + "/order/add",
 				data: {
 					baseInfo: JSON.stringify(baseInfo),
 					productInfo: JSON.stringify(productInfo),
-					contactInfo: JSON.stringify(contactInfo),
-					feeInfo: JSON.stringify(feeInfo)
+					orderSummary: JSON.stringify(orderSummary)
 				},
 				success: function (data) {
-					if ("OK" === data.statusInfo) {
-						if(baseInfo.translateType == 0) { //文字翻译
-							window.location.href =  _base + "/p/customer/order/payOrder/"+data.data;
-						} else {
-							//文档翻译，跳到待报价页面
-							window.location.href =  _base + "/p/customer/order/orderOffer";
-						}
-					} else { //用户未登陆
-						window.location.href = _base + "/p/order/orderSubmit?orderType=text";
+                    if ("1" === data.statusCode) {
+						window.location.href =  _base + "/p/order/contact?skip="+data.data;
 					}
 				}
 			});
 		},
-		
-		//查询报价
-		_queryAutoOffer:function() {
-			var _this = this;
-			if(!_this._isTextTransType()) { //文档类型
-				$("#price").html("<span>"+ $.i18n.prop("order.place.waitPrice")+ "</span>");
-				return;
-			}
-			
-		   var isUrgent;
-	    	if ( $("#urgentOrder").is(':checked') ) 
-	    		isUrgent = true;
-			else 
-				isUrgent = false;
-		    
-			ajaxController.ajax({
-				type: "post",
-				url: _base + "/order/queryAutoOffer",
-				data: {
-					wordNum: CountWordsUtil.count($("#translateContent").val()),
-					duadId: $("#selectDuad").find("option:selected").val(),
-					purposeId: $("#selectPurpose").find("option:selected").val(),
-				    language: $(".dropdown .selected").attr('value'),
-				    translateLevel: $(".none-ml.current").attr('name'),
-				    isUrgent: isUrgent,
-				},
-				success: function (data) {
-					if ("1" === data.statusCode) {
-						var unit;
-						if (data.data.currencyUnit === "1")
-							unit = $.i18n.prop('order.yuan');
-						else
-							unit = $.i18n.prop('order.meiyuan');
-						$("#price").html("<span>"+ _this.fmoney(data.data.price/1000,2) +"</span>"+ unit);
-					}
-				}
-			});
+
+		//判断是否是文档翻译类型
+		_isTextTransType:function () {
+			if ($("#fy2").css("display") == "none")
+				return true
+			else
+				return false;
 		},
-		
-		_toCreateOrder:function(){
-			$("#textOrderPage").show();
-			$("#contactPage").hide();
-		},
-		
+
 		//翻译等级改变，翻译速度改变
 		_transGrade:function() {
 			var _this = this;
@@ -462,46 +348,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				}
 			}
 		},
-		
-		_saveContact:function() {
-			var _this= this;
-        	var formValidator=_this._initValidate();
-			formValidator.form();
-			if(!$("#textOrderForm").valid()){
-				//alert('验证不通过！！！！！');
-				return;
-			}
 
-			$("#saveContactDiv").hide();
-			
-			$("#editContactDiv").find('p').eq(0).html($("#saveContactDiv").find('input').eq(0).val());
-			$("#editContactDiv").find('p').eq(1).html("+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val());
-			$("#editContactDiv").find('p').eq(2).html($("#saveContactDiv").find('input').eq(2).val());
-			
-			$("#editContactDiv").show();
-		},
-		
-		_editContactDiv:function() {
-			$("#saveContactDiv").show();
-			$("#editContactDiv").hide();
-		},
-		
-		_globalRome:function() {
-			$.getJSON(_base + "/resources/spm_modules/app/jsp/order/globalRome.json",function(data){
-				$.each(data.row,function(rowIndex,row){
-					var selObj = $("#globalRome");
-					var text;
-					if (currentLan.indexOf("zh") >= 0) {
-						text = row["COUNTRY_NAME_CN"];
-					} else {
-						text = row["COUNTRY_NAME_EN"];
-					}
-					
-					selObj.append("<option value='"+row["COUNTRY_CODE"]+"' exp='" +row["REGULAR_EXPRESSION"]+"'>"+text+"   +"+row["COUNTRY_CODE"]+"</option>");
-				});
-			});
-		},
-		
 		//文字输入，js控制
 		_inputText:function() {
 			$("#selectAddedSer").val(2);
@@ -516,12 +363,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		_uploadFile:function() {
 			$("#selectAddedSer").attr("disabled",false);
 			$("#selectFormatConv").attr("disabled",false);
-		},
-		
-		//根据国家设置号码匹配规则
-		_setPattern:function() {
-			var pattern = $("#saveContactDiv").find('option:selected').attr('exp');
-			$("#phoneNum").attr('pattern',pattern);
 		},
 		
 		//清空输入文字
