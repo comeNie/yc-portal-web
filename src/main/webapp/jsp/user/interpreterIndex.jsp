@@ -34,7 +34,7 @@
                     <div class="right-title-left-word">
                         <ul>
 								<li class="word-red" style="cursor:pointer;" onclick="location.reload();">${sessionScope.user_session_key.username}</li>
-								<li class="c-red" style="cursor:pointer;" onclick="location.href='${_base}/p/security/seccenter'" id="accLevelInfo"></li>
+								<li class="c-red" style="cursor:pointer;" onclick="location.href='${_base}/p/security/seccenter?source=interpreter'" id="accLevelInfo"></li>
 							</ul>
 						<ul>
                             <li class="bule" id="lspName"></li>
