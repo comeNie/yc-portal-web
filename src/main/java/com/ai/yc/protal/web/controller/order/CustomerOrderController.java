@@ -351,7 +351,7 @@ public class CustomerOrderController {
     public String orderInfoView(@PathVariable("orderId") String orderId, Model uiModel){
         
         if (StringUtils.isEmpty(orderId)) {
-            return "/404";
+            return "customerOrder/orderError";
         }
         
         try {
@@ -361,6 +361,7 @@ public class CustomerOrderController {
             LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
             //如果返回值为空,或返回信息中包含错误信息,返回失败
             if (orderDetailsRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
+                return "customerOrder/orderError";
             }
 //  getProdLevels  返回的是id,前台把 id转成对应的 中英文文字。    
 //          ("100110", "陪同翻译");("100120", "交替传译");("100130", "同声翻译");
@@ -368,6 +369,7 @@ public class CustomerOrderController {
             uiModel.addAttribute("OrderDetails", orderDetailsRes);
         } catch (Exception e) {
             LOGGER.error("查询订单详情失败:",e);
+            return "transOrder/orderError";
         }
 //        QueryOrderDetailsResponse orderDetailsRes = new QueryOrderDetailsResponse();
 //        ProdVo prod = new ProdVo();

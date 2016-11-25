@@ -100,10 +100,12 @@
 					</audio>
 					<p>
 						<a id="sus-top1" href="javaScript:void(0)" class="ord-icon"><i class="icon iconfont">&#xe62e;</i>
-                            <span class="suspension1">复制译文</span>
+                            <!-- 复制译文-->
+                            <span class="suspension1"><spring:message code="home.Copytranslation"/></span>
                         </a>
 						<a  id="sus-top2" href="javaScript:void(0)" class="radio-icon"><i class="icon iconfont">&#xe61b;</i>
-                            <span class="suspension2">朗诵译文</span>
+                            <!-- 朗诵译文-->
+                            <span class="suspension2"><spring:message code="home.Readtrans"/></span>
                         </a>
 						 <!--<a id="sus-top3" href="javaScript:void(0)" class="stars-icon"><i class="icon iconfont">&#xe754;</i>
 						    <span class="suspension3">收藏译文</span>
@@ -115,7 +117,8 @@
 							<!-- 翻译有误 -->
 							<span><spring:message code="home.translation_error_btn"/>?</span>
 						</a>
-                    <div class="suspension">	修改译文</div>
+                    <!-- 修改译文 -->
+                    <div class="suspension">	<spring:message code="home.Modifytranslation"/></div>
                     </p>
 					<p class="right" id="error-oc"  style="display: none;">
 						<a href="javaScript:void(0)" class="edit-icon" id="preser-btn">

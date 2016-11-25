@@ -131,7 +131,7 @@ public class TransOrderController {
     @RequestMapping("/{orderId}")
     public String orderInfoView(@PathVariable("orderId") String orderId, Model uiModel){
         if (StringUtils.isEmpty(orderId)) {
-            return "/404";
+            return "transOrder/orderError";
         }
         
         try {
@@ -141,6 +141,7 @@ public class TransOrderController {
             LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
             //如果返回值为空,或返回信息中包含错误信息,返回失败
             if (orderDetailsRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
+                return "transOrder/orderError";
             }
 //  getProdLevels  返回的是id,前台把 id转成对应的 中英文文字。    
 //          ("100110", "陪同翻译");("100120", "交替传译");("100130", "同声翻译");
@@ -164,6 +165,7 @@ public class TransOrderController {
             uiModel.addAttribute("OrderDetails", orderDetailsRes);
         } catch (Exception e) {
             LOGGER.error("查询订单详情失败:",e);
+            return "transOrder/orderError";
         }
         return "transOrder/orderInfo";
     }
