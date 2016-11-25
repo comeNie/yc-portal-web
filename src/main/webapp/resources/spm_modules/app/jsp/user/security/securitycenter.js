@@ -108,15 +108,15 @@ define("app/jsp/user/security/securitycenter", function(require, exports, module
     				type:"post",
     				url:_base+"/password/updatePassword",
     				data:{
-    					'newpw':passwordVal,
-    					'oldPwd':newPasswordVal
+    					'newpw':newPasswordVal,
+    					'oldPwd':passwordVal
     				},
     		        success: function(json) {
     		        	if(!json.data){
     		        		showMsg(json.statusInfo);
     		        		return false;
     		        	}else{
-    		        		$("#modify-determine").click();
+    		        		$("#modify-close").click();
     		        	}
     		          }
     				});

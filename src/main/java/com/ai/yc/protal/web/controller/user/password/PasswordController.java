@@ -114,6 +114,7 @@ public class PasswordController {
 			passRequest.setChecke_mode(checkeMode);
 			passRequest.setTenantId(Constants.DEFAULT_TENANT_ID);
 			passRequest.setNewpw(Md5Utils.md5(passRequest.getNewpw()));
+			System.out.println(JSON.toJSONString(passRequest));
 			IUcMembersSV ucMembersSV = DubboConsumerFactory
 					.getService(IUcMembersSV.class);
 			UcMembersResponse res = ucMembersSV.ucEditPassword(passRequest);
