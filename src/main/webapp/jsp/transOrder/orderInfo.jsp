@@ -203,7 +203,7 @@
 							<span><spring:message code="myOrder.ExpectedSubmTime"/>:</span>
 							<ul>
 								<li>
-									<p>2015-04-07 09:53:51</p>
+									<p><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${OrderDetails.stateChgTime}"/></p>
 								</li>
 							</ul>
 						</c:if>
