@@ -48,7 +48,9 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.apache.axis2.databinding.types.soapencoding.Integer;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +62,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import static java.util.Locale.SIMPLIFIED_CHINESE;
 
 /**
  * 通用订单
@@ -131,55 +135,78 @@ public class OrderController {
     }
 
     /**
-     * 提交订单
+     * 缓存页面页面提交过来的订单
      * @return
      */
-    @RequestMapping(value = "/save",method = RequestMethod.POST)
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseData<String> submitOrder(HttpServletRequest request){
-        ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-        String feeInfoStr = request.getParameter("feeInfo");
-        String contactInfoStr = request.getParameter("contactInfo");
+    public ResponseData<String> addOrder(HttpServletRequest request, HttpSession session){
+        ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+
+        //取到订单的信息，缓存到 session中
         String productInfoStr = request.getParameter("productInfo");
         String baseInfoStr = request.getParameter("baseInfo");
-        
-        OrderSubmissionRequest subReq = new OrderSubmissionRequest();
-        subReq.setBaseInfo(JSON.parseObject(baseInfoStr, BaseInfo.class));
-        subReq.getBaseInfo().setOrderTime(new Timestamp(System.currentTimeMillis()));
-        subReq.setProductInfo(JSON.parseObject(productInfoStr, ProductInfo.class));
-        subReq.setContactInfo(JSON.parseObject(contactInfoStr, ContactInfo.class));
-        subReq.setFeeInfo(JSON.parseObject(feeInfoStr, FeeInfo.class));
-        
-        //判断登录
-        String userId = UserUtil.getUserId();
-        if (StringUtils.isEmpty(userId)) {
-            request.getSession().setAttribute("orderInfo", subReq);
-            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "NOLOGIN");
-            return resData;
-        } else {
-            subReq.getBaseInfo().setUserId(userId);
-        }
+        String orderSummaryStr = request.getParameter("orderSummary");
 
-        LOGGER.info(JSONObject.toJSONString(subReq));
         try {
-            IOrderSubmissionSV orderSubmissionSV = DubboConsumerFactory.getService(IOrderSubmissionSV.class);
-            OrderSubmissionResponse subRes = orderSubmissionSV.orderSubmission(subReq);
-            ResponseHeader resHeader = subRes==null?null:subRes.getResponseHeader();
-            LOGGER.info(JSONObject.toJSONString(subRes));
-            //如果返回值为空,或返回信息中包含错误信息,则抛出异常
-            if (subRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,rb.getMessage(""));
+            JSONObject orderSummary = JSON.parseObject(orderSummaryStr);
+            OrderSubmissionRequest subReq = new OrderSubmissionRequest();
+            subReq.setBaseInfo(JSON.parseObject(baseInfoStr, BaseInfo.class));
+            subReq.setProductInfo(JSON.parseObject(productInfoStr, ProductInfo.class));
+
+            //设置费用信息
+            FeeInfo feeInfo = new FeeInfo();
+            if ( "0".equals(subReq.getBaseInfo().getTranslateType()) ) { //快速翻译，查询报价
+                ProductInfo pro = subReq.getProductInfo();
+                IQueryAutoOfferSV iQueryAutoOfferSV = DubboConsumerFactory.getService(IQueryAutoOfferSV.class);
+                QueryAutoOfferReq offerInfo =  new QueryAutoOfferReq();
+
+                boolean isUrgent = false;
+                if ("Y".equals(pro.getIsUrgent())){
+                    isUrgent = true;
+                }
+                String language = Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale()) ? "zh_CN":"us_EN";
+
+                offerInfo.setDuadId(pro.getLanguagePairInfoList().get(0).getLanguagePairId());
+                offerInfo.setPurposeId(pro.getUseCode());
+                offerInfo.setUrgent(isUrgent);
+                offerInfo.setLanguage(language);
+                offerInfo.setTranslateLevel(pro.getTranslateLevelInfoList().get(0).getTranslateLevel());
+                offerInfo.setWordNum(pro.getTranslateSum().intValue());
+                QueryAutoOfferRes offerRes = iQueryAutoOfferSV.queryAutoOffer(offerInfo);
+                ResponseHeader resHeader = offerRes==null? null:offerRes.getResponseHeader();
+                //如果返回值为空,或返回信息中包含错误信息,则抛出异常
+                if (offerRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
+                    resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"FAIL");
+                }
+
+                //订单设置费用信息
+                feeInfo.setTotalFee(offerRes.getPrice().longValue());
+                feeInfo.setCurrencyUnit(offerRes.getCurrencyUnit());
             } else {
-                resData.setData(subRes.getOrderId()+"");//返回订单信息
+                //"1：RMB 2：$"
+                String currencyUnit = Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale()) ? "1":"0";
+                feeInfo.setCurrencyUnit(currencyUnit);
             }
-            
-        }catch (BusinessException e){
-            LOGGER.error("提交订单失败:",e);
+            subReq.setFeeInfo(feeInfo);
+
+
+            //订单存到session中
+            session.setAttribute("orderInfo", subReq);
+            session.setAttribute("orderSummary", orderSummary);
+            if (StringUtils.isEmpty(UserUtil.getUserId())) {
+                resData.setData("-2");
+            } else {
+                resData.setData("-1");
+            }
+
+        } catch(Exception e) {
+            LOGGER.error("系统自动报价:",e);
             resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,rb.getMessage(""));
         }
         return resData;
     }
-    
+
     /**
      * 目前是单文件上传，返回文件id
      * @param request

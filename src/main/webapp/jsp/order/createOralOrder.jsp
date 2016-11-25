@@ -73,13 +73,13 @@
   						<c:forEach items="${duadList}" var="duad">
   						<c:if test="${duad.orderType == 2}">
 	  						<p>
-	  							<span><input name="duad" type="checkbox" class="radio" value="${duad.duadId}" duadZh="${duad.sourceCn}-${duad.targetCn}" duadEn="${duad.sourceEn}-${duad.targetEn}"></span>
+	  							<span><input name="duad" type="checkbox" class="radio" value="${duad.duadId}" duadZh="${duad.sourceCn}→${duad.targetCn}" duadEn="${duad.sourceEn}→${duad.targetEn}"></span>
 	  							<c:choose>
 		  							<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">
-		  								<span name="${duad.duadId}">${duad.sourceCn}${duad.targetCn}</span>
+		  								<span name="${duad.duadId}">${duad.sourceCn}→${duad.targetCn}</span>
 		  							</c:when>
 		  							<c:otherwise> 
-		  								<span name="${duad.duadId}">${duad.sourceEn}${duad.targetEn}</span>
+		  								<span name="${duad.duadId}">${duad.sourceEn}→${duad.targetEn}</span>
 		  							</c:otherwise>
 	  							</c:choose>
 	  						</p>
@@ -161,14 +161,12 @@
   			</div>	
 			<div class="recharge-btn order-btn placeorder-btn ml-0">
  				<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="order.subTranslation"/>">
- 				<p><input name="isAgree" type="checkbox" class="radio" checked=""><spring:message code="order.Agreement"/><a href="#"><spring:message code="order.AgreementInfo"/></a></p>
+ 				<p><input name="isAgree" type="checkbox" class="radio" checked=""><spring:message code="order.Agreement"/><a href="javaScript:void(0)"><spring:message code="order.AgreementInfo"/></a></p>
  			</div>
 			
 		</div>
 		</div>
 		
-		<!-- 联系人 -->
-		<%@ include file="/jsp/order/oralOrderContact.jsp" %>
 		</form>
 	<!--底部-->
 	<%@include file="/inc/indexFoot.jsp"%>

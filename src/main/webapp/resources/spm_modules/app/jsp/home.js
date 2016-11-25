@@ -46,7 +46,7 @@ define('app/jsp/home', function (require, exports, module) {
 			});
 			
 			// 定义一个新的复制对象
-			var clip = new ZeroClipboard( document.getElementById("copyText"), {
+			var clip = new ZeroClipboard( document.getElementById("sus-top1"), {
 				moviePath: "ZeroClipboard.swf"
 			});
 
@@ -89,9 +89,9 @@ define('app/jsp/home', function (require, exports, module) {
 
 						//翻译后的文字超过1000，隐藏播放喇叭
 						if ($("#transRes").val().length > 1000)
-							$("#playControl").hide();
+							$("#sus-top2").hide();
 						else
-							$("#playControl").show();
+							$("#sus-top2").show();
 
 						var array=eval("("+data.data+")");
 						var translation = array.translation;

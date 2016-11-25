@@ -105,9 +105,9 @@
 	  							   	<!-- 选择文件 -->
 	  							 	<div id="selectFile" ><spring:message code="order.choosefile"/></div>
 	  							<!--<input id="uploadAll" type="file" class="att-file">  -->
-	  							</p></li>
+	  							</li>
 	  							<!-- 将文件拖拽至此区域可上传 -->
-	  							<li class="word" id="dragFile"> <div><spring:message code="order.dragFileInfo"/></div></lil>
+	  							<li class="word" id="dragFile"> <div><spring:message code="order.dragFileInfo"/></div></li>
 	  						</ul>
 	  					</div>
   					</div>
@@ -288,8 +288,6 @@
 		</div>
 		</div>
 		
-		<!-- 联系人 -->
-		<%@ include file="/jsp/order/textOrderContact.jsp" %>
 		</form>
 	<!--底部-->
 	<%@include file="/inc/indexFoot.jsp"%>

@@ -50,6 +50,7 @@
         <!--白色背景-->
         <div class="white-bj   pdd-150">
             <div class="recharge-success">
+                <a href="javascript:history.go(-1)">向上一页</a>
                 <ul>
                     <li><img src="${uedroot}/images/rech-win.png"/></li>
                     <!-- 订单提交成功，请等待报价！ -->

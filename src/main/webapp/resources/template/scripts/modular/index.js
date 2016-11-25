@@ -34,7 +34,7 @@ $(function(){
 $(function(){
   $("#error").click(function(){
   $("#error").hide();
-  $("#error-oc").show();preser-btn
+  $("#error-oc").show();
   });
   $("#preser-btn").click(function(){
   $("#error-oc").hide();
