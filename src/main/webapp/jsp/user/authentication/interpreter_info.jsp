@@ -38,7 +38,7 @@
   		
   		<div class="right-list mt-0">
   			<div class="right-list-title pb-10 pl-20">
-  				<p>基本信息</p>
+  				<p><spring:message code="interpreter.baseInfo" /></p>
   				<!-- <p class="right"><input type="button" class="btn  btn-od-large btn-blue radius20" value="译云认证"></p> -->
   			</div>
   			<form id="dataForm" method="post" >
@@ -46,7 +46,7 @@
   				<ul>
   					<li class="toux">
   						<p class="word">
-  							<spring:message code="interpreter.portrait" />
+  							<spring:message code="interpreter.portrait" />:
   						</p>
   						<p class="portrait">
   							<img src="${userPortraitImg}" id="portraitFileId" />
@@ -114,7 +114,7 @@
   						<p><a href="${_base}/p/security/seccenter?source=${source}"><spring:message code="interpreter.setting" /></a></p>
   					</li>
   					<li>
-  						<p class="word">qq:</p>
+  						<p class="word">QQ:</p>
   						<p><input type="text" class="int-text int-xlarge radius" name="qq" id="qq" value="${interpreterInfo.qq}"/></p>
   					</li>
   					<li style="display: none;">
@@ -129,7 +129,7 @@
   				</ul>
   			</div>
   			<div class="recharge-btn order-btn">
- 				<input type="button" class="btn btn-green btn-xxxlarge radius10" id="saveButton"  value="保 存">
+ 				<input type="button" class="btn btn-green btn-xxxlarge radius10" id="saveButton"  value="<spring:message code="interpreter.save" />">
  				<input type="hidden" id="uploadImgFlag" value="0"/>
  				<input type="hidden" id="nickNameFlag" value="0"/>
  				<input type="hidden" id="portraitId" name="portraitId" value="${interpreterInfo.portraitId}"/>
