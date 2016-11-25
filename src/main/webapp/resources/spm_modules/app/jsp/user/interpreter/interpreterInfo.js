@@ -68,6 +68,10 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 			if(!$("#dataForm").valid()){
 				return false;
 			}else{
+			 var userPortraitImg ="";
+			 if($("#portraitFileId").attr("src")){
+				 userPortraitImg =$("#portraitFileId").attr("src");
+			 }
              ajaxController.ajax({
 					type:"post",
     				url:_base+"/p/interpreter/saveInfo",
@@ -81,11 +85,14 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 						'birthdayTmp':$("#startTime").val(),
 						'qq':$("#qq").val(),
 						'portraitId':$("#portraitId").val(),
-						'originalNickname':originalNickname
+						'originalNickname':originalNickname,
+						'userPortraitImg':userPortraitImg
     				},
     		        success: function(json) {
     		        	if(!json.data){
     		        		showMsg(json.statusInfo);
+    		        	}else{
+    		        		location.reload();
     		        	}
     		          }
     				});

@@ -30,7 +30,7 @@
             <!--右侧第一块-->
             <div class="right-title">
                 <div class="right-title-left">
-                    <div class="right-title-left-tu"><img src="${uedroot}/images/icon1.jpg"></div>
+                    <div class="right-title-left-tu"><img src="${userPortraitImg}"></div>
                     <div class="right-title-left-word">
                         <ul>
 								<li class="word-red" style="cursor:pointer;" onclick="location.reload();">${sessionScope.user_session_key.username}</li>

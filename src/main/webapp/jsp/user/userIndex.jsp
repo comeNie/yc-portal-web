@@ -29,7 +29,7 @@
 				<div class="right-title">
 					<div class="right-title-left">
 						<div class="right-title-left-tu">
-							<img src="${uedroot}/images/icon1.jpg">
+							<img src="${userPortraitImg}">
 						</div>
 						<div class="right-title-left-word">
 							<ul>

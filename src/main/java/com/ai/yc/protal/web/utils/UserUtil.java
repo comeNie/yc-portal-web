@@ -1,13 +1,20 @@
 package com.ai.yc.protal.web.utils;
 
-import com.ai.opt.sdk.util.StringUtil;
-import com.ai.opt.sso.client.filter.SSOClientConstants;
-import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpSession;
+import com.ai.opt.sdk.components.idps.IDPSClientFactory;
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.StringUtil;
+import com.ai.opt.sso.client.filter.SSOClientConstants;
+import com.ai.paas.ipaas.image.IImageClient;
+import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
+import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
+import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
+import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
 
 /**
  * Created by jackieliu on 16/7/8.
@@ -58,5 +65,35 @@ public class UserUtil {
 		}
 		securitylevel += 34;//默认有密码
 		return securitylevel;
+    }
+    /**
+     * 获取用户头像信息
+     * @return
+     */
+    public static String getUserPortraitImg(){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session =request.getSession();
+        String userPortraitImg = (String) session.getAttribute("userPortraitImg");
+        if(!StringUtil.isBlank(userPortraitImg)){
+        	return userPortraitImg;
+        }
+        userPortraitImg = request.getContextPath()+"/resources/template/images/4.jpg";
+        try {
+			IYCUserServiceSV ucUserServiceSV = DubboConsumerFactory
+					.getService(IYCUserServiceSV.class);
+			SearchYCUserRequest userRequest = new SearchYCUserRequest();
+			userRequest.setUserId(UserUtil.getUserId());
+			YCUserInfoResponse response = ucUserServiceSV
+					.searchYCUserInfo(userRequest);
+			String idpsns = "yc-portal-web";
+			IImageClient im = IDPSClientFactory.getImageClient(idpsns);
+			String portraitId = response.getPortraitId();
+			if(!StringUtil.isBlank(portraitId)){
+				userPortraitImg = im.getImageUrl(portraitId, ".jpg", "100x100");
+			}
+		   } catch (Exception e) {
+		 }
+        session.setAttribute("userPortraitImg",userPortraitImg);
+        return userPortraitImg;
     }
 }

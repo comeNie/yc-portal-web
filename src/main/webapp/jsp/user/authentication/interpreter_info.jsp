@@ -49,7 +49,7 @@
   							<spring:message code="interpreter.portrait" />
   						</p>
   						<p class="portrait">
-  							<img src="${portraitId}" id="portraitFileId" />
+  							<img src="${userPortraitImg}" id="portraitFileId" />
   							<div class="portrait-file">
   								<a href="javascript:void(0);"><spring:message code="interpreter.updatePortrait" /></a>
   								<input type="file"  class="file-opacity" id="uploadImg" name="uploadImg" onchange="uploadPortraitImg('uploadImg')"/>
