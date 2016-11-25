@@ -72,9 +72,11 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 					type:"post",
     				url:_base+"/p/interpreter/saveInfo",
     				data:{
+    					'portraitId':$("#portraitId").val(),
     					'userName':$("#userName").val(),
-						'fullName':$("#fullName").val(),
 						'nickname':$("#nickname").val(),
+						'firstname':$("#firstname").val(),
+						'lastname':$("#lastname").val(),
 						'sex':$("input[name='sex']:checked").val(),
 						'birthdayTmp':$("#startTime").val(),
 						'qq':$("#qq").val(),
@@ -229,7 +231,7 @@ function uploadPortraitImg(uploadImgFile){
          data:{uploadImgFile:uploadImgFile},//一同上传的数据  
          success: function (data, status) {
         	 var jsonData = JSON.parse(data);
-        	if(jsonData.isTrue==true){
+        	if(jsonData.isTrue){
         		document.getElementById("portraitFileId").src=jsonData.url;
         		$("#portraitId").val(jsonData.idpsId);
         	 }

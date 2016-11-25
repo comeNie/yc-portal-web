@@ -51,7 +51,7 @@
   						<p class="portrait">
   							<img src="${portraitId}" id="portraitFileId" />
   							<div class="portrait-file">
-  								<a href="#"><spring:message code="interpreter.updatePortrait" /></a>
+  								<a href="javascript:void(0);"><spring:message code="interpreter.updatePortrait" /></a>
   								<input type="file"  class="file-opacity" id="uploadImg" name="uploadImg" onchange="uploadPortraitImg('uploadImg')"/>
   							</div>
   						</p>
@@ -65,15 +65,15 @@
   					</li>
   					<li>
   						<p class="word">
-  							<spring:message code="interpreter.fullName" />
+  							<spring:message code="interpreter.firstName" />
   						</p>
-  						<p><input value="" type="text" class="int-text int-xlarge radius" name="firstName" id="firstName" /></p>
+  						<p><input  type="text" class="int-text int-xlarge radius" name="firstname" id="firstname" value="${interpreterInfo.firstname}" /></p>
   					</li>
   					<li>
   						<p class="word">
-  							<spring:message code="interpreter.fullName" />
+  							<spring:message code="interpreter.lastName" />
   						</p>
-  						<p><input value=""  type="text" class="int-text int-xlarge radius" name="lastName" id="lastName" /></p>
+  						<p><input  type="text" class="int-text int-xlarge radius" name="lastname" id="lastname" value="${interpreterInfo.lastname}" /></p>
   					</li>
   					<li>
   						<p class="word"><b>*</b>
@@ -114,10 +114,10 @@
   						<p><a href="${_base}/p/security/seccenter?source=${source}"><spring:message code="interpreter.setting" /></a></p>
   					</li>
   					<li>
-  						<p class="word">QQ:</p>
-  						<p><input type="text" class="int-text int-xlarge radius" name="qq" id="qq"/></p>
+  						<p class="word">qq:</p>
+  						<p><input type="text" class="int-text int-xlarge radius" name="qq" id="qq" value="${interpreterInfo.qq}"/></p>
   					</li>
-  					<li>
+  					<li style="display: none;">
   						<p class="word"><spring:message code="interpreter.address" /></p>
   						<p><select class="select select-in-small"></select></p>
   						<p><select class="select select-in-small"></select></p>
@@ -132,7 +132,7 @@
  				<input type="button" class="btn btn-green btn-xxxlarge radius10" id="saveButton"  value="保 存">
  				<input type="hidden" id="uploadImgFlag" value="0"/>
  				<input type="hidden" id="nickNameFlag" value="0"/>
- 				<input type="hidden" id="portraitId" name="portraitId"/>
+ 				<input type="hidden" id="portraitId" name="portraitId" value="${interpreterInfo.portraitId}"/>
  			</div>
  			</form>
   		</div>	
