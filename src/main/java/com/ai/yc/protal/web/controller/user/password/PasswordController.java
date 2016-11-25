@@ -108,6 +108,7 @@ public class PasswordController {
 				passRequest.setChecke_code(request.getParameter("checke_code"));
 			}else{
 				checkeMode = UcenterOperation.OPERATION_TYPE_UPDATE_PWD_OLDPSD;
+				oldPwd = Md5Utils.md5(oldPwd);
 				passRequest.setChecke_code(oldPwd);
 			}
 			passRequest.setChecke_mode(checkeMode);
