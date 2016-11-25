@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.yc.protal.web.constants.Constants;
@@ -101,8 +101,17 @@ public class PasswordController {
 			if (passRequest.getUid() == null) {// 修改密码uid无需传值
 				passRequest.setUid(Integer.parseInt(UserUtil.getUserId()));
 			}
-			passRequest
-					.setChecke_mode(UcenterOperation.OPERATION_TYPE_UPDATE_PWD_CODE);
+			String oldPwd = request.getParameter("oldPwd");
+			String checkeMode="";
+			if(StringUtil.isBlank(oldPwd)){//默认验证码
+				checkeMode = UcenterOperation.OPERATION_TYPE_UPDATE_PWD_CODE;
+				passRequest.setChecke_code(request.getParameter("checke_code"));
+			}else{
+				checkeMode = UcenterOperation.OPERATION_TYPE_UPDATE_PWD_OLDPSD;
+				oldPwd = Md5Utils.md5(oldPwd);
+				passRequest.setChecke_code(oldPwd);
+			}
+			passRequest.setChecke_mode(checkeMode);
 			passRequest.setTenantId(Constants.DEFAULT_TENANT_ID);
 			passRequest.setNewpw(Md5Utils.md5(passRequest.getNewpw()));
 			IUcMembersSV ucMembersSV = DubboConsumerFactory
