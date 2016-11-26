@@ -115,7 +115,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		},
 		_checkNickNameValue:function(){
 			var nickname =  $("#nickname").val();
-			if(originalNickname==nickname){//昵称未改变无需校验
+			if(originalNickname==nickname||nickname==""){//昵称未改变无需校验
 				return;
 			}
 			ajaxController.ajax({
@@ -135,7 +135,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		},
 		_checkUserNameValue:function(){
 			var userName =  $("#userName").val();
-			if(originalUsername==userName){//用户名未改变无需校验
+			if(originalUsername==userName||userName==""){//用户名未改变无需校验
 				return;
 			}
 			ajaxController.ajax({
@@ -146,44 +146,54 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 				},
 		        success: function(json) {
 		        	 if(!json.data){
-		        		 $("#userNameErrMsg").show().html("<span>"+json.statusInfo+"</span>");
+		        		 $("#userName-error").show().html(json.statusInfo);
 		        	 }else{
-		        		 $("#userNameErrMsg").hide().html(""); 
+		        		 $("#userName-error").hide().html(""); 
 		        	 }
 		          }
 				});
 		}
 		,
     	_initValidate:function(){
+    		$.validator.addMethod( "checkUserName", function( value, element, param ) {
+    			if(param==false)return true;
+    			/*如果参数值存在，则进行校验*/
+    			var empty = $.trim(value).length?false:true;
+    			if(empty)return true;
+    			var re = /^[a-z0-9A-Z][a-z0-9A-Z_]{5,15}$/;
+    			var valid =  (re.test(value))?true:false;		
+    			return valid;
+    		}, $.validator.format( "首字母必须是字母或数字的字母和数字下划线组合" ) );
     		var formValidator=$("#dataForm").validate({
     			rules: {
-    				//productCatName: "required",
-    				/*userName: {
+    				userName: {
     					required:true,
     					maxlength:16,
     					minlength:6,
-    					regexp: /^[a-z0-9A-Z]\w{5,15}$/
-    					},*/
+    					checkUserName: $("#userName").val()
+    					},
     				nickName: {
     					required:true,
     					maxlength:10,
     					minlength:3,
     					},
-    			    fullName:{
-    			    	required:false,
-    					maxlength:50,
-    			    },
-    			    qq:{
+    			   qq:{
     			    	required:false,
     					maxlength:10,
     					digits:true,
-    			    },
+    			    }
+    				/*,
     				serialNumber: {
     					required: true,
     					digits:true,
     					min:1,
     					max:100
-    				},
+    				}
+    				,
+    				fullName:{
+     			    	required:false,
+     					maxlength:50,
+     			    },
     				isChild: {
     					required: true
     				},
@@ -208,11 +218,11 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     				address:{
     					required:false,
     					maxlength:100,
-    				}
+    				}*/
     			},
     			messages: {
     				userName: {
-    					required:"请输入用户名称",
+    					required:"请输入用户名",
     					maxlength:"最大长度不能超过{0}",
     					minlength:"最小长度不能小于{0}"
     					},
@@ -220,19 +230,16 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     					required:"请输入昵称信息",
     					maxlength:"最大长度不能超过{0}",
     				},
-    				fullName:{
-    					maxlength:"最大长度不能超过{0}",
-    				},
     				qq:{
     					digits: "只能输入数字",
     					maxlength:"最大长度不能超过{0}"
     				},
-    				address:{
+    				/*address:{
     					maxlength:"最大长度不能超过{0}",
     				},
     				startDate:{
     					required: "请输入开始日期"     						
-    				}
+    				}*/
     			},
     			
     			
