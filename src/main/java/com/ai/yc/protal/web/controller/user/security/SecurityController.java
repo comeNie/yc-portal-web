@@ -309,8 +309,9 @@ public class SecurityController {
 				oldPwd= Md5Utils.md5(oldPwd);
 				//校验支付密码
 				if(!oldPwd.equals(nowPayPassword)){
+					msg = rb.getMessage("ycaccountcenter.updatePayPassword.currentPasswordError");
 					ResponseData<Boolean> responseData = new ResponseData<Boolean>(
-							ResponseData.AJAX_STATUS_SUCCESS, "accountBalanceInfo is null", isOK);
+							ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
 					return responseData;
 				}
 			}

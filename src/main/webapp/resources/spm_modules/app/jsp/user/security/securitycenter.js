@@ -116,6 +116,9 @@ define("app/jsp/user/security/securitycenter", function(require, exports, module
     		        		showMsg(json.statusInfo);
     		        		return false;
     		        	}else{
+    		        		password.val("");
+    		        		newPassword.val("");
+    		        		newPassword2.val("");
     		        		$("#modify-close").click();
     		        	}
     		          }
@@ -134,7 +137,7 @@ define("app/jsp/user/security/securitycenter", function(require, exports, module
     			}
     			
     			// 新密码
-    			var newPassword = $("#pay_currentPassword");
+    			var newPassword = $("#pay_newPassword");
     			var newPasswordVal = newPassword.val();
     			if ($.trim(newPasswordVal) == "") {
     				showMsg(secCenterMsg.newPasswordEmpty);
@@ -168,7 +171,10 @@ define("app/jsp/user/security/securitycenter", function(require, exports, module
     		        		showMsg(json.statusInfo);
     		        		return false;
     		        	}else{
-    		        		$("#modify-determine").click();
+    		        		password.val("");
+    		        		newPassword.val("");
+    		        		newPassword2.val("");
+    		        		$("#pay_modify-close").click();
     		        	}
     		          }
     				});
