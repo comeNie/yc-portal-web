@@ -186,7 +186,8 @@
 	
 	var isexistemail = "${isexistemail}";
 	var isexistphone = "${isexistphone}";
-	var isexistpaypassword = "${isexistpaypassword}"
+	var isexistloginpassword = "${isexistloginpassword}"
+	var isexistpaypassword ="${isexistpaypassword}";
 	var securitylevel = "${securitylevel}";
 	var userEmail = "${userinfo.email}"
 	var userMobile = "${userinfo.mobile}";
@@ -237,7 +238,7 @@
 		
 	});
 	function showUpdatePwd(){
-		if(isexistpaypassword){
+		if(isexistloginpassword=='true'){
 			$('#eject-mask').fadeIn(100);
 			$('#modify-password').slideDown(100);
 		}else{
@@ -245,7 +246,7 @@
 		}
 	}
 	function showUpdatePayPwd(){
-		if(isexistpaypassword){
+		if(isexistpaypassword=='true'){
 			$('#pay_eject-mask').fadeIn(100);
 			$('#pay_modify-password').slideDown(100);
 		}else{

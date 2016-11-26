@@ -43,10 +43,8 @@ import com.ai.yc.ucenter.api.members.param.get.UcMembersGetRequest;
 import com.ai.yc.ucenter.api.members.param.get.UcMembersGetResponse;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.SearchYCTranslatorRequest;
-import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
 import com.ai.yc.user.api.userservice.param.YCLSPInfoReponse;
 import com.ai.yc.user.api.userservice.param.YCTranslatorInfoResponse;
-import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
 import com.ai.yc.user.api.userservice.param.searchYCLSPInfoRequest;
 import com.alibaba.fastjson.JSON;
 
@@ -198,15 +196,15 @@ public class SecurityController {
 		}
 		String source = request.getParameter("source");//区分来源
 		Map<String, Object> model = new HashMap<String, Object>();
-		// IYCUserServiceSV iYCUserServiceSV =
-		// DubboConsumerFactory.getService(IYCUserServiceSV.class);
-		SearchYCUserRequest req = new SearchYCUserRequest();
-		// request.setUserId("000000000000003211");
 		GeneralSSOClientUser userSSOInfo = UserUtil.getSsoUser();
 		Boolean isexistemail = true;
 		Boolean isexistphone = true;
 		Boolean isexistloginpassword = true;
 		Boolean isexistpaypassword = true;
+		AccountBalanceInfo accountBalanceInfo =queryBalanceInfo();
+		if(accountBalanceInfo!=null&&Md5Utils.md5(Constants.DEFAULT_PAY_PASSWORD).equals(accountBalanceInfo.getPayPassword())){
+			isexistpaypassword = false;
+		}
 		int securitylevel = 0;
 		if (StringUtil.isBlank(userSSOInfo.getEmail())) {
 			isexistemail = false;
@@ -219,19 +217,16 @@ public class SecurityController {
 			ModelAndView modelView = new ModelAndView(ERROR_PAGE);
 			return modelView;
 		}
-		req.setUserId(userSSOInfo.getUserId());
-		// YCUserInfoResponse response =
-		// iYCUserServiceSV.searchYCUserInfo(request);
 		model.put("userinfo", userSSOInfo);
 
 		// 登录密码exist
-		model.put("isexistloginpassword", isexistpaypassword);
+		model.put("isexistloginpassword", true);
 		// 邮箱exist
 		model.put("isexistemail", isexistemail);
 		// 手机exist
 		model.put("isexistphone", isexistphone);
 		// 支付密码exist
-		model.put("isexistpaypassword", isexistloginpassword);
+		model.put("isexistpaypassword", isexistpaypassword);
 
 		if (isexistemail == true) {
 			securitylevel += 33;
@@ -242,10 +237,6 @@ public class SecurityController {
 		if (isexistloginpassword == true) {
 			securitylevel += 34;
 		}
-//		if (isexistpaypassword == true) {
-//			securitylevel += 25;
-//		}
-
 		// sec level
 		model.put("securitylevel", securitylevel);
 		model.put("source", source);
@@ -296,45 +287,36 @@ public class SecurityController {
 						ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
 				return responseData;
 			}
-			
+			payPwd = Md5Utils.md5(payPwd);
 			String password =getResponse.getDate().get("password").toString();
 			String salt =getResponse.getDate().get("salt").toString();
-			if(Md5Utils.md5(Md5Utils.md5(payPwd).concat(salt)).equals(password)){
+			if(Md5Utils.md5(payPwd.concat(salt)).equals(password)){
 				msg = rb.getMessage("ycaccountcenter.updatePayPassword.info1");
 				ResponseData<Boolean> responseData = new ResponseData<Boolean>(
 						ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
 				return responseData;
 			}
-			SearchYCUserRequest sReq = new SearchYCUserRequest();
-			sReq.setUserId(UserUtil.getUserId());
-			YCUserInfoResponse res = DubboConsumerFactory.getService(
-					IYCUserServiceSV.class).searchYCUserInfo(sReq);
-			ResponseHeader responseHeader = res == null ? null : res
-					.getResponseHeader();
-			boolean isSuccess = responseHeader == null ? false : responseHeader
-					.isSuccess();
-			msg = responseHeader == null ? "error" : responseHeader
-					.getResultMessage();
-			if (!isSuccess) {
+			AccountBalanceInfo balanceInfo =queryBalanceInfo();
+			if(balanceInfo==null){
 				ResponseData<Boolean> responseData = new ResponseData<Boolean>(
-						ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
+						ResponseData.AJAX_STATUS_SUCCESS, "accountBalanceInfo is null", isOK);
 				return responseData;
 			}
-			Long accountId = res.getAccountId();
-			if (accountId == null || accountId == 0) {
-				msg = "accountId is null";
-				ResponseData<Boolean> responseData = new ResponseData<Boolean>(
-						ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
-				return responseData;
+			String nowPayPassword =balanceInfo.getPayPassword();
+			//设置支付密码后修改需要校验先前支付密码
+			if(!Md5Utils.md5(Constants.DEFAULT_PAY_PASSWORD).equals(nowPayPassword)){
+				String oldPwd = request.getParameter("oldPwd");//旧支付密码
+				oldPwd= Md5Utils.md5(oldPwd);
+				//校验支付密码
+				if(!oldPwd.equals(nowPayPassword)){
+					ResponseData<Boolean> responseData = new ResponseData<Boolean>(
+							ResponseData.AJAX_STATUS_SUCCESS, "accountBalanceInfo is null", isOK);
+					return responseData;
+				}
 			}
-			
-			String oldPwd = request.getParameter("oldPwd");//旧支付密码
-			
-			
-			
 			AccountUpdateParam req = new AccountUpdateParam();
 			req.setTenantId(Constants.DEFAULT_TENANT_ID);
-			req.setAcctId(accountId);
+			req.setAcctId(balanceInfo.getAccountId());
 			req.setPayPassword(payPwd);
 			IAccountMaintainSV iAccountMaintainSV = DubboConsumerFactory
 					.getService(IAccountMaintainSV.class);
@@ -511,5 +493,4 @@ public class SecurityController {
 		}
 		return new Object[] { falg, msg };
 	}
-
 }

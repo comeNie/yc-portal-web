@@ -17,6 +17,7 @@ public class AccountBalanceInfo {
     是否需要密码
      */
     private String payCheck;
+    private String payPassword;
 
     public long getAccountId() {
         return accountId;
@@ -41,4 +42,13 @@ public class AccountBalanceInfo {
     public void setPayCheck(String payCheck) {
         this.payCheck = payCheck;
     }
+
+	public String getPayPassword() {
+		return payPassword;
+	}
+
+	public void setPayPassword(String payPassword) {
+		this.payPassword = payPassword;
+	}
+    
 }

@@ -137,9 +137,10 @@ public class InterpreterController {
 			Integer codeNumber = responseCode == null ? null : responseCode
 					.getCodeNumber();
 			if (codeNumber != null && codeNumber == 1) {// 成功
-				isOk = true;
-			} else {
+				isOk = false;
 				msg= rb.getMessage("interpreter.userName.exist");
+			} else {
+				isOk = true;
 				LOGGER.error(JSON.toJSONString(res));
 			}
 		 } catch (Exception e) {

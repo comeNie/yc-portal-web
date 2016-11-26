@@ -70,6 +70,7 @@ public class BalanceService {
         accountBalanceInfo = new AccountBalanceInfo();
         BeanUtils.copyProperties(accountBalanceInfo,fundInfo);
         accountBalanceInfo.setPayCheck(accountInfoVo.getPayCheck());
+        accountBalanceInfo.setPayPassword(accountInfoVo.getPayPassword());
         return accountBalanceInfo;
     }
 }
