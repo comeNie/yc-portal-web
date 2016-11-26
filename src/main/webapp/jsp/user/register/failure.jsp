@@ -50,7 +50,7 @@
 	function startSmsTime() {
 		if (curCount == 1) {
 			window.clearInterval(intervalObj);// 停止计时器
-			location.href="http://www.yeecloud.com/index";
+			location.href="${_base}/reg/toRegister";
 		} else {
 			curCount = curCount - 1;
 			$(".verification ul li span").html(curCount);
