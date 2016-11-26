@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.CollectionUtil;
-import com.ai.opt.sdk.util.RandomUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.util.StringUtil;
@@ -216,7 +215,7 @@ public class RegisterController {
 		if (codeNumber != null && codeNumber == 1) {
 			falg = true;
 		} else {
-			msg = responseCode.getCodeMessage();
+			msg = responseCode==null?"error":responseCode.getCodeMessage();
 		}
 		return new Object[]{falg,msg};
 	}
