@@ -167,7 +167,7 @@ define("app/jsp/user/security/bindPhone",
 				    		        	}
 				    		          },
 				    				error: function(error) {
-				    						alert("error:"+ error);
+				    						showMsg("error:"+ error);
 				    					}
 				    				});
 							 
@@ -254,20 +254,20 @@ define("app/jsp/user/security/bindPhone",
 								    				},
 								    				success: function(json) {
 								    					if(!json.data){
-								    		        		alert(json.statusInfo);
+								    		        		showMsg(json.statusInfo);
 															return false;
 								    		        	}else{
-								    		        		alert(phoneBindMsg.bingSuccess);
+								    		        		showMsg(phoneBindMsg.bingSuccess);
 								    		        	}
 								    		          },
 								    				error: function(error) {
-								    						alert("error:"+ error);
+								    						showMsg("error:"+ error);
 								    					}
 								    				});
 				    		        	}
 				    		          },
 				    				error: function(error) {
-				    						alert("error:"+ error);
+				    						showMsg("error:"+ error);
 				    					}
 				    				});
 						}
