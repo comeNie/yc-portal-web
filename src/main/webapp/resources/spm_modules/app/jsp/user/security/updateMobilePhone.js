@@ -37,7 +37,7 @@ define("app/jsp/user/security/updateMobilePhone",
 							//发送手机动态码
 							"click #send_dynamicode_btn":"_sendDynamiCode",
 							//手机验证身份下一步
-							"click #next-bt1":"_checkPhoneDynamicode",
+							"click #update-mobile-next-bt1":"_checkPhoneDynamicode",
 							//校验手机号
 							"blur #uPhone":"_checkPhone",
 							//修改手机号，发送动态码
@@ -53,13 +53,13 @@ define("app/jsp/user/security/updateMobilePhone",
 							//验证身份发送邮件
 							"click #sendEmailBtn" : "_sendEmail",
 							//邮箱验证下一步
-							"click #next-bt4":"_checkEmailImageCode",
+							"click #update-mobile-next-bt4":"_checkEmailImageCode",
 							//通过邮箱修改手机号,校验手机号合法性
 							"blur #emailUpdatePhone":"_checkEmailUpdatePhone",
 							//通过邮箱修改手机号，发送动态码验证
 							"click #emailUpDynamicodeBtn":"_sendEmailUPhoneDynamiCode",
 							//校验手机和验证码是否匹配，如果匹配则修改手机号
-							"click #next-bt5":"_submitValue",
+							"click #update-mobile-next-bt5":"_submitValue",
 						},
 						/* 重写父类 */
 						setup : function() {

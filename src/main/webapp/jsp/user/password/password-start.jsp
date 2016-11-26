@@ -8,18 +8,7 @@
     <title><spring:message code="ycfindpassword.forgetPassword"/></title>
     <link href="${uedroot}/css/modular/login-regsiter.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
-  <!--二级主体-->
-  <!--外侧背景-->
-  <div class="cloud-container">
-  <!--内侧内容区域-->
-  <div class="cloud-wrapper">
-  	
-  	<!--右侧内容-->
-  	<!--右侧大块-->
-  	<div class="right-wrapper">
-  		<!--右侧第一块-->
-	
+<body class="login-body">
   		<!--右侧第二块-->
   		<form method="post">
   		<div class="login-big">
@@ -52,7 +41,7 @@
  				</div>
  				
  				<div class="recharge-btn">
- 						<input type="button" id="back-btn" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycfindpassword.next" />">
+ 						<input type="button" id="find_password_next-btn" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycfindpassword.next" />">
  			 	</div>
  			 	</div>
  				<!--输入账号结束-->
@@ -118,7 +107,7 @@
  				
  				<!--按钮-->
  				<div class="recharge-btn btn40">
- 						<input type="button" id="next-bt1" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycfindpassword.next" />">
+ 						<input type="button" id="find_password_next-bt1" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycfindpassword.next" />">
  				</div>	
 				</div>
 					<div id="next2">
@@ -166,7 +155,7 @@
 	 				
 	 				<!--按钮-->
 	 				<div class="recharge-btn btn40">
-	 						<input type="button" id="next-bt2" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycfindpassword.next" />">
+	 						<input type="button" id="find_password_next-bt2" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycfindpassword.next" />">
 	 				</div>	
 					</div>
 
@@ -257,7 +246,7 @@
  				
  				<!--按钮-->
  				<div class="recharge-btn btn40">
- 						<input type="button" id="next-bt4" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycfindpassword.next" />">
+ 						<input type="button" id="find_password-next-bt4" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycfindpassword.next" />">
  				</div>	
 				</div>
 					<div id="next5">
@@ -305,7 +294,7 @@
 	 				
 	 				<!--按钮-->
 	 				<div class="recharge-btn btn40">
-	 						<input type="button" id="next-bt5" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycfindpassword.next" />">
+	 						<input type="button" id="find_password-next-bt5" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycfindpassword.next" />">
 	 				</div>	
 					</div>
 
@@ -353,9 +342,6 @@
 		
   	</div>
   	</form>
-  </div>
-  </div>
-  </div>
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
 var pager;

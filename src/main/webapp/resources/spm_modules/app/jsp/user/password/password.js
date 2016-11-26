@@ -37,7 +37,7 @@ define("app/jsp/user/password/password",
 							/**
 							 * 账号下一步
 							 */
-							"click #back-btn":"_nextStep", 
+							"click #find_password_next-btn":"_nextStep", 
 							/**
 							 * 发送动态码
 							 */
@@ -45,19 +45,19 @@ define("app/jsp/user/password/password",
 							/**
 							 * 手机验证身份下一步
 							 */
-							"click #next-bt1":"_checkDynamicode",
+							"click #find_password_next-bt1":"_checkDynamicode",
 							/**
 							 * 输入密码下一步
 							 */
-							"click #next-bt2":"_checkPassword",
+							"click #find_password_next-bt2":"_checkPassword",
 							/**
 							 * 邮箱验证下一步
 							 */
-							"click #next-bt4":"_checkEmailImageCode",
+							"click #find_password-next-bt4":"_checkEmailImageCode",
 							/**
 							 * 邮件密码
 							 */
-							"click #next-bt5":"_checkEmailPassword"
+							"click #find_password-next-bt5":"_checkEmailPassword"
 							
 						},
 						/* 重写父类 */

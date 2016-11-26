@@ -93,7 +93,7 @@
 
 								<!--按钮-->
 								<div class="recharge-btn">
-									<input type="button" id="next-bt1"
+									<input type="button" id="update-paypassword-next-bt1"
 										class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycaccountcenter.updatePassword.next"/>">
 								</div>
 							</div>
@@ -141,7 +141,7 @@
 								</div>
 								<!--按钮-->
 								<div class="recharge-btn">
-									<input type="button" id="next-bt2"
+									<input type="button" id="update-paypassword-next-bt2"
 										class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycaccountcenter.updatePassword.submit"/>">
 								</div>
 							</div>
@@ -231,7 +231,7 @@
 
 								<!--按钮-->
 								<div class="recharge-btn">
-									<input type="button" id="next-bt4"
+									<input type="button" id="update-paypassword-next-bt4"
 										class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycaccountcenter.updatePassword.next"/>">
 								</div>
 							</div>
@@ -279,7 +279,7 @@
 								</div>
 								<!--按钮-->
 								<div class="recharge-btn">
-									<input type="button" id="next-bt5"
+									<input type="button" id="update-paypassword-next-bt5"
 										class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycaccountcenter.updatePassword.submit"/>">
 								</div>
 							</div>

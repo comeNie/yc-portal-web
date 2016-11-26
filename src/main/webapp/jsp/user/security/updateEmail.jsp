@@ -94,7 +94,7 @@
  				
  				<!--按钮-->
  				<div class="recharge-btn">
- 						<input type="button" id="next-bt1" class="btn btn-green btn-xxxlarge radius10" value='<spring:message code="ycupdateemail.nextstep"/>'>
+ 						<input type="button" id="update_email_next-bt1" class="btn btn-green btn-xxxlarge radius10" value='<spring:message code="ycupdateemail.nextstep"/>'>
  				</div>
  				</div>
  				<div class="binding" id="next2">
@@ -233,7 +233,7 @@
  				
  				<!--按钮-->
  				<div class="recharge-btn">
- 						<input type="button" id="next-bt4" class="btn btn-green btn-xxxlarge radius10" value='<spring:message code="ycupdateemail.nextstep"/>'>
+ 						<input type="button" id="update-email-next-bt4" class="btn btn-green btn-xxxlarge radius10" value='<spring:message code="ycupdateemail.nextstep"/>'>
  				</div>
  				</div>
  				<div class="binding" id="next5">
@@ -282,7 +282,7 @@
  					</div>
  				<!--按钮-->
  				<div class="recharge-btn">
- 						<input type="button" id="next-bt5" class="btn btn-green btn-xxxlarge radius10" value='<spring:message code="ycupdateemail.submit"/>'>
+ 						<input type="button" id="update-email-next-bt5" class="btn btn-green btn-xxxlarge radius10" value='<spring:message code="ycupdateemail.submit"/>'>
  				</div>
  				</div>
  				<div class="binding" id="next6">
