@@ -117,9 +117,6 @@ dependencies {
     //余额扣减服务
     compile 'com.ai.slp.balance:deduct:1.0-SNAPSHOT'
 
-    //联系人
-    compile 'com.ai.yc.user:contactsinfo:1.0-SNAPSHOT'
-    
 	compile 'com.ai.yc.ucenter:members:1.1.1-SNAPSHOT'
 	compile 'com.ai.yc.common:country:1.0-SNAPSHOT'
 	//支付密码修改
