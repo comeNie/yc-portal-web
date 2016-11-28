@@ -75,10 +75,10 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
                     });
                 },
                 rules: {
-                    contactName: {
+                    userName: {
                         required:true,
                     },
-                    phoneNum: {
+                    mobilePhone: {
                         required:true,
                     },
                     email: {
@@ -87,10 +87,10 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
                     }
                 },
                 messages: {
-                    contactName: {
+                    userName: {
                         required: $.i18n.prop('order.place.error.name')//"请输入姓名",
                     },
-                    phoneNum: {
+                    mobilePhone: {
                         required: $.i18n.prop('order.place.error.phone'),//"请输入手机号",
                         pattern: $.i18n.prop('order.place.error.phone1')//"请输入正确的手机号"
                     },
@@ -123,8 +123,8 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
                     if ("1" === data.statusCode) {
                         //成功
                         $("#saveContactDiv").hide();
-                        $("#editContactDiv").find('p').eq(0).html($("#contactName").val());
-                        $("#editContactDiv").find('p').eq(1).html("+"+$("#globalRome").find('option:selected').attr('code')+" "+$("#phoneNum").val());
+                        $("#editContactDiv").find('p').eq(0).html($("#userName").val());
+                        $("#editContactDiv").find('p').eq(1).html("+"+$("#globalRome").find('option:selected').attr('code')+" "+$("#mobilePhone").val());
                         $("#editContactDiv").find('p').eq(2).html($("#email").val());
                         $("#editContactDiv").show();
                     }
@@ -166,16 +166,24 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
         //根据国家设置号码匹配规则
         _setPattern:function() {
             var pattern = $("#saveContactDiv").find('option:selected').attr('exp');
-            $("#phoneNum").attr('pattern',pattern);
+            $("#mobilePhone").attr('pattern',pattern);
         },
 
         //提交订单
         _addTextOrder:function(){
+            var _this= this;
+            var formValidator=_this._initValidate();
+            formValidator.form();
+            if(!$("#contactForm").valid()){
+                //alert('验证不通过！！！！！');
+                return;
+            }
+
             var translateType = $("#transType").val();
             var contactInfo = {};
             $("#saveContactDiv").hide();
-            contactInfo.contactName=$("#contactName").val();
-            contactInfo.contactTel="+"+$("#globalRome").find('option:selected').attr('code')+" "+$("#phoneNum").val();
+            contactInfo.contactName=$("#userName").val();
+            contactInfo.contactTel="+"+$("#globalRome").find('option:selected').attr('code')+" "+$("#mobilePhone").val();
             contactInfo.contactEmail=$("#email").val();
 
             ajaxController.ajax({
