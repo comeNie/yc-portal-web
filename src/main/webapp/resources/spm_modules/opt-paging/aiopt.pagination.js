@@ -87,7 +87,6 @@ define("opt-paging/aiopt.pagination", ["jquery","twbs-pagination/jquery.twbsPagi
  	                //var totalPages=d.pageCount?d.pageCount:1;
  	                if(d.pageCount>0){
  	                	_this.setupTwbsPagination(d.pageCount);
-						_this.showGotoPage();
  	                }
  	            },
  	            failure:function(){
@@ -195,30 +194,22 @@ define("opt-paging/aiopt.pagination", ["jquery","twbs-pagination/jquery.twbsPagi
 				prevClass:"next-down",
                 last: opt.last,
                 loop: opt.loop,
+				numPrev:'到',
+				numAfter:'页',
+				numBtn:'跳转',
+				//numCheck:function(pageNum){//检查输入页码是否符合要求,返回true或false
+				//	if(window.console){
+				//		console.log("num check:"+pageNum);
+				//	}
+				//	return true;
+				//},
                 paginationClass: opt.paginationClass?opt.paginationClass:"pagination",
                 onPageClick: function (event, pageNo) {
                     _this.loadData(pageNo);
                 }
             });
         	this._tp= _tp;
-        },
-		/**
-		 * 显示页码跳转部分
-		 */
-		showGotoPage:function(){
-			this.$element.append("<p><span>到</span>&nbsp;&nbsp;<span><input type='text' class='int-verysmall radius' maxlength='8'></span>" +
-				"&nbsp;&nbsp;<span>页</span></p><p class='taiz'><a href='javaScript:void(0);'>跳转</a></p>");
-			var cliPar = this.$element;
-			this.$element.find("p.taiz a").click(function(){
-				var goPage = cliPar.find("p span input:first").val();
-				if(window.console){
-					console.log("goto page " + goPage);
-				}
-				//获取待跳转页码
-
-			});
-		}
-
+        }
     };
 
     // PLUGIN DEFINITION
