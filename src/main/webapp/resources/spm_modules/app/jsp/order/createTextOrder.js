@@ -336,11 +336,11 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 
 			//格式转换
 			if ($("#format").val() != '') {
-				$("#selectFormatConv").val("1");
+				$("#selectFormatConv").val("2");
 				$("#inputFormatConv").show();
 				$("#inputFormatConv").val($("#format").val());
 			} else {
-				$("#selectFormatConv").val("0");
+				$("#selectFormatConv").val("1");
 			}
 
 			//加急
