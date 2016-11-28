@@ -116,6 +116,8 @@
 		</div>
 
 	</div>
+	<%@ include file="/inc/userFoot.jsp"%>
+</body>
 	<script id="orderTemple1" type="text/template">
 				<table class="table  table-bg tb-border mb-20">
 	<thead>
@@ -285,5 +287,4 @@
 		}
 	});
 	</script>
-</body>
 </html>
