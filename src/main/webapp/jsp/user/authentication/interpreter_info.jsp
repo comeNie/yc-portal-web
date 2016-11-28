@@ -62,7 +62,7 @@
 							<spring:message code="interpreter.userName" />
 						</p>
   						<p>
-  						<input maxlength="16" type="text" class="int-text int-xlarge radius" id="userName"  name="userName" value="${user_session_key.username}"/>
+  						<input <c:if test="${interpreterInfo.isChange=='1'}">readonly="readonly"</c:if>  maxlength="16" type="text" class="int-text int-xlarge radius" id="userName"  name="userName" value="${user_session_key.username}"/>
   						<label id="userName-error" class="error" for="userName"></label>
   						</p>
   					   <!-- <label id="userNameErrMsg" style="display: none;"></label> -->
@@ -143,6 +143,8 @@
   	</div>
   </div>
   </div>
+  	<%@ include file="/inc/userFoot.jsp"%>
+  </body>
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
     var current ="interpreterInfo";
@@ -170,7 +172,5 @@
 				});
 	})();
 </script>
-</body>
-
 
 </html>

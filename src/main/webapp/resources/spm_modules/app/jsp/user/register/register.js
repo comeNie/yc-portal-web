@@ -46,7 +46,7 @@ define(
 											if ("zh_CN" != currentLan) {
 												name = t.countryNameEn;
 											}
-											html.push('<option reg="'
+											html.push('<option country_value="'+t.countryValue+'" reg="'
 													+ t.regularExpression
 													+ '" value="' + _code
 													+ '" >' + _code + '+'
@@ -209,12 +209,17 @@ define(
 								return;
 							}
 							var falg = this._checkRegsiter();
-							if (falg) {
+							if (!falg) {
+								return;
+							}
 								var _this = this;
 								var register_type = $("#change_register_type")
 										.attr("register_type");
+								var country_value ="";
 								if ("phone" == register_type) {
 									$("#email").val("");
+									var country = $("#country").find("option:selected");
+									country_value = country.attr("country_value");
 								} else if ("email" == register_type) {
 									$("#phone").val("");
 								}
@@ -225,7 +230,7 @@ define(
 											type : "post",
 											processing : false,
 											message : "保存中，请等待...",
-											url : _base + "/reg/submitRegister",
+											url : _base + "/reg/submitRegister?country="+country_value,
 											data : $("#regsiterForm")
 													.serializeArray(),
 											success : function(json) {
@@ -248,7 +253,6 @@ define(
 												}
 											}
 										});
-							}
 						},
 						/* 异步校验图形验证码 */
 						_checkImageCode : function() {
