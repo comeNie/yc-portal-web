@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.RandomUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
@@ -69,24 +68,24 @@ public class UserCommonController {
 	 */
 	@RequestMapping("/loadCountry")
 	@ResponseBody
-	public ResponseData<List<CountryVo>> loadCountry() {
+	public ResponseData<List<CountryVo>> loadCountry(CountryRequest req) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("-------加载国家-------");
 		}
 		String msg = "ok";
 		List<CountryVo> result = null;
-		ICacheClient iCacheClient = AiPassUitl.getCacheClient();
+		/*ICacheClient iCacheClient = AiPassUitl.getCacheClient();
 		String countryList = iCacheClient
 				.get(Register.REGISTER_COUNTRY_LIST_KEY);
 		if (!StringUtil.isBlank(countryList)) {
 			result = JSON.parseArray(countryList, CountryVo.class);
 			return new ResponseData<List<CountryVo>>(
 					ResponseData.AJAX_STATUS_SUCCESS, msg, result);
-		}
+		}*/
 		CountryResponse res = null;
 		try {
 			res = DubboConsumerFactory.getService(IGnCountrySV.class)
-					.queryCountry(new CountryRequest());
+					.queryCountry(req);
 		} catch (Exception e) {
 			msg = "error";
 			LOG.error(e.getMessage(), e);
@@ -97,11 +96,11 @@ public class UserCommonController {
 				&& res.getResponseHeader().isSuccess()) {
 			result = res.getResult();
 		}
-		if (!CollectionUtil.isEmpty(result)) {
+		/*if (!CollectionUtil.isEmpty(result)) {
 			iCacheClient.setex(Register.REGISTER_COUNTRY_LIST_KEY,
 					Register.REGISTER_COUNTRY_LIST_KEY_OVERTIME,
 					JSON.toJSONString(result));
-		}
+		}*/
 		return new ResponseData<List<CountryVo>>(
 				ResponseData.AJAX_STATUS_SUCCESS, msg, result);
 	}
