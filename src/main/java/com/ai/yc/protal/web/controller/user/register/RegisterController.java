@@ -278,6 +278,7 @@ public class RegisterController {
 			String key = PhoneVerify.REGISTER_PHONE_CODE + phone+PhoneVerify.PHONE_CODE_REGISTER_UID;
 		    String uid = (String) request.getSession().getAttribute(key);
             req.setUserId(uid);
+            String country = request.getParameter("country");
 		}
 		String email = request.getParameter("email");
 		if (!StringUtil.isBlank(email)) {

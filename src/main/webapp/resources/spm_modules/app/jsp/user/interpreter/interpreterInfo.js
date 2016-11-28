@@ -106,6 +106,10 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     		        	if(!json.data){
     		        		showMsg(json.statusInfo);
     		        	}else{
+    		        		if(originalUsername!=userName&&userName!=""){//用户名发生改变禁用输入框
+    		    				$("#userName").attr("readonly","readonly");
+    		    				originalUsername = userName;
+    		    			}
     		        		showMsg2(json.statusInfo);
     		        	}
     		          }

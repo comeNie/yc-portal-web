@@ -165,8 +165,8 @@ public class InterpreterController {
 				if(!res.getData()){//昵称校验不通过
 					return res;
 				}
-				//调用ucenter
-				//ucUserRequest.setIsChange("1");
+				//调用ucenter ok
+				ucUserRequest.setIsChange("1");
 			}
 			
 			ucUserRequest.setUserId(UserUtil.getUserId());
