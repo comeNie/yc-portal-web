@@ -114,13 +114,24 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
                 return;
             }
 
-            $("#saveContactDiv").hide();
-            $("#editContactDiv").find('p').eq(0).html($("#saveContactDiv").find('input').eq(0).val());
-            $("#editContactDiv").find('p').eq(1).html("+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val());
-            $("#editContactDiv").find('p').eq(2).html($("#saveContactDiv").find('input').eq(2).val());
-            $("#editContactDiv").show();
-
             //发请求保存联系人
+            ajaxController.ajax({
+                type: "post",
+                url: _base + "/p/order/saveContact",
+                data: $("#contactForm").serializeArray(),
+                success: function (data) {
+                    if ("1" === data.statusCode) {
+                        //成功
+                        $("#saveContactDiv").hide();
+                        $("#editContactDiv").find('p').eq(0).html($("#saveContactDiv").find('input').eq(0).val());
+                        $("#editContactDiv").find('p').eq(1).html("+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val());
+                        $("#editContactDiv").find('p').eq(2).html($("#saveContactDiv").find('input').eq(2).val());
+                        $("#editContactDiv").show();
+                    }
+                }
+            });
+
+
         },
 
         //编辑联系人
@@ -131,6 +142,7 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
 
         //国际编码
         _globalRome:function() {
+            var gnCountryId = $("input[name='gnCountryId']").val();
             $.getJSON(_base + "/resources/spm_modules/app/jsp/order/globalRome.json",function(data){
                 $.each(data.row,function(rowIndex,row){
                     var selObj = $("#globalRome");
@@ -144,6 +156,17 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
                     selObj.append("<option value='"+row["COUNTRY_CODE"]+"' exp='" +row["REGULAR_EXPRESSION"]+"'>"+text+"   +"+row["COUNTRY_CODE"]+"</option>");
                 });
             });
+
+            if (gnCountryId != '') {
+                $("#globalRome").val(gnCountryId);
+                this._setPattern();
+            }
+        },
+
+        //根据国家设置号码匹配规则
+        _setPattern:function() {
+            var pattern = $("#saveContactDiv").find('option:selected').attr('exp');
+            $("#phoneNum").attr('pattern',pattern);
         },
 
         //提交订单

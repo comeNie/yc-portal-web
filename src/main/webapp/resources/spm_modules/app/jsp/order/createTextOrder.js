@@ -309,8 +309,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			if ($("#transLv").val() != '') {
 				$("#transGrade ul").each(function () {
 					if ($("#transLv").val() == $(this).attr("name")) {
+						$(this).children('label').remove();
 						$(this).addClass("current");
+						$(this).append('<label></label>');
+
 						$($(this).siblings()).removeClass("current");
+						$($(this).siblings()).children('label').remove();
 					}
 				});
 			}
