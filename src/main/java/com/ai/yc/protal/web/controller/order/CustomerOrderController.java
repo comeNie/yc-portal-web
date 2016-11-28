@@ -241,6 +241,7 @@ public class CustomerOrderController {
         feeQueryRequest.setOrderId(orderId);
         OrderFeeQueryResponse feeQueryResponse = iOrderFeeQuerySV.orderFeeQuery(feeQueryRequest);
         OrderFeeInfo orderFeeInfo = feeQueryResponse.getOrderFeeInfo();
+        OrderFeeProdInfo orderPordInfo = feeQueryResponse.getOrderFeeProdInfo();
 
         //若订单金额等于0,则表示待报价
         if(orderFeeInfo.getTotalFee().equals(0)){
@@ -259,6 +260,8 @@ public class CustomerOrderController {
         uiModel.addAttribute("orderId",orderId);
         //订单信息
         uiModel.addAttribute("orderFee",feeQueryResponse.getOrderFeeInfo());
+        //订单主题
+        uiModel.addAttribute("translateName",orderPordInfo.getTranslateName());
         return resultView;
     }
 
@@ -305,7 +308,7 @@ public class CustomerOrderController {
     @RequestMapping(value = "/gotoPay")
     public void gotoPay(
             String orderId,Long orderAmount,String currencyUnit,String merchantUrl,String payOrgCode,
-            String orderType,
+            String orderType,String translateName,
             HttpServletResponse response)
             throws Exception {
         //租户
@@ -324,7 +327,7 @@ public class CustomerOrderController {
         map.put("requestSource", Constants.SELF_SOURCE);//终端来源
         map.put("currencyUnit",currencyUnit);//币种
         map.put("orderAmount", amount);//金额
-        map.put("subject", "orderPay");//订单名称
+        map.put("subject", translateName);//订单名称
         map.put("payOrgCode",payOrgCode);
         // 加密
         String infoStr = orderId+ VerifyUtil.SEPARATOR

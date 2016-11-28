@@ -80,6 +80,7 @@
 					<input type="hidden" name="orderId" value="${orderId}">
 					<input type="hidden" name="orderAmount" value="${orderFee.totalFee}">
 					<input type="hidden" name="currencyUnit" value="${orderFee.currencyUnit}">
+					<input type="hidden" name="translateName" value="${translateName}">
 					<input type="hidden" id="payType" name="payOrgCode">
 					<%--当前地址--%>
 					<input type="hidden" id="merchantUrl" name="merchantUrl">
