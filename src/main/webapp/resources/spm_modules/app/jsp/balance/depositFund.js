@@ -19,7 +19,6 @@ define('app/jsp/balance/depositFund', function (require, exports, module) {
 		_payOrder:function(){
 			//当前地址
 			var merchantUrl = "";
-			//若为余额支付,则进行余额支付流程
 			if("YE" != payType){
 				$("#merchantUrl").val(window.location.href);
 				//提交
