@@ -142,7 +142,7 @@
   	</div>
   </div><!--内侧内容区域-->
   </div> <!--外侧背景-->
-
+<%@include file="/inc/userFoot.jsp"%>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
 <script id="searchOrderTemple" type="text/template">
