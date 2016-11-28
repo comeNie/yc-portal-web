@@ -26,9 +26,7 @@ import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.paas.ipaas.util.StringUtil;
-import com.ai.yc.common.api.country.interfaces.IGnCountrySV;
 import com.ai.yc.common.api.country.param.CountryRequest;
-import com.ai.yc.common.api.country.param.CountryResponse;
 import com.ai.yc.common.api.country.param.CountryVo;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.EmailVerify;
@@ -38,6 +36,7 @@ import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.constants.Constants.UcenterOperation;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
 import com.ai.yc.protal.web.model.sms.SmsRequest;
+import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.ai.yc.protal.web.utils.SmsSenderUtil;
 import com.ai.yc.protal.web.utils.UserUtil;
@@ -62,6 +61,8 @@ public class UserCommonController {
 			.getLogger(UserCommonController.class);
 	@Autowired
 	ResWebBundle rb;
+	@Autowired
+    CacheServcie cacheServcie;
 
 	/**
 	 * 加载国家
@@ -72,37 +73,8 @@ public class UserCommonController {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("-------加载国家-------");
 		}
-		String msg = "ok";
-		List<CountryVo> result = null;
-		/*ICacheClient iCacheClient = AiPassUitl.getCacheClient();
-		String countryList = iCacheClient
-				.get(Register.REGISTER_COUNTRY_LIST_KEY);
-		if (!StringUtil.isBlank(countryList)) {
-			result = JSON.parseArray(countryList, CountryVo.class);
-			return new ResponseData<List<CountryVo>>(
-					ResponseData.AJAX_STATUS_SUCCESS, msg, result);
-		}*/
-		CountryResponse res = null;
-		try {
-			res = DubboConsumerFactory.getService(IGnCountrySV.class)
-					.queryCountry(req);
-		} catch (Exception e) {
-			msg = "error";
-			LOG.error(e.getMessage(), e);
-			return new ResponseData<List<CountryVo>>(
-					ResponseData.AJAX_STATUS_FAILURE, msg);
-		}
-		if (res != null && res.getResponseHeader() != null
-				&& res.getResponseHeader().isSuccess()) {
-			result = res.getResult();
-		}
-		/*if (!CollectionUtil.isEmpty(result)) {
-			iCacheClient.setex(Register.REGISTER_COUNTRY_LIST_KEY,
-					Register.REGISTER_COUNTRY_LIST_KEY_OVERTIME,
-					JSON.toJSONString(result));
-		}*/
 		return new ResponseData<List<CountryVo>>(
-				ResponseData.AJAX_STATUS_SUCCESS, msg, result);
+				ResponseData.AJAX_STATUS_SUCCESS, "ok", cacheServcie.getAllCountry());
 	}
 
 	/**
