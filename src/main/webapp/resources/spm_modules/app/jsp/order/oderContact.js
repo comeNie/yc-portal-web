@@ -123,9 +123,9 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
                     if ("1" === data.statusCode) {
                         //成功
                         $("#saveContactDiv").hide();
-                        $("#editContactDiv").find('p').eq(0).html($("#saveContactDiv").find('input').eq(0).val());
-                        $("#editContactDiv").find('p').eq(1).html("+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val());
-                        $("#editContactDiv").find('p').eq(2).html($("#saveContactDiv").find('input').eq(2).val());
+                        $("#editContactDiv").find('p').eq(0).html($("#contactName").val());
+                        $("#editContactDiv").find('p').eq(1).html("+"+$("#globalRome").find('option:selected').attr('code')+" "+$("#phoneNum").val());
+                        $("#editContactDiv").find('p').eq(2).html($("#email").val());
                         $("#editContactDiv").show();
                     }
                 }
@@ -153,7 +153,7 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
                         text = row["COUNTRY_NAME_EN"];
                     }
 
-                    selObj.append("<option value='"+row["COUNTRY_CODE"]+"' exp='" +row["REGULAR_EXPRESSION"]+"'>"+text+"   +"+row["COUNTRY_CODE"]+"</option>");
+                    selObj.append("<option value='"+row["ID"]+"' code='"+row["COUNTRY_CODE"]+"' exp='" +row["REGULAR_EXPRESSION"]+"'>"+text+"   +"+row["COUNTRY_CODE"]+"</option>");
                 });
             });
 
@@ -173,9 +173,10 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
         _addTextOrder:function(){
             var translateType = $("#transType").val();
             var contactInfo = {};
-            contactInfo.contactName=$("#saveContactDiv").find('input').eq(0).val();
-            contactInfo.contactTel="+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val();
-            contactInfo.contactEmail=$("#saveContactDiv").find('input').eq(2).val();
+            $("#saveContactDiv").hide();
+            contactInfo.contactName=$("#contactName").val();
+            contactInfo.contactTel="+"+$("#globalRome").find('option:selected').attr('code')+" "+$("#phoneNum").val();
+            contactInfo.contactEmail=$("#email").val();
 
             ajaxController.ajax({
                 type: "post",
