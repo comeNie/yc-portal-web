@@ -331,6 +331,7 @@
 
 	</div>
 	<input type="hidden" id="code"/>
+	<%@ include file="/inc/userFoot.jsp"%>
 </body>
 <%@ include file="/inc/incJs.jsp"%>
 <script src="${_base}/resources/spm_modules/email/emailHandle.js"></script>

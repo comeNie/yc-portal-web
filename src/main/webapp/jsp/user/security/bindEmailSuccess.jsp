@@ -46,6 +46,7 @@
 	</div>
 
 	</div>
+	<%@ include file="/inc/userFoot.jsp"%>
 </body>
 <%@ include file="/inc/incJs.jsp"%>
 <script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
