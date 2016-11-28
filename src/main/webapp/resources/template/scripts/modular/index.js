@@ -1,13 +1,12 @@
 $(document).ready(function(){
   $("#int-before").click(function(){
-    $(".index-wrapper").animate({top:'150px'},400);
+    $(".index-wrapper").animate({top:'100px'},300);
+    $(".banner").css({"height":"343px"});
   });
 });
-
-//
 $(function () {
     $(".banner-hover p").click(function () {
-		$(this).children('i').toggleClass(" icon-angle-down   icon-angle-up");
+		$(this).children('i').toggleClass(" icon-angle-down icon-angle-up");
 		$(this).parents().parent().children('.banner-sm').slideToggle(50);
     });
 });	
@@ -34,7 +33,7 @@ $(function(){
 $(function(){
   $("#error").click(function(){
   $("#error").hide();
-  $("#error-oc").show();
+  $("#error-oc").show();preser-btn
   });
   $("#preser-btn").click(function(){
   $("#error-oc").hide();
@@ -74,3 +73,37 @@ $(function () {
    });
     
   });
+  
+//
+$(function(){
+  $("#img1").click(function(){
+  $(".jiaicon1").hide();
+  $(".jiaicon2").show();
+  $(".jiaicon3").show();
+  });
+  $("#img2").click(function(){
+  $(".jiaicon2").hide();
+  $(".jiaicon1").show();
+  $(".jiaicon3").show();
+  });
+   $("#img3").click(function(){
+  $(".jiaicon3").hide();
+  $(".jiaicon1").show();
+  $(".jiaicon2").show();
+  });
+});
+//风琴
+$(function () {
+    var $centerwell_first = $('#centerwell li:first');
+    $centerwell_first.animate({ width: '500px' }, 300);
+    $centerwell_first.find('h3').addClass("on");
+
+    $('#centerwell li').click(function () {
+        if (!$(this).is(':animated')) {
+            $(this).animate({ width: '500px' }, 300).siblings().animate({ width: '216px' }, 300);
+
+            $('#centerwell li h3').removeClass("on");
+            $(this).find("h3").addClass("on");
+        }
+    });
+});

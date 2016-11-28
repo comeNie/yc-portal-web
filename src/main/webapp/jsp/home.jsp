@@ -248,9 +248,14 @@
     <!--广告-->
     <div class="banner-wapper">
         <div class="banner-sm">
-            <a href="${_base}/oral">
-                <img src="${uedroot}/images/banner-sm<%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"_en":""%>.jpg" />
-            </a>
+            <p class="left">
+                <span class="word">口译翻译</span>
+                <span>全球多领域，全语种高端口译人才，提供国际会议，商务活动等各种服务</span>
+            </p>
+            <%--立即下单--%>
+            <p class="right"><input type="button" id="oralBtn" class="btn btn-blue banner-place-btn radius20"
+                                    value="<spring:message code="home.manual_order_now_btn"/>"
+                                    onclick="javaScript:window.location.href='${_base}/oral'"></p>
         </div>
         <div class="banner-hover">
             <p><i class="icon-angle-down"></i></p>
@@ -261,28 +266,46 @@
         <div class="service-container">
             <%--一站式翻译服务平台--%>
             <div class="service-title"><spring:message code="home.title.tips"/></div>
-            <div class="service-list">
-                <ul class="none">
-                    <li class="tp">
-                        <p class="sev-icon1"></p>
-                        <%--智能自动翻译--%>
-                        <p><spring:message code="home.auto_translation_tips"/></p>
-                    </li>
-                    <%--智能自动翻译  亿万级语料支持，通过强大的云端数据处理技术为用户提供精准、快速、人性的智能翻译服务。--%>
-                    <li class="word"><spring:message code="home.auto_translation_content_tips"/></li>
-                </ul>
-                <ul class="tow">
+            <div class="hot_role">
+                <ul id="centerwell">
                     <li>
-                        <p class="sev-icon2"></p>
-                        <%--精准人工翻译--%>
-                        <p class="p-word"><spring:message code="home.manual_translation"/></p>
+                        <h3>
+                            <p><img src="${uedroot}/images/icon-16.png" id="img1"><i class="icon-plus jiaicon1"></i></p>
+                            <%--智能自动翻译--%>
+                            <p class="word"><spring:message code="home.auto_translation_tips"/></p>
+                        </h3>
+                        <div class="hot_content">
+                            <%--智能自动翻译  亿万级语料支持，通过强大的云端数据处理技术为用户提供精准、快速、人性的智能翻译服务。--%>
+                            <div class="hot_top">
+                                <spring:message code="home.auto_translation_content_tips"/>
+                            </div>
+                        </div>
                     </li>
-                </ul>
-                <ul class="tow right">
                     <li>
-                        <p class="sev-icon3"></p>
-                        <%--全终端翻译工具--%>
-                        <p class="p-word"><spring:message code="home.allchannel_translation"/></p>
+                        <h3>
+                            <p><img src="${uedroot}/images/icon-17.png"  id="img2"><i class="icon-plus jiaicon2"></i></p>
+                            <%--精准人工翻译--%>
+                            <p class="word"><spring:message code="home.manual_translation"/></p>
+                        </h3>
+                        <div class="hot_content">
+                            <%--一流的译员翻译团队，覆盖全球资源，高速响应客户需求，做精准的人工翻译，让客户随时享有翻译服务--%>
+                            <div class="hot_top">
+                                <spring:message code="home.manual_translation_content"/>
+                            </div>
+                        </div>
+                    </li>
+                    <li style="margin-right:0">
+                        <h3>
+                            <p><img src="${uedroot}/images/icon-18.png"  id="img3"><i class="icon-plus jiaicon3"></i></p>
+                            <%--全终端翻译工具--%>
+                            <p class="word"><spring:message code="home.allchannel_translation"/></p>
+                        </h3>
+                        <div class="hot_content">
+                            <%--平台提供字幕翻译、会议翻译、网页插件等免费翻译工具，通过网页、app，微信等各种终端尽可享有--%>
+                            <div class="hot_top">
+                                <spring:message code="home.allchannel_translation_content"/>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </div>
