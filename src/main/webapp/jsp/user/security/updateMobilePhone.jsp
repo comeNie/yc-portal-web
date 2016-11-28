@@ -334,6 +334,8 @@
   </div>
   </div>
   </div>
+<%@ include file="/inc/userFoot.jsp"%>
+</body>
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
 var current = "seccenterSettings";
@@ -397,6 +399,4 @@ var pager;
 			"getDynamiCode":'<spring:message code="ycregister.getDynamiCode"/>'
 		}; */
 </script>
-
-</body>
 </html>

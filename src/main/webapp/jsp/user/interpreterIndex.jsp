@@ -119,6 +119,8 @@
     </div>
 
 </div>
+<%@ include file="/inc/userFoot.jsp"%>
+</body>
 <script id="orderTemple" type="text/template">
     <tr>
         <td>
@@ -165,5 +167,4 @@
 		}
 	});
 </script>
-</body>
 </html>
