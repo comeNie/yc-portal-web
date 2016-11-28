@@ -64,7 +64,7 @@
                             <p><input id="contactName" name="userName" value="${Contact.userName}" maxlength="15" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterName"/>"></p>
                             <p><select id="globalRome" name="gnCountryId" class="select int-in radius"></select></p>
                             <p><input id="phoneNum" name="mobilePhone"  value="${Contact.mobilePhone}" pattern="^1\d{10}$" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterPhone"/>"></p>
-                            <p class="mr-0"><input id="email" name="email" type="text" class="int-text int-large-mail radius" placeholder="<spring:message code="order.EnterEmail"/>"></p>
+                            <p class="mr-0"><input id="email" name="email" value="${Contact.email}" type="text" class="int-text int-large-mail radius" placeholder="<spring:message code="order.EnterEmail"/>"></p>
                         </li>
                         <li class="right-btn"><input id="saveContact" type="button" class="btn radius20 border-blue btn-80" value="<spring:message code="order.Save"/>"></li>
 
