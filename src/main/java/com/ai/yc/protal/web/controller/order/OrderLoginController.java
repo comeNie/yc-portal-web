@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import com.ai.yc.order.api.ordersubmission.param.*;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.extractor.ExcelExtractor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,14 @@ public class OrderLoginController {
     @RequestMapping(value = "/contact")
     public String contactView(int skip,Model uiModel){
         uiModel.addAttribute("skip", skip);
+
+//        //获取联系人
+//        try {
+//            IUcContactsInfoSV orderSubmissionSV = DubboConsumerFactory.getService(IUcContactsInfoSV.class);
+//            OrderSubmissionRequest subReq  = (OrderSubmissionRequest) session.getAttribute("orderInfo");
+//        } catch (Exception e) {
+//
+//        }
         LOGGER.info("skip = " + skip);
         return "order/orderContact";
     }
@@ -72,6 +81,11 @@ public class OrderLoginController {
             } else {
                 resData.setData(subRes.getOrderId()+"");//返回订单信息
             }
+
+            //清楚会话中的 订单信息
+            session.removeAttribute("orderInfo");
+            session.removeAttribute("orderSummary");
+            session.removeAttribute("fileInfoList");
         } catch (Exception e) {
             LOGGER.error("提交订单失败:",e);
             resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"");

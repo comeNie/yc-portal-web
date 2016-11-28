@@ -178,7 +178,14 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
 
         //返回上一页
         _toCreateOrder:function () {
-            window.history.go($("#toCreateOrder").attr("skip"));
+            var translateType = $("#transType").val();
+
+            if(translateType == 2) { //口译
+                window.history.go($("#toCreateOrder").attr("skip"));
+            } else {
+               window.location.href= _base + "/written";
+            }
+
         }
 
     });

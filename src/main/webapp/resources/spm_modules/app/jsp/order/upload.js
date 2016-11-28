@@ -21,13 +21,32 @@
              fileSizeLimit: 100 * 1024 * 1024,    // 100 M
          });
 
+        uploader.on("beforeFileQueued", function (file) {
+            var allSize = file.size;
+            var allCount = $("#fileList ul").length + 1
+            $("#fileList ul li").each(function() {
+                allSize += $(this).attr("size");
+            });
+
+            if (allSize > 100 * 1024 * 1024) {
+                alert("上传文件不能超过100M");
+                return false;
+            }
+
+            if (allCount > 10) {
+                alert("上传文件个数不能超过10个");
+                return false;
+            }
+
+        });
+
          uploader.on("fileQueued",function(file){
         	 $("#fileList ul").css('"border-bottom","none"');
-             $("#fileList").append('<ul style="border-bottom: medium none;"><li class="word" id="'+file.id+'">'+file.name+'</li><li><p class="ash-bj"><span style="width:0%;"></span></p><p name="percent">0%</p></li><li class="right"><i class="icon iconfont" >&#xe618;</i></li></ul>');
+             $("#fileList").append('<ul style="border-bottom: medium none;"><li class="word" size="'+file.size+'" id="'+file.id+'">'+file.name+'</li><li><p class="ash-bj"><span style="width:0%;"></span></p><p name="percent">0%</p></li><li class="right"><i class="icon iconfont" >&#xe618;</i></li></ul>');
          });
-         
+
          uploader.on("uploadProgress",function(file,percentage){
-             
+
              var fileId = $("#"+file.id),
                  percent = fileId.find(".progress .progress-bar");
              if(!percent.length){//避免重复创建
@@ -37,9 +56,9 @@
              fileId.next().find('span').css('width',percentage*100+"%");
              fileId.next().find('p[name="percent"]').text(percentage*100+"%");
              percent.css( 'width', percentage * 100 + '%' );
-           
+
          });
-         
+
          uploader.on( 'uploadSuccess', function( file, responseData ) {
         	 if(responseData.statusCode=="1"){
 					var fileData = responseData.data;
@@ -64,11 +83,11 @@
          uploader.on( 'uploadComplete', function( file ) {
              $( '#'+file.id ).find('.progress').fadeOut();
          });
-         
+
          //上传出错时触发
          uploader.on( "uploadError", function( file, reason  ) {
          });
-         
+
          // 拖拽时不接受 js, txt 文件。
 //         uploader.on( 'dndAccept', function( items ) {
 //             var denied = false,
@@ -133,7 +152,7 @@
          //删除
     	 $('.attachment').delegate('ul li i','click',function(){
 			 $(this).parent().parent('ul').remove();
-			 
+
 			 var id = $(this).parent().parent('ul').find('li:first').attr("id");
 			 var file = uploader.getFile(id);
 			 uploader.removeFile(file);

@@ -52,7 +52,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			this._transPrice();
 			this._initPage();
     	},
-    	
+
         _initValidate:function(){
         	var _this = this;
         	var formValidator=$("#textOrderForm").validate({
@@ -174,6 +174,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 					var tempObj = {};
 					tempObj.fileName = $(this).text();
 					tempObj.fileSaveId = $(this).attr("fileid");
+					tempObj.fileSie = $(this).attr("size");
 					fileInfoList.push(tempObj);
 				});
 				productInfo.fileInfoList = fileInfoList;
@@ -247,7 +248,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				data: {
 					baseInfo: JSON.stringify(baseInfo),
 					productInfo: JSON.stringify(productInfo),
-					orderSummary: JSON.stringify(orderSummary)
+					orderSummary: JSON.stringify(orderSummary),
+					fileInfoList: JSON.stringify(fileInfoList)
 				},
 				success: function (data) {
                     if ("1" === data.statusCode) {
@@ -286,10 +288,63 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		
 		//初始化页面后做的操作
 		_initPage:function() {
+			//页面初始化，从session取订单信息
 			//改变上传div高度
 			$("#selectFile").children("div:last").css("height", '70px');
-			$("#fy2").hide();
-			
+
+			//根据翻译类型，显示不同
+			if ($("#transType").val() == "1") {
+				$("#fy1").hide();
+				$("#fy2").show();
+			} else {
+				$("#fy2").hide();
+			}
+
+			//session 语言对
+			if ($("#duadName").val() != '') {
+				$(".dropdown .selected").val($("#duadName").val());
+			}
+
+			//翻译级别
+			if ($("#transLv").val() != '') {
+				$("#transGrade ul").each(function () {
+					if ($("#transLv").val() == $(this).attr("name")) {
+						$(this).addClass("current");
+						$($(this).siblings()).removeClass("current");
+					}
+				});
+			}
+
+			//用途
+			if ($("#useCode").val() != '') {
+				$("#selectPurpose").val($("#useCode").val());
+			}
+
+			//领域
+			if ($("#fieldCode").val() != '') {
+				$("#selectDomain").val($("#fieldCode").val());
+			}
+
+			//排版
+			if ($("#isSetType").val() == 'Y') {
+				$("#selectAddedSer").val("1");
+			}
+
+			//格式转换
+			if ($("#format").val() != '') {
+				$("#selectFormatConv").val("1");
+				$("#inputFormatConv").show();
+				$("#inputFormatConv").val($("#format").val());
+			} else {
+				$("#selectFormatConv").val("0");
+			}
+
+			//加急
+			if ($("#isUrgent").val() == 'Y') {
+				$("#urgentOrder").attr("checked", true);
+			}
+
+
 		},
 		
 		//语言对改变，价格改变,翻译速度改变

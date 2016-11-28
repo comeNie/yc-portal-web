@@ -30,6 +30,7 @@ import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import java.io.File;
@@ -147,9 +148,11 @@ public class OrderController {
         String productInfoStr = request.getParameter("productInfo");
         String baseInfoStr = request.getParameter("baseInfo");
         String orderSummaryStr = request.getParameter("orderSummary");
+        String fileInfoListStr = request.getParameter("fileInfoList");
 
         try {
             JSONObject orderSummary = JSON.parseObject(orderSummaryStr);
+            JSONArray fileInfoList = JSONArray.parseArray(fileInfoListStr);
             OrderSubmissionRequest subReq = new OrderSubmissionRequest();
             subReq.setBaseInfo(JSON.parseObject(baseInfoStr, BaseInfo.class));
             subReq.setProductInfo(JSON.parseObject(productInfoStr, ProductInfo.class));
@@ -194,6 +197,7 @@ public class OrderController {
             //订单存到session中
             session.setAttribute("orderInfo", subReq);
             session.setAttribute("orderSummary", orderSummary);
+            session.setAttribute("fileInfoList", fileInfoList);
             if (StringUtils.isEmpty(UserUtil.getUserId())) {
                 resData.setData("-2");
             } else {

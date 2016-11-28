@@ -9,8 +9,21 @@
 	<%@ include file="/inc/inc.jsp" %>
 	 <title><spring:message code="order.Translatepage"/></title>
 	<link rel="stylesheet" type="text/css" href="${_base}/resources/spm_modules/webuploader/webuploader.css">
+	<c:set var="order" value="${sessionScope.orderInfo}" scope="session" />
+	<c:set var="orderSummary" value="${sessionScope.orderSummary}" scope="session" />
+	<c:set var="fileInfoList" value="${sessionScope.fileInfoList}" scope="session" />
+	<c:set var="transType" value="${order.baseInfo.translateType}" />
 </head>
-<body>	
+<body>
+	<input type="hidden" value="${transType}" id="transType">
+	<input type="hidden" value="${orderSummary.duadName}" id="duadName">
+	<input type="hidden" value="${order.productInfo.translateLevelInfoList[0].translateLevel}" id="transLv">
+	<input type="hidden" value="${order.productInfo.useCode}" id="useCode">
+	<input type="hidden" value="${order.productInfo.fieldCode}" id="fieldCode">
+	<input type="hidden" value="${order.productInfo.isSetType}" id="isSetType">
+	<input type="hidden" value="${order.baseInfo.orderDesc}" id="format">
+	<input type="hidden" value="${order.productInfo.isUrgent}" id="isUrgent">
+
 	<!--面包屑导航-->
 	<%@ include file="/inc/topHead.jsp" %>
 	<%@ include file="/inc/topMenu.jsp" %>
@@ -83,7 +96,7 @@
   				<div class="translate-int radius" id="fy1">
   					<p>
   					<!--  翻译内容--> 
-  					<textarea id="translateContent" name="translateContent" class="int-text textarea-xlarge-100 radius">${sessionScope.orderInfo.productInfo.translateInfo}</textarea></p>
+  					<textarea id="translateContent" name="translateContent" class="int-text textarea-xlarge-100 radius">${order.productInfo.translateInfo}</textarea></p>
   					<!-- 上传文档btn -->
   					<p class="right"><input type="button" class="btn border-blue radius20 btn-80" value="<spring:message code="order.uploadDoc"/>"  id="fy-btn"></p>
   					<!-- 清空 -->
@@ -94,6 +107,23 @@
   					<div class="limit-height">
 	  					<!--文件列表  -->
 	  					<div class="attachment" id="fileList">
+							<c:forEach items="${fileInfoList}" var="file" varStatus="status">
+								<ul style="border-bottom: medium none;">
+								<li id="WU_FILE_${status.index}" class="word" size="${file.fileSize}" fileid="${file.fileSaveId}">
+									${file.fileName}
+									<div class="progress progress-striped active" style="display: none;">
+										<div class="progress-bar" style="width: 100%;" role="progressbar"></div>
+									</div>
+								</li>
+								<li>
+									<p class="ash-bj">
+									<p name="percent">100%</p>
+								</li>
+								<li class="right">
+									<i class="icon iconfont"></i>
+								</li>
+								</ul>
+							</c:forEach>
 	  					</div>
 	  					<div class="attachment-btn">
 	  						<ul>
