@@ -286,6 +286,8 @@
 		</div>
  	</div>
 </div>
+
+<%@include file="/inc/userFoot.jsp"%>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
 

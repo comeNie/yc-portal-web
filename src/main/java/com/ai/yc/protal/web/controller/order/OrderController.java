@@ -197,7 +197,9 @@ public class OrderController {
             //订单存到session中
             session.setAttribute("orderInfo", subReq);
             session.setAttribute("orderSummary", orderSummary);
-            session.setAttribute("fileInfoList", fileInfoList);
+            if (fileInfoList != null) {
+                session.setAttribute("fileInfoList", fileInfoList);
+            }
             if (StringUtils.isEmpty(UserUtil.getUserId())) {
                 resData.setData("-2");
             } else {

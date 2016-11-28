@@ -3,7 +3,14 @@ package com.ai.yc.protal.web.controller.order;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.ai.opt.base.vo.BaseResponse;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.yc.order.api.ordersubmission.param.*;
+import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
+import com.ai.yc.user.api.userservice.param.InsertYCContactRequest;
+import com.ai.yc.user.api.userservice.param.SearchYCContactRequest;
+import com.ai.yc.user.api.userservice.param.YCContactInfoResponse;
+import com.ai.yc.user.api.userservice.param.YCInsertContactResponse;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.extractor.ExcelExtractor;
@@ -39,16 +46,50 @@ public class OrderLoginController {
     @RequestMapping(value = "/contact")
     public String contactView(int skip,Model uiModel){
         uiModel.addAttribute("skip", skip);
-
-//        //获取联系人
-//        try {
-//            IUcContactsInfoSV orderSubmissionSV = DubboConsumerFactory.getService(IUcContactsInfoSV.class);
-//            OrderSubmissionRequest subReq  = (OrderSubmissionRequest) session.getAttribute("orderInfo");
-//        } catch (Exception e) {
-//
-//        }
         LOGGER.info("skip = " + skip);
+
+        //获取联系人
+        try {
+            IYCUserServiceSV iYCUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
+            SearchYCContactRequest contactReq = new SearchYCContactRequest();
+            contactReq.setUserId(UserUtil.getUserId());
+            YCContactInfoResponse contactRes = iYCUserServiceSV.searchYCContactInfo(contactReq);
+            if (!CollectionUtil.isEmpty(contactRes.getUsrContactList())) {
+                uiModel.addAttribute("Contact", contactRes.getUsrContactList().get(0));
+            }
+
+        } catch (Exception e) {
+            LOGGER.error("查询联系人失败：", e);
+        }
+
         return "order/orderContact";
+    }
+
+    /**
+     * 保存联系人
+     * @return
+     */
+    @RequestMapping(value = "/saveContact",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseData<String> saveContact(InsertYCContactRequest contactReq) {
+        ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+
+//        保存联系人信息
+        try {
+            IYCUserServiceSV iYCUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
+            contactReq.setUserId(UserUtil.getUserId());
+            YCInsertContactResponse contactRes = iYCUserServiceSV.insertYCContact(contactReq);
+            ResponseHeader resHeader = contactRes.getResponseHeader();
+            //如果返回值为空,或返回信息中包含错误信息,则抛出异常
+            if (contactRes==null|| (resHeader!=null && (!resHeader.isSuccess()))) {
+                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "");
+            }
+        } catch(Exception e) {
+            LOGGER.error("保存联系人失败：", e);
+            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"");
+        }
+
+        return  resData;
     }
 
     /**

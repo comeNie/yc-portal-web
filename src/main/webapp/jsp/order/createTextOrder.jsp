@@ -96,7 +96,7 @@
   				<div class="translate-int radius" id="fy1">
   					<p>
   					<!--  翻译内容--> 
-  					<textarea id="translateContent" name="translateContent" class="int-text textarea-xlarge-100 radius">${order.productInfo.translateInfo}</textarea></p>
+  					<textarea id="translateContent" name="translateContent" class="int-text textarea-xlarge-100 radius">${order.productInfo.needTranslateInfo}</textarea></p>
   					<!-- 上传文档btn -->
   					<p class="right"><input type="button" class="btn border-blue radius20 btn-80" value="<spring:message code="order.uploadDoc"/>"  id="fy-btn"></p>
   					<!-- 清空 -->

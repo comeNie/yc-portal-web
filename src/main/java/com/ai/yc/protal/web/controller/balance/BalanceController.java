@@ -151,7 +151,7 @@ public class BalanceController {
     }
 
     /**
-     * 跳转支付页面,需要登录后才能进行支付
+     * 跳转第三方支付页面,需要登录后才能进行支付
      * @param
      * @param orderAmount
      * @param response
@@ -160,21 +160,20 @@ public class BalanceController {
     @RequestMapping(value = "/gotoPay")
     public void gotoPay(
             Long orderAmount,String currencyUnit,String merchantUrl,String payOrgCode,
-            String orderType,
             HttpServletResponse response)
             throws Exception {
         //租户
         String tenantId= ConfigUtil.getProperty("TENANT_ID");
         //服务异步通知地址
-        String notifyUrl= ConfigUtil.getProperty("NOTIFY_URL");
+        String notifyUrl= ConfigUtil.getProperty("NOTIFY_DEPOSIT_URL");
         //商户交易单号(要求商户每次提交的支付请求交易单号不能重复，用于唯一标识每个提交给支付中心的支付请求)
         String orderId = UUIDUtil.genId32();
         //异步通知地址,默认为用户
-        String amount = String.valueOf(orderAmount*1000);
+        String amount = String.valueOf(orderAmount);
         Map<String, String> map = new HashMap<String, String>();
         map.put("tenantId", tenantId);//租户ID
         map.put("orderId", orderId);//请求单号
-        map.put("returnUrl", ConfigUtil.getProperty("RETURN_URL"));//页面跳转地址
+        map.put("returnUrl", ConfigUtil.getProperty("RETURN_DEPOSIT_URL"));//页面跳转地址
         map.put("notifyUrl", notifyUrl);//服务异步通知地址
         map.put("merchantUrl",merchantUrl);//用户付款中途退出返回商户的地址
         map.put("requestSource", Constants.SELF_SOURCE);//终端来源

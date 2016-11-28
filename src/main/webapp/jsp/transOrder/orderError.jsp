@@ -44,5 +44,8 @@
         </div>
     </div>
 </div>
+
+<%--底部--%>
+<%@include file="/inc/userFoot.jsp"%>
 </body>
 </html>
