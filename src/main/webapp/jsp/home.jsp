@@ -261,8 +261,10 @@
     <div class="banner-wapper">
         <div class="banner-sm">
             <p class="left">
-                <span class="word">口译翻译</span>
-                <span>全球多领域，全语种高端口译人才，提供国际会议，商务活动等各种服务</span>
+                <%--口译翻译--%>
+                <span class="word"><spring:message code="home.oral_translation_tips"/></span>
+                    <%--全球多领域，全语种高端口译人才，提供国际会议，商务活动等各种服务--%>
+                <span><spring:message code="home.oral_translation_content_tips"/></span>
             </p>
             <%--立即下单--%>
             <p class="right"><input type="button" id="oralBtn" class="btn btn-blue banner-place-btn radius20"
