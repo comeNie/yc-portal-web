@@ -89,9 +89,8 @@ public class PayController {
      * 帐户充值结果 后台
      * @return
      */
-    @RequestMapping("/depositFundResult")
-    public void accountDepositResult(
-//            @RequestParam String currencyUnit,
+    @RequestMapping("/depositFundResult/{userId}")
+    public void accountDepositResult(@PathVariable("userId")String userId,
             PayNotify payNotify){
         LOG.info("The pay result.orderType:{},\r\n{}",JSON.toJSONString(payNotify));
         //若哈希验证不通过或支付失败,则表示支付结果有问题
@@ -107,7 +106,7 @@ public class PayController {
         IDepositSV iDepositSV = DubboConsumerFactory.getService(IDepositSV.class);
         DepositParam depositParam = new DepositParam();
         TransSummary summary = new TransSummary();
-        summary.setAmount(Long.parseLong(totalFee.toString()));
+        summary.setAmount(new Double(totalFee).longValue());
         //资金科目ID,从公共域查,该充值模块为预存款,科目编码100000
         summary.setSubjectId(Long.parseLong(ConfigUtil.getProperty("FUNDSUBJECT_ID")));
         List<TransSummary> transSummaryList = new ArrayList<TransSummary>();
@@ -116,7 +115,7 @@ public class PayController {
         IYCUserServiceSV userServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
         SearchYCUserRequest searchYCUserReq = new SearchYCUserRequest();
         searchYCUserReq.setTenantId(Constants.DEFAULT_TENANT_ID);
-        String userId = UserUtil.getUserId();
+//        String userId = UserUtil.getUserId();
         searchYCUserReq.setUserId(userId);
         YCUserInfoResponse userInfoResponse = userServiceSV.searchYCUserInfo(searchYCUserReq);
         //若没有账户信息,直接返回null
@@ -130,7 +129,7 @@ public class PayController {
         //业务描述
         depositParam.setBusiDesc("充值");
         depositParam.setBusiSerialNo(payNotify.getOrderId());
-        depositParam.setSystemId(ConfigUtil.getProperty("Cloud-UAC_WEB"));
+        depositParam.setSystemId(ConfigUtil.getProperty("SYSTEM_ID"));
         depositParam.setTenantId(ConfigUtil.getProperty("TENANT_ID"));
         depositParam.setCurrencyUnit("1");
         /*支付方式
