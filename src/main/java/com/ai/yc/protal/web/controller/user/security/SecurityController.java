@@ -32,6 +32,11 @@ import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
 import com.ai.yc.protal.web.service.BalanceService;
 import com.ai.yc.protal.web.utils.PasswordMD5Util.Md5Utils;
 import com.ai.yc.protal.web.utils.UserUtil;
+import com.ai.yc.translator.api.translatorservice.interfaces.IYCTranslatorServiceSV;
+import com.ai.yc.translator.api.translatorservice.param.SearchYCTranslatorRequest;
+import com.ai.yc.translator.api.translatorservice.param.YCLSPInfoReponse;
+import com.ai.yc.translator.api.translatorservice.param.YCTranslatorInfoResponse;
+import com.ai.yc.translator.api.translatorservice.param.searchYCLSPInfoRequest;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
 import com.ai.yc.ucenter.api.members.param.base.ResponseCode;
@@ -42,10 +47,6 @@ import com.ai.yc.ucenter.api.members.param.editmobile.UcMembersEditMobileRequest
 import com.ai.yc.ucenter.api.members.param.get.UcMembersGetRequest;
 import com.ai.yc.ucenter.api.members.param.get.UcMembersGetResponse;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
-import com.ai.yc.user.api.userservice.param.SearchYCTranslatorRequest;
-import com.ai.yc.user.api.userservice.param.YCLSPInfoReponse;
-import com.ai.yc.user.api.userservice.param.YCTranslatorInfoResponse;
-import com.ai.yc.user.api.userservice.param.searchYCLSPInfoRequest;
 import com.alibaba.fastjson.JSON;
 
 /**
@@ -83,13 +84,13 @@ public class SecurityController {
         String userId = UserUtil.getUserId();
         modelView.addObject("userId", userId);
 		// 查询译员信息
-		IYCUserServiceSV iycUserServiceSV = DubboConsumerFactory
-				.getService(IYCUserServiceSV.class);
+        IYCTranslatorServiceSV iycTranslatorServiceSV = DubboConsumerFactory
+				.getService(IYCTranslatorServiceSV.class);
 		SearchYCTranslatorRequest ycReq = new SearchYCTranslatorRequest();
 		ycReq.setUserId(userId);
 		YCTranslatorInfoResponse ycRes = null;
 		try {
-			ycRes = iycUserServiceSV.searchYCTranslatorInfo(ycReq);
+			ycRes = iycTranslatorServiceSV.searchYCTranslatorInfo(ycReq);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}
@@ -114,7 +115,7 @@ public class SecurityController {
 		String status = ResponseData.AJAX_STATUS_SUCCESS;
 		String msg ="ok";
 		try {
-			res= DubboConsumerFactory.getService(IYCUserServiceSV.class).searchLSPInfo(req);
+			res= DubboConsumerFactory.getService(IYCTranslatorServiceSV.class).searchLSPInfo(req);
 			ResponseHeader responseHeader =res==null?null:res.getResponseHeader();
 			if(responseHeader!=null&&responseHeader.isSuccess()){
 				data = res.getUsrLspList();
