@@ -77,6 +77,7 @@ public class TaskCenterController {
         //查询订单大厅数量
         IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
         QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
+        ordCountReq.setState(OrderConstants.State.UN_RECEIVE);
         QueryOrdCountResponse taskNumRes = iOrderQuerySV.queryOrderCount(ordCountReq);
         Map<String,Integer> taskNumMap = taskNumRes.getCountMap();
         Integer taskNum = taskNumMap.get(OrderConstants.State.UN_RECEIVE);
