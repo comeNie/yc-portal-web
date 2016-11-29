@@ -1,8 +1,3 @@
-/build/
-*.iml
-*.class
-build/
-gradle/
 # Ignore Gradle GUI config
 gradle-app.setting
 
@@ -14,10 +9,16 @@ gradle-app.setting
 *.ear
 
 # Cache of project
-.gradle
 .gradletasknamecache
 .classpath
 .project
+*.iml
+*.class
+
+# Cache dir of project
+.gradle
 .settings/
-/bin/
+bin/
 logs/
+build/
+gradle/
