@@ -48,6 +48,8 @@ docker run -d --name yc-portal-web-v1.0  -p 14101:8080  \
 -e "APP_ACTION_URL=http://10.19.13.24:14110/opt-pay/pay/gotoPayByOrg" \
 -e "NOTIFY_URL=http://10.19.13.20:14101/portal-web/pay/payResult" \
 -e "RETURN_URL=http://10.19.13.20:14101/portal-web/pay/payResultView" \
+-e "RETURN_DEPOSIT_URL=http://10.19.13.24:14101/portal-web/pay/depositFundResultView" \
+-e "NOTIFY_DEPOSIT_URL=http://10.19.13.24:14101/portal-web/pay/depositFundResult" \
 -e "SoaServerIpAddressA=10.19.13.29" \
 -e "SoaServerIpPortA=8082" \
 -e "HttpServerIpAddressA=10.19.13.29" \
