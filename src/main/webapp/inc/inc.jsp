@@ -11,7 +11,7 @@
     response.setHeader("Cache-Control", "no-cache");
     response.setDateHeader("Expires", 0);
     response.setHeader("Pragma", "No-cache");
-
+    //设置日历控件国际化语言
     if(Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())){
         request.setAttribute("my97Lang","zh-cn");
     }else {
