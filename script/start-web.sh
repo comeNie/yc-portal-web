@@ -52,6 +52,8 @@ sed -i "s%ACTION_URL=.*%ACTION_URL=${ACTION_URL}%g" ./config.properties
 sed -i "s%APP_ACTION_URL=.*%APP_ACTION_URL=${APP_ACTION_URL}%g" ./config.properties
 sed -i "s%NOTIFY_URL=.*%NOTIFY_URL=${NOTIFY_URL}%g" ./config.properties
 sed -i "s%RETURN_URL=.*%RETURN_URL=${RETURN_URL}%g" ./config.properties
+sed -i "s%RETURN_DEPOSIT_URL=.*%RETURN_DEPOSIT_URL=${RETURN_DEPOSIT_URL}%g" ./config.properties
+sed -i "s%NOTIFY_DEPOSIT_URL=.*%NOTIFY_DEPOSIT_URL=${NOTIFY_DEPOSIT_URL}%g" ./config.properties
 #FocusSms.properties
 sed -i "s%SoaServerIpAddressA=.*%SoaServerIpAddressA=${SoaServerIpAddressA}%g" ./FocusSms.properties
 sed -i "s%SoaServerIpPortA=.*%SoaServerIpPortA=${SoaServerIpPortA}%g" ./FocusSms.properties
