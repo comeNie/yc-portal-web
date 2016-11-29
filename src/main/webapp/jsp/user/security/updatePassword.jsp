@@ -360,7 +360,7 @@
     		'getDynamiCode':'<spring:message code="ycregister.getDynamiCode"/>',
     		'sendMailError':'<spring:message code="ycaccountcenter.updatePassword.sendMailError"/>'
     };
-	var phone = "${user.mobile}";
+	var phone = "${user.fullMobile}";
 	var email = "${user.email}";
 	var pager;
 	(function() {
