@@ -13,7 +13,7 @@
 <!--面包屑导航-->
 <%@ include file="/inc/topHead.jsp" %>
 <!--banner-->
-<div class="banner<%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"-en":""%>"></div>
+<div class="banner"><p><img src="${uedroot}/images/banner-word-CN.png"></p></div>
 <!--index nav-->
 <div class="index-nav">
     <ul>

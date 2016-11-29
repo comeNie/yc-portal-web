@@ -156,17 +156,20 @@
 							</ul>
 							<%--使用余额--%>
 							<c:if test="${balanceInfo!=null}">
-							<ul payType="YE" class="none-ml">
-								<li class="payment-balance">
-									<%--账户余额--%>
-									<p><spring:message code="pay.order.account.balance"/></p>
-							<%--支付余额--%>
-									<p class="word"><spring:message code="pay.order.pay.balance" />：<c:if
-											test="${isEn==true}">¥</c:if><fmt:formatNumber
-											value="${balanceInfo.balance/1000}" pattern="#,##0.00#"/><c:if
-											test="${isEn!=true}">元</c:if></p>
-								</li>
-							</ul>
+								<ul payType="YE" class="none-ml">
+									<li class="payment-balance">
+											<%--账户余额--%>
+										<p><spring:message code="pay.order.account.balance"/></p>
+											<%--支付余额--%>
+										<p class="word"><spring:message code="pay.order.pay.balance"/>：<c:if
+												test="${isEn==true}">¥</c:if><fmt:formatNumber
+												value="${balanceInfo.balance/1000}" pattern="#,##0.00#"/><c:if
+												test="${isEn!=true}">元</c:if></p>
+											<%--充值--%>
+										<p><input type="button" class="btn radius20 border-blue btn-80 ml-10"
+												  value="<spring:message code="pay.order.balance.recharge"/>"></p>
+									</li>
+								</ul>
 							<%--余额支付--%>
 							<form id="yePayForm" method="post" action="${_base}/p/customer/order/payOrder/balance">
 								<input type="hidden" name="externalId" value="${orderId}">
@@ -192,16 +195,6 @@
 						<%--<label><i class="icon iconfont">&#xe617;</i></label>--%>
 						<%--</ul>--%>
 					</c:choose>
-  				</div>
-  				<div class="payment-btn">
-					<%--人民币订单,且余额不足--%>
-					<c:if test="${orderFee.currencyUnit == '1'&&needPay==true}">
-  					<ul>
-						<%--余额不足，可先--%>
-  						<li><spring:message code="pay.order.balance.insufficient"/>
-							<input type="button" id="depositBtn" class="btn radius20 border-blue btn-80 ml-10" value="<spring:message code="pay.order.balance.recharge"/>"></li>
-  					</ul>
-					</c:if>
   				</div>
   			</div>
 			<div class="recharge-btn order-btn placeorder-btn ml-0">
