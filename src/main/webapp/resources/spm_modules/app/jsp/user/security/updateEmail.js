@@ -168,7 +168,7 @@ define("app/jsp/user/security/updateEmail",
 									$("#sendEmailBtn").removeAttr("disabled"); //移除disabled属性
 								},
 								error : function(){
-									alert(updateEmailJs.networkConnectTimeOut);
+									showMsg(updateEmailJs.networkConnectTimeOut);
 								}
 							});
 						},
@@ -224,7 +224,7 @@ define("app/jsp/user/security/updateEmail",
 									$("#phone-send-email-btn").removeAttr("disabled"); //移除disabled属性
 								},
 								error : function(){
-									alert(updateEmailJs.networkConnectTimeOut);
+									showMsg(updateEmailJs.networkConnectTimeOut);
 								}
 							});
 						},
@@ -313,7 +313,7 @@ define("app/jsp/user/security/updateEmail",
 				    		        	}
 				    		          },
 				    				error: function(error) {
-				    						alert("error:"+ error);
+				    						showMsg("error:"+ error);
 				    					}
 				    				});
 							 
@@ -355,7 +355,7 @@ define("app/jsp/user/security/updateEmail",
 								    				success: function(data) {
 								    					var jsonData = JSON.parse(data);
 								    		        	if(jsonData.statusCode!="1"){
-								    		        		alert(updateEmailJs.bindFail)
+								    		        		showMsg(updateEmailJs.bindFail)
 															return false;
 								    		        	}else{
 								    		        		$("#next2").hide();
@@ -363,13 +363,13 @@ define("app/jsp/user/security/updateEmail",
 								    		        	}
 								    		          },
 								    				error: function(error) {
-								    						alert("error:"+ error);
+								    						showMsg("error:"+ error);
 								    					}
 								    				});
 				    		        	}
 				    		          },
 				    				error: function(error) {
-				    						alert("error:"+ error);
+				    						showMsg("error:"+ error);
 				    					}
 				    				});
 						},
@@ -378,13 +378,13 @@ define("app/jsp/user/security/updateEmail",
 							var email = $("#"+id);
 							var emailVal = email.val();
 							if ($.trim(emailVal) == "") {
-								alert(updateEmailJs.emailUErrPleaseMsg);
+								showMsg(updateEmailJs.emailUErrPleaseMsg);
 								//email.focus();
 								return false;
 							}
 							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
 									.test(emailVal)) {
-								alert(updateEmailJs.emailUErrLegalMsg);
+								showMsg(updateEmailJs.emailUErrLegalMsg);
 								return false;
 							}
 							return true;
@@ -544,7 +544,7 @@ define("app/jsp/user/security/updateEmail",
 			    		        	}
 			    		          },
 			    				error: function(error) {
-			    						alert("error:"+ error);
+			    						showMsg("error:"+ error);
 			    					}
 			    				});
 							
@@ -570,14 +570,14 @@ define("app/jsp/user/security/updateEmail",
 				    				},
 				    				success: function(json) {
 				    					if(!json.data){
-				    		        		alert(json.statusInfo)
+				    		        		showMsg(json.statusInfo)
 										}else{
 				    		        		$("#next5").hide();
 				    		        		$("#next6").show();
 				    		        	}
 				    		          },
 				    				error: function(error) {
-				    						alert("error:"+ error);
+				    						showMsg("error:"+ error);
 				    					}
 				    				});
 						},
@@ -601,7 +601,7 @@ define("app/jsp/user/security/updateEmail",
 				    				},
 				    				success: function(json) {
 				    					if(!json.data){
-				    		        		alert(json.statusInfo)
+				    		        		showMsg(json.statusInfo)
 											return;
 				    		        	}else{
 				    		        		$("#next2").hide();
@@ -609,7 +609,7 @@ define("app/jsp/user/security/updateEmail",
 				    		        	}
 				    		          },
 				    				error: function(error) {
-				    						alert("error:"+ error);
+				    						showMsg("error:"+ error);
 				    					}
 				    				});
 						}
