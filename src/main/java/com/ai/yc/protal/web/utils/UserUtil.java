@@ -43,8 +43,9 @@ public class UserUtil {
         //TODO....模拟数据
         if (clientUser==null) {
             clientUser = new GeneralSSOClientUser();
-            clientUser.setUserId("4444313");
-            clientUser.setEmail("test@asiainfo.com");
+            clientUser.setUserId("305234");
+            clientUser.setEmail("mengbo@asiainfo.com");
+            clientUser.setUsername("mengbo@asiainfo.com");
             saveSsoUser(clientUser);
         }
         return clientUser;
