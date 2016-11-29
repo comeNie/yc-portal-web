@@ -319,6 +319,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				});
 			}
 
+			//首页传过来的参数
+			var selPurpose = this.getUrlParam("selPurpose");
+			if (selPurpose != '' || selPurpose != undefined) {
+				$("#selectPurpose").val(selPurpose);
+			}
+
 			//用途
 			if ($("#useCode").val() != '') {
 				$("#selectPurpose").val($("#useCode").val());
@@ -453,6 +459,13 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			}
 				
 			
+		},
+
+		//获取url中参数
+		getUrlParam:function(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+			var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+			if (r != null) return unescape(r[2]); return null; //返回参数值
 		},
 
 		//格式化金钱
