@@ -85,11 +85,7 @@
  							<li>
  								<label class="ml-70" id="dynamicode" style="display: none;"></label>
  								<p class="word"><spring:message code="ycupdateemail.phone" /></p>
- 								<p>
-									<select id="country" class="select select-in radius"></select>
-								</p>
- 								
- 								<p id="telephone">${sessionScope.user_session_key.mobile}</p>
+ 								<p id="telephone">${sessionScope.user_session_key.fullMobile}</p>
  							</li>
  							<li>
  								<p class="word"><spring:message code="ycupdateemail.dynamiccode" /></p>

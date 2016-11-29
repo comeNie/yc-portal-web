@@ -84,7 +84,7 @@
 										<li> 
 										    <label class="ml-70" id="dynamicode" style="display: none;"></label>
 											<p class="word"><spring:message code="ycaccountcenter.updatePassword.bindPhone"/></p>
-											<p id="telephone">${user.mobile}</p>
+											<p id="telephone">${user.fullMobile}</p>
 										</li>
 										<li>
 											<p class="word"><spring:message code="ycregister.dynamiCode" /></p>
