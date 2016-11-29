@@ -63,7 +63,7 @@ define("app/jsp/user/password/password",
 						/* 重写父类 */
 						setup : function() {
 							passwordPager.superclass.setup.call(this);
-							this._loadCountry();
+							//this._loadCountry();
 							$(".set-up a").click(function () {
 				                $(".set-up a").each(function () {
 				                    $(this).removeClass("current");
