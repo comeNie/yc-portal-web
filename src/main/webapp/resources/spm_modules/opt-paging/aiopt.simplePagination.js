@@ -185,28 +185,23 @@ define("opt-paging/aiopt.simplePagination", ["jquery","simplePagination/jquery.s
         	if(this._tp){
         		return;
         	}
-            //var _tp = this.$element.twbsPagination({
-            //    totalPages: totalPages,
-            //    startPage: opt.startPage,
-            //    visiblePages: opt.visiblePages,
-            //    first: opt.first,
-            //    prev: opt.prev,
-            //    next: opt.next,
-            //    last: opt.last,
-            //    loop: opt.loop,
-            //    paginationClass: opt.paginationClass?opt.paginationClass:"pagination",
-            //    onPageClick: function (event, pageNo) {
-            //        _this.loadData(pageNo);
-            //    }
-            //});
 			var _tp = this.$element.pagination({
 				displayedPages: opt.visiblePages,
 				pages:totalPages,
 				currentPage:2,
 				prevText:"<",
 				nextText:">",
-                hrefTextPrefix:"",
+                // numPrev:'到',
+                // numAfter:'页',
+                // numBtn:'跳转',
+                // hrefTextPrefix:"",
 				cssStyle:'compact-theme',
+                numCheck:function(pageNum){//检查输入页码是否符合要求,返回true或false
+                	if(window.console){
+                		console.log("num check:"+pageNum);
+                	}
+                	return true;
+                },
 				onPageClick: function (pageNo, event) {
 					_this.loadData(pageNo);
 				}

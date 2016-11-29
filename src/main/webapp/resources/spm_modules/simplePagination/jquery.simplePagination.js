@@ -393,7 +393,7 @@
 		_showGotoPage:function(){
             var self = this,o = self.data('pagination');
             self.append("<p><span>"+o.numPrev+"</span>&nbsp;&nbsp;<span>" +
-                "<input type='number' class='int-verysmall radius' maxlength='8' max='"+o.pages+"'></span>" +
+                "<input type='number' class='int-verysmall radius' maxlength='8' max='"+o.pages+"' min='1'></span>" +
                 "&nbsp;&nbsp;<span>"+o.numAfter+"</span></p><p class='taiz'>" +
                 "<a href='javaScript:void(0);'>"+o.numBtn+"</a></p>");
 
@@ -410,7 +410,7 @@
                     methods._selectPage.call(self, parseInt(goPage, 10)-1);
 				}
             });
-        },
+        }
 	};
 
 	$.fn.pagination = function(method) {
