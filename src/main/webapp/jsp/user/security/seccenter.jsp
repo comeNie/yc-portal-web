@@ -114,15 +114,15 @@
   			</div>
   			<div class="security-list">
   				<ul>
-  					<li id="login_password_icon_color" class="green"><i id="login_password_icon" class="icon-ok-sign"></i></li>
+  					<li id="login_password_icon_color" class="red"><i id="login_password_icon" class="icon iconfont">&#xe652;</i></li>
   					<li class="word"><spring:message code="ycaccountcenter.setting.loginpassword"/></li>
-  					<li><spring:message code="ycaccountcenter.setting.loginpassword.tip"/></li>
+  					<li id="login_password_text"><spring:message code="ycaccountcenter.setting.loginpassword.unset"/></li>
   					<li class="right">
   					  <a href="javascript:void(0)" onclick="showUpdatePwd();"><spring:message code="ycaccountcenter.setting.set"/></a>
   					 </li>
   				</ul>
   				<ul>
-  					<li id="login_email_icon_color" class="red"><i id="login_email_icon" class="icon-remove-sign"></i></li>
+  					<li id="login_email_icon_color" class="red"><i id="login_email_icon" class="icon iconfont">&#xe652;</i></li>
   					<li class="word"><spring:message code="ycaccountcenter.setting.email"/></li>
   					<li id="login_email_text"><spring:message code="ycaccountcenter.setting.email.unset"/></li>
   					<li class="right">
@@ -135,7 +135,7 @@
   					</li>
   				</ul>
   				<ul>
-  					<li id="login_phone_icon_color" class="red"><i id="login_phone_icon" class="icon-remove-sign"></i></li>
+  					<li id="login_phone_icon_color" class="red"><i id="login_phone_icon" class="icon iconfont">&#xe652;</i></li>
   					<li class="word"><spring:message code="ycaccountcenter.setting.loginphone"/></li>
   					<li id="login_phone_text"><spring:message code="ycaccountcenter.setting.loginphone.unset"/></li>
   					<li class="right">
@@ -148,7 +148,7 @@
   					</li>
   				</ul>
   				<ul>
-  					<li id="pay_password_icon_color"  class="red"><i id="pay_password_icon" class="icon-remove-sign"></i></li>
+  					<li id="pay_password_icon_color"  class="red"><i id="pay_password_icon" class="icon iconfont">&#xe652;</i></li>
   					<li class="word"><spring:message code="ycaccountcenter.setting.paypassword"/></li>
   					<li id="pay_password_text"><spring:message code="ycaccountcenter.setting.paypassword.unset"/></li>
   					<li class="right"><a href="javascript:void(0);"onclick="showUpdatePayPwd();"><spring:message code="ycaccountcenter.setting.set"/></a></li>
@@ -191,7 +191,7 @@
 	var isexistpaypassword ="${isexistpaypassword}";
 	var securitylevel = "${securitylevel}";
 	var userEmail = "${userinfo.email}"
-	var userMobile = "${userinfo.mobile}";
+	var userMobile = "${userinfo.fullMobile}";
 	var secCenterMsg = {
 			"showOkValueMsg" : '<spring:message code="ycaccountcenter.js.showOkValueMsg"/>',
     		"showTitleMsg" : '<spring:message code="ycaccountcenter.js.showTitleMsg"/>',
@@ -201,7 +201,8 @@
     		"repeatPasswordError" : '<spring:message code="ycaccountcenter.updatePassword.repeatPasswordError"/>',
 			"email_set"       : '<spring:message code="ycaccountcenter.setting.email.set"/>',
 			"login_phone_set" : '<spring:message code="ycaccountcenter.setting.loginphone.set"/>',
-			"paypassword_set" : '<spring:message code="ycaccountcenter.setting.paypassword.set"/>'
+			"paypassword_set" : '<spring:message code="ycaccountcenter.setting.paypassword.set"/>',
+			"password_set" : '<spring:message code="ycaccountcenter.setting.loginpassword.tip"/>',
 		};
 
 	$(document).ready(function(){

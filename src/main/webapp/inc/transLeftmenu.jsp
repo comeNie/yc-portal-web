@@ -21,14 +21,14 @@ UserUtil.getUserPortraitImg();
 		<ul>
 			<li id="index">
 				<a href="${_base}/p/security/interpreterIndex">
-					<span><i class="icon iconfont">&#xe600;</i></span>
+					<span><i class="icon iconfont">&#xe645;</i></span>
 					<%--我的首页--%>
 					<span><spring:message code="ycleftmenu.mymainpage"/></span>
 				</a>
 			</li>
 			<li id="taskCenter">
 				<a href="javaScript:void(0);">
-					<span><i class="icon iconfont">&#xe68e;</i></span>
+					<span><i class="icon iconfont">&#xe641;</i></span>
 					<%--发现订单--%>
 					<span><spring:message code="ycleftmenu.look.orders"/> </span>
 				</a>
@@ -40,33 +40,33 @@ UserUtil.getUserPortraitImg();
 			<%--<div class="list-p"><a href="#"><spring:message code="ycleftmenu.assign.orders"/><span> (7)</span></a></div>--%>
 			<li id="orderList">
 				<a href="${_base}/p/trans/order/list/view">
-					<span><i class="icon iconfont">&#xe602;</i></span>
+					<span><i class="icon iconfont">&#xe64a;</i></span>
 					<%--我的订单--%>
 					<span><spring:message code="ycleftmenu.myorder"/></span>
 				</a>
 			</li>
 			<!-- <li>
 				<a href="#">
-					<span><i class="icon iconfont">&#xe604;</i></span>
+					<span><i class="icon iconfont">&#xe647;</i></span>
 					<span>译员级别</span>
 				</a>
 			</li> -->
 			<!-- <li>
 				<a href="#">
-					<span><i class="icon iconfont">&#xe65f;</i></span>
+					<span><i class="icon iconfont">&#xe640;</i></span>
 					<span>工作记录</span>
 				</a>
 			</li> 
 			-->
 			<li id="interpreterInfo">
 				<a href="${_base}/p/interpreter/interpreterInfoPager?source=interpreter">
-					<span><i class="icon iconfont">&#xe60c;</i></span>
+					<span><i class="icon iconfont">&#xe642;</i></span>
 					<span><spring:message code="ycleftmenu.myinfo"/></span>
 				</a>
 			</li>
 			<li id="seccenterSettings">
 				<a  href="${_base}/p/security/seccenter?source=interpreter">
-					<span><i class="icon iconfont">&#xe609;</i></span>
+					<span><i class="icon iconfont">&#xe63f;</i></span>
 					<span><spring:message code="ycleftmenu.mysecurity"/></span>
 				</a>
 			</li>

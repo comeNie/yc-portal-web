@@ -39,20 +39,25 @@ define("app/jsp/user/security/securitycenter", function(require, exports, module
 			this._setSecSettingList();
             },
             _setSecSettingList : function () {
+            	if(isexistloginpassword=="true"){
+            		$("#login_password_icon").html("&#xe651;");
+            		$("#login_password_icon_color").attr("class","green");
+            		$("#login_password_text").html(secCenterMsg.password_set);
+            	}
             	if(isexistemail == "true") {
-            		$("#login_email_icon").attr("class","icon-ok-sign");
+            		$("#login_email_icon").html("&#xe651;");
             		$("#login_email_icon_color").attr("class","green");
             		var userEmailWithStart = this._getEmailWithStart(userEmail);
             		$("#login_email_text").html(secCenterMsg.email_set + userEmailWithStart );
             	}
             	if(isexistphone == "true") {
-            		$("#login_phone_icon").attr("class","icon-ok-sign");
+            		$("#login_phone_icon").html("&#xe651;");
             		$("#login_phone_icon_color").attr("class","green");
             		var userMobileWithStart = this._getMobileWithStart(userMobile);
             		$("#login_phone_text").html(secCenterMsg.login_phone_set + " " + userMobileWithStart);
             	}
             	if(isexistpaypassword == "true") {
-            		$("#pay_password_icon").attr("class","icon-ok-sign");
+            		$("#pay_password_icon").html("&#xe651;");
             		$("#pay_password_icon_color").attr("class","green");
             		$("#pay_password_text").html(secCenterMsg.paypassword_set);
             	}
@@ -65,7 +70,7 @@ define("app/jsp/user/security/securitycenter", function(require, exports, module
             	return StartEmail;
             },
             _getMobileWithStart : function (orginalMobile) {
-            	var part1 = orginalMobile.substring(0,3);
+            	var part1 = orginalMobile.substring(0,6);
             	var part2 = "******";
             	var part3 = orginalMobile.substring(9,11);
             	return part1 + part2 + part3;

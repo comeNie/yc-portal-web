@@ -19,33 +19,36 @@ UserUtil.getUserPortraitImg();
   		</div>
   		<div class="left-list" id="left_menu_list">
   			<ul>
+  				<!-- 我的首页 -->
   				<li id="index" class="current">
   					<a href="${_base}/p/security/index">
-  					<span><i class="icon iconfont">&#xe600;</i></span>
+  					<span><i class="icon iconfont">&#xe645;</i></span>
   					<span><spring:message code="ycleftmenu.mymainpage"/></span>
   					</a>
   				</li>
+  				<!-- 我的订单 -->
   				<li id="orderList">
   					<a href="${_base}/p/customer/order/list/view">
-  					<span><i class="icon iconfont">&#xe601;</i></span>
+  					<span><i class="icon iconfont">&#xe64a;</i></span>
   					<span><spring:message code="ycleftmenu.myorder"/></span>
   					</a>
   				</li>
+  				<!-- 我的账户 -->
 				<li id="myaccount">
 					<a href="${_base}/p/balance/account">
-						<span><i class="icon iconfont">&#xe602;</i></span>
+						<span><i class="icon iconfont">&#xe648;</i></span>
 						<span><spring:message code="ycleftmenu.myaccount"/></span>
 					</a>
 				</li>
   				<li>
   					<a href="优惠卷.html">
-  					<span><i class="icon iconfont">&#xe603;</i></span>
+  					<span><i class="icon iconfont">&#xe644;</i></span>
   					<span><spring:message code="ycleftmenu.discount"/></span>
   					</a>
   				</li>
   				<!-- <li>
   					<a href="我的级别.html">
-  					<span><i class="icon iconfont">&#xe604;</i></span>
+  					<span><i class="icon iconfont">&#xe647;</i></span>
   					<span><spring:message code="ycleftmenu.mylevel"/></span>
   					</a>
   				</li> -->
@@ -57,25 +60,27 @@ UserUtil.getUserPortraitImg();
   				</li>
   				<li>
   					<a href="发票管理.html">
-  					<span><i class="icon iconfont">&#xe606;</i></span>
+  					<span><i class="icon iconfont">&#xe643;</i></span>
   					<span><spring:message code="ycleftmenu.myfapiao"/></span>
   					</a>
   				</li>
   				<!-- <li>
   					<a href="企业中心.html">
-  					<span><i class="icon iconfont">&#xe607;</i></span>
+  					<span><i class="icon iconfont">&#xe6f8;</i></span>
   					<span><spring:message code="ycleftmenu.companycenter"/></span>
   					</a>
   				</li> -->
+  				<!-- 个人信息 -->
   				<li id="interpreterInfo">
   					<a href="${_base}/p/interpreter/interpreterInfoPager?source=user">
-  					<span><i class="icon iconfont">&#xe60c;</i></span>
+  					<span><i class="icon iconfont">&#xe642;</i></span>
   					<span><spring:message code="ycleftmenu.myinfo"/></span>
   					</a>
   				</li>
+  				<!-- 安全设置 -->
   				<li id="seccenterSettings">
   					<a  href="${_base}/p/security/seccenter?source=user">
-  					<span><i class="icon iconfont">&#xe609;</i></span>
+  					<span><i class="icon iconfont">&#xe63f;</i></span>
   					<span><spring:message code="ycleftmenu.mysecurity"/></span>
   					</a>
   				</li>
