@@ -188,7 +188,7 @@ define("opt-paging/aiopt.simplePagination", ["jquery","simplePagination/jquery.s
 			var _tp = this.$element.pagination({
 				displayedPages: opt.visiblePages,
 				pages:totalPages,
-				currentPage:2,
+				currentPage:opt.startPage,
 				prevText:"<",
 				nextText:">",
                 // numPrev:'到',

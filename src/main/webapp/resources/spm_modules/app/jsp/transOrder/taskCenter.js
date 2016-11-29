@@ -7,7 +7,7 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
     require("jsviews/jsrender.min");
     require("jsviews/jsviews.min");
     require("app/util/jsviews-ext");
-	require("opt-paging/aiopt.pagination");
+	require("opt-paging/aiopt.simplePagination");
 	require("my97DatePicker/WdatePicker");
 	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
 
