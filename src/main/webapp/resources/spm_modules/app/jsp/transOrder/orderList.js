@@ -6,7 +6,7 @@ define('app/jsp/transOrder/orderList', function (require, exports, module) {
     require("jsviews/jsrender.min");
     require("jsviews/jsviews.min");
     require("app/util/jsviews-ext");
-	require("opt-paging/aiopt.pagination");
+	require("opt-paging/aiopt.simplePagination");
     
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();

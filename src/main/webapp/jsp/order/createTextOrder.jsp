@@ -96,7 +96,7 @@
   				<div class="translate-int radius" id="fy1">
   					<p>
   					<!--  翻译内容--> 
-  					<textarea id="translateContent" name="translateContent" class="int-text textarea-xlarge-100 radius">${order.productInfo.needTranslateInfo}</textarea></p>
+  					<textarea id="translateContent" maxlength="2000" name="translateContent" class="int-text textarea-xlarge-100 radius">${order.productInfo.needTranslateInfo}</textarea></p>
   					<!-- 上传文档btn -->
   					<p class="right"><input type="button" class="btn border-blue radius20 btn-80" value="<spring:message code="order.uploadDoc"/>"  id="fy-btn"></p>
   					<!-- 清空 -->
@@ -151,7 +151,7 @@
 			<div class="white-bj">
 				<div class="selection-level mt-20" id="transGrade">
 					<!-- 翻译级别 3种 -->
-					<ul class="none-ml current" name="100210">
+					<ul class="none-ml" name="100210">
 						<li class="blue">
 							<p><spring:message code="order.Standard"/></p>
 							<p><i class="icon-star-empty"></i></p>
@@ -182,7 +182,7 @@
 						</li>
 						<label></label>
 					</ul>
-					<ul name="100220">
+					<ul class="current" name="100220">
 						<li class="blue">
 							<p><spring:message code="order.Professional"/></p>
 							<p><i class="icon-star-empty"></i><i class="icon-star-empty"></i></p>
@@ -211,6 +211,7 @@
 							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
 							<p><spring:message code="order.proInfo3"/></p>
 						</li>
+						<label></label>
 					</ul>
 					<ul name="100230">
 						<li class="blue">
@@ -250,6 +251,8 @@
 							<p class="word"><spring:message code="order.purpose"/></p>
 							<p>
 								<select id="selectPurpose" name="selectPurpose" class="select select-medium radius">
+									<%--不限  --%>
+									<option value="" selected="selected"><spring:message code="order.noLimt"/></option>
 									<c:forEach items="${purposeList}" var="purpose">
 										<option value="${purpose.purposeId}">
 											<c:choose>
@@ -265,6 +268,8 @@
 							<p class="word"><spring:message code="order.Fields"/></p>
 							<p>
 								<select id="selectDomain" name="selectDomain" class="select select-medium radius">
+									<%--不限  --%>
+									<option value="" selected="selected"><spring:message code="order.noLimt"/></option>
 									<c:forEach items="${domainList}" var="domain">
 										<option value="${domain.domainId}">
 											<c:choose>

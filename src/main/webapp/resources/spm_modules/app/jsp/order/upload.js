@@ -11,8 +11,8 @@
 	          dnd: '#fy2', //拖拽
 	          accept: {
 	      	    title: 'intoTypes',
-	      	    extensions: 'rar,zip,doc,xls,docx,xlsx,pdf,jpg,png,jif',
-	      	    mimeTypes: '.rar,.zip,.doc,.xls,.docx,.xlsx,.pdf,.jpg,.png,.jif'
+	      	    extensions: 'rar,zip,doc,docx,pdf,jpg,png,jif',
+	      	    mimeTypes: '.rar,.zip,.doc,.docx,.pdf,.jpg,.png,.jif'
 	      		},
              resize : false,
              // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。

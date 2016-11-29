@@ -111,7 +111,7 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
             formValidator.form();
             if(!$("#contactForm").valid()){
                 //alert('验证不通过！！！！！');
-                return;
+                return false;
             }
 
             //发请求保存联系人
@@ -210,6 +210,12 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
 
         //返回上一页
         _toCreateOrder:function () {
+            if ($("#saveContactDiv").css("display") != 'none') {
+                if (this._saveContact() == false)
+                    return
+            }
+
+
             var translateType = $("#transType").val();
 
             if(translateType == 2) { //口译
