@@ -41,13 +41,13 @@ public class UserUtil {
         HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
         GeneralSSOClientUser clientUser = (GeneralSSOClientUser)session.getAttribute(SSOClientConstants.USER_SESSION_KEY);
         //TODO....模拟数据
-        if (clientUser==null) {
-            clientUser = new GeneralSSOClientUser();
-            clientUser.setUserId("305234");
-            clientUser.setEmail("mengbo@asiainfo.com");
-            clientUser.setUsername("mengbo@asiainfo.com");
-            saveSsoUser(clientUser);
-        }
+//        if (clientUser==null) {
+//            clientUser = new GeneralSSOClientUser();
+//            clientUser.setUserId("305234");
+//            clientUser.setEmail("mengbo@asiainfo.com");
+//            clientUser.setUsername("mengbo@asiainfo.com");
+//            saveSsoUser(clientUser);
+//        }
         return clientUser;
     }
     /**
