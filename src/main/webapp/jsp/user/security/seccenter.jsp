@@ -127,10 +127,10 @@
   					<li id="login_email_text"><spring:message code="ycaccountcenter.setting.email.unset"/></li>
   					<li class="right">
   					 <c:if test="${!isexistemail}">
-  					  <a href="${_base}/p/security/bindEmail"><spring:message code="ycaccountcenter.setting.set"/></a>
+  					  <a href="${_base}/p/security/bindEmail?source=${source}"><spring:message code="ycaccountcenter.setting.set"/></a>
   					 </c:if>
   					  <c:if test="${isexistemail}">
-  					 <a href="${_base}/p/security/editEmail"><spring:message code="ycaccountcenter.setting.update"/></a>
+  					 <a href="${_base}/p/security/editEmail?source=${source}"><spring:message code="ycaccountcenter.setting.update"/></a>
   					 </c:if>
   					</li>
   				</ul>
@@ -140,10 +140,10 @@
   					<li id="login_phone_text"><spring:message code="ycaccountcenter.setting.loginphone.unset"/></li>
   					<li class="right">
   					<c:if test="${!isexistphone}">
-  					 <a href="${_base}/p/security/bindPhone"><spring:message code="ycaccountcenter.setting.set"/></a>
+  					 <a href="${_base}/p/security/bindPhone?source=${source}"><spring:message code="ycaccountcenter.setting.set"/></a>
   					</c:if>
   					<c:if test="${isexistphone}">
-  					 <a href="${_base}/p/security/editPhone"><spring:message code="ycaccountcenter.setting.set"/></a>
+  					 <a href="${_base}/p/security/editPhone?source=${source}"><spring:message code="ycaccountcenter.setting.set"/></a>
   					</c:if>
   					</li>
   				</ul>

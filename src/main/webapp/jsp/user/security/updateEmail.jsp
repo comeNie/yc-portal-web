@@ -9,7 +9,12 @@
 </head>
 <body>
 	<!--头部-->
- <%@ include file="/inc/userTopMenu.jsp"%>
+  <c:if test="${source=='user'}">
+      <%@ include file="/inc/userTopMenu.jsp"%>
+  </c:if>
+  <c:if test="${source=='interpreter'}">
+      <%@ include file="/inc/transTopMenu.jsp"%>
+  </c:if>
   <!--二级主体-->
   <!--外侧背景-->
   <div class="cloud-container">
@@ -17,7 +22,12 @@
   <div class="cloud-wrapper">
   	<!--左侧菜单-->
   	<div class="left-subnav">
+  	<c:if test="${source=='user'}">
   	<%@ include file="/inc/leftmenu.jsp"%>
+  	</c:if>
+  <c:if test="${source=='interpreter'}">
+  <%@ include file="/inc/transLeftmenu.jsp"%>
+  </c:if>
   	</div>
   	<!--右侧内容-->
   	<!--右侧大块-->
@@ -75,11 +85,10 @@
  								<label class="ml-70" id="dynamicode" style="display: none;"></label>
  								<p class="word"><spring:message code="ycupdateemail.phone"/></p>
  								<p>
-									<select id="country" class="select select-in radius"></select>
 									<input id="tempCode" type="hidden"/>
 								</p>
  								
- 								<p id="telephone">${sessionScope.user_session_key.mobile}</p>
+ 								<p id="telephone">${sessionScope.user_session_key.fullMobile}</p>
  							</li>
  							<li>
  								<p class="word"><spring:message code="ycupdateemail.dynamiccode"/></p>
@@ -345,7 +354,7 @@ var pager;
 })();
 </script>
 <script type="text/javascript">
-	var phone = "${sessionScope.user_session_key.mobile}";
+	var phone = "${sessionScope.user_session_key.fullMobile}";
 	var email = "${sessionScope.user_session_key.email}";
 	$(document).ready(function(){
 		$("#goEmail1").click(function(){

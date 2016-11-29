@@ -5,7 +5,7 @@ UserUtil.getUserPortraitImg();
 %>
 <script src="${_base}/resources/spm_modules/jquery/1.9.1/jquery.min.js"></script>
    <!--二级主体-->
-  <!--外侧背景-->
+  <!--外侧背景--> 
   	<!--左侧菜单-->
   	<div class="left-subnav">
   		<div class="left-title">
@@ -43,12 +43,12 @@ UserUtil.getUserPortraitImg();
   					<span><spring:message code="ycleftmenu.discount"/></span>
   					</a>
   				</li>
-  				<li>
+  				<!-- <li>
   					<a href="我的级别.html">
   					<span><i class="icon iconfont">&#xe604;</i></span>
   					<span><spring:message code="ycleftmenu.mylevel"/></span>
   					</a>
-  				</li>
+  				</li> -->
   				<li>
   					<a href="我的积分.html">
   					<span><i class="icon iconfont">&#xe605;</i></span>
@@ -61,12 +61,12 @@ UserUtil.getUserPortraitImg();
   					<span><spring:message code="ycleftmenu.myfapiao"/></span>
   					</a>
   				</li>
-  				<li>
+  				<!-- <li>
   					<a href="企业中心.html">
   					<span><i class="icon iconfont">&#xe607;</i></span>
   					<span><spring:message code="ycleftmenu.companycenter"/></span>
   					</a>
-  				</li>
+  				</li> -->
   				<li id="interpreterInfo">
   					<a href="${_base}/p/interpreter/interpreterInfoPager?source=user">
   					<span><i class="icon iconfont">&#xe60c;</i></span>

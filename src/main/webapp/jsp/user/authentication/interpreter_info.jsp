@@ -114,7 +114,7 @@
   					</li>
   					<li>
   						<p class="word"><spring:message code="interpreter.mobilePhone" /></p>
-  						<p  class="rightword">${user_session_key.mobile}</p>
+  						<p  class="rightword">${user_session_key.fullMobile}</p>
   						<p><a href="${_base}/p/security/seccenter?source=${source}"><spring:message code="interpreter.setting" /></a></p>
   					</li>
   					<li>

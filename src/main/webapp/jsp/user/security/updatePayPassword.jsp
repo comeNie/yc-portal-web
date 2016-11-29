@@ -9,7 +9,12 @@
 </head>
 <body>
 	<!--头部-->
-	<%@ include file="/inc/userTopMenu.jsp"%>
+	<c:if test="${source=='user'}">
+      <%@ include file="/inc/userTopMenu.jsp"%>
+  </c:if>
+  <c:if test="${source=='interpreter'}">
+      <%@ include file="/inc/transTopMenu.jsp"%>
+  </c:if>
 	<!--二级主体-->
 	<!--外侧背景-->
 	<div class="cloud-container">
@@ -17,7 +22,12 @@
 		<div class="cloud-wrapper">
 			<!--左侧菜单-->
 			<div class="left-subnav">
-				<%@ include file="/inc/leftmenu.jsp"%>
+			 <c:if test="${source=='user'}">
+		  	<%@ include file="/inc/leftmenu.jsp"%>
+		  	</c:if>
+		  <c:if test="${source=='interpreter'}">
+		  <%@ include file="/inc/transLeftmenu.jsp"%>
+		  </c:if>
 			</div>
 			<!--右侧内容-->
 			<!--右侧大块-->
@@ -74,7 +84,7 @@
 										<li> 
 										    <label class="ml-70" id="dynamicode" style="display: none;"></label>
 											<p class="word"><spring:message code="ycaccountcenter.updatePassword.bindPhone"/></p>
-											<p id="telephone">${user.mobile}</p>
+											<p id="telephone">${user.fullMobile}</p>
 										</li>
 										<li>
 											<p class="word"><spring:message code="ycregister.dynamiCode" /></p>
@@ -338,7 +348,7 @@
 
 <script type="text/javascript">
     var current = "seccenterSettings";
-	var phone = "${user.mobile}";
+	var phone = "${user.fullMobile}";
 	var email = "${user.email}";
 	 var updatePayPasswordMsg ={
 	    		"sendEmailCode":'<spring:message code="ycaccountcenter.updatePassword.sendEmailCode"/>',
