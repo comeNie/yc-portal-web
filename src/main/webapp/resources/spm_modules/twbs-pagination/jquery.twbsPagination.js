@@ -207,6 +207,7 @@
             children.filter(function () {
                 return $(this).data('page-type') === 'next';
             }).toggleClass(this.options.disabledClass, !this.options.loop && pages.currentPage === this.options.totalPages);
+            this.showGotoPage();
         },
 
         setupEvents: function () {
@@ -225,6 +226,25 @@
                     !base.options.href && evt.preventDefault();
                     base.show(parseInt($this.data('page'), 10));
                 });
+            });
+        },
+        showGotoPage:function(){
+            this.$listContainer.append("<p><span>"+this.options.numPrev+"</span>&nbsp;&nbsp;<span>" +
+            "<input type='text' class='int-verysmall radius' maxlength='8'></span>" +
+                "&nbsp;&nbsp;<span>"+this.options.numAfter+"</span></p><p class='taiz'>" +
+                "<a href='javaScript:void(0);'>"+this.options.numBtn+"</a></p>");
+            var base = this;
+            this.$listContainer.find("p.taiz a").click(function(){
+                //获取待跳转页码
+                var goPage = base.$element.find("p span input:first").val();
+                if(window.console){
+                    console.log("goto page " + goPage);
+                }
+                var numCheck = base.options.numCheck;
+                //检查函数为空,或
+                if(numCheck==null
+                    || (numCheck instanceof Function && numCheck(goPage)))
+                    base.show(parseInt(goPage, 10));
             });
         },
 
@@ -260,6 +280,10 @@
         prev: '上一页',
         next: '下一页',
         last: '末页',
+        numPrev:'到',
+        numAfter:'页',
+        numBtn:'跳转',
+        numCheck:null,
         loop: false,
         onPageClick: null,
         paginationClass: 'pagination',

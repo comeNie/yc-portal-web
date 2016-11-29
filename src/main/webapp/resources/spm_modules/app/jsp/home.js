@@ -30,7 +30,7 @@ define('app/jsp/home', function (require, exports, module) {
 			"click .change": "_change",
 			"click #error-oc": "_saveText",
 			"click #preser-close": "_cancelSave",
-			"click #error": "_transError",
+			"click #error": "_transError"
         },
 
         //重写父类
