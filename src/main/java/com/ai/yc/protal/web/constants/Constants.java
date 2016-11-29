@@ -23,6 +23,8 @@ public final class Constants {
 	public static final String CURRENCTY_UNIT_USD = "2";
 	//资金科目ID 预存款:100000  赠款:100001(未定义)
 	public static final String FUNDSUBJECT_ID = "100000";
+	//系统ID
+	public static final String SYSTEM_ID = "Cloud-UAC_WEB";
 	/** 邮箱可重复发送时间 配置key */
 	public static final String SEND_VERIFY_MAX_TIME_KEY = "/email_verifycode_send_maxtime";
 	/** IP发送邮件次数key */
