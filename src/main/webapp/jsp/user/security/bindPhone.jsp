@@ -9,7 +9,12 @@
 </head>
 <body>
 	<!--头部-->
-	<%@ include file="/inc/userTopMenu.jsp"%>
+	<c:if test="${source=='user'}">
+      <%@ include file="/inc/userTopMenu.jsp"%>
+  </c:if>
+  <c:if test="${source=='interpreter'}">
+      <%@ include file="/inc/transTopMenu.jsp"%>
+  </c:if>
 	<!--二级主体-->
 	<!--外侧背景-->
 	<div class="cloud-container">
@@ -17,7 +22,12 @@
 		<div class="cloud-wrapper">
 			<!--左侧菜单-->
 			<div class="left-subnav">
-				<%@ include file="/inc/leftmenu.jsp"%>
+	<c:if test="${source=='user'}">
+  	<%@ include file="/inc/leftmenu.jsp"%>
+  	</c:if>
+  <c:if test="${source=='interpreter'}">
+  <%@ include file="/inc/transLeftmenu.jsp"%>
+  </c:if>
 			</div>
 			<!--右侧内容-->
 			<!--右侧大块-->
@@ -68,6 +78,7 @@
 <%@ include file="/inc/incJs.jsp"%>
 <script type="text/javascript">
 var current = "seccenterSettings";
+var source = "${source}";
 var phoneBindMsg = {
 		showOkValueMsg	: '<spring:message code="ycaccountcenter.js.showOkValueMsg"/>',
 		showTitleMsg : '<spring:message code="ycaccountcenter.js.showTitleMsg"/>',
