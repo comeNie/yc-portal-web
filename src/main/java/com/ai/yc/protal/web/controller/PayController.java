@@ -92,7 +92,7 @@ public class PayController {
     @RequestMapping("/depositFundResult/{userId}")
     public void accountDepositResult(@PathVariable("userId")String userId,
             PayNotify payNotify){
-        LOG.info("The pay result.orderType:{},\r\n{}",JSON.toJSONString(payNotify));
+        LOG.info("The pay result.:{},\r\n{}",JSON.toJSONString(payNotify));
         //若哈希验证不通过或支付失败,则表示支付结果有问题
         if (!verifyData(payNotify)
                 || !PayNotify.PAY_STATES_SUCCESS.equals(payNotify.getPayStates())){
@@ -141,7 +141,13 @@ public class PayController {
         depositParam.setPayStyle(payNotify.getPayOrgCode());
         //内部系统充值
         depositParam.setBusiOperCode("300000");
-        iDepositSV.depositFund(depositParam);
+        String result = iDepositSV.depositFund(depositParam);
+        if (result==null){
+            LOG.error("The deposit is fail.");
+            return;
+        }else {
+            LOG.debug("The deposit is success.");
+        }
     }
     /**
      * 帐户充值结果
