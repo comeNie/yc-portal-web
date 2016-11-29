@@ -89,10 +89,6 @@
  							<li>
  								<label class="ml-70" id="dynamicode" style="display: none;"></label>
  								<p class="word"><spring:message code="ycfindpassword.phoneLabel"/></p>
- 								<p>
-									<select id="country" class="select select-in radius"></select>
-								</p>
- 								
  								<p id="telephone"></p>
  							</li>
  							<li>
