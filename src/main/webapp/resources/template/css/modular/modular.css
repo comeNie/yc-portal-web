@@ -378,7 +378,7 @@
 .payment-method ul .union{width:137px;height:35px;background: url(../../images/icon-big.png) no-repeat left -345px;margin:45px 0 0 30px}
 .payment-method ul .zhifb{width:112px;height:35px;background: url(../../images/icon-big.png) no-repeat left -424px;margin:45px 0 0 50px}
 .payment-method ul .paypal{width:127px;height:35px;background: url(../../images/icon-big.png) no-repeat left -385px;margin:48px 0 0 38px}
-.payment-method ul .payment-balance{line-height:30px;margin:30px 0 0 0;}
+.payment-method ul .payment-balance{line-height:30px;margin:20px 0 0 0;}
 .payment-method ul .payment-balance .word{font-size:14px;font-weight:normal;}
 .payment-method .none-ml{margin-right:0;}
 
