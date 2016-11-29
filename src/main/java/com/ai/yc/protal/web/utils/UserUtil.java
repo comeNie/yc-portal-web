@@ -42,6 +42,7 @@ public class UserUtil {
         GeneralSSOClientUser clientUser = (GeneralSSOClientUser)session.getAttribute(SSOClientConstants.USER_SESSION_KEY);
         //TODO....模拟数据
         if (clientUser==null) {
+            clientUser = new GeneralSSOClientUser();
             clientUser.setUserId("4444313");
             clientUser.setEmail("test@asiainfo.com");
             saveSsoUser(clientUser);
