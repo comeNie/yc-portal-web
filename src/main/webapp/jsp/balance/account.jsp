@@ -134,7 +134,7 @@
 
 </div>
 <script type="text/javascript" src="${_base}/resources/template/scripts/modular/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="${_base}/resources/template/scripts/modular/frame.js"></script>
+<%--<script type="text/javascript" src="${_base}/resources/template/scripts/modular/frame.js"></script>--%>
 <script src="${_base}/resources/spm_modules/my97DatePicker/WdatePicker.js"></script>
 <%@include file="/inc/indexFoot.jsp"%>
 </body>
