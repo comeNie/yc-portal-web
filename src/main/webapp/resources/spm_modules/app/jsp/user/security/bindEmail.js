@@ -185,7 +185,7 @@ define("app/jsp/user/security/bindEmail",
 															return false;
 								    		        	}else{
 								    		        		//showMsg2(emailBindMsg.bingSuccess);
-								    		        		location.href=_base+"/p/security/bindEmailSuccess";
+								    		        		location.href=_base+"/p/security/bindEmailSuccess?source="+source;
 								    		        	}
 								    					
 								    		          },
