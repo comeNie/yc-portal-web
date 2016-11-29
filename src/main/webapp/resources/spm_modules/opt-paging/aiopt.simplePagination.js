@@ -5,7 +5,7 @@ define("opt-paging/aiopt.simplePagination", ["jquery","simplePagination/jquery.s
 	require("simplePagination/jquery.simplePagination");
 
 	
-	/*!
+/*!
  * jQuery runner pagination plugin v1.0.0
  * based on jquery.pagController.js  jquery.twbsPagination.js
  * Copyright 2014, Asiainfo
@@ -200,13 +200,12 @@ define("opt-paging/aiopt.simplePagination", ["jquery","simplePagination/jquery.s
             //    }
             //});
 			var _tp = this.$element.pagination({
-				items: 30,
-				itemsOnPage: 10,
-				displayedPages: 10,
-				pages:3,
+				displayedPages: opt.visiblePages,
+				pages:totalPages,
 				currentPage:2,
 				prevText:"<",
 				nextText:">",
+                hrefTextPrefix:"",
 				cssStyle:'compact-theme',
 				onPageClick: function (pageNo, event) {
 					_this.loadData(pageNo);

@@ -263,9 +263,9 @@
 				methods._appendItem.call(this, !o.invertPageOrder ? o.currentPage + 1 : o.currentPage - 1, {text: o.nextText, classes: 'next'});
 			}
 
-			if (o.ellipsePageSet && !o.disabled) {
-				methods._ellipseClick.call(this, $panel);
-			}
+			// if (o.ellipsePageSet && !o.disabled) {
+			// 	methods._ellipseClick.call(this, $panel);
+			// }
 
 		},
 
@@ -296,20 +296,32 @@
 			}
 
 			options = $.extend(options, opts || {});
-
+            if (options.classes === 'prev') {
+                $linkWrapper.addClass('prev-up');
+            } else if(options.classes === 'next'){
+                $linkWrapper.addClass('next-down');
+			}else {
+                $linkWrapper.addClass('page');
+            }
 			if (pageIndex == o.currentPage || o.disabled) {
 				if (o.disabled || options.classes === 'prev' || options.classes === 'next') {
 					$linkWrapper.addClass('disabled');
 				} else {
 					$linkWrapper.addClass('active');
 				}
-				$link = $('<span class="current">' + (options.text) + '</span>');
-			} else {
-				$link = $('<a href="' + o.hrefTextPrefix + (pageIndex + 1) + o.hrefTextSuffix + '" class="page-link">' + (options.text) + '</a>');
-				$link.click(function(event){
-					return methods._selectPage.call(self, pageIndex, event);
-				});
 			}
+            $link = $('<a href="javaScript:void(0);">' + (options.text) + '</a>');
+
+            $link.click(function(event){
+            	//若是disabledClass或activeClass，则不允许点击
+                if (pageIndex == o.currentPage || o.disabled) {
+                    this.click(function (evt) {
+                        evt.preventDefault();
+                    });
+                    return;
+                }
+                return methods._selectPage.call(self, pageIndex, event);
+            });
 
 			if (options.classes) {
 				$link.addClass(options.classes);
