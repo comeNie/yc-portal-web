@@ -52,7 +52,7 @@ define('app/jsp/home', function (require, exports, module) {
 
 			// 复制内容到剪贴板成功后的操作
 			clip.on( 'complete', function(client, args) {
-				// alert("复制成功，复制内容为："+ args.text);
+				alert("复制成功，复制内容为："+ args.text);
 			} );
         },
 		//人工翻译,跳转到笔译订单

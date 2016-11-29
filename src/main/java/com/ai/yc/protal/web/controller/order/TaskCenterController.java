@@ -18,9 +18,14 @@ import com.ai.yc.order.api.orderreceivesearch.interfaces.IOrderWaitReceiveSV;
 import com.ai.yc.order.api.orderreceivesearch.param.OrderWaitReceiveSearchInfo;
 import com.ai.yc.order.api.orderreceivesearch.param.OrderWaitReceiveSearchRequest;
 import com.ai.yc.order.api.orderreceivesearch.param.OrderWaitReceiveSearchResponse;
+import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.OrderConstants;
 import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.utils.UserUtil;
+import com.ai.yc.translator.api.translatorservice.interfaces.IYCTranslatorServiceSV;
+import com.ai.yc.translator.api.translatorservice.param.SearchYCTranslatorSkillListRequest;
+import com.ai.yc.translator.api.translatorservice.param.YCTranslatorSkillListResponse;
+import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import org.apache.commons.lang.StringUtils;
 import org.owasp.esapi.User;
 import org.slf4j.Logger;
@@ -57,18 +62,18 @@ public class TaskCenterController {
         //获取译员信息
         String userId = UserUtil.getUserId();
         /* TODO... 模拟数据 */
-//        IYCUserServiceSV userServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
+//        IYCTranslatorServiceSV translatorServiceSV = DubboConsumerFactory.getService(IYCTranslatorServiceSV.class);
 //        SearchYCTranslatorSkillListRequest searchYCUserReq = new SearchYCTranslatorSkillListRequest();
 //        searchYCUserReq.setTenantId(Constants.DEFAULT_TENANT_ID);
 //        searchYCUserReq.setUserId(userId);
-//        YCTranslatorSkillListResponse userInfoResponse = userServiceSV.getTranslatorSkillList(searchYCUserReq);
-        //包括译员的等级,是否为LSP译员,LSP中的角色,支持的语言对
+//        YCTranslatorSkillListResponse userInfoResponse = translatorServiceSV.getTranslatorSkillList(searchYCUserReq);
+////        包括译员的等级,是否为LSP译员,LSP中的角色,支持的语言对
 //        uiModel.addAttribute("lspId",userInfoResponse.getLspId());//lsp标识
 //        uiModel.addAttribute("lspRole",userInfoResponse.getLspRole());//lsp角色
 //        uiModel.addAttribute("vipLevel",userInfoResponse.getVipLevel());//译员等级
-        uiModel.addAttribute("lspId","");//lsp标识
-        uiModel.addAttribute("lspRole","1");//lsp角色
-        uiModel.addAttribute("vipLevel","4");//译员等级
+//        uiModel.addAttribute("lspId","");//lsp标识
+//        uiModel.addAttribute("lspRole","1");//lsp角色
+//        uiModel.addAttribute("vipLevel","4");//译员等级
 
         //查询订单大厅数量
         IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
