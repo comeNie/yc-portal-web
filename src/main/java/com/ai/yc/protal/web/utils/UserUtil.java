@@ -39,7 +39,14 @@ public class UserUtil {
      */
     public static GeneralSSOClientUser getSsoUser(){
         HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
-        return (GeneralSSOClientUser)session.getAttribute(SSOClientConstants.USER_SESSION_KEY);
+        GeneralSSOClientUser clientUser = (GeneralSSOClientUser)session.getAttribute(SSOClientConstants.USER_SESSION_KEY);
+        //TODO....模拟数据
+        if (clientUser==null) {
+            clientUser.setUserId("4444313");
+            clientUser.setEmail("test@asiainfo.com");
+            saveSsoUser(clientUser);
+        }
+        return clientUser;
     }
     /**
      * 更新单点登陆的用户信息
