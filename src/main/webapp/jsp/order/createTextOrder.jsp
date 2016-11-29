@@ -116,7 +116,7 @@
 									</div>
 								</li>
 								<li>
-									<p class="ash-bj">
+									<p class="ash-bj"><span style="width:100%;"></span></p>
 									<p name="percent">100%</p>
 								</li>
 								<li class="right">
