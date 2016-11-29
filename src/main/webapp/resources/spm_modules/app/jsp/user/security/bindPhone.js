@@ -258,7 +258,7 @@ define("app/jsp/user/security/bindPhone",
 															return false;
 								    		        	}else{
 								    		        		//showMsg(phoneBindMsg.bingSuccess);
-								    		        		location.href=_base+"/p/security/bindPhoneSuccess";
+								    		        		location.href=_base+"/p/security/bindPhoneSuccess?source="+source;
 								    		        	}
 								    		          },
 								    				error: function(error) {

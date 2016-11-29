@@ -46,7 +46,6 @@ import com.ai.yc.ucenter.api.members.param.editemail.UcMembersEditEmailRequest;
 import com.ai.yc.ucenter.api.members.param.editmobile.UcMembersEditMobileRequest;
 import com.ai.yc.ucenter.api.members.param.get.UcMembersGetRequest;
 import com.ai.yc.ucenter.api.members.param.get.UcMembersGetResponse;
-import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.alibaba.fastjson.JSON;
 
 /**
@@ -246,16 +245,20 @@ public class SecurityController {
 	}
 
 	@RequestMapping("updatePassword")
-	public ModelAndView updatePassword() {
+	public ModelAndView updatePassword(HttpServletRequest request) {
 		ModelAndView modelView = new ModelAndView(UPDATE_PASSWORD);
 		modelView.addObject("user", UserUtil.getSsoUser());
+		String source = request.getParameter("source");//区分来源
+		modelView.addObject("source", source);
 		return modelView;
 	}
 
 	@RequestMapping("updatePayPassword")
-	public ModelAndView updatePayPassword() {
+	public ModelAndView updatePayPassword(HttpServletRequest request) {
 		ModelAndView modelView = new ModelAndView(UPDATE_PAY_PASSWORD);
 		modelView.addObject("user", UserUtil.getSsoUser());
+		String source = request.getParameter("source");//区分来源
+		modelView.addObject("source", source);
 		return modelView;
 	}
 
@@ -335,33 +338,51 @@ public class SecurityController {
 	}
 
 	@RequestMapping("bindEmail")
-	public ModelAndView bindEmail() {
-		return new ModelAndView("user/security/bindEmail");
+	public ModelAndView bindEmail(HttpServletRequest request) {
+		String source = request.getParameter("source");//区分来源
+		ModelAndView modelView =new ModelAndView("user/security/bindEmail");
+		modelView.addObject("source", source);
+		return modelView;
 	}
 
 	@RequestMapping("bindEmailSuccess")
-	public ModelAndView bindEmailSuccess() {
-		return new ModelAndView("user/security/bindEmailSuccess");
+	public ModelAndView bindEmailSuccess(HttpServletRequest request) {
+		String source = request.getParameter("source");//区分来源
+		ModelAndView modelView =new ModelAndView("user/security/bindEmailSuccess");
+		modelView.addObject("source", source);
+		return modelView;
 	}
 
 	@RequestMapping("editEmail")
-	public ModelAndView editEmail() {
-		return new ModelAndView("user/security/updateEmail");
-	}
+	public ModelAndView editEmail(HttpServletRequest request) {
+		String source = request.getParameter("source");//区分来源
+		ModelAndView modelView =new ModelAndView("user/security/updateEmail");
+		modelView.addObject("source", source);
+		return modelView;
+    }
 
 	@RequestMapping("bindPhone")
-	public ModelAndView bindPhone() {
-		return new ModelAndView("user/security/bindPhone");
+	public ModelAndView bindPhone(HttpServletRequest request) {
+		String source = request.getParameter("source");//区分来源
+		ModelAndView modelView =new ModelAndView("user/security/bindPhone");
+		modelView.addObject("source", source);
+		return modelView;
 	}
 
 	@RequestMapping("editPhone")
-	public ModelAndView editPhone() {
-		return new ModelAndView("user/security/updateMobilePhone");
+	public ModelAndView editPhone(HttpServletRequest request) {
+		String source = request.getParameter("source");//区分来源
+		ModelAndView modelView =new ModelAndView("user/security/updateMobilePhone");
+		modelView.addObject("source", source);
+		return modelView;
 	}
 	@RequestMapping("bindPhoneSuccess")
-	public ModelAndView bindPhoneSuccess() {
-		return new ModelAndView("user/security/bindPhoneSuccess");
-	}
+	public ModelAndView bindPhoneSuccess(HttpServletRequest request) {
+		String source = request.getParameter("source");//区分来源
+		ModelAndView modelView =new ModelAndView("user/security/bindPhoneSuccess");
+		modelView.addObject("source", source);
+		return modelView;
+   }
 	@RequestMapping(value = "/updateEmail", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseData<Boolean> updateEmail(
