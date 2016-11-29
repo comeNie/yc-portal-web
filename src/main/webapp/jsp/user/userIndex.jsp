@@ -108,8 +108,34 @@
 					<li class="right mt-t50"><input onclick="location.href='${_base}'" type="button"  class="btn border-blue btn-large radius20 blue" value="<spring:message code="home.manual_order_now_btn"/>"></li>
 				</ul>
 			</div>
-			<div class="no-step"><img src="${uedroot}/images/step.jpg" /></div>
-	</div>	
+			<div class="no-step">
+			<ul>
+					<li>
+						<p class="iocn1"></p>
+						<p class="sz-radius">1</p>
+						<p class="word"><spring:message code="ycaccountcenter.userIndex.step1"/></p>
+					</li>
+					<li class="line"></li>
+					<li>
+						<p class="iocn2"></p>
+						<p class="sz-radius">2</p>
+						<p class="word"><spring:message code="ycaccountcenter.userIndex.step2"/></p>
+					</li>
+					<li class="line1"></li>
+					<li>
+						<p class="iocn3"></p>
+						<p class="sz-radius">3</p>
+						<p class="word"><spring:message code="ycaccountcenter.userIndex.step3"/></p>
+					</li>
+					<li class="line"></li>
+					<li>
+						<p class="iocn4"></p>
+						<p class="sz-radius">4</p>
+						<p class="word"><spring:message code="ycaccountcenter.userIndex.step4"/></p>
+					</li>
+				</ul>
+			</div>
+			 </div>	
 			</div>
 
 

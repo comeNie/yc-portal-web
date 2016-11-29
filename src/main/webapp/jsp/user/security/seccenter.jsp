@@ -243,7 +243,7 @@
 			$('#eject-mask').fadeIn(100);
 			$('#modify-password').slideDown(100);
 		}else{
-			location.href="${_base}/p/security/updatePassword";
+			location.href="${_base}/p/security/updatePassword?source=${source}";
 		}
 	}
 	function showUpdatePayPwd(){
@@ -251,7 +251,7 @@
 			$('#pay_eject-mask').fadeIn(100);
 			$('#pay_modify-password').slideDown(100);
 		}else{
-			location.href="${_base}/p/security/updatePayPassword";
+			location.href="${_base}/p/security/updatePayPassword?source=${source}";
 		}
 	}
 </script>

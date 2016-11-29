@@ -67,4 +67,6 @@
 			interface="com.ai.yc.order.api.orderreceive.interfaces.IOrderReceiveSV"/>
 	<dubbo:reference id="iDepositSV" registry="ycRegistry"
 					 interface="com.ai.slp.balance.api.deposit.interfaces.IDepositSV"/>
+	<dubbo:reference id="iYCTranslatorServiceSV" registry="ycRegistry"
+					 interface="com.ai.yc.translator.api.translatorservice.interfaces.IYCTranslatorServiceSV"/>
 </beans>

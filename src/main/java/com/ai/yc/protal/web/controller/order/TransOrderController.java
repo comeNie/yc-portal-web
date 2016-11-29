@@ -24,9 +24,11 @@ import com.ai.yc.protal.web.constants.OrderConstants;
 import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.service.OrderService;
 import com.ai.yc.protal.web.utils.UserUtil;
-import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
-import com.ai.yc.user.api.userservice.param.SearchYCTranslatorRequest;
-import com.ai.yc.user.api.userservice.param.YCTranslatorInfoResponse;
+import com.ai.yc.translator.api.translatorservice.interfaces.IYCTranslatorServiceSV;
+import com.ai.yc.translator.api.translatorservice.param.SearchYCTranslatorRequest;
+import com.ai.yc.translator.api.translatorservice.param.SearchYCTranslatorSkillListRequest;
+import com.ai.yc.translator.api.translatorservice.param.YCTranslatorInfoResponse;
+import com.ai.yc.translator.api.translatorservice.param.YCTranslatorSkillListResponse;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -76,11 +78,12 @@ public class TransOrderController {
             QueryOrdCountResponse taskNumRes = iOrderQuerySV.queryOrderCount(ordCountReq);
             String userId = UserUtil.getUserId();
 
-            //查询译员信息 TODO暂时关闭
-//            IYCUserServiceSV iycUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
+//            TODO 暂时关闭
+            //查询译员信息
+//            IYCTranslatorServiceSV translatorServiceSV = DubboConsumerFactory.getService(IYCTranslatorServiceSV.class);
 //            SearchYCTranslatorRequest ycReq = new SearchYCTranslatorRequest();
 //            ycReq.setUserId(UserUtil.getUserId());
-//            YCTranslatorInfoResponse ycRes = iycUserServiceSV.searchYCTranslatorInfo(ycReq);
+//            YCTranslatorInfoResponse ycRes = translatorServiceSV.searchYCTranslatorInfo(ycReq);
 //            ResponseHeader resHeader = ycRes.getResponseHeader();
 //            LOGGER.info("译员信息: "+JSONObject.toJSONString(ycRes));
 //            //如果返回值为空,或返回信息中包含错误信息
@@ -171,15 +174,15 @@ public class TransOrderController {
     }
 
     private void getUserInfo(Model uiModel){
-//        IYCUserServiceSV userServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
+//        IYCTranslatorServiceSV translatorServiceSV = DubboConsumerFactory.getService(IYCTranslatorServiceSV.class);
 //        SearchYCTranslatorSkillListRequest searchYCUserReq = new SearchYCTranslatorSkillListRequest();
 //        searchYCUserReq.setUserId(UserUtil.getUserId());
-//        YCTranslatorSkillListResponse userInfoResponse = userServiceSV.getTranslatorSkillList(searchYCUserReq);
+//        YCTranslatorSkillListResponse userInfoResponse = translatorServiceSV.getTranslatorSkillList(searchYCUserReq);
 //        //包括译员的等级,是否为LSP译员,LSP中的角色,支持的语言对
 //        uiModel.addAttribute("lspId",userInfoResponse.getLspId());//lsp标识
 //        uiModel.addAttribute("lspRole",userInfoResponse.getLspRole());//lsp角色
 //        uiModel.addAttribute("vipLevel",userInfoResponse.getVipLevel());//译员等级
-        //TODO... 模拟数据
+//        //TODO... 模拟数据
         uiModel.addAttribute("lspId","10086");//lsp标识
         uiModel.addAttribute("lspRole","10");//lsp角色
         uiModel.addAttribute("vipLevel","4");//译员等级

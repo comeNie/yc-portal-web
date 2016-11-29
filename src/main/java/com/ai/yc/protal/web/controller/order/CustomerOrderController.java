@@ -138,6 +138,11 @@ public class CustomerOrderController {
         String stateListStr = request.getParameter("stateListStr"); //后台、译员 订单状态
         String lspRole = request.getParameter("lspRole"); //译员角色
         try {
+            //如果 译员id、用户id 都为null，返回空。一般不会出现
+            if (StringUtils.isEmpty(orderReq.getUserId()) && StringUtils.isEmpty(orderReq.getInterperId())) {
+                resData.setData(null);
+                return resData;
+            }
             //如果是LSP的管理员或项目经理
             if ("12".equals(lspRole) || "11".equals(lspRole)) {
                 orderReq.setInterperId(null);
@@ -374,78 +379,6 @@ public class CustomerOrderController {
             LOGGER.error("查询订单详情失败:",e);
             return "transOrder/orderError";
         }
-//        QueryOrderDetailsResponse orderDetailsRes = new QueryOrderDetailsResponse();
-//        ProdVo prod = new ProdVo();
-//        prod.setNeedTranslateInfo("需要翻译的内容");
-//        prod.setTranslateInfo("翻译结果");
-//        prod.setUseCn("用途名");
-//        prod.setUseEn("purposename");
-//        prod.setFieldCn("领域名");
-//        prod.setFieldEn("dominaname");
-//        prod.setTakeDay("1"); //预计耗时 天数
-//        prod.setTakeTime("20"); //预计翻译耗时 小时
-//        prod.setIsUrgent("1"); //加急
-//        prod.setIsSetType("1"); //排版
-//        //口译信息
-//        prod.setStateTime(new Timestamp(System.currentTimeMillis()));
-//        prod.setEndTime(new Timestamp(System.currentTimeMillis()));
-//        prod.setInterperSum((long) 10);//译员数
-//        prod.setMeetingSum((long) 10);//会场数
-//        prod.setMeetingAddress("北京");
-//        prod.setInterperGen("不限"); //
-//        orderDetailsRes.setProd(prod);
-//
-//        orderDetailsRes.setRemark("速度翻译");//备注
-//        orderDetailsRes.setOrderId(Long.valueOf(orderId));
-//        orderDetailsRes.setTranslateName("翻译主题");
-//        orderDetailsRes.setOrderTime(new Timestamp(System.currentTimeMillis()));//下单时间
-//        orderDetailsRes.setDisplayFlag(displayFlag);
-//        orderDetailsRes.setTranslateType("2"); //翻译类型 0：文本翻译 1：文档翻译 2：口译翻译
-//
-//        List<ProdFileVo> prodFiles = new ArrayList<>();//文档
-//        ProdFileVo prodFileVo = new ProdFileVo();
-//        prodFileVo.setFileName("原文名字");
-//        prodFileVo.setFileSaveId("yuanId");
-//        prodFileVo.setFileTraslateId("yiId");
-//        prodFileVo.setFileTranslateName("译文名字");
-//        prodFiles.add(prodFileVo);
-//        orderDetailsRes.setProdFiles(prodFiles);
-//
-//        List<ProdExtendVo> prodExtendVos = new ArrayList<>();
-//        ProdExtendVo prodExtendVo =  new ProdExtendVo();
-//        prodExtendVo.setLangungePair("1");
-//        prodExtendVo.setLangungeNameEn("en-ch");
-//        prodExtendVo.setLangungePairName("英-中");
-//        prodExtendVos.add(prodExtendVo);
-//        orderDetailsRes.setProdExtends(prodExtendVos);
-//
-//        List<ProdLevelVo> prodLevels = new ArrayList<>();//peitong
-//        ProdLevelVo prodLevelVo = new ProdLevelVo();
-//        prodLevelVo.setTranslateLevel("1");
-//        prodLevels.add(prodLevelVo);
-//        orderDetailsRes.setProdLevels(prodLevels);
-//
-//        OrderFeeVo orderFeeVo = new OrderFeeVo();
-//        orderFeeVo.setCurrencyUnit("1");//1：RMB 2：$
-//        orderFeeVo.setPaidFee((long) 100);
-//        orderFeeVo.setDiscountFee((long) 10);
-//        orderDetailsRes.setOrderFee(orderFeeVo);
-//
-//        ContactsVo contact = new ContactsVo();
-//        contact.setContactName("王五");
-//        contact.setContactTel("+86 13844987323");
-//        contact.setContactEmail("1231@qq.com");
-//        orderDetailsRes.setContacts(contact);
-//
-//        List<OrderStateChgVo> chgList = new ArrayList<>();
-//        OrderStateChgVo stateChgVo = new OrderStateChgVo();
-//        stateChgVo.setStateChgTime(new Timestamp(System.currentTimeMillis()));
-//        stateChgVo.setChgDesc("订单已被译员领取，正在翻译中，请耐心等待");
-//        stateChgVo.setChgDescEn("The order has been received by the interpreter, is in translation, please be patient");
-//        chgList.add(stateChgVo);
-//        orderDetailsRes.setOrderStateChgs(chgList);
-//
-//        uiModel.addAttribute("OrderDetails", orderDetailsRes);
         return "customerOrder/orderInfo";
     }
     

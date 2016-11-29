@@ -1,11 +1,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<fmt:setTimeZone value="${sessionScope.USER_TIME_ZONE}" scope="session"/>
+<c:set var="_base" value="${pageContext.request.contextPath}"/>
+<c:set var="rootRes" value="${_base}/resources"/>
+<c:set var="spmRes" value="${_base}/resources/spm_modules"/>
+<c:set var="uedroot" value="${pageContext.request.contextPath}/resources/template"/>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>首页</title>
-    <%@ include file="/inc/inc.jsp" %>
+    <link href="${uedroot}/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="${uedroot}/css/iconfont.css" rel="stylesheet" type="text/css">
+    <link href="${uedroot}/css/modular/global.css" rel="stylesheet" type="text/css"/>
+    <link href="${uedroot}/css/modular/headr-footer.css" rel="stylesheet" type="text/css"/>
     <link href="${uedroot}/css/modular/index.css" rel="stylesheet" type="text/css"/>
 </head>
 
@@ -40,7 +52,7 @@
         <div class="translate-title">
             <ul>
                 <li>
-                    <select tabindex="5" class="dropdown" id="showa" data-settings='{"cutOff": 100}'>
+                    <select tabindex="5" class="dropdown" id="showa" data-settings='{"cutOff": 12}'>
                         <%--自动检测--%>
                         <option value="auto" selected = "selected"><spring:message code="home.trans_language_auto"/></option>
                             <%--中文简体--%>

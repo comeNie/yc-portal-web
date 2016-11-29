@@ -21,7 +21,8 @@ public class GeneralSSOClientUser implements Serializable {
     private String mobile;
     //邮件
     private String email;
-
+    //手机号码 带国家代码 +86
+    private String fullMobile;
     public String getTenantId() {
         return tenantId;
     }
@@ -60,4 +61,13 @@ public class GeneralSSOClientUser implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+	public String getFullMobile() {
+		return fullMobile;
+	}
+
+	public void setFullMobile(String fullMobile) {
+		this.fullMobile = fullMobile;
+	}
+    
 }

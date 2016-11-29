@@ -110,7 +110,33 @@
                                                          value="<spring:message code="ycaccountcenter.interpreterIndex.certification.interpreter"/>"></li>
                     </ul>
                 </div>
-                <div class="no-step"><img src="${uedroot}/images/step1.jpg"/></div>
+                <div class="no-step">
+				<ul>
+					<li>
+						<p class="iocn5"></p>
+						<p class="sz-radius">1</p>
+						<p class="word"><spring:message code="ycaccountcenter.interpreterIndex.step1"/></p>
+					</li>
+					<li class="line"></li>
+					<li>
+						<p class="iocn6"></p>
+						<p class="sz-radius">2</p>
+						<p class="word"><spring:message code="ycaccountcenter.interpreterIndex.step2"/></p>
+					</li>
+					<li class="line1"></li>
+					<li>
+						<p class="iocn7"></p>
+						<p class="sz-radius">3</p>
+						<p class="word"><spring:message code="ycaccountcenter.interpreterIndex.step3"/></p>
+					</li>
+					<li class="line"></li>
+					<li>
+						<p class="iocn8"></p>
+						<p class="sz-radius">4</p>
+						<p class="word"><spring:message code="ycaccountcenter.interpreterIndex.step4"/></p>
+					</li>
+				</ul>
+			</div>
             </div>
 
         </div>

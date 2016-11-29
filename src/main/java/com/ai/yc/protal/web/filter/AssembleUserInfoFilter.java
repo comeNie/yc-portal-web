@@ -1,8 +1,16 @@
 package com.ai.yc.protal.web.filter;
 
+import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sso.client.filter.SSOClientConstants;
+import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
+import com.ai.yc.common.api.cachekey.key.CacheKey;
+import com.ai.yc.common.api.country.param.CountryVo;
 import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
+import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
+import org.apache.commons.lang.StringUtils;
 import org.jasig.cas.client.authentication.AttributePrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.security.Principal;
@@ -74,6 +83,7 @@ public class AssembleUserInfoFilter implements Filter {
                 AttributePrincipal attributePrincipal = (AttributePrincipal) principal;
                 Map<String, Object> attributes = attributePrincipal.getAttributes();
                 Field[] fields = GeneralSSOClientUser.class.getDeclaredFields();
+                String countryCode ="CN";
                 for (Field field : fields) {
                     String value = (String) attributes.get(field.getName());
                     if (value != null) {
@@ -85,6 +95,7 @@ public class AssembleUserInfoFilter implements Filter {
                         }
                     }
                 }
+                setMoreUserInfo(countryCode,user);
             }
         } catch (Exception e) {
             LOG.error("封装用户信息失败", e);
@@ -107,5 +118,20 @@ public class AssembleUserInfoFilter implements Filter {
         }
         return true;*/
         return ignorSuffixStr.contains(uri)||ignorSuffixStr.contains(uri+",");
+    }
+    /**
+     * 设置更多用户信息
+     * @param countryCode
+     * @param user
+     */
+    private void setMoreUserInfo(String countryCode, GeneralSSOClientUser user){
+    	if(!StringUtil.isBlank(countryCode)&&!StringUtil.isBlank(user.getMobile())){
+        	ICacheClient iCacheClient = AiPassUitl.getCommonCacheClient();
+        	String str = iCacheClient.hget(CacheKey.COUNTRY_D_KEY,countryCode);
+            if(StringUtils.isNotBlank(str)) {
+            	CountryVo country = JSONObject.parseObject(str, CountryVo.class);
+            	user.setFullMobile("+"+country.getCountryCode()+user.getMobile());
+            }
+        }
     }
 }

@@ -65,11 +65,11 @@ public class UserUtil {
     public static int getUserSecurityLevel(){
     	GeneralSSOClientUser userSSOInfo = UserUtil.getSsoUser();
 		int securitylevel=0;
-		if (StringUtil.isBlank(userSSOInfo.getEmail())) {
+		if (!StringUtil.isBlank(userSSOInfo.getEmail())) {
 			securitylevel += 33;
 		}
 
-		if (StringUtil.isBlank(userSSOInfo.getMobile())) {
+		if (!StringUtil.isBlank(userSSOInfo.getMobile())) {
 			securitylevel += 33;
 		}
 		securitylevel += 34;//默认有密码
