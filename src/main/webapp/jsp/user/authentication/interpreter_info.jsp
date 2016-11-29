@@ -162,7 +162,11 @@
 			var calInput = $(this).parent().prev();
 			var timeId = calInput.attr('id');
 			console.log("click calendar "+timeId);
-			WdatePicker({el:timeId,readOnly:true});
+			WdatePicker({
+				el:timeId,
+				readOnly:true,
+				lang:'${my97Lang}'
+				});
 		});
 		seajs.use('app/jsp/user/interpreter/interpreterInfo',function(InterPreterInfoPager) {
 					pager = new InterPreterInfoPager({
