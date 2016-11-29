@@ -23,6 +23,10 @@
 				hrefTextSuffix: '',
 				prevText: 'Prev',
 				nextText: 'Next',
+                numPrev:'到',
+                numAfter:'页',
+                numBtn:'跳转',
+                numCheck:null,
 				ellipseText: '&hellip;',
 				ellipsePageSet: true,
 				cssStyle: 'light-theme',
@@ -266,7 +270,7 @@
 			// if (o.ellipsePageSet && !o.disabled) {
 			// 	methods._ellipseClick.call(this, $panel);
 			// }
-
+            methods._showGotoPage.call(this);
 		},
 
 		_getPages: function(o) {
@@ -345,7 +349,6 @@
 			return o.onPageClick(pageIndex + 1, event);
 		},
 
-
 		_ellipseClick: function($panel) {
 			var self = this,
 				o = this.data('pagination'),
@@ -385,8 +388,29 @@
 				}
 				return false;
 			});
-		}
+		},
+        //显示页码跳转
+		_showGotoPage:function(){
+            var self = this,o = self.data('pagination');
+            self.append("<p><span>"+o.numPrev+"</span>&nbsp;&nbsp;<span>" +
+                "<input type='number' class='int-verysmall radius' maxlength='8' max='"+o.pages+"'></span>" +
+                "&nbsp;&nbsp;<span>"+o.numAfter+"</span></p><p class='taiz'>" +
+                "<a href='javaScript:void(0);'>"+o.numBtn+"</a></p>");
 
+            self.find("p.taiz a").click(function(){
+                //获取待跳转页码
+                var goPage = self.find("p span input:first").val();
+                if(window.console){
+                    console.log("goto page " + goPage);
+                }
+                var numCheck = o.numCheck;
+                //检查函数为空,或
+                if(numCheck==null
+                    || (numCheck instanceof Function && numCheck(goPage))){
+                    methods._selectPage.call(self, parseInt(goPage, 10)-1);
+				}
+            });
+        },
 	};
 
 	$.fn.pagination = function(method) {
