@@ -28,12 +28,12 @@
 .post-cion p a{color:#2965e6;float:left;margin-left:20px;}
 .post-cion p i{}
 .post-cion p .radio-icon{}
-.post-cion p .radio-icon i{font-size:18px;}
-.post-cion p .ord-icon{margin-top:1px;}
-.post-cion p .ord-icon i{font-size:13px;}
-.post-cion p .stars-icon i{font-size:15px;}
-.post-cion p .edit-icon i{font-size:14px}
-.post-cion .right{float:right}
+.post-cion p .radio-icon i{font-size:24px;}
+.post-cion p .ord-icon{}
+.post-cion p .ord-icon i{font-size:24px;}
+.post-cion p .stars-icon i{font-size:24px;}
+.post-cion p .edit-icon i{font-size:20px;}
+.post-cion .right{float:right;margin-top:3px;}
 .post-cion .right a{overflow:auto;}
 .post-cion .right span{float:left;margin-left:10px;}
 .translate-file{width:100%;float:left;margin-top:20px;}
@@ -42,13 +42,13 @@
 .translate-file ul li p{float:left;position:relative;}
 .translate-file ul .right{float:right}
 .translate-file ul li p .pop-file{width:80px;height:26px;position:absolute;top:0;left:0; opacity: 0;filter:alpha(opacity=0);-moz-opacity:0;-khtml-opacity:0;}
-.post-cion #error-oc i{font-size:12px;}
+.post-cion #error-oc i{font-size:18px;}
 .before-translation label{position:absolute;bottom:-44px;right:90px;font-size:12px;}
 .post-cion a{position:relative;}
 .post-cion .suspension{width:65px;height:32px;background:url(../../images/suspension-bj.png) no-repeat;position:absolute;right:15px;bottom:35px;border-radius:5px;text-align:center;line-height:28px;color:#666;font-size:12px;display:none;}
-.post-cion .suspension1{width:65px;height:32px;background:url(../../images/suspension-bj.png) no-repeat;position:absolute;left:-26px;bottom:22px;border-radius:5px;text-align:center;line-height:28px;color:#666;font-size:12px;display:none;}
-.post-cion .suspension2{width:65px;height:32px;background:url(../../images/suspension-bj.png) no-repeat;position:absolute;left:-26px;bottom:22px;border-radius:5px;text-align:center;line-height:28px;color:#666;font-size:12px;display:none;}
-.post-cion .suspension3{width:65px;height:32px;background:url(../../images/suspension-bj.png) no-repeat;position:absolute;left:-26px;bottom:22px;border-radius:5px;text-align:center;line-height:28px;color:#666;font-size:12px;display:none;}
+.post-cion .suspension1{width:65px;height:32px;background:url(../../images/suspension-bj.png) no-repeat;position:absolute;left:-21px;bottom:32px;border-radius:5px;text-align:center;line-height:28px;color:#666;font-size:12px;display:none;}
+.post-cion .suspension2{width:65px;height:32px;background:url(../../images/suspension-bj.png) no-repeat;position:absolute;left:-21px;bottom:32px;border-radius:5px;text-align:center;line-height:28px;color:#666;font-size:12px;display:none;}
+.post-cion .suspension3{width:65px;height:32px;background:url(../../images/suspension-bj.png) no-repeat;position:absolute;left:-21px;bottom:32px;border-radius:5px;text-align:center;line-height:28px;color:#666;font-size:12px;display:none;}
 
 /**说明**/
 .explain-big{width:100%;float:left;}
