@@ -358,7 +358,7 @@ var pager;
 <script src="${_base}/resources/spm_modules/email/emailHandle.js"></script>
 <script type="text/javascript">
 	
-	var phone = "${sessionScope.user_session_key.mobile}";
+	var phone = "${sessionScope.user_session_key.fullMobile}";
 	var email = "${sessionScope.user_session_key.email}";
 	$(document).ready(function(){
 		$("#goEmail").click(function(){

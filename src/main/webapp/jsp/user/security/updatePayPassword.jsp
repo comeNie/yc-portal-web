@@ -348,7 +348,7 @@
 
 <script type="text/javascript">
     var current = "seccenterSettings";
-	var phone = "${user.mobile}";
+	var phone = "${user.fullMobile}";
 	var email = "${user.email}";
 	 var updatePayPasswordMsg ={
 	    		"sendEmailCode":'<spring:message code="ycaccountcenter.updatePassword.sendEmailCode"/>',

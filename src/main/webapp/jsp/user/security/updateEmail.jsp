@@ -354,7 +354,7 @@ var pager;
 })();
 </script>
 <script type="text/javascript">
-	var phone = "${sessionScope.user_session_key.mobile}";
+	var phone = "${sessionScope.user_session_key.fullMobile}";
 	var email = "${sessionScope.user_session_key.email}";
 	$(document).ready(function(){
 		$("#goEmail1").click(function(){
