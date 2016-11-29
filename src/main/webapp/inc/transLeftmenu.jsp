@@ -45,18 +45,18 @@ UserUtil.getUserPortraitImg();
 					<span><spring:message code="ycleftmenu.myorder"/></span>
 				</a>
 			</li>
-			<li>
+			<!-- <li>
 				<a href="#">
 					<span><i class="icon iconfont">&#xe604;</i></span>
 					<span>译员级别</span>
 				</a>
-			</li>
-			<li>
+			</li> -->
+			<!-- <li>
 				<a href="#">
 					<span><i class="icon iconfont">&#xe65f;</i></span>
 					<span>工作记录</span>
 				</a>
-			</li>
+			</li> -->
 			<li id="interpreterInfo">
 				<a href="${_base}/p/interpreter/interpreterInfoPager?source=interpreter">
 					<span><i class="icon iconfont">&#xe60c;</i></span>
@@ -69,12 +69,12 @@ UserUtil.getUserPortraitImg();
 					<span><spring:message code="ycleftmenu.mysecurity"/></span>
 				</a>
 			</li>
-			<li>
+			<!-- <li>
 				<a href="#">
 					<span><i class="icon iconfont">&#xe606;</i></span>
 					<span>LSP管理</span>
 				</a>
-			</li>
+			</li> -->
 		</ul>
 	</div>
 	<!--定位-->
