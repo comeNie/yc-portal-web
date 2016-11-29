@@ -52,28 +52,10 @@ public class BalanceController {
      * @return
      */
     @RequestMapping("/account")
-    public String toMyAccount(Model uiModel){/*
+    public String toMyAccount(Model uiModel){
         //帐户余额
-        AccountBalanceInfo balanceInfo =  balanceService.queryOfUser("405411");
-//        if (balanceInfo.equals(null)){
-//
-//        }
-        //单位厘换算成元
-        double balance = balanceInfo.getBalance()/1000.00;*/
-
-        //查询用户余额
-        IFundQuerySV fundQuerySV = DubboConsumerFactory.getService(IFundQuerySV.class);
-        AccountIdParam accountIdParam = new AccountIdParam();
-        accountIdParam.setTenantId(Constants.DEFAULT_TENANT_ID);
-        accountIdParam.setAccountId(11531);
-        FundInfo fundInfo = fundQuerySV.queryUsableFund(accountIdParam);
-        //查询账号设置
-
-
-
-//        uiModel.addAttribute("balanceInfo",accountInfoVo);
-        uiModel.addAttribute("balance",String.valueOf(AmountUtil.changeLiToYuan(fundInfo.getBalance())));
-        //
+        AccountBalanceInfo balanceInfo =  balanceService.queryOfUser(UserUtil.getUserId());
+        uiModel.addAttribute("balance",String.valueOf(AmountUtil.changeLiToYuan(balanceInfo.getBalance())));
         return "balance/account";
     }
 
@@ -84,62 +66,67 @@ public class BalanceController {
                                                             @RequestParam(value = "pageSize")int pageSize){
         ResponseData<PageInfo<IncomeDetail>> resData =
                 new ResponseData<PageInfo<IncomeDetail>>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-        AccountBalanceInfo balanceInfo =  balanceService.queryOfUser("405411");
+        AccountBalanceInfo balanceInfo =  balanceService.queryOfUser(UserUtil.getUserId());
         IncomeOutQuerySV incomeOutQuerySV =  DubboConsumerFactory.getService(IncomeOutQuerySV.class);
         incomeQueryRequest.setAccountId(balanceInfo.getAccountId());
         incomeQueryRequest.setTenantId(Constants.DEFAULT_TENANT_ID);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-
-        if(StringUtils.isBlank(incomeQueryRequest.getBeginDate())){
-            Date beginDate = new Date();
-            beginDate.setMonth(beginDate.getMonth()-1);
-            String date1 = formatter.format(beginDate);
-            incomeQueryRequest.setBeginDate(date1+" 00:00:00");
-        } else {
-            incomeQueryRequest.setBeginDate(incomeQueryRequest.getBeginDate().toString()+" 00:00:00");
-        }
-        if(StringUtils.isBlank(incomeQueryRequest.getEndDate())){
-            Date endDate = new Date();
-            endDate.setMonth(endDate.getMonth());
-            String date1 = formatter.format(endDate);
-            incomeQueryRequest.setEndDate(date1+" 23:59:59");
-        }else {
-            incomeQueryRequest.setEndDate(incomeQueryRequest.getEndDate().toString()+" 23:59:59");
-        }
-        FundBookQueryResponse fundBookQueryResponse = new FundBookQueryResponse();
-        PageInfo<IncomeDetail> pageInfo = new  PageInfo<IncomeDetail>();
-        pageInfo.setPageNo(pageNO);
-        pageInfo.setPageSize(pageSize);
-        incomeQueryRequest.setPageInfo(pageInfo);
-        fundBookQueryResponse = incomeOutQuerySV.incomeOutQuery(incomeQueryRequest);
-        //总收支计算
-        IncomeQueryRequest incomeQueryByDate = new IncomeQueryRequest();
-        incomeQueryByDate.setTenantId(incomeQueryRequest.getTenantId());
-        incomeQueryByDate.setAccountId(incomeQueryRequest.getAccountId());
-        incomeQueryByDate.setBeginDate(incomeQueryRequest.getBeginDate());
-        incomeQueryByDate.setEndDate(incomeQueryRequest.getEndDate());
-        FundBookQueryResponse fundBookQueryResponseByDate = new FundBookQueryResponse();
-        incomeQueryRequest.setPageInfo(pageInfo);
-        fundBookQueryResponseByDate = incomeOutQuerySV.incomeOutQuery(incomeQueryByDate);
-        Long incomeAmount = 0l;
-        long outAmount = 0l;
-        if (fundBookQueryResponse.getPageInfo()!=null){
-            List<IncomeDetail> incomeDetails = fundBookQueryResponseByDate.getPageInfo().getResult();
-            for (IncomeDetail incomeDetail:incomeDetails){
-                if (incomeDetail.getIncomeFlag().equals("1")){
-                    incomeAmount = incomeAmount + incomeDetail.getTotalAmount();
-                }
-                if (incomeDetail.getIncomeFlag().equals("0")){
-                    outAmount = outAmount + incomeDetail.getTotalAmount();
-                }
+        try
+        {
+            if(StringUtils.isBlank(incomeQueryRequest.getBeginDate())){
+                Date beginDate = new Date();
+                beginDate.setMonth(beginDate.getMonth()-1);
+                String date1 = formatter.format(beginDate);
+                incomeQueryRequest.setBeginDate(date1+" 00:00:00");
+            } else {
+                incomeQueryRequest.setBeginDate(incomeQueryRequest.getBeginDate().toString()+" 00:00:00");
             }
-            for (int i = 0;i<fundBookQueryResponse.getPageInfo().getResult().size();i++){
-                fundBookQueryResponse.getPageInfo().getResult().get(i).setIncomeBalance(incomeAmount);
-                fundBookQueryResponse.getPageInfo().getResult().get(i).setOutBalance(java.lang.Math.abs(outAmount));
+            if(StringUtils.isBlank(incomeQueryRequest.getEndDate())){
+                Date endDate = new Date();
+                endDate.setMonth(endDate.getMonth());
+                String date1 = formatter.format(endDate);
+                incomeQueryRequest.setEndDate(date1+" 23:59:59");
+            }else {
+                incomeQueryRequest.setEndDate(incomeQueryRequest.getEndDate().toString()+" 23:59:59");
             }
+            FundBookQueryResponse fundBookQueryResponse = new FundBookQueryResponse();
+            PageInfo<IncomeDetail> pageInfo = new  PageInfo<IncomeDetail>();
+            pageInfo.setPageNo(pageNO);
+            pageInfo.setPageSize(pageSize);
+            incomeQueryRequest.setPageInfo(pageInfo);
+            fundBookQueryResponse = incomeOutQuerySV.incomeOutQuery(incomeQueryRequest);
+            //总收支计算
+            IncomeQueryRequest incomeQueryByDate = new IncomeQueryRequest();
+            incomeQueryByDate.setTenantId(incomeQueryRequest.getTenantId());
+            incomeQueryByDate.setAccountId(incomeQueryRequest.getAccountId());
+            incomeQueryByDate.setBeginDate(incomeQueryRequest.getBeginDate());
+            incomeQueryByDate.setEndDate(incomeQueryRequest.getEndDate());
+            FundBookQueryResponse fundBookQueryResponseByDate = new FundBookQueryResponse();
+            incomeQueryRequest.setPageInfo(pageInfo);
+            fundBookQueryResponseByDate = incomeOutQuerySV.incomeOutQuery(incomeQueryByDate);
+            Long incomeAmount = 0l;
+            long outAmount = 0l;
+            if (fundBookQueryResponse.getPageInfo()!=null){
+                List<IncomeDetail> incomeDetails = fundBookQueryResponseByDate.getPageInfo().getResult();
+                for (IncomeDetail incomeDetail:incomeDetails){
+                    if (incomeDetail.getIncomeFlag().equals("1")){
+                        incomeAmount = incomeAmount + incomeDetail.getTotalAmount();
+                    }
+                    if (incomeDetail.getIncomeFlag().equals("0")){
+                        outAmount = outAmount + incomeDetail.getTotalAmount();
+                    }
+                }
+                for (int i = 0;i<fundBookQueryResponse.getPageInfo().getResult().size();i++){
+                    fundBookQueryResponse.getPageInfo().getResult().get(i).setIncomeBalance(incomeAmount);
+                    fundBookQueryResponse.getPageInfo().getResult().get(i).setOutBalance(java.lang.Math.abs(outAmount));
+                }
 
+            }
+            resData.setData(fundBookQueryResponse.getPageInfo());
+        } catch (Exception e) {
+            LOGGER.error("查询收支分页失败:",e);
+            resData = new ResponseData<PageInfo<IncomeDetail>>(ResponseData.AJAX_STATUS_FAILURE, "查询收支失败");
         }
-        resData.setData(fundBookQueryResponse.getPageInfo());
         return resData;
     }
 
@@ -165,7 +152,7 @@ public class BalanceController {
         //租户
         String tenantId= ConfigUtil.getProperty("TENANT_ID");
         //服务异步通知地址
-        String notifyUrl= ConfigUtil.getProperty("NOTIFY_DEPOSIT_URL");
+        String notifyUrl= ConfigUtil.getProperty("NOTIFY_DEPOSIT_URL")+"/"+ UserUtil.getUserId();
         //商户交易单号(要求商户每次提交的支付请求交易单号不能重复，用于唯一标识每个提交给支付中心的支付请求)
         String orderId = UUIDUtil.genId32();
         //异步通知地址,默认为用户
