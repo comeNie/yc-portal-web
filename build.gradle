@@ -85,7 +85,6 @@ dependencies {
     compile 'com.ai.yc.order:ordersubmission:1.0-SNAPSHOT'
     //订单系统自动报价查询
     compile 'com.ai.yc.order:autooffer:1.0-SNAPSHOT'
-
     //订单查询
     compile 'com.ai.yc.order:orderquery:1.0-SNAPSHOT'
     //订单查询 我的订单
