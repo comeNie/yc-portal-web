@@ -109,8 +109,6 @@ dependencies {
 
 	//用户服务
 	compile 'com.ai.yc.user:userservice:1.0-SNAPSHOT'
-    //译员服务
-    compile 'com.ai.yc.translator:translatorservice:1.0-SNAPSHOT'
 
     //余额服务
     compile 'com.ai.slp.balance:fundquery:1.0-SNAPSHOT'
