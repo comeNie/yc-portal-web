@@ -17,8 +17,13 @@ import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
+import com.ai.yc.common.api.country.interfaces.IGnCountrySV;
+import com.ai.yc.common.api.country.param.CountryRequest;
+import com.ai.yc.common.api.country.param.CountryResponse;
+import com.ai.yc.common.api.country.param.CountryVo;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.UcenterOperation;
+import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.utils.PasswordMD5Util.Md5Utils;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.protal.web.utils.VerifyUtil;
@@ -38,6 +43,8 @@ public class PasswordController {
 			.getLogger(PasswordController.class);
 	@Autowired
 	ResWebBundle rb;
+	@Autowired
+	CacheServcie cservice;
 
 	@RequestMapping("/passwordPager")
 	public ModelAndView toInterpreterBaseInfo() {
@@ -65,8 +72,10 @@ public class PasswordController {
 				return responseData;
 			}
 			String account =  request.getParameter("account");
+			
 			IUcMembersSV ucMembersSV = DubboConsumerFactory
 					.getService(IUcMembersSV.class);
+			
 			UcMembersGetRequest membersGetRequest = new UcMembersGetRequest();
 			membersGetRequest.setUsername(account);
 			membersGetRequest.setGetmode("5");
@@ -75,6 +84,9 @@ public class PasswordController {
 			if(getResponse.getDate()!=null){
 				isOk = true;
 				resultMap.putAll(getResponse.getDate());
+				CountryVo country = cservice.getCountryByKey("CN");
+				String newMobilephone = "+"+country.getCountryCode()+getResponse.getDate().get("mobilephone");
+				resultMap.put("mobilephone", newMobilephone);
 			}else{
 				 msg = rb.getMessage("ycfindpassword.accountNotExist");
 			}
