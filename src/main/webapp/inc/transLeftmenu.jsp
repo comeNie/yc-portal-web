@@ -56,7 +56,8 @@ UserUtil.getUserPortraitImg();
 					<span><i class="icon iconfont">&#xe65f;</i></span>
 					<span>工作记录</span>
 				</a>
-			</li> -->
+			</li> 
+			-->
 			<li id="interpreterInfo">
 				<a href="${_base}/p/interpreter/interpreterInfoPager?source=interpreter">
 					<span><i class="icon iconfont">&#xe60c;</i></span>

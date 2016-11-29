@@ -5,7 +5,7 @@ UserUtil.getUserPortraitImg();
 %>
 <script src="${_base}/resources/spm_modules/jquery/1.9.1/jquery.min.js"></script>
    <!--二级主体-->
-  <!--外侧背景-->
+  <!--外侧背景--> 
   	<!--左侧菜单-->
   	<div class="left-subnav">
   		<div class="left-title">
