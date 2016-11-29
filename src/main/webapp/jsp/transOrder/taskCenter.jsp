@@ -57,7 +57,8 @@
                                 <option value=""><spring:message code="task.center.select.all"/></option>
                                 <c:forEach var="obj" items="${purposeList}">
                                     <option value="${obj.purposeId}"><c:choose><c:when
-                                            test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${obj.purposeCn}</c:when><c:otherwise>${obj.purposeEn}</c:otherwise>
+                                            test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>"
+                                    >${obj.purposeCn}</c:when><c:otherwise>${obj.purposeEn}</c:otherwise>
                                     </c:choose></option>
                                 </c:forEach>
                             </select></p>
@@ -65,12 +66,13 @@
                             <p><spring:message code="task.center.order.date"/></p>
                             <p><input id="startDate" name="startDateStr" class="int-text int-small radius"
                                        readonly type="text"
-                                      onfocus="WdatePicker({el:id,readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\');}'})"/>
+                                      onfocus="WdatePicker({lang:'${my97Lang}',el:id,readOnly:true,
+                                              dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\');}'})"/>
                             </p>
                             <p>－</p>
                             <p><input id="endDate" name="endDateStr" class="int-text int-small radius"
                                       type="text" readonly
-                                      onfocus="WdatePicker({el:id,readOnly:true,dateFmt:'yyyy-MM-dd',
+                                      onfocus="WdatePicker({lang:'${my97Lang}',el:id,readOnly:true,dateFmt:'yyyy-MM-dd',
                                       minDate:'#F{$dp.$D(\'startDate\');}',
                                       onpicking:function(dp){if(dp.cal.getDateStr() != dp.cal.getNewDateStr())pager._getOrderList()}})"/>
                             </p>

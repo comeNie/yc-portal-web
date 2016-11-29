@@ -111,21 +111,21 @@
 						Your browser does not support the audio tag.
 					</audio>
 					<p>
-						<a id="sus-top1" href="javaScript:void(0)" class="ord-icon"><i class="icon iconfont">&#xe62e;</i>
+						<a id="sus-top1" href="javaScript:void(0)" class="ord-icon"><i class="icon iconfont">&#xe639;</i>
                             <!-- 复制译文-->
                             <span class="suspension1"><spring:message code="home.Copytranslation"/></span>
                         </a>
-						<a  id="sus-top2" href="javaScript:void(0)" class="radio-icon"><i class="icon iconfont">&#xe61b;</i>
+						<a  id="sus-top2" href="javaScript:void(0)" class="radio-icon"><i class="icon iconfont">&#xe636;</i>
                             <!-- 朗诵译文-->
                             <span class="suspension2"><spring:message code="home.Readtrans"/></span>
                         </a>
-						 <!--<a id="sus-top3" href="javaScript:void(0)" class="stars-icon"><i class="icon iconfont">&#xe754;</i>
+						 <!--<a id="sus-top3" href="javaScript:void(0)" class="stars-icon"><i class="icon iconfont">&#xe637;</i>
 						    <span class="suspension3">收藏译文</span>
 						 </a>-->
 					</p>
 					<p class="right" id="error">
 						<a href="javaScript:void(0)" class="edit-icon" id="sus-top">
-							<span><i class="icon iconfont">&#xe62a;</i></span>
+							<span><i class="icon iconfont">&#xe638;</i></span>
 							<!-- 翻译有误 -->
 							<span><spring:message code="home.translation_error_btn"/>?</span>
 						</a>
@@ -134,12 +134,12 @@
                     </p>
 					<p class="right" id="error-oc"  style="display: none;">
 						<a href="javaScript:void(0)" class="edit-icon" id="preser-btn">
-							<span><i class="icon iconfont">&#xe612;</i></span>
+							<span><i class="icon iconfont">&#xe651;</i></span>
 							<!-- 保存 -->
 							<span><spring:message code="home.save"/></span>
 						</a>
 						<a href="javaScript:void(0)"  class="edit-icon"  id="preser-close">
-							<span><i class="icon iconfont">&#xe611;</i></span>
+							<span><i class="icon iconfont">&#xe652;</i></span>
 							<!-- 取消 -->
 							<span><spring:message code="home.cancel"/></span>
 						</a>
@@ -261,8 +261,10 @@
     <div class="banner-wapper">
         <div class="banner-sm">
             <p class="left">
-                <span class="word">口译翻译</span>
-                <span>全球多领域，全语种高端口译人才，提供国际会议，商务活动等各种服务</span>
+                <%--口译翻译--%>
+                <span class="word"><spring:message code="home.oral_translation_tips"/></span>
+                    <%--全球多领域，全语种高端口译人才，提供国际会议，商务活动等各种服务--%>
+                <span><spring:message code="home.oral_translation_content_tips"/></span>
             </p>
             <%--立即下单--%>
             <p class="right"><input type="button" id="oralBtn" class="btn btn-blue banner-place-btn radius20"

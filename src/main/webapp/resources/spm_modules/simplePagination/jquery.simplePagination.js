@@ -23,6 +23,10 @@
 				hrefTextSuffix: '',
 				prevText: 'Prev',
 				nextText: 'Next',
+                numPrev:'到',
+                numAfter:'页',
+                numBtn:'跳转',
+                numCheck:null,
 				ellipseText: '&hellip;',
 				ellipsePageSet: true,
 				cssStyle: 'light-theme',
@@ -263,10 +267,10 @@
 				methods._appendItem.call(this, !o.invertPageOrder ? o.currentPage + 1 : o.currentPage - 1, {text: o.nextText, classes: 'next'});
 			}
 
-			if (o.ellipsePageSet && !o.disabled) {
-				methods._ellipseClick.call(this, $panel);
-			}
-
+			// if (o.ellipsePageSet && !o.disabled) {
+			// 	methods._ellipseClick.call(this, $panel);
+			// }
+            methods._showGotoPage.call(this);
 		},
 
 		_getPages: function(o) {
@@ -296,20 +300,32 @@
 			}
 
 			options = $.extend(options, opts || {});
-
+            if (options.classes === 'prev') {
+                $linkWrapper.addClass('prev-up');
+            } else if(options.classes === 'next'){
+                $linkWrapper.addClass('next-down');
+			}else {
+                $linkWrapper.addClass('page');
+            }
 			if (pageIndex == o.currentPage || o.disabled) {
 				if (o.disabled || options.classes === 'prev' || options.classes === 'next') {
 					$linkWrapper.addClass('disabled');
 				} else {
 					$linkWrapper.addClass('active');
 				}
-				$link = $('<span class="current">' + (options.text) + '</span>');
-			} else {
-				$link = $('<a href="' + o.hrefTextPrefix + (pageIndex + 1) + o.hrefTextSuffix + '" class="page-link">' + (options.text) + '</a>');
-				$link.click(function(event){
-					return methods._selectPage.call(self, pageIndex, event);
-				});
 			}
+            $link = $('<a href="javaScript:void(0);">' + (options.text) + '</a>');
+
+            $link.click(function(event){
+            	//若是disabledClass或activeClass，则不允许点击
+                if (pageIndex == o.currentPage || o.disabled) {
+                    this.click(function (evt) {
+                        evt.preventDefault();
+                    });
+                    return;
+                }
+                return methods._selectPage.call(self, pageIndex, event);
+            });
 
 			if (options.classes) {
 				$link.addClass(options.classes);
@@ -332,7 +348,6 @@
 			}
 			return o.onPageClick(pageIndex + 1, event);
 		},
-
 
 		_ellipseClick: function($panel) {
 			var self = this,
@@ -373,8 +388,29 @@
 				}
 				return false;
 			});
-		}
+		},
+        //显示页码跳转
+		_showGotoPage:function(){
+            var self = this,o = self.data('pagination');
+            self.append("<p><span>"+o.numPrev+"</span>&nbsp;&nbsp;<span>" +
+                "<input type='number' class='int-verysmall radius' maxlength='8' max='"+o.pages+"' min='1'></span>" +
+                "&nbsp;&nbsp;<span>"+o.numAfter+"</span></p><p class='taiz'>" +
+                "<a href='javaScript:void(0);'>"+o.numBtn+"</a></p>");
 
+            self.find("p.taiz a").click(function(){
+                //获取待跳转页码
+                var goPage = self.find("p span input:first").val();
+                if(window.console){
+                    console.log("goto page " + goPage);
+                }
+                var numCheck = o.numCheck;
+                //检查函数为空,或
+                if(numCheck==null
+                    || (numCheck instanceof Function && numCheck(goPage))){
+                    methods._selectPage.call(self, parseInt(goPage, 10)-1);
+				}
+            });
+        }
 	};
 
 	$.fn.pagination = function(method) {

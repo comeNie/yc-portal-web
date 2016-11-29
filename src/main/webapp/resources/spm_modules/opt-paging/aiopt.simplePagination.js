@@ -5,7 +5,7 @@ define("opt-paging/aiopt.simplePagination", ["jquery","simplePagination/jquery.s
 	require("simplePagination/jquery.simplePagination");
 
 	
-	/*!
+/*!
  * jQuery runner pagination plugin v1.0.0
  * based on jquery.pagController.js  jquery.twbsPagination.js
  * Copyright 2014, Asiainfo
@@ -185,29 +185,23 @@ define("opt-paging/aiopt.simplePagination", ["jquery","simplePagination/jquery.s
         	if(this._tp){
         		return;
         	}
-            //var _tp = this.$element.twbsPagination({
-            //    totalPages: totalPages,
-            //    startPage: opt.startPage,
-            //    visiblePages: opt.visiblePages,
-            //    first: opt.first,
-            //    prev: opt.prev,
-            //    next: opt.next,
-            //    last: opt.last,
-            //    loop: opt.loop,
-            //    paginationClass: opt.paginationClass?opt.paginationClass:"pagination",
-            //    onPageClick: function (event, pageNo) {
-            //        _this.loadData(pageNo);
-            //    }
-            //});
 			var _tp = this.$element.pagination({
-				items: 30,
-				itemsOnPage: 10,
-				displayedPages: 10,
-				pages:3,
-				currentPage:2,
+				displayedPages: opt.visiblePages,
+				pages:totalPages,
+				currentPage:opt.startPage,
 				prevText:"<",
 				nextText:">",
+                // numPrev:'到',
+                // numAfter:'页',
+                // numBtn:'跳转',
+                // hrefTextPrefix:"",
 				cssStyle:'compact-theme',
+                numCheck:function(pageNum){//检查输入页码是否符合要求,返回true或false
+                	if(window.console){
+                		console.log("num check:"+pageNum);
+                	}
+                	return true;
+                },
 				onPageClick: function (pageNo, event) {
 					_this.loadData(pageNo);
 				}

@@ -11,9 +11,14 @@
     response.setHeader("Cache-Control", "no-cache");
     response.setDateHeader("Expires", 0);
     response.setHeader("Pragma", "No-cache");
+
+    if(Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())){
+        request.setAttribute("my97Lang","zh-cn");
+    }else {
+        request.setAttribute("my97Lang","en");
+    }
 %>
 <!-- <link rel="stylesheet" type="text/css" href="${_base}/resources/slpmall/styles/bootstrap.css"> -->
-
 <link href="${uedroot}/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
 <link href="${uedroot}/css/iconfont.css" rel="stylesheet" type="text/css">
 <link href="${uedroot}/css/modular/global.css" rel="stylesheet" type="text/css"/>
