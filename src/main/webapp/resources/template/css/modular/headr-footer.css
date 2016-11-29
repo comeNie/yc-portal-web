@@ -73,9 +73,12 @@
 .footer-about-right ul li p{float:left}
 .footer-about-right ul .shaw{float:right}
 .footer-about-right ul .shaw p{margin-left:12px;margin-top:32px;}
-.footer-about-right ul li .shaw-a a{width:38px;height:38px;background: url(../../images/icon-big.png) no-repeat left -841px;float:left;}
-.footer-about-right ul li .shaw-b a{width:38px;height:38px;background: url(../../images/icon-big.png) no-repeat left -886px;float:left;}
-.footer-about-right ul li .shaw-c a{width:38px;height:38px;background: url(../../images/icon-big.png) no-repeat left -930px;float:left;}
+.footer-about-right ul li .shaw-a a{width:39px;height:39px;background: url(../../images/icon-big.png) no-repeat left -841px;float:left;}
+.footer-about-right ul li .shaw-a a:hover{width:39px;height:39px;background: url(../../images/icon-big.png) no-repeat -50px -930px;float:left;}
+.footer-about-right ul li .shaw-b a{width:39px;height:39px;background: url(../../images/icon-big.png) no-repeat left -886px;float:left;}
+.footer-about-right ul li .shaw-b a:hover{width:39px;height:39px;background: url(../../images/icon-big.png) no-repeat -100px -930px;float:left;}
+.footer-about-right ul li .shaw-c a{width:39px;height:39px;background: url(../../images/icon-big.png) no-repeat left -930px;float:left;}
+.footer-about-right ul li .shaw-c a:hover{width:39px;height:39px;background: url(../../images/icon-big.png) no-repeat -150px -930px;float:left;}
 .footer-list{width:100%;float:left;margin-top:40px;border-top:1px solid #528fea;padding-top:25px;}
 .footer-list ul li{text-align: center;line-height:30px;font-size:12px;color:#5b96ed}
 .footer-list ul li img{margin-left:10px;}
