@@ -179,8 +179,9 @@ public class CustomerOrderController {
             if (orderRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
 
             } else {
+                PageInfo<OrdOrderVo> pageInfo = orderRes.getPageInfo();
                 //返回订单分页信息
-                resData.setData(orderRes.getPageInfo());
+                resData.setData(pageInfo);
             }
         } catch (Exception e) {
             LOGGER.error("查询订单分页失败:",e);
