@@ -412,6 +412,9 @@
     </div>
 
 </div>
+
+<%--底部--%>
+<%@include file="/inc/userFoot.jsp"%>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript" src="${uedroot}/scripts/modular/jquery-1.11.1.min.js"></script>

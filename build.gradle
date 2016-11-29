@@ -104,6 +104,8 @@ dependencies {
     compile 'com.ai.yc.order:translatesave:1.0-SNAPSHOT'
     //更新订单状态
     compile 'com.ai.yc.order:orderstate:1.0-SNAPSHOT'
+    //充值服务
+    compile 'com.ai.slp.balance:deposit:1.0.1-SNAPSHOT'
 
 	//用户服务
 	compile 'com.ai.yc.user:userservice:1.0-SNAPSHOT'
@@ -116,7 +118,7 @@ dependencies {
     compile 'com.ai.slp.balance:incomeoutquery:1.0-SNAPSHOT'
     //余额扣减服务
     compile 'com.ai.slp.balance:deduct:1.0-SNAPSHOT'
-    
+
 	compile 'com.ai.yc.ucenter:members:1.1.1-SNAPSHOT'
 	compile 'com.ai.yc.common:country:1.0-SNAPSHOT'
 	//支付密码修改

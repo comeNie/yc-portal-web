@@ -52,7 +52,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			this._transPrice();
 			this._initPage();
     	},
-    	
+
         _initValidate:function(){
         	var _this = this;
         	var formValidator=$("#textOrderForm").validate({
@@ -174,6 +174,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 					var tempObj = {};
 					tempObj.fileName = $(this).text();
 					tempObj.fileSaveId = $(this).attr("fileid");
+					tempObj.fileSie = $(this).attr("size");
 					fileInfoList.push(tempObj);
 				});
 				productInfo.fileInfoList = fileInfoList;
@@ -247,7 +248,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				data: {
 					baseInfo: JSON.stringify(baseInfo),
 					productInfo: JSON.stringify(productInfo),
-					orderSummary: JSON.stringify(orderSummary)
+					orderSummary: JSON.stringify(orderSummary),
+					fileInfoList: JSON.stringify(fileInfoList)
 				},
 				success: function (data) {
                     if ("1" === data.statusCode) {
@@ -286,10 +288,73 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		
 		//初始化页面后做的操作
 		_initPage:function() {
+			//页面初始化，从session取订单信息
 			//改变上传div高度
 			$("#selectFile").children("div:last").css("height", '70px');
-			$("#fy2").hide();
-			
+
+			//根据翻译类型，显示不同
+			if ($("#transType").val() == "1") {
+				$("#fy1").hide();
+				$("#fy2").show();
+			} else {
+				$("#fy2").hide();
+			}
+
+			//session 语言对
+			if ($("#duadName").val() != '') {
+				$(".dropdown .selected").val($("#duadName").val());
+			}
+
+			//翻译级别
+			if ($("#transLv").val() != '') {
+				$("#transGrade ul").each(function () {
+					if ($("#transLv").val() == $(this).attr("name")) {
+						$(this).children('label').remove();
+						$(this).addClass("current");
+						$(this).append('<label></label>');
+
+						$($(this).siblings()).removeClass("current");
+						$($(this).siblings()).children('label').remove();
+					}
+				});
+			}
+
+			//首页传过来的参数
+			var selPurpose = this.getUrlParam("selPurpose");
+			if (selPurpose != '' || selPurpose != undefined) {
+				$("#selectPurpose").val(selPurpose);
+			}
+
+			//用途
+			if ($("#useCode").val() != '') {
+				$("#selectPurpose").val($("#useCode").val());
+			}
+
+			//领域
+			if ($("#fieldCode").val() != '') {
+				$("#selectDomain").val($("#fieldCode").val());
+			}
+
+			//排版
+			if ($("#isSetType").val() == 'Y') {
+				$("#selectAddedSer").val("1");
+			}
+
+			//格式转换
+			if ($("#format").val() != '') {
+				$("#selectFormatConv").val("2");
+				$("#inputFormatConv").show();
+				$("#inputFormatConv").val($("#format").val());
+			} else {
+				$("#selectFormatConv").val("1");
+			}
+
+			//加急
+			if ($("#isUrgent").val() == 'Y') {
+				$("#urgentOrder").attr("checked", true);
+			}
+
+
 		},
 		
 		//语言对改变，价格改变,翻译速度改变
@@ -394,6 +459,13 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			}
 				
 			
+		},
+
+		//获取url中参数
+		getUrlParam:function(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+			var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+			if (r != null) return unescape(r[2]); return null; //返回参数值
 		},
 
 		//格式化金钱

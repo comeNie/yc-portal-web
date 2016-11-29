@@ -75,10 +75,10 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
                     });
                 },
                 rules: {
-                    contactName: {
+                    userName: {
                         required:true,
                     },
-                    phoneNum: {
+                    mobilePhone: {
                         required:true,
                     },
                     email: {
@@ -87,10 +87,10 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
                     }
                 },
                 messages: {
-                    contactName: {
+                    userName: {
                         required: $.i18n.prop('order.place.error.name')//"请输入姓名",
                     },
-                    phoneNum: {
+                    mobilePhone: {
                         required: $.i18n.prop('order.place.error.phone'),//"请输入手机号",
                         pattern: $.i18n.prop('order.place.error.phone1')//"请输入正确的手机号"
                     },
@@ -114,13 +114,24 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
                 return;
             }
 
-            $("#saveContactDiv").hide();
-            $("#editContactDiv").find('p').eq(0).html($("#saveContactDiv").find('input').eq(0).val());
-            $("#editContactDiv").find('p').eq(1).html("+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val());
-            $("#editContactDiv").find('p').eq(2).html($("#saveContactDiv").find('input').eq(2).val());
-            $("#editContactDiv").show();
-
             //发请求保存联系人
+            ajaxController.ajax({
+                type: "post",
+                url: _base + "/p/order/saveContact",
+                data: $("#contactForm").serializeArray(),
+                success: function (data) {
+                    if ("1" === data.statusCode) {
+                        //成功
+                        $("#saveContactDiv").hide();
+                        $("#editContactDiv").find('p').eq(0).html($("#userName").val());
+                        $("#editContactDiv").find('p').eq(1).html("+"+$("#globalRome").find('option:selected').attr('code')+" "+$("#mobilePhone").val());
+                        $("#editContactDiv").find('p').eq(2).html($("#email").val());
+                        $("#editContactDiv").show();
+                    }
+                }
+            });
+
+
         },
 
         //编辑联系人
@@ -131,6 +142,7 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
 
         //国际编码
         _globalRome:function() {
+            var gnCountryId = $("input[name='gnCountryId']").val();
             $.getJSON(_base + "/resources/spm_modules/app/jsp/order/globalRome.json",function(data){
                 $.each(data.row,function(rowIndex,row){
                     var selObj = $("#globalRome");
@@ -141,18 +153,38 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
                         text = row["COUNTRY_NAME_EN"];
                     }
 
-                    selObj.append("<option value='"+row["COUNTRY_CODE"]+"' exp='" +row["REGULAR_EXPRESSION"]+"'>"+text+"   +"+row["COUNTRY_CODE"]+"</option>");
+                    selObj.append("<option value='"+row["ID"]+"' code='"+row["COUNTRY_CODE"]+"' exp='" +row["REGULAR_EXPRESSION"]+"'>"+text+"   +"+row["COUNTRY_CODE"]+"</option>");
                 });
             });
+
+            if (gnCountryId != '') {
+                $("#globalRome").val(gnCountryId);
+                this._setPattern();
+            }
+        },
+
+        //根据国家设置号码匹配规则
+        _setPattern:function() {
+            var pattern = $("#saveContactDiv").find('option:selected').attr('exp');
+            $("#mobilePhone").attr('pattern',pattern);
         },
 
         //提交订单
         _addTextOrder:function(){
+            var _this= this;
+            var formValidator=_this._initValidate();
+            formValidator.form();
+            if(!$("#contactForm").valid()){
+                //alert('验证不通过！！！！！');
+                return;
+            }
+
             var translateType = $("#transType").val();
             var contactInfo = {};
-            contactInfo.contactName=$("#saveContactDiv").find('input').eq(0).val();
-            contactInfo.contactTel="+"+$("#saveContactDiv").find('option:selected').val()+" "+$("#saveContactDiv").find('input').eq(1).val();
-            contactInfo.contactEmail=$("#saveContactDiv").find('input').eq(2).val();
+            $("#saveContactDiv").hide();
+            contactInfo.contactName=$("#userName").val();
+            contactInfo.contactTel="+"+$("#globalRome").find('option:selected').attr('code')+" "+$("#mobilePhone").val();
+            contactInfo.contactEmail=$("#email").val();
 
             ajaxController.ajax({
                 type: "post",
@@ -178,7 +210,14 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
 
         //返回上一页
         _toCreateOrder:function () {
-            window.history.go($("#toCreateOrder").attr("skip"));
+            var translateType = $("#transType").val();
+
+            if(translateType == 2) { //口译
+                window.history.go($("#toCreateOrder").attr("skip"));
+            } else {
+               window.location.href= _base + "/written";
+            }
+
         }
 
     });

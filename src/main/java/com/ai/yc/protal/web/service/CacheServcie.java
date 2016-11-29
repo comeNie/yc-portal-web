@@ -1,19 +1,21 @@
 package com.ai.yc.protal.web.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Service;
+
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.yc.common.api.cachekey.key.CacheKey;
 import com.ai.yc.common.api.cachekey.model.SysDomain;
 import com.ai.yc.common.api.cachekey.model.SysDuad;
 import com.ai.yc.common.api.cachekey.model.SysPurpose;
+import com.ai.yc.common.api.country.param.CountryVo;
 import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * 缓存操作服务
@@ -95,5 +97,31 @@ public class CacheServcie {
 
 //        return purposeList;
     }
-
+    /**
+     * 获取国家代码列表
+     * @return
+     */
+    public List<CountryVo> getAllCountry(){
+    	List<CountryVo> list = new ArrayList<>();
+        ICacheClient iCacheClient = AiPassUitl.getCommonCacheClient();
+        String str = iCacheClient.hget(CacheKey.COUNTRY_L_KEY,CacheKey.COUNTRY_L_KEY);
+        if(StringUtils.isNotBlank(str)) {
+        	list = JSONObject.parseArray(str, CountryVo.class);
+        }
+        return list;
+    }
+    /**
+     * 获取国家代码列表
+     * @param key [支持id,country_value]
+     * @return
+     */
+    public CountryVo getCountryByKey(String key){
+    	CountryVo country = null;
+        ICacheClient iCacheClient = AiPassUitl.getCommonCacheClient();
+        String str = iCacheClient.hget(CacheKey.COUNTRY_D_KEY,key);
+        if(StringUtils.isNotBlank(str)) {
+        	country = JSONObject.parseObject(str, CountryVo.class);
+        }
+        return country;
+    }
 }

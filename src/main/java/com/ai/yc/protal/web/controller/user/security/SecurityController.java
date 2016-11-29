@@ -357,7 +357,10 @@ public class SecurityController {
 	public ModelAndView editPhone() {
 		return new ModelAndView("user/security/updateMobilePhone");
 	}
-
+	@RequestMapping("bindPhoneSuccess")
+	public ModelAndView bindPhoneSuccess() {
+		return new ModelAndView("user/security/bindPhoneSuccess");
+	}
 	@RequestMapping(value = "/updateEmail", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseData<Boolean> updateEmail(

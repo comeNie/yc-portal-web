@@ -54,20 +54,24 @@
                 <div class="right-list-title pl-20 none-border">
                     <p><spring:message code="order.ContactInfo"/></p>
                 </div>
+
+                <input type="hidden"  name="gnCountryId" value="${Contact.gnCountryId}" />
                 <form id="contactForm">
                 <div class="oral-form" id="saveContactDiv">
                     <ul>
                         <li>
-                            <p><input id="contactName" name="contactName" maxlength="15" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterName"/>"></p>
-                            <p><select id="globalRome" name="globalRome" class="select int-in radius"></select></p>
-                            <p><input id="phoneNum" name="phoneNum"  pattern="^1\d{10}$" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterPhone"/>"></p>
-                            <p class="mr-0"><input id="email" name="email" type="text" class="int-text int-large-mail radius" placeholder="<spring:message code="order.EnterEmail"/>"></p>
+                            <input type="hidden" name="contactId" value="${Contact.contactId}"/>
+                            <p><input id="userName" name="userName" value="${Contact.userName}" maxlength="15" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterName"/>"></p>
+                            <p><select id="globalRome" name="gnCountryId" class="select int-in radius"></select></p>
+                            <p><input id="mobilePhone" name="mobilePhone"  value="${Contact.mobilePhone}" pattern="^1\d{10}$" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterPhone"/>"></p>
+                            <p class="mr-0"><input id="email" name="email" value="${Contact.email}" type="text" class="int-text int-large-mail radius" placeholder="<spring:message code="order.EnterEmail"/>"></p>
                         </li>
                         <li class="right-btn"><input id="saveContact" type="button" class="btn radius20 border-blue btn-80" value="<spring:message code="order.Save"/>"></li>
 
                     </ul>
                 </div>
                 </form>
+
                 <div class="oral-form" id="editContactDiv" style="display: none;">
                     <ul>
                         <li>
