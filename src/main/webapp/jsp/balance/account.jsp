@@ -4,8 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>我的账户</title>
+    <%--我的帐户--%>
     <%@ include file="/inc/inc.jsp" %>
+    <title><spring:message code="account.my.account"/></title>
 </head>
 <body>
 <!--头部-->
@@ -25,14 +26,14 @@
                 <div class="right-title-left user-account-title">
                     <div class="right-title-left-word user-account-title-word">
                         <ul>
-                            <li class="user-word">账户余额</li>
+                            <li class="user-word"><spring:message code="account.balance"/></li>
                         </ul>
                         <ul>
                             <li class="word"><span>${balance}</span>CNY</li>
-                            <li class="c-bj-bule"><a href="${_base}/p/balance/depositFund">充值余额</a></li>
+                            <li class="c-bj-bule"><a href="${_base}/p/balance/depositFund"><spring:message code="account.recharge"/></a></li>
                         </ul>
                         <ul class="word-li">
-                            <li>为保证账户安全，如需提现，请致电译云客服进行申请和审核：400-119-8080</li>
+                            <li><spring:message code="account.claim"/></li>
                         </ul>
                     </div>
                 </div>
@@ -45,15 +46,15 @@
                 <div class="query-order" id="dates">
                     <ul>
                         <li class="left">
-                            <p><a href="#" id="today" onclick="todate(this,today)">今天</a></p>
-                            <p class="current"><a href="#" id="oneMonth" onclick="todate(this,oneMonth)">近一个月</a></p>
-                            <p><a href="#" id="threeMonth" onclick="todate(this,threeMonth)">近三个月</a></p>
-                            <p><a href="#" id="oneyear" onclick="todate(this,oneyear)">近一年</a></p>
+                            <p><a href="#" id="today" onclick="todate(this,today)"><spring:message code="account.today"/></a></p>
+                            <p class="current"><a href="#" id="oneMonth" onclick="todate(this,oneMonth)"><spring:message code="account.one.month"/></a></p>
+                            <p><a href="#" id="threeMonth" onclick="todate(this,threeMonth)"><spring:message code="account.three.months"/></a></p>
+                            <p><a href="#" id="oneyear" onclick="todate(this,oneyear)"><spring:message code="account.one.year"/></a></p>
                         </li>
                         <li class="right">
-                            <p id="income">收入:0USD</p>
-                            <p id="out">支出:0USD</p>
-                            <p><a href="#" class="is">收起筛选<i class="icon-angle-down"></i></a></p>
+                            <p id="income"><spring:message code="account.income"/>:0USD</p>
+                            <p id="out"><spring:message code="account.expenditure"/>:0USD</p>
+                            <p><a href="#" class="is"><spring:message code="account.advanced.screening"/><i class="icon-angle-down"></i></a></p>
                         </li>
                     </ul>
                 </div>
@@ -61,24 +62,24 @@
                 <div class="query-order order-hiddn">
                     <ul>
                         <li class="left li-xlarge li-xlarge-ml">
-                            <p><a href="#">订单时间</a></p>
-                            <p><input style="width: 140px" id="beginDate" name="beginDate" type="text" value="" class="int-text int-small radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}'})" readonly="readonly"></p>
+                            <p><a href="#"><spring:message code="account.starting.endingtime"/></a></p>
+                            <p><input style="width: 140px" id="beginDate" name="beginDate" type="text" value="" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}'})" readonly="readonly"></p>
                             <p>~</p>
-                            <p><input style="width: 140px" id="endDate" name="endDate" type="text" class="int-text int-small radius" onClick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'beginDate\')}',onpicked:function(dp){endtime();}})" readonly="readonly"></p>
+                            <p><input style="width: 140px" id="endDate" name="endDate" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'beginDate\')}',onpicked:function(dp){endtime();}})" readonly="readonly"></p>
                         </li>
                         <li class="left li-xlarge" id="incomes">
                             <input type="hidden" id="incomeFlag" name="incomeFlag" value="1"/>
-                            <p >收支:</p>
-                            <p class="current"><a href="#" id="shouru" aval="1" onclick="shouzhi(this)">收入</a></p>
-                            <p><a href="#" id="zhichu" aval="0" onclick="shouzhi(this)">支出</a></p>
+                            <p><spring:message code="account.income.expense"/>:</p>
+                            <p class="current"><a href="#" id="shouru" aval="1" onclick="shouzhi(this)"><spring:message code="account.income"/></a></p>
+                            <p><a href="#" id="zhichu" aval="0" onclick="shouzhi(this)"><spring:message code="account.expenditure"/></a></p>
                         </li>
                         <li class="left li-xlarge" id="types">
                             <input type="hidden" id="optType" name="optType" value="2"/>
-                            <p>类型:</p>
-                            <p><a href="#" id="chongzhi" aval="1" onclick="totype(this)">充值</a></p>
-                            <p><a href="#" id="tixian" aval="3" onclick="totype(this)">提现</a></p>
-                            <p class="current"><a href="#" id="xiadan" aval="2" onclick="totype(this)">下单</a></p>
-                            <p><a href="#" id="tuikuan" aval="4" onclick="totype(this)">退款</a></p>
+                            <p><spring:message code="account.type"/>:</p>
+                            <p><a href="#" id="chongzhi" aval="1" onclick="totype(this)"><spring:message code="account.recharge"/></a></p>
+                            <p><a href="#" id="tixian" aval="3" onclick="totype(this)"><spring:message code="account.withdraw.cash"/></a></p>
+                            <p class="current"><a href="#" id="xiadan" aval="2" onclick="totype(this)"><spring:message code="account.place.order"/></a></p>
+                            <p><a href="#" id="tuikuan" aval="4" onclick="totype(this)"><spring:message code="account.refund"/></a></p>
                         </li>
                     </ul>
                 </div>
@@ -87,13 +88,13 @@
                     <table class="table table-bg  table-striped-even table-height50">
                         <thead>
                         <tr>
-                            <th>时间</th>
-                            <th>收入</th>
-                            <th>支出</th>
-                            <th>余额</th>
-                            <th>类型</th>
-                            <th>对方</th>
-                            <th>详细说明</th>
+                            <th><spring:message code="account.time"/></th>
+                            <th><spring:message code="account.income"/></th>
+                            <th><spring:message code="account.expenditure"/></th>
+                            <th><spring:message code="balance"/></th>
+                            <th><spring:message code="account.type"/></th>
+                            <th><spring:message code="account.counterpart"/></th>
+                            <th><spring:message code="account.detailed.instruction"/></th>
                         </tr>
                         </thead>
                     </table>
@@ -140,8 +141,8 @@
 </body>
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
-    var current = "myaccount";
     var pager;
+    var current = "myaccount";
     (function () {
         seajs.use('app/jsp/balance/account', function(accountListPage) {
             pager = new accountListPage({element : document.body});
