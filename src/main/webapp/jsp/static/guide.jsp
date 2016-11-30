@@ -24,7 +24,7 @@
 				</p>
 				<p class="line">_________________</p>
 			</li>
-			<li class="pacbtn"><input type="button" class="btn border-white btn-230 radius20" value="立即发布翻译任务"></li>
+			<li class="pacbtn"><input id="order-btn" type="button" class="btn border-white btn-230 radius20" value="立即发布翻译任务"></li>
 		</ul>
 	</div>
 </div>
@@ -204,5 +204,11 @@
 <script type="text/javascript" src="${uedroot}/scripts/modular/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/jqueryrotate.2.3.js"></script>
+
+<script type="text/javascript">
+	$("#order-btn").click(function () {
+		window.location.href = "${_base}/written";
+	});
+</script>
 </body>
 </html>

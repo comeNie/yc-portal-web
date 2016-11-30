@@ -121,7 +121,7 @@
 									<spring:message code="ycregister.agreement" />
 								</p>
 								<p class="right">
-									<a href="${ssoLoginUrl}"><spring:message
+									<a href="${_base}/p/index"><spring:message
 											code="ycregister.haveAccounts" /></a>
 								</p>
 							</li>

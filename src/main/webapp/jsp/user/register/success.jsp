@@ -52,7 +52,7 @@
 	function startSmsTime() {
 		if (curCount == 1) {
 			window.clearInterval(intervalObj);// 停止计时器
-			location.href="${ssoLoginUrl}";
+			location.href=_base+"/p/index";
 		} else {
 			curCount = curCount - 1;
 			$(".verification ul li span").html(curCount);

@@ -83,7 +83,6 @@ public class AssembleUserInfoFilter implements Filter {
                 AttributePrincipal attributePrincipal = (AttributePrincipal) principal;
                 Map<String, Object> attributes = attributePrincipal.getAttributes();
                 Field[] fields = GeneralSSOClientUser.class.getDeclaredFields();
-                String countryCode ="CN";
                 for (Field field : fields) {
                     String value = (String) attributes.get(field.getName());
                     if (value != null) {
@@ -95,7 +94,7 @@ public class AssembleUserInfoFilter implements Filter {
                         }
                     }
                 }
-                setMoreUserInfo(countryCode,user);
+                setMoreUserInfo(user);
             }
         } catch (Exception e) {
             LOG.error("封装用户信息失败", e);
@@ -121,17 +120,18 @@ public class AssembleUserInfoFilter implements Filter {
     }
     /**
      * 设置更多用户信息
-     * @param countryCode
      * @param user
      */
-    private void setMoreUserInfo(String countryCode, GeneralSSOClientUser user){
-    	if(!StringUtil.isBlank(countryCode)&&!StringUtil.isBlank(user.getMobile())){
+    private void setMoreUserInfo(GeneralSSOClientUser user){
+    	if(!StringUtil.isBlank(user.getDomainname())&&!StringUtil.isBlank(user.getMobile())){
         	ICacheClient iCacheClient = AiPassUitl.getCommonCacheClient();
-        	String str = iCacheClient.hget(CacheKey.COUNTRY_D_KEY,countryCode);
+        	String str = iCacheClient.hget(CacheKey.COUNTRY_D_KEY,user.getDomainname());
             if(StringUtils.isNotBlank(str)) {
             	CountryVo country = JSONObject.parseObject(str, CountryVo.class);
             	user.setFullMobile("+"+country.getCountryCode()+user.getMobile());
             }
+        }else{
+        	user.setFullMobile(user.getMobile());
         }
     }
 }
