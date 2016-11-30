@@ -89,8 +89,8 @@ public class PayController {
      * 帐户充值结果 后台
      * @return
      */
-    @RequestMapping("/depositFundResult/{userId}")
-    public void accountDepositResult(@PathVariable("userId")String userId,
+    @RequestMapping("/depositFundResult/{userId}/{currencyUnit}")
+    public void accountDepositResult(@PathVariable("userId")String userId,@PathVariable("currencyUnit")String currencyUnit,
             PayNotify payNotify){
         LOG.info("The pay result.:{},\r\n{}",JSON.toJSONString(payNotify));
         //若哈希验证不通过或支付失败,则表示支付结果有问题
@@ -108,7 +108,7 @@ public class PayController {
         TransSummary summary = new TransSummary();
         summary.setAmount(new Double(totalFee).longValue());
         //资金科目ID,从公共域查,该充值模块为预存款,科目编码100000
-        summary.setSubjectId(Long.parseLong(ConfigUtil.getProperty("FUNDSUBJECT_ID")));
+        summary.setSubjectId(Long.parseLong(Constants.FUNDSUBJECT_ID));
         List<TransSummary> transSummaryList = new ArrayList<TransSummary>();
         transSummaryList.add(summary);
         depositParam.setTransSummary(transSummaryList);
@@ -129,9 +129,9 @@ public class PayController {
         //业务描述
         depositParam.setBusiDesc("充值");
         depositParam.setBusiSerialNo(payNotify.getOrderId());
-        depositParam.setSystemId(ConfigUtil.getProperty("SYSTEM_ID"));
-        depositParam.setTenantId(ConfigUtil.getProperty("TENANT_ID"));
-        depositParam.setCurrencyUnit("1");
+        depositParam.setSystemId(Constants.SYSTEM_ID);
+        depositParam.setTenantId(Constants.DEFAULT_TENANT_ID);
+        depositParam.setCurrencyUnit(currencyUnit);
         /*支付方式
         ZFB: 	支付宝
         YL: 	   银联
@@ -162,8 +162,12 @@ public class PayController {
             payNotify.setPayStates(PayNotify.PAY_STATES_FAIL);
         }
         //支付结果
-        uiModel.addAttribute("payResult",PayNotify.PAY_STATES_SUCCESS.equals(payNotify.getPayStates()));
-        return "balance/depositResult";
+        //如果成功,跳转到支付成功页面
+        if (PayNotify.PAY_STATES_SUCCESS.equals(payNotify.getPayStates())){
+            return "balance/depositResultSuccess";
+        }
+        else
+            return "balance/depositResultFailed";
     }
     /**
      * 验证签名是否正常

@@ -40,30 +40,30 @@ UserUtil.getUserPortraitImg();
 						<span><spring:message code="ycleftmenu.myaccount"/></span>
 					</a>
 				</li>
-  				<li>
-  					<a href="优惠卷.html">
-  					<span><i class="icon iconfont">&#xe644;</i></span>
-  					<span><spring:message code="ycleftmenu.discount"/></span>
-  					</a>
-  				</li>
+  				<%--<li>--%>
+  					<%--<a href="优惠卷.html">--%>
+  					<%--<span><i class="icon iconfont">&#xe644;</i></span>--%>
+  					<%--<span><spring:message code="ycleftmenu.discount"/></span>--%>
+  					<%--</a>--%>
+  				<%--</li>--%>
   				<!-- <li>
   					<a href="我的级别.html">
   					<span><i class="icon iconfont">&#xe647;</i></span>
   					<span><spring:message code="ycleftmenu.mylevel"/></span>
   					</a>
   				</li> -->
-  				<li>
-  					<a href="我的积分.html">
-  					<span><i class="icon iconfont">&#xe605;</i></span>
-  					<span><spring:message code="ycleftmenu.mycredit"/></span>
-  					</a>
-  				</li>
-  				<li>
-  					<a href="发票管理.html">
-  					<span><i class="icon iconfont">&#xe643;</i></span>
-  					<span><spring:message code="ycleftmenu.myfapiao"/></span>
-  					</a>
-  				</li>
+  				<%--<li>--%>
+  					<%--<a href="我的积分.html">--%>
+  					<%--<span><i class="icon iconfont">&#xe605;</i></span>--%>
+  					<%--<span><spring:message code="ycleftmenu.mycredit"/></span>--%>
+  					<%--</a>--%>
+  				<%--</li>--%>
+  				<%--<li>--%>
+  					<%--<a href="发票管理.html">--%>
+  					<%--<span><i class="icon iconfont">&#xe643;</i></span>--%>
+  					<%--<span><spring:message code="ycleftmenu.myfapiao"/></span>--%>
+  					<%--</a>--%>
+  				<%--</li>--%>
   				<!-- <li>
   					<a href="企业中心.html">
   					<span><i class="icon iconfont">&#xe6f8;</i></span>
