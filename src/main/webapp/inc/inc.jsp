@@ -1,3 +1,4 @@
+<%@page import="java.util.Locale"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -18,6 +19,7 @@
         request.setAttribute("my97Lang","en");
     }
 %>
+<link rel="stylesheet" type="text/css" href="${spmRes}/optDialog/css/ui-dialog.css"/>
 <!-- <link rel="stylesheet" type="text/css" href="${_base}/resources/slpmall/styles/bootstrap.css"> -->
 <link href="${uedroot}/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
 <link href="${uedroot}/css/iconfont.css" rel="stylesheet" type="text/css">

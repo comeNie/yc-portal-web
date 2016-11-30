@@ -21,6 +21,8 @@ public class GeneralSSOClientUser implements Serializable {
     private String mobile;
     //邮件
     private String email;
+    //国家代码
+    private String domainname;
     //手机号码 带国家代码 +86
     private String fullMobile;
     public String getTenantId() {
@@ -68,6 +70,14 @@ public class GeneralSSOClientUser implements Serializable {
 
 	public void setFullMobile(String fullMobile) {
 		this.fullMobile = fullMobile;
+	}
+
+	public String getDomainname() {
+		return domainname;
+	}
+
+	public void setDomainname(String domainname) {
+		this.domainname = domainname;
 	}
     
 }

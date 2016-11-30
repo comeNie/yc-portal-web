@@ -13,12 +13,15 @@ define(
 						/* 事件代理 */
 						events : {
 							"click #refreshVerificationCode" : "_refreshVerificationCode",
+							"click #send_dynamicode_btn" : "_sendDynamiCode",
 							"click #change_register_type" : "_changeRegisterType",
 							"blur #verifyCodeImg" : "_checkImageCode",
 							"click #regsiterBtn" : "_submitRegsiter",
 							"blur #phone" : "_checkPhoneOrEmail",
 							"blur #email" : "_checkPhoneOrEmail",
-							"click #send_dynamicode_btn" : "_sendDynamiCode"
+							"blur #password":"_checkPassword",
+							"blur #confirmPassword":"_checkPassword"
+							
 						},
 						/* 重写父类 */
 						setup : function() {
@@ -95,7 +98,11 @@ define(
 						},
 						/* 展示校验信息 */
 						_showCheckMsg : function(msg) {
-							$("#regsiterMsg").html(msg)
+							$("#regsiterMsg").html(msg);
+						},
+						/* 获取校验信息 */
+						_getCheckMsg : function() {
+							return $("#regsiterMsg").html();
 						},
 						/* 手机格式校验 */
 						_checkPhone : function() {
@@ -133,6 +140,72 @@ define(
 							}
 							return true;
 						},
+						/* 校验密码 */
+						_checkPassword:function(){
+							// 密码校验
+							var _this = this;
+							var password = $("#password");
+							var passwordVal = password.val();
+							if ($.trim(passwordVal) == "") {
+								this._showCheckMsg(registerMsg.password_empty);
+								//password.focus();
+								return false;
+							}
+							var errMsg = _this._getCheckMsg();
+							if(errMsg==registerMsg.password_empty){
+								_this._showCheckMsg("");
+							}
+							if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
+									.test(passwordVal)) {
+								this._showCheckMsg(registerMsg.password_error);
+								//password.focus();
+								return false;
+							}
+							errMsg = _this._getCheckMsg();
+							if(errMsg==registerMsg.password_error){
+								_this._showCheckMsg("");
+							}
+							// 确认密码
+							var confirmPassword = $("#confirmPassword");
+							var confirmPasswordVal = confirmPassword.val();
+							if ($.trim(confirmPasswordVal) == "") {
+								this
+										._showCheckMsg(registerMsg.confirm_password_empty);
+								//confirmPassword.focus();
+								return false;
+							}
+							errMsg = _this._getCheckMsg();
+							if(errMsg==registerMsg.confirm_password_empty){
+								_this._showCheckMsg("");
+							}
+							if (confirmPasswordVal != passwordVal) {
+								this
+										._showCheckMsg(registerMsg.confirm_password_error);
+								//confirmPassword.focus();
+								return false;
+							}
+							errMsg = _this._getCheckMsg();
+							if(errMsg==registerMsg.confirm_password_error){
+								_this._showCheckMsg("");
+							}
+							return true;
+						},
+						/* 校验图片验证码 */
+						_checkVerifyCodeImg:function(){
+							var verifyCodeImg = $("#verifyCodeImg");
+							var verifyCodeImgVal = verifyCodeImg.val();
+							if ($.trim(verifyCodeImgVal) == "") {
+								this
+										._showCheckMsg(registerMsg.verify_code_img_empty);
+								//verifyCodeImg.focus();
+								return false;
+							}
+							var errMsg = this._getCheckMsg();
+							if(errMsg==registerMsg.verify_code_img_empty){
+								this._showCheckMsg("");
+							}
+							return true;
+						},
 						/* 校验注册 */
 						_checkRegsiter : function() {
 							var register_type = $("#change_register_type")
@@ -146,50 +219,19 @@ define(
 							if (!checkFalg) {
 								return false;
 							}
-							// 密码校验
-							var password = $("#password");
-							var passwordVal = password.val();
-							if ($.trim(passwordVal) == "") {
-								this._showCheckMsg(registerMsg.password_empty);
-								//password.focus();
+							checkFalg = this._checkPassword();
+							if (!checkFalg) {
 								return false;
 							}
-
-							if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
-									.test(passwordVal)) {
-								this._showCheckMsg(registerMsg.password_error);
-								//password.focus();
-								return false;
-							}
-							// 确认密码
-							var confirmPassword = $("#confirmPassword");
-							var confirmPasswordVal = confirmPassword.val();
-							if ($.trim(confirmPasswordVal) == "") {
-								this
-										._showCheckMsg(registerMsg.confirm_password_empty);
-								//confirmPassword.focus();
-								return false;
-							}
-							if (confirmPasswordVal != passwordVal) {
-								this
-										._showCheckMsg(registerMsg.confirm_password_error);
-								//confirmPassword.focus();
-								return false;
-							}
-							var verifyCodeImg = $("#verifyCodeImg");
-							var verifyCodeImgVal = verifyCodeImg.val();
-							if ($.trim(verifyCodeImgVal) == "") {
-								this
-										._showCheckMsg(registerMsg.verify_code_img_empty);
-								//verifyCodeImg.focus();
+							checkFalg =this._checkVerifyCodeImg();
+							if (!checkFalg) {
 								return false;
 							}
 							if ("phone" == register_type) {// 手机注册
 								var smsCode = $("#smsCode");
 								var smsCodeVal = smsCode.val();
 								if ($.trim(smsCodeVal) == "") {
-									this
-											._showCheckMsg(registerMsg.sms_code_empty);
+									this._showCheckMsg(registerMsg.sms_code_empty);
 									//smsCode.focus();
 									return false;
 								}
@@ -258,7 +300,7 @@ define(
 						_checkImageCode : function() {
 							var imgCode = $("#verifyCodeImg");
 							var imgCodeVal = imgCode.val();
-							if ($.trim(imgCodeVal).length < 4) {
+							if (!this._checkVerifyCodeImg()) {
 								return;
 							}
 							var _this = this;
@@ -274,6 +316,14 @@ define(
 									if (!json.data) {
 										//imgCode.focus();
 										_this._showCheckMsg(json.statusInfo);
+									}else{
+										//清除帐号校验错误信息
+										var errMsg = _this._getCheckMsg();
+										if(errMsg==registerMsg.verify_code_img_empty||
+										  errMsg==registerMsg.verify_code_img_error){
+											_this._showCheckMsg("");
+										}
+									
 									}
 								}
 							});
@@ -302,7 +352,7 @@ define(
 							ajaxController.ajax({
 								type : "post",
 								processing : false,
-								message : "保存中，请等待...",
+								message : "...",
 								url : _base + "/reg/checkPhoneOrEmail",
 								data : {
 									'checkType' : checkType,
@@ -311,6 +361,13 @@ define(
 								success : function(json) {
 									if (!json.data) {
 										_this._showCheckMsg(json.statusInfo);
+									}else{//清除帐号校验错误信息
+										var errMsg = _this._getCheckMsg();
+										if(errMsg==registerMsg.account_empty||
+										  errMsg==registerMsg.account_error ||
+										  errMsg==registerMsg.account_exists){
+											_this._showCheckMsg("");
+										}
 									}
 								}
 							});

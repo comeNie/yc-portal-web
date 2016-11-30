@@ -61,7 +61,7 @@ public class BalanceController {
 
     @RequestMapping("/accountList")
     @ResponseBody
-    public ResponseData<PageInfo<IncomeDetail>> accountList(Model model, IncomeQueryRequest incomeQueryRequest,
+    public ResponseData<PageInfo<IncomeDetail>> accountList(IncomeQueryRequest incomeQueryRequest,
                                                             @RequestParam(value = "pageNo")int pageNO,
                                                             @RequestParam(value = "pageSize")int pageSize){
         ResponseData<PageInfo<IncomeDetail>> resData =
@@ -152,7 +152,7 @@ public class BalanceController {
         //租户
         String tenantId= ConfigUtil.getProperty("TENANT_ID");
         //服务异步通知地址
-        String notifyUrl= ConfigUtil.getProperty("NOTIFY_DEPOSIT_URL")+"/"+ UserUtil.getUserId();
+        String notifyUrl= ConfigUtil.getProperty("NOTIFY_DEPOSIT_URL")+"/"+ UserUtil.getUserId()+"/"+currencyUnit;
         //商户交易单号(要求商户每次提交的支付请求交易单号不能重复，用于唯一标识每个提交给支付中心的支付请求)
         String orderId = UUIDUtil.genId32();
         //异步通知地址,默认为用户

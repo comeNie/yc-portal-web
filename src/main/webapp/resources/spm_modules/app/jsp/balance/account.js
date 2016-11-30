@@ -6,9 +6,9 @@ define('app/jsp/balance/account', function (require, exports, module) {
     require("jsviews/jsrender.min");
     require("jsviews/jsviews.min");
     require("app/util/jsviews-ext");
-	require("opt-paging/aiopt.pagination");
-    
-    //实例化AJAX控制处理对象
+	require("opt-paging/aiopt.simplePagination");
+	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
+	//实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
     
     var accountListPage = Widget.extend({
@@ -39,22 +39,27 @@ define('app/jsp/balance/account', function (require, exports, module) {
       	//重写父类
     	setup: function () {
 			accountListPage.superclass.setup.call(this);
+			$.i18n.properties({//加载资浏览器语言对应的资源文件
+				name: ["myaccount"], //资源文件名称，可以是数组
+				path: _i18n_res, //资源文件路径
+				mode: 'both',
+				language: currentLan,
+				async: true
+			});
     		this._incomeList();
     	},
     	
         //表单查询收支列表
 		_incomeList:function() {
         	var _this = this;
-        	/*var incomeBalance = $("#incomeBalance").val();
-        	var beginDate  = $("#beginDate").val();
-        	var endDate  = $("#endDate").val();
-        	var optType = $("#optType").val();*/
-        	_this._getIncomerList();
+			_this._getIncomerList();
         },
 		
         //查询收支列表
 		_getIncomerList:function() {
         	var _this = this;
+			var beginDate = $("#beginDate").val();
+			var endDate = $("#endDate").val();
           	$("#pagination-ul").runnerPagination({
 	 			url: _base+"/p/balance/accountList",
 	 			method: "POST",
@@ -72,15 +77,37 @@ define('app/jsp/balance/account', function (require, exports, module) {
 						var currencyUnit = data[0].currencyUnit;
 						var incomeBalance =  data[0].incomeBalance;
 						var outBalance =  data[0].outBalance;
-						$("#income").html("收入:"+incomeBalance+currencyUnit);
-						$("#out").html("支出:"+outBalance+currencyUnit);
-
+						$("#income").html($.i18n.prop('account.tag.income')+":"+incomeBalance+currencyUnit);
+						$("#out").html($.i18n.prop('account.tag.expenditure')+":"+outBalance+currencyUnit);
 						var template = $.templates("#searchAccountTemple");
 	            	    var htmlOutput = template.render(data);
 	            	    $("#searchAccountData").html(htmlOutput);
 	            	}
 	            }
     		});
+			$.ajax({
+				url: _base+"/p/balance/accountList",
+				type:'POST',
+				dataType: "json",
+				data:{
+					// isValid:is_valid,
+					beginDate:beginDate,
+					endDate:endDate
+				},
+				success: function(data){
+					if(data != null && data != 'undefined' && data.length>0){
+						// for(var i=0;i<data.length;i++) {
+						var currencyUnit = data[0].currencyUnit;
+						var incomeBalance =  data[0].incomeBalance;
+						var outBalance =  data[0].outBalance;
+						$("#income").html($.i18n.prop('account.tag.income')+":"+incomeBalance+currencyUnit);
+						$("#out").html($.i18n.prop('account.tag.expenditure')+":"+outBalance+currencyUnit);
+						var template = $.templates("#searchAccountTemple");
+						var htmlOutput = template.render(data);
+						$("#searchAccountData").html(htmlOutput);
+					}
+				}
+			});
         },
 		
     });
