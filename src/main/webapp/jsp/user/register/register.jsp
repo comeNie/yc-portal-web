@@ -150,6 +150,7 @@
 	var registerMsg = {
 		"account_empty" : '<spring:message code="ycregisterMsg.accountEmpty" />',
 		"account_error" : '<spring:message code="ycregisterMsg.accountError" />',
+		"account_exists" : '<spring:message code="ycregisterMsg.accountExists" />',
 		"password_empty" : '<spring:message code="ycregisterMsg.passwordEmpty" />',
 		"password_error" : '<spring:message code="ycregisterMsg.passwordError" />',
 		"confirm_password_empty" : '<spring:message code="ycregisterMsg.passwordEmpty" />',
