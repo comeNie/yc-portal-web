@@ -18,7 +18,7 @@
     <div class="about-list">
         <ul>
             <li class="word">全新译云平台 这只是一个开始</li>
-            <li class="pacbtn"><input type="button" class="btn btn-blue btn-168 radius20" value="体验即时翻译"></li>
+            <li class="pacbtn"><input id="trans-btn" type="button" class="btn btn-blue btn-168 radius20" value="体验即时翻译"></li>
         </ul>
     </div>
 </div>
@@ -36,5 +36,11 @@
 <script type="text/javascript" src="${uedroot}/scripts/modular/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/jqueryrotate.2.3.js"></script>
+
+<script type="text/javascript">
+    $("#trans-btn").click(function () {
+        window.location.href = "${_base}";
+    });
+</script>
 </body>
 </html>
