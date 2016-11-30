@@ -24,7 +24,9 @@ import com.ai.yc.protal.web.constants.OrderConstants;
 import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.translator.api.translatorservice.interfaces.IYCTranslatorServiceSV;
+import com.ai.yc.translator.api.translatorservice.param.SearchYCTranslatorRequest;
 import com.ai.yc.translator.api.translatorservice.param.SearchYCTranslatorSkillListRequest;
+import com.ai.yc.translator.api.translatorservice.param.YCTranslatorInfoResponse;
 import com.ai.yc.translator.api.translatorservice.param.YCTranslatorSkillListResponse;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -64,10 +66,11 @@ public class TaskCenterController {
 
         try {
             IYCTranslatorServiceSV userServiceSV = DubboConsumerFactory.getService(IYCTranslatorServiceSV.class);
-            SearchYCTranslatorSkillListRequest searchYCUserReq = new SearchYCTranslatorSkillListRequest();
+            SearchYCTranslatorRequest searchYCUserReq = new SearchYCTranslatorRequest();
             searchYCUserReq.setTenantId(Constants.DEFAULT_TENANT_ID);
             searchYCUserReq.setUserId(userId);
-            YCTranslatorSkillListResponse userInfoResponse = userServiceSV.getTranslatorSkillList(searchYCUserReq);
+
+            YCTranslatorInfoResponse userInfoResponse = userServiceSV.searchYCTranslatorInfo(searchYCUserReq);
 //        包括译员的等级,是否为LSP译员,LSP中的角色,支持的语言对
             uiModel.addAttribute("lspId",userInfoResponse.getLspId());//lsp标识
             uiModel.addAttribute("lspRole",userInfoResponse.getLspRole());//lsp角色
