@@ -1,8 +1,9 @@
-define("opt-paging/aiopt.simplePagination", ["jquery","simplePagination/jquery.simplePagination"], function(require, exports, module){
+define("opt-paging/aiopt.simplePagination", ["jquery","simplePagination/jquery.simplePagination","jquery-i18n/1.2.2/jquery.i18n.properties.min"], function(require, exports, module){
 	 var AjaxController=require('opt-ajax/1.0.0/index');
 	//实例化AJAX控制处理对象
 	 var ajaxController = new AjaxController();
 	require("simplePagination/jquery.simplePagination");
+    require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
 
 	
 /*!
@@ -31,6 +32,13 @@ define("opt-paging/aiopt.simplePagination", ["jquery","simplePagination/jquery.s
         constructor: RunnerPagination,
         
         setup: function () {
+            $.i18n.properties({//加载资浏览器语言对应的资源文件
+                name: ["commonRes"], //资源文件名称，可以是数组
+                path: _i18n_res, //资源文件路径
+                mode: 'both',
+                language: currentLan,
+                async: true
+            });
            this.destroy();
            this.loadData(1);
         },
@@ -143,7 +151,7 @@ define("opt-paging/aiopt.simplePagination", ["jquery","simplePagination/jquery.s
         	var messageId = this.options.messageId;
         	if(messageId){
 	        	if(imageType == "1"){
-	        		document.getElementById(messageId).innerHTML = "<li class='dialog-icon-notquery-1'></li><li>抱歉没有找到相关商品，更换搜索词试一试吧！</li>";
+	        		document.getElementById(messageId).innerHTML = "<li class='dialog-icon-notquery-1'></li><li>抱歉没有找到相关数据</li>";
 	            	document.getElementById(messageId).className = "query-product-msgimage not-query";
 	
 	//        		this.$element.addClass("query-product-msgimage not-query");
@@ -191,16 +199,23 @@ define("opt-paging/aiopt.simplePagination", ["jquery","simplePagination/jquery.s
 				currentPage:opt.startPage,
 				prevText:"<",
 				nextText:">",
-                // numPrev:'到',
-                // numAfter:'页',
-                // numBtn:'跳转',
+                numPrev:$.i18n.prop('com.page.to.label'),
+                numAfter:$.i18n.prop('com.page.page.label'),
+                numBtn:$.i18n.prop('com.page.go.label'),
                 // hrefTextPrefix:"",
 				cssStyle:'compact-theme',
                 numCheck:function(pageNum){//检查输入页码是否符合要求,返回true或false
-                	if(window.console){
+                	var checkRet = true;
+					if(window.console){
                 		console.log("num check:"+pageNum);
                 	}
-                	return true;
+                	var errMsg = $.i18n.prop('com.page.num.error',totalPages);
+                	//不是整数，数字小于1，数字大于最大页数
+					if(!(/^(\+|-)?\d+$/.test( pageNum )) || pageNum<1 || pageNum >totalPages){
+						alert(errMsg);
+                        checkRet = false;
+					}
+                	return checkRet;
                 },
 				onPageClick: function (pageNo, event) {
 					_this.loadData(pageNo);
