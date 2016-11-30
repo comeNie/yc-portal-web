@@ -75,9 +75,10 @@ public class TaskCenterController {
             /* TODO... 模拟数据 */
 //          uiModel.addAttribute("lspId","");//lsp标识
 //          uiModel.addAttribute("lspRole","1");//lsp角色
-//          uiModel.addAttribute("vipLevel","4");//译员等级
+//            uiModel.addAttribute("vipLevel","4");//译员等级
             //如果译员等级为空，则表示译员未认证通过，跳转到认证界面
-            if(StringUtils.isBlank(userInfoResponse.getVipLevel())){
+            //0：认证不通过，1：认证通过
+            if(!"1".equals(userInfoResponse.getApproveState())){
                 retView = "redirect:/p/security/interpreterIndex";
             }else {
                 //查询订单大厅数量
@@ -116,7 +117,7 @@ public class TaskCenterController {
             @RequestParam(value = "endDateStr",required = false)String endDateStr,
             OrderWaitReceiveSearchRequest orderReq){
         ResponseData<PageInfo<OrderWaitReceiveSearchInfo> > resData =
-                new ResponseData<PageInfo<OrderWaitReceiveSearchInfo>>(ResponseData.AJAX_STATUS_FAILURE,"OK");
+                new ResponseData<PageInfo<OrderWaitReceiveSearchInfo>>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         try {
             //判断是国内还是国外业务
             String flag = Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale())?"0":"1";
