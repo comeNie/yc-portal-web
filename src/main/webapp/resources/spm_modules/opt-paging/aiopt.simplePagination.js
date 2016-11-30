@@ -205,10 +205,17 @@ define("opt-paging/aiopt.simplePagination", ["jquery","simplePagination/jquery.s
                 // hrefTextPrefix:"",
 				cssStyle:'compact-theme',
                 numCheck:function(pageNum){//检查输入页码是否符合要求,返回true或false
-                	if(window.console){
+                	var checkRet = true;
+					if(window.console){
                 		console.log("num check:"+pageNum);
                 	}
-                	return true;
+                	var errMsg = $.i18n.prop('com.page.num.error',totalPages);
+                	//不是整数，数字小于1，数字大于最大页数
+					if(!(/^(\+|-)?\d+$/.test( pageNum )) || pageNum<1 || pageNum >totalPages){
+						alert(errMsg);
+                        checkRet = false;
+					}
+                	return checkRet;
                 },
 				onPageClick: function (pageNo, event) {
 					_this.loadData(pageNo);
