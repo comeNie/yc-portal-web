@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>充值</title>
     <%@ include file="/inc/inc.jsp" %>
+    <title><spring:message code="account.recharge"/></title>
 </head>
 <body>
 <!--弹出-->
@@ -47,7 +47,7 @@
             <!--右侧第二块-->
             <div class="right-list mt-0">
                 <div class="right-list-title pb-10 pl-20">
-                    <p>账户充值</p>
+                    <p><spring:message code="account.account.recharge"/></p>
                 </div>
                 <!--充值-->
                 <form id="toPayForm" method="post" action="${_base}/p/balance/gotoPay">
@@ -66,18 +66,18 @@
                         <div class="recharge-form-label mt-50">
                             <ul>
                                 <li>
-                                    <p class="word">充值账号:</p>
+                                    <p class="word"><spring:message code="account.account.to.be.recharged"/>:</p>
                                     <p>admin</p>
                                 </li>
                                 <li>
-                                    <p class="word">充值金额:</p>
+                                    <p class="word"><spring:message code="account.amount.to.be.recharged"/>:</p>
                                     <p><input type="text" name="orderAmount" class="int-text int-rech-medium radius"></p>
-                                    <p>元</p>
+                                    <p><spring:message code="account.yuan"/></p>
                                 </li>
                                 <li class="tishi">
-                                    <p>提示</p>
-                                    <p>1.充值金额用于平台翻译下单的支付</p>
-                                    <p>2.若需要提现账户余额,请致电客服400-119-8080</p>
+                                    <p><spring:message code="account.tips"/></p>
+                                    <p><spring:message code="account.tip1"/></p>
+                                    <p><spring:message code="account.tip2"/></p>
                                 </li>
                             </ul>
                         </div>
@@ -85,7 +85,7 @@
 
                     <!--按钮-->
                     <div class="recharge-btn">
-                        <input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="充 值">
+                        <input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="account.recharge.recharge"/>">
                     </div>
                 </div>
                 </form>
@@ -96,7 +96,9 @@
 
 </div>
 <script type="text/javascript" src="${_base}/resources/template/scripts/modular/jquery-1.11.1.min.js"></script>
+<%--
 <script type="text/javascript" src="${_base}/resources/template/scripts/modular/frame.js"></script>
+--%>
 <script type="text/javascript" src="${_base}/resources/template/scripts/modular/eject.js"></script>
 <%@include file="/inc/indexFoot.jsp"%>
 </body>
