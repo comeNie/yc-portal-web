@@ -105,7 +105,7 @@
 				<ul>
 					<li><img src="${uedroot}/images/none-d.jpg" /></li>
 					<li class="mt-t50"><spring:message code="ycaccountcenter.userIndex.noTaskMsg"/></li>
-					<li class="right mt-t50"><input onclick="location.href='${_base}'" type="button"  class="btn border-blue btn-large radius20 blue" value="<spring:message code="home.manual_order_now_btn"/>"></li>
+					<li class="right mt-t50"><input onclick="location.href='${_base}/'" type="button"  class="btn border-blue btn-large radius20 blue" value="<spring:message code="home.manual_order_now_btn"/>"></li>
 				</ul>
 			</div>
 			<div class="no-step">
