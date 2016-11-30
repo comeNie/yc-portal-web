@@ -81,7 +81,7 @@
 		 								<!-- 全部  -->
 		 								<option value=""><spring:message code="myOrder.translatingContent.all"/></option>
 		 								<!-- 翻译  -->
-		 								<option value="['211','23']"><spring:message code="myOrder.Translate"/></option>
+		 								<option value="['211','23','25']"><spring:message code="myOrder.Translate"/></option>
 		 								<!-- 审校  -->
 		 								<option value="['40','41','42']"><spring:message code="myOrder.Proofread"/></option>
 		 							</select>
@@ -205,7 +205,7 @@
 							</td>
 							<td>
 								<!-- 翻译  审校-->
-								{{if state  == '211' || state  == '23'}}
+								{{if state  == '211' || state  == '23' || state  == '25'}}
 								<spring:message code="myOrder.Translate"/>
 								{{else state  == '40' || state  == '41' || state  == '42'}}
 								<spring:message code="myOrder.Proofread"/>
@@ -232,22 +232,38 @@
 								<!-- 提交 -->
 								<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="<spring:message code="myOrder.Submit"/>">
 							</td>
+							{{else state  == '24'}}
+							<%--已提交--%>
+							<td><spring:message code="myOrder.status.submitted"/></td>
+							<td></td>
 							{{else state  == '40'}}
 							<!-- 待审核 -->
 							<td><spring:message code="myOrder.status.Review"/></td>
 							<td>
 								<!--<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="提交"> -->
 							</td>
+							{{else state  == '42'}}
+							<!-- 审核失败 -->
+							<td><spring:message code="myOrder.status.Auditfailure"/></td>
+							<td></td>
 							{{else state  == '50'}}
 							<!-- 待确认 -->
 							<td><spring:message code="myOrder.status.tobeConfirm"/></td>
 							<td>
 							</td>
+							{{else state  == '51'}}
+							<!-- 已确认 -->
+							<td><spring:message code="myOrder.status.confirmed"/></td>
+							<td>
+							</td>
 							{{else state  == '90'}}
 							<!-- 已完成 -->
 							<td><spring:message code="myOrder.status.Completed"/></td>
-							<td>
-							</td>
+							<td></td>
+							{{else state  == '52'}}
+							<!-- 待评价-->
+							<td><spring:message code="myOrder.status.tobeEvaluated"/></td>
+							<td></td>
 							{{else state  == '53'}}
 							<!-- 已评价 -->
 							<td><spring:message code="myOrder.status.Evaluated"/></td>

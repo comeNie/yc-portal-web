@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ai.opt.sdk.util.DateUtil;
+import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.slp.balance.api.deduct.interfaces.IDeductSV;
 import com.ai.slp.balance.api.deduct.param.DeductParam;
 import com.ai.slp.balance.api.deduct.param.DeductResponse;
@@ -84,6 +85,9 @@ public class CustomerOrderController {
     BalanceService balanceService;
     @Autowired
     OrderService orderService;
+    @Autowired
+    ResWebBundle rb;
+
     /**
      * 我的订单,订单列表
      * @return
@@ -185,7 +189,7 @@ public class CustomerOrderController {
             }
         } catch (Exception e) {
             LOGGER.error("查询订单分页失败:",e);
-            resData = new ResponseData<PageInfo<OrdOrderVo>>(ResponseData.AJAX_STATUS_FAILURE, "查询订单失败");
+            resData = new ResponseData<PageInfo<OrdOrderVo>>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
         }
         return resData;
     }
@@ -221,13 +225,11 @@ public class CustomerOrderController {
             LOGGER.info("取消订单返回 ："+JSONObject.toJSONString(baseRes));
             //如果返回值为空,或返回信息中包含错误信息,返回失败
             if (baseRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"取消订单失败");
-            } else {
-                resData.setData("取消成功");
+                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
             }
         } catch(Exception e) {
             LOGGER.error("取消订单失败：", e);
-            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"取消订单失败");
+            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
         }
         
         return resData;
