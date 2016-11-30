@@ -37,7 +37,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
         /*判断邮箱和手机方式*/
         _initUpdateType:function(){
         	if(phone==""){
-        		$("#set-table1").html("<div class='recharge-success mt-40'><ul><li class='word'>"+updatePasswordMsg.notBindingPhone+"</li></ul></div>");
+        		$("#set-table1").html("<div class='recharge-success mt-40'><ul><li><img src='"+uedroot+"/images/rech-fail.png' /></li><li class='word'>"+updatePasswordMsg.notBindingPhone+"</li></ul></div>");
             }
         	if(email==""){
         		$("#set-table2").html("<div class='recharge-success mt-40'><ul><li class='word'>"+updatePasswordMsg.notBindingEmail+"</li></ul></div>");
