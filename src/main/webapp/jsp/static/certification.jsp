@@ -18,7 +18,7 @@
 		<ul>
 			<li><span> 赚钱、学习 、长经验，就选“译云”</span><br>
 在线自由接单、交易全程担保、免费语料工具，随时随地 想翻就翻</li>
-			<li class="pacbtn"><input type="button" class="btn card-border-blue btn-168 radius20" value="加入译云"></li>
+			<li class="pacbtn"><input id="join-btn" type="button" class="btn card-border-blue btn-168 radius20" value="加入译云"></li>
 		</ul>
 	</div>
 </div>
@@ -137,5 +137,11 @@
 <script type="text/javascript" src="${uedroot}/scripts/modular/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/jqueryrotate.2.3.js"></script>
+
+<script type="text/javascript">
+	$("#join-btn").click(function () {
+		window.location.href = "${_base}/p/security/interpreterIndex";
+	});
+</script>
 </body>
 </html>

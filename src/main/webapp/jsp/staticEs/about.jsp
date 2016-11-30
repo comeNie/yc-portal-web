@@ -20,7 +20,7 @@
         <ul>
             <li class="word">A new yiyun platform this is just a start</li>
             <%--体验即时翻译 --%>
-            <li class="pacbtn"><input type="button" class="btn btn-blue btn-168 radius20" value="Experience instant translation"></li>
+            <li class="pacbtn"><input  id="trans-btn" type="button" class="btn btn-blue btn-168 radius20" value="Experience instant translation"></li>
         </ul>
     </div>
 </div>
@@ -39,5 +39,11 @@
 <script type="text/javascript" src="${uedroot}/scripts/modular/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/jqueryrotate.2.3.js"></script>
+
+<script type="text/javascript">
+    $("#trans-btn").click(function () {
+        window.location.href = "${_base}";
+    });
+</script>
 </body>
 </html>
