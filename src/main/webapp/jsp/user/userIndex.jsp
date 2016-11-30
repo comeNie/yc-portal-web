@@ -65,7 +65,7 @@
 							<a href="${_base}/p/customer/order/list/view?displayFlag=50"> <span class="tp3"></span> <span><spring:message code="myOrder.status.tobeConfirm"/><b id="unConfirmCount">0</b></span>
 							</a>
 						</p>
-						<p>
+						<p style="display: none;">
 							<a href="${_base}/p/customer/order/list/view?displayFlag=52"> <span class="tp4"></span> <span><spring:message code="myOrder.status.tobeEvaluated"/><b id="unEvaluateCount">0</b></span>
 							</a>
 						</p>
