@@ -1,6 +1,7 @@
 package com.ai.yc.protal.web.controller.order;
 
 import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
@@ -22,11 +23,10 @@ import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.OrderConstants;
 import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.utils.UserUtil;
+import com.ai.yc.translator.api.translatorservice.interfaces.IYCTranslatorServiceSV;
 import com.ai.yc.translator.api.translatorservice.param.SearchYCTranslatorSkillListRequest;
 import com.ai.yc.translator.api.translatorservice.param.YCTranslatorSkillListResponse;
-import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import org.apache.commons.lang.StringUtils;
-import org.owasp.esapi.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,37 +58,49 @@ public class TaskCenterController {
      */
     @RequestMapping("/view")
     public String taskCenterView(Model uiModel){
+        String retView = "transOrder/taskCenter";
         //获取译员信息
         String userId = UserUtil.getUserId();
-        /* TODO... 模拟数据 */
-//        IYCUserServiceSV userServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
-//        SearchYCTranslatorSkillListRequest searchYCUserReq = new SearchYCTranslatorSkillListRequest();
-//        searchYCUserReq.setTenantId(Constants.DEFAULT_TENANT_ID);
-//        searchYCUserReq.setUserId(userId);
-//        YCTranslatorSkillListResponse userInfoResponse = userServiceSV.getTranslatorSkillList(searchYCUserReq);
-////        包括译员的等级,是否为LSP译员,LSP中的角色,支持的语言对
-//        uiModel.addAttribute("lspId",userInfoResponse.getLspId());//lsp标识
-//        uiModel.addAttribute("lspRole",userInfoResponse.getLspRole());//lsp角色
-//        uiModel.addAttribute("vipLevel",userInfoResponse.getVipLevel());//译员等级
-        uiModel.addAttribute("lspId","");//lsp标识
-        uiModel.addAttribute("lspRole","1");//lsp角色
-        uiModel.addAttribute("vipLevel","4");//译员等级
 
-        //查询订单大厅数量
-        IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
-        QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
-        ordCountReq.setState(OrderConstants.State.UN_RECEIVE);
-        QueryOrdCountResponse taskNumRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-        Map<String,Integer> taskNumMap = taskNumRes.getCountMap();
-        Integer taskNum = taskNumMap.get(OrderConstants.State.UN_RECEIVE);
-        if (taskNum==null||taskNum<0) {
-            taskNum = 0;
+        try {
+            IYCTranslatorServiceSV userServiceSV = DubboConsumerFactory.getService(IYCTranslatorServiceSV.class);
+            SearchYCTranslatorSkillListRequest searchYCUserReq = new SearchYCTranslatorSkillListRequest();
+            searchYCUserReq.setTenantId(Constants.DEFAULT_TENANT_ID);
+            searchYCUserReq.setUserId(userId);
+            YCTranslatorSkillListResponse userInfoResponse = userServiceSV.getTranslatorSkillList(searchYCUserReq);
+//        包括译员的等级,是否为LSP译员,LSP中的角色,支持的语言对
+            uiModel.addAttribute("lspId",userInfoResponse.getLspId());//lsp标识
+            uiModel.addAttribute("lspRole",userInfoResponse.getLspRole());//lsp角色
+            uiModel.addAttribute("vipLevel",userInfoResponse.getVipLevel());//译员等级
+            /* TODO... 模拟数据 */
+//          uiModel.addAttribute("lspId","");//lsp标识
+//          uiModel.addAttribute("lspRole","1");//lsp角色
+//          uiModel.addAttribute("vipLevel","4");//译员等级
+            //如果译员等级为空，则表示译员未认证通过，跳转到认证界面
+            if(StringUtils.isBlank(userInfoResponse.getVipLevel())){
+                retView = "redirect:/p/security/interpreterIndex";
+            }else {
+                //查询订单大厅数量
+                IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
+                QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
+                ordCountReq.setState(OrderConstants.State.UN_RECEIVE);
+                QueryOrdCountResponse taskNumRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+                Map<String, Integer> taskNumMap = taskNumRes.getCountMap();
+                Integer taskNum = taskNumMap.get(OrderConstants.State.UN_RECEIVE);
+                if (taskNum == null || taskNum < 0) {
+                    taskNum = 0;
+                }
+                uiModel.addAttribute("taskNum", taskNum > 99 ? "99+" : taskNum);
+                //获取领域,用途
+                uiModel.addAttribute("domainList", cacheServcie.getAllDomain(rb.getDefaultLocale()));
+                uiModel.addAttribute("purposeList", cacheServcie.getAllPurpose(rb.getDefaultLocale()));
+            }
+        } catch (Exception e) {
+            LOGGER.error("",e);
+            uiModel.addAttribute("isTrans",true);//添加译员标识，用来显示译员菜单和译员的订单地址
+            retView = "/sysError.jsp";
         }
-        uiModel.addAttribute("taskNum",taskNum>99?"99+":taskNum);
-        //获取领域,用途
-        uiModel.addAttribute("domainList",cacheServcie.getAllDomain(rb.getDefaultLocale()));
-        uiModel.addAttribute("purposeList",cacheServcie.getAllPurpose(rb.getDefaultLocale()));
-        return "transOrder/taskCenter";
+        return retView;
     }
 
     /**
@@ -104,7 +116,7 @@ public class TaskCenterController {
             @RequestParam(value = "endDateStr",required = false)String endDateStr,
             OrderWaitReceiveSearchRequest orderReq){
         ResponseData<PageInfo<OrderWaitReceiveSearchInfo> > resData =
-                new ResponseData<PageInfo<OrderWaitReceiveSearchInfo>>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+                new ResponseData<PageInfo<OrderWaitReceiveSearchInfo>>(ResponseData.AJAX_STATUS_FAILURE,"OK");
         try {
             //判断是国内还是国外业务
             String flag = Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale())?"0":"1";
@@ -133,15 +145,15 @@ public class TaskCenterController {
 
             ResponseHeader resHeader = orderRes==null?null:orderRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息,返回失败
-            if (orderRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-                throw new BusinessException("","");
+            if (resHeader!=null && !resHeader.isSuccess()){
+                throw new BusinessException(resHeader.getResultCode(),resHeader.getResultMessage());
             } else {
                 //返回订单分页信息
                 resData.setData(orderRes.getPageInfo());
             }
         } catch (Exception e) {
             LOGGER.error("查询订单分页失败:",e);
-            resData = new ResponseData<PageInfo<OrderWaitReceiveSearchInfo>>(ResponseData.AJAX_STATUS_FAILURE, "查询订单失败");
+            resData = new ResponseData<PageInfo<OrderWaitReceiveSearchInfo>>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage("common.res.sys.error",""));
         }
         return resData;
     }
