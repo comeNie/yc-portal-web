@@ -23,6 +23,8 @@ define('app/jsp/balance/account', function (require, exports, module) {
     	
     	//事件代理
     	events: {
+			"click #all":"_incomeList",
+			"click #allType":"_incomeList",
 			"click #shouru":"_incomeList",
 			"click #zhichu":"_incomeList",
 			"click #chongzhi":"_incomeList",
@@ -46,6 +48,7 @@ define('app/jsp/balance/account', function (require, exports, module) {
 				language: currentLan,
 				async: true
 			});
+
     		this._incomeList();
     	},
     	
@@ -58,8 +61,6 @@ define('app/jsp/balance/account', function (require, exports, module) {
         //查询收支列表
 		_getIncomerList:function() {
         	var _this = this;
-			var beginDate = $("#beginDate").val();
-			var endDate = $("#endDate").val();
           	$("#pagination-ul").runnerPagination({
 	 			url: _base+"/p/balance/accountList",
 	 			method: "POST",
@@ -77,37 +78,16 @@ define('app/jsp/balance/account', function (require, exports, module) {
 						var currencyUnit = data[0].currencyUnit;
 						var incomeBalance =  data[0].incomeBalance;
 						var outBalance =  data[0].outBalance;
-						$("#income").html($.i18n.prop('account.tag.income')+":"+incomeBalance+currencyUnit);
-						$("#out").html($.i18n.prop('account.tag.expenditure')+":"+outBalance+currencyUnit);
-						var template = $.templates("#searchAccountTemple");
-	            	    var htmlOutput = template.render(data);
-	            	    $("#searchAccountData").html(htmlOutput);
+						$("#income").html($.i18n.prop('account.tag.income')+":"+incomeBalance/1000+"元");
+						$("#out").html($.i18n.prop('account.tag.expenditure')+":"+outBalance/1000+"元");
+						if (data[0].payTime!=null){
+							var template = $.templates("#searchAccountTemple");
+							var htmlOutput = template.render(data);
+							$("#searchAccountData").html(htmlOutput);
+						}
 	            	}
 	            }
     		});
-			$.ajax({
-				url: _base+"/p/balance/accountList",
-				type:'POST',
-				dataType: "json",
-				data:{
-					// isValid:is_valid,
-					beginDate:beginDate,
-					endDate:endDate
-				},
-				success: function(data){
-					if(data != null && data != 'undefined' && data.length>0){
-						// for(var i=0;i<data.length;i++) {
-						var currencyUnit = data[0].currencyUnit;
-						var incomeBalance =  data[0].incomeBalance;
-						var outBalance =  data[0].outBalance;
-						$("#income").html($.i18n.prop('account.tag.income')+":"+incomeBalance+currencyUnit);
-						$("#out").html($.i18n.prop('account.tag.expenditure')+":"+outBalance+currencyUnit);
-						var template = $.templates("#searchAccountTemple");
-						var htmlOutput = template.render(data);
-						$("#searchAccountData").html(htmlOutput);
-					}
-				}
-			});
         },
 		
     });

@@ -29,7 +29,7 @@
                             <li class="user-word"><spring:message code="account.balance"/></li>
                         </ul>
                         <ul>
-                            <li class="word"><span>${balance}</span>CNY</li>
+                            <li class="word"><span>${balance}</span>元</li>
                             <li class="c-bj-bule"><a href="${_base}/p/balance/depositFund"><spring:message code="account.recharge"/></a></li>
                         </ul>
                         <ul class="word-li">
@@ -40,7 +40,7 @@
                 <div class="user-title-right"><img src="${uedroot}/images/user-bj.jpg" /></div>
             </div>
             <!--右侧第二块-->
-            <form id="accountQuery">
+            <form id="accountQuery" action="">
 
             <div class="right-list">
                 <div class="query-order" id="dates">
@@ -68,17 +68,19 @@
                             <p><input style="width: 140px" id="endDate" name="endDate" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'beginDate\')}',onpicked:function(dp){endtime();}})" readonly="readonly"></p>
                         </li>
                         <li class="left li-xlarge" id="incomes">
-                            <input type="hidden" id="incomeFlag" name="incomeFlag" value="1"/>
+                            <input type="hidden" id="incomeFlag" name="incomeFlag" value=""/>
                             <p><spring:message code="account.income.expense"/>:</p>
-                            <p class="current"><a href="#" id="shouru" aval="1" onclick="shouzhi(this)"><spring:message code="account.income"/></a></p>
+                            <p class="current"> <a id="all" aval="" href="#" onclick="shouzhi(this)"> <spring:message code="account.all"/> </a></p>
+                            <p><a href="#" id="shouru" aval="1" onclick="shouzhi(this)"><spring:message code="account.income"/></a></p>
                             <p><a href="#" id="zhichu" aval="0" onclick="shouzhi(this)"><spring:message code="account.expenditure"/></a></p>
                         </li>
                         <li class="left li-xlarge" id="types">
-                            <input type="hidden" id="optType" name="optType" value="2"/>
+                            <input type="hidden" id="optType" name="optType" value=""/>
                             <p><spring:message code="account.type"/>:</p>
+                            <p class="current"><a href="#" id="allType" aval="" onclick="totype(this)"><spring:message code="account.all"/> </a></p>
                             <p><a href="#" id="chongzhi" aval="1" onclick="totype(this)"><spring:message code="account.recharge"/></a></p>
                             <p><a href="#" id="tixian" aval="3" onclick="totype(this)"><spring:message code="account.withdraw.cash"/></a></p>
-                            <p class="current"><a href="#" id="xiadan" aval="2" onclick="totype(this)"><spring:message code="account.place.order"/></a></p>
+                            <p><a href="#" id="xiadan" aval="2" onclick="totype(this)"><spring:message code="account.place.order"/></a></p>
                             <p><a href="#" id="tuikuan" aval="4" onclick="totype(this)"><spring:message code="account.refund"/></a></p>
                         </li>
                     </ul>
@@ -88,13 +90,13 @@
                     <table class="table table-bg  table-striped-even table-height50">
                         <thead>
                         <tr>
-                            <th><spring:message code="account.time"/></th>
-                            <th><spring:message code="account.income"/></th>
-                            <th><spring:message code="account.expenditure"/></th>
-                            <th><spring:message code="balance"/></th>
-                            <th><spring:message code="account.type"/></th>
-                            <th><spring:message code="account.counterpart"/></th>
-                            <th><spring:message code="account.detailed.instruction"/></th>
+                            <th width="14.286%"><spring:message code="account.time"/></th>
+                            <th width="14.286%"><spring:message code="account.income"/></th>
+                            <th width="14.286%"><spring:message code="account.expenditure"/></th>
+                            <th width="14.286%"><spring:message code="balance"/></th>
+                            <th width="14.286%"><spring:message code="account.type"/></th>
+                            <th width="14.286%"><spring:message code="account.counterpart"/></th>
+                            <th width="14.286%"><spring:message code="account.detailed.instruction"/></th>
                         </tr>
                         </thead>
                     </table>
@@ -112,14 +114,28 @@
                 <script id="searchAccountTemple" type="text/template">
                     <table class="table  table-bg tb-border mb-20">
                         <tbody>
+                        <input type="hidden" name="unit" value="{{:incomeFlag}}">
+
                         <tr class="width-16" >
                             <td>{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',payTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
-                            <td class="red">{{:totalAmount}}</td>
-                            <td class="green"> 0yuan</td><%--{{:~liToYuan()}}--%>
-                            <td>{{:balancePre}}</td>
+                            <td class="red">
+                                {{if  incomeFlag == '1'}}
+                                    {{:~liToYuan(totalAmount)}}
+                                {{else }}
+                                    0元
+                                {{/if}}
+                            </td>
+                            <td class="green">
+                                {{if  incomeFlag == '0'}}
+                                {{:~liToYuan(-totalAmount)}}
+                                {{else }}
+                                0元
+                                {{/if}}
+                            </td><%--{{:~liToYuan()}}--%>
+                            <td>{{:~liToYuan(balancePre)}}</td>
+                            <td>{{:optType}}</td>
                             <td>{{:channel}}</td>
                             <td>{{:remark}}</td>
-
                         </tr>
                         </tbody>
                     </table>

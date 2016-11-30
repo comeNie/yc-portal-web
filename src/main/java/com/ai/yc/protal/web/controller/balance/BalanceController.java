@@ -121,6 +121,14 @@ public class BalanceController {
                     fundBookQueryResponse.getPageInfo().getResult().get(i).setOutBalance(java.lang.Math.abs(outAmount));
                 }
 
+            }else {
+                IncomeDetail incomeDetail = new IncomeDetail();
+                incomeDetail.setIncomeBalance(incomeAmount);
+                incomeDetail.setOutBalance(outAmount);
+                List<IncomeDetail> list = new ArrayList<>();
+                list.add(incomeDetail);
+                pageInfo.setResult(list);
+                fundBookQueryResponse.setPageInfo(pageInfo);
             }
             resData.setData(fundBookQueryResponse.getPageInfo());
         } catch (Exception e) {
