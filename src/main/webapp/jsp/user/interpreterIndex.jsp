@@ -23,7 +23,7 @@
         <!--右侧内容-->
         <!--右侧大块-->
         <div class="right-wrapper">
-            <input id="interperId" name="interperId" type="hidden" value="${interperInfo.userId}"/>
+            <input id="interperId" name="interperId" type="hidden" value="${interperInfo.translatorId}"/>
             <input id="lspId" name="lspId" type="hidden" value="${interperInfo.lspId}"/>
             <input id="lspRole" name="lspRole" type="hidden" value="${interperInfo.lspRole}"/>
             <input id="userId" name="userId" type="hidden" value="${userId}"/>
@@ -148,21 +148,81 @@
 <%@ include file="/inc/userFoot.jsp"%>
 </body>
 <script id="orderTemple" type="text/template">
+    
     <tr>
+        <input type="hidden" name="orderId" value="{{:orderId}}">
+						<input type="hidden" name="unit" value="{{:currencyUnit}}">
+						<input type="hidden" name="state" value="{{:state}}">
         <td>
             <div class="fy-sm"> {{:translateName}}</div>
         </td>
         <td>
-            {{:~liToYuan(totalFee)}}
-            {{if currencyUnit == '1'}}
-            <spring:message code="myOrder.rmb"/>
-            {{else }}
-            <spring:message code="myOrder.dollar"/>
-            {{/if}}
+            {{if  currencyUnit == '1'}}
+								<spring:message code="myOrder.rmbSame" arguments="{{:~liToYuan(totalFee)}}" />
+								{{else }}
+								<spring:message code="myOrder.dollarSame" arguments="{{:~liToYuan(totalFee)}}" />
+								{{/if}}
         </td>
         <td>{{:endTime}}</td>
-        <td>翻译中</td>
-        <td><input type="button" class="btn biu-btn btn-auto-25 btn-green radius10" value="翻译"></td>
+        {{if  state  == '21'}}
+							<!-- 已领取 -->
+							<td><spring:message code="myOrder.status.Claimed"/></td>
+							<td>
+								<!-- <input type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="分 配"> -->
+								<!-- 翻 译 -->
+								<input name="trans" type="button"  class="btn biu-btn btn-auto-25 btn-green radius10"  value="<spring:message code="myOrder.Translate"/>">
+							</td>
+							{{else state  == '221'}}
+							<!-- 已分配 -->
+							<td><spring:message code="myOrder.status.Assigned"/></td>
+							<td>
+								<!-- <input name="assigne" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="分 配"> -->
+							</td>
+							{{else state  == '23'}}
+							<!-- 翻译中 -->
+							<td><spring:message code="myOrder.status.translating"/></td>
+							<td>
+								<!-- 提交 -->
+								<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="<spring:message code="myOrder.Submit"/>">
+							</td>
+							{{else state  == '40'}}
+							<!-- 待审核 -->
+							<td><spring:message code="myOrder.status.Review"/></td>
+							<td>
+								<!--<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="提交"> -->
+							</td>
+							{{else state  == '50'}}
+							<!-- 待确认 -->
+							<td><spring:message code="myOrder.status.tobeConfirm"/></td>
+							<td>
+							</td>
+							{{else state  == '90'}}
+							<!-- 已完成 -->
+							<td><spring:message code="myOrder.status.Completed"/></td>
+							<td>
+							</td>
+							{{else state  == '53'}}
+							<!-- 已评价 -->
+							<td><spring:message code="myOrder.status.Evaluated"/></td>
+							<td>
+								<!-- <input name="evaluated" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="已评价"> -->
+							</td>
+							{{else state  == '25'}}
+							<!-- 修改中 -->
+							<td><spring:message code="myOrder.status.Modification"/></td>
+							<td>
+								<!-- 提交 -->
+								<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="<spring:message code="myOrder.Submit"/>">
+							</td>
+							{{else state  == '92'}}
+							<!-- 已退款 -->
+							<td><spring:message code="myOrder.status.Refunded"/></td>
+							<td>
+							</td>
+							{{else }}
+							<td></td>
+							<td></td>
+							{{/if}}
     </tr>
 </script>
 <script type="text/javascript">
@@ -175,6 +235,15 @@
             });
             pager.render();
         });
+        //提交按钮
+    	$('#order_list').delegate("input[name='submit']", 'click', function () {
+    		pager._orderSubmit($(this).parents("tr").find("input[name='orderId']").val());
+    	});
+    	
+    	//翻译按钮
+    	$('#order_list').delegate("input[name='trans']", 'click', function () {
+    		 window.location.href="${_base}/p/trans/order/"+$(this).parents("tr").find("input[name='orderId']").val();
+    	});
     })();
 	$(function(){
 		var securitylevel = "${securitylevel}";
