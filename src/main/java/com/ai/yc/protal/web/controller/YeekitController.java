@@ -1,27 +1,16 @@
 package com.ai.yc.protal.web.controller;
 
-import java.io.IOException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.yc.protal.web.service.YeekitService;
-import com.alibaba.fastjson.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ai.yc.protal.web.utils.HttpUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
-import com.ai.yc.order.api.ordersubmission.param.OrderSubmissionResponse;
-import com.ai.yc.protal.web.exception.HttpStatusException;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+
 
 /**
  * 译库机器翻译
@@ -32,6 +21,8 @@ public class YeekitController {
 
     @Autowired
     YeekitService yeekitService;
+    @Autowired
+    ResWebBundle rb;
 
 
     /**
@@ -53,10 +44,8 @@ public class YeekitController {
             resData.setData(yeekitService.dotranslate(fromTmp,to,text));
         } catch (Exception e) {
             LOGGER.error("机器翻译失败：", e);
-            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"FAIL"); 
-            resData.setData("机器翻译失败");
-            return resData;
-        } 
+            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
+        }
         
         return resData;
     }
@@ -77,7 +66,7 @@ public class YeekitController {
             lan = yeekitService.detection(text);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"");
+            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
         }
         //TODO
         resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
