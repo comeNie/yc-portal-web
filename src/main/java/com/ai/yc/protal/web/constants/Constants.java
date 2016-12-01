@@ -50,6 +50,11 @@ public final class Constants {
 		public static final String REGISTER_EMAIL_ZH_CN_TEMPLATE = "email/template/yc-register_zh_cn-mail.xml";
 		/** 注册邮件英文模版 */
 		public static final String REGISTER_EMAIL_EN_US_TEMPLATE = "email/template/yc-register_en_us-mail.xml";
+		/** 注册邮件中文模版主题 */
+		public static final String REGISTER_EMAIL_ZH_CN_SUBJECT = "注册邮件";
+		/** 注册邮件英文模版 主题 */
+		public static final String REGISTER_EMAIL_EN_US_SUBJECT = "Registered email";
+		
 		/** 邮箱校验 */
 		public static final String CHECK_TYPE_EMAIL = "email";
 		/** 手机校验 */
@@ -158,6 +163,14 @@ public final class Constants {
 		public static final String EMAIL_VERIFICATION_CODE = "email_verification_code";
 		/** 邮箱验证码超时时间 */
 		public static final String EMAIL_VERIFICATION_OVER_TIME = "email_verification_code_over_time";
+        /** 动态码邮件中文模版 */
+		public static final String EMAIL_VERIFY_ZH_CN_TEMPLATE = "email/template/yc-verification_zh_cn-mail.xml";
+		/** 动态码邮件英文模版 */
+		public static final String EMAIL_VERIFY_EN_US_TEMPLATE = "email/template/yc-verification_en_us-mail.xml";
+		/** 动态码邮件中文模版主题 */
+		public static final String EMAIL_VERIFY_ZH_CN_SUBJECT = "邮箱验证码邮件";
+		/** 动态码邮件英文模版 主题 */
+		public static final String EMAIL_VERIFY_EN_US_SUBJECT = "Email for email verification code";
 	}
 	public final class Order {
 		private Order() {
