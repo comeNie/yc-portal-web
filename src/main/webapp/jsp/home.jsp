@@ -19,7 +19,12 @@
     <link href="${uedroot}/css/modular/global.css" rel="stylesheet" type="text/css"/>
     <link href="${uedroot}/css/modular/headr-footer.css" rel="stylesheet" type="text/css"/>
     <link href="${uedroot}/css/modular/index.css" rel="stylesheet" type="text/css"/>
-</head>
+
+    <style type="text/css">
+        /*分词高亮*/
+        .before-translation span.b_cur {background: #fff444 none repeat scroll 0 0;}
+    </style>
+    </head>
 
 <body class="homebody">
 <!--面包屑导航-->
