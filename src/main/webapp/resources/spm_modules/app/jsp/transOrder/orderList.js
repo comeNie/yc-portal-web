@@ -119,6 +119,7 @@ define('app/jsp/transOrder/orderList', function (require, exports, module) {
 				success: function (data) {
 					if ("1" === data.statusCode) {
 						//提交成功
+						window.location.reload();
 					}
 				}
 			});

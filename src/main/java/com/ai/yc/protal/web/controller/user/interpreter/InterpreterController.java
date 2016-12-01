@@ -27,7 +27,9 @@ import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.image.IImageClient;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
+import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
 import com.ai.yc.ucenter.api.members.param.base.ResponseCode;
+import com.ai.yc.ucenter.api.members.param.editusername.UcMembersEditUserNameRequest;
 import com.ai.yc.ucenter.api.members.param.get.UcMembersGetRequest;
 import com.ai.yc.ucenter.api.members.param.get.UcMembersGetResponse;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
@@ -162,7 +164,11 @@ public class InterpreterController {
 		try {
 			if(!StringUtil.isBlank(userName)&&!userName.equals(originalUsername)){//用户名发生改变
 				ResponseData<Boolean> res= checkUserName(request,userName);
-				if(!res.getData()){//昵称校验不通过
+				if(!res.getData()){//用户名校验不通过
+					return res;
+				}
+				res = updateUserName(userName);
+				if(!res.getData()){//用户名保存失败
 					return res;
 				}
 				//调用ucenter ok
@@ -200,5 +206,36 @@ public class InterpreterController {
 		}
 
 		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,msg, isOk);
+	}
+	/**
+	 * 修改用户名
+	 * @param request
+	 * @param userName
+	 * @return
+	 */
+	private ResponseData<Boolean> updateUserName(String userName) {
+		boolean isOk = false;
+		String msg = "ok";
+		try {
+			IUcMembersSV ucMembersSV = DubboConsumerFactory
+					.getService(IUcMembersSV.class);
+			UcMembersEditUserNameRequest nameReq = new UcMembersEditUserNameRequest();
+			nameReq.setUid(Integer.parseInt(UserUtil.getUserId()));
+			UcMembersResponse res = ucMembersSV.ucEditUserName(nameReq);
+			ResponseCode responseCode = res == null ? null : res.getCode();
+			Integer codeNumber = responseCode == null ? null : responseCode
+					.getCodeNumber();
+			if (codeNumber != null && codeNumber == 1) {// 成功
+				isOk = true;
+			} else {
+				isOk = false;
+				msg =responseCode.getCodeMessage();
+			}
+		 } catch (Exception e) {
+			isOk = false;
+			msg = "Ucenter System error";
+			LOGGER.error(e.getMessage(), e);
+		}
+		return new  ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,msg, isOk);
 	}
 }

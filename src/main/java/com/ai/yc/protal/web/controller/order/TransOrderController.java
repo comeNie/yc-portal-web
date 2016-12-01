@@ -205,8 +205,8 @@ public class TransOrderController {
             LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
             //如果返回值为空,或返回信息中包含错误信息,返回失败
             if (orderDetailsRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "FAIL");
-                resData.setData("查询订单失败");
+                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
+                return resData;
             }
             
                 
@@ -214,8 +214,8 @@ public class TransOrderController {
             //文本翻译  翻译信息为空，则返回失败
             if (transferType.equalsIgnoreCase("0") && 
                     StringUtils.isEmpty(orderDetailsRes.getProd().getTranslateInfo())) {
-                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "FAIL");
-                resData.setData("翻译信息为空");
+                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage("order.info.transNull"));
+                return resData;
             }
             
             //文档翻译 上传文件为0，则返回失败
@@ -229,8 +229,9 @@ public class TransOrderController {
                 }
                 
                 if (filesCount <= 0) {
-                    resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "FAIL");
-                    resData.setData("没有上传译文");
+                    resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
+                            rb.getMessage("order.info.uploadFileNull"));
+                    return resData;
                 }
             }
             
@@ -244,14 +245,12 @@ public class TransOrderController {
             resHeader = stateRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息
             if (stateRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "FAIL");
-                resData.setData("提交订单失败");
+                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
             }
             
         } catch(Exception e) {
             LOGGER.error("提交订单失败:", e);
-            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "FAIL");
-            resData.setData("提交订单失败");
+            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
         }
         
         return resData;
@@ -284,11 +283,11 @@ public class TransOrderController {
             ResponseHeader resHeader = updateRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息
             if (updateRes==null|| (updateRes!=null && (!resHeader.isSuccess()))){
-                resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, "FAIL");
+                resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
             }
         } catch(Exception e) {
             LOGGER.error("修改订单信息失败：", e);
-            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, "FAIL");
+            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
         }
         
         return resData;
@@ -317,12 +316,12 @@ public class TransOrderController {
             ResponseHeader resHeader = stateRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息
             if (stateRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-                resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, "FAIL");
+                resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
             }
             
         } catch(Exception e) {
             LOGGER.error("修改订单状态失败：", e);
-            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, "FAIL");
+            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
         }
         
         return resData;
@@ -367,7 +366,7 @@ public class TransOrderController {
             ResponseHeader resHeader = updateRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息
             if (updateRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-                resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, "FAIL");
+                resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
             }
         } catch (Exception e) {
             LOGGER.error("删除译员文件失败", e);
@@ -443,11 +442,11 @@ public class TransOrderController {
             ResponseHeader resHeader = updateRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息
             if (updateRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-                resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, "FAIL");
+                resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
             }
         } catch (Exception e) {
             LOGGER.error("上传译文失败:", e);
-            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, "FAIL");
+            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
         }
         
         return resData;

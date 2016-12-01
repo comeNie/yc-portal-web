@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.sdk.util.CollectionUtil;
+import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.yc.order.api.ordersubmission.param.*;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.InsertYCContactRequest;
@@ -16,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.extractor.ExcelExtractor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +40,8 @@ import java.sql.Timestamp;
 @RequestMapping("/p/order")
 public class OrderLoginController {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderLoginController.class);
+    @Autowired
+    ResWebBundle rb;
     
     /**
      * 提交订单，填写联系人
@@ -82,11 +86,11 @@ public class OrderLoginController {
             ResponseHeader resHeader = contactRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息,则抛出异常
             if (contactRes==null|| (resHeader!=null && (!resHeader.isSuccess()))) {
-                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "");
+                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
             }
         } catch(Exception e) {
             LOGGER.error("保存联系人失败：", e);
-            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"");
+            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
         }
 
         return  resData;

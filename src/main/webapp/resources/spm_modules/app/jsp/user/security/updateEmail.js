@@ -86,7 +86,7 @@ define("app/jsp/user/security/updateEmail",
 								 $("#set-table2").html("<div class='recharge-success mt-40'><ul><li class='word'>"+updateEmailJs.notBindEmailNoVerify+"</li></ul></div>");
 							}
 							if(phone==""){
-								 $("#set-table1").html("<div class='recharge-success mt-40'><ul><li class='word'>"+updateEmailJs.notBindPhoneNoVerify+"</li></ul></div>");
+								 $("#set-table1").html("<div class='recharge-success mt-40'><ul><li><img src='"+uedroot+"/images/rech-fail.png' /></li><li class='word'>"+updateEmailJs.notBindPhoneNoVerify+"</li></ul></div>");
 							}
 							if(phone==""&&email!=""){//没有绑定手机选中邮箱
 								$('.set-up a:eq(1)').click();
