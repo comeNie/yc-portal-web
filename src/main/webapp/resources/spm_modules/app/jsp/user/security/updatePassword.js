@@ -12,7 +12,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 				d.close();
 			}
 		});
-		d.show();
+		d.showModal();
     };
 	// 实例化AJAX控制处理对象
 	var ajaxController = new AjaxController();

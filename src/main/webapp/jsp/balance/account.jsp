@@ -111,44 +111,11 @@
                     <ul id="pagination-ul">
                     </ul>
                 </div>
-                <script id="searchAccountTemple" type="text/template">
-                    <table class="table  table-bg tb-border mb-20">
-                        <tbody>
-                        <input type="hidden" name="unit" value="{{:incomeFlag}}">
-
-                        <tr class="width-16" >
-                            <td>{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',payTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
-                            <td class="red">
-                                {{if  incomeFlag == '1'}}
-                                    {{:~liToYuan(totalAmount)}}
-                                {{else }}
-                                    0元
-                                {{/if}}
-                            </td>
-                            <td class="green">
-                                {{if  incomeFlag == '0'}}
-                                {{:~liToYuan(-totalAmount)}}
-                                {{else }}
-                                0元
-                                {{/if}}
-                            </td><%--{{:~liToYuan()}}--%>
-                            <td>{{:~liToYuan(balancePre)}}</td>
-                            <td>{{:optType}}</td>
-                            <td>{{:channel}}</td>
-                            <td>{{:remark}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </script>
                 <!--分页结束-->
             </div>
             </form>
-
-
         </div>
     </div>
-
-
 </div>
 <script type="text/javascript" src="${_base}/resources/template/scripts/modular/jquery-1.11.1.min.js"></script>
 <%--<script type="text/javascript" src="${_base}/resources/template/scripts/modular/frame.js"></script>--%>
@@ -156,6 +123,36 @@
 <%@include file="/inc/indexFoot.jsp"%>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
+<script id="searchAccountTemple" type="text/template">
+    <table class="table  table-bg tb-border mb-20">
+        <tbody>
+        <input type="hidden" name="unit" value="{{:incomeFlag}}">
+
+        <tr class="width-16" >
+            <td>{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',payTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
+            <td class="red">
+                {{if  incomeFlag == '1'}}
+                {{:~liToYuan(totalAmount)}}
+                {{else }}
+                0元
+                {{/if}}
+            </td>
+            <td class="green">
+                {{if  incomeFlag == '0'}}
+                {{:~liToYuan(-totalAmount)}}
+                {{else }}
+                    0元
+                {{/if}}
+            </td><%--{{:~liToYuan()}}--%>
+            <td>{{:~liToYuan(balancePre)}}</td>
+            <td>{{:optType}}</td>
+            <td>{{:channel}}</td>
+            <td>{{:remark}}</td>
+        </tr>
+        </tbody>
+    </table>
+</script>
+
 <script type="text/javascript">
     var pager;
     var current = "myaccount";

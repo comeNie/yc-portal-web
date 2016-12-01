@@ -221,6 +221,7 @@ public class InterpreterController {
 					.getService(IUcMembersSV.class);
 			UcMembersEditUserNameRequest nameReq = new UcMembersEditUserNameRequest();
 			nameReq.setUid(Integer.parseInt(UserUtil.getUserId()));
+			nameReq.setUsername(userName);
 			UcMembersResponse res = ucMembersSV.ucEditUserName(nameReq);
 			ResponseCode responseCode = res == null ? null : res.getCode();
 			Integer codeNumber = responseCode == null ? null : responseCode
