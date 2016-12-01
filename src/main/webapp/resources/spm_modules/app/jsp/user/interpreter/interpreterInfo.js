@@ -36,7 +36,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 				d.close();
 			}
 		});
-		d.show();
+		d.showModal();
     };
     var showMsg2 = function(msg){
     	var d = Dialog({
@@ -48,7 +48,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 				d.close();
 			}
 		});
-		d.show();
+		d.showModal();
     };
     //定义页面组件类
     var InterPreterInfoPager = Widget.extend({
