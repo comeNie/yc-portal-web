@@ -76,7 +76,7 @@ public class TaskCenterController {
             userInfoResponse.setApproveState("1");
 //          uiModel.addAttribute("lspId","");//lsp标识
 //          uiModel.addAttribute("lspRole","1");//lsp角色
-            uiModel.addAttribute("vipLevel","4");//译员等级
+//            uiModel.addAttribute("vipLevel","4");//译员等级
             //如果译员等级为空，则表示译员未认证通过，跳转到认证界面
             //0：认证不通过，1：认证通过
             if(!"1".equals(userInfoResponse.getApproveState())){
@@ -155,7 +155,8 @@ public class TaskCenterController {
             }
         } catch (Exception e) {
             LOGGER.error("查询订单分页失败:",e);
-            resData = new ResponseData<PageInfo<OrderWaitReceiveSearchInfo>>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage("common.res.sys.error",""));
+            resData = new ResponseData<PageInfo<OrderWaitReceiveSearchInfo>>(ResponseData.AJAX_STATUS_FAILURE,
+                    rb.getMessage("common.res.sys.error",""));
         }
         return resData;
     }
@@ -206,7 +207,8 @@ public class TaskCenterController {
         }catch (Exception e){
             LOGGER.error("Claim order is fail",e);
             //领取失败
-            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,rb.getMessage(""));
+            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
+                    rb.getMessage("common.res.sys.error",""));
         }
         return responseData;
     }
