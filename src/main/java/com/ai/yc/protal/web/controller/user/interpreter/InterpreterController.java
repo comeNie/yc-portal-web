@@ -185,6 +185,10 @@ public class InterpreterController {
 			if(!originalNickname.equals(nickname) && !StringUtil.isBlank(nickname)){//昵称发生改变
 				ResponseData<Boolean> res= checkNickName(request,nickname);
 				if(!res.getData()){//昵称校验不通过
+					//回滚用户名
+					if(isChangeUserName){
+					  updateUserName(originalUsername);
+					}
 					return res;
 				}
 			}
