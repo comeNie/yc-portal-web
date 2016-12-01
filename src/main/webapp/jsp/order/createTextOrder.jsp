@@ -91,7 +91,7 @@
 			<!--白色背景-->
 			<div class="white-bj">
 				<div class="right-list-title pb-20 pl-20 none-border">
-  					<p><spring:message code="order.translateLan"/></p>
+  					<p><spring:message code="order.translateContent"/></p>
   				</div>
   				<div class="translate-int radius" id="fy1">
   					<p>

@@ -68,7 +68,7 @@
                         <%--您的订单号： 5000020965 ,您可以在“我的订单”中查看您的订单信息，--%>
                             <p><spring:message code="order.pay.result.tag.front"/><a
                                     href="${_base}/p/customer/order/${orderId}">${orderId}</a><spring:message
-                                    code="order.pay.result.tag.back" arguments="${_base}"/></p>
+                                    code="order.pay.result.tag.back" arguments="${_base}/p/customer/order/list/view"/></p>
                             <%--若有任何疑问，欢迎致电咨询：400-119-8080--%>
                             <p><spring:message code="order.pay.result.tag.phone"/></p>
                     </li>
