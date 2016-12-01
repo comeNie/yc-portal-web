@@ -40,13 +40,14 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
                 mode: 'both',
                 language: currentLan
             });
+            this._globalRome();
 
             var formValidator=this._initValidate();
             $(":input").bind("focusout",function(){
                 formValidator.element(this);
             });
 
-            this._globalRome();
+
         },
 
         _initValidate:function(){

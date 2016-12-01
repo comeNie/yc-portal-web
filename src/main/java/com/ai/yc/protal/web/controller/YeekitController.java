@@ -61,16 +61,17 @@ public class YeekitController {
     public ResponseData<String> translateLan(String text) {  
         ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         //TODO 
-        String lan = "en";
+        String lan;
         try {
             lan = yeekitService.detection(text);
+            resData.setData(lan);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
         }
         //TODO
-        resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-        resData.setData(lan);
+//        resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+//        resData.setData(lan);
         return resData;
     }
   

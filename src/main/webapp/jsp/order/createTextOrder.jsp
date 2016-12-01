@@ -120,7 +120,7 @@
 									<p name="percent">100%</p>
 								</li>
 								<li class="right">
-									<i class="icon iconfont"></i>
+									<i class="icon iconfont">&#xe618;</i>
 								</li>
 								</ul>
 							</c:forEach>
@@ -251,8 +251,6 @@
 							<p class="word"><spring:message code="order.purpose"/></p>
 							<p>
 								<select id="selectPurpose" name="selectPurpose" class="select select-medium radius">
-									<%--不限  --%>
-									<option value="" selected="selected"><spring:message code="order.noLimt"/></option>
 									<c:forEach items="${purposeList}" var="purpose">
 										<option value="${purpose.purposeId}">
 											<c:choose>
@@ -268,8 +266,6 @@
 							<p class="word"><spring:message code="order.Fields"/></p>
 							<p>
 								<select id="selectDomain" name="selectDomain" class="select select-medium radius">
-									<%--不限  --%>
-									<option value="" selected="selected"><spring:message code="order.noLimt"/></option>
 									<c:forEach items="${domainList}" var="domain">
 										<option value="${domain.domainId}">
 											<c:choose>
@@ -328,10 +324,12 @@
 	<%@include file="/inc/indexFoot.jsp"%>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
+<script type="text/javascript" src="${spmRes}/jquery-i18n/1.2.2/jquery.i18n.properties.min.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/drop-down.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
-<script type="text/javascript" src="${_base}/resources/spm_modules/webuploader/webuploader.js"></script>
-<script type="text/javascript" src="${_base}/resources/spm_modules/app/jsp/order/upload.js"></script>
+<script type="text/javascript" src="${spmRes}/webuploader/webuploader.js"></script>
+
+<script type="text/javascript" src="${spmRes}/app/jsp/order/upload.js"></script>
 <script type="text/javascript">
 	(function () {
 		var pager;

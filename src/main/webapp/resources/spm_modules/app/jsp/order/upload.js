@@ -2,7 +2,7 @@
     // 当domReady的时候开始初始化
     $(function() {
          //var $list = $("#fileInfo");
-
+        var FILE_TYPES=['rar','zip','doc','docx','pdf','jpg','png','jif'];
          uploader = WebUploader.create({
 	    	  swf : _base+"/resources/spm_modules/webuploader/Uploader.swf",
 	          server: _base+'/order/uploadFile',
@@ -28,13 +28,18 @@
                 allSize += $(this).attr("size");
             });
 
-            if (allSize > 100 * 1024 * 1024) {
+            if (allSize > 100*1024*1024) {
                 alert("上传文件不能超过100M");
                 return false;
             }
 
             if (allCount > 10) {
                 alert("上传文件个数不能超过10个");
+                return false;
+            }
+
+            if ($.inArray(file.ext, FILE_TYPES)<0) {
+                alert("请上传rar,zip,doc,docx,pdf,jpg,png,jif");
                 return false;
             }
 
