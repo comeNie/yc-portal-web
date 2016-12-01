@@ -127,25 +127,35 @@
     <table class="table  table-bg tb-border mb-20">
         <tbody>
         <input type="hidden" name="unit" value="{{:incomeFlag}}">
-
+        <input type="hidden" name="unit" value="{{:optType}}">
         <tr class="width-16" >
             <td>{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',payTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
             <td class="red">
                 {{if  incomeFlag == '1'}}
-                {{:~liToYuan(totalAmount)}}
+                +{{:~liToYuan(totalAmount)}}元
                 {{else }}
                 0元
                 {{/if}}
             </td>
             <td class="green">
                 {{if  incomeFlag == '0'}}
-                {{:~liToYuan(-totalAmount)}}
+                -{{:~liToYuan(-totalAmount)}}元
                 {{else }}
                     0元
                 {{/if}}
             </td><%--{{:~liToYuan()}}--%>
             <td>{{:~liToYuan(balancePre)}}</td>
-            <td>{{:optType}}</td>
+            <td>
+                {{if  optType == '1'}}
+                <spring:message code="account.recharge"/>
+                {{else optType == '2'}}
+                <spring:message code="account.place.order"/>
+                {{else optType == '3'}}
+                <spring:message code="account.withdraw.cash"/>
+                {{else optType == '4'}}
+                <spring:message code="account.refund"/>
+                {{/if}}
+            </td>
             <td>{{:channel}}</td>
             <td>{{:remark}}</td>
         </tr>

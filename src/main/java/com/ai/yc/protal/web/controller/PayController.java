@@ -138,7 +138,15 @@ public class PayController {
         WEIXIN: 微信
         XY ：兴业
                 */
-        depositParam.setPayStyle(payNotify.getPayOrgCode());
+        if (payNotify.getPayOrgCode()!=null){
+            if (payNotify.getPayOrgCode().equals("ZFB")){
+                depositParam.setPayStyle("支付宝");
+            }else if (payNotify.getPayOrgCode().equals("YL")){
+                depositParam.setPayStyle("银联");
+            }else if (payNotify.getPayOrgCode().equals("XY")){
+                depositParam.setPayStyle("兴业");
+            }
+        }
         //内部系统充值
         depositParam.setBusiOperCode("300000");
         String result = iDepositSV.depositFund(depositParam);
