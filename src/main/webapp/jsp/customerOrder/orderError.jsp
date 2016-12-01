@@ -33,7 +33,7 @@
                             <li><img src="${uedroot}/images/rech-fail.png" /></li>
                             <li class="word"><spring:message code="myOrder.Systemerror" /> </li>
                             <li class="list mt-50">
-                                <spring:message code="myOrder.errorInfoCustomer" arguments="${_base}" />
+                                <spring:message code="myOrder.errorInfoCustomer" arguments="${_base}/p/customer/order/list/view" />
                             </li>
                         </ul>
                     </div>

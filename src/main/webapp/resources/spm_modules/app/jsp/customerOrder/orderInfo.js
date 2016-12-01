@@ -16,7 +16,7 @@ define('app/jsp/customerOrder/orderInfo', function (require, exports, module) {
     	
     	//跳转支付
     	_orderPay:function() {
-    		window.location.href="${_base}/p/customer/order/payOrder/"+$("#orderId").val()+"?unit="+$("#unit").val();
+    		window.location.href=_base+"/p/customer/order/payOrder/"+$("#orderId").val()+"?unit="+$("#unit").val();
     	},
     	
 //    	下载文件

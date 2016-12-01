@@ -57,7 +57,7 @@
                     <!-- 我们正在确认您的订单金额，并电话联系您，请耐心等待··· -->
                     <li class="mt-20"><spring:message code="orderOffer.offerConfirm"/></li>
                     <li class="list mt-20">
-                       <spring:message code="orderOffer.myorder" arguments="${_base}"/>
+                       <spring:message code="orderOffer.myorder" arguments="${_base}/p/customer/order/list/view"/>
                     </li>
                 </ul>
             </div>

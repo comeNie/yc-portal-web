@@ -180,7 +180,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				productInfo.fileInfoList = fileInfoList;
 
 				baseInfo.subFlag = "1";
-				productInfo.needTranslateInfo = JSON.stringify(fileInfoList);
+				//productInfo.needTranslateInfo = JSON.stringify(fileInfoList);
 				productInfo.translateInfo = "";
 				baseInfo.translateName = $("#fileList").find('li:first').text().substring(0,15);
 			} else {
@@ -294,11 +294,26 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 
 			//根据翻译类型，显示不同
 			if ($("#transType").val() == "1") {
+				//文档
 				$("#fy1").hide();
 				$("#fy2").show();
+				$("#selectAddedSer").attr("disabled",false);
+				$("#selectFormatConv").attr("disabled",false);
+
+				//格式转换
+				if ($("#format").val() != '') {
+					$("#selectFormatConv").val("1");
+					$("#inputFormatConv").show();
+					$("#inputFormatConv").val($("#format").val());
+				}
 			} else {
+				//文字
 				$("#fy2").hide();
+				$("#selectFormatConv").val("2");
+				$("#selectAddedSer").attr("disabled",true);
+				$("#selectFormatConv").attr("disabled",true);
 			}
+
 
 			//session 语言对
 			if ($("#duadName").val() != '') {
@@ -338,15 +353,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			//排版
 			if ($("#isSetType").val() == 'Y') {
 				$("#selectAddedSer").val("1");
-			}
-
-			//格式转换
-			if ($("#format").val() == '1') {
-				$("#selectFormatConv").val("1");
-				$("#inputFormatConv").show();
-				$("#inputFormatConv").val($("#format").val());
-			} else {
-				$("#selectFormatConv").val("2");
 			}
 
 			//加急

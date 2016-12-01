@@ -109,7 +109,7 @@
 	  					<div class="attachment" id="fileList">
 							<c:forEach items="${fileInfoList}" var="file" varStatus="status">
 								<ul style="border-bottom: medium none;">
-								<li id="WU_FILE_${status.index}" class="word" size="${file.fileSize}" fileid="${file.fileSaveId}">
+								<li  class="word" size="${file.fileSize}" fileid="${file.fileSaveId}">
 									${file.fileName}
 									<div class="progress progress-striped active" style="display: none;">
 										<div class="progress-bar" style="width: 100%;" role="progressbar"></div>
@@ -324,11 +324,9 @@
 	<%@include file="/inc/indexFoot.jsp"%>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
-<script type="text/javascript" src="${spmRes}/jquery-i18n/1.2.2/jquery.i18n.properties.min.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/drop-down.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
 <script type="text/javascript" src="${spmRes}/webuploader/webuploader.js"></script>
-
 <script type="text/javascript" src="${spmRes}/app/jsp/order/upload.js"></script>
 <script type="text/javascript">
 	(function () {

@@ -205,7 +205,7 @@ public class OrderController {
             } else {
                 resData.setData("-1");
             }
-
+            LOGGER.info("缓存的订单信息:", subReq);
         } catch(Exception e) {
             LOGGER.error("系统自动报价:",e);
             resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,rb.getMessage(""));
