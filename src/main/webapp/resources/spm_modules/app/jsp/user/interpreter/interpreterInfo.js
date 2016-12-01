@@ -203,17 +203,17 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     			},
     			messages: {
     				userName: {
-    					required:"请输入用户名",
-    					maxlength:"最大长度不能超过{0}",
-    					minlength:"最小长度不能小于{0}"
+    					required:interpreterInfoMsg.userNameEmptyMsg,
+    					maxlength:interpreterInfoMsg.userNameMaxMsg,
+    					minlength:interpreterInfoMsg.userNameMinMsg
     					},
     				nickName: {
-    					required:"请输入昵称信息",
-    					maxlength:"最大长度不能超过{0}",
+    					required:interpreterInfoMsg.nickNameEmptyMsg,
+    					maxlength:interpreterInfoMsg.nickNameMaxMsg,
+    					minlength:interpreterInfoMsg.nickNameMinMsg
     				},
     				qq:{
-    					digits: "只能输入数字",
-    					maxlength:"最大长度不能超过{0}"
+    					digits: interpreterInfoMsg.qqErrorMsg
     				}
     			},
     			
