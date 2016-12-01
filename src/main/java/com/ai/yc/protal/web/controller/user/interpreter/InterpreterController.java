@@ -164,6 +164,7 @@ public class InterpreterController {
 		String userName = request.getParameter("userName");
 		boolean isOk = false;
 		String  msg = rb.getMessage("interpreter.save.error.msg");
+		//用户名是否修改
 		boolean isChangeUserName = false;
 		try {
 			if(!StringUtil.isBlank(userName)&&!userName.equals(originalUsername)){//用户名发生改变
@@ -221,6 +222,10 @@ public class InterpreterController {
 				msg = responseHeader.getResultMessage();
 			}
 		} catch (Exception e) {
+			//回滚用户名
+			if(isChangeUserName){
+			  updateUserName(originalUsername);
+			}
 			LOGGER.error(e.getMessage(),e);
 		}
 
