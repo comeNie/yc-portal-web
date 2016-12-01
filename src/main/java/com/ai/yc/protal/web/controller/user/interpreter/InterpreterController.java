@@ -157,11 +157,14 @@ public class InterpreterController {
 	@ResponseBody
 	public ResponseData<Boolean> saveInfo(HttpServletRequest request,
 			UpdateYCUserRequest ucUserRequest) {
+		//原始昵称
 		String originalNickname = request.getParameter("originalNickname");
+		//原始用户名
 		String originalUsername = request.getParameter("originalUsername");
 		String userName = request.getParameter("userName");
 		boolean isOk = false;
-		String  msg = rb.getMessage("interpreter.save.success.msg");
+		String  msg = rb.getMessage("interpreter.save.error.msg");
+		boolean isChangeUserName = false;
 		try {
 			if(!StringUtil.isBlank(userName)&&!userName.equals(originalUsername)){//用户名发生改变
 				ResponseData<Boolean> res= checkUserName(request,userName);
@@ -172,10 +175,8 @@ public class InterpreterController {
 				if(!res.getData()){//用户名保存失败
 					return res;
 				}
+				isChangeUserName = true;
 				//调用ucenter ok 更改状态
-				GeneralSSOClientUser updateUser = UserUtil.getSsoUser();
-				updateUser.setUsername(userName);
-				UserUtil.saveSsoUser(updateUser);
 				ucUserRequest.setIsChange("1");
 			}
 			
@@ -195,14 +196,24 @@ public class InterpreterController {
 					.getService(IYCUserServiceSV.class);
 			YCUpdateUserResponse res = ucUserServiceSV
 					.updateYCUserInfo(ucUserRequest);
-			ResponseHeader responseHeader = res==null?null:res.getResponseHeader();
+			ResponseHeader responseHeader =res==null?null:res.getResponseHeader();
 			if(responseHeader!=null&&responseHeader.isSuccess()){
+				msg =rb.getMessage("interpreter.save.success.msg");
 				isOk = true;
 				String userPortraitImg = request.getParameter("userPortraitImg");
 				if(!StringUtil.isBlank(userPortraitImg)){
 					request.getSession().setAttribute("userPortraitImg", userPortraitImg);
 				}
+				if(isChangeUserName){//更新会话信息
+					GeneralSSOClientUser updateUser = UserUtil.getSsoUser();
+					updateUser.setUsername(userName);
+					UserUtil.saveSsoUser(updateUser);
+				}
 			}else{
+				 //失败回滚用户名
+				if(isChangeUserName){
+				 updateUserName(originalUsername);
+				}
 				msg = responseHeader.getResultMessage();
 			}
 		} catch (Exception e) {
