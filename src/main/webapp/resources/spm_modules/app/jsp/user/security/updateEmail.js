@@ -17,7 +17,7 @@ define("app/jsp/user/security/updateEmail",
 						d.close();
 					}
 				});
-				d.show();
+				d.showModal();
 		    };
 			
 			var $ = require('jquery'), 
