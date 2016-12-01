@@ -14,7 +14,7 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 				d.close();
 			}
 		});
-		d.show();
+    	d.showModal();
     };
 	// 定义页面组件类
 	var updatePayPasswordPager = Widget.extend({
