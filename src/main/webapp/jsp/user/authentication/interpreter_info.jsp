@@ -158,7 +158,16 @@
     var interpreterInfoMsg ={
     		"showOkValueMsg" : '<spring:message code="ycaccountcenter.js.showOkValueMsg"/>',
     		"showTitleMsg" : '<spring:message code="ycaccountcenter.js.showTitleMsg"/>',
-    		"uplaodImageMsg" : '<spring:message code="interpreter.uplaodImageMsg"/>'
+    		"uplaodImageMsg" : '<spring:message code="interpreter.uplaodImageMsg"/>',
+    		"userNameEmptyMsg" : '<spring:message code="interpreter.save.userName.empty.msg"/>',
+    		"userNameErrorMsg" : '<spring:message code="interpreter.save.userName.error.msg"/>',
+    		"userNameMaxMsg" : '<spring:message code="interpreter.save.userName.maxlength.msg"/>',
+    		"userNameMinMsg" : '<spring:message code="interpreter.save.userName.minlength.msg"/>',
+    		"nickNameEmptyMsg" : '<spring:message code="interpreter.save.nickName.empty.msg"/>',
+    		"nickNameErrorMsg" : '<spring:message code="interpreter.save.userName.error.msg"/>',
+    		"nickNameMaxMsg" : '<spring:message code="interpreter.save.nickName.maxlength.msg"/>',
+    		"nickNameMinMsg" : '<spring:message code="interpreter.save.nickName.minlength.msg"/>',
+    		"qqErrorMsg" : '<spring:message code="interpreter.save.qq.error.msg"/>'
     	};
 	var pager;
 	(function() {
