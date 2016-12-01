@@ -25,6 +25,7 @@ import com.ai.opt.sdk.util.UUIDUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.image.IImageClient;
+import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
@@ -160,7 +161,7 @@ public class InterpreterController {
 		String originalUsername = request.getParameter("originalUsername");
 		String userName = request.getParameter("userName");
 		boolean isOk = false;
-		String  msg = "ok";
+		String  msg = rb.getMessage("interpreter.save.success.msg");
 		try {
 			if(!StringUtil.isBlank(userName)&&!userName.equals(originalUsername)){//用户名发生改变
 				ResponseData<Boolean> res= checkUserName(request,userName);
@@ -171,7 +172,10 @@ public class InterpreterController {
 				if(!res.getData()){//用户名保存失败
 					return res;
 				}
-				//调用ucenter ok
+				//调用ucenter ok 更改状态
+				GeneralSSOClientUser updateUser = UserUtil.getSsoUser();
+				updateUser.setUsername(userName);
+				UserUtil.saveSsoUser(updateUser);
 				ucUserRequest.setIsChange("1");
 			}
 			
