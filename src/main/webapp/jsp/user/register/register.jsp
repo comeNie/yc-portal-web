@@ -17,7 +17,7 @@
 	<div class="login-big">
 		<div class="login-headr">
 			<p>
-				<img src="${uedroot}/images/login-logo.png" />
+				<img src="${uedroot}/images/login-logo.png" onclick="location.href='${_base}/'" />
 			</p>
 			<p class="word">
 				<spring:message code="ycregister.registerTitle" />

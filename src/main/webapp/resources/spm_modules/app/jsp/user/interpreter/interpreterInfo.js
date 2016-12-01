@@ -152,8 +152,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 			if(originalUsername==userName||userName==""){//用户名未改变无需校验
 				return;
 			}
-			var re = /^[a-z0-9A-Z][a-z0-9A-Z_]{5,15}$/;
-			if(!re.test(userName)){
+			if(!this._regCheckUserName(userName)){
 				return;
 			}
 			ajaxController.ajax({
@@ -172,16 +171,20 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 				});
 		}
 		,
+		_regCheckUserName:function(value){
+			var re = /^(?![0-9]+$)(?![a-zA-Z]+$)[a-z0-9A-Z][a-z0-9A-Z_]{5,15}$/;
+			return re.test(value);
+		},
     	_initValidate:function(){
+    		var _this = this;
     		$.validator.addMethod( "checkUserName", function( value, element, param ) {
     			if(param==false)return true;
     			/*如果参数值存在，则进行校验*/
     			var empty = $.trim(value).length?false:true;
     			if(empty)return true;
-    			var re = /^[a-z0-9A-Z][a-z0-9A-Z_]{5,15}$/;
-    			var valid =  (re.test(value))?true:false;		
+    			var valid =  (_this._regCheckUserName(value))?true:false;		
     			return valid;
-    		}, $.validator.format( "首字母必须是字母或数字的字母和数字下划线组合") );
+    		}, $.validator.format(interpreterInfoMsg.userNameErrorMsg) );
     		var formValidator=$("#dataForm").validate({
     			rules: {
     				userName: {
@@ -203,17 +206,17 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     			},
     			messages: {
     				userName: {
-    					required:"请输入用户名",
-    					maxlength:"最大长度不能超过{0}",
-    					minlength:"最小长度不能小于{0}"
+    					required:interpreterInfoMsg.userNameEmptyMsg,
+    					maxlength:interpreterInfoMsg.userNameMaxMsg,
+    					minlength:interpreterInfoMsg.userNameMinMsg
     					},
     				nickName: {
-    					required:"请输入昵称信息",
-    					maxlength:"最大长度不能超过{0}",
+    					required:interpreterInfoMsg.nickNameEmptyMsg,
+    					maxlength:interpreterInfoMsg.nickNameMaxMsg,
+    					minlength:interpreterInfoMsg.nickNameMinMsg
     				},
     				qq:{
-    					digits: "只能输入数字",
-    					maxlength:"最大长度不能超过{0}"
+    					digits: interpreterInfoMsg.qqErrorMsg
     				}
     			},
     			
