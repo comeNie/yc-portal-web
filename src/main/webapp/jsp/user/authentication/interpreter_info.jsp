@@ -61,9 +61,14 @@
   						<p class="word"><b>*</b>
 							<spring:message code="interpreter.userName" />
 						</p>
-  						<p>
-  						<input <c:if test="${interpreterInfo.isChange=='1'}">readonly="readonly"</c:if>  maxlength="16" type="text" class="int-text int-xlarge radius" id="userName"  name="userName" value="${user_session_key.username}"/>
+  						<p id="p_userName">
+  						<c:if test="${interpreterInfo.isChange=='1'}">
+  						 ${user_session_key.username}
+  						</c:if>
+  						<c:if test="${interpreterInfo.isChange!='1'}">
+  						<input  maxlength="16" type="text" class="int-text int-xlarge radius" id="userName"  name="userName" value="${user_session_key.username}"/>
   						<label id="userName-error" class="error" for="userName"></label>
+  						</c:if>
   						</p>
   					   <!-- <label id="userNameErrMsg" style="display: none;"></label> -->
   					</li>

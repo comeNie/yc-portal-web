@@ -152,6 +152,10 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 			if(originalUsername==userName||userName==""){//用户名未改变无需校验
 				return;
 			}
+			var re = /^[a-z0-9A-Z][a-z0-9A-Z_]{5,15}$/;
+			if(!re.test(userName)){
+				return;
+			}
 			ajaxController.ajax({
 				type:"post",
 				url:_base+"/p/interpreter/checkUserName",
@@ -177,7 +181,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     			var re = /^[a-z0-9A-Z][a-z0-9A-Z_]{5,15}$/;
     			var valid =  (re.test(value))?true:false;		
     			return valid;
-    		}, $.validator.format( "首字母必须是字母或数字的字母和数字下划线组合" ) );
+    		}, $.validator.format( "首字母必须是字母或数字的字母和数字下划线组合") );
     		var formValidator=$("#dataForm").validate({
     			rules: {
     				userName: {
@@ -196,43 +200,6 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     					maxlength:10,
     					digits:true,
     			    }
-    				/*,
-    				serialNumber: {
-    					required: true,
-    					digits:true,
-    					min:1,
-    					max:100
-    				}
-    				,
-    				fullName:{
-     			    	required:false,
-     					maxlength:50,
-     			    },
-    				isChild: {
-    					required: true
-    				},
-    				startDate:{
-    					required: true,
-    					isDate: true,
-    					maxDate: $("#endDate").val()
-    				},
-    				fee:{
-    					required: true,
-    					moneyNumber: true
-    				},
-    				mynum:{
-    					required: true,
-    					amount: [8,3]
-    				}
-    				,
-    				idno:{
-    					required: true,
-    					idcard: true
-    				},
-    				address:{
-    					required:false,
-    					maxlength:100,
-    				}*/
     			},
     			messages: {
     				userName: {
@@ -247,13 +214,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     				qq:{
     					digits: "只能输入数字",
     					maxlength:"最大长度不能超过{0}"
-    				},
-    				/*address:{
-    					maxlength:"最大长度不能超过{0}",
-    				},
-    				startDate:{
-    					required: "请输入开始日期"     						
-    				}*/
+    				}
     			},
     			
     			
