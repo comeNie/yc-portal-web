@@ -85,12 +85,15 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 			 if($("#portraitFileId").attr("src")){
 				 userPortraitImg =$("#portraitFileId").attr("src");
 			 }
+			 var userName =$("#userName").val();
              ajaxController.ajax({
 					type:"post",
+					processing : true,
+					message : " ",
     				url:_base+"/p/interpreter/saveInfo",
     				data:{
     					'portraitId':$("#portraitId").val(),
-    					'userName':$("#userName").val(),
+    					'userName':userName,
 						'nickname':$("#nickname").val(),
 						'firstname':$("#firstname").val(),
 						'lastname':$("#lastname").val(),
@@ -106,10 +109,17 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     		        	if(!json.data){
     		        		showMsg(json.statusInfo);
     		        	}else{
-    		        		if(originalUsername!=userName&&userName!=""){//用户名发生改变禁用输入框
-    		    				$("#userName").attr("readonly","readonly");
-    		    				originalUsername = userName;
+    		        		if(originalUsername!=userName&&userName!=""){//用户名发生改变
+    		        			originalUsername = userName;
+    		    				//输入框替换
+    		    				$("#p_userName").html(userName);
+    		    				//更新头部菜单用户名显示
+    		    				$("#top_username").html(userName);
+    		    				//更新左侧菜单用户名显示
+    		    				$("#left_username").html(userName);
     		    			}
+    		        		//更新头像显示
+    		        		$("#ycUserPortraitImg").attr("src",$("#portraitFileId").attr("src"));
     		        		showMsg2(json.statusInfo);
     		        	}
     		          }
