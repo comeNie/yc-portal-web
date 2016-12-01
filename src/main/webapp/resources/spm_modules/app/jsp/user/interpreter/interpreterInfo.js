@@ -152,7 +152,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 			if(originalUsername==userName||userName==""){//用户名未改变无需校验
 				return;
 			}
-			var re = /^[a-z0-9A-Z][a-z0-9A-Z_]{5,15}$/;
+			var re = /^(?![0-9]+$)(?![a-zA-Z]+$)[a-z0-9A-Z][a-z0-9A-Z_]{5,15}$/;
 			if(!re.test(userName)){
 				return;
 			}
@@ -178,7 +178,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     			/*如果参数值存在，则进行校验*/
     			var empty = $.trim(value).length?false:true;
     			if(empty)return true;
-    			var re = /^[a-z0-9A-Z][a-z0-9A-Z_]{5,15}$/;
+    			var re = /^(?![0-9]+$)(?![a-zA-Z]+$)[a-z0-9A-Z][a-z0-9A-Z_]{5,15}$/;
     			var valid =  (re.test(value))?true:false;		
     			return valid;
     		}, $.validator.format( "首字母必须是字母或数字的字母和数字下划线组合") );
