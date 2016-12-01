@@ -176,7 +176,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				cancel:function(){
 					this.close();
 				}
-			}).show();
+			}).showModal();
 		}
         
     });
