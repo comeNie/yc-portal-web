@@ -1,6 +1,7 @@
 package com.ai.yc.protal.web.controller.user.register;
 
 import java.util.Locale;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +28,7 @@ import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.constants.Constants.UcenterOperation;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
+import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.ai.yc.protal.web.utils.PasswordMD5Util.Md5Utils;
 import com.ai.yc.protal.web.utils.VerifyUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersOperationSV;
@@ -39,6 +42,7 @@ import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.InsertYCUserRequest;
 import com.ai.yc.user.api.userservice.param.YCInsertUserResponse;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 译云注册Controller <br>
@@ -121,7 +125,7 @@ public class RegisterController {
 				if(isPhone){//清除手机动态码
 					VerifyUtil.delRedisValue( PhoneVerify.REGISTER_PHONE_CODE + req.getMobilePhone());//清除验证码
 				}
-				sendRegisterEmaial(res.getUserId(), req.getEmail(),res.getOperationcode());
+				sendRegisterEmaial(req,res);
 				return new ResponseData<Boolean>(
 						ResponseData.AJAX_STATUS_SUCCESS, msg, true);
 			}
@@ -130,7 +134,7 @@ public class RegisterController {
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
-					"error", false);
+					"System error", false);
 		}
 
 	}
@@ -215,21 +219,27 @@ public class RegisterController {
 		if (codeNumber != null && codeNumber == 1) {
 			falg = true;
 		} else {
-			msg = responseCode==null?"error":responseCode.getCodeMessage();
+			msg = rb.getMessage("ycregisterMsg.accountExists");
 		}
 		return new Object[]{falg,msg};
 	}
-	@RequestMapping("emailActivate")
-	public String emailActivate(HttpServletRequest request,@RequestParam int uid,@RequestParam String code) {
+	@RequestMapping("emailActivate/{uuid}")
+	public String emailActivate(@PathVariable("uuid") String uuid) {
+		String value = VerifyUtil.getRedisValue(uuid);
+		if(StringUtil.isBlank(value)){
+			return ERROR;
+		}
+		String[] codes = value.split(",");
 		UcMembersActiveRequest req = new UcMembersActiveRequest();
-		req.setUid(uid);
-		req.setOperationcode(code);
+		req.setUid(Integer.parseInt(codes[0]));
+		req.setOperationcode(codes[1]);
 		req.setOperationtype(UcenterOperation.OPERATION_TYPE_EMAIL_ACTIVATE);
 		UcMembersResponse res =DubboConsumerFactory.getService(IUcMembersOperationSV.class).ucActiveMember(req);
 		if (res != null && res.getMessage() != null
 				&& res.getMessage().isSuccess() && res.getCode() != null
 				&& res.getCode().getCodeNumber() != null
 				&& res.getCode().getCodeNumber() == 1) {
+			VerifyUtil.delRedisValue(uuid);
 			return SUCCESS;
 		}
 		LOG.info("邮箱激活返回参数："+JSON.toJSONString(res));
@@ -244,22 +254,25 @@ public class RegisterController {
 	/**
 	 * 发送验证邮件
 	 */
-	private boolean sendRegisterEmaial(String userId, String email,String code) {
-		if (!StringUtil.isBlank(email)) {
-
+	private boolean sendRegisterEmaial(InsertYCUserRequest req,YCInsertUserResponse res) {
+		if (!StringUtil.isBlank(req.getEmail())) {
+			String key = UUID.randomUUID().toString().replace("-", "");
+			String value = res.getUserId()+","+res.getOperationcode();
+			VerifyUtil.addRedisValue(key, 24*60*60,value);
+			JSONObject config = AiPassUitl.getVerificationCodeConfig();
+			String url = config.getString("email_active_url")+"/reg/emailActivate/"+key;
 			SendEmailRequest emailRequest = new SendEmailRequest();
-			emailRequest.setTomails(new String[] { email });
-			emailRequest.setData(new String[] { "zhangsan", code,userId});
+			emailRequest.setTomails(new String[] { req.getEmail() });
+			emailRequest.setData(new String[] {res.getUsername(),url});
 			Locale locale = rb.getDefaultLocale();
-			String _template = "";
-			if (Locale.SIMPLIFIED_CHINESE.toString().equals(
-					locale.toString())) {
-				_template = Register.REGISTER_EMAIL_ZH_CN_TEMPLATE;
-			} else if (Locale.US.toString().equals(locale.toString())) {
+			String _template = Register.REGISTER_EMAIL_ZH_CN_TEMPLATE;
+			String subject="注册成功";
+			if (Locale.US.toString().equals(locale.toString())) {
 				_template = Register.REGISTER_EMAIL_EN_US_TEMPLATE;
+				subject="ok";
 			}
 			emailRequest.setTemplateURL(_template);
-			emailRequest.setSubject("注册成功");
+			emailRequest.setSubject(subject);
 			return VerifyUtil.sendEmail(emailRequest);
 		}
 		return false;
