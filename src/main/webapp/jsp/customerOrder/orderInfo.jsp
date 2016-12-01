@@ -52,9 +52,17 @@
                    	  		<!-- 原文 文档类型 -->
                    	  		<li class="title"><spring:message code="myOrder.Originaltext"/>:</li>
                    	  			 <!-- 文本类型翻译 更多 -->
-	                            <li class="word">${fn:substring(OrderDetails.prod.needTranslateInfo, 0, 150)}
-	                            	<span style="display: none;">${fn:substring(OrderDetails.prod.needTranslateInfo, 150, fn:length(OrderDetails.prod.needTranslateInfo))}</span>
-	                            	<A name="more" href="javaScript:void(0);">[<spring:message code="myOrder.more"/>]</A></li>
+                                <c:choose>
+                                    <c:when test="${fn:length(OrderDetails.prod.needTranslateInfo) <= 150}">
+                                        <li class="word">${OrderDetails.prod.needTranslateInfo}</li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="word">${fn:substring(OrderDetails.prod.needTranslateInfo, 0, 150)}
+                                            <span style="display: none;">${fn:substring(OrderDetails.prod.needTranslateInfo, 150, fn:length(OrderDetails.prod.needTranslateInfo))}</span>
+                                            <A name="more" href="javaScript:void(0);">[<spring:message code="myOrder.more"/>]</A></li>
+                                    </c:otherwise>
+                                </c:choose>
+
                    	 	</ul>
                     	</c:if>
                     	
@@ -78,9 +86,17 @@
 	                    	<!-- 译文 文本 -->
                             <li class="title"><spring:message code="myOrder.Translatedtext"/>:</li>
                             <!-- 文本类型翻译 更多 -->
-                            <li class="word">${fn:substring(OrderDetails.prod.translateInfo, 0, 150)}
-	                            <span style="display: none;">${fn:substring(OrderDetails.prod.translateInfo, 150, fn:length(OrderDetails.prod.translateInfo))}</span>
-	                            <A name="more" href="javaScript:void(0);">[<spring:message code="myOrder.more"/>]</A></li>
+                            <c:choose>
+                                <c:when test="${fn:length(OrderDetails.prod.translateInfo) <= 150}">
+                                    <li class="word">${OrderDetails.prod.translateInfo}</li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="word">${fn:substring(OrderDetails.prod.translateInfo, 0, 150)}
+                                        <span style="display: none;">${fn:substring(OrderDetails.prod.translateInfo, 150, fn:length(OrderDetails.prod.translateInfo))}</span>
+                                        <A name="more" href="javaScript:void(0);">[<spring:message code="myOrder.more"/>]</A></li>
+                                </c:otherwise>
+                            </c:choose>
+
 	                    </ul>
 	                    </c:if>
 	                    

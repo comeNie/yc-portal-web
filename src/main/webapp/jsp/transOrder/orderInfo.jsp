@@ -50,9 +50,16 @@
 				 					<!-- 原文  -->
 				 					<li class="title"><spring:message code="myOrder.Originaltext"/>:</li>
 				 					<!-- 更多 -->
-				 					<li class="word">${fn:substring(OrderDetails.prod.needTranslateInfo, 0, 150)}
-		                            	<span style="display: none;">${fn:substring(OrderDetails.prod.needTranslateInfo, 150, fn:length(OrderDetails.prod.needTranslateInfo))}</span>
-		                            	<A name="more" href="javaScript:void(0);">[<spring:message code="myOrder.more"/>]</A></li>
+									<c:choose>
+										<c:when test="${fn:length(OrderDetails.prod.needTranslateInfo) <= 150}">
+											<li class="word">${OrderDetails.prod.needTranslateInfo}</li>
+										</c:when>
+										<c:otherwise>
+											<li class="word">${fn:substring(OrderDetails.prod.needTranslateInfo, 0, 150)}
+												<span style="display: none;">${fn:substring(OrderDetails.prod.needTranslateInfo, 150, fn:length(OrderDetails.prod.needTranslateInfo))}</span>
+												<A name="more" href="javaScript:void(0);">[<spring:message code="myOrder.more"/>]</A></li>
+										</c:otherwise>
+									</c:choose>
 				 				</ul>
 				 				
 				 				<c:if test="${OrderDetails.state =='23' || OrderDetails.state =='25' }">
@@ -66,9 +73,17 @@
 						 						<!-- 修改 -->
 						 						<input id="editText" class="btn border-blue-small btn-auto radius20" type="button" value="<spring:message code="myOrder.modify"/>"></li>
 						 					<!-- 更多 -->
-						 					<li class="word">${fn:substring(OrderDetails.prod.translateInfo, 0, 150)}
-				                            	<span style="display: none;">${fn:substring(OrderDetails.prod.translateInfo, 150, fn:length(OrderDetails.prod.translateInfo))}</span>
-				                            	<A name="more" href="javaScript:void(0);">[<spring:message code="myOrder.more"/>]</A></li>
+											<c:choose>
+												<c:when test="${fn:length(OrderDetails.prod.translateInfo) <=150}">
+													<li class="word">${OrderDetails.prod.translateInfo}</li>
+												</c:when>
+												<c:otherwise>
+													<li class="word">${fn:substring(OrderDetails.prod.translateInfo, 0, 150)}
+														<span style="display: none;">${fn:substring(OrderDetails.prod.translateInfo, 150, fn:length(OrderDetails.prod.translateInfo))}</span>
+														<A name="more" href="javaScript:void(0);">[<spring:message code="myOrder.more"/>]</A></li>
+												</c:otherwise>
+											</c:choose>
+
 				                            <li class="word" style="display: none"><textarea id="transTextArea" class="int-text radius text-150">${OrderDetails.prod.translateInfo}</textarea></li>
 					 					</ul>
 				 						<ul style="display: none">
