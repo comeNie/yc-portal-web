@@ -267,6 +267,18 @@ public class VerifyUtil {
 		}
 	}
 	/**
+	 * 添加redis值
+	 * @param key
+	 * @param seconds
+	 * @param value
+	 */
+	public static void addRedisValue(String key,int seconds,String value){
+		if (!StringUtil.isBlank(key)) {
+			ICacheClient iCacheClient = AiPassUitl.getCacheClient();
+			iCacheClient.setex(key, seconds, value);
+		}
+	}
+	/**
 	 * 删除redis值
 	 * @param key
 	 */
@@ -277,14 +289,24 @@ public class VerifyUtil {
 		}
 	}
 	/**
+	 * 获取redis值
+	 * @param key
+	 */
+	public static String getRedisValue(String key){
+		if (!StringUtil.isBlank(key)) {
+			ICacheClient iCacheClient = AiPassUitl.getCacheClient();
+			return iCacheClient.get(key);
+		}
+		return "";
+	}
+	/**
 	 * 校验缓存值
 	 * @param key
 	 * @param ckValue
 	 * @return
 	 */
 	public static boolean checkRedisValue(String key,String ckValue){
-		ICacheClient iCacheClient = AiPassUitl.getCacheClient();
-		String code = iCacheClient.get(key);
+		String code = getRedisValue(key);
 		boolean isOk = false;
 		if (!StringUtil.isBlank(code) && !StringUtil.isBlank(ckValue)
 				&& ckValue.equalsIgnoreCase(code)) {

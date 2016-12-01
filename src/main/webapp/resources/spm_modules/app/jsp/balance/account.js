@@ -46,7 +46,7 @@ define('app/jsp/balance/account', function (require, exports, module) {
 				path: _i18n_res, //资源文件路径
 				mode: 'both',
 				language: currentLan,
-				async: true
+				async: false
 			});
 
     		this._incomeList();

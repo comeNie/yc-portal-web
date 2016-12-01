@@ -94,6 +94,9 @@ public class AssembleUserInfoFilter implements Filter {
                         }
                     }
                 }
+                if(attributes.containsKey("loginName")&&attributes.get("loginName")!=null){//用户名特殊处理
+                	user.setUsername(String.valueOf(attributes.get("loginName")));
+                }
                 setMoreUserInfo(user);
             }
         } catch (Exception e) {

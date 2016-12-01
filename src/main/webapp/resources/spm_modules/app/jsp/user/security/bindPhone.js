@@ -21,7 +21,7 @@ define("app/jsp/user/security/bindPhone",
 						d.close();
 					}
 				});
-				d.show();
+				d.showModal();
 		    };
 			// 实例化AJAX控制处理对象
 			var ajaxController = new AjaxController();
@@ -55,7 +55,7 @@ define("app/jsp/user/security/bindPhone",
 										this.close();
 									}
 								});
-								d.show();
+								d.showModal();
 						    }
 						},
 						/* 加载国家 */

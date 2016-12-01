@@ -21,7 +21,7 @@ define("app/jsp/user/security/updateMobilePhone",
 						this.close();
 					}
 				});
-				d.show();
+				d.showModal();
 		    }
 
 			// 实例化AJAX控制处理对象

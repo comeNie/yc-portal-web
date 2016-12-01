@@ -22,7 +22,7 @@ define("app/jsp/user/security/bindEmail",
 						d.close();
 					}
 				});
-				d.show();
+				d.showModal();
 		    };
 		    
 		    var showMsg2 = function(msg){
@@ -35,7 +35,7 @@ define("app/jsp/user/security/bindEmail",
 						d.close();
 					}
 				});
-				d.show();
+				d.showModal();
 			}
 			// 实例化AJAX控制处理对象
 			var ajaxController = new AjaxController();

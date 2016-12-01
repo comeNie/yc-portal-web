@@ -25,6 +25,7 @@ import com.ai.opt.sdk.util.UUIDUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.image.IImageClient;
+import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
@@ -156,11 +157,15 @@ public class InterpreterController {
 	@ResponseBody
 	public ResponseData<Boolean> saveInfo(HttpServletRequest request,
 			UpdateYCUserRequest ucUserRequest) {
+		//原始昵称
 		String originalNickname = request.getParameter("originalNickname");
+		//原始用户名
 		String originalUsername = request.getParameter("originalUsername");
 		String userName = request.getParameter("userName");
 		boolean isOk = false;
-		String  msg = "ok";
+		String  msg = rb.getMessage("interpreter.save.error.msg");
+		//用户名是否修改
+		boolean isChangeUserName = false;
 		try {
 			if(!StringUtil.isBlank(userName)&&!userName.equals(originalUsername)){//用户名发生改变
 				ResponseData<Boolean> res= checkUserName(request,userName);
@@ -171,7 +176,8 @@ public class InterpreterController {
 				if(!res.getData()){//用户名保存失败
 					return res;
 				}
-				//调用ucenter ok
+				isChangeUserName = true;
+				//调用ucenter ok 更改状态
 				ucUserRequest.setIsChange("1");
 			}
 			
@@ -180,6 +186,10 @@ public class InterpreterController {
 			if(!originalNickname.equals(nickname) && !StringUtil.isBlank(nickname)){//昵称发生改变
 				ResponseData<Boolean> res= checkNickName(request,nickname);
 				if(!res.getData()){//昵称校验不通过
+					//回滚用户名
+					if(isChangeUserName){
+					  updateUserName(originalUsername);
+					}
 					return res;
 				}
 			}
@@ -191,17 +201,31 @@ public class InterpreterController {
 					.getService(IYCUserServiceSV.class);
 			YCUpdateUserResponse res = ucUserServiceSV
 					.updateYCUserInfo(ucUserRequest);
-			ResponseHeader responseHeader = res==null?null:res.getResponseHeader();
+			ResponseHeader responseHeader =res==null?null:res.getResponseHeader();
 			if(responseHeader!=null&&responseHeader.isSuccess()){
+				msg =rb.getMessage("interpreter.save.success.msg");
 				isOk = true;
 				String userPortraitImg = request.getParameter("userPortraitImg");
 				if(!StringUtil.isBlank(userPortraitImg)){
 					request.getSession().setAttribute("userPortraitImg", userPortraitImg);
 				}
+				if(isChangeUserName){//更新会话信息
+					GeneralSSOClientUser updateUser = UserUtil.getSsoUser();
+					updateUser.setUsername(userName);
+					UserUtil.saveSsoUser(updateUser);
+				}
 			}else{
+				 //失败回滚用户名
+				if(isChangeUserName){
+				 updateUserName(originalUsername);
+				}
 				msg = responseHeader.getResultMessage();
 			}
 		} catch (Exception e) {
+			//回滚用户名
+			if(isChangeUserName){
+			  updateUserName(originalUsername);
+			}
 			LOGGER.error(e.getMessage(),e);
 		}
 
@@ -221,6 +245,7 @@ public class InterpreterController {
 					.getService(IUcMembersSV.class);
 			UcMembersEditUserNameRequest nameReq = new UcMembersEditUserNameRequest();
 			nameReq.setUid(Integer.parseInt(UserUtil.getUserId()));
+			nameReq.setUsername(userName);
 			UcMembersResponse res = ucMembersSV.ucEditUserName(nameReq);
 			ResponseCode responseCode = res == null ? null : res.getCode();
 			Integer codeNumber = responseCode == null ? null : responseCode
