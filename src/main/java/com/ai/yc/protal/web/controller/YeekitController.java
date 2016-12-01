@@ -69,8 +69,8 @@ public class YeekitController {
             resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
         }
         //TODO
-        resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-        resData.setData(lan);
+//        resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+//        resData.setData(lan);
         return resData;
     }
   

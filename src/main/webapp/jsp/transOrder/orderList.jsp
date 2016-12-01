@@ -165,7 +165,7 @@
 							<th colspan="6" class="text-l">
 								<div class="table-thdiv">
 									<p>{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',orderTime,'<%=ZoneContextHolder.getZone()%>')}}</p>
-									<p name="orderId"><spring:message code="myOrder.Ordernumber"/>：<span>{{:orderId}}</span></p>
+									<p name="orderId"><spring:message code="myOrder.Ordernumber"/>：<span style="cursor:pointer;">{{:orderId}}</span></p>
 									<!-- 剩余2天23小时59分钟 -->
 									{{if state!='50' || state!='51' || state!='52' || state!='53' || state!='90' || state!='91' || state!='92'}}
 									<p class="right">
@@ -186,7 +186,7 @@
 						<input type="hidden" name="unit" value="{{:currencyUnit}}">
 						<input type="hidden" name="state" value="{{:state}}">
 						<tr class="width-16">
-							<td name="translateName">{{:translateName}}</td>
+							<td name="translateName" style="cursor:pointer;">{{:translateName}}</td>
 							<td>
 								{{for ordProdExtendList}}
 								{{if #parent.parent.data.currentLan == 'zh_CN'}}
