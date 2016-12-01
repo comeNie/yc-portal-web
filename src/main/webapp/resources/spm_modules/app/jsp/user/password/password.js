@@ -17,7 +17,7 @@ define("app/jsp/user/password/password",
 						d.close();
 					}
 				});
-				d.show();
+				d.showModal();
 		    };
 			// 实例化AJAX控制处理对象
 			var ajaxController = new AjaxController();
