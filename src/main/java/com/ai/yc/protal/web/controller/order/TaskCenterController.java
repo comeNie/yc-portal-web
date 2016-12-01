@@ -155,7 +155,8 @@ public class TaskCenterController {
             }
         } catch (Exception e) {
             LOGGER.error("查询订单分页失败:",e);
-            resData = new ResponseData<PageInfo<OrderWaitReceiveSearchInfo>>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage("common.res.sys.error",""));
+            resData = new ResponseData<PageInfo<OrderWaitReceiveSearchInfo>>(ResponseData.AJAX_STATUS_FAILURE,
+                    rb.getMessage("common.res.sys.error",""));
         }
         return resData;
     }
@@ -206,7 +207,8 @@ public class TaskCenterController {
         }catch (Exception e){
             LOGGER.error("Claim order is fail",e);
             //领取失败
-            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,rb.getMessage(""));
+            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
+                    rb.getMessage("common.res.sys.error",""));
         }
         return responseData;
     }
