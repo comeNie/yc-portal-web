@@ -266,10 +266,10 @@ public class RegisterController {
 			emailRequest.setData(new String[] {res.getUsername(),url});
 			Locale locale = rb.getDefaultLocale();
 			String _template = Register.REGISTER_EMAIL_ZH_CN_TEMPLATE;
-			String subject="注册成功";
+			String subject=Register.REGISTER_EMAIL_ZH_CN_SUBJECT;
 			if (Locale.US.toString().equals(locale.toString())) {
 				_template = Register.REGISTER_EMAIL_EN_US_TEMPLATE;
-				subject="ok";
+				subject=Register.REGISTER_EMAIL_EN_US_SUBJECT;
 			}
 			emailRequest.setTemplateURL(_template);
 			emailRequest.setSubject(subject);
