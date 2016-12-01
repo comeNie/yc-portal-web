@@ -12,7 +12,7 @@ UserUtil.getUserPortraitImg();
   			<ul>
   				<li class="user"><img id="ycUserPortraitImg" src="${userPortraitImg}" /></li>
   				<li class="word">
-  					<p>${user_session_key.username}</p>
+  					<p id="left_username">${user_session_key.username}</p>
   					<p class="vip1"></p>
   				</li>
   			</ul>
