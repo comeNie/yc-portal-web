@@ -341,12 +341,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			}
 
 			//格式转换
-			if ($("#format").val() != '') {
-				$("#selectFormatConv").val("2");
+			if ($("#format").val() == '1') {
+				$("#selectFormatConv").val("1");
 				$("#inputFormatConv").show();
 				$("#inputFormatConv").val($("#format").val());
 			} else {
-				$("#selectFormatConv").val("1");
+				$("#selectFormatConv").val("2");
 			}
 
 			//加急

@@ -161,10 +161,10 @@
 
                         <li id="price">
                             <c:if test="${transType == '0' && order.feeInfo.currencyUnit == '1'}">
-                                <span>1500</span><spring:message code="order.yuan"/>
+                                <span><fmt:formatNumber value="${order.feeInfo.totalFee/1000}" pattern="#,##0.00#"/></span><spring:message code="order.yuan"/>
                             </c:if>
                             <c:if test="${transType == '0' && order.feeInfo.currencyUnit == '0'}">
-                                $<span>1500</span>
+                                $<span><fmt:formatNumber value="${order.feeInfo.totalFee/1000}" pattern="#,##0.00#"/><</span>
                             </c:if>
                             <c:if test="${transType != '0'}">
                                 <spring:message code="order.waitPatiently" />

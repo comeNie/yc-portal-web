@@ -251,8 +251,6 @@
 							<p class="word"><spring:message code="order.purpose"/></p>
 							<p>
 								<select id="selectPurpose" name="selectPurpose" class="select select-medium radius">
-									<%--不限  --%>
-									<option value="0" selected="selected"><spring:message code="order.noLimt"/></option>
 									<c:forEach items="${purposeList}" var="purpose">
 										<option value="${purpose.purposeId}">
 											<c:choose>
@@ -268,8 +266,6 @@
 							<p class="word"><spring:message code="order.Fields"/></p>
 							<p>
 								<select id="selectDomain" name="selectDomain" class="select select-medium radius">
-									<%--不限  --%>
-									<option value="0" selected="selected"><spring:message code="order.noLimt"/></option>
 									<c:forEach items="${domainList}" var="domain">
 										<option value="${domain.domainId}">
 											<c:choose>
