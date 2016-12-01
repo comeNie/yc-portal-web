@@ -8,28 +8,6 @@
     <title><spring:message code="account.recharge"/></title>
 </head>
 <body>
-<!--弹出-->
-<!--提示弹出框 操作-->
-<div class="eject-big">
-    <div class="prompt-samll" id="rechargepop">
-        <div class="prompt-samll-title">请选择</div>
-        <!--确认删除-->
-        <div class="prompt-samll-confirm">
-            <ul>
-                <li>支付完成前请不要关闭此窗口。</li>
-                <li>完成后请根据您的情况点击下面的按钮</li>
-                <li class="eject-btn">
-                    <input type="button" id="completed" class="btn btn-green btn-120 radius20" value="已完成支付">
-                    <input type="button"  class="btn border-green btn-120 radius20" value="支付遇到困难">
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="mask" id="eject-mask"></div>
-</div>
-<!--/提示弹出框操作结束-->
-<!--弹出结束-->
-
 <!--头部-->
 <%@ include file="/inc/userTopMenu.jsp" %>
 <!--二级主体-->
