@@ -20,6 +20,7 @@ import com.ai.yc.order.api.orderreceivesearch.param.OrderWaitReceiveSearchInfo;
 import com.ai.yc.order.api.orderreceivesearch.param.OrderWaitReceiveSearchRequest;
 import com.ai.yc.order.api.orderreceivesearch.param.OrderWaitReceiveSearchResponse;
 import com.ai.yc.protal.web.constants.Constants;
+import com.ai.yc.protal.web.constants.ErrorCode;
 import com.ai.yc.protal.web.constants.OrderConstants;
 import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.utils.UserUtil;
@@ -153,10 +154,14 @@ public class TaskCenterController {
                 //返回订单分页信息
                 resData.setData(orderRes.getPageInfo());
             }
-        } catch (Exception e) {
+        } catch (BusinessException e){
             LOGGER.error("查询订单分页失败:",e);
             resData = new ResponseData<PageInfo<OrderWaitReceiveSearchInfo>>(ResponseData.AJAX_STATUS_FAILURE,
-                    rb.getMessage("common.res.sys.error",""));
+                    rb.getMessage("common.res.sys.error",new String[]{e.getErrorCode()}));
+        }catch (Exception e) {
+            LOGGER.error("查询订单分页失败:",e);
+            resData = new ResponseData<PageInfo<OrderWaitReceiveSearchInfo>>(ResponseData.AJAX_STATUS_FAILURE,
+                    rb.getMessage("common.res.sys.error", new String[]{ErrorCode.SYSTEM_ERROR}));
         }
         return resData;
     }
@@ -208,7 +213,7 @@ public class TaskCenterController {
             LOGGER.error("Claim order is fail",e);
             //领取失败
             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
-                    rb.getMessage("common.res.sys.error",""));
+                    rb.getMessage("common.res.sys.error",new String[]{ErrorCode.SYSTEM_ERROR}));
         }
         return responseData;
     }
