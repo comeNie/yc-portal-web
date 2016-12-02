@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>邮箱注册验证码</title>
+<title></title>
 <%@ include file="/inc/inc.jsp"%>
 <link href="${uedroot}/css/modular/login-regsiter.css" rel="stylesheet"
 	type="text/css" />
