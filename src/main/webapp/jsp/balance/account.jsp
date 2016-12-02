@@ -91,8 +91,8 @@
                         <thead>
                         <tr>
                             <th width="14.286%"><spring:message code="account.time"/></th>
-                            <th width="14.286%"><spring:message code="account.income"/></th>
-                            <th width="14.286%"><spring:message code="account.expenditure"/></th>
+                            <th width="14.286%"><spring:message code="account.income"/>(元)</th>
+                            <th width="14.286%"><spring:message code="account.expenditure"/>(元)</th>
                             <th width="14.286%"><spring:message code="balance"/></th>
                             <th width="14.286%"><spring:message code="account.type"/></th>
                             <th width="14.286%"><spring:message code="account.counterpart"/></th>
@@ -132,16 +132,16 @@
             <td>{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',payTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
             <td class="red">
                 {{if  incomeFlag == '1'}}
-                +{{:~liToYuan(totalAmount)}}元
+                +{{:~liToYuan(totalAmount)}}
                 {{else }}
-                0元
+                0
                 {{/if}}
             </td>
             <td class="green">
                 {{if  incomeFlag == '0'}}
-                -{{:~liToYuan(-totalAmount)}}元
+                -{{:~liToYuan(-totalAmount)}}
                 {{else }}
-                    0元
+                    0
                 {{/if}}
             </td><%--{{:~liToYuan()}}--%>
             <td>{{:~liToYuan(balancePre)}}</td>

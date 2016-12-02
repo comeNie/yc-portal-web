@@ -50,6 +50,7 @@
 </div>
 <script type="text/javascript" src="${_base}/resources/template/scripts/modular/jquery-1.11.1.min.js"></script>
 <%--<script type="text/javascript" src="../scripts/modular/frame.js"></script--%>>
+<%@include file="/inc/indexFoot.jsp"%>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">

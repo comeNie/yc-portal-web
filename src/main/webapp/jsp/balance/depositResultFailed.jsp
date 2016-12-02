@@ -24,23 +24,20 @@
             <!--右侧第二块-->
             <div class="right-list mt-0">
                 <div class="right-list-title pb-10 pl-20">
-                    <p>账户充值</p>
+                    <p><spring:message code="account.account.recharge"/></p>
                 </div>
                 <!--充值-->
                 <div class="recharge mt-30">
                  <!--充值成功-->
                     <div class="recharge-success">
                         <ul>
-                            <li><img src="../images/rech-win.png" /></li>
-                            <li class="word">充值成功</li>
+                            <li><img src="${uedroot}/images/rech-fail.png" /></li>
+                            <li class="word"><spring:message code="account.recharge.failed"/></li>.
                             <li class="list mt-50">
-                                <p>请您牢记充值单号： <a href="#">5000020965</a>,您可以在“<a href="我的账户.html">我的账户</a>”中查看您的充值信息</p>
-                                <p>若有任何疑问，欢迎致电咨询：400-119-8080</p>
+                                <p><spring:message code="account.phone"/></p>
                             </li>
                         </ul>
                     </div>
-
-
                 </div>
 
             </div>
@@ -49,7 +46,7 @@
 
 </div>
 <script type="text/javascript" src="${_base}/resources/template/scripts/modular/jquery-1.11.1.min.js"></script>
-<%--<script type="text/javascript" src="../scripts/modular/frame.js"></script--%>>
+<%@include file="/inc/indexFoot.jsp"%>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
