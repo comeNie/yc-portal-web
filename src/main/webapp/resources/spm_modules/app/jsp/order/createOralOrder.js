@@ -48,6 +48,7 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
         	
         _initValidate:function(){
         	var formValidator=$("#oralOrderForm").validate({
+				focusInvalid:true,
         		errorPlacement: function(error, element) {
 					if (element.is(":checkbox")) {
 						error.appendTo(element.parent().parent().parent());
@@ -146,7 +147,7 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 			formValidator.form();
 			if(!$("#oralOrderForm").valid()){
 				//alert('验证不通过！！！！！');
-				return;
+                return formValidator.focusInvalid();
 			}
 			
 
