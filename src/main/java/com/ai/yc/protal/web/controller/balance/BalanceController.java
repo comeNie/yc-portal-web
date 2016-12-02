@@ -154,7 +154,7 @@ public class BalanceController {
      */
     @RequestMapping(value = "/gotoPay")
     public void gotoPay(
-            Long orderAmount,String currencyUnit,String merchantUrl,String payOrgCode,
+            double orderAmount,String currencyUnit,String merchantUrl,String payOrgCode,
             HttpServletResponse response)
             throws Exception {
         //租户
@@ -174,7 +174,7 @@ public class BalanceController {
         map.put("requestSource", Constants.SELF_SOURCE);//终端来源
         map.put("currencyUnit",currencyUnit);//币种
         map.put("orderAmount", amount);//金额
-        map.put("subject", "depositFund");//订单名称
+        map.put("subject", "充值");//订单名称
         map.put("payOrgCode",payOrgCode);
         // 加密
         String infoStr = orderId+ VerifyUtil.SEPARATOR

@@ -74,7 +74,7 @@ public class TaskCenterController {
             uiModel.addAttribute("lspRole",userInfoResponse.getLspRole());//lsp角色
             uiModel.addAttribute("vipLevel",userInfoResponse.getVipLevel());//译员等级
             /* TODO... 模拟数据 */
-            userInfoResponse.setApproveState("1");
+//            userInfoResponse.setApproveState("1");
 //          uiModel.addAttribute("lspId","");//lsp标识
 //          uiModel.addAttribute("lspRole","1");//lsp角色
 //            uiModel.addAttribute("vipLevel","4");//译员等级
@@ -87,7 +87,8 @@ public class TaskCenterController {
                 //查询订单大厅数量
                 IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
                 QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
-                ordCountReq.setState(OrderConstants.State.UN_RECEIVE);
+                ordCountReq.setState(OrderConstants.State.UN_RECEIVE);//订单状态
+                ordCountReq.setInterperLevel(userInfoResponse.getVipLevel());//译员等级
                 QueryOrdCountResponse taskNumRes = iOrderQuerySV.queryOrderCount(ordCountReq);
                 Map<String, Integer> taskNumMap = taskNumRes.getCountMap();
                 Integer taskNum = taskNumMap.get(OrderConstants.State.UN_RECEIVE);

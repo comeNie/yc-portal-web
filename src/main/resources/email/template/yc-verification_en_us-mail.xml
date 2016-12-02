@@ -1,99 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <xml-body>
 <html>
 <head>
-    
 </head>
-<style type="text/css">
-/*************************初始化*************************/
-*'{'font-family:"Microsoft Yahei","Hiragino Sans GB","Helvetica Neue",Helvetica,tahoma,arial,Verdana,sans-serif,"WenQuanYi Micro Hei","\5B8B\4F53";-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing:grayscale; box-sizing: border-box; border:0; padding:0; margin:0;!important'}'
-body'{'font-size:14px; color:#6a6c6f; background:#fff;!important'}'
-ul'{' list-style:none;!important'}'
-a'{'text-decoration:none;font-size:12px;!important'}'
-a:link'{' text-decoration:none;!important'}'
-a:active'{' text-decoration:none;!important'}'
-var,em '{'font-style:normal;!important'}'
-table'{'border-collapse:collapse;!important'}'
-.left'{' float:left!important'}'
-.right'{' float:right;!important'}'
-.center'{'text-align: center;!important'}'
-input'{'outline:none;!important'}'
-button'{'outline:none; cursor:pointer;!important'}'
-html,body '{'height:100%; !important'}'
-img'{'vertical-align:middle!important'}'
-/****/
-.mail-conter'{'width:760px;margin:0 auto;!important'}'
-.mail-logo'{'width:100%;float:left;margin-top:22px;!important'}'
-.mail-title'{'width:100%;float:left;text-align: center;margin-top:35px;font-size:22px;color:#2c3e50;font-weight:bold;!important'}'
-.mail-title span'{'color:#2965e6!important'}'
-.mail-main'{'width:100%;height: auto;border:1px solid #dbdfe5;border-top:3px solid #0a67f0;float:left;margin-top:40px;padding:35px 35px;!important'}'
-.word-title'{'width:100%;display:inline-block;!important'}'
-.word-title p'{'font-size:14px;margin-bottom:20px;!important'}'
-.word-title .word'{'font-size:16px;color:#2c3e50!important'}'
-.word-title p span'{'color:#2965e6!important'}'
-.word-list'{'width:100%;float:left!important'}'
-.word-list-title'{'height:30px;background:#f0f3fa;border-top:1px solid #0a67f0;line-height:30px; padding-left:20px;font-size:14px;color:#2c3e50;font-weight: bold;!important'}'
-.word-list-text'{'width:100%;float:left;padding:30px 20px;!important'}'
-.word-list-text ul li'{'line-height:25px;color:#6a6c6f!important'}'
-.word-list-text ul li a'{'color:#2965e6!important'}'
-.word-foot'{'width:100%;float:left;!important'}'
-.word-foot p'{'margin:20px 0;!important'}'
-.word-foot p a'{'color:#2965e6!important'}'
-.word-foot p span'{'color:#2965e6;font-size:18px;!important'}'
-.mail-footer-conter'{'width:100%;height:122px;background:#092e51;float:left;margin-top:20px;!important'}'
-.footer-main'{'width:760px;margin:0 auto;!important'}'
-.footer-main ul'{'width:100%;float:left;margin-top:20px;!important'}'
-.footer-main ul li'{'float:left!important'}'
-.footer-main ul .left p'{'float:left;color:#fff!important'}'
-.footer-main ul .left .word'{'margin:22px 0 0 18px;font-size:12px;!important'}'
-.footer-main ul .right'{'float:right;font-size:12px;text-align: right;color:#3f76aa;margin-top:20px;!important'}'
-</style>
-<body>	
-	<div class="mail-conter">
-		<div class="mail-logo">
-		<img src="" />
+<body style='color:#6a6c6f; background:#fff;font-size:14px;margin:0 auto;font-family:"Microsoft Yahei","Hiragino Sans GB","Helvetica Neue",Helvetica,tahoma,arial,Verdana,sans-serif,"WenQuanYi Micro Hei","\5B8B\4F53";-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing:grayscale; box-sizing: border-box; border:0; padding:0; margin:0;'>	
+	<div class="mail-conter" style="width:760px;margin:0 auto;">
+		<div class="mail-logo" style="width:100%;float:left;margin-top:22px;"><img src="{3}" /></div>
+		<div class="mail-title" style="width:100%;float:left;text-align: center;margin-top:35px;font-size:22px;color:#2c3e50;font-weight:bold;">
+		{0}
 		</div>
-		<div class="mail-title"></div>
-		<div class="mail-main">
-			<div class="word-title">
-				<p class="word">尊敬的<span>{0}</span>：</p>
-				<p></p>
+		<div class="mail-main" style="width:1080px;height: auto;border:1px solid #dbdfe5;border-top:3px solid #0a67f0;float:left;margin-top:40px;padding:35px 35px;">
+			<div class="word-title" style="width:100%;display:inline-block;">
+				<p class="word" style="font-size:16px;color:#2c3e50">Hi<span>{1}</span>：</p>
 			</div>
-			<div class="word-list">
-				<div class="word-list-title"></div>
-				<div class="word-list-text">
-					<ul>
-						<li>
-						 您好，感谢您注册译云平台，请点击下面的链接完成注册（24小时内有效），译云伴您步入语言沟通无障碍的世界
-						<br></br>
-						<a href="{1}">{1}</a>
-						<br></br>
-						（如上述链接点击无效，可以将此链接复制到浏览器地址栏中打开）
+			<div class="word-list" style="width:100%;float:left;margin-top:20px;">
+				<div class="word-list-title" style="height:30px;background:#f0f3fa;border-top:1px solid #0a67f0;line-height:30px; padding-left:20px;font-size:14px;color:#2c3e50;font-weight: bold;"></div>
+				<div class="word-list-text" style="width:100%;float:left;padding:30px 0px;">
+					<ul style="float:left;margin-left:-20px;list-style: none;">
+						<li style="list-style: none;line-height:25px;color:#6a6c6f">
+						 Hi, your e-mail verification code sent by YeeCloud is <span>{2}</span> (valid for 30min);
+					    YeeCloud will bring you into a world without any language communication barrier
 						</li>
+						
 					</ul>
 				</div>
 			</div>
 			
-			<div class="word-foot">
-				<p>本邮件由系统自动发送，请勿直接回复！</p>
-				<p class="right">
-					<span><img src="" /></span>
-					<span>400-119-8080</span>
+			<div class="word-foot" style="width:100%;float:left">
+				<p style="margin:20px 0;">This is sent by YeeCloud system automatically and the system cannot receive any reply, please do not reply directly.</p>
+				<p class="right"  style="margin:20px 0;float:right">
+					<span><img src="{4}" /></span>
+					<span style="color:#2965e6;font-size:18px;">400-119-8080</span>
 				</p>
 			</div>
 		</div>
 	</div>
-	<div class="mail-footer-conter">
-		<div class="footer-main">
-			<ul>
-				<li class="left">
-					<p><img src=""/></p>
-					<p class="word">扫描左侧二维码，关注译云平台官方微信，
-                    <br></br>获得优惠活动和翻译资讯信息。</p>
+	<div class="mail-footer-conter" style="width:100%;height:122px;background:#092e51;float:left;margin-top:20px;vertical-align:middle">
+		<div class="footer-main" style="width:760px;margin:0 auto;">
+			<ul style="width:100%;float:left;list-style: none;">
+				<li class="left" style="list-style: none;float:left">
+					<p style="float:left;"><img src="{5}"/></p>
+					<p class="word" style="float:left;color:#fff;margin:22px 0 0 18px;font-size:12px;line-height:25px;">
+					Scan QR code on the left to follow our WeChat official account for information about special offers and translation messages.
+					</p>
 				</li>
-				<li class="right">
-					<p>中译语通科技（北京）有限公司  版权所有</p>
+				<li class="right" style="list-style: none;float:right;font-size:12px;text-align: right;color:#3f76aa;margin-top:20px;">
+					<p>Global Tone Communication Technology (Beijing) Co., Ltd.  All rights reserved.</p>
 					<p>Copyright © 2014 www.yeecloud.com All rights reserved.
 </p>
 				</li>

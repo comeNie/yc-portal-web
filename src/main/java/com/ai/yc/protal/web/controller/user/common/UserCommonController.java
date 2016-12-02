@@ -304,7 +304,11 @@ public class UserCommonController {
 		}
 		SendEmailRequest emailRequest = new SendEmailRequest();
 		emailRequest.setTomails(new String[] { email });
-		emailRequest.setData(new String[] { "zhangsan", randomStr });
+		JSONObject config = AiPassUitl.getVerificationCodeConfig();
+		String  baseUrl = config.getString("base_url");
+		String logoUrl = baseUrl+"/resources/template/images/logo.jpg";
+		String phoneUrl = baseUrl+"/resources/template/images/phone.jpg";
+		String ermaUrl = baseUrl+"/resources/template/images/erma.jpg";
 		Locale locale = rb.getDefaultLocale();
 		String _template = EmailVerify.EMAIL_VERIFY_ZH_CN_TEMPLATE;
 		String _subject =EmailVerify.EMAIL_VERIFY_ZH_CN_SUBJECT;
@@ -312,12 +316,16 @@ public class UserCommonController {
 			_template = EmailVerify.EMAIL_VERIFY_EN_US_TEMPLATE;
 			_subject = EmailVerify.EMAIL_VERIFY_EN_US_SUBJECT;
 		}
+		String userName = UserUtil.getSsoUser()==null?null:UserUtil.getSsoUser().getUsername();
+		if(StringUtil.isBlank(userName)){
+			userName = request.getParameter("userName");
+		}
+		emailRequest.setData(new String[] {_subject,userName,randomStr,logoUrl,phoneUrl,ermaUrl});
 		emailRequest.setTemplateURL(_template);
 		emailRequest.setSubject(_subject);
 		boolean isOk = VerifyUtil.sendEmail(emailRequest);
 		if (isOk) {
 			String key = EmailVerify.EMAIL_VERIFICATION_CODE + email;
-			JSONObject config = AiPassUitl.getVerificationCodeConfig();
 			int overTime = config
 					.getIntValue(EmailVerify.EMAIL_VERIFICATION_OVER_TIME);
 			AiPassUitl.getCacheClient().setex(key, overTime, randomStr);
