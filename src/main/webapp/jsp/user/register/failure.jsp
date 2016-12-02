@@ -30,7 +30,7 @@
 				<div class="verification">
 					<ul>
 						<li><img src="${uedroot}/images/rech-fail.png" /></li>
-						<li class="word"><spring:message code="ycregister.registerSuccessMsg2" /></li>
+						<li class="word"><spring:message code="ycregister.registerMailErrorMsg2" /></li>
 						<li><spring:message code="ycregister.registerMailErrorMsg" /></li>
 					</ul>
 				</div>
