@@ -80,24 +80,24 @@ public class TransOrderController {
 
 //            TODO 暂时关闭
             //查询译员信息
-//            IYCTranslatorServiceSV translatorServiceSV = DubboConsumerFactory.getService(IYCTranslatorServiceSV.class);
-//            SearchYCTranslatorRequest ycReq = new SearchYCTranslatorRequest();
-//            ycReq.setUserId(UserUtil.getUserId());
-//            YCTranslatorInfoResponse ycRes = translatorServiceSV.searchYCTranslatorInfo(ycReq);
-//            ResponseHeader resHeader = ycRes.getResponseHeader();
-//            LOGGER.info("译员信息: "+JSONObject.toJSONString(ycRes));
-//            //如果返回值为空,或返回信息中包含错误信息
-//            if (ycRes==null|| (resHeader!=null && (!resHeader.isSuccess())) ){
-//                return "/404";
-//            }
+            IYCTranslatorServiceSV translatorServiceSV = DubboConsumerFactory.getService(IYCTranslatorServiceSV.class);
+            SearchYCTranslatorSkillListRequest ycReq = new SearchYCTranslatorSkillListRequest();
+            ycReq.setTenantId(Constants.DEFAULT_TENANT_ID);
+            ycReq.setUserId(UserUtil.getUserId());
+            YCTranslatorSkillListResponse ycRes = translatorServiceSV.getTranslatorSkillList(ycReq);
+            LOGGER.info("译员信息: "+JSONObject.toJSONString(ycRes));
+            //0：认证不通过，1：认证通过
+            if(!"1".equals(ycRes.getApproveState()) ) {
+                return "redirect:/p/security/interpreterIndex";
+            }
 //            "10、译员
 //            11、项目经理
 //            12、超级管理员"
 
-            YCTranslatorInfoResponse ycRes = new YCTranslatorInfoResponse();
-            ycRes.setUserId(UserUtil.getUserId());
-            ycRes.setLspId("10001");
-            ycRes.setLspRole("10");
+//            YCTranslatorInfoResponse ycRes = new YCTranslatorInfoResponse();
+//            ycRes.setUserId(UserUtil.getUserId());
+//            ycRes.setLspId("10001");
+//            ycRes.setLspRole("10");
 
             ordCountReq.setInterperId(userId);//设置译员编码
             //如果是LSP的管理员或项目经理
@@ -174,18 +174,18 @@ public class TransOrderController {
     }
 
     private void getUserInfo(Model uiModel){
-//        IYCTranslatorServiceSV translatorServiceSV = DubboConsumerFactory.getService(IYCTranslatorServiceSV.class);
-//        SearchYCTranslatorSkillListRequest searchYCUserReq = new SearchYCTranslatorSkillListRequest();
-//        searchYCUserReq.setUserId(UserUtil.getUserId());
-//        YCTranslatorSkillListResponse userInfoResponse = translatorServiceSV.getTranslatorSkillList(searchYCUserReq);
-//        //包括译员的等级,是否为LSP译员,LSP中的角色,支持的语言对
-//        uiModel.addAttribute("lspId",userInfoResponse.getLspId());//lsp标识
-//        uiModel.addAttribute("lspRole",userInfoResponse.getLspRole());//lsp角色
-//        uiModel.addAttribute("vipLevel",userInfoResponse.getVipLevel());//译员等级
+        IYCTranslatorServiceSV translatorServiceSV = DubboConsumerFactory.getService(IYCTranslatorServiceSV.class);
+        SearchYCTranslatorSkillListRequest searchYCUserReq = new SearchYCTranslatorSkillListRequest();
+        searchYCUserReq.setUserId(UserUtil.getUserId());
+        YCTranslatorSkillListResponse userInfoResponse = translatorServiceSV.getTranslatorSkillList(searchYCUserReq);
+        //包括译员的等级,是否为LSP译员,LSP中的角色,支持的语言对
+        uiModel.addAttribute("lspId",userInfoResponse.getLspId());//lsp标识
+        uiModel.addAttribute("lspRole",userInfoResponse.getLspRole());//lsp角色
+        uiModel.addAttribute("vipLevel",userInfoResponse.getVipLevel());//译员等级
 //        //TODO... 模拟数据
-        uiModel.addAttribute("lspId","10086");//lsp标识
-        uiModel.addAttribute("lspRole","10");//lsp角色
-        uiModel.addAttribute("vipLevel","4");//译员等级
+//        uiModel.addAttribute("lspId","10086");//lsp标识
+//        uiModel.addAttribute("lspRole","10");//lsp角色
+//        uiModel.addAttribute("vipLevel","4");//译员等级
     }
     
     /**
