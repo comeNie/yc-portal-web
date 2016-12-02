@@ -17,9 +17,6 @@ import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
-import com.ai.yc.common.api.country.interfaces.IGnCountrySV;
-import com.ai.yc.common.api.country.param.CountryRequest;
-import com.ai.yc.common.api.country.param.CountryResponse;
 import com.ai.yc.common.api.country.param.CountryVo;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.UcenterOperation;
@@ -126,7 +123,7 @@ public class PasswordController {
 			passRequest.setChecke_mode(checkeMode);
 			passRequest.setTenantId(Constants.DEFAULT_TENANT_ID);
 			passRequest.setNewpw(Md5Utils.md5(passRequest.getNewpw()));
-			System.out.println(JSON.toJSONString(passRequest));
+			//System.out.println(JSON.toJSONString(passRequest));
 			IUcMembersSV ucMembersSV = DubboConsumerFactory
 					.getService(IUcMembersSV.class);
 			UcMembersResponse res = ucMembersSV.ucEditPassword(passRequest);
