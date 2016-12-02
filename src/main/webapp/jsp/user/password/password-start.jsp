@@ -12,7 +12,14 @@
   		<!--右侧第二块-->
   		<form method="post">
   		<div class="login-big">
-			<div class="login-headr"><p><img src="${uedroot }/images/login-logo.png" /></p><p class="word"><spring:message code="ycfindpassword.forgetPassword" /></p></div>
+			<div class="login-headr">
+			<p>
+			<img src="${uedroot }/images/login-logo.png" onclick="location.href='${_base}/'" />
+			</p>
+			<p class="word">
+			<spring:message code="ycfindpassword.forgetPassword" />
+			</p>
+			</div>
 			
 			<div class="password-bj">
 				<!--输入账号-->
