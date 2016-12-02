@@ -93,18 +93,24 @@
 				<div class="right-list-title pb-20 pl-20 none-border">
   					<p><spring:message code="order.translateContent"/></p>
   				</div>
-  				<div class="translate-int radius" id="fy1">
-  					<p>
-  					<!--  翻译内容--> 
-  					<textarea id="translateContent" maxlength="2000" name="translateContent" class="int-text textarea-xlarge-100 radius">${order.productInfo.needTranslateInfo}</textarea></p>
-  					<!-- 上传文档btn -->
-  					<p class="right"><input type="button" class="btn border-blue radius20 btn-80" value="<spring:message code="order.uploadDoc"/>"  id="fy-btn"></p>
-  					<!-- 清空 -->
-  					<p class="right"><input hidden="" type="button" class="btn border-blue radius20 btn-80" value="<spring:message code="order.clear" />" id="clear-btn"></p>
-  					<label></label>		
-  				</div>
-  				<div class="translate-int radius bj-ash placeholder" id="fy2" style="display: block;">
-  					<div class="limit-height">
+				<div class="translate-int translate-int1 radius" id="fy1">
+					<p>
+						<!--  翻译内容-->
+						<textarea id="translateContent" maxlength="2000" name="translateContent"
+								  class="int-text textarea-xlarge-100 radius">${order.productInfo.needTranslateInfo}</textarea>
+					</p>
+					<!-- 上传文档btn -->
+					<p class="right"><input type="button" class="btn border-blue radius20 btn-80"
+											value="<spring:message code="order.uploadDoc"/>" id="fy-btn"></p>
+					<!-- 清空 -->
+					<p class="right"><input hidden="" type="button" class="btn border-blue radius20 btn-80"
+											value="<spring:message code="order.clear" />" id="clear-btn"></p>
+					<label></label>
+				</div>
+
+  				<div class="translate-int radius bj-ash placeholder" id="fy2" >
+
+                    <div class="limit-height">
 	  					<!--文件列表  -->
 	  					<div class="attachment" id="fileList">
 							<c:forEach items="${fileInfoList}" var="file" varStatus="status">
@@ -125,16 +131,13 @@
 								</ul>
 							</c:forEach>
 	  					</div>
+
 	  					<div class="attachment-btn">
 	  						<ul>
 	  							<!-- 上传文档 -->
-	  							<li class="pp">
-	  							<!--
-	  							<input id="uploadFile" type="button" class="btn border-green btn-large radius20" value="<spring:message code="order.uploadDoc"/>">
-	  							   -->
+	  							<li>
+                                    <div id="selectFile"><spring:message code="order.choosefile"/></div>
 	  							   	<!-- 选择文件 -->
-	  							 	<div id="selectFile" ><spring:message code="order.choosefile"/></div>
-	  							<!--<input id="uploadAll" type="file" class="att-file">  -->
 	  							</li>
 	  							<!-- 将文件拖拽至此区域可上传 -->
 	  							<li class="word" id="dragFile"> <div><spring:message code="order.dragFileInfo"/></div></li>
@@ -143,9 +146,11 @@
   					</div>
   					<div class="shur-btn">
   						<!-- 输入文字 -->
-  						<p class="right mr-0"><input type="button" class="btn border-blue radius20 btn-80 " value="<spring:message code="order.Entertext"/>"  id="fy-btn1"></p>
+  						<p class="right mr-0"><input type="button" class="btn border-blue radius20 btn-80 "
+													 value="<spring:message code="order.Entertext"/>"  id="fy-btn1"></p>
   					</div>
   				</div>
+
   			</div>
 			<!--白色背景-->
 			<div class="white-bj">
@@ -326,32 +331,21 @@
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript" src="${uedroot}/scripts/modular/drop-down.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
-<script type="text/javascript" src="${spmRes}/webuploader/webuploader.js"></script>
-<script type="text/javascript" src="${spmRes}/app/jsp/order/upload.js"></script>
 <script type="text/javascript">
 	(function () {
 		var pager;
-		//seajs.use('app/jsp/order/uploadFile');
-		seajs.use(['app/jsp/order/createTextOrder'], function(createTextOrderPage) {
-			pager = new createTextOrderPage({element : document.body});
+		seajs.use(['app/jsp/order/createTextOrder'], function(textOrderAddPager) {
+			pager = new textOrderAddPager({element : document.body});
 			pager.render();
-			
-			//new uploadFile({element : document.body}).render();
 		});
-		
-		 $('.attachment').delegate('ul li i','click',function(){
-			 $(this).parent().parent('ul').hide();
-		 });
-		 /***
-		$(".attachment ul li i").click(function () {
-			$(this).parent().parent('ul').hide();
-			});
-		$("i[name='delFile']").click(function () {
-			$(this).parent().parent('ul').hide();
-			});
-		*****/
-		
-		//$("#selectFile1").children("div:last").css("height", '58px');
+
+        $('.attachment').delegate('ul li i','click',function(){
+            $(this).parent().parent('ul').remove();
+
+            var id = $(this).parent().parent('ul').find('li:first').attr("id");
+            var file = uploader.getFile(id);
+            uploader.removeFile(file);
+        });
 	})();
 	
 
