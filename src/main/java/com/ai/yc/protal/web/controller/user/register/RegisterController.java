@@ -248,6 +248,13 @@ public class RegisterController {
 	@RequestMapping("test")
 	
 	public String test() {
+		InsertYCUserRequest req = new InsertYCUserRequest();
+		req.setEmail("714115852@qq.com");
+		YCInsertUserResponse res = new YCInsertUserResponse();
+		res.setUsername("小徐");
+		res.setUserId("1");
+		res.setOperationcode("222333");
+		sendRegisterEmaial(req,res);
 		return ERROR;
 	}
 
@@ -260,10 +267,11 @@ public class RegisterController {
 			String value = res.getUserId()+","+res.getOperationcode();
 			VerifyUtil.addRedisValue(key, 24*60*60,value);
 			JSONObject config = AiPassUitl.getVerificationCodeConfig();
-			String url = config.getString("email_active_url")+"/reg/emailActivate/"+key;
-			SendEmailRequest emailRequest = new SendEmailRequest();
-			emailRequest.setTomails(new String[] { req.getEmail() });
-			emailRequest.setData(new String[] {res.getUsername(),url});
+			String  baseUrl = config.getString("base_url");
+			String url = baseUrl+"/reg/emailActivate/"+key;
+			String logoUrl = baseUrl+"/resources/template/images/logo.jpg";
+			String phoneUrl = baseUrl+"/resources/template/images/phone.jpg";
+			String ermaUrl = baseUrl+"/resources/template/images/erma.jpg";
 			Locale locale = rb.getDefaultLocale();
 			String _template = Register.REGISTER_EMAIL_ZH_CN_TEMPLATE;
 			String subject=Register.REGISTER_EMAIL_ZH_CN_SUBJECT;
@@ -271,6 +279,9 @@ public class RegisterController {
 				_template = Register.REGISTER_EMAIL_EN_US_TEMPLATE;
 				subject=Register.REGISTER_EMAIL_EN_US_SUBJECT;
 			}
+			SendEmailRequest emailRequest = new SendEmailRequest();
+			emailRequest.setTomails(new String[] { req.getEmail() });
+			emailRequest.setData(new String[] {subject,res.getUsername(),url,logoUrl,phoneUrl,ermaUrl});
 			emailRequest.setTemplateURL(_template);
 			emailRequest.setSubject(subject);
 			return VerifyUtil.sendEmail(emailRequest);
