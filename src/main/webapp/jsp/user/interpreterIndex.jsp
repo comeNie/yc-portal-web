@@ -23,7 +23,7 @@
         <!--右侧内容-->
         <!--右侧大块-->
         <div class="right-wrapper">
-            <input id="interperId" name="interperId" type="hidden" value="${interperInfo.translatorId}"/>
+            <input id="interperId" name="interperId" type="hidden" value="${interperInfo.userId}"/>
             <input id="lspId" name="lspId" type="hidden" value="${interperInfo.lspId}"/>
             <input id="lspRole" name="lspRole" type="hidden" value="${interperInfo.lspRole}"/>
             <input id="userId" name="userId" type="hidden" value="${userId}"/>
