@@ -75,84 +75,27 @@
 					}
 				}//上传失败
 				else{
-					_this._showFail(responseData.statusInfo);
-					_this._closeDialog();
+				    alert("上传文件失败");
+                    //删除文件
+                    $("#"+file.id).parent('ul').remove();
+                    var file = uploader.getFile(file.id);
+                    uploader.removeFile(file);
 					return;
 				}
          });
 
-         uploader.on( 'uploadError', function( file ) {
-        	 $("#"+file.id).parent().next().find('p[name="percent"]').text("上传出错");
+         uploader.on( 'uploadError', function( file, reason ) {
+        	 alert(reason);
+             //删除文件
+             $("#"+file.id).parent('ul').remove();
+             var file = uploader.getFile(file.id);
+             uploader.removeFile(file);
          });
 
          uploader.on( 'uploadComplete', function( file ) {
              $( '#'+file.id ).find('.progress').fadeOut();
          });
 
-         //上传出错时触发
-         uploader.on( "uploadError", function( file, reason  ) {
-         });
-
-         // 拖拽时不接受 js, txt 文件。
-//         uploader.on( 'dndAccept', function( items ) {
-//             var denied = false,
-//                 len = items.length,
-//                 i = 0,
-//                 // 修改js类型
-//                 unAllowed = 'text/plain;application/javascript ';
-//
-//             for ( ; i < len; i++ ) {
-//                 // 如果在列表里面
-//                 if ( ~unAllowed.indexOf( items[ i ].type ) ) {
-//                     denied = true;
-//                     break;
-//                 }
-//             }
-//
-//             return !denied;
-//         });
-
-         uploader.onFileDequeued = function( file ) {
-//             fileCount--;
-//             fileSize -= file.size;
-
-//             var fullName = $("#hiddenInput" + $(item)[0].id + file.id).val();
-//             if (fullName!=null) {
-//                 $.post(webuploaderoptions.deleteServer, { fullName: fullName }, function (data) {
-//                     alert(data.message);
-//                 })
-//             }
-//                 $("#"+file.id).remove();
-//             $("#"+ $(item)[0].id + file.id).remove();
-//             $("#hiddenInput" + $(item)[0].id + file.id).remove();
-
-//             if ( !fileCount ) {
-//                 setState( 'pedding' );
-//             }
-//
-//             removeFile( file );
-//             updateTotalProgress();
-
-         };
-
-         function updateTotalProgress() {
-             var loaded = 0,
-                 total = 0,
-                 spans = $progress.children(),
-                 percent;
-
-             $.each( percentages, function( k, v ) {
-                 total += v[ 0 ];
-                 loaded += v[ 0 ] * v[ 1 ];
-             } );
-
-             percent = total ? loaded / total : 0;
-
-
-             spans.eq( 0 ).text( Math.round( percent * 100 ) + '%' );
-             spans.eq( 1 ).css( 'width', Math.round( percent * 100 ) + '%' );
-             updateStatus();
-         }
 
          //删除
     	 $('.attachment').delegate('ul li i','click',function(){

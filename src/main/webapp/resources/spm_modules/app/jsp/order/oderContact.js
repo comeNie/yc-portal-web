@@ -52,6 +52,7 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
 
         _initValidate:function(){
             var formValidator=$("#contactForm").validate({
+                focusInvalid:true,
                 errorPlacement: function(error, element) {
                     if (element.is(":checkbox")) {
                         error.appendTo(element.parent().parent().parent());
@@ -112,7 +113,7 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
             formValidator.form();
             if(!$("#contactForm").valid()){
                 //alert('验证不通过！！！！！');
-                return false;
+               return formValidator.focusInvalid();;
             }
 
             //发请求保存联系人
@@ -177,7 +178,7 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
             formValidator.form();
             if(!$("#contactForm").valid()){
                 //alert('验证不通过！！！！！');
-                return;
+                return formValidator.focusInvalid();
             }
 
             var translateType = $("#transType").val();
@@ -215,7 +216,6 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
                 if (this._saveContact() == false)
                     return
             }
-
 
             var translateType = $("#transType").val();
 

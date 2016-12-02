@@ -227,24 +227,30 @@ public class OrderController {
                 "OK");
 
         LOGGER.info("文件上传");
-        IDSSClient client = DSSClientFactory.getDSSClient(Constants.IPAAS_ORDER_FILE_DSS);
-        // 文件上传的请求
-        MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest) request;
-        // 获取请求的参数
-        Map<String, MultipartFile> fileMap = mRequest.getFileMap();
-        String fileId = "";
-        Iterator<Map.Entry<String, MultipartFile>> it = fileMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, MultipartFile> entry = it.next();
-            MultipartFile mFile = entry.getValue();
+        try {
+            IDSSClient client = DSSClientFactory.getDSSClient(Constants.IPAAS_ORDER_FILE_DSS);
+            // 文件上传的请求
+            MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest) request;
+            // 获取请求的参数
+            Map<String, MultipartFile> fileMap = mRequest.getFileMap();
+            String fileId = "";
+            Iterator<Map.Entry<String, MultipartFile>> it = fileMap.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry<String, MultipartFile> entry = it.next();
+                MultipartFile mFile = entry.getValue();
 
-            if (mFile.getSize() != 0 && !"".equals(mFile.getName())) {
-                fileId = client.save(mFile.getBytes(), mFile.getOriginalFilename());
-                LOGGER.info(mFile.getOriginalFilename() + mFile.getSize() + fileId);
+                if (mFile.getSize() != 0 && !"".equals(mFile.getName())) {
+                    fileId = client.save(mFile.getBytes(), mFile.getOriginalFilename());
+                    LOGGER.info(mFile.getOriginalFilename() + mFile.getSize() + fileId);
+                }
             }
+
+            resData.setData(fileId);
+        } catch (Exception e) {
+            LOGGER.error("上传文件出错:", e);
+            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
         }
 
-        resData.setData(fileId);
         return resData;
     }
 
