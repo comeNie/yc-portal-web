@@ -242,6 +242,10 @@
 							<td>
 								<!--<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="提交"> -->
 							</td>
+							{{else state  == '41'}}
+							<%--审核通过--%>
+							<td><spring:message code="myOrder.status.AuditSuccess"/></td>
+							<td></td>
 							{{else state  == '42'}}
 							<!-- 审核失败 -->
 							<td><spring:message code="myOrder.status.Auditfailure"/></td>

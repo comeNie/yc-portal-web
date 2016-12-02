@@ -92,6 +92,11 @@ public final class OrderConstants {
          * 待审核
          */
         public static final String UN_CHECK = "40";
+
+        /**
+         * 审核通过
+         */
+        public static final String CHECK_SUCCESS = "41";
         
         /**
          * 审核失败
