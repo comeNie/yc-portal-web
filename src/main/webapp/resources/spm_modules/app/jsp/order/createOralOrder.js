@@ -198,8 +198,10 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 			productInfo.interperGen = $("#gender").find("option:selected").val();
 			productInfo.meetingAddress = $("#place").find("option:selected").text();
 			productInfo.interperSum = $("#interpreterNum").val();
-			productInfo.startTime = new Date($("#begin_time").val()).getTime();
-			productInfo.endTime = new Date($("#end_time").val()).getTime();
+
+			var offsetMis = new Date().getTimezoneOffset()*60*1000;
+			productInfo.startTime = new Date($("#begin_time").val()).getTime() - offsetMis;
+			productInfo.endTime = new Date($("#end_time").val()).getTime() - offsetMis;
 
 			var translateLevelInfoList = [];
 			$('input[name="interpretationType"]:checked').each(function(){
