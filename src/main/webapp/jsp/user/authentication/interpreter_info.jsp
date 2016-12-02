@@ -88,9 +88,9 @@
   						<p class="word"><b>*</b>
   							<spring:message code="interpreter.nickName" />
   						</p>
-  						<p><input maxlength="24" type="text" class="int-text int-xlarge radius" name="nickname" id="nickname" value="${interpreterInfo.nickname}"/>
+  						<p><input  maxlength="24" type="text" class="int-text int-xlarge radius" name="nickname" id="nickname" value="${interpreterInfo.nickname}"/>
+  						<label id="nickname-error" class="error" for="nickname"></label>
   						</p>
-  						<label id="nickNameErrMsg" style="display: none;"></label>
   					</li>
   					<li>
   						<p class="word">
@@ -164,7 +164,7 @@
     		"userNameMaxMsg" : '<spring:message code="interpreter.save.userName.maxlength.msg"/>',
     		"userNameMinMsg" : '<spring:message code="interpreter.save.userName.minlength.msg"/>',
     		"nickNameEmptyMsg" : '<spring:message code="interpreter.save.nickName.empty.msg"/>',
-    		"nickNameErrorMsg" : '<spring:message code="interpreter.save.userName.error.msg"/>',
+    		"nickNameErrorMsg" : '<spring:message code="interpreter.save.nickName.error.msg"/>',
     		"nickNameMaxMsg" : '<spring:message code="interpreter.save.nickName.maxlength.msg"/>',
     		"nickNameMinMsg" : '<spring:message code="interpreter.save.nickName.minlength.msg"/>',
     		"qqErrorMsg" : '<spring:message code="interpreter.save.qq.error.msg"/>'

@@ -132,6 +132,9 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 			if(originalNickname==nickname||nickname==""){//昵称未改变无需校验
 				return;
 			}
+			if(!this._regCheckNickName(nickname)){
+				return;
+			}
 			ajaxController.ajax({
 				type:"post",
 				url:_base+"/p/interpreter/checkNickName",
@@ -140,9 +143,9 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 				},
 		        success: function(json) {
 		        	 if(!json.data){
-		        		 $("#nickNameErrMsg").show().html("<span>"+json.statusInfo+"</span>");
+		        		 $("#nickname-error").show().html(json.statusInfo);
 		        	 }else{
-		        		 $("#nickNameErrMsg").hide().html(""); 
+		        		 $("#nickname-error").hide().html(""); 
 		        	 }
 		          }
 				});
@@ -175,6 +178,12 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 			var re = /^(?![0-9]+$)(?![a-zA-Z]+$)[a-z0-9A-Z][a-z0-9A-Z_]{5,15}$/;
 			return re.test(value);
 		},
+		_regCheckNickName:function(value){
+			var re = /^[\-_0-9a-zA-Z\u4e00-\u9fa5]{1,24}$/;
+			return re.test(value);
+		}
+		
+		,
     	_initValidate:function(){
     		var _this = this;
     		$.validator.addMethod( "checkUserName", function( value, element, param ) {
@@ -185,6 +194,14 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     			var valid =  (_this._regCheckUserName(value))?true:false;		
     			return valid;
     		}, $.validator.format(interpreterInfoMsg.userNameErrorMsg) );
+    		$.validator.addMethod( "checkNickName", function( value, element, param ) {
+    			if(param==false)return true;
+    			/*如果参数值存在，则进行校验*/
+    			var empty = $.trim(value).length?false:true;
+    			if(empty)return true;
+    			var valid =  (_this._regCheckNickName(value))?true:false;		
+    			return valid;
+    		}, $.validator.format(interpreterInfoMsg.nickNameErrorMsg) );
     		var formValidator=$("#dataForm").validate({
     			rules: {
     				userName: {
@@ -193,10 +210,11 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     					minlength:6,
     					checkUserName: $("#userName").val()
     					},
-    				nickName: {
+    				nickname: {
     					required:true,
-    					maxlength:10,
-    					minlength:3,
+    					maxlength:24,
+    					minlength:1,
+    					checkNickName: $("#nickname").val()
     					},
     			   qq:{
     			    	required:false,
@@ -210,7 +228,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     					maxlength:interpreterInfoMsg.userNameMaxMsg,
     					minlength:interpreterInfoMsg.userNameMinMsg
     					},
-    				nickName: {
+    				nickname: {
     					required:interpreterInfoMsg.nickNameEmptyMsg,
     					maxlength:interpreterInfoMsg.nickNameMaxMsg,
     					minlength:interpreterInfoMsg.nickNameMinMsg
