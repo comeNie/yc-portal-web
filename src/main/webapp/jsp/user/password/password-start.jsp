@@ -30,6 +30,7 @@
  							<li>
  								<input type="hidden" id="userId" name="uid"/>
  								<input type="hidden" id="tcode"/>
+ 								<input type="hidden" id="t_userName" name="t_userName"/>
  								<p class="word"><spring:message code="ycfindpassword.account"/></p>
  								<p><input type="text" class="int-text int-in-big radius" name="userName" id="userName"></p>
  								<label id="userNameErrMsg" style="display: none;"><span class="ash" id="userNameText"></span></label>

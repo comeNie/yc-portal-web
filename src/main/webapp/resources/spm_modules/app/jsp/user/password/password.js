@@ -139,12 +139,13 @@ define("app/jsp/user/password/password",
 								data : {
 									"email": $("#passwordEmail").html(),
 									"type":'5',
-									"uid":$("#userId").val()
+									"uid":$("#userId").val(),
+									"userName":$("#t_userName").val()
 								},
 								dataType: 'json',
 								url :_base+"/userCommon/sendEmail",
 								processing: true,
-								message : "...",
+								message : " ",
 								success : function(data) {
 									var resultCode = data.data;
 									if(!resultCode){
@@ -186,7 +187,7 @@ define("app/jsp/user/password/password",
 						ajaxController.ajax({
 							type : "post",
 							processing : true,
-							message : "...",
+							message : " ",
 							url : _base + "/password/checkAccountInfo",
 							data : {
 								'imgCode' : imgCodeVal,
@@ -197,6 +198,7 @@ define("app/jsp/user/password/password",
 								if (!data.isOk) {
 									showMsg(json.statusInfo);
 								}else{
+									$("#t_userName").val(data.username);
 									var userId = data.uid;
 									$("#userId").val(userId);
 									var telphone =data.mobilephone;
