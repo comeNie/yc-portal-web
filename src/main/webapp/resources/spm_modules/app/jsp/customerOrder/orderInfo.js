@@ -12,6 +12,7 @@ define('app/jsp/customerOrder/orderInfo', function (require, exports, module) {
     	//事件代理
     	events: {
 			"click #payOrder":"_orderPay",
+			"click #confirmOrder":"_confirm"
     	},
     	
     	//跳转支付
@@ -22,7 +23,27 @@ define('app/jsp/customerOrder/orderInfo', function (require, exports, module) {
 //    	下载文件
     	_downLoad:function(fileId, fileName) {
     		window.open(_base + "/p/customer/order/download?fileId="+fileId+"&fileName="+fileName);
-    	}
+    	},
+
+		//确认订单
+		_confirm:function() {
+			ajaxController.ajax({
+				type: "post",
+				url: _base + "/p/trans/order/updateState",
+				data: {
+					orderId: $("#orderId").val(),
+					state: "90",
+					displayFlag: "90",
+				},
+				success: function (data) {
+					if ("1" === data.statusCode) {
+						//成功
+						//刷新页面
+						window.location.reload();
+					}
+				}
+			});
+		},
         
     });
     module.exports = orderInfoPage;

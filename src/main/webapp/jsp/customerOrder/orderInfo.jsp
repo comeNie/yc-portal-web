@@ -453,7 +453,7 @@ var current = "orderList";
 	 $("input[name='download']").click(function(){
 		 pager._downLoad($(this).attr('fileId'), $(this).attr('fileName'));
      });
-	
+
 })();
    
 
