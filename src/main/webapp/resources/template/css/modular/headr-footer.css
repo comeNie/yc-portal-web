@@ -2,13 +2,13 @@
 .header-big{width:100%;height:60px;background:#2361ea;min-width:1170px;}
 .cloud-header{width:1170px;height:60px;margin:0 auto;}
 .logo{width:253px;height:34px;float:left;margin:10px 0 0 26px;}
-.cloud-nav{width:480px;float:left;margin:16px 0 0 64px;}
+.cloud-nav{float:left;margin:16px 0 0 64px;}
 .cloud-nav ul{width:100%;float:left;}
 .cloud-nav ul li{float:left;margin-right:22px;line-height:30px;}
 .cloud-nav ul li a{color:#fff;font-size:14px;padding:0 20px;}
 .cloud-nav ul li a:hover{height:30px;float:left;padding:0 20px;background:#eff1f4;color:#2361ea;border-radius:15px;}
 .cloud-nav ul .current a{height:30px;float:left;padding:0 20px;background:#eff1f4;color:#2361ea;border-radius:15px;}
-.cloud-breadcrumb{float:left;margin:15px 25px 0 0;;}
+.cloud-breadcrumb{float:right;margin:15px 25px 0 0;;}
 .cloud-breadcrumb ul{display: inline-block;}
 .cloud-breadcrumb ul li{float:left;position: relative;margin-left:20px;}
 .none-select{background:none;border: none;color:#fff; outline:none;appearance:none;-moz-appearance:none;-webkit-appearance:none;}
