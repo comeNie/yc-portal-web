@@ -92,6 +92,8 @@ define('app/jsp/home', function (require, exports, module) {
 						}
 					});
 					$('.selected').eq(0).attr('value', vLan);
+				} else { //检测语言失败
+					$("#transError").html($.i18n.prop("home.error.trans"));
 				}
 			}
 
