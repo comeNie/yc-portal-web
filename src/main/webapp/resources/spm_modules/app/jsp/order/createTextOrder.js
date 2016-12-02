@@ -88,35 +88,35 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                     translateContent: {
                         required: true,
                         maxlength: 2000,
-                        remote: {                                          //验证检查语言
-                            type: "POST",
-                            url: _base + "/translateLan",
-                            data: {
-                                text: function () {
-                                    return $("#translateContent").val();
-                                }
-                            },
-                            dataType: 'json',
-                            dataFilter: function (data) {//判断控制器返回的内容
-                                data = jQuery.parseJSON(data);
-
-                                var sourlan = 'en';
-                                $("#selectDuad").find('option').each(function () {
-                                    var val = $(this).val();
-                                    if (val == $(".dropdown .selected").attr('value')) {
-                                        var selected = $(this);
-                                        sourlan = selected.attr("sourceCode");
-                                        return false;
-                                    }
-                                });
-
-                                if (sourlan == data.data) {
-                                    return true;
-                                } else {
-                                    return false;
-                                }
-                            }
-                        }
+                        // remote: {                                          //验证检查语言
+                        //     type: "POST",
+                        //     url: _base + "/translateLan",
+                        //     data: {
+                        //         text: function () {
+                        //             return $("#translateContent").val();
+                        //         }
+                        //     },
+                        //     dataType: 'json',
+                        //     dataFilter: function (data) {//判断控制器返回的内容
+                        //         data = jQuery.parseJSON(data);
+                        //
+                        //         var sourlan = 'en';
+                        //         $("#selectDuad").find('option').each(function () {
+                        //             var val = $(this).val();
+                        //             if (val == $(".dropdown .selected").attr('value')) {
+                        //                 var selected = $(this);
+                        //                 sourlan = selected.attr("sourceCode");
+                        //                 return false;
+                        //             }
+                        //         });
+                        //
+                        //         if (sourlan == data.data) {
+                        //             return true;
+                        //         } else {
+                        //             return false;
+                        //         }
+                        //     }
+                        // }
                     },
                     isAgree: {
                         required: true
@@ -126,7 +126,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                     translateContent: {
                         required: $.i18n.prop('order.place.error.translation'), //"请输入翻译内容",
                         maxlength: $.i18n.prop('order.place.error.Maximum'),//"最大长度不能超过{0}",
-                        remote:  $.i18n.prop('order.place.error.contentConsis')//"您输入的内容和源语言不一致"
+                       // remote:  $.i18n.prop('order.place.error.contentConsis')//"您输入的内容和源语言不一致"
                     },
                     isAgree: {
                         required: $.i18n.prop('order.place.error.agree')//"请阅读并同意翻译协议",
@@ -489,8 +489,20 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			new Dialog({
 				content:msg,
 				icon:'warning',
-				okValue: '确 定',
-				title: '提示',
+				okValue: $.i18n.prop("order.info.dialog.ok"),
+				title:  $.i18n.prop("order.info.dialog.prompt"),
+				ok:function(){
+					this.close();
+				}
+			}).show();
+		},
+
+		_showFail:function(msg){
+			new Dialog({
+				title: $.i18n.prop("order.info.dialog.prompt"),
+				content:msg,
+				icon:'fail',
+				okValue: $.i18n.prop("order.info.dialog.ok"),
 				ok:function(){
 					this.close();
 				}
@@ -551,17 +563,17 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 });
 
                 if (allSize > 100*1024*1024) {
-                    alert("上传文件不能超过100M");
+					_this._showWarn($.i18n.prop('order.upload.error.fileSize'));
                     return false;
                 }
 
                 if (allCount > 10) {
-                    alert("上传文件个数不能超过10个");
+					_this._showWarn($.i18n.prop('order.upload.error.fileNum'));
                     return false;
                 }
 
                 if ($.inArray(file.ext, FILE_TYPES)<0) {
-                    alert("请上传rar,zip,doc,docx,pdf,jpg,png,jif");
+					_this._showWarn($.i18n.prop('order.upload.error.type'));
                     return false;
                 }
 
@@ -597,7 +609,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                     }
                 }//上传失败
                 else{
-                    alert("上传文件失败");
+					_this._showFail($.i18n.prop('order.upload.error.upload'));
                     //删除文件
                     $("#"+file.id).parent('ul').remove();
                     var file = uploader.getFile(file.id);
@@ -607,7 +619,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
             });
 
             uploader.on( 'uploadError', function( file, reason ) {
-                alert(reason);
+				_this._showFail($.i18n.prop('order.upload.error.upload'));
+
                 //删除文件
                 $("#"+file.id).parent('ul').remove();
                 var file = uploader.getFile(file.id);
