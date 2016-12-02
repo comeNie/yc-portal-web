@@ -238,7 +238,7 @@ public class TransOrderController {
             IOrderStateUpdateSV iOrderStateUpdateSV = DubboConsumerFactory.getService(IOrderStateUpdateSV.class);
             OrderStateUpdateRequest stateReq = new OrderStateUpdateRequest();
             stateReq.setOrderId(orderId);
-            stateReq.setState(OrderConstants.State.SUBMITTED); //已提交
+            stateReq.setState(OrderConstants.State.UN_CHECK); //待审核
             stateReq.setDisplayFlag(OrderConstants.State.TRANSLATING);
             
             OrderStateUpdateResponse stateRes = iOrderStateUpdateSV.updateState(stateReq);
