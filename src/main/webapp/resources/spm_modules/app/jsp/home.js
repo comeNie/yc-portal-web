@@ -24,6 +24,7 @@ define('app/jsp/home', function (require, exports, module) {
         events: {
             "click #recharge-popo":"_addOralOrderTemp",
             "click #toCreateOrder":"_toCreateOrder",
+			"keyup #int-before": "_mt",
             "click #trante": "_mt",
             "click #playControl": "_text2audio",
 			"click #humanTranBtn":"_goTextOrder",
@@ -70,6 +71,10 @@ define('app/jsp/home', function (require, exports, module) {
 				console.log("from:"+from+",to:"+to);
 			}
 
+			if (from == '') {
+				return
+			}
+
 			$('#tgtNew').empty();
 			$('#srcNew').empty();
 
@@ -92,6 +97,9 @@ define('app/jsp/home', function (require, exports, module) {
 							$("#sus-top2").hide();
 						else
 							$("#sus-top2").show();
+
+						$('#tgtNew').empty();
+						$('#srcNew').empty();
 
 						var array=eval("("+data.data+")");
 						var translation = array.translation;
