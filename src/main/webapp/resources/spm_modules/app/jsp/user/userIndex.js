@@ -44,8 +44,8 @@ define("app/jsp/user/userIndex",function(require, exports, module) {
 						url: _base + "/p/trans/order/updateState",
 						data: {
 							orderId: orderId,
-							state: "51",
-							displayFlag: "52",
+							state: "90",
+							displayFlag: "90",
 						},
 						success: function (data) {
 							if ("1" === data.statusCode) {

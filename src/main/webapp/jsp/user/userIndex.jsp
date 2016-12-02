@@ -222,7 +222,7 @@
 					<!-- 确认 -->
 					<input name="confirmOrder" class="btn biu-btn btn-auto-25 btn-green radius10" type="button" value="<spring:message code="myOrder.confirm"/>">
 					<!-- 延时确认-->
-					<--<input name="lateConfirmOrder" class="btn biu-btn btn-auto-25 btn-red radius10" type="button" value="<spring:message code="myOrder.Delayed"/>">-->
+					<!--<input name="lateConfirmOrder" class="btn biu-btn btn-auto-25 btn-red radius10" type="button" value="<spring:message code="myOrder.Delayed"/>">-->
 				</td>
 			{{else displayFlag == '52'}}
 				<!-- 待评价  -->
