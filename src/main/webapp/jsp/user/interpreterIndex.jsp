@@ -1,3 +1,4 @@
+<%@page import="com.ai.paas.ipaas.i18n.ZoneContextHolder"%>
 <%@ page language="java" contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -163,7 +164,9 @@
 								<spring:message code="myOrder.dollarSame" arguments="{{:~liToYuan(totalFee)}}" />
 								{{/if}}
         </td>
-        <td>{{:endTime}}</td>
+        <td>
+        {{:~timestampToDate('yyyy-MM-dd hh:mm:ss',endTime,'<%=ZoneContextHolder.getZone()%>')}}
+        </td>
         {{if  state  == '21'}}
 							<!-- 已领取 -->
 							<td><spring:message code="myOrder.status.Claimed"/></td>
