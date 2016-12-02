@@ -44,7 +44,7 @@ public class YeekitController {
             resData.setData(yeekitService.dotranslate(fromTmp,to,text));
         } catch (Exception e) {
             LOGGER.error("机器翻译失败：", e);
-            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
+            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, rb.getMessage(""));
         }
         
         return resData;
@@ -67,7 +67,7 @@ public class YeekitController {
             resData.setData(lan);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
+            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "FAIL");
         }
         //TODO
 //        resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");

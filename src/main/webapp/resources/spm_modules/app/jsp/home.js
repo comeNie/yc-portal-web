@@ -14,7 +14,8 @@ define('app/jsp/home', function (require, exports, module) {
     var ajaxController = new AjaxController();
 
 	var sourYiWen="";
-    var homePage = Widget.extend({
+	var clip;
+	var homePage = Widget.extend({
         //属性，使用时由类的构造函数传入
         attrs: {
             clickId:""
@@ -45,17 +46,23 @@ define('app/jsp/home', function (require, exports, module) {
 				mode: 'both',
 				language: currentLan,
 			});
-			
+
+
 			// 定义一个新的复制对象
-			var clip = new ZeroClipboard( document.getElementById("sus-top1"), {
-				moviePath: "ZeroClipboard.swf"
+			var  clip = new ZeroClipboard( document.getElementById("sus-top1"), {
+				moviePath:  "${_base}/resources/spm_modules/zeroclipboard/ZeroClipboard.swf"
+			});
+			// 复制内容到剪贴板成功后的操作
+			clip.on('copy', function (event) {
+				event.clipboardData.setData('text/plain', $('#transRes').val());
 			});
 
-			// 复制内容到剪贴板成功后的操作
 			clip.on( 'complete', function(client, args) {
-				alert("复制成功，复制内容为："+ args.text);
-			} );
+			});
+
         },
+
+
 		//人工翻译,跳转到笔译订单
        	_goTextOrder:function(){
 			window.location.href=_base+"/written";
@@ -73,6 +80,19 @@ define('app/jsp/home', function (require, exports, module) {
 
 			if (from == '') {
 				return
+			}
+
+			if (from == 'auto') {
+				var vLan = _this._verifyLan();
+				if ( vLan!= '') {
+					$("#showa option").each(function () {
+						if ($(this).val() == vLan) {
+							$('.selected').eq(0).html( $(this).text());
+							return false;
+						}
+					});
+					$('.selected').eq(0).attr('value', vLan);
+				}
 			}
 
 			$('#tgtNew').empty();
@@ -130,6 +150,25 @@ define('app/jsp/home', function (require, exports, module) {
 				}
 			});
         },
+
+		//检测语言
+		_verifyLan:function() {
+			var lan = '';
+			ajaxController.ajax({
+				type: "post",
+				url: _base + "/translateLan",
+				data: {
+					text: $("#int-before").val()
+				},
+				success: function (data) {
+					if("OK" === data.statusInfo) {
+						lan = data.data;
+					}
+				}
+			});
+
+			return lan;
+		},
         
         _change:function() {
         	var srcValue = $(".selected").eq(0).attr('value');
