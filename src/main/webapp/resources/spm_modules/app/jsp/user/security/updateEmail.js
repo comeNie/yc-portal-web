@@ -138,7 +138,7 @@ define("app/jsp/user/security/updateEmail",
 								dataType: 'json',
 								url :_base+"/userCommon/sendEmail",
 								processing: true,
-								message : updateEmailJs.dealing,
+								message : " ",
 								success : function(data) {
 									var resultCode = data.data;
 									if(!resultCode){
@@ -195,7 +195,7 @@ define("app/jsp/user/security/updateEmail",
 								dataType: 'json',
 								url :_base+"/userCommon/sendEmail",
 								processing: true,
-								message : updateEmailJs.dealing,
+								message : " ",
 								success : function(data) {
 									var resultCode = data.data;
 									if(!resultCode){
