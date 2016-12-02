@@ -32,7 +32,6 @@ import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.EmailVerify;
 import com.ai.yc.protal.web.constants.Constants.PhoneVerify;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
-import com.ai.yc.protal.web.constants.Constants.Register;
 import com.ai.yc.protal.web.constants.Constants.UcenterOperation;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
 import com.ai.yc.protal.web.model.sms.SmsRequest;
@@ -307,14 +306,11 @@ public class UserCommonController {
 		emailRequest.setTomails(new String[] { email });
 		emailRequest.setData(new String[] { "zhangsan", randomStr });
 		Locale locale = rb.getDefaultLocale();
-		String _template = "";
-		String _subject = "";
-		if (Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())) {
-			_template = Register.REGISTER_EMAIL_ZH_CN_TEMPLATE;
-			_subject = "中文主题";
-		} else if (Locale.US.toString().equals(locale.toString())) {
-			_template = Register.REGISTER_EMAIL_EN_US_TEMPLATE;
-			_subject = "英文主题";
+		String _template = EmailVerify.EMAIL_VERIFY_ZH_CN_TEMPLATE;
+		String _subject =EmailVerify.EMAIL_VERIFY_ZH_CN_SUBJECT;
+		if (Locale.US.toString().equals(locale.toString())) {
+			_template = EmailVerify.EMAIL_VERIFY_EN_US_TEMPLATE;
+			_subject = EmailVerify.EMAIL_VERIFY_EN_US_SUBJECT;
 		}
 		emailRequest.setTemplateURL(_template);
 		emailRequest.setSubject(_subject);
