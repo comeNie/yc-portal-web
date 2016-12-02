@@ -310,7 +310,7 @@
 .placeorder-translate label{position:absolute;top:-38px;left:170px;font-size:12px;color:#fe6b6b}
 .translate-int{width:100%;min-height:316px;border:1px solid #e6e6e6;float:left;position:relative;}
 .white-bj .right{float:right;margin:0 20px 0 0;}
-.translate-int label{position:absolute;top:-40px;right:0px;font-size:12px;color:#fe6b6b}
+.translate-int1 label{position:absolute;top:-40px;right:0px;font-size:12px;color:#fe6b6b}
 /**选择级别**/
 .selection-level{width:100%;float:left}
 .selection-level ul{width:352px;height:250px;float:left;background:#f8f8f8;border-radius:5px;margin-left:30px;padding:20px 30px 30px 30px;position:relative;}

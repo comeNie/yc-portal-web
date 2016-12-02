@@ -8,11 +8,13 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 
     require("jquery-validation/1.15.1/jquery.validate");
 	require("app/util/aiopt-validate-ext");
-	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');	
+	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
+	require('webuploader/webuploader');
     var CountWordsUtil = require("app/util/countWords");
     
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
+    var uploader = null;
     var textOrderAddPager = Widget.extend({
     	//属性，使用时由类的构造函数传入
     	attrs: {
@@ -30,7 +32,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			"click #fy-btn1": "_inputText",
 			"click #clear-btn": "_clearText",
 			"keyup #translateContent": "_clearControl",
-			"change #selectFormatConv": "_formatControl",
+			"change #selectFormatConv": "_formatControl"
            	},
             
     	//重写父类
@@ -54,83 +56,85 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			this._initPage();
     	},
 
-        _initValidate:function(){
-        	var _this = this;
-        	var formValidator=$("#textOrderForm").validate({
-        		onkeyup:false,
-				focusInvalid: true,
-        		errorPlacement: function(error, element) {
-					if (element.is(":checkbox")) {
-						error.appendTo(element.parent().parent().parent());
-					} else {
-						error.insertAfter(element);
-					}
+        _initValidate: function () {
+            var _this = this;
+            var formValidator = $("#textOrderForm").validate({
+                onkeyup: false,
+                focusInvalid: true,
+                errorPlacement: function (error, element) {
+                    if (element.is(":checkbox")) {
+                        error.appendTo(element.parent().parent().parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
 
-				},
-				highlight: function(element, errorClass) {
+                },
+                highlight: function (element, errorClass) {
 
-				},
-				unhighlight: function(element, errorClass) {
+                },
+                unhighlight: function (element, errorClass) {
 
-				} ,
-				errorClass:"x-label",
-				showErrors:function(errorMap,errorList) {
-					this.defaultShowErrors();
-					$('ul li p label').each(function (index,element) {
-						if (index > 0)
-							element.remove();
-					});
-					//$('ul li p label').remove();//删除所有隐藏的li p label标签
-				},
-    			rules: {
-    				translateContent: {
-    					required:true,
-    					maxlength:2000,
-    			// 		remote:{                                          //验证检查语言
-    			// 　　               type:"POST",
-    			// 　　               url:  _base + "/translateLan",
-    			// 　　               data:{
-	    		// 	　　                text: function(){return $("#translateContent").val();}
-    			// 　　               },
-    			// 　　               dataType:'json',
-    			// 　　               dataFilter: function (data) {//判断控制器返回的内容
-    			// 　　            	  	data = jQuery.parseJSON(data);
-    			// 　　
-    			// 　　            	  	var sourlan = 'en';
-    			// 　　           		$("#selectDuad").find('option').each(function() {
-	    		// 	　　               		var val = $(this).val();
-	    		// 	　　               		if (val ==  $(".dropdown .selected").attr('value')) {
-	    		// 	　　               			var selected = $(this);
-	    		// 	　　               			sourlan = selected.attr("sourceCode");
-	    		// 	　　               			return false;
-	    		// 	　　               		}
-	    		// 	　　           	});
-    			// 　　
-			    //                  if (sourlan == data.data) {
-			    //                      return true;
-			    //                  } else {
-			    //                      return false;
-			    //                  }
-    			//            }
-    			// 　　 	}
-    				},
-    				isAgree: {
-    					required:true,
-    				},
-    			},
-    			messages: {
-    				translateContent: {
-    					required: $.i18n.prop('order.place.error.translation'), //"请输入翻译内容",
-    					maxlength: $.i18n.prop('order.place.error.Maximum'),//"最大长度不能超过{0}",
-    					//remote:  $.i18n.prop('order.place.error.contentConsis')//"您输入的内容和源语言不一致"
-    				},
-    				isAgree: {
-    					required: $.i18n.prop('order.place.error.agree')//"请阅读并同意翻译协议",
-    				},
-    			}
-    		});
-    		
-    		return formValidator;
+                },
+                errorClass: "x-label",
+                showErrors: function (errorMap, errorList) {
+                    this.defaultShowErrors();
+                    $('ul li p label').each(function (index, element) {
+                        if (index > 0)
+                            element.remove();
+                    });
+                    //$('ul li p label').remove();//删除所有隐藏的li p label标签
+                },
+                rules: {
+                    translateContent: {
+                        required: true,
+                        maxlength: 2000,
+                        remote: {                                          //验证检查语言
+                            type: "POST",
+                            url: _base + "/translateLan",
+                            data: {
+                                text: function () {
+                                    return $("#translateContent").val();
+                                }
+                            },
+                            dataType: 'json',
+                            dataFilter: function (data) {//判断控制器返回的内容
+                                data = jQuery.parseJSON(data);
+
+                                var sourlan = 'en';
+                                $("#selectDuad").find('option').each(function () {
+                                    var val = $(this).val();
+                                    if (val == $(".dropdown .selected").attr('value')) {
+                                        var selected = $(this);
+                                        sourlan = selected.attr("sourceCode");
+                                        return false;
+                                    }
+                                });
+
+                                if (sourlan == data.data) {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                        }
+                    },
+                    isAgree: {
+                        required: true
+                    }
+                },
+                messages: {
+                    translateContent: {
+                        required: $.i18n.prop('order.place.error.translation'), //"请输入翻译内容",
+                        maxlength: $.i18n.prop('order.place.error.Maximum'),//"最大长度不能超过{0}",
+                        remote:  $.i18n.prop('order.place.error.contentConsis')//"您输入的内容和源语言不一致"
+                    },
+                    isAgree: {
+                        required: $.i18n.prop('order.place.error.agree')//"请阅读并同意翻译协议",
+                    }
+                }
+            });
+
+            return formValidator;
         },
 
 
@@ -298,7 +302,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		_initPage:function() {
 			//页面初始化，从session取订单信息
 			//改变上传div高度
-			$("#selectFile").children("div:last").css("height", '70px');
+			// $("#selectFile").children("div:last").css("height", '70px');
 
 			//根据翻译类型，显示不同
 			if ($("#transType").val() == "1") {
@@ -445,6 +449,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		_uploadFile:function() {
 			$("#selectAddedSer").attr("disabled",false);
 			$("#selectFormatConv").attr("disabled",false);
+            if ( !WebUploader.Uploader.support() ) {
+                alert( 'Web Uploader 不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器');
+                throw new Error( 'WebUploader does not support the browser you are using.' );
+            }else if(uploader==null){
+                this._initUpdate();
+            }
 		},
 		
 		//清空输入文字
@@ -510,7 +520,105 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
 			}
 			return t.split("").reverse().join("") + "." + r;
-		}
+		},
+		//初始化上传控件
+		_initUpdate:function () {
+			var _this= this;
+            var FILE_TYPES=['rar','zip','doc','docx','pdf','jpg','png','jif'];
+            uploader = WebUploader.create({
+                swf : _base+"/resources/spm_modules/webuploader/Uploader.swf",
+                server: _base+'/order/uploadFile',
+                auto : true,
+                pick : "#selectFile",
+                dnd: '#fy2', //拖拽
+                accept: {
+                    title: 'intoTypes',
+                    extensions: 'rar,zip,doc,docx,pdf,jpg,png,gif',
+                    mimeTypes: 'application/zip,application/msword,application/pdf,image/jpeg,image/png,image/gif'
+                },
+                resize : false,
+                // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
+                disableGlobalDnd: true,
+                fileNumLimit: 10,
+                fileSizeLimit: 100 * 1024 * 1024,    // 100 M
+            });
+
+            uploader.on("beforeFileQueued", function (file) {
+                var allSize = file.size;
+                var allCount = $("#fileList ul").length + 1
+                $("#fileList ul li").each(function() {
+                    allSize += $(this).attr("size");
+                });
+
+                if (allSize > 100*1024*1024) {
+                    alert("上传文件不能超过100M");
+                    return false;
+                }
+
+                if (allCount > 10) {
+                    alert("上传文件个数不能超过10个");
+                    return false;
+                }
+
+                if ($.inArray(file.ext, FILE_TYPES)<0) {
+                    alert("请上传rar,zip,doc,docx,pdf,jpg,png,jif");
+                    return false;
+                }
+
+            });
+
+            uploader.on("fileQueued",function(file){
+                $("#fileList ul").css('"border-bottom","none"');
+                $("#fileList").append('<ul style="border-bottom: medium none;"><li class="word" size="'+file.size+'" id="'+file.id+'">'+file.name+'</li><li><p class="ash-bj"><span style="width:0%;"></span></p><p name="percent">0%</p></li><li class="right"><i class="icon iconfont" >&#xe618;</i></li></ul>');
+            });
+
+            uploader.on("uploadProgress",function(file,percentage){
+
+                var fileId = $("#"+file.id),
+                    percent = fileId.find(".progress .progress-bar");
+                if(!percent.length){//避免重复创建
+                    percent = $('<div class="progress progress-striped active"><div class="progress-bar" role="progressbar" style="width: 0%"></div></div>')
+                        .appendTo(fileId).find('.progress-bar');
+                }
+                fileId.next().find('span').css('width',percentage*100+"%");
+                fileId.next().find('p[name="percent"]').text(percentage*100+"%");
+                percent.css( 'width', percentage * 100 + '%' );
+
+            });
+
+            uploader.on( 'uploadSuccess', function( file, responseData ) {
+                if(responseData.statusCode=="1"){
+                    var fileData = responseData.data;
+                    console.log(fileData);
+                    //文件上传成功
+                    if(fileData){
+                        $("#"+file.id).attr("fileId", fileData);
+                        return;
+                    }
+                }//上传失败
+                else{
+                    alert("上传文件失败");
+                    //删除文件
+                    $("#"+file.id).parent('ul').remove();
+                    var file = uploader.getFile(file.id);
+                    uploader.removeFile(file);
+                    return;
+                }
+            });
+
+            uploader.on( 'uploadError', function( file, reason ) {
+                alert(reason);
+                //删除文件
+                $("#"+file.id).parent('ul').remove();
+                var file = uploader.getFile(file.id);
+                uploader.removeFile(file);
+            });
+
+            uploader.on( 'uploadComplete', function( file ) {
+                $( '#'+file.id ).find('.progress').fadeOut();
+            });
+        },
+
     });
     
     module.exports = textOrderAddPager;
