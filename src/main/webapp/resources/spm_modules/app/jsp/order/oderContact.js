@@ -126,7 +126,7 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
                         //成功
                         $("#saveContactDiv").hide();
                         $("#editContactDiv").find('p').eq(0).html($("#userName").val());
-                        $("#editContactDiv").find('p').eq(1).html("+"+$("#globalRome").find('option:selected').attr('code')+" "+$("#mobilePhone").val());
+                        $("#editContactDiv").find('p').eq(1).html($("#globalRome").find('option:selected').attr('code')+$("#mobilePhone").val());
                         $("#editContactDiv").find('p').eq(2).html($("#email").val());
                         $("#editContactDiv").show();
                     }
