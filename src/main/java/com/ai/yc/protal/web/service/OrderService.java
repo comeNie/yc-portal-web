@@ -24,17 +24,17 @@ public class OrderService {
      * @param accountId 账号ID,可为空
      * @param orderId 订单ID
      * @param orderType 订单类型 企业/个人
-     * @param totalFee 订单金额
+     * @param paidFee 订单金额
      * @param payStyle 支付方式,对应支付机构
      * @param outOrderId 支付流水号
      * @param notifyTime 支付时间
      */
     public void orderPayProcessResult(
-            String userId,Long accountId,long orderId,String orderType,long totalFee,
+            String userId,Long accountId,long orderId,String orderType,long paidFee,
             String payStyle,String outOrderId,Timestamp notifyTime){
         LOGGER.info("order pay process result,\r\n" +
-                "userId:{},orderId:{},orderType:{},totalFee:{},payStyle:{},outOrderId:{}",
-                userId,orderId,orderType,totalFee,payStyle,outOrderId);
+                "userId:{},orderId:{},orderType:{},paidFee:{},payStyle:{},outOrderId:{}",
+                userId,orderId,orderType,paidFee,payStyle,outOrderId);
         //TODO...若是企业订单,需要查询企业信息,一阶段暂不实现
         OrderPayProcessedResultRequest payResultReq = new OrderPayProcessedResultRequest();
         //基本信息
@@ -56,7 +56,8 @@ public class OrderService {
         OrderPayProcessedResultFeeInfo payResultFeeInfo = new OrderPayProcessedResultFeeInfo();
         payResultReq.setFeeInfo(payResultFeeInfo);
         payResultFeeInfo.setPayStyle(payStyle);//支付机构
-        payResultFeeInfo.setTotalFee(totalFee);
+        payResultFeeInfo.setTotalFee(paidFee);
+        payResultFeeInfo.setPaidFee(paidFee);//实际支付金额
         payResultFeeInfo.setExternalId(outOrderId);
         payResultFeeInfo.setPayTime(notifyTime);
         //产品信息

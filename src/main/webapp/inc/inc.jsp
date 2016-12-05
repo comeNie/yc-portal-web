@@ -1,9 +1,12 @@
 <%@page import="java.util.Locale"%>
+<%@ page import="com.ai.paas.ipaas.i18n.ZoneContextHolder" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<fmt:setTimeZone value="${sessionScope.USER_TIME_ZONE}" scope="session"/>
+<!--session time zone：<%=session.getAttribute("USER_TIME_ZONE")%>-->
+<!--zone context：<%= ZoneContextHolder.getZone()%>-->
+<fmt:setTimeZone value="<%= ZoneContextHolder.getZone()%>" scope="session"/>
 <c:set var="_base" value="${pageContext.request.contextPath}"/>
 <c:set var="rootRes" value="${_base}/resources"/>
 <c:set var="spmRes" value="${_base}/resources/spm_modules"/>

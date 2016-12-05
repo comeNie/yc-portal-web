@@ -2,7 +2,6 @@ package com.ai.yc.protal.web.controller.order;
 
 import java.io.OutputStream;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,25 +9,22 @@ import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.slp.balance.api.deduct.interfaces.IDeductSV;
 import com.ai.slp.balance.api.deduct.param.DeductParam;
 import com.ai.slp.balance.api.deduct.param.DeductResponse;
-import com.ai.slp.balance.api.deduct.param.ForegiftDeduct;
 import com.ai.yc.order.api.orderfee.interfaces.IOrderFeeQuerySV;
 import com.ai.yc.order.api.orderfee.param.*;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.OrderConstants;
 import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
-import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
 import com.ai.yc.protal.web.service.BalanceService;
 import com.ai.yc.protal.web.service.OrderService;
 import com.ai.yc.protal.web.utils.*;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.hadoop.fs.DF;
-import org.apache.tools.ant.types.selectors.OrSelector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,28 +46,17 @@ import com.ai.paas.ipaas.i18n.ZoneContextHolder;
 import com.ai.yc.order.api.orderclose.interfaces.IOrderCancelSV;
 import com.ai.yc.order.api.orderclose.param.OrderCancelRequest;
 import com.ai.yc.order.api.orderdetails.interfaces.IQueryOrderDetailsSV;
-import com.ai.yc.order.api.orderdetails.param.ContactsVo;
-import com.ai.yc.order.api.orderdetails.param.OrderFeeVo;
-import com.ai.yc.order.api.orderdetails.param.OrderStateChgVo;
-import com.ai.yc.order.api.orderdetails.param.ProdExtendVo;
-import com.ai.yc.order.api.orderdetails.param.ProdFileVo;
-import com.ai.yc.order.api.orderdetails.param.ProdLevelVo;
-import com.ai.yc.order.api.orderdetails.param.ProdVo;
 import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsResponse;
 import com.ai.yc.order.api.orderfee.param.OrderFeeInfo;
 import com.ai.yc.order.api.orderfee.param.OrderFeeQueryResponse;
 import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
 import com.ai.yc.order.api.orderquery.param.OrdOrderVo;
-import com.ai.yc.order.api.orderquery.param.OrdProdExtendVo;
 import com.ai.yc.order.api.orderquery.param.QueryOrdCountRequest;
 import com.ai.yc.order.api.orderquery.param.QueryOrdCountResponse;
 import com.ai.yc.order.api.orderquery.param.QueryOrderRequest;
 import com.ai.yc.order.api.orderquery.param.QueryOrderRsponse;
-import com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
 
 /**
  * 客户订单
@@ -359,12 +344,12 @@ public class CustomerOrderController {
      * @return
      */
     @RequestMapping("/{orderId}")
-    public String orderInfoView(@PathVariable("orderId") String orderId, Model uiModel){
+    public String orderInfoView(@PathVariable("orderId") String orderId, Model uiModel,HttpSession session){
         
         if (StringUtils.isEmpty(orderId)) {
             return "customerOrder/orderError";
         }
-        
+        LOGGER.info("customer order session "+session.getAttribute("USER_TIME_ZONE"));
         try {
             IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
             QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(Long.valueOf(orderId));

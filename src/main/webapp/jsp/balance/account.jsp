@@ -90,16 +90,18 @@
                     <table class="table table-bg  table-striped-even table-height50">
                         <thead>
                         <tr>
-                            <th width="14.286%"><spring:message code="account.time"/></th>
-                            <th width="14.286%"><spring:message code="account.income"/>(元)</th>
-                            <th width="14.286%"><spring:message code="account.expenditure"/>(元)</th>
-                            <th width="14.286%"><spring:message code="balance"/></th>
-                            <th width="14.286%"><spring:message code="account.type"/></th>
-                            <th width="14.286%"><spring:message code="account.counterpart"/></th>
-                            <th width="14.286%"><spring:message code="account.detailed.instruction"/></th>
+                            <th style="width: 277px"><spring:message code="account.time"/></th>
+                            <th style="width: 108px"><spring:message code="account.income"/>(元)</th>
+                            <th style="width: 134px"><spring:message code="account.expenditure"/>(元)</th>
+                            <th style="width: 125px"><spring:message code="balance"/></th>
+                            <th style="width: 52px"><spring:message code="account.type"/></th>
+                            <th style="width: 78px"><spring:message code="account.counterpart"/></th>
+                            <th ><spring:message code="account.detailed.instruction"/></th>
                         </tr>
                         </thead>
+
                     </table>
+
                 </div>
                 <!-- 订单列表 -->
                 <div class="right-list-table" id="searchAccountData">
@@ -124,28 +126,28 @@
 </body>
 <%@ include file="/inc/incJs.jsp" %>
 <script id="searchAccountTemple" type="text/template">
-    <table class="table  table-bg tb-border mb-20">
+    <table class="table table-bg  table-striped-even table-height50">
         <tbody>
         <input type="hidden" name="unit" value="{{:incomeFlag}}">
         <input type="hidden" name="unit" value="{{:optType}}">
-        <tr class="width-16" >
-            <td>{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',payTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
-            <td class="red">
+        <tr>
+            <td style="width: 277px">{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',payTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
+            <td class="red" style="width: 108px">
                 {{if  incomeFlag == '1'}}
                 +{{:~liToYuan(totalAmount)}}
                 {{else }}
                 0
                 {{/if}}
             </td>
-            <td class="green">
+            <td class="green" style="width: 134px">
                 {{if  incomeFlag == '0'}}
                 -{{:~liToYuan(-totalAmount)}}
                 {{else }}
                     0
                 {{/if}}
             </td><%--{{:~liToYuan()}}--%>
-            <td>{{:~liToYuan(balancePre)}}</td>
-            <td>
+            <td style="width: 125px">{{:~liToYuan(balancePre)}}</td>
+            <td style="width: 52px">
                 {{if  optType == '1'}}
                 <spring:message code="account.recharge"/>
                 {{else optType == '2'}}
@@ -156,7 +158,7 @@
                 <spring:message code="account.refund"/>
                 {{/if}}
             </td>
-            <td>{{:channel}}</td>
+            <td style="width: 78px">{{:channel}}</td>
             <td>{{:remark}}</td>
         </tr>
         </tbody>
