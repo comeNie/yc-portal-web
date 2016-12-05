@@ -76,8 +76,6 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     	_saveInterpreterInfo:function(){
     	    var formValidator=this._initValidate();
 			formValidator.form();
-			var uploadImgFlag = $("#uploadImgFlag").val();
-			var nickNameFlag = $("#nickNameFlag").val();
 			if(!$("#dataForm").valid()){
 				return false;
 			}else{
@@ -86,6 +84,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 				 userPortraitImg =$("#portraitFileId").attr("src");
 			 }
 			 var userName =$("#userName").val();
+			 var nickName =$("#nickname").val();
              ajaxController.ajax({
 					type:"post",
 					processing : true,
@@ -94,7 +93,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     				data:{
     					'portraitId':$("#portraitId").val(),
     					'userName':userName,
-						'nickname':$("#nickname").val(),
+						'nickname':nickName,
 						'firstname':$("#firstname").val(),
 						'lastname':$("#lastname").val(),
 						'sex':$("input[name='sex']:checked").val(),
@@ -110,14 +109,17 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     		        		showMsg(json.statusInfo);
     		        	}else{
     		        		if(originalUsername!=userName&&userName!=""){//用户名发生改变
-    		        			originalUsername = userName;
-    		    				//输入框替换
+    		        			//输入框替换
     		    				$("#p_userName").html(userName);
     		    				//更新头部菜单用户名显示
     		    				$("#top_username").html(userName);
     		    				//更新左侧菜单用户名显示
     		    				$("#left_username").html(userName);
     		    			}
+    		        		//用户名重新赋值
+    		        		originalUsername = userName;
+		        			//昵称重新赋值
+    		        		originalNickname=nickName;
     		        		//更新头像显示
     		        		$("#ycUserPortraitImg").attr("src",$("#portraitFileId").attr("src"));
     		        		showMsg2(json.statusInfo);
