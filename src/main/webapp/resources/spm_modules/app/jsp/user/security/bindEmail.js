@@ -160,9 +160,10 @@ define("app/jsp/user/security/bindEmail",
 								    type:"post",
 				    				url:_base+"/userCommon/checkEmailCode",
 				    				data:{
-				    					email:$("#bindEmail").val(),
-				    					type:"5",
-				    					code:emailDynamicode,
+				    					'email':$("#bindEmail").val(),
+				    					'type':"5",
+				    					'code':emailDynamicode,
+				    					'isRemove':'true'
 				    				},
 				    		        success: function(data) {
 				    		        	if(!data.data){
