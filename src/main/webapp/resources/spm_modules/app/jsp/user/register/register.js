@@ -108,6 +108,7 @@ define(
 						_checkPhone : function() {
 							var country = $("#country").find("option:selected");
 							var reg = country.attr("reg");
+							var countryCode = country.val();
 							var phone = $("#phone");
 							var phoneVal = phone.val();
 							if ($.trim(phoneVal) == "") {
@@ -115,6 +116,7 @@ define(
 								//phone.focus();
 								return false;
 							}
+							phoneVal =countryCode+phoneVal;
 							reg = eval('/' + reg + '/');
 							if (!reg.test(phoneVal)) {
 								this._showCheckMsg(registerMsg.account_error);
@@ -257,11 +259,8 @@ define(
 								var _this = this;
 								var register_type = $("#change_register_type")
 										.attr("register_type");
-								var country_value ="";
 								if ("phone" == register_type) {
 									$("#email").val("");
-									var country = $("#country").find("option:selected");
-									country_value = country.attr("country_value");
 								} else if ("email" == register_type) {
 									$("#phone").val("");
 								}
@@ -271,8 +270,8 @@ define(
 										.ajax({
 											type : "post",
 											processing : false,
-											message : "保存中，请等待...",
-											url : _base + "/reg/submitRegister?country="+country_value,
+											message : " ",
+											url : _base + "/reg/submitRegister",
 											data : $("#regsiterForm")
 													.serializeArray(),
 											success : function(json) {
@@ -285,12 +284,9 @@ define(
 												} else {
 													if ("email" == register_type) {
 														location.href = _base
-																+ "/reg/toEmail?email="
-																+ $("#email")
-																		.val();
+																+ "/reg/toEmail?email="+ $("#email").val();
 													} else {
-														location.href = _base
-																+ "/reg/toSuccess";
+														location.href = _base+ "/reg/toSuccess";
 													}
 												}
 											}
@@ -307,7 +303,7 @@ define(
 							ajaxController.ajax({
 								type : "post",
 								processing : false,
-								message : "保存中，请等待...",
+								message : " ",
 								url : _base + "/userCommon/checkImageVerifyCode",
 								data : {
 									'imgCode' : imgCodeVal
@@ -352,7 +348,7 @@ define(
 							ajaxController.ajax({
 								type : "post",
 								processing : false,
-								message : "...",
+								message : " ",
 								url : _base + "/reg/checkPhoneOrEmail",
 								data : {
 									'checkType' : checkType,
@@ -381,25 +377,29 @@ define(
 									return;
 								}
 								curCount = count;
+								var country = $("#country").find("option:selected");
+								var countryCode = country.val();
+								var country_value = country.attr("country_value");
+								var phone_value =$("#phone").val();
+								var sendPhoneVal ="+"+countryCode+phone_value; 
 								ajaxController
 										.ajax({
 											type : "post",
 											processing : false,
-											message : "保存中，请等待...",
+											message : " ",
 											url : _base + "/userCommon/sendSmsCode",
 											data : {
-												'phone' : $("#phone").val(),
+												'phone' :phone_value,
+												'fullPhone' :sendPhoneVal,
+												'domainName':country_value,
 												'type':'1'
 											},
 											success : function(json) {
 												if(json.statusCode=="1" && json.data){
-													btn.val(
-															curCount + " s")
-															.removeClass(
-																	"btn-green")
+													btn.val(curCount + " s")
+															.removeClass("btn-green")
 															.addClass("biu-btn")
-															.attr("style",
-																	"color:#fff;");
+															.attr("style","color:#fff;");
 													smsObj = window.setInterval(
 															_this.startSmsTime,
 															1000); // 启动计时器，1秒执行一次

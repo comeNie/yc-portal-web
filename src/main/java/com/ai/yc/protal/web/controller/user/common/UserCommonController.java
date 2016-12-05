@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.RandomUtil;
@@ -183,7 +185,15 @@ public class UserCommonController {
 		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg,
 				isOk);
 	}
-
+    /**
+     * 发送短信处理
+     * @param request
+     * @param req
+     * @param type
+     * @param uid
+     * @param phone
+     * @return
+     */
 	private ResponseData<Boolean> sendSms(HttpServletRequest request,SmsRequest req, String type,
 			String uid, String phone) {
 		ICacheClient iCacheClient = AiPassUitl.getCacheClient();
@@ -198,8 +208,7 @@ public class UserCommonController {
 		}
 		String msg = rb.getMessage("ycregisterMsg.sendSmsError");
 		if (nowCount > maxCount) {
-			msg = rb.getMessage("ycregisterMsg.verificationCodeCountError",
-					new Object[] { maxCount });
+			msg = rb.getMessage("ycregisterMsg.verificationCodeCountError");
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
 					msg, false);
 		}
@@ -217,12 +226,13 @@ public class UserCommonController {
 			_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
 		}
 		req.setContent(MessageFormat.format(_template,randomStr));
-		boolean sendOk =  SmsSenderUtil.sendMessage(phone,
-								 req.getContent());
+		// 手机注册特殊处理 请求ucenter  phone没有国家代码 
+		if (UcenterOperation.OPERATION_TYPE_PHONE_ACTIVATE.equals(type)) {
+		    request.getSession().setAttribute(req.getCodeKey()+PhoneVerify.PHONE_CODE_REGISTER_UID, ucenterRes[3]);
+		    phone = request.getParameter("fullPhone");//+86格式
+		}
+		boolean sendOk =  SmsSenderUtil.sendMessage(phone,req.getContent());
 		if (sendOk) {
-			if (UcenterOperation.OPERATION_TYPE_PHONE_ACTIVATE.equals(type)) {// 手机注册操作有uid
-			    request.getSession().setAttribute(req.getCodeKey()+PhoneVerify.PHONE_CODE_REGISTER_UID, ucenterRes[3]);
-			}
 			// 最多发送次数超时时间
 			int maxOverTimeCount = config.getIntValue(req
 					.getMaxCountOverTimeKey());
@@ -253,6 +263,12 @@ public class UserCommonController {
 		}
 		if (!StringUtil.isBlank(userinfo)) {
 			req.setUserinfo(userinfo);
+		}
+		if (UcenterOperation.OPERATION_TYPE_PHONE_ACTIVATE.equals(operationtype)) {
+			// 注册手机激活码续传递domainName
+	        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+	        String domainName = request.getParameter("domainName");
+	        req.setDomainname(domainName);
 		}
 		boolean isOk = false;
 		String code = "";
