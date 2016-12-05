@@ -18,6 +18,7 @@ import com.ai.slp.balance.api.incomeoutquery.param.IncomeQueryRequest;
 
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
+import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
 import com.ai.yc.protal.web.service.BalanceService;
 
 import com.ai.yc.protal.web.utils.*;
@@ -141,7 +142,12 @@ public class BalanceController {
     //充值页面
     @RequestMapping("/depositFund")
     public String toDepositFund(Model uiModel, IncomeQueryRequest incomeQueryRequest){
-
+        GeneralSSOClientUser ssoUser = UserUtil.getSsoUser();
+        if (ssoUser ==null){
+            LOGGER.error("用户名查询失败!");
+        }
+        String loginName = ssoUser.getLoginName();
+        uiModel.addAttribute("loginName",loginName);
         return "balance/depositFund";
     }
 
