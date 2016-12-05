@@ -22,6 +22,7 @@ import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.ccs.IConfigClient;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.yc.protal.web.constants.Constants;
+import com.ai.yc.protal.web.constants.Constants.EmailVerify;
 import com.ai.yc.protal.web.constants.Constants.PhoneVerify;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
@@ -325,5 +326,53 @@ public class VerifyUtil {
 	 */
 	public static String encodeParam(String param, String key) {
 		return MD5.sign(param, key, DEFAULT_CHARSET);
+	}
+	/**
+	 * 校验邮箱验证码
+	 * @param request
+	 * @return
+	 */
+	public static ResponseData<Boolean>  checkEmailCode(HttpServletRequest request,String errorMsg) {
+		String email = request.getParameter("email");
+		String ckValue = request.getParameter("code");
+		String codeKey = EmailVerify.EMAIL_VERIFICATION_CODE + email;
+		boolean isOk = VerifyUtil.checkRedisValue(codeKey, ckValue);
+		String msg = "ok";
+		if (!isOk) {
+			msg = errorMsg;
+		}
+		String isRemove = request.getParameter("isRemove");
+		if(isOk && "true".equals(isRemove)){
+			VerifyUtil.delRedisValue(codeKey);
+		}
+		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg,
+				isOk);
+	}
+	/**
+	 * 校验短信证码
+	 * @param request
+	 * @return
+	 */
+	public static ResponseData<Boolean> checkSmsCode(HttpServletRequest request,String errorMsg) {
+		String phone = request.getParameter("phone");
+		String type = request.getParameter("type");
+		String ckValue = request.getParameter("code");
+		boolean isOk = VerifyUtil.checkSmsCode(phone, type, ckValue);
+		String msg = "ok";
+		if (!isOk) {
+			msg = errorMsg;
+		}
+		String isRemove = request.getParameter("isRemove");
+		if(isOk &&"true".equals(isRemove)){
+			String codeKey="";
+			if (PhoneVerify.PHONE_CODE_REGISTER_OPERATION.equals(type)) {// 注册
+				codeKey = PhoneVerify.REGISTER_PHONE_CODE + phone;
+			} else if (PhoneVerify.PHONE_CODE_UPDATE_DATA_OPERATION.equals(type)) {// 修改资料
+				codeKey = PhoneVerify.UPDATE_DATA_PHONE_CODE + phone;
+			}
+			VerifyUtil.delRedisValue(codeKey);
+		}
+		return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS, msg,
+				isOk);
 	}
 }
