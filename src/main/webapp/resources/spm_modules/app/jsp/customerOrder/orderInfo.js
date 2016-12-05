@@ -44,6 +44,23 @@ define('app/jsp/customerOrder/orderInfo', function (require, exports, module) {
 				}
 			});
 		},
+
+		//提交订单
+		_orderSubmit:function(orderId) {
+			ajaxController.ajax({
+				type: "post",
+				url: _base + "/p/trans/order/save",
+				data: {
+					orderId: orderId,
+				},
+				success: function (data) {
+					if ("1" === data.statusCode) {
+						//提交成功
+						window.location.reload();
+					}
+				}
+			});
+		},
         
     });
     module.exports = orderInfoPage;

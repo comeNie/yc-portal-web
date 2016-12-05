@@ -42,7 +42,7 @@
 
 <script type="text/javascript">
     $("#trans-btn").click(function () {
-        window.location.href = "${_base}";
+        window.location.href = "${_base}/";
     });
 </script>
 </body>

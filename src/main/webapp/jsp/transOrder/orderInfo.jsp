@@ -349,7 +349,19 @@
 	                             <li>
 	                            	<!-- 译员性别 -->
 	                                <p class="word"><spring:message code="myOrder.Gender"/>:</p>
-	                                <p>${OrderDetails.prod.interperGen}</p>
+	                                <p>
+										<c:choose>
+											<c:when test="${OrderDetails.prod.interperGen == 0}">
+												<spring:message code="order.sex2"/>
+											</c:when>
+											<c:when test="${OrderDetails.prod.interperGen == 1}">
+												<spring:message code="order.sex3" />
+											</c:when>
+											<c:otherwise>
+												<spring:message code="order.sex1" />
+											</c:otherwise>
+										</c:choose>
+									</p>
 	                            </li>
 			  				</c:if>
 			  				
@@ -440,6 +452,11 @@ var orderId = "${OrderDetails.orderId}";
 	//删除
 	$("input[name='delFile']").click(function(){
 		 pager._delFile($(this).parent().find("input[name='download']").attr('fileid'));
+	});
+
+	//提交
+	$("input[name='submit']").click(function() {
+		pager._orderSubmit($("#orderId").val());
 	});
 	
 	
