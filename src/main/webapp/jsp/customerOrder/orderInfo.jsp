@@ -310,7 +310,19 @@
                              <li>
                             	<!-- 译员性别 -->
                                 <p class="word"><spring:message code="myOrder.Gender"/>:</p>
-                                <p>${OrderDetails.prod.interperGen}</p>
+                                <p>
+                                    <c:choose>
+                                        <c:when test="${OrderDetails.prod.interperGen == 0}">
+                                            <spring:message code="order.sex2"/>
+                                        </c:when>
+                                        <c:when test="${OrderDetails.prod.interperGen == 1}">
+                                            <spring:message code="order.sex3" />
+                                        </c:when>
+                                        <c:otherwise>
+                                            <spring:message code="order.sex1" />
+                                        </c:otherwise>
+                                    </c:choose>
+                                </p>
                             </li>
                             <li class="width-large">
                             	<!-- 需求备注 -->
@@ -351,14 +363,14 @@
                                 <p>-</p>
                             </li>
                             -->
-                            <li class="width-large">
-                                <!-- 优惠券 -->
-                                <p class="word"><spring:message code="myOrder.Coupons"/>:</p>
-                                <p>
-                                	<c:set var="discountFee"><fmt:formatNumber value="${OrderDetails.orderFee.discountFee/1000}" pattern="#,##0.00#"/></c:set>
-                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb"  arguments="${discountFee}"/></c:if>
-                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar"  arguments="${discountFee}"/></c:if></p>
-                            </li>
+                            <%--<li class="width-large">--%>
+                                <%--<!-- 优惠券 -->--%>
+                                <%--<p class="word"><spring:message code="myOrder.Coupons"/>:</p>--%>
+                                <%--<p>--%>
+                                	<%--<c:set var="discountFee"><fmt:formatNumber value="${OrderDetails.orderFee.discountFee/1000}" pattern="#,##0.00#"/></c:set>--%>
+                               		<%--<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb"  arguments="${discountFee}"/></c:if>--%>
+                               		<%--<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar"  arguments="${discountFee}"/></c:if></p>--%>
+                            <%--</li>--%>
                             <li class="width-large red">
                             	<!-- 实付金额 -->
                                 <p class="word"><spring:message code="myOrder.Amountpaid"/>:</p>

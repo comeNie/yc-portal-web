@@ -441,6 +441,11 @@ var orderId = "${OrderDetails.orderId}";
 	$("input[name='delFile']").click(function(){
 		 pager._delFile($(this).parent().find("input[name='download']").attr('fileid'));
 	});
+
+	//提交
+	$("input[name='submit']").click(function() {
+		pager._orderSubmit($("#orderId").val());
+	});
 	
 	
 })();
