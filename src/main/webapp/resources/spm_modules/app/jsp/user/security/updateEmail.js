@@ -288,8 +288,6 @@ define("app/jsp/user/security/updateEmail",
 						_checkPhoneDynamicode:function(){
 							 var phoneDynamicode = $("#phoneDynamicode").val();
 							 if(phoneDynamicode==null||phoneDynamicode==""){
-								 //$("#dynamicode").show();
-								 //$("#dynamicode").text(updateEmailJs.pleaseInputOC);
 								 showMsg(updateEmailJs.pleaseInputOC);
 								 return false;
 							 }
@@ -297,9 +295,10 @@ define("app/jsp/user/security/updateEmail",
 								 type:"post",
 				    				url:_base+"/userCommon/checkSmsCode",
 				    				data:{
-				    					phone:$("#telephone").html(),
-				    					type:"2",
-				    					code:$("#phoneDynamicode").val(),
+				    					'phone':$("#telephone").html(),
+				    					'type':"2",
+				    					'code':$("#phoneDynamicode").val(),
+				    					'isRemove':'true'
 				    				},
 				    		        success: function(data) {
 				    		        	if(!data.data){
@@ -520,8 +519,6 @@ define("app/jsp/user/security/updateEmail",
 						_checkEmailImageCode:function(){
 							var emailIdentifyCode = $("#emailIdentifyCode").val();
 							if(emailIdentifyCode==""||emailIdentifyCode==null){
-								//$("#emailErrMsg").show();
-								//$("#emailErrMsg").text(updateEmailJs.pleaseInputOC);
 								showMsg(updateEmailJs.pleaseInputOC);
 								return;
 							}
@@ -529,8 +526,9 @@ define("app/jsp/user/security/updateEmail",
 								type:"post",
 			    				url:_base+"/userCommon/checkEmailCode",
 			    				data:{
-			    					email:email,
-			    					code:$("#emailIdentifyCode").val(),
+			    					'email':email,
+			    					'code':$("#emailIdentifyCode").val(),
+			    					'isRemove':'true'
 			    				},
 			    		        success: function(data) {
 			    		        	if(!data.data){
