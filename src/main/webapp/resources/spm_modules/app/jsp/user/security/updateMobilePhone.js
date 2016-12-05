@@ -484,8 +484,6 @@ define("app/jsp/user/security/updateMobilePhone",
 						_checkEmailImageCode:function(){
 							var emailIdentifyCode = $("#emailIdentifyCode").val();
 							if(emailIdentifyCode==""||emailIdentifyCode==null){
-								//$("#emailErrMsg").show();
-								//$("#emailErrMsg").text(updatePhoneJs.pleaseInputOC);
 								showMsg(updatePhoneJs.pleaseInputOC);
 								return;
 							}
@@ -495,6 +493,7 @@ define("app/jsp/user/security/updateMobilePhone",
 			    				data:{
 			    					'email':$("#bindEmail").html(),
 			    					'code':emailIdentifyCode,
+			    					'isRemove':'true'
 			    				},
 			    		        success: function(data) {
 			    		        	if(!data.data){
