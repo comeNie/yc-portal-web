@@ -62,52 +62,56 @@
 									</c:choose>
 				 				</ul>
 				 				
-				 				<c:if test="${OrderDetails.state =='23' || OrderDetails.state =='25' }">
-				 				<!-- 翻译中 修改中 -->
-				 					<c:choose>
-				 						<c:when test="${not empty OrderDetails.prod.translateInfo}">
-				 						<!-- 有译文的情况 -->
-				 						<ul>
-						 					<!-- 译文  -->
-						 					<li class="title"><spring:message code="myOrder.Translatedtext"/>:
-						 						<!-- 修改 -->
-						 						<input id="editText" class="btn border-blue-small btn-auto radius20" type="button" value="<spring:message code="myOrder.modify"/>"></li>
-						 					<!-- 更多 -->
-											<c:choose>
-												<c:when test="${fn:length(OrderDetails.prod.translateInfo) <=150}">
-													<li class="word">${OrderDetails.prod.translateInfo}</li>
-												</c:when>
-												<c:otherwise>
-													<li class="word">${fn:substring(OrderDetails.prod.translateInfo, 0, 150)}
-														<span style="display: none;">${fn:substring(OrderDetails.prod.translateInfo, 150, fn:length(OrderDetails.prod.translateInfo))}</span>
-														<A name="more" href="javaScript:void(0);">[<spring:message code="myOrder.more"/>]</A></li>
-												</c:otherwise>
-											</c:choose>
+								<c:choose>
+									<c:when test="${not empty OrderDetails.prod.translateInfo}">
+									<!-- 有译文的情况 -->
+									<ul>
+										<!-- 译文  -->
+										<li class="title"><spring:message code="myOrder.Translatedtext"/>:
+											<!-- 修改 -->
+											<c:if test="${OrderDetails.state =='23' || OrderDetails.state =='25' }">
+											<input id="editText" class="btn border-blue-small btn-auto radius20" type="button" value="<spring:message code="myOrder.modify"/>">
+											</c:if>
+										</li>
+										<!-- 更多 -->
+										<c:choose>
+											<c:when test="${fn:length(OrderDetails.prod.translateInfo) <=150}">
+												<li class="word">${OrderDetails.prod.translateInfo}</li>
+											</c:when>
+											<c:otherwise>
+												<li class="word">${fn:substring(OrderDetails.prod.translateInfo, 0, 150)}
+													<span style="display: none;">${fn:substring(OrderDetails.prod.translateInfo, 150, fn:length(OrderDetails.prod.translateInfo))}</span>
+													<A name="more" href="javaScript:void(0);">[<spring:message code="myOrder.more"/>]</A></li>
+											</c:otherwise>
+										</c:choose>
 
-				                            <li class="word" style="display: none"><textarea id="transTextArea" class="int-text radius text-150">${OrderDetails.prod.translateInfo}</textarea></li>
-					 					</ul>
-				 						<ul style="display: none">
+										<li class="word" style="display: none"><textarea id="transTextArea" class="int-text radius text-150">${OrderDetails.prod.translateInfo}</textarea></li>
+									</ul>
+									<ul style="display: none">
+										<li class="right mr-5">
+											<!-- 保存 -->
+											<input id="textSave" name="textSave" class="btn border-blue-small btn-auto radius20" type="button" value="<spring:message code="myOrder.sava"/>">
+										</li>
+									</ul>
+									</c:when>
+									<c:otherwise>
+									<!-- 无译文的情况 -->
+										<!-- 翻译中 修改中 -->
+										<c:if test="${OrderDetails.state =='23' || OrderDetails.state =='25' }">
+										<ul>
+											<!-- 译文  -->
+											<li class="title"><spring:message code="myOrder.Translatedtext"/>:</li>
+											<li class="word"><textarea id="transTextArea" class="int-text radius text-150"></textarea></li>
+										</ul>
+										<ul>
 											<li class="right mr-5">
-												<!-- 保存 -->
 												<input id="textSave" name="textSave" class="btn border-blue-small btn-auto radius20" type="button" value="<spring:message code="myOrder.sava"/>">
 											</li>
 										</ul>
-				 						</c:when>
-				 						<c:otherwise>
-				 						<!-- 无译文的情况 -->
-			 							<ul>
-						 					<!-- 译文  -->
-						 					<li class="title"><spring:message code="myOrder.Translatedtext"/>:</li>
-						 					<li class="word"><textarea id="transTextArea" class="int-text radius text-150"></textarea></li>
-						 				</ul>
-						 				<ul>
-											<li class="right mr-5">
-												<input id="textSave" name="textSave" class="btn border-blue-small btn-auto radius20" type="button" value="<spring:message code="myOrder.sava"/>">
-											</li>
-										</ul>
-				 						</c:otherwise>
-				 					</c:choose>
-				 				</c:if>
+										</c:if>
+									</c:otherwise>
+								</c:choose>
+
 				 				
 				 			</div>
 			 			</c:if>
@@ -129,25 +133,31 @@
 			                        </ul>
 			                    </c:forEach>
 								
+
+                                 <c:forEach items="${OrderDetails.prodFiles}" var="prodFile" varStatus="status">
+                                    <c:if test="${not empty prodFile.fileTranslateId}">
+                                    <ul class="mt-30">
+                                        <!-- 译文 文档-->
+                                        <li class="title"><spring:message code="myOrder.Translatedtext"/>:</li>
+                                            <!-- 文档类型翻译 文档list -->
+                                            <li>${prodFile.fileTranslateName}</li>
+                                            <li class="right mr-5">
+                                                <input name="download" fileId="${prodFile.fileTranslateId}" fileName="${prodFile.fileTranslateName}" type="button" class="btn border-blue-small btn-auto radius20" value="<spring:message code="myOrder.downLoad"/>">
+
+                                                <!-- 翻译中 修改中 -->
+                                                <c:if test="${OrderDetails.state =='23' || OrderDetails.state =='25' }">
+                                                <!-- 删除 -->
+                                                <input name="delFile" class="btn border-blue-small btn-auto radius20" type="button" value="<spring:message code="myOrder.delete"/>">
+                                                </c:if>
+                                            </li>
+
+                                    </ul>
+                                    </c:if>
+                                </c:forEach>
+
+								<!-- 翻译中 修改中 -->
 								<c:if test="${OrderDetails.state =='23' || OrderDetails.state =='25' }">
-				 				<!-- 翻译中 修改中 -->
-				 					 <c:forEach items="${OrderDetails.prodFiles}" var="prodFile" varStatus="status">
-				                        <c:if test="${not empty prodFile.fileTranslateName}">
-				                        <ul class="mt-30">
-				                        	<!-- 译文 文档-->
-				                            <li class="title"><spring:message code="myOrder.Translatedtext"/>:</li>
-				                            	<!-- 文档类型翻译 文档list -->
-				                            	<li>${prodFile.fileTranslateName}</li>
-				  								<li class="right mr-5">
-					  								<input name="download" fileId="${prodFile.fileTranslateId}" fileName="${prodFile.fileTranslateName}" type="button" class="btn border-blue-small btn-auto radius20" value="<spring:message code="myOrder.downLoad"/>">
-					  								<!-- 删除 -->
-					  								<input name="delFile" class="btn border-blue-small btn-auto radius20" type="button" value="<spring:message code="myOrder.delete"/>">
-				  								</li>
-				                            	
-				                    	</ul>
-				                    	</c:if>
-	                   				</c:forEach>
-	                   				
+
                    					<c:if test="${UUploadCount > 0}">
 			 						<!-- 可以上传 -->
 			 							<!-- 上传译文 -->
@@ -159,8 +169,7 @@
 								   			</p>  
 										</form>　   
 			 						</c:if>
-			 						
-			 						
+
 				 				</c:if>
 							</div>
 			 			</c:if>

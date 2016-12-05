@@ -40,6 +40,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
     	
     	//上传译文
     	_upload:function() {
+			var _this = this;
 			 var formData = new FormData($( "#uploadForm" )[0]); 
 			 $.ajax({  
 		         url: _base +"/p/trans/order/upload" ,  
@@ -54,18 +55,16 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 							//保存成功
 							//刷新页面
 				    		window.location.reload();
-					 }
-
-					 if ("FAIL" == data.statusInfo) {
-						 alert($.i18n.prop('order.submit.fail'));
+					 } else if("FAIL" == data.statusInfo) {
+						 _this._showWarn($.i18n.prop('order.submit.fail'));
 					 } else if ("FAIL_0" == data.statusInfo) {
-						 alert($.i18n.prop('order.submit.reason.transNull'));
+						 _this._showWarn($.i18n.prop('order.submit.reason.transNull'));
 					 } else { //FAIL_1
-						 alert($.i18n.prop('order.submit.reason.transFileNull'));
+						 _this._showWarn($.i18n.prop('order.submit.reason.transFileNull'));
 					 }
 		         },  
-		         error: function (data) {  
-					 alert($.i18n.prop('order.submit.fail'));
+		         error: function (data) {
+					 _this._showFail($.i18n.prop('order.submit.fail'));
 		         }
 		    });  
     	},
@@ -177,7 +176,30 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 					this.close();
 				}
 			}).showModal();
-		}
+		},
+
+		_showWarn:function(msg){
+			new Dialog({
+				content:msg,
+				icon:'warning',
+				okValue: $.i18n.prop("order.info.dialog.ok"),
+				title:  $.i18n.prop("order.info.dialog.prompt"),
+				ok:function(){
+					this.close();
+				}
+			}).show();
+		},
+		_showFail:function(msg){
+			new Dialog({
+				title: $.i18n.prop("order.info.dialog.prompt"),
+				content:msg,
+				icon:'fail',
+				okValue: $.i18n.prop("order.info.dialog.ok"),
+				ok:function(){
+					this.close();
+				}
+			}).show();
+		},
         
     });
     module.exports = orderInfoPage;
