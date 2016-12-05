@@ -20,7 +20,8 @@ define(
 							"blur #phone" : "_checkPhoneOrEmail",
 							"blur #email" : "_checkPhoneOrEmail",
 							"blur #password":"_checkPassword",
-							"blur #confirmPassword":"_checkPassword"
+							"blur #confirmPassword":"_checkConfirmPassword",
+							"blur #smsCode":"_checkSmsCode"
 							
 						},
 						/* 重写父类 */
@@ -167,6 +168,12 @@ define(
 							if(errMsg==registerMsg.password_error){
 								_this._showCheckMsg("");
 							}
+							return true;
+						},
+						_checkConfirmPassword:function(){
+							var _this = this;
+							var password = $("#password");
+							var passwordVal = password.val();
 							// 确认密码
 							var confirmPassword = $("#confirmPassword");
 							var confirmPasswordVal = confirmPassword.val();
@@ -176,7 +183,7 @@ define(
 								//confirmPassword.focus();
 								return false;
 							}
-							errMsg = _this._getCheckMsg();
+							var errMsg = _this._getCheckMsg();
 							if(errMsg==registerMsg.confirm_password_empty){
 								_this._showCheckMsg("");
 							}
@@ -189,6 +196,20 @@ define(
 							errMsg = _this._getCheckMsg();
 							if(errMsg==registerMsg.confirm_password_error){
 								_this._showCheckMsg("");
+							}
+							return true;
+						},
+						/*短信验证码*/
+						_checkSmsCode:function(){
+							var smsCode = $("#smsCode");
+							var smsCodeVal = smsCode.val();
+							if ($.trim(smsCodeVal) == "") {
+								this._showCheckMsg(registerMsg.sms_code_empty);
+								return false;
+							}
+							var errMsg = this._getCheckMsg();
+							if(errMsg==registerMsg.sms_code_empty){
+								this._showCheckMsg("");
 							}
 							return true;
 						},
@@ -225,16 +246,17 @@ define(
 							if (!checkFalg) {
 								return false;
 							}
+							checkFalg = this._checkConfirmPassword();
+							if (!checkFalg) {
+								return false;
+							}
 							checkFalg =this._checkVerifyCodeImg();
 							if (!checkFalg) {
 								return false;
 							}
 							if ("phone" == register_type) {// 手机注册
-								var smsCode = $("#smsCode");
-								var smsCodeVal = smsCode.val();
-								if ($.trim(smsCodeVal) == "") {
-									this._showCheckMsg(registerMsg.sms_code_empty);
-									//smsCode.focus();
+								checkFalg = this._checkSmsCode();
+								if (!checkFalg) {
 									return false;
 								}
 							}
