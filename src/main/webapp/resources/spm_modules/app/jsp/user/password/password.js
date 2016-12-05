@@ -313,6 +313,7 @@ define("app/jsp/user/password/password",
 						 * 输入密码下一步
 						 */
 						_checkPassword:function(){
+							var _this = this;
 							// 密码校验
 							var password = $("#password");
 							var passwordVal = password.val();
@@ -351,6 +352,7 @@ define("app/jsp/user/password/password",
 			    		        	}else if(json.data){
 			    		        		$("#next2").hide();
 										$("#next3").show();
+										_this.goIndex();
 			    		        	}
 			    		          }
 			    				});
@@ -459,6 +461,7 @@ define("app/jsp/user/password/password",
 						 * 输入邮箱密码下一步
 						 */
 						_checkEmailPassword:function(){
+							var _this = this;
 							// 密码校验
 							var password = $("#emailPassword");
 							var passwordVal = password.val();
@@ -497,10 +500,24 @@ define("app/jsp/user/password/password",
 			    		        	}else{
 			    		        		$("#next5").hide();
 			    		        		$("#next6").show();
+			    		        		_this.goIndex();
 			    		        	}
 			    		          }
 			    				});
 						},
+						/*修改成功倒计时*/
+						goIndex:function(){
+							var step = 5;
+							var _res = setInterval(function(){
+				            	step-=1;
+				                if(step <= 0){
+				                //清除setInterval
+				                clearInterval(_res);
+				                //跳转首页
+				                location.href=_base+"/p/index";
+				                }
+				            },1000);
+						}
 					});
 			module.exports = passwordPager;
 		});
