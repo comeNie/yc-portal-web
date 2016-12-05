@@ -277,9 +277,10 @@ define("app/jsp/user/security/updateMobilePhone",
 								 type:"post",
 				    				url:_base+"/userCommon/checkSmsCode",
 				    				data:{
-				    					phone:$("#telephone").html(),
-				    					type:"2",
-				    					code:$("#phoneDynamicode").val(),
+				    					'phone':$("#telephone").html(),
+				    					'type':"2",
+				    					'code':$("#phoneDynamicode").val(),
+				    					'isRemove':'true'
 				    				},
 				    		        success: function(data) {
 				    		        	if(!data.data){
