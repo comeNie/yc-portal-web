@@ -45,7 +45,7 @@
                             <ul>
                                 <li>
                                     <p class="word"><spring:message code="account.account.to.be.recharged"/>:</p>
-                                    <p>admin</p>
+                                    <p>${loginName }</p>
                                 </li>
                                 <li>
                                     <p class="word"><spring:message code="account.amount.to.be.recharged"/>:</p>
