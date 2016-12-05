@@ -180,7 +180,7 @@ public class BalanceController {
         map.put("requestSource", Constants.SELF_SOURCE);//终端来源
         map.put("currencyUnit",currencyUnit);//币种
         map.put("orderAmount", amount);//金额
-        map.put("subject", "充值");//订单名称
+//        map.put("subject", translateName);//订单名称
         map.put("payOrgCode",payOrgCode);
         // 加密
         String infoStr = orderId+ VerifyUtil.SEPARATOR
