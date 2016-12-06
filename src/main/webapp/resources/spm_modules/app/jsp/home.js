@@ -25,7 +25,7 @@ define('app/jsp/home', function (require, exports, module) {
         events: {
             "click #recharge-popo":"_addOralOrderTemp",
             "click #toCreateOrder":"_toCreateOrder",
-			"keyup #int-before": "_mt",
+			"keyup #int-before": "_verifyLan",
             "click #trante": "_mt",
             "click #sus-top2": "_text2audio",
 			"click #humanTranBtn":"_goTextOrder",
@@ -80,21 +80,6 @@ define('app/jsp/home', function (require, exports, module) {
 
 			if (from == '') {
 				return
-			}
-
-			if (from == 'auto') {
-				var vLan = _this._verifyLan();
-				if ( vLan!= '') {
-					$("#showa option").each(function () {
-						if ($(this).val() == vLan) {
-							$('.selected').eq(0).html( $(this).text());
-							return false;
-						}
-					});
-					$('.selected').eq(0).attr('value', vLan);
-				} else { //检测语言失败
-					$("#transError").html($.i18n.prop("home.error.trans"));
-				}
 			}
 
 			$('#tgtNew').empty();
@@ -155,21 +140,39 @@ define('app/jsp/home', function (require, exports, module) {
 
 		//检测语言
 		_verifyLan:function() {
-			var lan = '';
-			ajaxController.ajax({
-				type: "post",
-				url: _base + "/translateLan",
-				data: {
-					text: $("#int-before").val()
-				},
-				success: function (data) {
-					if("OK" === data.statusInfo) {
-						lan = data.data;
-					}
-				}
-			});
+			var _this = this;
+			var from = $(".dropdown .selected").eq(0).attr("value");
 
-			return lan;
+			if (from == 'auto') {
+				//语言检测
+				ajaxController.ajax({
+					type: "post",
+					url: _base + "/translateLan",
+					data: {
+						text: $("#int-before").val()
+					},
+					success: function (data) {
+						if("OK" === data.statusInfo) {
+							var vLan = data.data;
+							if ( vLan!= '') {
+								$("#showa option").each(function () {
+									if ($(this).val() == vLan) {
+										$('.selected').eq(0).html( $(this).text());
+										return false;
+									}
+								});
+								$('.selected').eq(0).attr('value', vLan);
+
+								_this._mt();
+							} else { //检测语言失败
+								$("#transError").html($.i18n.prop("home.error.verify"));
+							}
+						}
+					}
+				});
+
+			}
+
 		},
         
         _change:function() {

@@ -113,7 +113,7 @@ define('app/jsp/order/orderContact', function (require, exports, module) {
             formValidator.form();
             if(!$("#contactForm").valid()){
                 //alert('验证不通过！！！！！');
-               return formValidator.focusInvalid();;
+               return;
             }
 
             //发请求保存联系人
@@ -155,15 +155,21 @@ define('app/jsp/order/orderContact', function (require, exports, module) {
                         text = row["COUNTRY_NAME_EN"];
                     }
 
-                    selObj.append("<option value='"+row["ID"]+"' code='"+row["COUNTRY_CODE"]+"' exp='" +row["REGULAR_EXPRESSION"]+"'>"+text+"   +"+row["COUNTRY_CODE"]+"</option>");
+                    if (gnCountryId == row["ID"]) {
+                        selObj.append("<option selected='selected' value='"+row["ID"]+"' code='"+row["COUNTRY_CODE"]+"' exp='" +row["REGULAR_EXPRESSION"]+"'>"+text+"   +"+row["COUNTRY_CODE"]+"</option>");
+                        $("#mobilePhone").attr('pattern', row["REGULAR_EXPRESSION"]);
+                    } else {
+                        selObj.append("<option value='"+row["ID"]+"' code='"+row["COUNTRY_CODE"]+"' exp='" +row["REGULAR_EXPRESSION"]+"'>"+text+"   +"+row["COUNTRY_CODE"]+"</option>");
+                    }
                 });
             });
 
-            if (gnCountryId != '') {
-                $("#globalRome").val(gnCountryId);
-                this._setPattern();
-            }
+            // if (gnCountryId != '') {
+            //     $("#globalRome").val("18");
+            //     this._setPattern();
+            // }
         },
+
 
         //根据国家设置号码匹配规则
         _setPattern:function() {
