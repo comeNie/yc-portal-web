@@ -136,7 +136,7 @@ public class OrderController {
     }
 
     /**
-     * 缓存页面页面提交过来的订单
+     * 提交订单信息，用于判断用户是否登录
      * @return
      */
     @RequestMapping(value = "/add",method = RequestMethod.POST)

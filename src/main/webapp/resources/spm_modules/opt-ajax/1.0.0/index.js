@@ -5,13 +5,9 @@ define('opt-ajax/1.0.0/index', function (require, exports, module) {
     Base = require('arale-base/1.2.0/base');
     
     require('jquery-form/3.51.0/jquery.form');
+    require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
     
-    var processingDialog = Dialog({
-    	closeIconShow:false,
-    	icon:"loading",
-        content: "<div class='word'>正在处理中，请稍候..</div>"
-    });
-    
+    var processingDialog;
     
     var AjaxController = Base.extend({
     	attrs:{
@@ -25,8 +21,27 @@ define('opt-ajax/1.0.0/index', function (require, exports, module) {
 			STATUS_CODE: "statusCode",
 			STATUS_INFO: "statusInfo"
         },
+        initialize: function (options) {
+            AjaxController.superclass.initialize.call(this, options);
+            $.i18n.properties({//加载资浏览器语言对应的资源文件
+                name: ["commonRes"], //资源文件名称，可以是数组
+                path: _i18n_res, //资源文件路径
+                mode: 'both',
+                language: currentLan,
+                async: true
+            });
+
+        },
         ajax: function(options){
         	var _this = this;
+        	if(processingDialog==null){
+                processingDialog = Dialog({
+                    closeIconShow:false,
+                    icon:"loading",
+					//正在处理中，请稍后...
+                    content: $.i18n.prop('com.ajax.def.content')
+                });
+			}
         	var callbacks = {};
 			if(typeof options.before == 'function'){
 				callbacks["before"] = options.before;
@@ -54,11 +69,13 @@ define('opt-ajax/1.0.0/index', function (require, exports, module) {
 				var statusInfo = transport[AjaxController.STATUS_INFO];
 				if(status && status == AjaxController.AJAX_STATUS_FAILURE){
 					var failureDialog = Dialog({
-					    title: '操作失败',
+						// 操作错误
+					    title: $.i18n.prop('com.ajax.opt.fail.title'),
 					    icon: 'fail',
 					    content: statusInfo,
 					    cancel: false,
-					    okValue:'确定',
+						// 确定
+					    okValue:$.i18n.prop('com.ajax.def.okbtn'),
 					    ok: function () {
 					    	callbacks["failure"] && callbacks["failure"].call(_this,transport); 
 					    }
@@ -84,11 +101,14 @@ define('opt-ajax/1.0.0/index', function (require, exports, module) {
 			settings["error"] = function(transport){  
 				if(processing)processingDialog.close();
 				var failureDialog = Dialog({
-				    title: '请求失败',
+					//请求错误
+				    title: $.i18n.prop('com.ajax.req.fail.title'),
 				    icon:'fail',
-				    content: "网络请求错误,错误码:"+transport.status+",请重试。",
+                    // 网络请求错误,错误码
+				    content: $.i18n.prop('com.ajax.req.fail.tip')+transport.status,
 				    cancel: false,
-				    okValue:'确定',
+					//确定按钮
+				    okValue:$.i18n.prop('com.ajax.def.okbtn'),
 				    ok: function () {
 				    	callbacks["error"] && callbacks["error"].call(_this,transport); 
 				    }
@@ -101,7 +121,7 @@ define('opt-ajax/1.0.0/index', function (require, exports, module) {
 			settings.url += (settings.url.indexOf('?') >= 0 ? '&' : '?') + q;  
 			if(processing){
 				if(message){
-					processingDialog.content("<div class='word'>"+message+"</div>");	
+					processingDialog.content(message);
 				}
 				processingDialog.showModal();	
 			}

@@ -189,7 +189,7 @@
 <script type="text/javascript">
     (function () {
         var pager;
-        seajs.use(['app/jsp/order/oderContact'], function(orderContactPage) {
+        seajs.use(['app/jsp/order/orderContact'], function(orderContactPage) {
             pager = new orderContactPage({element : document.body});
             pager.render();
         });

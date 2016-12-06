@@ -256,6 +256,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
             //创建订单
 			ajaxController.ajax({
 				type: "post",
+                processing: true,
 				url: _base + "/order/add",
 				data: {
 					baseInfo: JSON.stringify(baseInfo),
