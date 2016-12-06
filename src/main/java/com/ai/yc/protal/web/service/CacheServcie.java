@@ -32,6 +32,7 @@ public class CacheServcie {
     public List<SysDuad> getAllDuad(Locale locale,String orderType){
         List<SysDuad> duadList = new ArrayList<SysDuad>();
 
+        //语言对里面金额单位是，每字多少元
         ICacheClient iCacheClient = AiPassUitl.getCommonCacheClient();
         String duadStr = iCacheClient.hget(CacheKey.DUAD_L_KEY,orderType);
         if(StringUtils.isNotBlank(duadStr)) {

@@ -73,9 +73,9 @@
 						<c:forEach items="${duadList}" var="duad">
 	  						<c:if test="${duad.orderType != 2}">
   								<option value="${duad.duadId}"
-  										ordinary="${duad.ordinary}"  ordinaryUrgent="${duad.ordinaryUrgent}"
-										professional="${duad.professional}"  professionalUrgent="${duad.professionalUrgent}"
-										publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}"
+  										ordinary="${duad.ordinary*1000}"  ordinaryUrgent="${duad.ordinaryUrgent*1000}"
+										professional="${duad.professional*1000}"  professionalUrgent="${duad.professionalUrgent*1000}"
+										publish="${duad.publish*1000}"  publishUrgent="${duad.publishUrgent*1000}"
 										sourceEn="${duad.sourceEn}" targertEn="${duad.targetEn}"
 										sourceCn="${duad.sourceCn}" targertCn="${duad.targetCn}"
 										sourceCode="${duad.sourceCode}" targetCode="${duad.targetCode}"
