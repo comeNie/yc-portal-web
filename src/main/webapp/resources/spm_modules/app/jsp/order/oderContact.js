@@ -191,7 +191,6 @@ define('app/jsp/order/oderContact', function (require, exports, module) {
             ajaxController.ajax({
                 type: "post",
                 processing: true,
-                message: "保存中，请等待...",
                 url: _base + "/p/order/save",
                 data: {
                     contactInfo: JSON.stringify(contactInfo),

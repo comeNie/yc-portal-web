@@ -27,7 +27,7 @@ define('app/jsp/home', function (require, exports, module) {
             "click #toCreateOrder":"_toCreateOrder",
 			"keyup #int-before": "_mt",
             "click #trante": "_mt",
-            "click #playControl": "_text2audio",
+            "click #sus-top2": "_text2audio",
 			"click #humanTranBtn":"_goTextOrder",
 			"click .change": "_change",
 			"click #error-oc": "_saveText",

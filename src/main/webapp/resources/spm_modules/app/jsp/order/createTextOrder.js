@@ -88,35 +88,35 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                     translateContent: {
                         required: true,
                         maxlength: 2000,
-                        // remote: {                                          //验证检查语言
-                        //     type: "POST",
-                        //     url: _base + "/translateLan",
-                        //     data: {
-                        //         text: function () {
-                        //             return $("#translateContent").val();
-                        //         }
-                        //     },
-                        //     dataType: 'json',
-                        //     dataFilter: function (data) {//判断控制器返回的内容
-                        //         data = jQuery.parseJSON(data);
-                        //
-                        //         var sourlan = 'en';
-                        //         $("#selectDuad").find('option').each(function () {
-                        //             var val = $(this).val();
-                        //             if (val == $(".dropdown .selected").attr('value')) {
-                        //                 var selected = $(this);
-                        //                 sourlan = selected.attr("sourceCode");
-                        //                 return false;
-                        //             }
-                        //         });
-                        //
-                        //         if (sourlan == data.data) {
-                        //             return true;
-                        //         } else {
-                        //             return false;
-                        //         }
-                        //     }
-                        // }
+                        remote: {                                          //验证检查语言
+                            type: "POST",
+                            url: _base + "/translateLan",
+                            data: {
+                                text: function () {
+                                    return $("#translateContent").val();
+                                }
+                            },
+                            dataType: 'json',
+                            dataFilter: function (data) {//判断控制器返回的内容
+                                data = jQuery.parseJSON(data);
+
+                                var sourlan = 'en';
+                                $("#selectDuad").find('option').each(function () {
+                                    var val = $(this).val();
+                                    if (val == $(".dropdown .selected").attr('value')) {
+                                        var selected = $(this);
+                                        sourlan = selected.attr("sourceCode");
+                                        return false;
+                                    }
+                                });
+
+                                if (sourlan == data.data) {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                        }
                     },
                     isAgree: {
                         required: true
@@ -126,7 +126,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                     translateContent: {
                         required: $.i18n.prop('order.place.error.translation'), //"请输入翻译内容",
                         maxlength: $.i18n.prop('order.place.error.Maximum'),//"最大长度不能超过{0}",
-                       // remote:  $.i18n.prop('order.place.error.contentConsis')//"您输入的内容和源语言不一致"
+                        remote:  $.i18n.prop('order.place.error.contentConsis')//"您输入的内容和源语言不一致"
                     },
                     isAgree: {
                         required: $.i18n.prop('order.place.error.agree')//"请阅读并同意翻译协议",

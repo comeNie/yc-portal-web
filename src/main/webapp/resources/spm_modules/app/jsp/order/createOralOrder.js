@@ -13,7 +13,6 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
     
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
-    
     var textOrderAddPager = Widget.extend({
     	Implements:SendMessageUtil,
     	//属性，使用时由类的构造函数传入
@@ -42,13 +41,17 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 
 			var formValidator=this._initValidate();
 			$(":input").bind("focusout",function(){
-				formValidator.element(this);
+				if($(this).attr('name')!='begin_time' && $(this).attr('name')!='end_time')
+					formValidator.element(this);
 			});
+
+
     	},
         	
         _initValidate:function(){
         	var formValidator=$("#oralOrderForm").validate({
 				focusInvalid:true,
+				onkeyup: false,
         		errorPlacement: function(error, element) {
 					if (element.is(":checkbox")) {
 						error.appendTo(element.parent().parent().parent());
@@ -79,12 +82,9 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
     					interpretationType: 'required',
     					begin_time:{
         					required: true,
-        					date: true,
-        					maxDate: $("#endDate").val()
         				},
         				end_time:{
         					required: true,
-        					date:true,
         				},
         				meetingAmount:{
         					required: true,
@@ -203,8 +203,11 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 			if(window.console){
 				console.log("The offsetMis "+offsetMis);
 			}
-			productInfo.startTime = new Date($("#begin_time").val()).getTime();
-			productInfo.endTime = new Date($("#end_time").val()).getTime();
+
+			var stime=$("#begin_time").val();
+			var etime=$("#end_time").val();
+			productInfo.startTime =  new Date( Date.parse( $("#begin_time").val().replace(/-/g,"/") ) ).getTime();
+			productInfo.endTime = new Date( Date.parse( $("#end_time").val().replace(/-/g,"/") ) ).getTime();
 
 			var translateLevelInfoList = [];
 			$('input[name="interpretationType"]:checked').each(function(){
