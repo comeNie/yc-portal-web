@@ -47,6 +47,11 @@ public class YeekitService {
     public static final String DETECTION_FAIL = "detectionFail";
 
     /**
+     * 语言检查出现错误
+     */
+    public static final String TRAINNS_FAIL = "trainFail";
+
+    /**
      * 进行机器翻译
      * @param from
      * @param to
@@ -66,9 +71,13 @@ public class YeekitService {
         String resultStr="";
         try {
             resultStr = HttpsUtil.HttpsPost(SERVER_URL, postParams.toString(), "UTF-8");
-            LOGGER.info("dotranslate result:{}",resultStr);
+            LOGGER.info("dotranslate result:{}", resultStr);
+
+            //失败
+            JSONObject translated = JSON.parseObject(resultStr);
         }  catch (Exception e) {
             LOGGER.error("机器翻译失败:", e);
+            throw new BusinessException(TRAINNS_FAIL,"The detection is fail.");
         }
 
 //        JSONArray translateds = JSON.parseObject(resultStr).getJSONArray("translation")
