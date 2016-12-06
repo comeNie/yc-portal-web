@@ -95,7 +95,7 @@
                 <div id="srcNew" class="int-before"  style="display: none;">
                 </div>
                 <div id="srcOld" class="int-before"  style="display: block;">
-                    <textarea class="int-before" id="int-before"></textarea>
+                    <textarea maxlength="2000" class="int-before" id="int-before"></textarea>
                  </div>
 
             </div>

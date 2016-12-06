@@ -35,6 +35,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
     	
 //    	下载文件
     	_downLoad:function(fileId, fileName) {
+			fileName = window.encodeURI(window.encodeURI(fileName));
     		window.open(_base + "/p/customer/order/download?fileId="+fileId+"&fileName="+fileName);
     	},
     	

@@ -41,8 +41,8 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 
 			var formValidator=this._initValidate();
 			$(":input").bind("focusout",function(){
-				if($(this).attr('name')!='begin_time' && $(this).attr('name')!='end_time')
-					formValidator.element(this);
+				//if($(this).attr('name')!='begin_time' && $(this).attr('name')!='end_time')
+				formValidator.element(this);
 			});
 
 
