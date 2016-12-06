@@ -379,7 +379,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		//语言对改变，价格改变,翻译速度改变
 		_transPrice:function() {
 			var _this = this;
-			
+
+			//清除remote验证的缓存，重新验证
+			$("#translateContent").removeData("previousValue");
+			var formValidator=_this._initValidate();
+			formValidator.form();
+
         	$("#selectDuad").find('option').each(function() {
         		var val = $(this).val();
         		if (val ==  $(".dropdown .selected").attr('value')) {
