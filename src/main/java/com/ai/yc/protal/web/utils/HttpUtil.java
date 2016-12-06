@@ -230,8 +230,7 @@ public class HttpUtil {
      * @param json json对象
      * @return
      */
-    public static String doPost(String apiUrl, Map<String, Object> params, String text) {
-        CloseableHttpClient httpClient = HttpClients.createDefault();
+    public static String doPost(CloseableHttpClient httpClient,String apiUrl, Map<String, Object> params, String text) {
         String httpStr = null;
         HttpPost httpPost = new HttpPost(apiUrl);
         CloseableHttpResponse response = null;
