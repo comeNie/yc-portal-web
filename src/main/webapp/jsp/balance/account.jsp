@@ -97,7 +97,7 @@
                     <table class="table table-bg  table-striped-even table-height50">
                         <thead>
                         <tr>
-                            <th style="width: 277px"><spring:message code="account.time"/></th>
+                            <th style="width: 200px"><spring:message code="account.time"/></th>
                             <th style="width: 108px"><spring:message code="account.income"/>(<c:choose>
                                 <c:when test="${currencyUnit==1}">
                                     <spring:message code="account.yuan"/>
@@ -148,8 +148,8 @@
         <input type="hidden" name="unit" value="{{:incomeFlag}}">
         <input type="hidden" name="unit" value="{{:optType}}">
         <tr>
-            <td style="width: 277px">{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',payTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
-            <td class="red" style="width: 108px">
+            <td style="width: 200px">{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',payTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
+            <td class="red" style="width: 108px;size: 18px">
                 {{if  incomeFlag == '1'}}
                 +{{:~liToYuan(totalAmount)}}
                 {{else }}
