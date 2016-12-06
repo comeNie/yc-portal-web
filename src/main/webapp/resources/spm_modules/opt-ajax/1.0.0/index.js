@@ -38,6 +38,7 @@ define('opt-ajax/1.0.0/index', function (require, exports, module) {
                 processingDialog = Dialog({
                     closeIconShow:false,
                     icon:"loading",
+					//正在处理中，请稍后...
                     content: $.i18n.prop('com.ajax.def.content')
                 });
 			}
