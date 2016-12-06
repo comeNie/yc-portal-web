@@ -3,6 +3,7 @@ package com.ai.yc.protal.web.service;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.yc.protal.web.exception.HttpStatusException;
 import com.ai.yc.protal.web.utils.HttpUtil;
+import com.ai.yc.protal.web.utils.HttpsUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -54,7 +55,7 @@ public class YeekitService {
      */
     public String dotranslate(String from, String to, String text)
             throws IOException, HttpStatusException {
-        Map<String, Object> postParams = new HashMap<>();
+        JSONObject  postParams =new JSONObject();
         postParams.put("srcl", from);// 源语言
         postParams.put("tgtl", to);// 目标语言
        // postParams.put("app_kid", APP_KID);// 授权APP ID
@@ -62,11 +63,14 @@ public class YeekitService {
         postParams.put("detoken", true);
         postParams.put("align", true);
         postParams.put("text", URLEncoder.encode(text, "UTF-8"));// 待翻译文本,UTF-8编码
-        String resultStr = HttpUtil.doPostSSL(SERVER_URL, postParams);
-        LOGGER.info("dotranslate result:{}",resultStr);
-        JSONArray translateds = JSON.parseObject(resultStr).getJSONArray("translation")
-                .getJSONObject(0).getJSONArray("translated");
-        LOGGER.info("result:{}", translateds);
+        String resultStr="";
+        try {
+            resultStr = HttpsUtil.HttpsPost(SERVER_URL, postParams.toString(), "UTF-8");
+            LOGGER.info("dotranslate result:{}",resultStr);
+        }  catch (Exception e) {
+            LOGGER.error("机器翻译失败:", e);
+        }
+
 //        JSONArray translateds = JSON.parseObject(resultStr).getJSONArray("translation")
 //                .getJSONObject(0).getJSONArray("translated");
 //        StringBuffer sb = new StringBuffer();
@@ -75,7 +79,7 @@ public class YeekitService {
 //            sb.append(jsonObject.getString("text").replaceAll("\\s*", ""));
 //        }
 //        LOGGER.info("response:\r\n" + sb.toString());
-        return JSONObject.toJSONString(translateds);
+        return resultStr;
 
 //            return  URLDecoder.decode(resultStr, "UTF-8");
     }
