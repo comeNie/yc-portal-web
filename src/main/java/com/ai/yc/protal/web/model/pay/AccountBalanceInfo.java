@@ -18,6 +18,18 @@ public class AccountBalanceInfo {
      */
     private String payCheck;
     private String payPassword;
+    /*
+    币种
+     */
+    private String currencyUnit;
+
+    public String getCurrencyUnit() {
+        return currencyUnit;
+    }
+
+    public void setCurrencyUnit(String currencyUnit) {
+        this.currencyUnit = currencyUnit;
+    }
 
     public long getAccountId() {
         return accountId;

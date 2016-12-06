@@ -56,6 +56,7 @@ public class BalanceController {
     public String toMyAccount(Model uiModel){
         //帐户余额
         AccountBalanceInfo balanceInfo =  balanceService.queryOfUser(UserUtil.getUserId());
+        uiModel.addAttribute("currencyUnit",balanceInfo.getCurrencyUnit());
         uiModel.addAttribute("balance",String.valueOf(AmountUtil.changeLiToYuan(balanceInfo.getBalance())));
         return "balance/account";
     }
