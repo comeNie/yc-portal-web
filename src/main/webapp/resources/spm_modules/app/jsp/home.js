@@ -138,39 +138,42 @@ define('app/jsp/home', function (require, exports, module) {
 			});
         },
 
-		//检测语言
+		//检测语言 并翻译
 		_verifyLan:function() {
 			var _this = this;
 			var from = $(".dropdown .selected").eq(0).attr("value");
 
-			if (from == 'auto' && $("#int-before").val() != '') {
-				//语言检测
-				ajaxController.ajax({
-					type: "post",
-					url: _base + "/translateLan",
-					data: {
-						text: $("#int-before").val()
-					},
-					success: function (data) {
-						if("OK" === data.statusInfo) {
-							var vLan = data.data;
-							if ( vLan!= '') {
-								$("#showa option").each(function () {
-									if ($(this).val() == vLan) {
-										$('.selected').eq(0).html( $(this).text());
-										return false;
-									}
-								});
-								$('.selected').eq(0).attr('value', vLan);
+			if (from == 'auto') {
+				if ($.trim($("#int-before").val()) != '') {
+					//语言检测
+					ajaxController.ajax({
+						type: "post",
+						url: _base + "/translateLan",
+						data: {
+							text: $("#int-before").val()
+						},
+						success: function (data) {
+							if("OK" === data.statusInfo) {
+								var vLan = data.data;
+								if ( vLan!= '') {
+									$("#showa option").each(function () {
+										if ($(this).val() == vLan) {
+											$('.selected').eq(0).html( $(this).text());
+											return false;
+										}
+									});
+									$('.selected').eq(0).attr('value', vLan);
 
-								_this._mt();
-							} else { //检测语言失败
-								$("#transError").html($.i18n.prop("home.error.verify"));
+									_this._mt();
+								} else { //检测语言失败
+									$("#transError").html($.i18n.prop("home.error.verify"));
+								}
 							}
 						}
-					}
-				});
-
+					});
+				}
+			} else {
+				_this._mt();
 			}
 
 		},
