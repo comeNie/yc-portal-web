@@ -62,7 +62,7 @@ public class YeekitService {
        // postParams.put("app_key", APP_KEY);// 授权APP KEY
         postParams.put("detoken", true);
         postParams.put("align", true);
-        postParams.put("text", URLEncoder.encode(text, "UTF-8"));// 待翻译文本,UTF-8编码
+        postParams.put("text", text);// 待翻译文本,UTF-8编码
         String resultStr="";
         try {
             resultStr = HttpsUtil.HttpsPost(SERVER_URL, postParams.toString(), "UTF-8");

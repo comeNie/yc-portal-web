@@ -143,7 +143,7 @@ define('app/jsp/home', function (require, exports, module) {
 			var _this = this;
 			var from = $(".dropdown .selected").eq(0).attr("value");
 
-			if (from == 'auto') {
+			if (from == 'auto' && $("#int-before").val() != '') {
 				//语言检测
 				ajaxController.ajax({
 					type: "post",
