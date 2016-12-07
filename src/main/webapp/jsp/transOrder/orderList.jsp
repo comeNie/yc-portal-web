@@ -61,7 +61,7 @@
 		 								<!-- 翻译中 -->
 		 								<option value="23"><spring:message code="myOrder.status.translating"/></option>
 		 								<!-- 待审核 -->
-		 								<option value="52"><spring:message code="myOrder.status.Review"/></option>
+		 								<option value="40"><spring:message code="myOrder.status.Review"/></option>
 		 								<!-- 待确认 -->
 		 								<option value="50"><spring:message code="myOrder.status.tobeConfirm"/></option>
 		 								<!--  已完成-->

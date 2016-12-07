@@ -81,26 +81,26 @@
 		                    </c:forEach>
 	                    </c:if>
 	                    
-	                    <c:if test="${OrderDetails.translateType == '0'}">
-	                    <ul class="mt-30">
-	                    	<!-- 译文 文本 -->
-                            <li class="title"><spring:message code="myOrder.Translatedtext"/>:</li>
-                            <!-- 文本类型翻译 更多 -->
-                            <c:choose>
-                                <c:when test="${fn:length(OrderDetails.prod.translateInfo) <= 150}">
-                                    <li class="word">${OrderDetails.prod.translateInfo}</li>
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="word">${fn:substring(OrderDetails.prod.translateInfo, 0, 150)}
-                                        <span style="display: none;">${fn:substring(OrderDetails.prod.translateInfo, 150, fn:length(OrderDetails.prod.translateInfo))}</span>
-                                        <A name="more" href="javaScript:void(0);">[<spring:message code="myOrder.more"/>]</A></li>
-                                </c:otherwise>
-                            </c:choose>
+	                    <c:if test="${OrderDetails.translateType == '0' && (OrderDetails.displayFlag=='50' || OrderDetails.displayFlag=='52' || OrderDetails.displayFlag=='90') }">
+                            <ul class="mt-30">
+                                <!-- 译文 文本 -->
+                                <li class="title"><spring:message code="myOrder.Translatedtext"/>:</li>
+                                <!-- 文本类型翻译 更多 -->
+                                <c:choose>
+                                    <c:when test="${fn:length(OrderDetails.prod.translateInfo) <= 150}">
+                                        <li class="word">${OrderDetails.prod.translateInfo}</li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="word">${fn:substring(OrderDetails.prod.translateInfo, 0, 150)}
+                                            <span style="display: none;">${fn:substring(OrderDetails.prod.translateInfo, 150, fn:length(OrderDetails.prod.translateInfo))}</span>
+                                            <A name="more" href="javaScript:void(0);">[<spring:message code="myOrder.more"/>]</A></li>
+                                    </c:otherwise>
+                                </c:choose>
 
-	                    </ul>
+                            </ul>
 	                    </c:if>
 	                    
-	                   	<c:if test="${OrderDetails.translateType == '1'}">
+	                   	<c:if test="${OrderDetails.translateType == '1'  && (OrderDetails.displayFlag=='50' || OrderDetails.displayFlag=='52' || OrderDetails.displayFlag=='90')}">
 		                   	<c:forEach items="${OrderDetails.prodFiles}" var="prodFile" varStatus="status">
 		                        <ul class="mt-30">
 		                        	<!-- 译文 文档-->
