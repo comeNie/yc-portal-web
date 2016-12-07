@@ -34,7 +34,7 @@
                             <li><img src="${uedroot}/images/rech-win.png" /></li>
                             <li class="word"><spring:message code="account.recharge.success"/></li>
                             <li class="list mt-50">
-                                <p><spring:message code="account.recharge.number"/> <a
+                                <p><spring:message code="account.recharge.number"/> ${orderId}<a
                                         href="${_base}/p/balance/account"></a><spring:message code="account.message" arguments="${_base}/p/balance/account"/></p>
                                 <p><spring:message code="account.phone"/></p>
                             </li>

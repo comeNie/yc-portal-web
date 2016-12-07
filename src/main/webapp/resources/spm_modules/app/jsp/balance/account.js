@@ -78,7 +78,7 @@ define('app/jsp/balance/account', function (require, exports, module) {
 						var currencyUnit = data[0].currencyUnit;
 						var incomeBalance =  data[0].incomeBalance;
 						var outBalance =  data[0].outBalance;
-						if (currencyUnit==1){
+						if (data[0].payTime==null||currencyUnit==1){
 							var yuan = $.i18n.prop('account.tag.yuan');
 						}else {
 							var yuan = $.i18n.prop('account.tag.dollar');
