@@ -31,10 +31,10 @@
                         <ul>
                             <li class="word"><span>${balance}</span>
                                 <c:choose>
-                                    <c:when test="${currencyUnit==1}">
-                                        <spring:message code="account.yuan"/>
+                                    <c:when test="${currencyUnit==0}">
+                                        <spring:message code="account.dollar"/>
                                     </c:when>
-                                    <c:otherwise><spring:message code="account.dollar"/></c:otherwise>
+                                    <c:otherwise><spring:message code="account.yuan"/></c:otherwise>
                                 </c:choose>
                             </li>
                             <li class="c-bj-bule"><a href="${_base}/p/balance/depositFund"><spring:message code="account.recharge"/></a></li>
@@ -98,17 +98,17 @@
                         <thead>
                         <tr>
                             <th style="width: 200px"><spring:message code="account.time"/></th>
-                            <th style="width: 108px"><spring:message code="account.income"/>(<c:choose>
-                                <c:when test="${currencyUnit==1}">
-                                    <spring:message code="account.yuan"/>
+                            <th style="width: 108px"><spring:message code="account.income"/>( <c:choose>
+                                <c:when test="${currencyUnit==0}">
+                                    <spring:message code="account.dollar"/>
                                 </c:when>
-                                <c:otherwise><spring:message code="account.dollar"/></c:otherwise>
+                                <c:otherwise><spring:message code="account.yuan"/></c:otherwise>
                             </c:choose>)</th>
-                            <th style="width: 134px"><spring:message code="account.expenditure"/>(<c:choose>
-                                <c:when test="${currencyUnit==1}">
-                                    <spring:message code="account.yuan"/>
+                            <th style="width: 134px"><spring:message code="account.expenditure"/>( <c:choose>
+                                <c:when test="${currencyUnit==0}">
+                                    <spring:message code="account.dollar"/>
                                 </c:when>
-                                <c:otherwise><spring:message code="account.dollar"/></c:otherwise>
+                                <c:otherwise><spring:message code="account.yuan"/></c:otherwise>
                             </c:choose>)</th>
                             <th style="width: 125px"><spring:message code="balance"/></th>
                             <th style="width: 52px"><spring:message code="account.type"/></th>
