@@ -167,7 +167,7 @@
 									<p>{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',orderTime,'<%=ZoneContextHolder.getZone()%>')}}</p>
 									<p name="orderId"><spring:message code="myOrder.Ordernumber"/>：<span style="cursor:pointer;">{{:orderId}}</span></p>
 									<!-- 剩余2天23小时59分钟 -->
-									{{if state!='50' || state!='51' || state!='52' || state!='53' || state!='90' || state!='91' || state!='92'}}
+									{{if state =='20' || state=='21' || state=='211' || state=='23' || state=='25' || state=='40' }}
 									<p class="right">
 										{{if finishRemTime < 0}}
 										<!-- 已超时 -->
