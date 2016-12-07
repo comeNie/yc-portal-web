@@ -95,8 +95,8 @@ define('app/jsp/home', function (require, exports, module) {
 				},
 				success: function (data) {
 					if("OK" === data.statusInfo) {
-						//$("#transRes").val(data.data);
-						//$("#transResBak").val(data.data);
+						$("#transRes").val(data.data);
+						$("#transResBak").val(data.data);
 						$("#transError").html('');
 
 						//翻译后的文字超过1024，隐藏播放喇叭
@@ -138,12 +138,12 @@ define('app/jsp/home', function (require, exports, module) {
 			});
         },
 
-		//检测语言
+		//检测语言 并翻译
 		_verifyLan:function() {
 			var _this = this;
 			var from = $(".dropdown .selected").eq(0).attr("value");
 
-			if (from == 'auto' && $("#int-before").val() != '') {
+			if ($.trim($("#int-before").val()) != '') {
 				//语言检测
 				ajaxController.ajax({
 					type: "post",
@@ -163,6 +163,7 @@ define('app/jsp/home', function (require, exports, module) {
 								});
 								$('.selected').eq(0).attr('value', vLan);
 
+								_this._diffSrc();
 								_this._mt();
 							} else { //检测语言失败
 								$("#transError").html($.i18n.prop("home.error.verify"));
@@ -170,8 +171,28 @@ define('app/jsp/home', function (require, exports, module) {
 						}
 					}
 				});
-
 			}
+
+		},
+
+		_diffSrc:function () {
+			var srcValue = $(".selected").eq(0).attr('value');
+			var srcText = $(".selected").eq(0).html();
+			var disValue = $(".selected").eq(1).attr('value');
+			var disText = $(".selected").eq(1).html();
+
+			if (srcValue == disValue) {
+				$("#showb option").each(function() {
+					if ($(this).attr('value') != disValue) {
+						srcValue = $(this).val();
+						srcText = $(this).text();
+						$(".selected").eq(1).attr('value', srcValue);
+						$(".selected").eq(1).html(srcText);
+						return false;
+					}
+				});
+			}
+
 
 		},
         
@@ -206,7 +227,7 @@ define('app/jsp/home', function (require, exports, module) {
 	    	if(myAudio.paused){
 		        var itostr = $.trim($("#transRes").val());
 		        if(itostr != null){
-	        		 var playUrl = _base + '/Hcicloud/text2audio?lan='+to+'&text='+itostr;
+	        		 var playUrl = _base + '/Hcicloud/text2audio?lan='+to+'&text='+ window.encodeURI(window.encodeURI(itostr));
 	        		
 	        		 $("#audioPlay").attr("src", playUrl);
 	        		 console.log(playUrl);

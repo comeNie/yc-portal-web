@@ -92,8 +92,9 @@ define('app/jsp/transOrder/orderList', function (require, exports, module) {
 	            		//把返回结果转换
 		            	for(var i=0;i<data.length;i++){
 		            		//订单完成剩余时间 转为 剩余x天x小时x分
-		            		var remainingTime = _this.ftimeDHS(data[i].endTime - new Date().getTime());
-		            		data[i].finishRemTime = remainingTime;
+							var tempMM=data[i].endTime - new Date().getTime();
+		            		var remainingTime = _this.ftimeDHS(tempMM);
+		            		data[i].finishRemTime = tempMM	;
 		            		data[i].finishTakeDays = remainingTime.days;
 		            		data[i].finishTakeHours = remainingTime.hours;
 		            		data[i].finishTakeMinutes =  remainingTime.minutes;

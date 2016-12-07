@@ -398,7 +398,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
         			var publishUrgent = selected.attr("publishUrgent");
         			
         			if ($("#urgentOrder").is(':checked') ) {
-        				$("#stanPrice").html(professionalUrgent);
+        				$("#stanPrice").html(ordinaryUrgent);
         				$("#proPrice").html(professionalUrgent);
         				$("#pubPrice").html(publishUrgent);
         			} else {

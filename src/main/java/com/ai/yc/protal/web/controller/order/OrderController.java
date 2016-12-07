@@ -144,6 +144,11 @@ public class OrderController {
     public ResponseData<String> addOrder(HttpServletRequest request, HttpSession session){
         ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
 
+        //清楚会话中的 订单信息
+        session.removeAttribute("orderInfo");
+        session.removeAttribute("orderSummary");
+        session.removeAttribute("fileInfoList");
+
         //取到订单的信息，缓存到 session中
         String productInfoStr = request.getParameter("productInfo");
         String baseInfoStr = request.getParameter("baseInfo");
@@ -192,7 +197,6 @@ public class OrderController {
                 feeInfo.setCurrencyUnit(currencyUnit);
             }
             subReq.setFeeInfo(feeInfo);
-
 
             //订单存到session中
             session.setAttribute("orderInfo", subReq);

@@ -210,8 +210,8 @@
 							<li>
 							<p>
 								<c:set var="totalFee"><fmt:formatNumber value="${OrderDetails.orderFee.totalFee/1000}" pattern="#,##0.00#"/></c:set>
-                           		<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb" arguments="${totalFee}"/></c:if>
-                           		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar" arguments="${totalFee}"/></c:if></p>
+                           		<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb" argumentSeparator="@" arguments="${totalFee}"/></c:if>
+                           		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar" argumentSeparator="@" arguments="${totalFee}"/></c:if></p>
 							</li>
 						</ul>
 						<c:if test="${OrderDetails.translateType != '2'}">
