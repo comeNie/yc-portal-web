@@ -95,15 +95,7 @@ define('app/jsp/home', function (require, exports, module) {
 				},
 				success: function (data) {
 					if("OK" === data.statusInfo) {
-						$("#transRes").val(data.data);
-						$("#transResBak").val(data.data);
 						$("#transError").html('');
-
-						//翻译后的文字超过1024，隐藏播放喇叭
-						if ($("#transRes").val().length > 1024)
-							$("#sus-top2").hide();
-						else
-							$("#sus-top2").show();
 
 						$('#tgtNew').empty();
 						$('#srcNew').empty();
@@ -118,6 +110,13 @@ define('app/jsp/home', function (require, exports, module) {
 									sourYiWen = sourYiWen+item.text;
 									$("#transRes").val(ywText);
 									$("#transResBak").val(ywText);
+
+									//翻译后的文字超过1024，隐藏播放喇叭
+									if ($("#transRes").val().length > 1024)
+										$("#sus-top2").hide();
+									else
+										$("#sus-top2").show();
+
 									var alignmentRaw  = item["alignment-raw"];
 									var tgtTokenized  = item["tgt-tokenized"];
 									var srcTokenized  = item["src-tokenized"];
