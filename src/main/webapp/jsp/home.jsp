@@ -26,6 +26,7 @@
             word-wrap: break-word;
             word-break: break-all;
             overflow: auto;
+            overflow-x: hidden;
         }
 
         .tb_text {
@@ -34,6 +35,7 @@
             word-wrap: break-word;
             word-break: break-all;
             overflow: auto;
+            overflow-x: hidden;
         }
     </style>
     </head>

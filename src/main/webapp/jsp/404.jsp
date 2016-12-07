@@ -16,7 +16,7 @@
 		<div class="placeorder-wrapper">
 			<div class="fourhundred"><img src="${uedroot}/images/404.jpg" usemap="#Map" />
               <map name="Map">
-                <area shape="rect" coords="398,306,504,340" href="${_base}">
+                <area shape="rect" coords="398,306,504,340" href="${_base}/">
               </map>
 		  </div>
 		</div>

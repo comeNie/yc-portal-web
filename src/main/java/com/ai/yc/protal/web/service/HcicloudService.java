@@ -48,13 +48,13 @@ public class HcicloudService {
         String browserName = getBrowserName(agent);
         LOGGER.info(browserName);
 
-        String config = "";
+        String config = "capkey=";
         String audioformat="";
 
         if (lan.equals("zh")) {
-            config += "capkey=tts.cloud.wangjing";
+            config += "tts.cloud.wangjing";
         } else if(lan.equals("en")) {
-            config += "capkey=tts.cloud.serena";
+            config += "tts.cloud.serena";
         } else if(lan.equals("fr")) {// 法语
             config += "tts.cloud.thomas";
         } else if(lan.equals("de")) {// 德语
