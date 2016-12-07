@@ -20,6 +20,21 @@
     <style type="text/css">
         /*分词高亮*/
         .before-translation span.b_cur {background: #fff444 none repeat scroll 0 0;}
+
+        .ta_text {
+            height: 198px;
+            word-wrap: break-word;
+            word-break: break-all;
+            overflow: auto;
+        }
+
+        .tb_text {
+            height: 166px;
+            line-height: 22px;
+            word-wrap: break-word;
+            word-break: break-all;
+            overflow: auto;
+        }
     </style>
     </head>
 
@@ -92,7 +107,7 @@
         <!--翻译主体-->
         <div class="translate-wapper">
             <div class="before-translation">
-                <div id="srcNew" class="int-before"  style="display: none;">
+                <div id="srcNew" class="int-before ta_text"  style="display: none;">
                 </div>
                 <div id="srcOld" class="int-before"  style="display: block;">
                     <textarea maxlength="2000" class="int-before" id="int-before"></textarea>
@@ -100,7 +115,7 @@
 
             </div>
             <div class="before-translation ml-20">
-                <div id="tgtNew" class="int-post" onmousemove="srcMove()" onmouseout="srcOut()"  style="display: none">
+                <div id="tgtNew" class="int-post tb_text" onmousemove="srcMove()" onmouseout="srcOut()"  style="display: none">
                 </div>
                 <div id="tgtOld" class="int-post"  style="display: block;">
                     <textarea  class="int-post"  id="transRes" readonly="readonly"></textarea>

@@ -348,8 +348,8 @@
                                 	<c:otherwise>
                                 		 <p>
                                 		 	<c:set var="totalFee"><fmt:formatNumber value="${OrderDetails.orderFee.totalFee/1000}" pattern="#,##0.00#"/></c:set>
-		                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb"  arguments="${totalFee}"/></c:if>
-		                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar" arguments="${totalFee}"/></c:if></p>
+		                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb"  argumentSeparator="@" arguments="${totalFee}"/></c:if>
+		                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar"  argumentSeparator="@" arguments="${totalFee}"/></c:if></p>
                                 	</c:otherwise>
                                 </c:choose>
                             </li>
@@ -368,16 +368,16 @@
                                 <%--<p class="word"><spring:message code="myOrder.Coupons"/>:</p>--%>
                                 <%--<p>--%>
                                 	<%--<c:set var="discountFee"><fmt:formatNumber value="${OrderDetails.orderFee.discountFee/1000}" pattern="#,##0.00#"/></c:set>--%>
-                               		<%--<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb"  arguments="${discountFee}"/></c:if>--%>
-                               		<%--<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar"  arguments="${discountFee}"/></c:if></p>--%>
+                               		<%--<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb" argumentSeparator="@" arguments="${discountFee}"/></c:if>--%>
+                               		<%--<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar" argumentSeparator="@" arguments="${discountFee}"/></c:if></p>--%>
                             <%--</li>--%>
                             <li class="width-large red">
                             	<!-- 实付金额 -->
                                 <p class="word"><spring:message code="myOrder.Amountpaid"/>:</p>
                                 <p><b>
                                 	<c:set var="paidFee"><fmt:formatNumber value="${OrderDetails.orderFee.paidFee/1000}" pattern="#,##0.00#"/></c:set>  
-                               		</b><c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb" arguments="${paidFee}" /> </c:if>
-                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar" arguments="${paidFee}"/> </c:if>
+                               		</b><c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb" argumentSeparator="@" arguments="${paidFee}" /> </c:if>
+                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar" argumentSeparator="@" arguments="${paidFee}"/> </c:if>
                                	</p>
                             </li>
                         </ul>
