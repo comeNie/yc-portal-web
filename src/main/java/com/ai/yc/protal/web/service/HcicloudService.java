@@ -32,6 +32,8 @@ public class HcicloudService {
     @Value("#{hciSetting['hcicloud.url']}")
     private String SERVER_URL;
     private static final  byte[] WAVHEAD8K = {82, 73, 70, 70, 2, 70, 0, 0, 87, 65, 86, 69, 102, 109, 116, 32, 16, 0, 0, 0, 1, 0, 1, 0, 64, 31, 0, 0, -128, 62, 0, 0, 2, 0, 16, 0, 100, 97, 116, 97, -34, 69, 0, 0};
+    private static final  byte[] WAVHEAD16K = {82, 73, 70, 70, -102, -24, 0, 0, 87, 65, 86, 69, 102, 109, 116, 32, 16, 0, 0, 0, 1, 0, 1, 0, -128, 62, 0, 0, 0, 125, 0, 0, 2, 0, 16, 0, 100, 97, 116, 97, 118, -24, 0, 0};
+
     @Autowired
     private CloseableHttpClient client;
 
@@ -65,6 +67,8 @@ public class HcicloudService {
 //            
         } else if(lan.equals("es")) { //西班牙
             config += "tts.cloud.diego";
+        } else if(lan.equals("ru")) { //俄语
+            config += "tts.cloud.milena";
         }
         
         if (browserName.equals("firefox") || browserName.equals("opera")) {
@@ -148,10 +152,13 @@ public class HcicloudService {
 //            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
             ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
             //pcm8k16bit  写入wav头
-            if (audioformat.equals("pcm8k16bit")) {
+            if (audioformat.contains("pcm8k16bit")) {
 //                fos.write(WAVHEAD8K);
                 swapStream.write(WAVHEAD8K);
+            } else if(audioformat.contains("pcm16k16bit")) {
+                swapStream.write(WAVHEAD16K);
             }
+
             byte[] b = new byte[1024*1024];
             int len = 0;
             while((len = is.read(b)) != -1)

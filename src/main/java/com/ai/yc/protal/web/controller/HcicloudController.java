@@ -31,6 +31,7 @@ public class HcicloudController {
             HttpServletResponse response) throws Exception {
         String agent = request.getHeader("User-Agent").toLowerCase();
         try {
+            text = java.net.URLDecoder.decode(text,"UTF-8");
             //写入文件
             byte[] audioByte = hcicloudService.text2audio(agent,lan,text);
             

@@ -95,8 +95,8 @@ define('app/jsp/home', function (require, exports, module) {
 				},
 				success: function (data) {
 					if("OK" === data.statusInfo) {
-						//$("#transRes").val(data.data);
-						//$("#transResBak").val(data.data);
+						$("#transRes").val(data.data);
+						$("#transResBak").val(data.data);
 						$("#transError").html('');
 
 						//翻译后的文字超过1024，隐藏播放喇叭
@@ -227,7 +227,7 @@ define('app/jsp/home', function (require, exports, module) {
 	    	if(myAudio.paused){
 		        var itostr = $.trim($("#transRes").val());
 		        if(itostr != null){
-	        		 var playUrl = _base + '/Hcicloud/text2audio?lan='+to+'&text='+itostr;
+	        		 var playUrl = _base + '/Hcicloud/text2audio?lan='+to+'&text='+ window.encodeURI(window.encodeURI(itostr));
 	        		
 	        		 $("#audioPlay").attr("src", playUrl);
 	        		 console.log(playUrl);
