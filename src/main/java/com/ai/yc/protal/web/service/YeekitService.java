@@ -3,6 +3,7 @@ package com.ai.yc.protal.web.service;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.yc.protal.web.exception.HttpStatusException;
 import com.ai.yc.protal.web.utils.HttpUtil;
+import com.ai.yc.protal.web.utils.HttpsUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -46,6 +47,11 @@ public class YeekitService {
     public static final String DETECTION_FAIL = "detectionFail";
 
     /**
+     * 语言检查出现错误
+     */
+    public static final String TRAINNS_FAIL = "trainFail";
+
+    /**
      * 进行机器翻译
      * @param from
      * @param to
@@ -54,16 +60,26 @@ public class YeekitService {
      */
     public String dotranslate(String from, String to, String text)
             throws IOException, HttpStatusException {
-        Map<String, Object> postParams = new HashMap<>();
+        JSONObject  postParams =new JSONObject();
         postParams.put("srcl", from);// 源语言
         postParams.put("tgtl", to);// 目标语言
        // postParams.put("app_kid", APP_KID);// 授权APP ID
        // postParams.put("app_key", APP_KEY);// 授权APP KEY
         postParams.put("detoken", true);
         postParams.put("align", true);
-        postParams.put("text", URLEncoder.encode(text, "UTF-8"));// 待翻译文本,UTF-8编码
-        String resultStr = HttpUtil.doPostSSL(SERVER_URL, postParams);
-        LOGGER.info("dotranslate result:{}",resultStr);
+        postParams.put("text", text);// 待翻译文本,UTF-8编码
+        String resultStr="";
+        try {
+            resultStr = HttpsUtil.HttpsPost(SERVER_URL, postParams.toString(), "UTF-8");
+            LOGGER.info("dotranslate result:{}", resultStr);
+
+            //失败
+            JSONObject translated = JSON.parseObject(resultStr);
+        }  catch (Exception e) {
+            LOGGER.error("机器翻译失败:", e);
+            throw new BusinessException(TRAINNS_FAIL,"The detection is fail.");
+        }
+
 //        JSONArray translateds = JSON.parseObject(resultStr).getJSONArray("translation")
 //                .getJSONObject(0).getJSONArray("translated");
 //        StringBuffer sb = new StringBuffer();
@@ -72,9 +88,9 @@ public class YeekitService {
 //            sb.append(jsonObject.getString("text").replaceAll("\\s*", ""));
 //        }
 //        LOGGER.info("response:\r\n" + sb.toString());
-//        return URLDecoder.decode(sb.toString(), "UTF-8");
+        return resultStr;
 
-        return  URLDecoder.decode(resultStr, "UTF-8");
+//            return  URLDecoder.decode(resultStr, "UTF-8");
     }
 
     /**

@@ -22,7 +22,8 @@ define('app/jsp/customerOrder/orderInfo', function (require, exports, module) {
     	
 //    	下载文件
     	_downLoad:function(fileId, fileName) {
-    		window.open(_base + "/p/customer/order/download?fileId="+fileId+"&fileName="+fileName);
+			fileName = window.encodeURI(window.encodeURI(fileName));
+    		window.open(_base +"/p/customer/order/download?fileId="+fileId+"&fileName="+fileName);
     	},
 
 		//确认订单

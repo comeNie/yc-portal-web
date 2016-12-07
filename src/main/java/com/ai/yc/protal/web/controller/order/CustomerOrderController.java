@@ -385,9 +385,10 @@ public class CustomerOrderController {
     
         try {
             OutputStream os = response.getOutputStream();
-            response.setCharacterEncoding("utf-8");
+//            response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");
             response.setHeader("Content-Disposition", "attachment;fileName="+fileName);
+            response.setHeader("Content-Length", b.length+"");
             os.write(b);
             os.close();
         } catch (Exception e) {
