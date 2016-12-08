@@ -2,6 +2,7 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
+		Dialog = require("optDialog/src/dialog"),
 	    AjaxController = require('opt-ajax/1.0.0/index');
     require("jsviews/jsrender.min");
     require("jsviews/jsviews.min");
@@ -33,7 +34,7 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
     	setup: function () {
     		orderListPage.superclass.setup.call(this);
 			$.i18n.properties({//加载资浏览器语言对应的资源文件
-				name: ["commonRes"], //资源文件名称，可以是数组
+				name: ["commonRes","orderInfo"], //资源文件名称，可以是数组
 				path: _i18n_res, //资源文件路径
 				mode: 'both',
 				language: currentLan,
@@ -140,19 +141,28 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
         
         //取消订单
         _cancelOrder:function(orderId) {
-        	ajaxController.ajax({
-				type: "post",
-				url: _base+"/p/customer/order/cancelOrder",
-				data: {'orderId': orderId},
-				success: function(data){
-					//取消成功
-					if("1"===data.statusCode){
-						//成功
-						//刷新页面
-						window.location.reload();
-					}
+			new Dialog({
+				icon:'prompt',
+				okValue: $.i18n.prop('order.info.dialog.ok'),
+				cancelValue:$.i18n.prop('order.info.dialog.cancel'),
+				title: $.i18n.prop('order.info.cancel.order'),
+				ok:function(){
+					ajaxController.ajax({
+						type: "post",
+						url: _base+"/p/customer/order/cancelOrder",
+						data: {'orderId': orderId},
+						success: function(data){
+							//取消成功,刷新页面
+							if("1"===data.statusCode){
+								window.location.reload();
+							}
+						}
+					});
+				},
+				cancel:function(){
+					this.close();
 				}
-			});
+			}).showModal();
         },
         
         //把毫秒数转为 x天x小时x分钟x秒

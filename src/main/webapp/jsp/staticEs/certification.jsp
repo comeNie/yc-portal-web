@@ -67,8 +67,8 @@
 			<ul>
 				<%--第一步 注册译云--%>
 				<li class="word"><span>First step</span> Translation cloud registration</li>
-				<%--注册/登录译云账户，点击”立即下单“，选择需要的业务类型，根据提示完成并提交您的翻译任务即可。目前，译云提供了快速翻译、文档翻译、简历翻译、创意翻译、证件翻译、口译翻译几大业务类型。--%>
-				<li>Registered translation cloud registration / login account and click "order immediately translated cloud,", select the type of business, according to the prompts to complete and submit to your translation task. At present, translation cloud provides fast translation, document translation, translation, creative translation, resume document translation, interpreting several types of business.</li>
+				<%--您可以使用手机号或者邮箱进行注册。若使用手机号注册，须填入正确的短信验证码，并设置密码，点击“立即注册”即可；若使用邮箱进行注册，在填写完验证码并设置好密码后，还须进入邮箱进行邮件激活，方能完成注册。--%>
+				<li>You can use the phone number or email to register. If you use the mobile phone number registered, shall fill in the SMS verification code correctly, and set a password, click the "register" can; if the use of e-mail registration, in completing the verification code and set the password, must enter mailbox mail activation, can complete the registration.</li>
 			</ul>
 		</div>
 	</div>
@@ -145,8 +145,8 @@
 			<ul>
 				<%--第三步 开始接单--%>
 				<li class="word"><span>Third step</span> Start receiving</li>
-				<%--注册/登录译云账户，点击”立即下单“，选择需要的业务类型，根据提示完成并提交您的翻译任务即可。目前，译云提供了快速翻译、文档翻译、简历翻译、创意翻译、证件翻译、口译翻译几大业务类型。--%>
-				<li>Registration / login account and click "order immediately translated cloud,", select the type of business, according to the prompts to complete and submit to your translation task. At present, translation cloud provides fast translation, document translation, translation, creative translation, resume document translation, interpreting several types of business.</li>
+					<%--只有通过语种测试的译员才可以领取该语种的任务。通过“”译员“入口登陆后，点击”领取任务“进入任务大厅，您可以通过选择”任务类型“、”发布时间“等方式搜索感兴趣的翻译任务，未被领取的任务将显示在右侧列表中，点击“详细”可查看原文内容，点击”领取“即可轻松领取任务。--%>
+				<li>Only through the language test of the interpreter can receive the language of the task. Through the "interpreter" entrance after landing, click "enter" to receive the task task hall, you can choose "task type", "published" means such as search interest in translation task, not receive a task will be displayed in the list on the right, click "details" to view the original content, click to receive "you can easily receive the task.</li>
 			</ul>
 		</div>
 	</div>

@@ -25,7 +25,7 @@
                     	<!-- 下单指南 -->
                         <p><a href="${_base}/guide"><spring:message code="indexFoot.Guide"/></a></p>
                         <!-- 常见问题 -->
-                        <p><a href="${_base}/faq"><a href="#"><spring:message code="indexFoot.FAQ"/></a></p>
+                        <p><a href="${_base}/faq"><a href="javaScript:void(0);"><spring:message code="indexFoot.FAQ"/></a></p>
                         <!-- 服务说明 -->
                         <p><a href="${_base}/sexplain"><spring:message code="indexFoot.ServiceDesc"/></a></p>
                     </li>

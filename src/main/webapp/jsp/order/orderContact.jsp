@@ -26,7 +26,7 @@
                     <div class="place-step-none adopt-wathet-bj">
                         <ul>
                             <li class="circle"><i class="icon iconfont">&#xe60f;</i></li>
-                            <li class="word"><spring:message code="order.translateContent"/></li>
+                            <li class="word"><spring:message code="order.translateLan"/></li>
                         </ul>
                         <p class="line"></p>
                     </div>
@@ -163,8 +163,8 @@
                             <c:if test="${transType == '0' && order.feeInfo.currencyUnit == '1'}">
                                 <span><fmt:formatNumber value="${order.feeInfo.totalFee/1000}" pattern="#,##0.00#"/></span><spring:message code="order.yuan"/>
                             </c:if>
-                            <c:if test="${transType == '0' && order.feeInfo.currencyUnit == '0'}">
-                                $<span><fmt:formatNumber value="${order.feeInfo.totalFee/1000}" pattern="#,##0.00#"/><</span>
+                            <c:if test="${transType == '0' && order.feeInfo.currencyUnit == '2'}">
+                                $<span><fmt:formatNumber value="${order.feeInfo.totalFee/1000}" pattern="#,##0.00#"/></span>
                             </c:if>
                             <c:if test="${transType != '0'}">
                                 <spring:message code="order.waitPatiently" />

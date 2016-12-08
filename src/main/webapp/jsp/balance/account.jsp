@@ -31,7 +31,7 @@
                         <ul>
                             <li class="word"><span>${balance}</span>
                                 <c:choose>
-                                    <c:when test="${currencyUnit==0}">
+                                    <c:when test="${currencyUnit==2}">
                                         <spring:message code="account.dollar"/>
                                     </c:when>
                                     <c:otherwise><spring:message code="account.yuan"/></c:otherwise>
@@ -99,13 +99,13 @@
                         <tr>
                             <th style="width: 200px"><spring:message code="account.time"/></th>
                             <th style="width: 108px"><spring:message code="account.income"/>( <c:choose>
-                                <c:when test="${currencyUnit==0}">
+                                <c:when test="${currencyUnit==2}">
                                     <spring:message code="account.dollar"/>
                                 </c:when>
                                 <c:otherwise><spring:message code="account.yuan"/></c:otherwise>
                             </c:choose>)</th>
                             <th style="width: 134px"><spring:message code="account.expenditure"/>( <c:choose>
-                                <c:when test="${currencyUnit==0}">
+                                <c:when test="${currencyUnit==2}">
                                     <spring:message code="account.dollar"/>
                                 </c:when>
                                 <c:otherwise><spring:message code="account.yuan"/></c:otherwise>
