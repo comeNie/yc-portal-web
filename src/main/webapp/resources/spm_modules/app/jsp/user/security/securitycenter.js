@@ -14,6 +14,19 @@ define("app/jsp/user/security/securitycenter", function(require, exports, module
 		});
 		d.showModal();
     };
+    var showMsg2 = function(msg){
+
+    	var d = Dialog({
+			content:msg,
+			icon:'success',
+			okValue: secCenterMsg.showOkValueMsg,
+			title: secCenterMsg.showTitleMsg,
+			ok:function(){
+				d.close();
+			}
+		});
+		d.showModal();
+    };
 	// 实例化AJAX控制处理对象
 	var ajaxController = new AjaxController();
 	// 定义页面组件类
@@ -125,6 +138,7 @@ define("app/jsp/user/security/securitycenter", function(require, exports, module
     		        		newPassword.val("");
     		        		newPassword2.val("");
     		        		$("#modify-close").click();
+    		        		showMsg2(secCenterMsg.password_set_ok);
     		        	}
     		          }
     				});
@@ -180,6 +194,7 @@ define("app/jsp/user/security/securitycenter", function(require, exports, module
     		        		newPassword.val("");
     		        		newPassword2.val("");
     		        		$("#pay_modify-close").click();
+    		        		showMsg2(secCenterMsg.password_set_ok);
     		        	}
     		          }
     				});
