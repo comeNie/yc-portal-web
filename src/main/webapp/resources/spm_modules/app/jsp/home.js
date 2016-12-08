@@ -60,6 +60,23 @@ define('app/jsp/home', function (require, exports, module) {
 			clip.on( 'complete', function(client, args) {
 			});
 
+            this._initPage();
+        },
+
+        _initPage:function () {
+            var _this = this;
+            $('.dropdown').eq(0).attr('id', 'drop-a');
+            $('.dropdown').eq(1).attr('id', 'drop-b');
+
+            //源语言改变
+            $("#drop-a .selected").bind('DOMNodeInserted', function (e) {
+                _this._diffSrc();
+            });
+
+            //目标语言改变
+            $("#drop-b .selected").bind('DOMNodeInserted', function (e) {
+                _this._mt();
+            });
         },
 
 
@@ -72,13 +89,19 @@ define('app/jsp/home', function (require, exports, module) {
         _mt:function() {
 			var _this=this;
 			var ywText="";
-        	var from = $(".dropdown .selected").eq(0).attr("value");
-        	var to = $(".dropdown .selected").eq(1).attr("value");
+        	var from=$(".dropdown .selected").eq(0).attr("value");
+        	var to='';
+            $("#showb option").each(function () {
+                if ($("#drop-b .selected").html() == $(this).text()) {
+                    to = $(this).val();
+                    return false;
+                }
+            });
 			if (Window.console){
 				console.log("from:"+from+",to:"+to);
 			}
 
-			if (from == '') {
+			if (from == 'auto' || $("#int-before") == '') {
 				return
 			}
 
@@ -174,13 +197,14 @@ define('app/jsp/home', function (require, exports, module) {
 
 		},
 
+        //使源语言和目标语言不一样
 		_diffSrc:function () {
 			var srcValue = $(".selected").eq(0).attr('value');
 			var srcText = $(".selected").eq(0).html();
 			var disValue = $(".selected").eq(1).attr('value');
-			var disText = $(".selected").eq(1).html();
+            var disText = $(".selected").eq(1).html();
 
-			if (srcValue == disValue) {
+			if (srcText == disText) {
 				$("#showb option").each(function() {
 					if ($(this).attr('value') != disValue) {
 						srcValue = $(this).val();
@@ -192,9 +216,14 @@ define('app/jsp/home', function (require, exports, module) {
 				});
 			}
 
+            $("#drop-b li").each(function () {
+                if ($(this).html() == $("#drop-a .selected").html())
+                    $(this).hide();
+                else
+                    $(this).show();
+            });
+        },
 
-		},
-        
         _change:function() {
         	var srcValue = $(".selected").eq(0).attr('value');
         	var srcText = $(".selected").eq(0).html();

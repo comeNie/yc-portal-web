@@ -335,11 +335,11 @@
                 	
                     <div class="info-list">
                     	<!-- 订单金额 -->
-                        <span><spring:message code="myOrder.Amount"/></span>
+                        <span><spring:message code="myOrder.OrderAmount"/></span>
                         <ul>
                         	<!-- 订单金额 -->
                             <li class="width-large">
-                                <p class="word"><spring:message code="myOrder.Amount"/>:</p>
+                                <p class="word"><spring:message code="myOrder.OrderAmount"/>:</p>
                                 <c:choose>
                                 	<c:when test="${OrderDetails.displayFlag=='13'}">
                                 		<!-- 待报价-->

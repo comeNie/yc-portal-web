@@ -20,14 +20,14 @@
 				<p class="line">_________________</p>
 				<p class="word">
 					<%--找翻译，就选译云--%>
-					<span class="large">find the translation , the yiyun</span>
+					<span class="large">YeeCloud, your better choice</span>
 					<%--在线发布您的翻译需求，全球译员为您翻译--%>
 					<span>Online publishing your translation needs, the global translator for you</span>
 				</p>
 				<p class="line">_________________</p>
 			</li>
 			<%--立即发布翻译任务--%>
-			<li class="pacbtn"><input id="order-btn" type="button" class="btn border-white btn-230 radius20" value="Immediate release translation task"></li>
+			<li class="pacbtn"><input id="order-btn" type="button" class="btn border-white btn-230 radius20" value="Need Translation Service"></li>
 		</ul>
 	</div>
 </div>

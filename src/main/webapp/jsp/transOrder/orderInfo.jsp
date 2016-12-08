@@ -205,7 +205,7 @@
 		 			<!--第一列信息-->
 		 			<div class="info-list info-title">
 	  					<!-- 订单金额  -->
-	  					<span><spring:message code="myOrder.Amount"/>:</span>
+	  					<span><spring:message code="myOrder.OrderAmount"/>:</span>
 						<ul>
 							<li>
 							<p>
