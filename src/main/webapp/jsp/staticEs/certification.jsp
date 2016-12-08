@@ -18,11 +18,11 @@
 	<div class="card-list">
 		<ul>
 			<%--要赚钱，学习，长时间的经验，选择“翻译云”--%>
-			<li><span> To make money, learning, long experience, choose yiyun</span><br>
+			<li><span> To make money, get knowledge, enrich experience, just join YeeCloud!</span><br>
 				<%--在线自由接单、交易全程担保、免费语料工具，随时随地 想翻就翻--%>
-				Online free orders, the entire transaction guarantees, free corpus tools, whenever you want to turn over</li>
+				Accept order online conveniently, full-process guarantee in the deal, free linguistic material, translate as you wish, anytime, anywhere</li>
 				<%--加入译云--%>
-				<li class="pacbtn"><input id="join-btn" type="button" class="btn card-border-blue btn-168 radius20" value="Join translation cloud"></li>
+				<li class="pacbtn"><input id="join-btn" type="button" class="btn card-border-blue btn-168 radius20" value="Join Us"></li>
 		</ul>
 	</div>
 </div>
