@@ -298,12 +298,14 @@ public class SecurityController {
 				msg = rb.getMessage("ycaccountcenter.updatePayPassword.info1");
 				ResponseData<Boolean> responseData = new ResponseData<Boolean>(
 						ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
+				LOG.error(msg);
 				return responseData;
 			}
 			AccountBalanceInfo balanceInfo =queryBalanceInfo();
 			if(balanceInfo==null){
 				ResponseData<Boolean> responseData = new ResponseData<Boolean>(
 						ResponseData.AJAX_STATUS_SUCCESS, "accountBalanceInfo is null", isOK);
+				LOG.error("accountBalanceInfo is null");
 				return responseData;
 			}
 			String nowPayPassword =balanceInfo.getPayPassword();
@@ -316,6 +318,7 @@ public class SecurityController {
 					msg = rb.getMessage("ycaccountcenter.updatePayPassword.currentPasswordError");
 					ResponseData<Boolean> responseData = new ResponseData<Boolean>(
 							ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
+					LOG.error(msg);
 					return responseData;
 				}
 			}
