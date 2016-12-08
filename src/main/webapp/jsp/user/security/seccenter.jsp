@@ -203,7 +203,8 @@
 			"login_phone_set" : '<spring:message code="ycaccountcenter.setting.loginphone.set"/>',
 			"paypassword_set" : '<spring:message code="ycaccountcenter.setting.paypassword.set"/>',
 			"password_set" : '<spring:message code="ycaccountcenter.setting.loginpassword.tip"/>',
-		};
+			"password_set_ok" : '<spring:message code="ycaccountcenter.updatePassword.ok"/>',	
+	};
 
 	$(document).ready(function(){
 		var accLevelInfo = $("#sec-level-info-account-level");
