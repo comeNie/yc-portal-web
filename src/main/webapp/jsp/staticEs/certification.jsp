@@ -18,7 +18,7 @@
 	<div class="card-list">
 		<ul>
 			<%--要赚钱，学习，长时间的经验，选择“翻译云”--%>
-			<li><span>To make money, get knowledge, enrich experience, just join YeeCloud!</span><br>
+			<li><span> To make money, get knowledge, enrich experience, just join YeeCloud!</span><br>
 				<%--在线自由接单、交易全程担保、免费语料工具，随时随地 想翻就翻--%>
 				Accept order online conveniently, full-process guarantee in the deal, free linguistic material, translate as you wish, anytime, anywhere</li>
 				<%--加入译云--%>
