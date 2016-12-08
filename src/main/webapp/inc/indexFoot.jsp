@@ -13,7 +13,7 @@
                         <!-- 合作客户 -->
                         <p><a href="${_base}/client"><spring:message code="indexFoot.Clients"/></a></p>
                         <!-- 意见反馈 -->
-                        <p><a href="${_base}/feedback"><spring:message code="indexFoot.Feedback"/></a></p>
+                        <%--<p><a href="${_base}/feedback"><spring:message code="indexFoot.Feedback"/></a></p>--%>
                         <!-- 协议规则 -->
                         <p><a href="${_base}/agreement"><spring:message code="indexFoot.Agreement"/></a></p>
                     </li>
