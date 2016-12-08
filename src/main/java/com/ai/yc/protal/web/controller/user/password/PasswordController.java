@@ -81,9 +81,11 @@ public class PasswordController {
 			if(getResponse.getDate()!=null){
 				isOk = true;
 				resultMap.putAll(getResponse.getDate());
-				CountryVo country = cservice.getCountryByKey("CN");
-				String newMobilephone = "+"+country.getCountryCode()+getResponse.getDate().get("mobilephone");
-				resultMap.put("mobilephone", newMobilephone);
+				if(!"".equals(getResponse.getDate().get("mobilephone"))&&getResponse.getDate().get("mobilephone")!=null){
+					CountryVo country = cservice.getCountryByKey("CN");
+					String newMobilephone = "+"+country.getCountryCode()+getResponse.getDate().get("mobilephone");
+					resultMap.put("mobilephone", newMobilephone);
+				}
 			}else{
 				 msg = rb.getMessage("ycfindpassword.accountNotExist");
 			}
