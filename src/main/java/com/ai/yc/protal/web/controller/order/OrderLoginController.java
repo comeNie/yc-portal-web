@@ -102,15 +102,14 @@ public class OrderLoginController {
      */
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseData<String> submitOrder(HttpServletRequest request, HttpSession session) {
+    public ResponseData<String> submitOrder(ContactInfo contactInfo,HttpServletRequest request, HttpSession session) {
         ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-        String contactInfoStr = request.getParameter("contactInfo");
         String remark = request.getParameter("remark");
 
         try {
             IOrderSubmissionSV orderSubmissionSV = DubboConsumerFactory.getService(IOrderSubmissionSV.class);
             OrderSubmissionRequest subReq  = (OrderSubmissionRequest) session.getAttribute("orderInfo");
-            subReq.setContactInfo(JSON.parseObject(contactInfoStr, ContactInfo.class));
+            subReq.setContactInfo(contactInfo);
             subReq.getBaseInfo().setUserId(UserUtil.getUserId());
             subReq.getBaseInfo().setOrderTime(new Timestamp(System.currentTimeMillis()));
             if (StringUtils.isNotEmpty(remark)) {
