@@ -241,6 +241,9 @@
 	});
 	function showUpdatePwd(){
 		if(isexistloginpassword=='true'){
+			$("#currentPassword").val("");
+			$("#newPassword").val("");
+			$("#newPassword2").val("");
 			$('#eject-mask').fadeIn(100);
 			$('#modify-password').slideDown(100);
 		}else{
@@ -249,6 +252,9 @@
 	}
 	function showUpdatePayPwd(){
 		if(isexistpaypassword=='true'){
+			$("#pay_currentPassword").val('');
+			$("#pay_newPassword").val('');
+			$("#pay_newPassword2").val('');
 			$('#pay_eject-mask').fadeIn(100);
 			$('#pay_modify-password').slideDown(100);
 		}else{

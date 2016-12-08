@@ -43,12 +43,13 @@
 <body class="homebody">
 <!--面包屑导航-->
 <%@ include file="/inc/topHead.jsp" %>
+<c:set var="lTag"><%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"_en":""%></c:set>
 <!--banner-->
-<div class="banner"><p><img src="${uedroot}/images/banner-word-CN.png"></p></div>
+<div class="banner"><p><img src="${uedroot}/images/banner-word-CN${lTag}.png"></p></div>
 <!--index nav-->
 <div class="index-nav">
     <ul>
-        <li><img src="${uedroot}/images/index-logo<%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"_en":""%>.png" /></li>
+        <li><img src="${uedroot}/images/index-logo${lTag}.png" /></li>
         <li class="right">
             <!-- 首页 -->
             <p><a href="${_base}" class="current"><spring:message code="home.nav.bar.home"></spring:message></a></p>
