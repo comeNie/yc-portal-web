@@ -235,7 +235,11 @@ public class SecurityController {
 			securitylevel += 33;
 		}
 		if (isexistloginpassword == true) {
-			securitylevel += 34;
+			securitylevel += 33;
+		}
+		
+		if(isexistemail&&isexistphone&&isexistloginpassword){
+			securitylevel=100;
 		}
 		// sec level
 		model.put("securitylevel", securitylevel);
