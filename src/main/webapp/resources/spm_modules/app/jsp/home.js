@@ -146,8 +146,10 @@ define('app/jsp/home', function (require, exports, module) {
 									if(tgtTokenized){
 										_this._yiwenSpan(alignmentRaw,tgtTokenized,srcTokenized,i+1);
 									}else{
-										$("#srcNew").append("<span>"+$("#int-before").val()+"</span>");
-										$("#tgtNew").append("<span>"+ywText+"</span>");
+										$("#srcNew").append("<span class='' id='src_10'>"+$("#int-before").val()+"</span>");
+										$("#tgtOld").hide();
+										$("#tgtNew").show();
+										$("#tgtNew").append("<span class='' id='10'  onmousemove='tgtMove(10)' onmouseout='tgtMove(10)'>"+ywText+"</span>");
 									}
 								});
 							});
