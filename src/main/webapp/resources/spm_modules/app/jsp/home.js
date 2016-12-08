@@ -146,6 +146,7 @@ define('app/jsp/home', function (require, exports, module) {
 									if(tgtTokenized){
 										_this._yiwenSpan(alignmentRaw,tgtTokenized,srcTokenized,i+1);
 									}else{
+										$("#srcNew").append("<span>"+$("#int-before").val()+"</span>");
 										$("#tgtNew").append("<span>"+ywText+"</span>");
 									}
 								});
