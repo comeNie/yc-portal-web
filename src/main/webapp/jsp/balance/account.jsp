@@ -37,7 +37,9 @@
                                     <c:otherwise><spring:message code="account.yuan"/></c:otherwise>
                                 </c:choose>
                             </li>
+                            <% if(Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())){ %>
                             <li class="c-bj-bule"><a href="${_base}/p/balance/depositFund"><spring:message code="account.recharge"/></a></li>
+                            <% } %>
                         </ul>
                         <ul class="word-li">
                             <li><spring:message code="account.claim"/></li>
@@ -70,7 +72,7 @@
                     <ul>
                         <li class="left li-xlarge li-xlarge-ml">
                             <p><a href="#"><spring:message code="account.starting.endingtime"/></a></p>
-                            <p><input style="width: 140px" id="beginDate" name="beginDate" type="text" value="" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}'})" readonly="readonly"></p>
+                            <p><input style="width: 140px" id="beginDate" name="beginDate" type="text" value="" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}',onpicked:function(dp){begintime();}})" readonly="readonly"></p>
                             <p>~</p>
                             <p><input style="width: 140px" id="endDate" name="endDate" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'beginDate\')}',onpicked:function(dp){endtime();}})" readonly="readonly"></p>
                         </li>
@@ -193,6 +195,10 @@
     })();
     //选择结束时间触发
     function endtime() {
+        pager._incomeList();
+    }
+    //选择开始时间触发
+    function begintime() {
         pager._incomeList();
     }
     //收支切换
