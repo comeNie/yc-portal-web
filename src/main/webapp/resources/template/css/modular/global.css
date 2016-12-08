@@ -314,6 +314,7 @@ pre ol.linenums li {
 .tb-border th{border-bottom:1px solid #e3e6ed;}
 .tb-border td{height:75px;}
 .table-height50 tr td{height:50px;}
+.table-height65 tr td{padding:15px 0;}
 .table-height60 tr td{height:60px;border-bottom:1px solid #f0f2f5;text-align: left;}
 .table tr .red{color:#fe6b6b}
 .table tr .green{color:#39d5b0}

@@ -117,7 +117,7 @@ $(function () {
 //设置密码
 $(function(){
   $("#next-bt1").click(function(){
-  $("#next1").hide();
+  $(this).hide();
   $("#next2").show();
   });
   $("#next-bt2").click(function(){
@@ -228,6 +228,154 @@ $(function(){
   });
   
 });
+//协议tba
+//我的订单 table
+$(function(){
+$(".subnav-left ul li a").click(function () {
+                $(".subnav-left ul li a").each(function () {
+                    $(this).removeClass("current");
+                });
+                $(this).addClass("current");
+            });
+$('.subnav-left ul li a').click(function(){
+  var index=$('.subnav-left ul li a').index(this);
+    if(index==0){
+     $('#tab-xy1').show();
+  	 $('#tab-xy2').hide();
+  	 $('#tab-xy3').hide();
+  	 $('#tab-xy4').hide();
+  	 $('#tab-xy5').hide();
+  	 $('#tab-xy6').hide();
+  	 $('#tab-xy7').hide();
+  	 $('#tab-xy8').hide();
+  	 $('#tab-xy9').hide();
+  	 $('#tab-xy10').hide();
+   }
+   if(index==1){
+  	 $('#tab-xy2').show();
+  	 $('#tab-xy1').hide();
+  	 $('#tab-xy3').hide();
+  	 $('#tab-xy4').hide();
+  	 $('#tab-xy5').hide();
+  	 $('#tab-xy6').hide();
+  	 $('#tab-xy7').hide();
+  	 $('#tab-xy8').hide();
+  	 $('#tab-xy9').hide();
+  	 $('#tab-xy10').hide();
+   }
+   if(index==2){
+   	 $('#tab-xy3').show();
+  	 $('#tab-xy2').hide();
+  	 $('#tab-xy1').hide();
+  	 $('#tab-xy4').hide();
+  	 $('#tab-xy5').hide();
+  	 $('#tab-xy6').hide();
+  	 $('#tab-xy7').hide();
+  	 $('#tab-xy8').hide();
+  	 $('#tab-xy9').hide();
+  	 $('#tab-xy10').hide();
+   }
+   if(index==3){
+   	 $('#tab-xy4').show();
+  	 $('#tab-xy3').hide();
+  	 $('#tab-xy2').hide();
+  	 $('#tab-xy1').hide();
+  	 $('#tab-xy5').hide();
+  	 $('#tab-xy6').hide();
+  	 $('#tab-xy7').hide();
+  	 $('#tab-xy8').hide();
+  	 $('#tab-xy9').hide();
+  	 $('#tab-xy10').hide();
+   }
+   if(index==4){
+   	 $('#tab-xy5').show();
+  	 $('#tab-xy3').hide();
+  	 $('#tab-xy2').hide();
+  	 $('#tab-xy1').hide();
+  	 $('#tab-xy4').hide();
+  	 $('#tab-xy6').hide();
+  	 $('#tab-xy7').hide();
+  	 $('#tab-xy8').hide();
+  	 $('#tab-xy9').hide();
+  	 $('#tab-xy10').hide();
+   }
+   if(index==5){
+   	 $('#tab-xy6').show();
+  	 $('#tab-xy3').hide();
+  	 $('#tab-xy2').hide();
+  	 $('#tab-xy1').hide();
+  	 $('#tab-xy4').hide();
+  	 $('#tab-xy5').hide();
+  	 $('#tab-xy7').hide();
+  	 $('#tab-xy8').hide();
+  	 $('#tab-xy9').hide();
+  	 $('#tab-xy10').hide();
+   }
+   if(index==6){
+   	 $('#tab-xy7').show();
+  	 $('#tab-xy3').hide();
+  	 $('#tab-xy2').hide();
+  	 $('#tab-xy1').hide();
+  	 $('#tab-xy4').hide();
+  	 $('#tab-xy5').hide();
+  	 $('#tab-xy6').hide();
+  	 $('#tab-xy8').hide();
+  	 $('#tab-xy9').hide();
+  	 $('#tab-xy10').hide();
+   }
+   if(index==7){
+   	 $('#tab-xy8').show();
+  	 $('#tab-xy3').hide();
+  	 $('#tab-xy2').hide();
+  	 $('#tab-xy1').hide();
+  	 $('#tab-xy4').hide();
+  	 $('#tab-xy5').hide();
+  	 $('#tab-xy7').hide();
+  	 $('#tab-xy6').hide();
+  	 $('#tab-xy9').hide();
+  	 $('#tab-xy10').hide();
+   }
+   if(index==8){
+   	 $('#tab-xy9').show();
+  	 $('#tab-xy3').hide();
+  	 $('#tab-xy2').hide();
+  	 $('#tab-xy1').hide();
+  	 $('#tab-xy4').hide();
+  	 $('#tab-xy5').hide();
+  	 $('#tab-xy7').hide();
+  	 $('#tab-xy6').hide();
+  	 $('#tab-xy8').hide();
+  	 $('#tab-xy10').hide();
+   }
+   if(index==9){
+   	 $('#tab-xy10').show();
+  	 $('#tab-xy3').hide();
+  	 $('#tab-xy2').hide();
+  	 $('#tab-xy1').hide();
+  	 $('#tab-xy4').hide();
+  	 $('#tab-xy5').hide();
+  	 $('#tab-xy7').hide();
+  	 $('#tab-xy6').hide();
+  	 $('#tab-xy8').hide();
+  	 $('#tab-xy9').hide();
+   }
+  }); 
+});
+
+
+//译者咨询
+$(function () {
+    $(".consultation-list ul li a").click(function () {
+		$(this).children('i').toggleClass("icon-angle-down  icon-angle-up");
+		$(this).css("color","#2965e6");
+		$(this).parent().parent().parent().parent().children('.consultation-show').slideToggle(100);
+		
+    });
+});	
+
+
+
+
 ////旋转
 //$(document).ready(function(){
 //$("#icon1").rotate({ 

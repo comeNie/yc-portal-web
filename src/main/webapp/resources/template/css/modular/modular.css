@@ -96,6 +96,7 @@
 .query-order ul .li-xlarge-ml p{margin-right:22px;}
 .order-hiddn{display:none;}
 
+
 /**充值**/
 .mt-0{margin-top:0;}
 .recharge{width:100%;float:left;display: block;}
@@ -581,6 +582,92 @@
 .contact{width:100%;display:inline-block;margin-top:60px;background:#f0f2f5;height:400px;}
 .contact-main{width:1200px;margin:0 auto;}
 .contact-list{width:100%;height:400px;background:url(../../images/about3.png) right bottom no-repeat;}
-
+.contact-list ul{margin:60px 0 0 60px;float:left;}
+.contact-list ul li{line-height:30px;font-size:16px;color:#2c3e50}
+.contact-list ul li p{margin:15px 20px 0 0;float:left}
+.contact-list ul li .icon1 a{width:40px;height:40px;float:left;background: url(../../images/icon-big.png) no-repeat left -2235px;}
+.contact-list ul li .icon2 a{width:40px;height:40px;float:left;background: url(../../images/icon-big.png) no-repeat -60px -2235px;}
 /****/
 #empty{display:none;}
+/**协议**/
+.agreement-body{background:#f0f2f5;}
+.agreement-wrapper-big{width:1200px;margin:0 auto;}
+.agreement-wrapper{width:1200px;float:left;background:url(../../images/xieyi.jpg) repeat-y left;margin-top:20px;min-height:750px;margin-bottom:20px;}
+.subnav-left{width:240px;display:inline-block;}
+.subnav-left ul{width:100%;}
+.subnav-left ul li{width:100%;height:75px;line-height:75px;}
+.subnav-left ul li a{width:100%;color:#2c3e50;font-size:16px;padding-left:40px;float:left}
+.subnav-left ul li .current{width:100%;height:75px;background:#fff;float:left;color:#2965e6;-webkit-box-shadow: #d4e0fb 0px 0px 3px;-moz-box-shadow: #d4e0fb 0px 0px 3px;box-shadow: #d4e0fb 0px 2px 3px;}
+.agreement-right{width:940px;background:#fff;float:right;padding:30px 50px;min-height:750px;}
+/**文字**/
+.agreement-word{width:100%;float:left}
+.agreement-word ul li{width:100%;float:left;line-height:30px;margin-bottom:20px;color:#2c3e50;font-size:14px;}
+.agreement-word ul li .blue{color:#2965e6}
+.agreement-word ul .mt-20{margin-top:20px;}
+.table .leftborder{border-left:none}
+.table .bottomborder{border-bottom:none}
+.table .pl-100{padding-left:100px;}
+.agreement-word ul li span{float:left;margin:20px 100px 0 0;}
+.agreement-word ul li .icon1{width:130px;height:36px;background:url(../../images/icon-big.png) no-repeat -152px -1508px;}
+.agreement-word ul li .icon2{width:98px;height:36px;background:url(../../images/icon-big.png) no-repeat -319px -1508px;}
+.agreement-word ul li .icon3{width:127px;height:36px;background:url(../../images/icon-big.png) no-repeat -463px -1508px;}
+/**译者咨询**/
+.consultation-wrapper{width:100%;float:left;margin:50px 0 50px 0;}
+.consultation-big{width:100%;float:left;position:relative;background:#f5f7fb;}
+.consultation-list{width:100%;background:#fff;float:left;height:60px;box-shadow:0 3px 10px 6px rgba(212, 224, 251,0.6);
+}
+.consultation-list ul{width:100%;float:left;padding:0 38px;}
+.consultation-list ul li{width:100%;float:left;line-height:60px;}
+.consultation-list ul li p{float:left;}
+.consultation-list ul li a{width:100%;float:left;font-size:16px;color:#2c3e50}
+.consultation-list ul li i{font-size:30px;margin-top:15px;float:right;}
+.consultation-show{width:100%;background:#f5f7fb;padding:20px 35px;float:left;display: none;z-index:-1;}
+.consultation-show p{font-size:14px;color:#2c3e50;line-height:30px;}
+/**回到顶部**/
+.cd-top {
+  display: inline-block;
+  height: 57px;
+  width: 57px;
+  position: fixed;
+  bottom:350px;
+  right: 10px;
+
+  /* image replacement properties */
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+  background:url(../../images/top.jpg) no-repeat;
+  visibility: hidden;
+ 
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  
+}
+.cd-top.cd-is-visible {
+  /* the button becomes visible */
+  visibility: visible;
+  opacity: 1;
+}
+.cd-top.cd-fade-out {
+  /* 如果用户继续向下滚动,这个按钮的透明度会变得更低 */
+
+}
+.no-touch .cd-top:hover {
+  background-color: #e86256;
+  opacity: 1;
+}
+@media only screen and (min-width: 768px) {
+  .cd-top {
+    right: 20px;
+    bottom: 350px;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .cd-top {
+    height: 60px;
+    width: 60px;
+    right: 30px;
+    bottom: 350px;
+  }
+}

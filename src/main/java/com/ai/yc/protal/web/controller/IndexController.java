@@ -137,6 +137,42 @@ public class IndexController {
         return staticUrl() + "/certification";
     }
 
+    /**
+     * 常見問題
+     * @return
+     */
+    @RequestMapping("/faq")
+    public String faq(){
+        return staticUrl() + "/faq";
+    }
+
+    /**
+     * 协议规则
+     * @return
+     */
+    @RequestMapping("/agreement")
+    public String agreement(){
+        return staticUrl() + "/agreement";
+    }
+
+    /**
+     * 协议规则
+     * @return
+     */
+    @RequestMapping("/sexplain")
+    public String sexplain(){
+        return staticUrl() + "/sexplain";
+    }
+
+    /**
+     * 译者咨询
+     * @return
+     */
+    @RequestMapping("/tconsul")
+    public String tconsul(){
+        return staticUrl() + "/tconsul";
+    }
+
     private String staticUrl(){
         return Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale())?"/static":"/staticEs";
     }
