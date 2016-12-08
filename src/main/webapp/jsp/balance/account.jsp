@@ -61,8 +61,8 @@
                             <p><a href="#" id="oneyear" onclick="todate(this,oneyear)"><spring:message code="account.one.year"/></a></p>
                         </li>
                         <li class="right">
-                            <p id="income"><spring:message code="account.income"/>:0USD</p>
-                            <p id="out"><spring:message code="account.expenditure"/>:0USD</p>
+                            <p id="income"></p>
+                            <p id="out"></p>
                             <p><a href="#" class="is"><spring:message code="account.advanced.screening"/><i class="icon-angle-down"></i></a></p>
                         </li>
                     </ul>
