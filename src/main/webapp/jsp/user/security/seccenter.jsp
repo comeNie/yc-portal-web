@@ -136,7 +136,7 @@
   				</ul>
   				<ul>
   					<li id="login_phone_icon_color" class="red"><i id="login_phone_icon" class="icon iconfont">&#xe652;</i></li>
-  					<li class="word"><spring:message code="ycaccountcenter.setting.loginphone"/></li>
+  					<li class="word"><spring:message code="ycaccountcenter.setting.bindphone"/></li>
   					<li id="login_phone_text"><spring:message code="ycaccountcenter.setting.loginphone.unset"/></li>
   					<li class="right">
   					<c:if test="${!isexistphone}">
