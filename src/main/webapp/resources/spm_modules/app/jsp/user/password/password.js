@@ -510,12 +510,13 @@ define("app/jsp/user/password/password",
 							var step = 5;
 							var _res = setInterval(function(){
 				            	step-=1;
-				                if(step <= 0){
-				                //清除setInterval
+				            	if(step <= 0){
+				            	//清除setInterval
 				                clearInterval(_res);
 				                //跳转首页
 				                location.href=_base+"/p/index";
 				                }
+				            	$("li[id^='goIndexCountDown']").children("span").html(step);
 				            },1000);
 						}
 					});

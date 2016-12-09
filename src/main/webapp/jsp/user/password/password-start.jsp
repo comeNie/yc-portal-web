@@ -196,6 +196,7 @@
  						<ul>
  							<li><img src="${uedroot }/images/rech-win.png"></li>
  							<li class="word"><spring:message code="ycfindpassword.success"/></li>
+ 							<li class="word" id="goIndexCountDown2"><spring:message arguments="${_base}/p/index" code="ycfindpassword.success.countDown"/></li>
  						</ul>
  					</div>
  				
@@ -333,8 +334,9 @@
  					<!--表单-->
  					<div class="recharge-success mt-40">
  						<ul>
- 							<li><img src="${uedroot }/images/rech-win.png"></li>
+ 							<li><img src="${uedroot}/images/rech-win.png"></li>
  							<li class="word"><spring:message code="ycfindpassword.success"/></li>
+ 							<li class="word" id="goIndexCountDown1"><spring:message arguments="${_base}/p/index" code="ycfindpassword.success.countDown"/></li>
  						</ul>
  					</div>
  			
