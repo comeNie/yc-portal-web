@@ -175,6 +175,7 @@ public class BalanceController {
         Map<String, String> map = new HashMap<String, String>();
         map.put("tenantId", tenantId);//租户ID
         map.put("orderId", orderId);//请求单号
+        map.put("subject","账户充值");
         map.put("returnUrl", ConfigUtil.getProperty("RETURN_DEPOSIT_URL"));//页面跳转地址
         map.put("notifyUrl", notifyUrl);//服务异步通知地址
         map.put("merchantUrl",merchantUrl);//用户付款中途退出返回商户的地址
@@ -193,6 +194,7 @@ public class BalanceController {
         LOGGER.info("开始前台通知:" + map);
         String htmlStr = PaymentUtil.generateAutoSubmitForm(ConfigUtil.getProperty("ACTION_URL"), map);
         LOGGER.info("发起支付申请:" + htmlStr);
+        response.setCharacterEncoding("UTF-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write(htmlStr);
         response.getWriter().flush();

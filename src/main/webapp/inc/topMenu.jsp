@@ -18,11 +18,11 @@
                     <%--APP--%>
                 <p><a href="${_base}/findyee"><spring:message code="topMenue.APP"/></a></p>
                     <%--字幕--%>
-                <p><a href="${_base}/yeecaption"><spring:message code="topMenue.YeeCaption"/></a></p>
+                <%--<p><a href="${_base}/yeecaption"><spring:message code="topMenue.YeeCaption"/></a></p>--%>
                     <%--译库网翻译--%>
-                <p><a href="http://web.yeekit.com/" target="_blank"><spring:message code="topMenue.YeeWeb"/></a></p>
+                <%--<p><a href="http://web.yeekit.com/" target="_blank"><spring:message code="topMenue.YeeWeb"/></a></p>--%>
                     <%--社区--%>
-                <p><a href="http://club.yeecloud.com" target="_blank"><spring:message code="topMenue.Club"/></a></p>
+                <%--<p><a href="http://club.yeecloud.com" target="_blank"><spring:message code="topMenue.Club"/></a></p>--%>
             </li>
         </ul>
     </div>
