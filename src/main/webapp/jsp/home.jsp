@@ -43,6 +43,7 @@
 <body class="homebody">
 <!--面包屑导航-->
 <%@ include file="/inc/topHead.jsp" %>
+<%--图片版本--%>
 <c:set var="lTag"><%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"_en":""%></c:set>
 <!--banner-->
 <div class="banner"><p><img src="${uedroot}/images/banner-word-CN${lTag}.png"></p></div>

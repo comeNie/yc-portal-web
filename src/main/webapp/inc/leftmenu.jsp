@@ -95,7 +95,7 @@ UserUtil.getUserPortraitImg();
 					<span class="red">400-119-8080</span>
 				</p>
 			</div>
-			<div class="left-tplist"><a hrel="#"><img src="${uedroot}/images/to.jpg" /></a><i class="icon-remove-circle"></i></div>
+			<div class="left-tplist"><a hrel="#"><img src="${uedroot}/images/to${lTag}.png" /></a><i class="icon-remove-circle"></i></div>
 		</div>
   	</div>
   	<script type="text/javascript">

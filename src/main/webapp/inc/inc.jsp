@@ -11,6 +11,8 @@
 <c:set var="rootRes" value="${_base}/resources"/>
 <c:set var="spmRes" value="${_base}/resources/spm_modules"/>
 <c:set var="uedroot" value="${pageContext.request.contextPath}/resources/template"/>
+<%--图片版本--%>
+<c:set var="lTag"><%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"_en":""%></c:set>
 <%
     response.setHeader("Cache-Control", "no-cache");
     response.setDateHeader("Expires", 0);
