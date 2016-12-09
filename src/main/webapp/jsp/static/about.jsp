@@ -25,7 +25,7 @@
 <div class="static-wrapper">
     <!--标题-->
     <div class="static-title">
-        <p>译者认证</p>
+        <p>关于我们</p>
         <p class="line1"></p>
     </div>
     <div class="about-enterprise">
@@ -43,6 +43,26 @@
                 <p class="number3">2016年12月 全新译云上线</p>
             </li>
         </ul>
+    </div>
+
+    <div class="contact">
+        <div class="contact-main">
+            <div class="static-title">
+                <p>联系我们</p>
+                <p class="line1"></p>
+            </div>
+            <div class="contact-list">
+                <ul>
+                    <li>公司位置：北京市石景山区石景山路20号中铁建设大厦16层</li>
+                    <li>联系电话：+86 10 5322 3600</li>
+                    <li>
+                        <p class="icon1"><a href="#"></a></p>
+                        <p class="icon2"><a href="#"></a></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
     </div>
 </div>
 <!--底部-->

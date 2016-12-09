@@ -433,7 +433,8 @@ public class SecurityController {
 	@ResponseBody
 	public ResponseData<Boolean> updatePhone(
 			@RequestParam("phone") String phone,
-			@RequestParam("code") String code, @RequestParam("type") String type) {
+			@RequestParam("code") String code, @RequestParam("type") String type,
+			@RequestParam("countryValue") String countryValue) {
 		String msg = "error";
 		boolean isOK = false;
 		try {
@@ -442,7 +443,7 @@ public class SecurityController {
 			req.setOperationcode(code);
 			req.setMobilephone(phone);
 			req.setUid(Integer.parseInt(UserUtil.getUserId()));
-
+			req.setDomainname(countryValue);
 			IUcMembersSV iUcMembersSV = DubboConsumerFactory
 					.getService(IUcMembersSV.class);
 			UcMembersResponse res = iUcMembersSV.ucEditMobilephone(req);

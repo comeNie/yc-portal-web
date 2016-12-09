@@ -139,9 +139,8 @@
  								<p class="word"><spring:message code="ycupdateemail.phone" /></p>
  								<p>
 									<select id="country2" class="select select-in radius"></select>
-									<input type="text"  class="" id="uPhone">
 								</p>
- 								<p></p>
+ 								<p><input type="text"  class="int-text int-large radius" id="uPhone"></p>
  							</li>
  							<li>
  								<p class="word"><spring:message code="ycupdateemail.dynamiccode" /></p>
