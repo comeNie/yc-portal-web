@@ -199,7 +199,7 @@ define('app/jsp/order/orderContact', function (require, exports, module) {
                 processing: true,
                 url: _base + "/p/order/save",
                 data: {
-                    contactInfo: JSON.stringify(contactInfo),
+                    contactInfo:JSON.stringify(contactInfo),
                     remark: $("#remark").val()
                 },
                 success: function (data) {
