@@ -4,7 +4,7 @@ define(function (require, exports) {
 
     function escape(string) {
         //这里还得考虑将制表符等换成空格
-        var str = ('' + string).replace(/[\u0000-\u0020]/g, ' ');
+        var str = ('' + string).replace(/[\u0000-\u0020]|\u00a0/g, ' ');
         return ('' + str).replace(/["'\\\n\r\u2028\u2029]/g, function (character) {
             // Escape all characters not included in SingleStringCharacters and
             // DoubleStringCharacters on
