@@ -32,7 +32,7 @@
 .left-phone .phone-word{width:130px;float:left;margin-left:10px;}
 .left-phone .phone-word .red{color:#fe6b6b;font-size:16px}
 .left-tplist{width:230px;float:left;margin-top:14px;text-align:center;position:relative;}
-.left-tplist i{position:absolute;top:6px;right:20px;cursor:pointer;color:#000}
+.left-tplist i{position:absolute;top:6px;right:20px;cursor:pointer;color:#fff}
 .left-tplist img{width:200px;height:200px;}
 /**译员左侧菜单**/
 .interpreter-subanav{min-height:1200px;}

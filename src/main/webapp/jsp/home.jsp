@@ -46,7 +46,7 @@
 <%--图片版本--%>
 <c:set var="lTag"><%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"_en":""%></c:set>
 <!--banner-->
-<div class="banner"><p><img src="${uedroot}/images/banner-word-CN${lTag}.png"></p></div>
+<div class="banner"><p><img src="${uedroot}/images/banner-word${lTag}.png"></p></div>
 <!--index nav-->
 <div class="index-nav">
     <ul>

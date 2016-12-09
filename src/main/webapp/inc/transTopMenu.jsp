@@ -5,7 +5,7 @@
   	<div class="cloud-header">
   		<div class="logo">
 			<a href="${pageContext.request.contextPath}/">
-			<img src="${pageContext.request.contextPath}/resources/template/images/logo<%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"_en":""%>.png" />
+			<img src="${pageContext.request.contextPath}/resources/template/images/logo${lTag}.png" />
 			</a>
 		</div>
   		<!--导航-->
