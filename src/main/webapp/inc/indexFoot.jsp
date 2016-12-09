@@ -49,7 +49,7 @@
                         <!-- 找翻译APP -->
                         <p><a href="${_base}/findyee"><spring:message code="indexFoot.FindYee"/></a></p>
                         <!-- 字幕通 -->
-                        <p><a href="${_base}/yeecaption"><spring:message code="indexFoot.YeeCaption"/></a></p>
+                        <p><a href="https://www.yeekit.com/site/caption" target="_blank"><spring:message code="indexFoot.YeeCaption"/></a></p>
                         <!-- 译库网页翻译 -->
                         <p><a href="http://web.yeekit.com/" target="_blank"><spring:message code="indexFoot.YeeWeb"/></a></p>
                     </li>
