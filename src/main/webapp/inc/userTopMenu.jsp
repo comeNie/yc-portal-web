@@ -32,8 +32,8 @@
 				<li class="user"><a href="javaScript:void(0)" class="yonh"><span id="top_username">${user_session_key.username}</span><i class="icon-caret-down btg" id="icon2"></i></a>
   					<div class="show">
   						<ul>
-  							<li><i class="icon-user"></i><a href="#"><spring:message code="user.topMenu.perProfile"/></a></li>
-  							<li><i class="icon-lock"></i><a href="#"><spring:message code="user.topMenu.secSetting"/></a></li>
+  							<li><i class="icon-user"></i><a href="${_base}/p/interpreter/interpreterInfoPager?source=user"><spring:message code="user.topMenu.perProfile"/></a></li>
+  							<li><i class="icon-lock"></i><a href="${_base}/p/security/seccenter?source=user"><spring:message code="user.topMenu.secSetting"/></a></li>
   							<li><i class="icon-off"></i><a href="${_base}/ssologout"><spring:message code="user.topMenu.exit"/></a></li>
   						</ul>
   					</div>

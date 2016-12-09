@@ -18,9 +18,9 @@
 <div class="about-banner">
     <div class="about-list">
         <ul>
-            <li class="word">A new yiyun platform this is just a start</li>
+            <li class="word">a new YeeCloud, this is just a start</li>
             <%--体验即时翻译 --%>
-            <li class="pacbtn"><input  id="trans-btn" type="button" class="btn btn-blue btn-168 radius20" value="Experience instant translation"></li>
+            <li class="pacbtn"><input  id="trans-btn" type="button" class="btn btn-blue btn-168 radius20" value="Instant translation"></li>
         </ul>
     </div>
 </div>

@@ -47,7 +47,7 @@
                         <tr class="bj">
                             <th>翻译级别</th>
                             <th>订单字数</th>
-                            <th>贡献值</th>
+                            <th>翻译耗时</th>
                         </tr>
                         <tr>
                             <td rowspan="2">普通级</td>
@@ -70,7 +70,7 @@
                         <tr>
                             <td rowspan="2">出版级</td>
                             <td>≤1000字</td>
-                            <td>3小时</td>
+                            <td>4小时</td>
                         </tr>
                         <tr>
                             <td>每增加1000字</td>
@@ -175,11 +175,11 @@
                 <li>
                     <table  class="table table-border table-bg  table-bordered  table-height65">
                         <tr class="bj">
-                            <th>翻译级别</th>
-                            <th>订单字数</th>
+                            <th>来源</th>
+                            <th>贡献值</th>
                         </tr>
                         <tr>
-                            <td class="text-l" style="padding-left:100px;">普通级</td>
+                            <td class="text-l" style="padding-left:100px;">通过一个语言认证</td>
                             <td>+500</td>
                         </tr>
                         <tr>
@@ -224,7 +224,7 @@
                         </tr>
                         <tr>
                             <td class="text-l" style="padding-left:100px;">译员翻译订单获得差评</td>
-                            <td>--500</td>
+                            <td>-500</td>
                         </tr>
                     </table>
                 </li>

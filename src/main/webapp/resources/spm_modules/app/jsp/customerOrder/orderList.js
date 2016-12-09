@@ -142,6 +142,7 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
         //取消订单
         _cancelOrder:function(orderId) {
 			new Dialog({
+				content:$.i18n.prop('order.info.cancel.info'),
 				icon:'prompt',
 				okValue: $.i18n.prop('order.info.dialog.ok'),
 				cancelValue:$.i18n.prop('order.info.dialog.cancel'),

@@ -203,11 +203,11 @@
 									</c:choose>
                                 </p>
                             </li>
-                            <li>
-                            	<!-- 创建时间-->
-                                <p class="word"><spring:message code="myOrder.Creationtime"/>:</p>
-                                <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${OrderDetails.orderTime}"/> </p>
-                            </li>
+                            <%--<li>--%>
+                            	<%--<!-- 创建时间-->--%>
+                                <%--<p class="word"><spring:message code="myOrder.Creationtime"/>:</p>--%>
+                                <%--<p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${OrderDetails.orderTime}"/> </p>--%>
+                            <%--</li>--%>
                             <li>
                             	<!-- 预计翻译耗时 -->
                                 <p class="word"><spring:message code="myOrder.Estimatedtime"/>:</p>
@@ -272,7 +272,7 @@
                                 	<!-- 依次是  陪同翻译 交替传译 同声翻译 -->
                                 	<c:forEach items="${OrderDetails.prodLevels}" var="prodLevels">
                                 		<c:if test="${prodLevels.translateLevel == '100110'}"><spring:message code="order.interpretationType1"/></c:if>
-                                		<c:if test="${prodLevels.translateLevel == '100120'}"><spring:message code="order.interpretationType2"/></c:if>
+                                            <c:if test="${prodLevels.translateLevel == '100120'}"><spring:message code="order.interpretationType2"/></c:if>
                                 		<c:if test="${prodLevels.translateLevel == '100130'}"><spring:message code="order.interpretationType3"/></c:if>
                                 	</c:forEach>
                                 </p>
@@ -287,11 +287,11 @@
                                 <p class="word"><spring:message code="myOrder.meetEndTime"/>:</p>
                                 <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${OrderDetails.prod.endTime}"/> </p>
                             </li>
-                            <li>
-                            	<!-- 创建时间-->
-                                <p class="word"><spring:message code="myOrder.Creationtime"/>:</p>
-                                <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${OrderDetails.orderTime}"/> </p>
-                            </li>
+                            <%--<li>--%>
+                            	<%--<!-- 创建时间-->--%>
+                                <%--<p class="word"><spring:message code="myOrder.Creationtime"/>:</p>--%>
+                                <%--<p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${OrderDetails.orderTime}"/> </p>--%>
+                            <%--</li>--%>
                             <li>
                             	<!-- 译员数量 -->
                                 <p class="word"><spring:message code="myOrder.interpreterNum"/>:</p>

@@ -428,32 +428,32 @@
                                     <td style="padding: 0;">
                                         <table class="table">
                                             <tr>
-                                                <td class="leftborder"  width="20%">1800</td>
-                                                <td class="" width="20%">2200</td>
-                                                <td class="" width="20%">2400</td>
-                                                <td class="" width="20%">2600</td>
-                                                <td class="" width="20%">3000</td>
+                                                <td class="leftborder"  width="20%">6000</td>
+                                                <td class="" width="20%">8000</td>
+                                                <td class="" width="20%">10000</td>
+                                                <td class="" width="20%">12000</td>
+                                                <td class="" width="20%">17000</td>
                                             </tr>
                                             <tr>
-                                                <td class=" leftborder"  width="20%">1600</td>
-                                                <td class="" width="20%">1800</td>
-                                                <td class="" width="20%">2000</td>
-                                                <td class="" width="20%">2200</td>
-                                                <td class="" width="20%">2500</td>
+                                                <td class=" leftborder"  width="20%">8000</td>
+                                                <td class="" width="20%">10000</td>
+                                                <td class="" width="20%">12000</td>
+                                                <td class="" width="20%">14000</td>
+                                                <td class="" width="20%">20000</td>
                                             </tr>
                                             <tr>
-                                                <td class=" leftborder"  width="20%">1600</td>
-                                                <td class="" width="20%">1800</td>
-                                                <td class="" width="20%">2000</td>
-                                                <td class="" width="20%">2200</td>
-                                                <td class="" width="20%">2500</td>
+                                                <td class=" leftborder"  width="20%">5000</td>
+                                                <td class="" width="20%">6000</td>
+                                                <td class="" width="20%">8000</td>
+                                                <td class="" width="20%">9000</td>
+                                                <td class="" width="20%">10000</td>
                                             </tr>
                                             <tr>
-                                                <td class="bottomborder leftborder"  width="20%">1000</td>
-                                                <td class="bottomborder" width="20%">1600</td>
-                                                <td class="bottomborder" width="20%">1800</td>
-                                                <td class="bottomborder" width="20%">2000</td>
-                                                <td class="bottomborder" width="20%">2200</td>
+                                                <td class="bottomborder leftborder"  width="20%">6000</td>
+                                                <td class="bottomborder" width="20%">7000</td>
+                                                <td class="bottomborder" width="20%">10000</td>
+                                                <td class="bottomborder" width="20%">11000</td>
+                                                <td class="bottomborder" width="20%">15000</td>
                                             </tr>
                                         </table>
                                     </td>

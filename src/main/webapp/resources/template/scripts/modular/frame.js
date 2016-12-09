@@ -1,20 +1,22 @@
 //导航下拉
 $(function () {
     var st = 100;
-    $('.cloud-breadcrumb ul .user .yonh').mouseover(function () {
+    $('.cloud-breadcrumb ul .user .yonh').mouseenter(function () {
 		$('.show').show(1);
 		 $(this).children('i').rotate({animateTo:180});
     })
 		$(".show").click(function () {
                 $(this).hide(1);
             });
-			
-		$('.cloud-breadcrumb').mouseout(function () {
+	$('.cloud-breadcrumb .show').mouseleave(function () {
         $('.show').hide(1);
-         $(this).children('i').rotate({animateTo:0});
     });	
+		$('.cloud-breadcrumb ul .user .yonh').mouseleave(function () {
+        $(this).children('i').rotate({animateTo:0});
+    });	
+    
   });
-
+ 
 //左侧菜单关闭
 $(function(){
 $(".left-tplist i").click(function () {
