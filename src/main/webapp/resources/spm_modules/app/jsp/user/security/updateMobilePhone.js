@@ -113,7 +113,7 @@ define("app/jsp/user/security/updateMobilePhone",
 											if ("zh_CN" != currentLan) {
 												name = t.countryNameEn;
 											}
-											html.push('<option reg="'
+											html.push('<option country_value="'+t.countryValue+'" reg="'
 													+ t.regularExpression
 													+ '" value="' + _code
 													+ '" >' + _code + '+'
@@ -310,6 +310,7 @@ define("app/jsp/user/security/updateMobilePhone",
 								 showMsg(updatePhoneJs.pleaseInputOC);
 								 return false;
 							 }
+							 var countryValue = $("#country2").find("option:selected").attr("country_value");
 							 ajaxController.ajax({
     		        			 type:"post",
 				    			 url:_base+"/p/security/updatePhone",
@@ -317,6 +318,7 @@ define("app/jsp/user/security/updateMobilePhone",
 				    					phone:$("#uPhone").val(),
 				    					type:"2",
 				    					code:phoneDynamicode,
+				    					countryValue:countryValue
 				    				},
 				    				success: function(json) {
 				    					if(!json.data){

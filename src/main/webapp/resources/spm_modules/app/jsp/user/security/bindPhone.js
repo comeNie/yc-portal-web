@@ -78,7 +78,7 @@ define("app/jsp/user/security/bindPhone",
 											if ("zh_CN" != currentLan) {
 												name = t.countryNameEn;
 											}
-											html.push('<option reg="'
+											html.push('<option country_value="'+t.countryValue+'" reg="'
 													+ t.regularExpression
 													+ '" value="' + _code
 													+ '" >' + _code + '+'
@@ -224,11 +224,10 @@ define("app/jsp/user/security/bindPhone",
 							 */
 							 var phoneDynamicode = $("#dynamicode").val();
 							 if(phoneDynamicode==null||phoneDynamicode==""){
-								 //$("#dynamicodeErrMsg").show();
-								 //$("#dynamicodeErrMsg").text(phoneBindMsg.pleaseInputOC);
 								 showMsg(phoneBindMsg.pleaseInputOC);
 								 return false;
 							 }
+							 var countryValue = $("#country").find("option:selected").attr("country_value");
 							 ajaxController.ajax({
 								    type:"post",
 				    				url:_base+"/userCommon/checkSmsCode",
@@ -239,8 +238,6 @@ define("app/jsp/user/security/bindPhone",
 				    				},
 				    		        success: function(data) {
 				    		        	if(!data.data){
-				    		        		//$("#dynamicodeErrMsg").show();
-											//$("#dynamicodeErrMsg").text(data.statusInfo);
 				    		        		showMsg(data.statusInfo);
 											return false;
 				    		        	}else{
@@ -251,6 +248,7 @@ define("app/jsp/user/security/bindPhone",
 								    					phone:$("#telephone").val(),
 								    					type:"2",
 								    					code:phoneDynamicode,
+								    					countryValue:countryValue
 								    				},
 								    				success: function(json) {
 								    					if(!json.data){
