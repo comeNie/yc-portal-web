@@ -143,7 +143,7 @@
  								<p><input type="text" class="int-text int-xlarge radius" id="phoneUEmail"></p>
  							</li>
  							<li>
- 								<p class="word"><spring:message code="ycupdateemail.verifycode"/></p>
+ 								<p class="word"><spring:message code="ycupdateemail.veritycode"/></p>
  								<p><input type="text" class="int-text int-in radius" id="phoneUEmailCode"></p>
  								<p><input type="button" class="btn border-green border-sma radius btn-medium" id="phone-send-email-btn" value='<spring:message code="ycupdateemail.getdynamiccode"/>'></p>
  								<p><a id="goEmail1" href="javascript:void(0);"><spring:message code="ycupdateemail.immediatelyentryemail"/></a></p>
