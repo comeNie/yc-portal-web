@@ -58,7 +58,6 @@ define("app/jsp/user/password/password",
 							 * 邮件密码
 							 */
 							"click #find_password-next-bt5":"_checkEmailPassword"
-							
 						},
 						/* 重写父类 */
 						setup : function() {
