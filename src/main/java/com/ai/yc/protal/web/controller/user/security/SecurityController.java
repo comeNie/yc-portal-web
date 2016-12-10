@@ -72,6 +72,7 @@ public class SecurityController {
 	ResWebBundle rb;
 	// 译员首页
 	@RequestMapping("/interpreterIndex")
+	@ResponseBody
 	public ModelAndView toRegister() {
 		ModelAndView modelView = new ModelAndView(INTERPRETER_INDEX);
 		long balance = 0;
@@ -130,6 +131,7 @@ public class SecurityController {
 		return new ResponseData<Object>(status, msg, data);
 	}
 	@RequestMapping("/index")
+	@ResponseBody
 	public ModelAndView toIndex() {
 		ModelAndView modelView = new ModelAndView(INDEX);
 		long balance = 0;
@@ -190,6 +192,7 @@ public class SecurityController {
 	}
 
 	@RequestMapping("seccenter")
+	@ResponseBody
 	public ModelAndView init(HttpServletRequest request) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("-------进入安全设置界面-------");
@@ -249,6 +252,7 @@ public class SecurityController {
 	}
 
 	@RequestMapping("updatePassword")
+	@ResponseBody
 	public ModelAndView updatePassword(HttpServletRequest request) {
 		ModelAndView modelView = new ModelAndView(UPDATE_PASSWORD);
 		modelView.addObject("user", UserUtil.getSsoUser());
