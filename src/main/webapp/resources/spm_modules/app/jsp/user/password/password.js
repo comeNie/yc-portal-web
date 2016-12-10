@@ -345,7 +345,6 @@ define("app/jsp/user/password/password",
 			    					'checke_code':$("#tcode").val()
 			    				},
 			    		        success: function(json) {
-			    		        	alert(json);
 			    		        	if(!json.data){
 			    		        		showMsg(json.statusInfo);
 			    		        		return false;
@@ -495,7 +494,7 @@ define("app/jsp/user/password/password",
 			    				},
 			    		        success: function(json) {
 			    		        	if(!json.data){
-			    		        		showMsg(data.statusInfo);
+			    		        		showMsg(json.statusInfo);
 			    		        		return false;
 			    		        	}else{
 			    		        		$("#next5").hide();

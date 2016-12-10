@@ -309,7 +309,7 @@ public class UserCommonController {
 			String uid = request.getParameter("uid");
 			if (StringUtil.isBlank(uid)) {
 				uid = UserUtil.getUserId();
-			}
+			} 
 			Object[] ucenterRes = getUcenterOperationCode(type, uid, email);
 			if (!(boolean) ucenterRes[0]) {
 				msg = (String) ucenterRes[2];
