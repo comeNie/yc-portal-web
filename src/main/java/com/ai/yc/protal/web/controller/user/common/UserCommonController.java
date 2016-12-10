@@ -306,9 +306,9 @@ public class UserCommonController {
 		String msg = "";
 		if (UcenterOperation.OPERATION_TYPE_EMAIL_VERIFY.equals(type)) {// 邮箱验证
 			randomStr = RandomUtil.randomNum(6);
-			String uid = UserUtil.getUserId();
+			String uid = request.getParameter("uid");
 			if (StringUtil.isBlank(uid)) {
-				uid = request.getParameter("uid");
+				uid = UserUtil.getUserId();
 			}
 			Object[] ucenterRes = getUcenterOperationCode(type, uid, email);
 			if (!(boolean) ucenterRes[0]) {
