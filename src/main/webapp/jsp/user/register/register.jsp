@@ -71,7 +71,7 @@
 									<spring:message code="ycregister.password" />
 								</p>
 								<p>
-									<input id="password" maxlength="16" name="password"
+									<input id="password"  name="password"
 										type="password" class="int-text int-in-big radius">
 								</p>
 							</li>
@@ -80,7 +80,7 @@
 									<spring:message code="ycregister.confirmPassword" />
 								</p>
 								<p>
-									<input id="confirmPassword" maxlength="16"
+									<input id="confirmPassword" 
 										name="confirmPassword" type="password"
 										class="int-text int-in-big radius">
 								</p>
