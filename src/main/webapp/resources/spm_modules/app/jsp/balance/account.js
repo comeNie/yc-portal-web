@@ -89,7 +89,9 @@ define('app/jsp/balance/account', function (require, exports, module) {
 							var template = $.templates("#searchAccountTemple");
 							var htmlOutput = template.render(data);
 							$("#searchAccountData").html(htmlOutput);
-						}
+						}else {
+							document.getElementById("showAccountDiv").innerHTML = "<li class='dialog-icon-notquery'></li><li>抱歉没有查询到相关数据</li>";
+							document.getElementById("showAccountDiv").className = "not-query pt-20 pb-20";						}
 	            	}
 	            }
     		});

@@ -31,6 +31,9 @@ define("app/jsp/user/security/updateEmail",
 					.extend({
 						/* 事件代理 */
 						events : {
+							//通过邮箱修改邮箱,校验邮箱合法性和邮箱是否存在
+							"blur #emailUpdateEmail":"_checkEmail",
+							"focus #emailUpdateEmail":"_disTishi",
 							/**
 							 * 通过手机修改邮箱
 							 */
@@ -46,7 +49,6 @@ define("app/jsp/user/security/updateEmail",
 							"click #pnext-bt2":"_submitEmailValue",
 
 							
-							
 							/**
 							 * 通过邮箱修改邮箱
 							 */
@@ -54,8 +56,6 @@ define("app/jsp/user/security/updateEmail",
 							"click #sendEmailBtn" : "_sendEmail",
 							//邮箱验证下一步
 							"click #update-email-next-bt4":"_checkEmailImageCode",
-							//通过邮箱修改邮箱,校验邮箱合法性
-							"blur #emailUpdateEmail":"_checkEmail",
 							//通过邮箱修改邮箱，发送动态码验证
 							"click #email-sendCode-btn":"_sendEmailUDynamiCode",
 							//校验手机和验证码是否匹配，如果匹配则修改手机号
@@ -372,20 +372,47 @@ define("app/jsp/user/security/updateEmail",
 				    					}
 				    				});
 						},
+						/**
+                         * 获取焦点时去掉提示
+						 */
+						_disTishi : function () {
+							$("#tishi1").html("");
+						},
 						/* 邮箱校验 */
-						_checkEmail : function(id) {
-							var email = $("#"+id);
+						_checkEmail : function() {
+							var email = $("#emailUpdateEmail");
 							var emailVal = email.val();
 							if ($.trim(emailVal) == "") {
-								showMsg(updateEmailJs.emailUErrPleaseMsg);
+								//$("#emailUErrMsg").show();
+								//$("#emailUErrMsg").text(emailBindMsg.emailUErrPleaseMsg);
 								//email.focus();
+								$("#tishi1").html(updateEmailJs.emailUErrPleaseMsg);
 								return false;
 							}
 							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
 									.test(emailVal)) {
-								showMsg(updateEmailJs.emailUErrLegalMsg);
+								//$("#emailUErrMsg").show();
+								//$("#emailUErrMsg").text(emailBindMsg.emailUErrLegalMsg);
+								$("#tishi1").html(updateEmailJs.emailUErrLegalMsg);
 								return false;
 							}
+							ajaxController.ajax({
+								type:"post",
+								url:_base+"/p/security/isExitEmail",
+								data:{
+									email:$("#emailUpdateEmail").val(),
+									type:"5",
+								},
+								success: function(json) {
+									if(!json.data){
+										$("#tishi1").html(json.statusInfo)
+									}
+								},
+								error: function(error) {
+									$("#tishi1").html("error:"+ error);
+								}
+							});
+							$("#emailUErrMsg").hide();
 							return true;
 						},
 						_pcheckEmail:function(){
@@ -459,10 +486,15 @@ define("app/jsp/user/security/updateEmail",
 						/* 发送动态码 */
 						  _sendEmailUEmailDynamiCode : function() {
 								var _this = this;
+							  	var tishi = $("#tishi1").val();
 								var btn = $("#email-sendCode-btn");
 								if (btn.hasClass("biu-btn")) {
 									return;
 								}
+							  	if(tishi!=null){
+									return;
+								}
+							  
 								curCount = count;
 								ajaxController
 									.ajax({

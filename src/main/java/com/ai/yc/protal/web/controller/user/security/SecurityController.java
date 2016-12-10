@@ -72,6 +72,7 @@ public class SecurityController {
 	ResWebBundle rb;
 	// 译员首页
 	@RequestMapping("/interpreterIndex")
+	@ResponseBody
 	public ModelAndView toRegister() {
 		ModelAndView modelView = new ModelAndView(INTERPRETER_INDEX);
 		long balance = 0;
@@ -130,6 +131,7 @@ public class SecurityController {
 		return new ResponseData<Object>(status, msg, data);
 	}
 	@RequestMapping("/index")
+	@ResponseBody
 	public ModelAndView toIndex() {
 		ModelAndView modelView = new ModelAndView(INDEX);
 		long balance = 0;
@@ -190,6 +192,7 @@ public class SecurityController {
 	}
 
 	@RequestMapping("seccenter")
+	@ResponseBody
 	public ModelAndView init(HttpServletRequest request) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("-------进入安全设置界面-------");
@@ -249,6 +252,7 @@ public class SecurityController {
 	}
 
 	@RequestMapping("updatePassword")
+	@ResponseBody
 	public ModelAndView updatePassword(HttpServletRequest request) {
 		ModelAndView modelView = new ModelAndView(UPDATE_PASSWORD);
 		modelView.addObject("user", UserUtil.getSsoUser());
@@ -390,6 +394,50 @@ public class SecurityController {
 		modelView.addObject("source", source);
 		return modelView;
    }
+
+
+	/**
+	 * 验证邮箱是否存在
+	 * @param email
+	 * @param
+	 * @return
+	 */
+
+	@RequestMapping(value = "/isExitEmail", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseData<Boolean> isExitEmail(
+			@RequestParam("email") String email) {
+		String msg = "error";
+		boolean isOK = false;
+		try {
+			UcMembersCheckEmailRequest req = new UcMembersCheckEmailRequest();
+			req.setTenantId(Constants.DEFAULT_TENANT_ID);
+			req.setEmail(email);
+			req.setUid(Integer.parseInt(UserUtil.getUserId()));
+
+			IUcMembersSV iUcMembersSV = DubboConsumerFactory
+					.getService(IUcMembersSV.class);
+			UcMembersResponse res = iUcMembersSV.ucCheckeEmail(req);
+			ResponseCode responseCode = res == null ? null : res.getCode();
+			Integer codeNumber = responseCode == null ? null : responseCode
+					.getCodeNumber();
+			LOG.info("--------验证邮箱是否存在返回 :" + JSON.toJSONString(res));
+			if (codeNumber != null && codeNumber == 1) {
+				isOK = true;
+				msg = "ok";
+			} else {
+				msg = responseCode.getCodeMessage();
+			}
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
+
+		ResponseData<Boolean> responseData = new ResponseData<Boolean>(
+				ResponseData.AJAX_STATUS_SUCCESS, msg, isOK);
+		return responseData;
+	}
+
+
 	@RequestMapping(value = "/updateEmail", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseData<Boolean> updateEmail(
