@@ -218,7 +218,9 @@ public class RegisterController {
 		String msg ="ok";
 		if (codeNumber != null && codeNumber == 1) {
 			falg = true;
-		} else {
+		} else if(codeNumber == -10){
+			msg = rb.getMessage("ycregisterMsg.accountError");
+		}else{
 			msg = rb.getMessage("ycregisterMsg.accountExists");
 		}
 		return new Object[]{falg,msg};
