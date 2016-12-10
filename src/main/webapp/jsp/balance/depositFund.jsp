@@ -67,7 +67,7 @@
                                 </li>
                                 <li>
                                     <p class="word"><spring:message code="account.amount.to.be.recharged"/>:</p>
-                                    <p><input type="text" id="orderAmount" name="orderAmount" class="int-text int-rech-medium radius" onblur="check(this.value)" onfocus="disTishi()"></p>
+                                    <p><input type="text" id="orderAmount" name="orderAmount" class="int-text int-rech-medium radius" onfocus="disTishi()"></p>
                                     <p><spring:message code="account.yuan"/></p>
                                 </li>
                                 <li class="tishi" >
@@ -114,21 +114,23 @@
             pager.render();
         });
     })();
-
+ /*   var input = <spring:message code="account.tishi.input"/>
+    var validInput = <spring:message code="account.tishi.validmoney"/>;
     function check(target) {
+
         if (target==""){
-            $("#tishi1").html("请输入充值金额");
+            $("#tishi1").html(input);
             return false;
         }
         if (isNaN(target)) {
-            $("#tishi1").html("请输入正确的充值金额");
+            $("#tishi1").html(validInput);
             return false;
         }
         if (target<=0||(target.toString().split(".").length > 1 && target.toString().split(".")[1].length > 2)){
-            $("#tishi1").html("请输入正确的充值金额");
+            $("#tishi1").html(validInput);
             return false;
         }
-    }
+    }*/
     function disTishi() {
         $("#tishi1").html("");
     }

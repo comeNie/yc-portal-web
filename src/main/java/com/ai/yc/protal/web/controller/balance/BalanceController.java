@@ -175,7 +175,7 @@ public class BalanceController {
         Map<String, String> map = new HashMap<String, String>();
         map.put("tenantId", tenantId);//租户ID
         map.put("orderId", orderId);//请求单号
-        map.put("subject","账户充值");
+        /*map.put("subject","账户充值");*/
         map.put("returnUrl", ConfigUtil.getProperty("RETURN_DEPOSIT_URL"));//页面跳转地址
         map.put("notifyUrl", notifyUrl);//服务异步通知地址
         map.put("merchantUrl",merchantUrl);//用户付款中途退出返回商户的地址
