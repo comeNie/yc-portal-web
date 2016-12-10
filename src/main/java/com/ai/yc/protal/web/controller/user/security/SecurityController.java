@@ -191,7 +191,7 @@ public class SecurityController {
 		return stateCount;
 	}
 
-	@RequestMapping("seccenter")
+	@RequestMapping("/seccenter")
 	@ResponseBody
 	public ModelAndView init(HttpServletRequest request) {
 		if (LOG.isDebugEnabled()) {
@@ -251,7 +251,7 @@ public class SecurityController {
 		return modelView;
 	}
 
-	@RequestMapping("updatePassword")
+	@RequestMapping("/updatePassword")
 	@ResponseBody
 	public ModelAndView updatePassword(HttpServletRequest request) {
 		ModelAndView modelView = new ModelAndView(UPDATE_PASSWORD);
@@ -261,7 +261,7 @@ public class SecurityController {
 		return modelView;
 	}
 
-	@RequestMapping("updatePayPassword")
+	@RequestMapping("/updatePayPassword")
 	public ModelAndView updatePayPassword(HttpServletRequest request) {
 		ModelAndView modelView = new ModelAndView(UPDATE_PAY_PASSWORD);
 		modelView.addObject("user", UserUtil.getSsoUser());
@@ -348,7 +348,7 @@ public class SecurityController {
 		return responseData;
 	}
 
-	@RequestMapping("bindEmail")
+	@RequestMapping("/bindEmail")
 	public ModelAndView bindEmail(HttpServletRequest request) {
 		String source = request.getParameter("source");//区分来源
 		ModelAndView modelView =new ModelAndView("user/security/bindEmail");
@@ -356,7 +356,7 @@ public class SecurityController {
 		return modelView;
 	}
 
-	@RequestMapping("bindEmailSuccess")
+	@RequestMapping("/bindEmailSuccess")
 	public ModelAndView bindEmailSuccess(HttpServletRequest request) {
 		String source = request.getParameter("source");//区分来源
 		ModelAndView modelView =new ModelAndView("user/security/bindEmailSuccess");
@@ -364,7 +364,7 @@ public class SecurityController {
 		return modelView;
 	}
 
-	@RequestMapping("editEmail")
+	@RequestMapping("/editEmail")
 	public ModelAndView editEmail(HttpServletRequest request) {
 		String source = request.getParameter("source");//区分来源
 		ModelAndView modelView =new ModelAndView("user/security/updateEmail");
@@ -372,7 +372,7 @@ public class SecurityController {
 		return modelView;
     }
 
-	@RequestMapping("bindPhone")
+	@RequestMapping("/bindPhone")
 	public ModelAndView bindPhone(HttpServletRequest request) {
 		String source = request.getParameter("source");//区分来源
 		ModelAndView modelView =new ModelAndView("user/security/bindPhone");
@@ -380,14 +380,14 @@ public class SecurityController {
 		return modelView;
 	}
 
-	@RequestMapping("editPhone")
+	@RequestMapping("/editPhone")
 	public ModelAndView editPhone(HttpServletRequest request) {
 		String source = request.getParameter("source");//区分来源
 		ModelAndView modelView =new ModelAndView("user/security/updateMobilePhone");
 		modelView.addObject("source", source);
 		return modelView;
 	}
-	@RequestMapping("bindPhoneSuccess")
+	@RequestMapping("/bindPhoneSuccess")
 	public ModelAndView bindPhoneSuccess(HttpServletRequest request) {
 		String source = request.getParameter("source");//区分来源
 		ModelAndView modelView =new ModelAndView("user/security/bindPhoneSuccess");
