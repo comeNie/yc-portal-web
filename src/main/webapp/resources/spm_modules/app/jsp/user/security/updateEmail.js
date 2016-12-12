@@ -33,7 +33,7 @@ define("app/jsp/user/security/updateEmail",
 						events : {
 							//通过邮箱修改邮箱,校验邮箱合法性和邮箱是否存在
 							"blur #emailUpdateEmail":"_checkEmail",
-							"focus #emailUpdateEmail":"_disTishi",
+							// "focus #emailUpdateEmail":"_disLabel",
 							/**
 							 * 通过手机修改邮箱
 							 */
@@ -372,31 +372,29 @@ define("app/jsp/user/security/updateEmail",
 				    					}
 				    				});
 						},
-						/**
-                         * 获取焦点时去掉提示
-						 */
-						_disTishi : function () {
-							$("#tishi1").html("");
-						},
+
 						/* 邮箱校验 */
 						_checkEmail : function() {
+							$("#emailUErrMsg").hide();
+							var flag = true;
 							var email = $("#emailUpdateEmail");
 							var emailVal = email.val();
 							if ($.trim(emailVal) == "") {
-								//$("#emailUErrMsg").show();
-								//$("#emailUErrMsg").text(emailBindMsg.emailUErrPleaseMsg);
+								$("#emailUErrMsg").show();
+								$("#emailUErrMsg").text(updateEmailJs.emailUErrPleaseMsg);
 								//email.focus();
-								$("#tishi1").html(updateEmailJs.emailUErrPleaseMsg);
+								// $("#tishi1").html(updateEmailJs.emailUErrPleaseMsg);
 								return false;
 							}
 							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
 									.test(emailVal)) {
-								//$("#emailUErrMsg").show();
-								//$("#emailUErrMsg").text(emailBindMsg.emailUErrLegalMsg);
-								$("#tishi1").html(updateEmailJs.emailUErrLegalMsg);
+								$("#emailUErrMsg").show();
+								$("#emailUErrMsg").text(updateEmailJs.emailUErrLegalMsg);
+								// $("#tishi1").html(updateEmailJs.emailUErrLegalMsg);
 								return false;
 							}
 							ajaxController.ajax({
+								async:false,
 								type:"post",
 								url:_base+"/p/security/isExitEmail",
 								data:{
@@ -405,15 +403,18 @@ define("app/jsp/user/security/updateEmail",
 								},
 								success: function(json) {
 									if(!json.data){
-										$("#tishi1").html(json.statusInfo)
+										$("#emailUErrMsg").show();
+										$("#emailUErrMsg").text(json.statusInfo);
+										// $("#tishi1").html(json.statusInfo)
+										flag = false;
 									}
 								},
 								error: function(error) {
 									$("#tishi1").html("error:"+ error);
 								}
 							});
-							$("#emailUErrMsg").hide();
-							return true;
+							// $("#emailUErrMsg").hide();
+							return flag;
 						},
 						_pcheckEmail:function(){
 							var email = $("#phoneUEmail");
@@ -435,18 +436,13 @@ define("app/jsp/user/security/updateEmail",
 							$("#phoneUEmailErrMgs").hide();
 							return true;
 						},
+						
 						/* 发送动态码 */
 						  _sendEmailUEmailDynamiCode : function() {
-								var _this = this;
-							  	var tishi = $("#tishi1").html();
 								var btn = $("#email-sendCode-btn");
 								if (btn.hasClass("biu-btn")) {
 									return;
 								}
-							  	if(tishi!=""){
-									return;
-								}
-							  
 								curCount = count;
 								ajaxController
 									.ajax({

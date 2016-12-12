@@ -282,7 +282,7 @@
  								<label class="ml-70" id="emailUErrMsg" style="display: none;"></label>
  								<p class="word"><spring:message code="ycupdateemail.email"/></p>
  								<p><input type="text" class="int-text int-xlarge radius" id="emailUpdateEmail"></p>
-								<p style="color: #fe6b6b" id="tishi1"></p>
+								<%--<p style="color: #fe6b6b" id="tishi1"></p>--%>
  							</li>
 							<%--<li class="tishi" >
 								<p id="tishi1">
