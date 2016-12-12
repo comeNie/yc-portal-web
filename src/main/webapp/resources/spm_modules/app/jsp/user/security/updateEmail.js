@@ -378,34 +378,37 @@ define("app/jsp/user/security/updateEmail",
 						_disTishi : function () {
 							$("#tishi1").html("");
 						},
+
 						/* 邮箱校验 */
 						_checkEmail : function() {
 							var email = $("#emailUpdateEmail");
 							var emailVal = email.val();
+							var flag = true;
 							if ($.trim(emailVal) == "") {
 								//$("#emailUErrMsg").show();
 								//$("#emailUErrMsg").text(emailBindMsg.emailUErrPleaseMsg);
 								//email.focus();
 								$("#tishi1").html(updateEmailJs.emailUErrPleaseMsg);
-								return false;
+								flag = false;
 							}
 							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
 									.test(emailVal)) {
 								//$("#emailUErrMsg").show();
 								//$("#emailUErrMsg").text(emailBindMsg.emailUErrLegalMsg);
 								$("#tishi1").html(updateEmailJs.emailUErrLegalMsg);
-								return false;
+								flag = false;
 							}
 							ajaxController.ajax({
+								async:false,
 								type:"post",
 								url:_base+"/p/security/isExitEmail",
 								data:{
 									email:$("#emailUpdateEmail").val(),
-									type:"5",
 								},
 								success: function(json) {
 									if(!json.data){
-										$("#tishi1").html(json.statusInfo)
+										$("#tishi1").html(json.statusInfo);
+										flag = false;
 									}
 								},
 								error: function(error) {
@@ -413,7 +416,7 @@ define("app/jsp/user/security/updateEmail",
 								}
 							});
 							$("#emailUErrMsg").hide();
-							return true;
+							return flag;
 						},
 						_pcheckEmail:function(){
 							var email = $("#phoneUEmail");
@@ -437,16 +440,10 @@ define("app/jsp/user/security/updateEmail",
 						},
 						/* 发送动态码 */
 						  _sendEmailUEmailDynamiCode : function() {
-								var _this = this;
-							  	var tishi = $("#tishi1").html();
 								var btn = $("#email-sendCode-btn");
 								if (btn.hasClass("biu-btn")) {
 									return;
 								}
-							  	if(tishi!=""){
-									return;
-								}
-							  
 								curCount = count;
 								ajaxController
 									.ajax({
@@ -468,7 +465,7 @@ define("app/jsp/user/security/updateEmail",
 												return;
 											}else{
 												if(data.data){
-													var step = 59;
+													var step = 5;
 										            $('#email-sendCode-btn').val(updateEmailJs.resend60);
 										            $("#email-sendCode-btn").attr("disabled", true);
 										            var _res = setInterval(function(){
