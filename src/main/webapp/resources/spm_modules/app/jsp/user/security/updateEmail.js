@@ -465,7 +465,7 @@ define("app/jsp/user/security/updateEmail",
 												return;
 											}else{
 												if(data.data){
-													var step = 5;
+													var step = 59;
 										            $('#email-sendCode-btn').val(updateEmailJs.resend60);
 										            $("#email-sendCode-btn").attr("disabled", true);
 										            var _res = setInterval(function(){
