@@ -542,7 +542,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		//初始化上传控件
 		_initUpdate:function () {
 			var _this= this;
-            var FILE_TYPES=['rar','zip','doc','docx','pdf','jpg','png','jif'];
+            var FILE_TYPES=['rar','zip','doc','docx','pdf','jpg','png','gif'];
             uploader = WebUploader.create({
                 swf : _base+"/resources/spm_modules/webuploader/Uploader.swf",
                 server: _base+'/order/uploadFile',

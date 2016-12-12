@@ -417,7 +417,7 @@ public class TransOrderController {
                 return resData;
             }
             
-            //把文件保存到数据库中
+            //把文件保存到DSS中
             fileId = client.save(file.getBytes(), file.getOriginalFilename());
             
             //更新 文件列表信息
