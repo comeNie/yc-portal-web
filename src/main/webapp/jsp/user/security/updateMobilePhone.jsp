@@ -154,7 +154,7 @@
  					</div>
  				<!--按钮-->
  				<div class="recharge-btn">
- 						<input type="button" id="unext-bt2" class="btn btn-green btn-xxxlarge radius10" value="提交">
+ 						<input type="button" id="unext-bt2" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="ycupdateMobilePhone.submit" />">
  				</div>
  				</div>
  				<div class="binding" id="next3">
