@@ -14,12 +14,13 @@
 	<title>FindYee App_FindYee partime _ how to find an interpreter or translator</title>
 </head>
 <body>
-<!--面包屑导航-->
-<%@include file="/inc/topHead.jsp" %>
-<!--主导航-->
-<%@include file="/inc/topMenu.jsp" %>
 
 <div class="rollbanner" id="rollbanner">
+	<!--面包屑导航-->
+	<%@include file="/inc/topHead.jsp" %>
+	<!--主导航-->
+	<%@include file="/inc/topMenu.jsp" %>
+
 	<div class="r_banner">
 		<div class="rb_public rb_con0">
 			<div class="cwidth rbc_0 clearfix" id="rbCon0">

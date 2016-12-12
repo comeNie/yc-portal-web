@@ -33,12 +33,8 @@ public class CacheServcie {
         List<SysDuad> duadList = new ArrayList<SysDuad>();
 
         ICacheClient iCacheClient = AiPassUitl.getCommonCacheClient();
-        String duadStr;
-        if ( Locale.SIMPLIFIED_CHINESE.equals(locale)) {
-            duadStr = iCacheClient.hget(CacheKey.DUAD_L_KEY,orderType);
-        } else {
-            duadStr = iCacheClient.hget(CacheKey.DUAD_D_KEY,orderType);
-        }
+        String duadStr="";
+        duadStr = iCacheClient.hget(CacheKey.DUAD_L_KEY,orderType);
 
         if(StringUtils.isNotBlank(duadStr)) {
             duadList = JSONObject.parseArray(duadStr, SysDuad.class);

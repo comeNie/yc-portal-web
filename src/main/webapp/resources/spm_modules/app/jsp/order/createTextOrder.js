@@ -390,12 +390,23 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
         		if (val ==  $(".dropdown .selected").attr('value')) {
         			var selected = $(this);
 
-        			var ordinary = selected.attr("ordinary");
-        			var ordinaryUrgent = selected.attr("ordinaryUrgent");
-        			var professional = selected.attr("professional");
-        			var professionalUrgent = selected.attr("professionalUrgent");
-        			var publish = selected.attr("publish");
-        			var publishUrgent = selected.attr("publishUrgent");
+					var ordinary,ordinaryUrgent,professional,professionalUrgent,publish,publishUrgent;
+					if (currentLan.indexOf("zh") >= 0) {
+						ordinary = selected.attr("ordinary");
+						ordinaryUrgent = selected.attr("ordinaryUrgent");
+						professional = selected.attr("professional");
+						professionalUrgent = selected.attr("professionalUrgent");
+						publish = selected.attr("publish");
+						publishUrgent = selected.attr("publishUrgent");
+					} else {
+						ordinary = selected.attr("ordinaryDollar");
+						ordinaryUrgent = selected.attr("ourgentDollar");
+						professional = selected.attr("professionalDollar");
+						professionalUrgent = selected.attr("purgentDollar");
+						publish = selected.attr("publishDollar");
+						publishUrgent = selected.attr("puburgentDollar");
+					}
+
         			
         			if ($("#urgentOrder").is(':checked') ) {
         				$("#stanPrice").html(ordinaryUrgent);

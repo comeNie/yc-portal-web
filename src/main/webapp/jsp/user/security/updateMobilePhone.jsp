@@ -3,6 +3,8 @@
 <html>
 <head>
 	<%@ include file="/inc/inc.jsp" %>
+	<link href="${uedroot}/css/modular/login-regsiter.css" rel="stylesheet"
+	type="text/css" />
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title><spring:message code="ycupdateemail.updatephone" /></title>
@@ -83,7 +85,7 @@
  					<div class="recharge-form-label mt-30 ">
  						<ul>
  							<li>
- 								<label class="ml-70" id="dynamicode" style="display: none;"></label>
+ 								<label class="ml-70" id="dynamicode" ></label>
  								<p class="word"><spring:message code="ycupdateemail.phone" /></p>
  								<p id="telephone">${sessionScope.user_session_key.fullMobile}</p>
  							</li>

@@ -74,8 +74,11 @@
 	  						<c:if test="${duad.orderType != 2}">
   								<option value="${duad.duadId}"
   										ordinary="${duad.ordinary}"  ordinaryUrgent="${duad.ordinaryUrgent}"
+										ordinaryDollar="${duad.ordinaryDollar}" ourgentDollar="${duad.ourgentDollar}"
 										professional="${duad.professional}"  professionalUrgent="${duad.professionalUrgent}"
+										professionalDollar="${duad.professionalDollar}"  purgentDollar="${duad.purgentDollar}"
 										publish="${duad.publish}"  publishUrgent="${duad.publishUrgent}"
+										publishDollar="${duad.publishDollar}" puburgentDollar="${duad.puburgentDollar}"
 										sourceEn="${duad.sourceEn}" targertEn="${duad.targetEn}"
 										sourceCn="${duad.sourceCn}" targertCn="${duad.targetCn}"
 										sourceCode="${duad.sourceCode}" targetCode="${duad.targetCode}"
