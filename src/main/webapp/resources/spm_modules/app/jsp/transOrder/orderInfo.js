@@ -49,7 +49,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
             if(filePath == null || filePath=== '')
             	return;
             var extStart = filePath.lastIndexOf(".");
-            var ext = filePath.substring(extStart+1, filepath.length).toLowerCase();
+            var ext = filePath.substring(extStart+1, filePath.length).toLowerCase();
             //没有扩展名或扩展名不在允许范围内，则进行提示
             if (extStart < 1 || $.inArray(ext, FILE_TYPES)<0) {
                 _this._showWarn($.i18n.prop('order.upload.error.type'));
@@ -201,7 +201,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				ok:function(){
 					this.close();
 				}
-			}).show();
+			}).showModal();
 		},
 		_showFail:function(msg){
 			new Dialog({
@@ -212,8 +212,8 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				ok:function(){
 					this.close();
 				}
-			}).show();
-		},
+			}).showModal();
+		}
         
     });
     module.exports = orderInfoPage;
