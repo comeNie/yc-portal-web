@@ -40,35 +40,48 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
     	},
     	
     	//上传译文
-    	_upload:function() {
-			var _this = this;
-			 var formData = new FormData($( "#uploadForm" )[0]); 
-			 $.ajax({  
-		         url: _base +"/p/trans/order/upload" ,  
-		         type: 'POST',  
-		         data: formData,  
-		         async: false,  
-		         cache: false,  
-		         contentType: false,  
-		         processData: false,  
-		         success: function (data) {  
-		        	 if ("1" === data.statusCode) {
-							//保存成功
-							//刷新页面
-				    		window.location.reload();
-					 } else if("FAIL" == data.statusInfo) {
-						 _this._showWarn($.i18n.prop('order.submit.fail'));
-					 } else if ("FAIL_0" == data.statusInfo) {
-						 _this._showWarn($.i18n.prop('order.submit.reason.transNull'));
-					 } else { //FAIL_1
-						 _this._showWarn($.i18n.prop('order.submit.reason.transFileNull'));
-					 }
-		         },  
-		         error: function (data) {
-					 _this._showFail($.i18n.prop('order.submit.fail'));
-		         }
-		    });  
-    	},
+        _upload: function () {
+            var _this = this;
+            var formData = new FormData($("#uploadForm")[0]);
+            //添加上传文件验证
+            var FILE_TYPES=['rar','zip','doc','docx','pdf','jpg','png','gif'];
+            var filePath = $("#upload").val();
+            if(filePath == null || filePath=== '')
+            	return;
+            var extStart = filePath.lastIndexOf(".");
+            var ext = filePath.substring(extStart+1, filePath.length).toLowerCase();
+            //没有扩展名或扩展名不在允许范围内，则进行提示
+            if (extStart < 1 || $.inArray(ext, FILE_TYPES)<0) {
+                _this._showWarn($.i18n.prop('order.upload.error.type'));
+                return false;
+            }
+
+            $.ajax({
+                url: _base + "/p/trans/order/upload",
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if ("1" === data.statusCode) {
+                        //保存成功
+                        //刷新页面
+                        window.location.reload();
+                    } else if ("FAIL" == data.statusInfo) {
+                        _this._showWarn($.i18n.prop('order.submit.fail'));
+                    } else if ("FAIL_0" == data.statusInfo) {
+                        _this._showWarn($.i18n.prop('order.submit.reason.transNull'));
+                    } else { //FAIL_1
+                        _this._showWarn($.i18n.prop('order.submit.reason.transFileNull'));
+                    }
+                },
+                error: function (data) {
+                    _this._showFail($.i18n.prop('order.submit.fail'));
+                }
+            });
+        },
     	
     	//删除译文
     	_delFile:function(fileId) {
@@ -188,7 +201,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				ok:function(){
 					this.close();
 				}
-			}).show();
+			}).showModal();
 		},
 		_showFail:function(msg){
 			new Dialog({
@@ -199,8 +212,8 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				ok:function(){
 					this.close();
 				}
-			}).show();
-		},
+			}).showModal();
+		}
         
     });
     module.exports = orderInfoPage;
