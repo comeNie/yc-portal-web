@@ -189,9 +189,9 @@ define("app/jsp/user/security/updateMobilePhone",
 										},
 										success : function(data) {
 											if(data.data==false){
-												//$("#uphoneErrMsg").show();
-												//$("#uphoneErrMsg").text(data.statusInfo);
-												showMsg(data.statusInfo);
+												$("#uphoneErrMsg").show();
+												$("#uphoneErrMsg").text(data.statusInfo);
+												//showMsg(data.statusInfo);
 												_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
 												_dynamicode_btn.val(updatePhoneJs.getOperationCode);
 												return;
@@ -235,9 +235,9 @@ define("app/jsp/user/security/updateMobilePhone",
 									},
 									success : function(data) {
 										if(data.data==false){
-											//$("#dynamicode").show();
-											//$("#dynamicode").text(data.statusInfo);
-											showMsg(data.statusInfo);
+											$("#dynamicode").show();
+											$("#dynamicode").text(data.statusInfo);
+											//showMsg(data.statusInfo);
 											_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
 											_dynamicode_btn.val(updatePhoneJs.getOperationCode);
 											return;
@@ -284,9 +284,9 @@ define("app/jsp/user/security/updateMobilePhone",
 				    				},
 				    		        success: function(data) {
 				    		        	if(!data.data){
-				    		        		//$("#dynamicode").show();
-											//$("#dynamicode").text(data.statusInfo);
-				    		        		showMsg(data.statusInfo);
+				    		        		$("#dynamicode").show();
+											$("#dynamicode").text(data.statusInfo);
+				    		        		//showMsg(data.statusInfo);
 											return false;
 				    		        	}else{
 				    		        		 $("#next1").hide();
@@ -445,9 +445,9 @@ define("app/jsp/user/security/updateMobilePhone",
 										},
 										success : function(data) {
 											if(data.data==false){
-												//$("#emailUpdatePhoneErrMsg").show();
-												//$("#emailUpdatePhoneErrMsg").text(data.statusInfo);
-												showMsg(data.statusInfo);
+												$("#emailUpdatePhoneErrMsg").show();
+												$("#emailUpdatePhoneErrMsg").text(data.statusInfo);
+												//showMsg(data.statusInfo);
 												_emailUpDynamicodeBtn.removeAttr("disabled"); //移除disabled属性
 												_emailUpDynamicodeBtn.val(updatePhoneJs.getOperationCode);
 												return;
@@ -499,9 +499,9 @@ define("app/jsp/user/security/updateMobilePhone",
 			    				},
 			    		        success: function(data) {
 			    		        	if(!data.data){
-			    		        		//$("#emailErrMsg").show();
-			    		        		//$("#emailErrMsg").text(data.statusInfo);
-			    		        		showMsg(data.statusInfo);
+			    		        		$("#emailErrMsg").show();
+			    		        		$("#emailErrMsg").text(data.statusInfo);
+			    		        		//showMsg(data.statusInfo);
 			    		        		return false;
 			    		        	}else{
 			    		        		$("#next4").hide();
