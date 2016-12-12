@@ -305,9 +305,9 @@ define("app/jsp/user/security/updateMobilePhone",
 						_checkUpdatePhoneDynamicode:function(){
 							 var phoneDynamicode = $("#uphoneDynamicode").val();
 							 if(phoneDynamicode==null||phoneDynamicode==""){
-								 //$("#uphoneErrMsg").show();
-								 //$("#uphoneErrMsg").text(updatePhoneJs.pleaseInputOC);
-								 showMsg(updatePhoneJs.pleaseInputOC);
+								 $("#uphoneErrMsg").show();
+								 $("#uphoneErrMsg").text(updatePhoneJs.pleaseInputOC);
+								 //showMsg(updatePhoneJs.pleaseInputOC);
 								 return false;
 							 }
 							 var countryValue = $("#country2").find("option:selected").attr("country_value");
@@ -341,18 +341,18 @@ define("app/jsp/user/security/updateMobilePhone",
 							var phone = $("#uPhone");
 							var phoneVal = phone.val();
 							if ($.trim(phoneVal) == "") {
-								//$("#uphoneErrMsg").show();
-								//$("#uphoneErrMsg").html(updatePhoneJs.phoneNumCanNotEmpty);
-								showMsg(updatePhoneJs.phoneNumCanNotEmpty);
+								$("#uphoneErrMsg").show();
+								$("#uphoneErrMsg").html(updatePhoneJs.phoneNumCanNotEmpty);
+								//showMsg(updatePhoneJs.phoneNumCanNotEmpty);
 //								phone.focus();
 								return false;
 							}else{
 								$("#uphoneErrMsg").hide();
 								reg = eval('/' + reg + '/');
 								if (!reg.test(phoneVal)) {
-									//$("#uphoneErrMsg").show();
-									//$("#uphoneErrMsg").html(updatePhoneJs.pleaseInputRightPhoneNum);
-									showMsg(updatePhoneJs.pleaseInputRightPhoneNum);
+									$("#uphoneErrMsg").show();
+									$("#uphoneErrMsg").html(updatePhoneJs.pleaseInputRightPhoneNum);
+									//showMsg(updatePhoneJs.pleaseInputRightPhoneNum);
 //									phone.focus();
 									return false;
 								}else{
@@ -368,9 +368,9 @@ define("app/jsp/user/security/updateMobilePhone",
 										},
 										success : function(json) {
 											if (!json.data) {
-												//$("#uphoneErrMsg").show();
-												//$("#uphoneErrMsg").html(json.statusInfo);
-												showMsg(json.statusInfo);
+												$("#uphoneErrMsg").show();
+												$("#uphoneErrMsg").html(json.statusInfo);
+												//showMsg(json.statusInfo);
 											}else{
 												$("#uphoneErrMsg").hide();
 											}
@@ -389,19 +389,19 @@ define("app/jsp/user/security/updateMobilePhone",
 							var phone = $("#emailUpdatePhone");
 							var phoneVal = phone.val();
 							if ($.trim(phoneVal) == "") {
-								//$("#emailUpdatePhoneErrMsg").show();
-								//$("#emailUpdatePhoneErrMsg").html(updatePhoneJs.phoneNumCanNotEmpty);
+								$("#emailUpdatePhoneErrMsg").show();
+								$("#emailUpdatePhoneErrMsg").html(updatePhoneJs.phoneNumCanNotEmpty);
 								//phone.focus();
-								showMsg(updatePhoneJs.phoneNumCanNotEmpty);
+								//showMsg(updatePhoneJs.phoneNumCanNotEmpty);
 								return false;
 							}else{
 								$("#emailUpdatePhoneErrMsg").hide();
 								reg = eval('/' + reg + '/');
 								if (!reg.test(phoneVal)) {
-//									$("#emailUpdatePhoneErrMsg").show();
-//									$("#emailUpdatePhoneErrMsg").html(updatePhoneJs.pleaseInputRightPhoneNum);
-//									phone.focus();
-									showMsg(updatePhoneJs.pleaseInputRightPhoneNum);
+									$("#emailUpdatePhoneErrMsg").show();
+									$("#emailUpdatePhoneErrMsg").html(updatePhoneJs.pleaseInputRightPhoneNum);
+									//phone.focus();
+									//showMsg(updatePhoneJs.pleaseInputRightPhoneNum);
 									return false;
 								}else{
 									$("#emailUpdatePhoneErrMsg").hide();
@@ -416,9 +416,9 @@ define("app/jsp/user/security/updateMobilePhone",
 										},
 										success : function(json) {
 											if (!json.data) {
-//												$("#emailUpdatePhoneErrMsg").show();
-//												$("#emailUpdatePhoneErrMsg").html(json.statusInfo);
-												showMsg(json.statusInfo);
+												$("#emailUpdatePhoneErrMsg").show();
+												$("#emailUpdatePhoneErrMsg").html(json.statusInfo);
+												//showMsg(json.statusInfo);
 											}else{
 												$("#emailUpdatePhoneErrMsg").hide();
 											}
@@ -520,9 +520,9 @@ define("app/jsp/user/security/updateMobilePhone",
 							 */
 							 var phoneDynamicode = $("#emailUValidateCode").val();
 							 if(phoneDynamicode==null||phoneDynamicode==""){
-								 //$("#emailUpdatePhoneErrMsg").show();
-								 //$("#emailUpdatePhoneErrMsg").text(updatePhoneJs.pleaseInputOC);
-								 showMsg(updatePhoneJs.pleaseInputOC);
+								 $("#emailUpdatePhoneErrMsg").show();
+								 $("#emailUpdatePhoneErrMsg").text(updatePhoneJs.pleaseInputOC);
+								 //showMsg(updatePhoneJs.pleaseInputOC);
 								 return false;
 							 }
 							 ajaxController.ajax({
@@ -535,7 +535,9 @@ define("app/jsp/user/security/updateMobilePhone",
 				    				},
 				    				success: function(json) {
 				    					if(!json.data){
-				    						showMsg(json.statusInfo)
+				    						$("#emailUpdatePhoneErrMsg").show();
+											$("#emailUpdatePhoneErrMsg").text(updatePhoneJs.pleaseInputOC);
+				    						//showMsg(json.statusInfo)
 											return false;
 				    		        	}else{
 				    		        		$("#next5").hide();
