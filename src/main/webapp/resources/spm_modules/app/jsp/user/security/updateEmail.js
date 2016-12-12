@@ -503,7 +503,9 @@ define("app/jsp/user/security/updateEmail",
 						_checkEmailImageCode:function(){
 							var emailIdentifyCode = $("#emailIdentifyCode").val();
 							if(emailIdentifyCode==""||emailIdentifyCode==null){
-								showMsg(updateEmailJs.pleaseInputOC);
+								$("#emailErrMsg").show();
+	    		        		$("#emailErrMsg").text(updateEmailJs.pleaseInputOC);
+								//showMsg(updateEmailJs.pleaseInputOC);
 								return;
 							}
 							ajaxController.ajax({
@@ -516,9 +518,9 @@ define("app/jsp/user/security/updateEmail",
 			    				},
 			    		        success: function(data) {
 			    		        	if(!data.data){
-			    		        		//$("#emailErrMsg").show();
-			    		        		//$("#emailErrMsg").text(data.statusInfo);
-			    		        		showMsg(data.statusInfo);
+			    		        		$("#emailErrMsg").show();
+			    		        		$("#emailErrMsg").text(data.statusInfo);
+			    		        		//showMsg(data.statusInfo);
 			    		        		return false;
 			    		        	}else{
 			    		        		$("#next4").hide();
@@ -537,9 +539,9 @@ define("app/jsp/user/security/updateEmail",
 							 */
 							 var phoneDynamicode = $("#uEmailCode").val();
 							 if(phoneDynamicode==null||phoneDynamicode==""){
-								 //$("#emailUErrMsg").show();
-								 //$("#emailUErrMsg").text(updateEmailJs.pleaseInputOC);
-								 showMsg(updateEmailJs.pleaseInputOC);
+								 $("#emailUErrMsg").show();
+								 $("#emailUErrMsg").text(updateEmailJs.pleaseInputOC);
+								 //showMsg(updateEmailJs.pleaseInputOC);
 								 return false;
 							 }
 							 ajaxController.ajax({
@@ -552,7 +554,9 @@ define("app/jsp/user/security/updateEmail",
 				    				},
 				    				success: function(json) {
 				    					if(!json.data){
-				    		        		showMsg(json.statusInfo)
+				    						$("#emailUErrMsg").show();
+											$("#emailUErrMsg").text(json.statusInfo);
+				    		        		//showMsg(json.statusInfo)
 										}else{
 				    		        		$("#next5").hide();
 				    		        		$("#next6").show();
