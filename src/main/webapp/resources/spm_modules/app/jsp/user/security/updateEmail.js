@@ -583,7 +583,9 @@ define("app/jsp/user/security/updateEmail",
 				    				},
 				    				success: function(json) {
 				    					if(!json.data){
-				    		        		showMsg(json.statusInfo)
+				    						$("#phoneUEmailErrMgs").show();
+											$("#phoneUEmailErrMgs").text(json.statusInfo);
+				    		        		//showMsg(json.statusInfo)
 											return;
 				    		        	}else{
 				    		        		$("#next2").hide();
