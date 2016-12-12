@@ -254,9 +254,9 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 						showMsg(updatePayPasswordMsg.sendMailError);
 					}else{
 						var step = 59;
-						sendEmailBtn.val('60 s');
+						sendEmailBtn.val(updatePayPasswordMsg.resend60);
 			            var _res = setInterval(function(){
-			            	sendEmailBtn.val(step+" s");
+			            	sendEmailBtn.val(updatePayPasswordMsg.resend+step);
 			                step-=1;
 			                if(step <= 0){
 			                sendEmailBtn.removeAttr("disabled"); //移除disabled属性
@@ -300,9 +300,9 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 						}else{
 							if(data.data){
 								var step = 59;
-								btn.val('60 s');
+								btn.val(updatePayPasswordMsg.resend60);
 					            var _res = setInterval(function(){
-					                btn.val(step+" s");
+					                btn.val(updatePayPasswordMsg.resend+step);
 					                step-=1;
 					                if(step <= 0){
 					                	btn.removeAttr("disabled"); //移除disabled属性
