@@ -433,6 +433,9 @@ define("app/jsp/user/security/updateMobilePhone",
 								var _this = this;
 								var _emailUpDynamicodeBtn = $("#emailUpDynamicodeBtn");
 								_emailUpDynamicodeBtn.attr("disabled", true);
+								if(!this._checkEmailUpdatePhone()){
+									return;
+								}
 								ajaxController
 									.ajax({
 										type : "post",
@@ -525,6 +528,7 @@ define("app/jsp/user/security/updateMobilePhone",
 								 //showMsg(updatePhoneJs.pleaseInputOC);
 								 return false;
 							 }
+							 var countryValue = $("#country3").find("option:selected").attr("country_value");
 							 ajaxController.ajax({
     		        			 type:"post",
 				    			 url:_base+"/p/security/updatePhone",
@@ -532,6 +536,7 @@ define("app/jsp/user/security/updateMobilePhone",
 				    					'phone':$("#emailUpdatePhone").val(),
 				    					'type':"2",
 				    					'code':phoneDynamicode,
+				    					'countryValue':countryValue
 				    				},
 				    				success: function(json) {
 				    					if(!json.data){
