@@ -268,9 +268,9 @@ define("app/jsp/user/security/updateMobilePhone",
 						_checkPhoneDynamicode:function(){
 							 var phoneDynamicode = $("#phoneDynamicode").val();
 							 if(phoneDynamicode==null||phoneDynamicode==""){
-								 //$("#dynamicode").show();
-								 //$("#dynamicode").text(updatePhoneJs.pleaseInputOC);
-								 showMsg(updatePhoneJs.pleaseInputOC);
+								 $("#dynamicode").show();
+								 $("#dynamicode").text(updatePhoneJs.pleaseInputOC);
+								 //showMsg(updatePhoneJs.pleaseInputOC);
 								 return false;
 							 }
 							 ajaxController.ajax({
