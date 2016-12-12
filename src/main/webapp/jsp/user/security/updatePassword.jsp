@@ -359,6 +359,8 @@
     		"confirmPasswordError" : '<spring:message code="ycregisterMsg.confirmPasswordError"/>',
     		'getDynamiCode':'<spring:message code="ycregister.getDynamiCode"/>',
     		'sendMailError':'<spring:message code="ycaccountcenter.updatePassword.sendMailError"/>'
+    		'resend60':'<spring:message code="ycaccountcenter.updatePassword.resend60"/>',
+	    	'resend':'<spring:message code="ycaccountcenter.updatePassword.resend"/>'
     };
 	var phone = "${user.fullMobile}";
 	var email = "${user.email}";
