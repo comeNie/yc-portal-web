@@ -118,6 +118,9 @@ define('app/jsp/home', function (require, exports, module) {
 				},
 				success: function (data) {
 					if("OK" === data.statusInfo) {
+
+						//图标展示
+						$(".post-cion").show();
 						$("#transError").html('');
 
 						$('#tgtNew').empty();
@@ -155,6 +158,8 @@ define('app/jsp/home', function (require, exports, module) {
 							});
 						}
 					} else {
+						//图标隐藏
+						$(".post-cion").hide();
 						$("#transError").html($.i18n.prop("home.error.trans"));
 						//alert($.i18n.prop("home.error.trans"));
 					}
@@ -272,6 +277,11 @@ define('app/jsp/home', function (require, exports, module) {
         //保存
         _saveText:function() {
         	$("#transRes").attr("readonly","readonly");
+			if ($.trim( $("#transRes").val())=='')
+				$(".post-cion").hide();
+			else
+				$(".post-cion").show()
+
 			if ($.trim(sourYiWen) == $("#transRes").val()) {
 				$("#tgtOld").hide();
 				$("#tgtNew").show();

@@ -126,7 +126,7 @@
                     <textarea  class="int-post"  id="transResBak" hidden=""></textarea>
                 </div>
                 <label id="transError"></label>
-                <div class="post-cion">
+                <div class="post-cion" style="display: none">
                 	<!-- 播放器 -->
                 	<audio src="" controls="controls" id="audioPlay" hidden>
 						Your browser does not support the audio tag.

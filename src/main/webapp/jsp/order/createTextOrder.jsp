@@ -108,7 +108,6 @@
 					<!-- 清空 -->
 					<p class="right"><input hidden="" type="button" class="btn border-blue radius20 btn-80"
 											value="<spring:message code="order.clear" />" id="clear-btn"></p>
-					<label></label>
 				</div>
 
   				<div class="translate-int radius bj-ash placeholder" id="fy2" >
@@ -188,7 +187,6 @@
 							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
 							<p><spring:message code="order.stanInfo3"/></p>
 						</li>
-						<label></label>
 					</ul>
 					<ul class="current" name="100220">
 						<li class="blue">
@@ -219,7 +217,6 @@
 							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
 							<p><spring:message code="order.proInfo3"/></p>
 						</li>
-						<label></label>
 					</ul>
 					<ul name="100230">
 						<li class="blue">
@@ -346,8 +343,7 @@
             $(this).parent().parent('ul').remove();
 
             var id = $(this).parent().parent('ul').find('li:first').attr("id");
-            var file = uploader.getFile(id);
-            uploader.removeFile(file);
+         	pager._removeFile(id);
         });
 	})();
 	

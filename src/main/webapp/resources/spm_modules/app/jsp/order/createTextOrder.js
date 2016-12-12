@@ -25,7 +25,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     	events: {
 			"click #recharge-popo":"_addTextOrderTemp",
 			"click #urgentOrder":"_transPrice",
-			"click .dropdown":"_transPrice",
+            "click #_getSpeed": "_getSpeed",
+			"click .dropdown":"_chDuad",
 			"click #saveContact":"_saveContact",
 			"click #editContact":"_editContactDiv",
 			"click #fy-btn": "_uploadFile",
@@ -330,7 +331,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 
 			//session 语言对
 			if ($("#duadName").val() != '') {
-				$(".dropdown .selected").val($("#duadName").val());
+				$(".dropdown .selected").html($("#duadName").val());
 			}
 
 			//翻译级别
@@ -375,15 +376,22 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 
 
 		},
-		
-		//语言对改变，价格改变,翻译速度改变
-		_transPrice:function() {
-			var _this = this;
 
-			//清除remote验证的缓存，重新验证
-			$("#translateContent").removeData("previousValue");
-			var formValidator=_this._initValidate();
-			formValidator.form();
+        //语言对改变触发
+        _chDuad:function () {
+            //清除remote验证的缓存，重新验证
+            $("#translateContent").removeData("previousValue");
+            if ( $.trim($("#translateContent")!='' )) {
+                var formValidator=this._initValidate();
+                formValidator.form();
+            }
+
+            this._transPrice();
+        },
+		
+		//价格改变,翻译速度改变
+		_transPrice:function() {
+			// var _this = this;
 
         	$("#selectDuad").find('option').each(function() {
         		var val = $(this).val();
@@ -434,17 +442,17 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			var pubSpeedUrgent = 3;
 			
 			if ($("#urgentOrder").is(':checked')) {
-				if($(".none-ml.current").attr('name') == 0) {
+				if($(".current").attr('name') == '100210') {
 					$("#speedValue").html(ordSpeedUrgent);
-				} else if($(".none-ml.current").attr('name') == 1) {
+				} else if($(".current").attr('name') == '100220') {
 					$("#speedValue").html(proSpeedUrgent);
 				} else {
 					$("#speedValue").html(pubSpeedUrgent);
 				}
 			} else {
-				if($(".none-ml.current").attr('name') == 0) {
+				if($(".current").attr('name') == '100210') {
 					$("#speedValue").html(ordSpeed);
-				} else if($(".none-ml.current").attr('name') == 1) {
+				} else if($(".current").attr('name') == '100220') {
 					$("#speedValue").html(proSpeed);
 				} else {
 					$("#speedValue").html(pubSpeed);
@@ -648,6 +656,11 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 $( '#'+file.id ).find('.progress').fadeOut();
             });
         },
+
+        _removeFile:function (id) {
+            var file = uploader.getFile(id);
+            uploader.removeFile(file);
+        }
 
     });
     
