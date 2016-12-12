@@ -1,6 +1,7 @@
 define('app/jsp/order/payOrder', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
+        Dialog = require("optDialog/src/dialog"),
 	    Widget = require('arale-widget/1.2.0/widget');
 
 	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
@@ -26,11 +27,6 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 				mode: 'both',
 				language: currentLan,
 				async: true
-				//callback: function() {//加载成功后设置显示内容
-				//	alert($.i18n.prop('com.ai.paas.ipaas.common.auth_null'));
-				//	//用户名
-				//	alert($.i18n.prop('pay.pass.null'));
-				//}
 			});
     	},
 		//支付订单
@@ -40,10 +36,24 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 			//当前地址
 			var merchantUrl = "";
 			$("#payType").val(payType);
-			//若为余额支付,则进行余额支付流程
+			//若不为余额支付
 			if("YE" != payType){
 				$("#merchantUrl").val(window.location.href);
 				//提交
+				new Dialog({
+                    content:$.i18n.prop('pay.msg.tip'),
+                    okValue: $.i18n.prop('pay.completed.btn'),
+                    cancelValue: $.i18n.prop('pay.error.btn'),
+                    title: $.i18n.prop('pay.result.title'),
+                    ok:function(){
+                        //跳转到我的订单
+						window.location.href=_base+"/p/customer/order/list/view";
+                    },
+                	cancel:function(){
+						//跳转到常见问题
+                        window.location.href=_base+"/faq";
+					}
+				}).showModal();
 				$("#toPayForm").submit();
 			}//余额支付,需要密码
 			else if("YE" === payType && needPayPass==="1"){
