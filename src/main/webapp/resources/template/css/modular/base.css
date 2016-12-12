@@ -1,0 +1,34 @@
+@charset "utf-8";
+/* CSS Document */
+body,div,ul,li,dl,dt,dd,p,a,span,b,strong,em,i,img,h1,h2,h3,h4,h5,h6,input,button,textarea,select,option{margin:0px;padding:0px;}
+img{border:0px;}
+ul,li{list-style:none;}
+a{text-decoration:none;}
+a:hover{text-decoration:none;}
+input{background:none;border:none;}
+:focus{outline:none;}
+body{width:100%;font:14px/22px "Microsoft YaHei","微软雅黑","helvetica neue",Arial,Helvetica,sans-serif;color:#646464;}
+.mask{display:none;width:100%;background:url("pubimg/mask.png") repeat 0 0;position:absolute;top:0px;left:0px;z-index:9999;}
+/*clear float*/
+.clearfix:after{display:block;clear:both;content:"";visibility:hidden;height:0}
+.clearfix{zoom:1}
+/*float*/
+.fl{float:left;}
+.fr{float:right;}
+/*font size*/
+.f12{font-size:12px;}
+.f14{font-size:14px;}
+.f16{font-size:16px;}
+.f18{font-size:18px;}
+.f20{font-size:20px;}
+.f24{font-size:24px;}
+.f26{font-size:26px;}
+.f28{font-size:28px;}
+.f30{font-size:30px;}
+
+.da_notice{background:#ff6767;height:28px;font-size:12px;text-align:center;}
+.da_notice span{display:inline-block;/*background:url(img/addown15101.jpg) no-repeat 0 center;padding-left:25px;*/width:1200px;height:28px;line-height:28px;color:#ffffff;}
+
+/*元旦公告*/
+.da_tfirefox15101{background:#ff6767;height:28px;font-size:12px;text-align:center;}
+.da_tfirefox15101 span{display:inline-block;background:url(img/addown15101.jpg) no-repeat 0 center;line-height:28px;padding-left:25px;color:#ffffff;}

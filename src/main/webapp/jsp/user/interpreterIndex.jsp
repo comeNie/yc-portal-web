@@ -167,65 +167,70 @@
         <td>
         {{:~timestampToDate('yyyy-MM-dd hh:mm:ss',endTime,'<%=ZoneContextHolder.getZone()%>')}}
         </td>
-        {{if  state  == '21'}}
-							<!-- 已领取 -->
-							<td><spring:message code="myOrder.status.Claimed"/></td>
-							<td>
-								<!-- <input type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="分 配"> -->
-								<!-- 翻 译 -->
-								<input name="trans" type="button"  class="btn biu-btn btn-auto-25 btn-green radius10"  value="<spring:message code="myOrder.Translate"/>">
-							</td>
-							{{else state  == '221'}}
-							<!-- 已分配 -->
-							<td><spring:message code="myOrder.status.Assigned"/></td>
-							<td>
-								<!-- <input name="assigne" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="分 配"> -->
-							</td>
-							{{else state  == '23'}}
-							<!-- 翻译中 -->
-							<td><spring:message code="myOrder.status.translating"/></td>
-							<td>
-								<!-- 提交 -->
-								<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="<spring:message code="myOrder.Submit"/>">
-							</td>
-							{{else state  == '40'}}
-							<!-- 待审核 -->
-							<td><spring:message code="myOrder.status.Review"/></td>
-							<td>
-								<!--<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="提交"> -->
-							</td>
-							{{else state  == '50'}}
-							<!-- 待确认 -->
-							<td><spring:message code="myOrder.status.tobeConfirm"/></td>
-							<td>
-							</td>
-							{{else state  == '90'}}
-							<!-- 已完成 -->
-							<td><spring:message code="myOrder.status.Completed"/></td>
-							<td>
-							</td>
-							{{else state  == '53'}}
-							<!-- 已评价 -->
-							<td><spring:message code="myOrder.status.Evaluated"/></td>
-							<td>
-								<!-- <input name="evaluated" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="已评价"> -->
-							</td>
-							{{else state  == '25'}}
-							<!-- 修改中 -->
-							<td><spring:message code="myOrder.status.Modification"/></td>
-							<td>
-								<!-- 提交 -->
-								<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="<spring:message code="myOrder.Submit"/>">
-							</td>
-							{{else state  == '92'}}
-							<!-- 已退款 -->
-							<td><spring:message code="myOrder.status.Refunded"/></td>
-							<td>
-							</td>
-							{{else }}
-							<td></td>
-							<td></td>
-							{{/if}}
+            {{if  state  == '21'}}
+            <!-- 已领取 -->
+            <td><spring:message code="myOrder.status.Claimed"/></td>
+            <td>
+                <!-- <input type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="分 配"> -->
+                <!-- 翻 译 -->
+                <input name="trans" type="button"  class="btn biu-btn btn-auto-25 btn-green radius10"  value="<spring:message code="myOrder.Translate"/>">
+            </td>
+            {{else state  == '221'}}
+            <!-- 已分配 -->
+            <td><spring:message code="myOrder.status.Assigned"/></td>
+            <td>
+                <!-- <input name="assigne" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="分 配"> -->
+            </td>
+            {{else state  == '23'}}
+            <!-- 翻译中 -->
+            <td><spring:message code="myOrder.status.translating"/></td>
+            <td>
+                <!-- 提交 -->
+                <input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="<spring:message code="myOrder.Submit"/>">
+            </td>
+            {{else state  == '40'}}
+            <!-- 待审核 -->
+            <td><spring:message code="myOrder.status.Review"/></td>
+            <td>
+                <!--<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="提交"> -->
+            </td>
+            {{else state  == '50'}}
+            <!-- 待确认 -->
+            <td><spring:message code="myOrder.status.tobeConfirm"/></td>
+            <td>
+            </td>
+            {{else state  == '51'}}
+            <!-- 已确认 -->
+            <td><spring:message code="myOrder.status.confirmed"/></td>
+            <td>
+            </td>
+            {{else state  == '90'}}
+            <!-- 已完成 -->
+            <td><spring:message code="myOrder.status.Completed"/></td>
+            <td>
+            </td>
+            {{else state  == '53'}}
+            <!-- 已评价 -->
+            <td><spring:message code="myOrder.status.Evaluated"/></td>
+            <td>
+                <!-- <input name="evaluated" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="已评价"> -->
+            </td>
+            {{else state  == '25'}}
+            <!-- 修改中 -->
+            <td><spring:message code="myOrder.status.Modification"/></td>
+            <td>
+                <!-- 提交 -->
+                <input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="<spring:message code="myOrder.Submit"/>">
+            </td>
+            {{else state  == '92'}}
+            <!-- 已退款 -->
+            <td><spring:message code="myOrder.status.Refunded"/></td>
+            <td>
+            </td>
+            {{else }}
+            <td></td>
+            <td></td>
+            {{/if}}
     </tr>
 </script>
 <script type="text/javascript">

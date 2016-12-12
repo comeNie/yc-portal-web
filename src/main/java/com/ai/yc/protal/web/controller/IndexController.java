@@ -173,6 +173,15 @@ public class IndexController {
         return staticUrl() + "/tconsul";
     }
 
+    /**
+     * 找翻译
+     * @return
+     */
+    @RequestMapping("/findyee")
+    public String findyee(){
+        return staticUrl() + "/app";
+    }
+
     private String staticUrl(){
         return Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale())?"/static":"/staticEs";
     }

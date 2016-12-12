@@ -193,7 +193,7 @@ public class OrderController {
                 feeInfo.setCurrencyUnit(offerRes.getCurrencyUnit());
             } else {
                 //"1：RMB 2：$"
-                String currencyUnit = Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale()) ? "1":"0";
+                String currencyUnit = Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale()) ? "1":"2";
                 feeInfo.setCurrencyUnit(currencyUnit);
             }
             subReq.setFeeInfo(feeInfo);

@@ -39,6 +39,7 @@ define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, mo
 						success: function (data) {
 							if ("1" === data.statusCode) {
 								//提交成功
+								window.location.reload();
 							}
 						}
 					});
