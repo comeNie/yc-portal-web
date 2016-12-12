@@ -328,11 +328,10 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				$("#selectFormatConv").attr("disabled",true);
 			}
 
-
-			//session 语言对
-			if ($("#duadName").val() != '') {
-				$(".dropdown .selected").html($("#duadName").val());
-			}
+            //session 语言对
+            if ($("#duadName").val() != '') {
+                $(".dropdown .selected").html($("#duadName").val());
+            }
 
 			//翻译级别
 			if ($("#transLv").val() != '') {
@@ -346,6 +345,13 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 						$($(this).siblings()).children('label').remove();
 					}
 				});
+
+                //设置耗时
+                if($("#isUrgent").val() == 'Y')
+                    this._getSpeed($("#transLv").val(),true);
+                else
+                    this._getSpeed($("#transLv").val(),false);
+
 			}
 
 			//首页传过来的参数
@@ -433,26 +439,32 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		},
 		
 		//获取翻译速度价格
-		_getSpeed:function() {
+		_getSpeed:function(lvId, isUrge) {
 			var ordSpeed = 2;
 			var ordSpeedUrgent = 1;
 			var proSpeed = 3;
 			var proSpeedUrgent = 2;
 			var pubSpeed = 4;
 			var pubSpeedUrgent = 3;
-			
-			if ($("#urgentOrder").is(':checked')) {
-				if($(".current").attr('name') == '100210') {
+
+            if (lvId =='' || lvId == undefined)
+                lvId = $(".current").attr('name');
+
+            if (isUrge =='' || isUrge == undefined)
+                isUrge = $("#urgentOrder").is(':checked')
+
+			if (isUrge) {
+				if(lvId == '100210') {
 					$("#speedValue").html(ordSpeedUrgent);
-				} else if($(".current").attr('name') == '100220') {
+				} else if(lvId == '100220') {
 					$("#speedValue").html(proSpeedUrgent);
 				} else {
 					$("#speedValue").html(pubSpeedUrgent);
 				}
 			} else {
-				if($(".current").attr('name') == '100210') {
+				if(lvId == '100210') {
 					$("#speedValue").html(ordSpeed);
-				} else if($(".current").attr('name') == '100220') {
+				} else if(lvId == '100220') {
 					$("#speedValue").html(proSpeed);
 				} else {
 					$("#speedValue").html(pubSpeed);
