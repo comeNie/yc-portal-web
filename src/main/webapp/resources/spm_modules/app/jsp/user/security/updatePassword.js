@@ -256,9 +256,9 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 						showMsg(updatePasswordMsg.sendMailError);
 					}else{
 						var step = 59;
-						sendEmailBtn.val('60 s');
+						sendEmailBtn.val(updatePasswordMsg.resend60);
 			            var _res = setInterval(function(){
-			            	sendEmailBtn.val(step+" s");
+			            	sendEmailBtn.val(updatePasswordMsg.resend+step);
 			                step-=1;
 			                if(step <= 0){
 			                sendEmailBtn.removeAttr("disabled"); //移除disabled属性
@@ -302,9 +302,9 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 						}else{
 							if(data.data){
 								var step = 59;
-								btn.val('60 s');
+								btn.val(updatePasswordMsg.resend60);
 					            var _res = setInterval(function(){
-					                btn.val(step+" s");
+					                btn.val(updatePasswordMsg.resend+step);
 					                step-=1;
 					                if(step <= 0){
 					                	btn.removeAttr("disabled"); //移除disabled属性
