@@ -42,7 +42,7 @@ define("app/jsp/user/security/updateEmail",
 							//手机验证身份下一步
 							"click #update_email_next-bt1":"_checkPhoneDynamicode",
 							//校验邮箱地址
-							//"blur #phoneUEmail":"_pcheckEmail",
+							"blur #phoneUEmail":"_pcheckEmail",
 							//手机方式验证后发送新邮箱
 							"click #phone-send-email-btn":"_psendEmail",
 							//校验手机和动态码是否匹配
@@ -424,17 +424,17 @@ define("app/jsp/user/security/updateEmail",
 							var email = $("#phoneUEmail");
 							var emailVal = email.val();
 							if ($.trim(emailVal) == "") {
-								//$("#phoneUEmailErrMgs").show();
-								//$("#phoneUEmailErrMgs").text(updateEmailJs.emailUErrPleaseMsg);
-								showMsg(updateEmailJs.emailUErrPleaseMsg);
+								$("#phoneUEmailErrMgs").show();
+								$("#phoneUEmailErrMgs").text(updateEmailJs.emailUErrPleaseMsg);
+								//showMsg(updateEmailJs.emailUErrPleaseMsg);
 								//email.focus();
 								return false;
 							}
 							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
 									.test(emailVal)) {
-								//$("#phoneUEmailErrMgs").show();
-								//$("#phoneUEmailErrMgs").text(updateEmailJs.emailUErrLegalMsg);
-								showMsg(updateEmailJs.emailUErrLegalMsg);
+								$("#phoneUEmailErrMgs").show();
+								$("#phoneUEmailErrMgs").text(updateEmailJs.emailUErrLegalMsg);
+								//showMsg(updateEmailJs.emailUErrLegalMsg);
 								return false;
 							}
 							$("#phoneUEmailErrMgs").hide();
