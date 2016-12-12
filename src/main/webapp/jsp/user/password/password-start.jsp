@@ -385,7 +385,9 @@ var pager;
 			"smsCodeError" : '<spring:message code="ycfindpassword.smsCodeError" />',
 			"emailCodeEmpty" : '<spring:message code="ycfindpassword.emailCodeEmpty" />',
 			"emailCodeError" : '<spring:message code="ycfindpassword.emailCodeError" />',
-			"getDynamiCode":'<spring:message code="ycregister.getDynamiCode"/>'
+			"getDynamiCode":'<spring:message code="ycregister.getDynamiCode"/>',
+			"resend60":'<spring:message code="ycfindpassword.js.resend60"/>',
+			"resend":'<spring:message code="ycfindpassword.js.resend"/>'
 		};
 </script>
 

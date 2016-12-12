@@ -435,63 +435,15 @@ define("app/jsp/user/security/updateEmail",
 							$("#phoneUEmailErrMgs").hide();
 							return true;
 						},
-						/**
-						 *  通过邮箱地址修改手机号 
-						 */
-						_checkEmailUpdatePhone : function() {
-							var country = $("#country").find("option:selected");
-							var reg = country.attr("reg");
-							var phone = $("#emailUpdatePhone");
-							var phoneVal = phone.val();
-							if ($.trim(phoneVal) == "") {
-								//$("#emailUpdatePhoneErrMsg").show();
-								//$("#emailUpdatePhoneErrMsg").html(updateEmailJs.phoneNumCanNotEmpty);
-								//phone.focus();
-								showMsg(updateEmailJs.phoneNumCanNotEmpty);
-								return false;
-							}else{
-								$("#emailUpdatePhoneErrMsg").hide();
-								reg = eval('/' + reg + '/');
-								if (!reg.test(phoneVal)) {
-									//$("#emailUpdatePhoneErrMsg").show();
-									//$("#emailUpdatePhoneErrMsg").html(updateEmailJs.pleaseInputRightPhoneNum);
-									//phone.focus();
-									showMsg(updateEmailJs.pleaseInputRightPhoneNum);
-									return false;
-								}else{
-									$("#emailUpdatePhoneErrMsg").hide();
-									ajaxController.ajax({
-										type : "post",
-										processing : false,
-										message : updateEmailJs.saveingMsg,
-										url : _base + "/reg/checkPhoneOrEmail",
-										data : {
-											'checkType' : "phone",
-											"checkVal" : $("#emailUpdatePhone").val()
-										},
-										success : function(json) {
-											if (!json.data) {
-												//$("#emailUpdatePhoneErrMsg").show();
-												//$("#emailUpdatePhoneErrMsg").html(json.statusInfo);
-												showMsg(json.statusInfo);
-											}else{
-												$("#emailUpdatePhoneErrMsg").hide();
-											}
-										}
-									});
-								}
-							}
-							return true;
-						},
 						/* 发送动态码 */
 						  _sendEmailUEmailDynamiCode : function() {
 								var _this = this;
-							  	var tishi = $("#tishi1").val();
+							  	var tishi = $("#tishi1").html();
 								var btn = $("#email-sendCode-btn");
 								if (btn.hasClass("biu-btn")) {
 									return;
 								}
-							  	if(tishi!=null){
+							  	if(tishi!=""){
 									return;
 								}
 							  

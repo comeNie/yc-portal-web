@@ -361,8 +361,10 @@
 	    		"passwordError" : '<spring:message code="ycregisterMsg.passwordError"/>',
 	    		"confirmPasswordError" : '<spring:message code="ycregisterMsg.confirmPasswordError"/>',
 	    		'getDynamiCode':'<spring:message code="ycregister.getDynamiCode"/>',
-	    		'sendMailError':'<spring:message code="ycaccountcenter.updatePassword.sendMailError"/>'
-	    };
+	    		'sendMailError':'<spring:message code="ycaccountcenter.updatePassword.sendMailError"/>',
+	    		'resend60':'<spring:message code="ycaccountcenter.updatePayPassword.resend60"/>',
+	    		'resend':'<spring:message code="ycaccountcenter.updatePayPassword.resend"/>'
+	 };
 	var pager;
 	(function() {
 		seajs.use('app/jsp/user/security/updatePayPassword', function(updatePayPasswordPager) {
