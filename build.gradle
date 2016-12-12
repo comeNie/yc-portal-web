@@ -81,6 +81,8 @@ dependencies {
 
     //公共缓存
     compile 'com.ai.yc.common:cachekey:1.0-SNAPSHOT'
+    //行政区域缓存
+    compile 'com.ai.yc.common:region:1.0-SNAPSHOT'
     //订单下单
     compile 'com.ai.yc.order:ordersubmission:1.0-SNAPSHOT'
     //订单系统自动报价查询

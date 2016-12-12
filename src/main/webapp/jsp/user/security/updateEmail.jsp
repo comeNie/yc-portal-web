@@ -3,6 +3,8 @@
 <html>
 <head>
 	<%@ include file="/inc/inc.jsp" %>
+	<link href="${uedroot}/css/modular/login-regsiter.css" rel="stylesheet"
+	type="text/css" />
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title><spring:message code="ycupdateemail.updateemail"/>  </title>
@@ -280,7 +282,7 @@
  								<label class="ml-70" id="emailUErrMsg" style="display: none;"></label>
  								<p class="word"><spring:message code="ycupdateemail.email"/></p>
  								<p><input type="text" class="int-text int-xlarge radius" id="emailUpdateEmail"></p>
-								<p style="color: #fe6b6b" id="tishi1"></p>
+								<%--<p style="color: #fe6b6b" id="tishi1"></p>--%>
  							</li>
 							<%--<li class="tishi" >
 								<p id="tishi1">
