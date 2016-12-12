@@ -152,9 +152,9 @@ define("app/jsp/user/password/password",
 										sendEmailBtn.removeAttr("disabled"); //移除disabled属性
 									}else{
 										var step = 59;
-										sendEmailBtn.val('60 s');
+										sendEmailBtn.val(passwordMsg.resend60);
 							            var _res = setInterval(function(){
-							            	sendEmailBtn.val(step+" s");
+							            	sendEmailBtn.val(passwordMsg.resend+step);
 							                step-=1;
 							                if(step <= 0){
 							                	sendEmailBtn.removeAttr("disabled"); //移除disabled属性
@@ -260,10 +260,10 @@ define("app/jsp/user/password/password",
 										return;
 									}else{
                                         var step = 59;
-										btn.val('60 s');
+										btn.val(passwordMsg.resend60);
 							            var _res = setInterval(function(){
 							            	btn.attr("disabled", true);//设置disabled属性
-							            	btn.val(step+" s");
+							            	btn.val(passwordMsg.resend+step);
 							                step-=1;
 							                if(step <= 0){
 							                btn.removeAttr("disabled"); //移除disabled属性
