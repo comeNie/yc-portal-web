@@ -486,12 +486,12 @@ define("app/jsp/user/security/updateEmail",
 						/* 发送动态码 */
 						  _sendEmailUEmailDynamiCode : function() {
 								var _this = this;
-							  	var tishi = $("#tishi1").val();
+							  	var tishi = $("#tishi1").html();
 								var btn = $("#email-sendCode-btn");
 								if (btn.hasClass("biu-btn")) {
 									return;
 								}
-							  	if(tishi!=null){
+							  	if(tishi!=""){
 									return;
 								}
 							  
