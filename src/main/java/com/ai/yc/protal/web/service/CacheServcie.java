@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import com.ai.paas.ipaas.i18n.ResWebBundle;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
@@ -23,6 +25,8 @@ import com.alibaba.fastjson.JSONObject;
  */
 @Service
 public class CacheServcie {
+    @Autowired
+    ResWebBundle rb;
 
     /**
      * 获取指定语言下订单的语言对
@@ -34,7 +38,13 @@ public class CacheServcie {
 
         //语言对里面金额单位是，每字多少元
         ICacheClient iCacheClient = AiPassUitl.getCommonCacheClient();
-        String duadStr = iCacheClient.hget(CacheKey.DUAD_L_KEY,orderType);
+        String duadStr = "";
+        if (Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale())) {
+            duadStr = iCacheClient.hget(CacheKey.DUAD_L_KEY,orderType);
+        } else {
+            duadStr = iCacheClient.hget(CacheKey.DUAD_D_KEY,orderType);
+        }
+
         if(StringUtils.isNotBlank(duadStr)) {
             duadList = JSONObject.parseArray(duadStr, SysDuad.class);
         }
@@ -48,8 +58,12 @@ public class CacheServcie {
     public List<SysDomain> getAllDomain(Locale locale){
         ICacheClient iCacheClient = AiPassUitl.getCommonCacheClient();
         String domainStr;
-        //目前全部为中文数据
-        domainStr = iCacheClient.hget(CacheKey.DOMAIN_L_KEY,CacheKey.DOMAIN_L_KEY);
+        if (Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale())) {
+            domainStr = iCacheClient.hget(CacheKey.DOMAIN_L_KEY,CacheKey.DOMAIN_L_KEY);
+        } else {
+            domainStr = iCacheClient.hget(CacheKey.DOMAIN_L_KEY,CacheKey.DOMAIN_D_KEY);
+        }
+
         return JSON.parseArray(domainStr,SysDomain.class);
 //        List<SysDomain> domainList = new ArrayList<SysDomain>();
 //        //领域 TODO... 模拟数据
@@ -69,8 +83,13 @@ public class CacheServcie {
      */
     public List<SysPurpose> getAllPurpose(Locale locale){
         ICacheClient iCacheClient = AiPassUitl.getCommonCacheClient();
-        //目前全部为中文数据
-        String purposeStr = iCacheClient.hget(CacheKey.PURPOSE_L_KEY,CacheKey.PURPOSE_L_KEY);
+        String purposeStr;
+        if (Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale())) {
+            purposeStr = iCacheClient.hget(CacheKey.PURPOSE_L_KEY,CacheKey.PURPOSE_L_KEY);
+        } else {
+            purposeStr = iCacheClient.hget(CacheKey.PURPOSE_L_KEY,CacheKey.PURPOSE_D_KEY);
+        }
+
         return JSON.parseArray(purposeStr,SysPurpose.class);
 //        List<SysPurpose> purposeList = new ArrayList<SysPurpose>();
         //TODO... 模拟数据
