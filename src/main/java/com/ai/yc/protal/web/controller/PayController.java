@@ -124,7 +124,7 @@ public class PayController {
         //若没有账户信息,直接返回null
         if (userInfoResponse==null||userInfoResponse.getAccountId()==null){
             LOG.error("没有该帐户信息.请创建帐户");
-            return;
+            return "FAIL123";
         }
         //用户账户
         long accountId = userInfoResponse.getAccountId();
