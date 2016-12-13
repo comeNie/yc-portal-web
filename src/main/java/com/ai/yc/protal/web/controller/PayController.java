@@ -93,14 +93,14 @@ public class PayController {
      * @return
      */
     @RequestMapping("/depositFundResult/{userId}/{currencyUnit}")
-    public void accountDepositResult(@PathVariable("userId")String userId,@PathVariable("currencyUnit")String currencyUnit,
+    public String accountDepositResult(@PathVariable("userId")String userId,@PathVariable("currencyUnit")String currencyUnit,
             PayNotify payNotify){
         LOG.info("The pay result.:{},\r\n{}",JSON.toJSONString(payNotify));
         //若哈希验证不通过或支付失败,则表示支付结果有问题
         if (!verifyData(payNotify)
                 || !PayNotify.PAY_STATES_SUCCESS.equals(payNotify.getPayStates())){
             LOG.error("The pay is fail.");
-            return;
+            return "fail";
         }
         //支付费用
         Double totalFee = Double.valueOf(payNotify.getOrderAmount())*1000;
@@ -155,10 +155,11 @@ public class PayController {
         String result = iDepositSV.depositFund(depositParam);
         if (result==null){
             LOG.error("The deposit is fail.");
-            return;
+            return "faile1";
         }else {
             LOG.debug("The deposit is success.");
         }
+        return "OK";
     }
     /**
      * 帐户充值结果
