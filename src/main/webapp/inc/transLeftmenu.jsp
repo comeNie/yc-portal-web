@@ -26,7 +26,7 @@ UserUtil.getUserPortraitImg();
 					<span><spring:message code="ycleftmenu.mymainpage"/></span>
 				</a>
 			</li>
-			<li id="taskCenter">
+			<li id="lookOrders">
 				<a href="javaScript:void(0);">
 					<span><i class="icon iconfont">&#xe641;</i></span>
 					<%--发现订单--%>
@@ -34,7 +34,7 @@ UserUtil.getUserPortraitImg();
 				</a>
 			</li>
 			<%--订单大厅--%>
-			<div class="list-p"><a href="${_base}/p/taskcenter/view"
+			<div class="list-p" id="taskCenter"><a href="${_base}/p/taskcenter/view"
 								   class=""><spring:message code="ycleftmenu.task.center"/><span><c:if test="${taskNum!=null}"> (${taskNum})</c:if></span></a></div>
 			<%--分配订单--%>
 			<%--<div class="list-p"><a href="#"><spring:message code="ycleftmenu.assign.orders"/><span> (7)</span></a></div>--%>
@@ -91,12 +91,19 @@ UserUtil.getUserPortraitImg();
 		<div class="left-tplist"><a hrel="#"><img src="${uedroot}/images/to${lTag}.png" /></a><i class="icon-remove-circle"></i></div>
 	</div>
 </div>
-  	<script type="text/javascript">
-  	  $(function(){
-  		var currentEle = $("#"+current);
-    	  if(current!=""&&currentEle){
-    		$("#left_menu_list ul li").removeClass("current");
-    		currentEle.addClass("current");
-    	  } 
-  	  });
-  	</script>
+<script type="text/javascript">
+    $(function () {
+        //一级菜单定位
+        var currentEle = $("#" + current);
+        if (current != "" && currentEle) {
+            $("#left_menu_list ul li").removeClass("current");
+            currentEle.addClass("current");
+        }
+        //二级菜单
+		var divEle = $("#" + divEleId);
+        if (divEleId != "" && divEle) {
+            $("#left_menu_list ul div").removeClass("current");
+            divEle.addClass("current");
+        }
+    });
+</script>
