@@ -109,9 +109,9 @@ define("app/jsp/user/security/bindPhone",
 									},
 									success : function(data) {
 										if(data.data==false){
-											//$("#dynamicode").show();
-											//$("#dynamicode").text(data.statusInfo);
-											showMsg(data.statusInfo);
+											$("#dynamicode").show();
+											$("#dynamicode").text(data.statusInfo);
+											//showMsg(data.statusInfo);
 											_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
 											_dynamicode_btn.val(phoneBindMsg.getOperationCode);
 											return;
@@ -142,9 +142,9 @@ define("app/jsp/user/security/bindPhone",
 						_checkPhoneDynamicode:function(){
 							 var phoneDynamicode = $("#phoneDynamicode").val();
 							 if(phoneDynamicode==null||phoneDynamicode==""){
-								 //$("#dynamicode").show();
-								 //$("#dynamicode").text("请输入验证码");
-								 showMsg(phoneBindMsg.pleaseInputOC);
+								 $("#dynamicode").show();
+								 $("#dynamicode").text(phoneBindMsg.pleaseInputOC);
+								 //showMsg(phoneBindMsg.pleaseInputOC);
 								 return false;
 							 }
 							 ajaxController.ajax({
@@ -157,9 +157,9 @@ define("app/jsp/user/security/bindPhone",
 				    				},
 				    		        success: function(data) {
 				    		        	if(!data.data){
-				    		        		//$("#dynamicode").show();
-											//$("#dynamicode").text(data.statusInfo);
-				    		        		showMsg(data.statusInfo);
+				    		        		$("#dynamicode").show();
+											$("#dynamicode").text(data.statusInfo);
+				    		        		//showMsg(data.statusInfo);
 											return false;
 				    		        	}else{
 				    		        		 $("#next1").hide();
@@ -179,19 +179,19 @@ define("app/jsp/user/security/bindPhone",
 							var phone = $("#telephone");
 							var phoneVal = phone.val();
 							if ($.trim(phoneVal) == "") {
-								//$("#telephoneErrMsg").show();
-								//$("#telephoneErrMsg").html("手机不能为空");
+								$("#telephoneErrMsg").show();
+								$("#telephoneErrMsg").html(phoneBindMsg.phoneNumCanNotEmpty);
 								//phone.focus();
-								showMsg(phoneBindMsg.phoneNumCanNotEmpty);
+								//showMsg(phoneBindMsg.phoneNumCanNotEmpty);
 								return false;
 							}else{
 								$("#telephoneErrMsg").hide();
 								reg = eval('/' + reg + '/');
 								if (!reg.test(phoneVal)) {
-									//$("#telephoneErrMsg").show();
-									//$("#telephoneErrMsg").html(phoneBindMsg.pleaseInputRightPhoneNum);
+									$("#telephoneErrMsg").show();
+									$("#telephoneErrMsg").html(phoneBindMsg.pleaseInputRightPhoneNum);
 									//phone.focus();
-									showMsg(phoneBindMsg.pleaseInputRightPhoneNum);
+									//showMsg(phoneBindMsg.pleaseInputRightPhoneNum);
 									return false;
 								}else{
 									$("#telephoneErrMsg").hide();
