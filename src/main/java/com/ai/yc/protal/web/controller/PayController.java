@@ -78,7 +78,7 @@ public class PayController {
         if (!verifyData(payNotify)
                 || !PayNotify.PAY_STATES_SUCCESS.equals(payNotify.getPayStates())){
             LOG.error("The pay is fail.");
-            return "Fail";
+            return "The pay verify fail";
         }
         //获取交易时间 20161111181026
         Timestamp notifyTime = DateUtil.getTimestamp(payNotify.getNotifyTime(),"yyyyMMddHHmmss");
