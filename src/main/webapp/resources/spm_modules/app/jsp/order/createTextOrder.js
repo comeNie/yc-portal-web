@@ -161,7 +161,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			var baseInfo = {};
 			var productInfo = {};
 			var orderSummary = {};
-			orderSummary.duadName = $.trim($("#selectDuad").find("option:selected").text());
+            orderSummary.duadId =  $.trim($(".dropdown .selected").attr('value'));
+            orderSummary.duadName = $.trim($(".dropdown .selected").html());
 			orderSummary.purposeName = $.trim($("#selectPurpose").find("option:selected").text());
 			orderSummary.domainName = $.trim($("#selectDomain").find("option:selected").text());
 			orderSummary.translevel = $.trim($("#transGrade ul.current").find("p").eq(0).html());
@@ -331,6 +332,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
             //session 语言对
             if ($("#duadName").val() != '') {
                 $(".dropdown .selected").html($("#duadName").val());
+                $(".dropdown .selected").attr("value", $("#duadId").val());
             }
 
 			//翻译级别
@@ -573,7 +575,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		//初始化上传控件
 		_initUpdate:function () {
 			var _this= this;
-            var FILE_TYPES=['rar','zip','doc','docx','pdf','jpg','png','gif'];
+            var FILE_TYPES=['rar','zip','doc','docx','txt','pdf','jpg','png','gif'];
             uploader = WebUploader.create({
                 swf : _base+"/resources/spm_modules/webuploader/Uploader.swf",
                 server: _base+'/order/uploadFile',
@@ -582,7 +584,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 dnd: '#fy2', //拖拽
                 accept: {
                     title: 'intoTypes',
-                    extensions: 'rar,zip,doc,docx,pdf,jpg,png,gif',
+                    extensions: 'rar,zip,doc,docx,txt,pdf,jpg,png,gif',
                     // mimeTypes: 'application/zip,application/msword,application/pdf,image/jpeg,image/png,image/gif'
                 },
                 resize : false,
