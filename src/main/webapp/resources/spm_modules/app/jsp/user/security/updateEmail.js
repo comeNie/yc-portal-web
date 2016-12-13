@@ -177,13 +177,6 @@ define("app/jsp/user/security/updateEmail",
 						 */
 						_psendEmail:function(){
 							var emailVal = $("#phoneUEmail").val();
-							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
-									.test(emailVal)) {
-								$("#phoneUEmailErrMgs").show();
-								$("#phoneUEmailErrMgs").text(updateEmailJs.emailFormatIncorrect);
-								//showMsg(updateEmailJs.emailFormatIncorrect);
-								return;
-							}
 							if(!this._pcheckEmail()){
 								
 								return;
