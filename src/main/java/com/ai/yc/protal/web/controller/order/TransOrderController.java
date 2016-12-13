@@ -42,6 +42,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -152,12 +153,8 @@ public class TransOrderController {
             
             List<ProdFileVo> prodFileVos = orderDetailsRes.getProdFiles();
             int uUploadCount = 0; //可以上传文件的数量
-            for(ProdFileVo prodFileVo : prodFileVos) {
-                if (StringUtils.isEmpty(prodFileVo.getFileTranslateId())) {
-                    uUploadCount ++;
-                }
-            }
-            
+            Map<String, Long> fileSizeMap = new HashMap<>();
+
             uiModel.addAttribute("UUploadCount", uUploadCount);
 //            orderDetailsRes.setState("20");//TODO... 模拟待领取
 //            orderDetailsRes.setDisplayFlag("20");//TODO... 模拟待领取
@@ -400,20 +397,28 @@ public class TransOrderController {
             List<ProdFileVo> prodFiles = orderDetailsRes.getProdFiles();
             String fileId = null;
             boolean isUpload = false; //是否能上传
-            
+            long allFileSize = file.getSize(); //文件总大小
+            String errInfo = rb.getMessage("order.info.fileMaxNum", new Object[]{prodFiles.size()});
+
             for(ProdFileVo prodFile : prodFiles) {
+                String transId = prodFile.getFileTranslateId();
                 //是否有上传位置
-                if (StringUtils.isEmpty(prodFile.getFileTranslateId())) {
+                if (StringUtils.isEmpty(transId)) {
                     isUpload = true;
                     break;
+                } else {
+                    allFileSize += client.getFileSize(transId);
                 }
             }
-            
+
+            if (allFileSize > 100*1024*1024) {
+                isUpload = false;
+                errInfo = rb.getMessage("order.info.fileMaxSize");
+            }
+
             //不能上传了,返回失败
             if (!isUpload) {
-                resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, "FAIL");
-                resData.setData("已经到达最大上传次数："+prodFiles.size());
-                
+                resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, errInfo);
                 return resData;
             }
             

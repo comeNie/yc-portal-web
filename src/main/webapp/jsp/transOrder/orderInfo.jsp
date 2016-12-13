@@ -156,9 +156,9 @@
                                 </c:forEach>
 
 								<!-- 翻译中 修改中 -->
-								<c:if test="${OrderDetails.state =='23' || OrderDetails.state =='25' }">
+								<%--<c:if test="${OrderDetails.state =='23' || OrderDetails.state =='25' }">--%>
 
-                   					<c:if test="${UUploadCount > 0}">
+                   					<%--<c:if test="${UUploadCount > 0}">--%>
 			 						<!-- 可以上传 -->
 			 							<!-- 上传译文 -->
 										<form  id="uploadForm" method="POST" enctype="multipart/form-data" action="${_base}/p/trans/order/upload">
@@ -168,9 +168,9 @@
 									   			<input name="orderId" type="hidden" value="${OrderDetails.orderId}">
 								   			</p>  
 										</form>　   
-			 						</c:if>
+			 						<%--</c:if>--%>
 
-				 				</c:if>
+				 				<%--</c:if>--%>
 							</div>
 			 			</c:if>
 			 			

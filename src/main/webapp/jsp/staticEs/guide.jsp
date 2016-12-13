@@ -27,7 +27,7 @@
 				<p class="line">_________________</p>
 			</li>
 			<%--立即发布翻译任务--%>
-			<li class="pacbtn"><input id="order-btn" type="button" class="btn border-white btn-230 radius20" value="Need Translation Service"></li>
+			<li class="pacbtn"><input id="order-btn" type="button" class="btn border-white btn-230 radius20" value="Release translation task"></li>
 		</ul>
 	</div>
 </div>

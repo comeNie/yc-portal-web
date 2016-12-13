@@ -76,6 +76,62 @@
         </div>
 
     </div>
+
+    <!--服务特色-->
+    <div class="service">
+        <div class="service-main">
+            <div class="static-title">
+                <p>Service Features</p>
+                <p class="line1"></p>
+            </div>
+            <div class="service-list">
+                <ul>
+                    <li class="img1">
+                        <p>
+                            <span class="title">Super speed</span>
+                            <span>Automation process</span>
+                            <span>State-level professional translation</span>
+                            <span>Synchronized operation of translation and proofreading</span>
+                        </p>
+                    </li>
+                    <li class="img2"><p>Guaranteed quality</p></li>
+                    <li class="img3"><p>Comprehensive service</p></li>
+                    <li class="img4"><p>First-class quality</p></li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+    <!--服务特色-->
+    <div class="guarantee">
+        <div class="guarantee-main">
+            <div class="static-title">
+                <p>Service Guarantee</p>
+                <p class="line1"></p>
+            </div>
+            <div class="guarantee-list">
+                <ul>
+                    <li>
+                        <p class="img1"></p>
+                        <p>Hundreds of millions of corpus entries</p>
+                    </li>
+                    <li>
+                        <p class="img2"></p>
+                        <p>Global quality translation resources</p>
+                    </li>
+                    <li>
+                        <p class="img3"></p>
+                        <p>Professional DTP optimization design</p>
+                    </li>
+                    <li>
+                        <p class="img4"></p>
+                        <p>Free translation changes</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 <!--底部-->
 <%@include file="/inc/indexFoot.jsp" %>
