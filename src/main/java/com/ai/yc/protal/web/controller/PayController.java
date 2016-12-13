@@ -93,6 +93,7 @@ public class PayController {
      * @return
      */
     @RequestMapping("/depositFundResult/{userId}/{currencyUnit}")
+    @ResponseBody
     public String accountDepositResult(@PathVariable("userId")String userId,@PathVariable("currencyUnit")String currencyUnit,
             PayNotify payNotify){
         LOG.info("The pay result.:{},\r\n{}",JSON.toJSONString(payNotify));
