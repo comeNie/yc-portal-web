@@ -418,7 +418,7 @@ define(
 											},
 											success : function(json) {
 												if(json.statusCode=="1" && json.data){
-													btn.val(curCount + " s")
+													btn.val(registerMsg.resend+curCount)
 															.removeClass("btn-green")
 															.addClass("biu-btn")
 															.attr("style","color:#fff;");
@@ -440,7 +440,7 @@ define(
 										"biu-btn").addClass("btn-green");
 							} else {
 								curCount = curCount - 1;
-								$("#send_dynamicode_btn").val(curCount + " s");
+								$("#send_dynamicode_btn").val(registerMsg.resend+curCount);
 							}
 						}
 					});
