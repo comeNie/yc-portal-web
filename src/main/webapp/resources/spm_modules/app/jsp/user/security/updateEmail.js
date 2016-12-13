@@ -142,9 +142,9 @@ define("app/jsp/user/security/updateEmail",
 								success : function(data) {
 									var resultCode = data.data;
 									if(!resultCode){
-										//$("#emailErrMsg").show();
-										//$("#emailErrMsg").text(updateEmailJs.sendEmailFail);
-										showMsg(updateEmailJs.sendEmailFail);
+										$("#emailErrMsg").show();
+										$("#emailErrMsg").text(updateEmailJs.sendEmailFail);
+										// showMsg(updateEmailJs.sendEmailFail);
 										$("#sendEmailBtn").removeAttr("disabled"); //移除disabled属性
 									}else{
 										var step = 59;
@@ -182,6 +182,10 @@ define("app/jsp/user/security/updateEmail",
 								$("#phoneUEmailErrMgs").show();
 								$("#phoneUEmailErrMgs").text(updateEmailJs.emailFormatIncorrect);
 								//showMsg(updateEmailJs.emailFormatIncorrect);
+								return;
+							}
+							if(!this._pcheckEmail()){
+								
 								return;
 							}
 							var _this = this;
@@ -414,14 +418,17 @@ define("app/jsp/user/security/updateEmail",
 									}
 								},
 								error: function(error) {
-									$("#tishi1").html("error:"+ error);
+									$("#emailUErrMsg").show();
+									$("#emailUErrMsg").text(error);
 								}
 							});
 							// $("#emailUErrMsg").hide();
 							return flag;
 						},
 						_pcheckEmail:function(){
+							$("#phoneUEmailErrMgs").hide();
 							var email = $("#phoneUEmail");
+							var flag = true;
 							var emailVal = email.val();
 							if ($.trim(emailVal) == "") {
 								$("#phoneUEmailErrMgs").show();
@@ -437,8 +444,28 @@ define("app/jsp/user/security/updateEmail",
 								//showMsg(updateEmailJs.emailUErrLegalMsg);
 								return false;
 							}
-							$("#phoneUEmailErrMgs").hide();
-							return true;
+							ajaxController.ajax({
+								async:false,
+								type:"post",
+								url:_base+"/p/security/isExitEmail",
+								data:{
+									email:$("#emailUpdateEmail").val(),
+									type:"5",
+								},
+								success: function(json) {
+									if(!json.data){
+										$("#phoneUEmailErrMgs").show();
+										$("#phoneUEmailErrMgs").text(json.statusInfo);
+										// $("#tishi1").html(json.statusInfo)
+										flag = false;
+									}
+								},
+								error: function(error) {
+									$("#phoneUEmailErrMgs").show();
+									$("#phoneUEmailErrMgs").text(error);
+								}
+							});
+							return flag;
 						},
 						
 						/* 发送动态码 */
