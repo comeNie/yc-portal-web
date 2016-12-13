@@ -180,24 +180,23 @@ define("app/jsp/user/security/bindPhone",
 							var phoneVal = phone.val();
 							if ($.trim(phoneVal) == "") {
 								$("#telephoneErrMsg").show();
-								$("#telephoneErrMsg").html(phoneBindMsg.phoneNumCanNotEmpty);
+								$("#telephoneErrMsg").text(phoneBindMsg.phoneNumCanNotEmpty);
 								//phone.focus();
 								//showMsg(phoneBindMsg.phoneNumCanNotEmpty);
 								return false;
 							}else{
-								$("#telephoneErrMsg").hide();
 								reg = eval('/' + reg + '/');
 								if (!reg.test(phoneVal)) {
 									$("#telephoneErrMsg").show();
-									$("#telephoneErrMsg").html(phoneBindMsg.pleaseInputRightPhoneNum);
+									$("#telephoneErrMsg").text(phoneBindMsg.pleaseInputRightPhoneNum);
 									//phone.focus();
 									//showMsg(phoneBindMsg.pleaseInputRightPhoneNum);
 									return false;
 								}else{
-									$("#telephoneErrMsg").hide();
 									ajaxController.ajax({
 										type : "post",
 										processing : false,
+										async:false,
 										message : phoneBindMsg.saveingMsg,
 										url : _base + "/reg/checkPhoneOrEmail",
 										data : {
@@ -206,9 +205,9 @@ define("app/jsp/user/security/bindPhone",
 										},
 										success : function(json) {
 											if (!json.data) {
-												//$("#telephoneErrMsg").show();
-												//$("#telephoneErrMsg").html(json.statusInfo);
-												showMsg(json.statusInfo);
+												$("#telephoneErrMsg").show();
+												$("#telephoneErrMsg").text(json.statusInfo);
+												//showMsg(json.statusInfo);
 											}else{
 												$("#telephoneErrMsg").hide();
 											}
@@ -219,12 +218,17 @@ define("app/jsp/user/security/bindPhone",
 							return true;
 						},
 						_submitPhone:function(){
+							if(!this._checkPhone()){
+								return;
+							}
 							/**
 							 * 校验动态码
 							 */
 							 var phoneDynamicode = $("#dynamicode").val();
 							 if(phoneDynamicode==null||phoneDynamicode==""){
-								 showMsg(phoneBindMsg.pleaseInputOC);
+								 $("#telephoneErrMsg").show();
+								 $("#telephoneErrMsg").text(phoneBindMsg.pleaseInputOC);
+								 //showMsg(phoneBindMsg.pleaseInputOC);
 								 return false;
 							 }
 							 var countryValue = $("#country").find("option:selected").attr("country_value");
@@ -238,7 +242,9 @@ define("app/jsp/user/security/bindPhone",
 				    				},
 				    		        success: function(data) {
 				    		        	if(!data.data){
-				    		        		showMsg(data.statusInfo);
+				    		        		 $("#telephoneErrMsg").show();
+											 $("#telephoneErrMsg").text(data.statusInfo);
+				    		        		//showMsg(data.statusInfo);
 											return false;
 				    		        	}else{
 				    		        		 ajaxController.ajax({
@@ -252,7 +258,9 @@ define("app/jsp/user/security/bindPhone",
 								    				},
 								    				success: function(json) {
 								    					if(!json.data){
-								    		        		showMsg(json.statusInfo);
+								    						 $("#telephoneErrMsg").show();
+															 $("#telephoneErrMsg").text(data.statusInfo);
+								    		        		//showMsg(json.statusInfo);
 															return false;
 								    		        	}else{
 								    		        		//showMsg(phoneBindMsg.bingSuccess);

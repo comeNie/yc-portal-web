@@ -7,6 +7,13 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>译员-订单大厅</title>
     <%@ include file="/inc/inc.jsp" %>
+    <%--菜单定位--%>
+    <script type="text/javascript">
+        //一级菜单
+        var current = "lookOrders";
+        //二级菜单
+        var divEleId = "taskCenter";
+    </script>
 </head>
 <body>
 <!--头部-->
@@ -160,7 +167,6 @@
 <script type="text/javascript" src="${uedroot}/scripts/modular/jqueryrotate.2.3.js"></script>
 <script type="text/javascript">
     var pager;
-    var current = "taskCenter";
     var lspId="${lspId}";
     (function () {
         //订单领取

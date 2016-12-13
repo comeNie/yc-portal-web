@@ -310,7 +310,9 @@ public class CustomerOrderController {
         String notifyUrl= ConfigUtil.getProperty("NOTIFY_URL")+"/"+orderType+"/"+ UserUtil.getUserId();
 
         //异步通知地址,默认为用户
-        String amount = String.valueOf(AmountUtil.changeLiToYuan(orderAmount));
+        //将订单金额直接转换为小数点后两位
+        java.text.DecimalFormat df =new java.text.DecimalFormat("#0.00");
+        String amount = String.valueOf(df.format(AmountUtil.changeLiToYuan(orderAmount)));
         Map<String, String> map = new HashMap<String, String>();
         map.put("tenantId", tenantId);//租户ID
         map.put("orderId", orderId);//请求单号
