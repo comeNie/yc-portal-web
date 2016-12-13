@@ -7,7 +7,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title><spring:message code="ycaccountcenter.title"/> </title>
-
  	<%@ include file="/inc/inc.jsp"%>
 </head>
 <body>
@@ -29,6 +28,7 @@
 			<li>
 				<p class="word"><spring:message code="ycaccountcenter.updatePassword.repeatPassword"/></p>
 				<p><input maxlength="16" id="newPassword2" type="password" class="int-text int-in-200 radius"></p>
+				<label class="ml-70" id="passwordErrMsg" style="display: none;color: red"></label>
 			</li>
 			<li class="eject-btn">
 				<input type="button" id="modify-determine" class="btn btn-green btn-120 radius20" value="<spring:message code="ycaccountcenter.updatePassword.confirm"/>">
@@ -58,6 +58,7 @@
 			<li>
 				<p class="word"><spring:message code="ycaccountcenter.updatePassword.repeatPassword"/></p>
 				<p><input maxlength="16" id="pay_newPassword2" type="password" class="int-text int-in-200 radius"></p>
+				<label class="ml-70" id="payPasswordErrMsg" style="display: none;color: red"></label>
 			</li>
 			<li class="eject-btn">
 				<input type="button" id="pay_modify-determine" class="btn btn-green btn-120 radius20" value="<spring:message code="ycaccountcenter.updatePassword.confirm"/>">
