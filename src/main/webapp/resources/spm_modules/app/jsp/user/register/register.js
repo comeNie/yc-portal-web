@@ -53,8 +53,8 @@ define(
 											html.push('<option country_value="'+t.countryValue+'" reg="'
 													+ t.regularExpression
 													+ '" value="' + _code
-													+ '" >' + _code + '+'
-													+ name + '</option>');
+													+ '" >' + name + '+'
+													+ _code + '</option>');
 										}
 										$("#country").html(html.join(""));
 									}
