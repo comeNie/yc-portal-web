@@ -17,6 +17,7 @@
 <body>
 	<input type="hidden" value="${transType}" id="transType">
 	<input type="hidden" value="${orderSummary.duadName}" id="duadName">
+	<input type="hidden" value="${orderSummary.duadId}" id="duadId">
 	<input type="hidden" value="${order.productInfo.translateLevelInfoList[0].translateLevel}" id="transLv">
 	<input type="hidden" value="${order.productInfo.useCode}" id="useCode">
 	<input type="hidden" value="${order.productInfo.fieldCode}" id="fieldCode">

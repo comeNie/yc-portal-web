@@ -44,7 +44,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
             var _this = this;
             var formData = new FormData($("#uploadForm")[0]);
             //添加上传文件验证
-            var FILE_TYPES=['rar','zip','doc','docx','pdf','jpg','png','gif'];
+            var FILE_TYPES=['rar','zip','doc','docx','txt','pdf','jpg','png','gif'];
             var filePath = $("#upload").val();
             if(filePath == null || filePath=== '')
             	return;
