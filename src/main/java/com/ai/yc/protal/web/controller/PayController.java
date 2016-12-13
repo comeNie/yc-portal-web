@@ -28,6 +28,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,7 +69,8 @@ public class PayController {
      * @return
      */
     @RequestMapping("/payResult/{orderType}/{userId}")
-    public void orderPayResult(
+    @ResponseBody
+    public String orderPayResult(
             @PathVariable("orderType")String orderType, @PathVariable("userId")String userId,
             PayNotify payNotify){
         LOG.info("The pay result.orderType:{},\r\n{}", orderType,JSON.toJSONString(payNotify));
@@ -76,7 +78,7 @@ public class PayController {
         if (!verifyData(payNotify)
                 || !PayNotify.PAY_STATES_SUCCESS.equals(payNotify.getPayStates())){
             LOG.error("The pay is fail.");
-            return;
+            return "Fail";
         }
         //获取交易时间 20161111181026
         Timestamp notifyTime = DateUtil.getTimestamp(payNotify.getNotifyTime(),"yyyyMMddHHmmss");
@@ -84,6 +86,7 @@ public class PayController {
         Double totalFee = Double.valueOf(payNotify.getOrderAmount())*1000;
         orderService.orderPayProcessResult(userId,null,Long.parseLong(payNotify.getOrderId()),orderType,
                 totalFee.longValue(),payNotify.getPayOrgCode(),payNotify.getOutOrderId(),notifyTime);
+        return "OK";
     }
     /**
      * 帐户充值结果 后台
