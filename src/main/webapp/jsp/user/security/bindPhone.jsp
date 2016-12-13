@@ -6,6 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <title></title>
 <%@ include file="/inc/inc.jsp"%>
+<link href="${uedroot}/css/modular/login-regsiter.css" rel="stylesheet"
+	type="text/css" />
 </head>
 <body>
 	<!--头部-->
@@ -46,17 +48,15 @@
  					<div class="recharge-form-label mt-20">
  						<ul>
  							<li>
- 							   <p class="word"><spring:message code="ycaccountcenter.bindphone.phonenumber"/></p>
+ 								<label class="ml-70" id="telephoneErrMsg" style="display: none;"></label>
+ 							    <p class="word"><spring:message code="ycaccountcenter.bindphone.phonenumber"/></p>
  								<p><select id="country" class="select select-in"></select></p>
  								<p><input id="telephone" type="text" class="int-text int-large radius"></p>
- 								<label id="telephoneErrMsg"></label>
- 								
  							</li>
  							<li>
  								<p class="word"><spring:message code="ycaccountcenter.bindphone.dynamicnumber"/></p>
  								<p><input id="dynamicode" type="text" class="int-text int-in radius"></p>
  								<p><input type="button" id="send_dynamicode_btn" class="btn border-green border-sma radius btn-medium" value='<spring:message code="ycaccountcenter.bindphone.getdynamiccode"/>'></p>
- 							   <label id="dynamicodeErrMsg"></label>
  							</li>
  						</ul>
  					</div>

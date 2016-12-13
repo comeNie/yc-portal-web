@@ -5,6 +5,8 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <title></title>
 <%@ include file="/inc/inc.jsp"%>
+<link href="${uedroot}/css/modular/login-regsiter.css" rel="stylesheet"
+	type="text/css" />
 </head>
 <body>
 	<!--头部-->
@@ -43,8 +45,8 @@
  				<div class="recharge-content binding">
  					<div class="recharge-form-label mt-20">
  						<ul>
- 							<li><label class="ml-70" id="emailUErrMsg" style="display: none;"></label></li>
- 							<li>
+ 							<li>	
+ 								<label class="ml-70" id="emailUErrMsg" style="display: none;"></label>
  								<p class="word"><spring:message code="ycaccountcenter.bindemial.label.word1"/></p>
  								<p><input type="text" class="int-text int-large radius" id="bindEmail"></p>
  							</li>

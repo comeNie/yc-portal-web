@@ -146,13 +146,16 @@ define("app/jsp/user/security/bindEmail",
 									});
 							},
 						_submitValue:function(){
+							 if(!this._checkEmail()){
+							    	return;
+							   }
 							/**
 							 * 校验动态码
 							 */
 							 var emailDynamicode = $("#emailValue").val();
 							 if(emailDynamicode==null||emailDynamicode==""){
-								 $("#dynamicodeErrMsg").show();
-								 $("#dynamicodeErrMsg").text(emailBindMsg.pleaseInputOC);
+								 $("#emailUErrMsg").show();
+								 $("#emailUErrMsg").text(emailBindMsg.pleaseInputOC);
 								 //showMsg(emailBindMsg.pleaseInputOC);
 								 return false;
 							 }
@@ -167,8 +170,8 @@ define("app/jsp/user/security/bindEmail",
 				    				},
 				    		        success: function(data) {
 				    		        	if(!data.data){
-				    		        		$("#dynamicodeErrMsg").show();
-											$("#dynamicodeErrMsg").text(data.statusInfo);
+				    		        		$("#emailUErrMsg").show();
+											$("#emailUErrMsg").text(data.statusInfo);
 				    		        		//showMsg(data.statusInfo);
 											return false;
 				    		        	}else{
