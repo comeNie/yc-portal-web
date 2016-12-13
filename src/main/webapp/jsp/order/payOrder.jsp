@@ -117,7 +117,7 @@
 							<p><spring:message code="pay.order.amount.order"/>：<c:if
 									test="${orderFee.currencyUnit == '2'}">$</c:if><c:if
 									test="${orderFee.currencyUnit == '1' && isEn==true}">¥</c:if><fmt:formatNumber
-									value="${orderFee.totalFee/1000}" pattern="#,##0.00#"/><c:if
+									value="${orderFee.totalFee/1000}" pattern="#,##0.00"/><c:if
 									test="${orderFee.currencyUnit == '1' && isEn!=true}">元</c:if></p>
 						</li>
 						<%--<li class="line-none line-20">--%>
@@ -130,7 +130,7 @@
 							<p><spring:message code="pay.order.payable.order"/>：<c:if
 									test="${orderFee.currencyUnit == '2'}">$</c:if><c:if
 									test="${orderFee.currencyUnit == '1' && isEn==true}">¥</c:if><span><fmt:formatNumber
-									value="${orderFee.totalFee/1000}" pattern="#,##0.00#"/></span><c:if
+									value="${orderFee.totalFee/1000}" pattern="#,##0.00"/></span><c:if
 									test="${orderFee.currencyUnit == '1'&& isEn!=true}">元</c:if></p>
 						</li>
 					</ul>
