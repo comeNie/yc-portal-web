@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -156,7 +157,8 @@
 							</ul>
 							<%--使用余额--%>
 							<c:if test="${balanceInfo!=null}">
-								<ul payType="YE" class="none-ml">
+								<ul payType="YE" class="none-ml" >
+									<%--账户余额--%>
 									<li class="payment-balance">
 											<%--账户余额--%>
 										<p><spring:message code="pay.order.account.balance"/></p>
@@ -209,7 +211,12 @@
 </body>
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
+	//是否需要校验密码
 	var needPayPass = "${balanceInfo.payCheck}";
+	//待支付金额，目前为总金额
+	var orderPayFee = ${orderFee.totalFee};
+	//账户余额
+	var acctBalance = ${balanceInfo.balance};
 	(function () {
 		var pager;
 		seajs.use('app/jsp/order/payOrder', function(payOrderPager) {

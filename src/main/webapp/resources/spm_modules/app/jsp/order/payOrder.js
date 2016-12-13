@@ -55,14 +55,19 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 					}
 				}).showModal();
 				$("#toPayForm").submit();
-			}//余额支付,需要密码
-			else if("YE" === payType && needPayPass==="1"){
-				$("#payPass").val("");
-				$('#eject-mask').fadeIn(100);
-				$('#rechargepop').slideDown(100);
-			}//余额支付不需要密码
-			else if("YE" === payType){
-				$("#yePayForm").submit();
+			}else {
+				//判断余额是否足够
+				if(acctBalance<orderPayFee){
+					this._showWarn($.i18n.prop('pay.dialog.recharge'));
+				}//余额支付,需要密码
+             	else if(needPayPass==="1"){
+                    $("#payPass").val("");
+                    $('#eject-mask').fadeIn(100);
+                    $('#rechargepop').slideDown(100);
+                }//余额支付不需要密码
+                else{
+                    $("#yePayForm").submit();
+                }
 			}
 
 		},
@@ -70,6 +75,10 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 		_changePayType:function(){
 			var _this = this;
 			$("#payment-method ul").each(function () {
+                var type = $(this).attr("payType");
+                if("YE" == type && acctBalance<orderPayFee){
+                    return;
+                }
 				$(this).click(function () {
 					$(this).children('label').remove();
 					$(this).addClass("current");
@@ -100,7 +109,18 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 		//调转到充值页面
 		_toDeposit:function(){
 			window.location.href=_base+"/p/balance/depositFund";
-		}
+		},
+        _showWarn:function(msg){
+            new Dialog({
+                content:msg,
+                icon:'warning',
+                okValue: $.i18n.prop("pay.dialog.ok"),
+                title:  $.i18n.prop("pay.dialog.prompt"),
+                ok:function(){
+                    this.close();
+                }
+            }).showModal();
+        }
 		
     });
     
