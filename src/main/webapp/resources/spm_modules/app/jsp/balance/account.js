@@ -83,8 +83,8 @@ define('app/jsp/balance/account', function (require, exports, module) {
 						}else {
 							var yuan = $.i18n.prop('account.tag.yuan');
 						}
-						$("#income").html(incomeBalance/1000+yuan);
-						$("#out").html(outBalance/1000+yuan);
+						$("#income").html(yuan+incomeBalance/1000);
+						$("#out").html(yuan+outBalance/1000);
 						if (data[0].payTime!=null){
 							var template = $.templates("#searchAccountTemple");
 							var htmlOutput = template.render(data);
