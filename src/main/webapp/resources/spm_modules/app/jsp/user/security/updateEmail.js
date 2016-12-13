@@ -449,7 +449,7 @@ define("app/jsp/user/security/updateEmail",
 								type:"post",
 								url:_base+"/p/security/isExitEmail",
 								data:{
-									email:$("#emailUpdateEmail").val(),
+									email:$("#phoneUEmail").val(),
 									type:"5",
 								},
 								success: function(json) {
