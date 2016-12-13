@@ -216,7 +216,7 @@
 	//待支付金额，目前为总金额
 	var orderPayFee = ${orderFee.totalFee};
 	//账户余额
-	var acctBalance = ${balanceInfo.balance};
+	var acctBalance = ${balanceInfo!=null?balanceInfo.balance:0};
 	(function () {
 		var pager;
 		seajs.use('app/jsp/order/payOrder', function(payOrderPager) {
