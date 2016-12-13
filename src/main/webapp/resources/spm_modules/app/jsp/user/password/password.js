@@ -223,7 +223,7 @@ define("app/jsp/user/password/password",
 										$("#set-table1").html("<div class='recharge-success mt-40'><ul><li><img src='"+uedroot+"/images/rech-fail.png' /></li><li class='word'>"+passwordMsg.notBindingPhone+"</li></ul></div>");	
 									}
                                     if(!isBindEmail){//没有绑定邮箱
-                                    	 $("#set-table2").html("<div class='recharge-success mt-40'><ul><li class='word'>"+passwordMsg.notBindingEmail+"</li></ul></div>");
+                                    	$("#set-table2").html("<div class='recharge-success mt-40'><ul><li><img src='"+uedroot+"/images/rech-fail.png' /></li><li class='word'>"+passwordMsg.notBindingEmail+"</li></ul></div>");
                                      }
                                     $("#back-pass").hide();
      							    $("#back-pass1").show();

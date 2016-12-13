@@ -83,10 +83,10 @@ define("app/jsp/user/security/updateMobilePhone",
 							   }
 							});
 							if(phone==""){
-								 $("#set-table1").html("<div class='recharge-success mt-40'><ul><img src='"+uedroot+"/images/rech-fail.png' /></li><li class='word'>"+updatePhoneJs.notBindPhoneNoVerify+"</li></ul></div>");
+								 $("#set-table1").html("<div class='recharge-success mt-40'><ul><li><img src='"+uedroot+"/images/rech-fail.png' /></li><li class='word'>"+updatePhoneJs.notBindPhoneNoVerify+"</li></ul></div>");
 							}
 							if(email==""){
-								$("#set-table2").html("<div class='recharge-success mt-40'><ul><li class='word'>"+updatePhoneJs.notBindEmailNoVerify+"</li></ul></div>");
+								 $("#set-table2").html("<div class='recharge-success mt-40'><ul><li><img src='"+uedroot+"/images/rech-fail.png' /></li><li class='word'>"+updatePhoneJs.notBindEmailNoVerify+"</li></ul></div>");
 							}
 							if(phone==""&&email!=""){
 								$("#emailVerification a").click();

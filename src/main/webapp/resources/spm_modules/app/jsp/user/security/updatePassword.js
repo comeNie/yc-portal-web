@@ -40,7 +40,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
         		$("#set-table1").html("<div class='recharge-success mt-40'><ul><li><img src='"+uedroot+"/images/rech-fail.png' /></li><li class='word'>"+updatePasswordMsg.notBindingPhone+"</li></ul></div>");
             }
         	if(email==""){
-        		$("#set-table2").html("<div class='recharge-success mt-40'><ul><li class='word'>"+updatePasswordMsg.notBindingEmail+"</li></ul></div>");
+        		$("#set-table2").html("<div class='recharge-success mt-40'><ul><li><img src='"+uedroot+"/images/rech-fail.png' /></li><li class='word'>"+updatePasswordMsg.notBindingEmail+"</li></ul></div>");
              }
         	if(phone==""&&email!=""){
         		$("#emailVerification").click();

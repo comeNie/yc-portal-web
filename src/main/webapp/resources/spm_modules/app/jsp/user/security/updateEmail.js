@@ -83,7 +83,7 @@ define("app/jsp/user/security/updateEmail",
 							   }
 							});
 							if(email==""){
-								 $("#set-table2").html("<div class='recharge-success mt-40'><ul><li class='word'>"+updateEmailJs.notBindEmailNoVerify+"</li></ul></div>");
+								 $("#set-table2").html("<div class='recharge-success mt-40'><ul><li><img src='"+uedroot+"/images/rech-fail.png' /></li><li class='word'>"+updateEmailJs.notBindEmailNoVerify+"</li></ul></div>");
 							}
 							if(phone==""){
 								 $("#set-table1").html("<div class='recharge-success mt-40'><ul><li><img src='"+uedroot+"/images/rech-fail.png' /></li><li class='word'>"+updateEmailJs.notBindPhoneNoVerify+"</li></ul></div>");
