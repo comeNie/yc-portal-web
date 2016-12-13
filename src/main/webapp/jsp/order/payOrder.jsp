@@ -168,7 +168,7 @@
 												value="${balanceInfo.balance/1000}" pattern="#,##0.00#"/><c:if
 												test="${isEn!=true}">元</c:if></p>
 											<%--充值--%>
-										<p><input type="button" class="btn radius20 border-blue btn-80 ml-10"
+										<p><input type="button" id="depositBtn" class="btn radius20 border-blue btn-80 ml-10"
 												  value="<spring:message code="pay.order.balance.recharge"/>"></p>
 									</li>
 								</ul>
