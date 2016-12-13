@@ -86,7 +86,7 @@
             	<!--译云专业语言服务平台 版权所有  -->
                 <li class="di-icon"><spring:message code="indexFoot.companyName"/><img src="${uedroot}/images/di-icon.png" /></li>
               	<!-- 京ICP备13002826号-7 -->
-                <li>Copyright ©2015 www.yeecloud.com All rights reserved. 京ICP备13002826号-7</li>
+                <li><spring:message code="indexFoot.copyRright"/></li>
             </ul>
         </div>
     </div>

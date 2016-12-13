@@ -154,7 +154,7 @@ define("app/jsp/user/security/updateMobilePhone",
 										var step = 59;
 										_sendEmailBtn.val(updatePhoneJs.resend60);
 							            var _res = setInterval(function(){
-							            	_sendEmailBtn.val(step + ' s');
+							            	_sendEmailBtn.val(updatePhoneJs.resend+step);
 							                step-=1;
 							                if(step <= 0){
 							                _sendEmailBtn.removeAttr("disabled"); //移除disabled属性

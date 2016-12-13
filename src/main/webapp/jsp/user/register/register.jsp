@@ -17,7 +17,7 @@
 	<div class="login-big">
 		<div class="login-headr">
 			<p>
-				<img src="${uedroot}/images/login-logo.png" onclick="location.href='${_base}/'" />
+				<img style="cursor: pointer" src="${uedroot}/images/login-logo.png" onclick="location.href='${_base}/'" />
 			</p>
 			<p class="word">
 				<spring:message code="ycregister.registerTitle" />
@@ -162,7 +162,8 @@
 		"email_registered" : '<spring:message code="ycregister.register.email" />',
 		"sms_code_empty":'<spring:message code="ycregisterMsg.smsEmpty"/>',
 		"sms_code_error":'<spring:message code="ycregisterMsg.smsError"/>',
-		"getDynamiCode":'<spring:message code="ycregister.getDynamiCode"/>'
+		"getDynamiCode":'<spring:message code="ycregister.getDynamiCode"/>',
+		"resend":'<spring:message code="ycregisterMsg.resend"/>'
 	};
 </script>
 

@@ -156,7 +156,7 @@ public class IndexController {
     }
 
     /**
-     * 协议规则
+     * 服务说明
      * @return
      */
     @RequestMapping("/sexplain")
@@ -180,6 +180,15 @@ public class IndexController {
     @RequestMapping("/findyee")
     public String findyee(){
         return staticUrl() + "/app";
+    }
+
+    /**
+     * 服务
+     * @return
+     */
+    @RequestMapping("/service")
+    public String service(){
+        return staticUrl() + "/service";
     }
 
     private String staticUrl(){

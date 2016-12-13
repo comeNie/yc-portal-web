@@ -187,6 +187,7 @@
 							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
 							<p><spring:message code="order.stanInfo3"/></p>
 						</li>
+						<label></label>
 					</ul>
 					<ul class="current" name="100220">
 						<li class="blue">
@@ -217,6 +218,7 @@
 							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
 							<p><spring:message code="order.proInfo3"/></p>
 						</li>
+						<label></label>
 					</ul>
 					<ul name="100230">
 						<li class="blue">
@@ -247,6 +249,7 @@
 							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
 							<p><spring:message code="order.pubInfo3"/></p>
 						</li>
+						<label></label>
 					</ul>
 				</div>
 				<!--select-->

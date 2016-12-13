@@ -64,6 +64,63 @@
         </div>
 
     </div>
+
+    <!--服务特色-->
+    <div class="service">
+        <div class="service-main">
+            <div class="static-title">
+                <p>服务特色</p>
+                <p class="line1"></p>
+            </div>
+            <div class="service-list">
+                <ul>
+                    <li class="img1">
+                        <p>
+                            <span class="title">极致的速度</span>
+                            <span>自动化流程</span>
+                            <span>国家级专业翻译</span>
+                            <span>译审同步</span>
+                        </p>
+                    </li>
+                    <li class="img2"><p>放心的质量</p></li>
+                    <li class="img3"><p>全面的服务</p></li>
+                    <li class="img4"><p>一流的品质</p></li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+    <!--服务特色-->
+    <div class="guarantee">
+        <div class="guarantee-main">
+            <div class="static-title">
+                <p>服务保障</p>
+                <p class="line1"></p>
+            </div>
+            <div class="guarantee-list">
+                <ul>
+                    <li>
+                        <p class="img1"></p>
+                        <p>亿万量级语料支持</p>
+                    </li>
+                    <li>
+                        <p class="img2"></p>
+                        <p>全球优质翻译资源</p>
+                    </li>
+                    <li>
+                        <p class="img3"></p>
+                        <p>专业排版优化设计</p>
+                    </li>
+                    <li>
+                        <p class="img4"></p>
+                        <p>免费修改服务保障</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
 </div>
 <!--底部-->
 <%@include file="/inc/indexFoot.jsp" %>
