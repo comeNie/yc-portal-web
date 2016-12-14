@@ -1,10 +1,14 @@
 package com.ai.yc.protal.web.controller.user.interpreter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +22,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.components.idps.IDPSClientFactory;
+import com.ai.opt.sdk.components.mcs.MCSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.util.UUIDUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.image.IImageClient;
+import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
+import com.ai.yc.common.api.region.key.RegionCacheKey;
+import com.ai.yc.common.api.region.model.RegionInfo;
 import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
@@ -262,5 +271,84 @@ public class InterpreterController {
 			LOGGER.error(e.getMessage(), e);
 		}
 		return new  ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,msg, isOk);
+	}
+	
+	@RequestMapping("/getAllCountry")
+	@ResponseBody
+	public ResponseData<List<RegionInfo>> getAllCountry(HttpServletRequest request){
+		String msg = "ok";
+		List<RegionInfo> regionInfos = new ArrayList<>();
+		try{
+			/**
+			 * 查询国家地址库
+			 */
+	        ICacheClient cacheClient= MCSClientFactory.getCacheClient("com.ai.yc.common.default.cache");;
+	        Set<String> countryCodes = cacheClient.smembers(RegionCacheKey.GN_REGION_COUNTRY_KEY);
+	        List<String> infoList = new ArrayList<String>();
+	        if (!CollectionUtil.isEmpty(countryCodes)){
+	        	infoList = cacheClient.hmget(RegionCacheKey.GN_REGION_INFO_KEY,
+	                    countryCodes.toArray(new String[countryCodes.size()]));
+	        	 for (String info:infoList){
+	                 regionInfos.add(JSON.parseObject(info,RegionInfo.class));
+	             }
+	        }
+		}catch(Exception e){
+			msg = "Get provice data error";
+			return new  ResponseData<List<RegionInfo>>(ResponseData.AJAX_STATUS_FAILURE,msg,regionInfos);
+		}
+		
+		return new  ResponseData<List<RegionInfo>>(ResponseData.AJAX_STATUS_SUCCESS,msg,regionInfos);
+	}
+	
+	@RequestMapping("/getProvice")
+	@ResponseBody
+	public ResponseData<List<RegionInfo>> getProvice(HttpServletRequest request,String regionCode){
+		String msg = "ok";
+		List<RegionInfo> regionInfos = new ArrayList<>();
+		try{
+	        ICacheClient cacheClient= MCSClientFactory.getCacheClient("com.ai.yc.common.default.cache");;
+	        String childStr = cacheClient.hget(RegionCacheKey.GN_REGION_PARENT_KEY,regionCode);
+	        if (StringUtils.isNotBlank(childStr)){
+	            List<String> codeArray = JSON.parseArray(childStr,String.class);
+	            if (!CollectionUtil.isEmpty(codeArray)){
+	                List<String> infoList = cacheClient.hmget(RegionCacheKey.GN_REGION_INFO_KEY,
+	                        codeArray.toArray(new String[codeArray.size()]));
+	                for (String info:infoList){
+	                    regionInfos.add(JSON.parseObject(info,RegionInfo.class));
+	                }
+	            }
+	        }
+		}catch(Exception e){
+			msg = "Get provice data error";
+			return new  ResponseData<List<RegionInfo>>(ResponseData.AJAX_STATUS_FAILURE,msg,regionInfos);
+		}
+		
+		return new  ResponseData<List<RegionInfo>>(ResponseData.AJAX_STATUS_SUCCESS,msg,regionInfos);
+	}
+	
+	@RequestMapping("/getCnCityInfo")
+	@ResponseBody
+	public ResponseData<List<RegionInfo>> getCnCityInfo(HttpServletRequest request,String Code){
+		String msg = "ok";
+		List<RegionInfo> regionInfos = new ArrayList<>();
+		try{
+	        ICacheClient cacheClient= MCSClientFactory.getCacheClient("com.ai.yc.common.default.cache");;
+	        String childStr = cacheClient.hget(RegionCacheKey.GN_REGION_PARENT_KEY,Code);
+	        if (StringUtils.isNotBlank(childStr)){
+	            List<String> codeArray = JSON.parseArray(childStr,String.class);
+	            if (!CollectionUtil.isEmpty(codeArray)){
+	                List<String> infoList = cacheClient.hmget(RegionCacheKey.GN_REGION_INFO_KEY,
+	                        codeArray.toArray(new String[codeArray.size()]));
+	                for (String info:infoList){
+	                    regionInfos.add(JSON.parseObject(info,RegionInfo.class));
+	                }
+	            }
+	        }
+		}catch(Exception e){
+			msg = "Get provice data error";
+			return new  ResponseData<List<RegionInfo>>(ResponseData.AJAX_STATUS_FAILURE,msg,regionInfos);
+		}
+		
+		return new  ResponseData<List<RegionInfo>>(ResponseData.AJAX_STATUS_SUCCESS,msg,regionInfos);
 	}
 }
