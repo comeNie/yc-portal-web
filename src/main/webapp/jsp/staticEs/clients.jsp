@@ -21,25 +21,30 @@
 		<div class="cooperation-title">They evaluate the translation cloud</div>
 		<div class="cooperation-list" id="scrollDiv">
 			<ul>
-				<li class="img-icon"><img src="${uedroot}/images/Jinshan-icon1.png" /></li>
-				<li class="word">
-					<%--金山词霸--%>
-					<p class="bigword">Kingsoft PowerWord：</p>
-					<%--现在用户翻译的需求越来越多样化，对质量要求越来越高，简单的机器翻译已经不能满足用户的需求，在这里我们推荐译云的人工翻译服务。它向用户提供了全球上万名译员在线t的人工翻译服务，快速且优质的翻译服务让用户感到惊喜，在这里我们真诚的向您推荐译云翻译。--%>
-					<p>Now the translation needs of users more and more diversified, the higher the quality requirements are simple, Machine Translation has been unable to meet the needs of users, here we recommend artificial translation cloud translation service. It provides the global interpreter tens of thousands of online t artificial translation services to users, fast and high-quality translation services let users feel surprise, here we sincerely recommend the translation cloud translation.</p>
+				<li>
+					<p class="img-icon"><img src="${uedroot}/images/Jinshan-icon1.png" /></p>
+					<p class="word">
+						<span class="bigword">Kingsoft PowerWord：</span>
+						<span>With more diversified translation needs, the users are having increasingly higher demand for quality, so simple machine translation already falls short to meet their needs. Here we recommend the human translation service of YeeCloud which is provided by tens of thousands of online translators from across the globe. The fast and high quality translation service will bring users surprises, and here we sincerely recommend you the YeeCloud Translation.</span>
+					</p>
 				</li>
-			</ul>
-			<ul>
-				<li class="img-icon"><img src="${uedroot}/images/Jinshan-icon1.png" /></li>
-				<li class="word">
-					<%--金山词霸--%>
-					<p class="bigword">Kingsoft PowerWord：</p>
-					<%--现在用户翻译的需求越来越多样化，对质量要求越来越高，简单的机器翻译已经不能满足用户的需求，在这里我们推荐译云的人工翻译服务。它向用户提供了全球上万名译员在线t的人工翻译服务，快速且优质的翻译服务让用户感到惊喜，在这里我们真诚的向您推荐译云翻译。--%>
-					<p>Now the translation needs of users more and more diversified, the higher the quality requirements are simple, Machine Translation has been unable to meet the needs of users, here we recommend artificial translation cloud translation service. It provides the global interpreter tens of thousands of online t artificial translation services to users, fast and high-quality translation services let users feel surprise, here we sincerely recommend the translation cloud translation.</p>
+				<li>
+					<p class="img-icon"><img src="${uedroot}/images/zhongj-icon1.jpg" /></p>
+					<p class="word">
+						<span class="bigword">CCCC Group:</span>
+						<span>As one of the world's top 500 enterprises, we set our business footprint in more than 100 countries and regions in the world. With huge translation demand, high translation requirements, YeeCloud covers a wide variety of fields, saves us a lot of time in looking for translators and communicating with them, improves work efficiency and reduces cost. With translators completing the translation on the cloud terminal, we have achieved a more smooth business process.</span>
+					</p>
+				</li>
+				<li>
+					<p class="img-icon"><img src="${uedroot}/images/alibb.jpg" /></p>
+					<p class="word">
+						<span class="bigword">Alibaba:</span>
+						<span>As an international Internet company, we need to make the products on Ali platform benefit global customers anytime and anywhere. Thanks to the support of YeeCloud’s efficient translation services and high-level technical support, our sellers are selling products to customers worldwide. We have to say that YeeCloud is the strongest supporter of Alibaba's localization strategy.</span>
+					</p>
 				</li>
 			</ul>
 		</div>
-		<div class="cooperation-icon"><a href="javaScript:void(0);" id="but_up"><img src="${uedroot}/images/cooper-icon.png" /></a></div>
+		<div class="cooperation-icon"><a href="javaScript:void(0);" id="but_down"><img src="${uedroot}/images/cooper-icon.png" /></a></div>
 	</div>
 </div>
 <div class="static-wrapper">
@@ -79,7 +84,7 @@
 <script type="text/javascript" src="${uedroot}/scripts/modular/jq_scroll.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-        $("#scrollDiv").Scroll({line:1,speed:500,timer:5000,up:"but_up"});
+        $("#scrollDiv").Scroll({line:1,speed:500,timer:5000,up:"but_down"});
 });
 </script>
 </body>

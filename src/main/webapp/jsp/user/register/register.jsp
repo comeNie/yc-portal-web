@@ -113,22 +113,11 @@
 							</li>
 
 							<li class="alink">
-								<p class="ml-100">
-									<input id="agreement" type="checkbox" class="radio"
-										checked="checked">
-								</p>
-								<p>
-									<spring:message code="ycregister.agreement" />
-								</p>
-								<p class="right">
-									<a href="${_base}/p/index"><spring:message
-											code="ycregister.haveAccounts" /></a>
-								</p>
+								<p class="ml-100"><input id="agreement" type="checkbox" class="radio" checked="checked"></p>
+								<p><spring:message code="ycregister.agreement" arguments="${_base}/reg/toUserAgreement"/></p>
+								<p class="right"><a href="${_base}/p/index"><spring:message	code="ycregister.haveAccounts" /></a></p>
 							</li>
-							<li class="ml-100"><input id="regsiterBtn" type="button"
-								class="btn btn-blue btn-415 radius20" value="<spring:message code="ycregister.registerNow" />"></li>
-
-</ul>
+							<li class="ml-100"><input id="regsiterBtn" type="button" class="btn btn-blue btn-415 radius20" value="<spring:message code="ycregister.registerNow" />"></li></ul>
 					</div>
 				</form>
 			</div>
@@ -148,8 +137,10 @@
 		});
 	})();
 	var registerMsg = {
-		"account_empty" : '<spring:message code="ycregisterMsg.accountEmpty" />',
-		"account_error" : '<spring:message code="ycregisterMsg.accountError" />',
+		"account_phone_empty" : '<spring:message code="ycregisterMsg.accountPhoneEmpty" />',
+		"account_email_empty" : '<spring:message code="ycregisterMsg.accountEmailEmpty" />',
+		"account_phone_error" : '<spring:message code="ycregisterMsg.accountPhoneError" />',
+		"account_email_error" : '<spring:message code="ycregisterMsg.accountEmailError" />',
 		"account_exists" : '<spring:message code="ycregisterMsg.accountExists" />',
 		"password_empty" : '<spring:message code="ycregisterMsg.passwordEmpty" />',
 		"password_error" : '<spring:message code="ycregisterMsg.passwordError" />',

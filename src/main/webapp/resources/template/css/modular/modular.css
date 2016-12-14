@@ -324,7 +324,7 @@
 .selection-level ul li span{font-size:24px;color:#fe6b6b;}
 .selection-level ul .green-li p{font-size:12px;}
 .selection-level ul .green-li p i{font-size:12px;margin-right:20px;color:#43d4b0}
-.selection-level .current{-webkit-box-shadow: #77b8fc 0px 0px 6px;-moz-box-shadow: #77b8fc 0px 0px 6px;box-shadow: #77b8fc 0px 0px 6px;}
+.selection-level .current{-webkit-box-shadow:0 0px 4px 2px rgba(212, 224, 251,1);-moz-box-shadow:0 0px 4px 2px rgba(212, 224, 251,1);box-shadow:0 0px 4px 2px rgba(212, 224, 251,1)}
 .selection-level .current label{position:absolute;right:-6px;top:-14px;background: url(../../images/icon-big.png) no-repeat left -2189px;width:23px;height:23px;}
 .selection-select{width:100%;float:left}
 .selection-select ul{width:100%;float:left}
@@ -488,12 +488,15 @@
 .static-title .line1{width:58px;height:4px;float:left;background:#2965e6;margin:10px 0 0 572px;}
 .static-tab{width:100%;float:left;margin:30px 0 0 0;padding:0 0 0 135px;}
 .static-tab ul{width:100%;float:left}
-.static-tab ul li{float:left;width:150px;text-align: center;}
-.static-tab ul li a{margin-bottom:15px;width:150px;float:left;height:150px;}
+.static-tab ul li{float:left;width:244px;text-align:center;}
+.static-tab ul li a{width:150px;margin-bottom:15px;float:left;height:150px;text-align: center;margin-left:50px;}
+.static-tab ul li p{width:100%;float:left}
 .static-tab ul li .word{color:#2c3e50;}
 .static-tab ul .current .word-font{color:#2965e6;font-weight:bold;}
-.static-tab ul .current a{width:150px;height:150px;float:left;background:url(../../images/yuanq.jpg) no-repeat;
-}
+.static-tab ul .current a{width:150px;height:150px;float:left;background:url(../../images/yuanq.jpg) no-repeat;}
+.static-tab2 ul li{float:left;width:200px;text-align:center;}
+.static-tab2 ul li a{width:150px;margin-bottom:15px;float:left;height:150px;text-align: center;margin-left:20px;}
+
 .static-tab ul .icon1{width:70px;height:70px;background:url(../../images/icon-big.png) no-repeat -78px -503px;margin:40px 0 0 40px;}
 .static-tab ul .icon2{width:70px;height:70px;background:url(../../images/icon-big.png) no-repeat -78px -585px;margin:40px 0 0 40px;}
 .static-tab ul .icon3{width:70px;height:70px;background:url(../../images/icon-big.png) no-repeat -168px -503px;margin:40px 0 0 40px;}
@@ -507,10 +510,10 @@
 .static-tab ul .icon11{width:70px;height:70px;background:url(../../images/icon-big.png) no-repeat -165px -708px;margin:40px 0 0 40px;}
 .static-tab ul .icon12{width:70px;height:70px;background:url(../../images/icon-big.png) no-repeat -165px -786px;margin:40px 0 0 40px;}
 
-.static-tab .line{width:58px;height:19px;background:url(../../images/icon-big.png) no-repeat -80px -677px;float:left;margin:62px 32px 0 32px;}
-.static-tab .line1{width:58px;height:19px;background:url(../../images/icon-big.png) no-repeat -165px -677px;float:left;margin:62px 32px 0 32px;}
+.static-tab .line{width:58px;height:19px;background:url(../../images/icon-big.png) no-repeat -80px -677px;float:left;margin:62px 0;}
+.static-tab .line1{width:58px;height:19px;background:url(../../images/icon-big.png) no-repeat -165px -677px;float:left;margin:62px 0;}
 
-.static-list{width:947px;float:left;height:180px;background:#f5f7fb;margin:40px 0 40px 135px;}
+.static-list{width:947px;float:left;padding:0px 0;background:#f5f7fb;margin:40px 0 40px 135px;}
 .static-list ul{width:100%;float:left;padding:40px 60px;}
 .static-list ul li{color:#2c3e50;font-size:14px;margin-bottom:10px;line-height:26px;}
 .static-list ul .word{font-size:18px;font-weight:bold;}
@@ -525,7 +528,7 @@
 .card-list ul li{width:100%;float:left;font-size:18px;color:#2c3e50;text-indent:2em;}
 .card-list ul li span{font-size:30px;color:#2c3e50;margin-bottom:10px;}
 .card-list ul .pacbtn{margin-top:100px;}
-.card-tab{width:100%;float:left;margin:30px 0 0 0;padding:0 0 0 260px;}
+.card-tab{width:100%;float:left;margin:30px 0 0 0;padding:0 0 0 160px;}
 /**合作客户**/
 .cooperation-banner{width:100%;height:418px;float:left;background:url(../../images/hez-banner.jpg) no-repeat center;min-width:1200px;}
 .cooperation-big{width:1200px;margin:0 auto;}
@@ -533,10 +536,11 @@
 .cooperation-list{width:900px;height:120px;float:left;margin-top:50px;margin-left:160px; overflow: hidden; }
 .cooperation-list ul{width:900px;float:left;height:120px;}
 .cooperation-list ul li{width:900px;line-height:25px;display: inline-block;}
-.cooperation-list ul li p{margin-top:10px;}
-.cooperation-list ul .img-icon{width:120px;height:120px;float:left;}
-.cooperation-list ul .img-icon img{width:120px;height:120px;border-radius:50%;border:1px solid #7d92bb;padding:5px;}
-.cooperation-list ul .word{width:730px;margin-left:36px;color:#fff;font-size:14px;display: inline-block;}
+.cooperation-list ul li p{float:left;}
+.cooperation-list ul li p span{float:left}
+.cooperation-list ul li .img-icon{width:120px;height:120px;float:left;}
+.cooperation-list ul li .img-icon img{width:120px;height:120px;border-radius:50%;border:1px solid #7d92bb;padding:5px;}
+.cooperation-list ul .word{width:730px;margin-left:36px;color:#fff;font-size:14px;display: inline-block;margin-top:10px;}
 .cooperation-list ul .word .bigword{font-size:18px;font-weight:bold;}
 .cooperation-icon{width:100%;text-align:center;margin-top:70px;display: inline-block;}
 .cooperation-logo{width:1200px;float:left;padding:0 37px;margin:55px 0 40px 0;}
@@ -669,7 +673,7 @@
 /**译者咨询**/
 .consultation-wrapper{width:100%;float:left;margin:50px 0 50px 0;}
 .consultation-big{width:100%;float:left;position:relative;background:#f5f7fb;}
-.consultation-list{width:100%;background:#fff;float:left;height:60px;box-shadow:0 3px 10px 6px rgba(212, 224, 251,0.6);
+.consultation-list{width:100%;background:#fff;float:left;height:60px;-webkit-box-shadow:0 3px 10px 6px rgba(212, 224, 251,0.6);-moz-box-shadow:0 3px 10px 6px rgba(212, 224, 251,0.6);box-shadow:0 3px 10px 6px rgba(212, 224, 251,0.6);
 }
 .consultation-list ul{width:100%;float:left;padding:0 38px;}
 .consultation-list ul li{width:100%;float:left;line-height:60px;}

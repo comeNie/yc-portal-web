@@ -12,7 +12,16 @@ UserUtil.getUserPortraitImg();
 		<ul>
 			<li class="user"><img id="ycUserPortraitImg" src="${userPortraitImg}" /></li>
 			<li class="word">
-				<p id="left_username">${user_session_key.username}</p>
+				<p id="left_username">
+					<c:choose>
+						<c:when test="${fn:length(user_session_key.username)>=5}">
+							${fn:substring(user_session_key.username,0,5)}...
+						</c:when>
+						<c:otherwise>
+							${user_session_key.username}
+						</c:otherwise>
+					</c:choose>
+				</p>
 				<p class="vip1"></p>
 			</li>
 		</ul>

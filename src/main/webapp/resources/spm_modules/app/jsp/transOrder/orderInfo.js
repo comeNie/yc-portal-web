@@ -9,7 +9,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
     var ajaxController = new AjaxController();
     
     var orderInfoPage = Widget.extend({
-    	
+
     	//事件代理
     	events: {
 			"click #textSave":"_textSave",
@@ -31,7 +31,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				async: true
 			});
 		},
-    	
+
     	//上传译文
         _upload: function () {
             var _this = this;
@@ -49,7 +49,24 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
                 return false;
             }
 
-            $.ajax({
+			var form = document.forms["uploadForm"];
+			var file = form["file"].files[0];
+            var allSize = file.size;
+            $("li[fileSize]").each(function () {
+                allSize += parseInt($(this).attr("fileSize"));
+            });
+
+            if (file.size > 20*1024*1024) {
+                _this._showWarn($.i18n.prop('order.upload.error.fileSizeSingle'));
+                return
+            }
+
+            if (allSize > 100*1024*1024) {
+                _this._showWarn($.i18n.prop('order.upload.error.fileSize'));
+                return
+            }
+
+			$.ajax({
                 url: _base + "/p/trans/order/upload",
                 type: 'POST',
                 data: formData,
@@ -90,7 +107,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				}
 			});
     	},
-    	
+
     	//保存译文
     	_textSave:function() {
 			if ($("#transTextArea").val() == '') {
@@ -114,14 +131,14 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				}
 			});
     	},
-    	
+
     	//修改按钮 触发的效果
     	_editText:function() {
     		$("#editText").parent().next().hide();
     		$("#editText").parent().parent().next("ul").show();
     		$("#editText").parent().next().next().show();
     	},
-    	
+
     	//从已领取到翻译状态
     	_trans:function() {
     		ajaxController.ajax({
@@ -191,7 +208,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				}
 			}).showModal();
 		}
-        
+
     });
     module.exports = orderInfoPage;
 });
