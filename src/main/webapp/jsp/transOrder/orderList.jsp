@@ -230,7 +230,9 @@
 							<td><spring:message code="myOrder.status.translating"/></td>
 							<td>
 								<!-- 提交 -->
+								{{if translateType != '2'}}
 								<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="<spring:message code="myOrder.Submit"/>">
+								{{/if}}
 							</td>
 							{{else state  == '24'}}
 							<%--已提交--%>
@@ -312,12 +314,14 @@
 <%@ include file="/inc/incJs.jsp" %>
 
 <script type="text/javascript">
-var pager;
+var pager, orderPager;
 var current = "orderList";
 (function () {
-	seajs.use('app/jsp/transOrder/orderList', function(oderListPage) {
+	seajs.use(['app/jsp/transOrder/orderList', 'app/jsp/customerOrder/order'], function(oderListPage, orderPage) {
 		pager = new oderListPage({element : document.body});
+		orderPager = new orderPage({element : document.body});
 		pager.render();
+		orderPager.render();
 	});
 	
 	//最上面 订单类型切换
@@ -339,7 +343,7 @@ var current = "orderList";
        
 	//提交按钮
 	$('#searchOrderData').delegate("input[name='submit']", 'click', function () {
-		pager._orderSubmit($(this).parents("table").find("input[name='orderId']").val());
+		orderPager._orderSubmit($(this).parents("table").find("input[name='orderId']").val());
 	});
 	
 	//翻译按钮

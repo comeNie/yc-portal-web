@@ -259,11 +259,12 @@
 </table>
 </script>
 <script type="text/javascript">
-var pager;
+var pager, orderPager;
 var current = "orderList";
 (function () {
-	seajs.use('app/jsp/customerOrder/orderList', function(oderListPage) {
+	seajs.use(['app/jsp/customerOrder/orderList', 'app/jsp/customerOrder/order'], function(oderListPage, orderPage) {
 		pager = new oderListPage({element : document.body});
+		orderPager = new orderPage({element : document.body})
 		pager.render();
 	});
 	   
@@ -287,19 +288,19 @@ var current = "orderList";
        
        <%-- 支付订单 --%>
        $("#searchOrderData").delegate("input[name='payOrder']","click",function(){
-       		window.location.href="${_base}/p/customer/order/payOrder/"
-       		+ $(this).parent().parent().parent().find("input[name='orderId']").val()
-       		+ "?unit="+$(this).parent().parent().parent().find("input[name='unit']").val();
+           var orderId = $(this).parent().parent().parent().find("input[name='orderId']").val()
+           var unit= $(this).parent().parent().parent().find("input[name='unit']").val();
+           orderPager._orderPay(orderId, unit);
        });
        
        <%-- 取消订单 --%>
        $("#searchOrderData").delegate("input[name='cancelOrder']","click",function(){
-    		pager._cancelOrder($(this).parent().parent().parent().find("input[name='orderId']").val());
+           orderPager._cancelOrder($(this).parent().parent().parent().find("input[name='orderId']").val());
        });
        
        <%-- 确认订单 --%>
        $("#searchOrderData").delegate("input[name='confirmOrder']","click",function(){
-       		pager._confirm($(this).parents("table").find("input[name='orderId']").val());
+           orderPager._confirm($(this).parents("table").find("input[name='orderId']").val());
        });
        <%-- 延迟确认订单 --%>
        //$("#confirmOrder").delegate("input[name='lateConfirmOrder']","click",function(){

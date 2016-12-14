@@ -234,18 +234,20 @@
     </tr>
 </script>
 <script type="text/javascript">
-    var pager;
+    var pager, orderPager;
     var current = "index";
     (function () {
-        seajs.use('app/jsp/user/interpreter/interpreterIndex', function (interpreterIndexPager) {
+        seajs.use(['app/jsp/user/interpreter/interpreterIndex', 'app/jsp/customerOrder/order'], function (interpreterIndexPager, orderPage) {
             pager = new interpreterIndexPager({
                 element: document.body
             });
+            orderPager = new orderPage({element: document.body});
             pager.render();
+            orderPager.render();
         });
         //提交按钮
     	$('#order_list').delegate("input[name='submit']", 'click', function () {
-    		pager._orderSubmit($(this).parents("tr").find("input[name='orderId']").val());
+            orderPager._orderSubmit($(this).parents("tr").find("input[name='orderId']").val());
     	});
     	
     	//翻译按钮

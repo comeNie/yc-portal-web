@@ -153,7 +153,11 @@ public class TransOrderController {
             
             List<ProdFileVo> prodFileVos = orderDetailsRes.getProdFiles();
             int uUploadCount = 0; //可以上传文件的数量
-            Map<String, Long> fileSizeMap = new HashMap<>();
+            for(ProdFileVo prodFileVo : prodFileVos) {
+                if (StringUtils.isEmpty(prodFileVo.getFileTranslateId())) {
+                    uUploadCount ++;
+                }
+            }
 
             uiModel.addAttribute("UUploadCount", uUploadCount);
 //            orderDetailsRes.setState("20");//TODO... 模拟待领取

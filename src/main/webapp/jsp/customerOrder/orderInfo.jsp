@@ -451,7 +451,7 @@
 var pager;
 var current = "orderList";
 (function () {
-	seajs.use('app/jsp/customerOrder/orderInfo', function(orderInfoPage) {
+	seajs.use('app/jsp/customerOrder/order', function(orderInfoPage) {
 		pager = new orderInfoPage({element : document.body});
 		pager.render();
 	});
@@ -465,6 +465,17 @@ var current = "orderList";
 	 $("input[name='download']").click(function(){
 		 pager._downLoad($(this).attr('fileId'), $(this).attr('fileName'));
      });
+
+    //支付
+    $("#payOrder").click(function () {
+        pager._orderPay($("#orderId").val(), $("#unit").val());
+    });
+
+    //确认
+    $("#confirmOrder").click(function () {
+        pager._confirm($("#orderId").val());
+    });
+
 
 })();
    

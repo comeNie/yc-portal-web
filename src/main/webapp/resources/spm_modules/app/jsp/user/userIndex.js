@@ -21,41 +21,7 @@ define("app/jsp/user/userIndex",function(require, exports, module) {
 					this._queryOrder();
 					//this._queryBalanceInfo();
 				},
-		        //取消订单
-		        _cancelOrder:function(orderId) {
-		        	ajaxController.ajax({
-						type: "post",
-						url: _base+"/p/customer/order/cancelOrder",
-						data: {'orderId': orderId},
-						success: function(data){
-							//取消成功
-							if("1"===data.statusCode){
-								//成功
-								//刷新页面
-								window.location.reload();
-							}
-						}
-					});
-		        },
-		      //确认订单
-		        _confirm:function(orderId) {
-		        	ajaxController.ajax({
-						type: "post",
-						url: _base + "/p/trans/order/updateState",
-						data: {
-							orderId: orderId,
-							state: "90",
-							displayFlag: "90",
-						},
-						success: function (data) {
-							if ("1" === data.statusCode) {
-								//成功
-								//刷新页面
-					    		window.location.reload();
-							}
-						}
-					});
-		        } ,
+
 				/*查询余额*/
 				_queryBalanceInfo:function(){
 					ajaxController.ajax({
