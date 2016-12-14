@@ -652,7 +652,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                         .appendTo(fileId).find('.progress-bar');
                 }
                 fileId.next().find('span').css('width',percentage*100+"%");
-                fileId.next().find('p[name="percent"]').text(percentage*100+"%");
+                fileId.next().find('p[name="percent"]').text(parseInt(percentage*100)+"%");
                 percent.css( 'width', percentage * 100 + '%' );
 
             });

@@ -63,12 +63,15 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 			//保存数据
     		"click [id='saveButton']":"_saveInterpreterInfo",
     		"blur [id='nickname']":"_checkNickNameValue",
-    		"blur [id='userName']":"_checkUserNameValue"
+    		"blur [id='userName']":"_checkUserNameValue",
+    		"change [id='countryInfo']":"_getProviceValue",
+    		"change [id='provinceInfo']":"_getCnCityValue",
         },
         //重写父类
     	setup: function () {
     		InterPreterInfoPager.superclass.setup.call(this);
     		var formValidator=this._initValidate();
+    		this._loadAllCountry();
     		$(":input").bind("focusout",function(){
 				formValidator.element(this);
 			});
@@ -244,6 +247,105 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     		});
     		
     		return formValidator;
+    	},
+    	_loadAllCountry:function(){
+    		ajaxController.ajax({
+				type:"post",
+				url:_base+"/p/interpreter/getAllCountry",
+		        success: function(json) {
+		        	 if(json.statusCode=='0'){
+		        		 $("#userName-error").show().html(json.statusInfo);
+		        	 }else{
+		        		$("#userName-error").hide().html(""); 
+		        		var data = json.data;
+						if (data) {
+							var html = [];
+							for (var i = 0; i < data.length; i++) {
+								var t = data[i];
+								var _code = t.regionCode;
+								var name = t.regionNameCn;
+								if ("zh_CN" != currentLan) {
+									name = t.regionNameEn;
+								}
+								html.push('<option value=' + _code+ '>' + name + '</option>');
+							}
+							$("#countryInfo").html(html.join(""));
+						}
+		        	 }
+		          }
+				});
+    	},
+    	_getProviceValue:function(){
+    		ajaxController.ajax({
+				type:"post",
+				url:_base+"/p/interpreter/getProvice",
+				data:{
+					'regionCode':$("#countryInfo").val(),
+				},
+		        success: function(json) {
+		        	 if(json.statusCode=='0'){
+		        		 $("#userName-error").show().html(json.statusInfo);
+		        	 }else{
+		        		$("#userName-error").hide().html(""); 
+		        		var data = json.data;
+						if (data) {
+							if(data.length==0){
+								$("#provinceInfo").hide();
+								$("#cnCityInfo").hide();
+								return;
+							}
+							$("#provinceInfo").show();
+							$("#cnCityInfo").show();
+							var html = [];
+							for (var i = 0; i < data.length; i++) {
+								var t = data[i];
+								var _code = t.regionCode;
+								var name = t.regionNameCn;
+								if ("zh_CN" != currentLan) {
+									name = t.regionNameEn;
+								}
+								html.push('<option value=' + _code+ '>' + name + '</option>');
+							}
+							$("#provinceInfo").html(html.join(""));
+						}
+		        	 }
+		          }
+				});
+    	},
+    	_getCnCityValue:function(){
+    		ajaxController.ajax({
+				type:"post",
+				url:_base+"/p/interpreter/getCnCityInfo",
+				data:{
+					'Code':$("#provinceInfo").val(),
+				},
+		        success: function(json) {
+		        	 if(json.statusCode=='0'){
+		        		 $("#userName-error").show().html(json.statusInfo);
+		        	 }else{
+		        		$("#userName-error").hide().html(""); 
+		        		var data = json.data;
+						if (data) {
+							if(data.length==0){
+								$("#cnCityInfo").hide();
+								return;
+							}
+							$("#cnCityInfo").show();
+							var html = [];
+							for (var i = 0; i < data.length; i++) {
+								var t = data[i];
+								var _code = t.regionCode;
+								var name = t.regionNameCn;
+								if ("zh_CN" != currentLan) {
+									name = t.regionNameEn;
+								}
+								html.push('<option value=' + _code+ '" >' + name + '</option>');
+							}
+							$("#cnCityInfo").html(html.join(""));
+						}
+		        	 }
+		          }
+				});
     	}
     })
     module.exports = InterPreterInfoPager

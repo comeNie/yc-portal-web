@@ -126,13 +126,19 @@
   						<p class="word">QQ:</p>
   						<p><input maxlength="10" type="text" class="int-text int-xlarge radius" name="qq" id="qq" value="${interpreterInfo.qq}"/></p>
   					</li>
-  					<li style="display: none;">
+  					<li>
   						<p class="word"><spring:message code="interpreter.address" /></p>
-  						<p><select class="select select-in-small"></select></p>
-  						<p><select class="select select-in-small"></select></p>
-  						<p><spring:message code="interpreter.address" /></p>
-  						<p><select class="select select-in-small"></select></p>
-  						<p><spring:message code="interpreter.cnCity" /></p>
+  						<p>
+  							<select class="select select-in-small" id="countryInfo" name="country">
+  							</select>
+  						</p>
+  						<p><select class="select select-in-small" id="provinceInfo" name="province">
+  						  </select>
+  						  <spring:message code="interpreter.province" />
+  						</p>
+  						<p><select class="select select-in-small" id="cnCityInfo" name="cnCity"></select>
+  							<spring:message code="interpreter.cnCity" />
+  						</p>
   						<p><input type="text" class="int-text int-in-bi radius" id="address" name="address"/></p>
   					</li>
   				</ul>
