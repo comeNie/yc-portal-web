@@ -140,7 +140,7 @@
                                         <!-- 译文 文档-->
                                         <li class="title"><spring:message code="myOrder.Translatedtext"/>:</li>
                                             <!-- 文档类型翻译 文档list -->
-                                            <li>${prodFile.fileTranslateName}</li>
+                                            <li fileSize="${FileSizeMap.get(prodFile.fileTranslateId)}">${prodFile.fileTranslateName}</li>
                                             <li class="right mr-5">
                                                 <input name="download" fileId="${prodFile.fileTranslateId}" fileName="${prodFile.fileTranslateName}" type="button" class="btn border-blue-small btn-auto radius20" value="<spring:message code="myOrder.downLoad"/>">
 

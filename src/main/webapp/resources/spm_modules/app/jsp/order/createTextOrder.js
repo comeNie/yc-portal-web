@@ -616,6 +616,11 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                     allSize += $(this).attr("size");
                 });
 
+				if (file.size > 20*1024*1024) {
+					_this._showWarn($.i18n.prop('order.upload.error.fileSizeSingle'));
+					return false;
+				}
+
                 if (allSize > 100*1024*1024) {
 					_this._showWarn($.i18n.prop('order.upload.error.fileSize'));
                     return false;

@@ -153,9 +153,14 @@ public class TransOrderController {
             
             List<ProdFileVo> prodFileVos = orderDetailsRes.getProdFiles();
             int uUploadCount = 0; //可以上传文件的数量
+            IDSSClient client = DSSClientFactory.getDSSClient(Constants.IPAAS_ORDER_FILE_DSS);
+            Map<String, Long> fileSizeMap = new HashMap<>();
             for(ProdFileVo prodFileVo : prodFileVos) {
-                if (StringUtils.isEmpty(prodFileVo.getFileTranslateId())) {
+                String transId = prodFileVo.getFileTranslateId();
+                if (StringUtils.isEmpty(transId)) {
                     uUploadCount ++;
+                } else {
+                    fileSizeMap.put(transId, client.getFileSize(transId));
                 }
             }
 
@@ -167,6 +172,7 @@ public class TransOrderController {
                 getUserInfo(uiModel);
             }
             uiModel.addAttribute("OrderDetails", orderDetailsRes);
+            uiModel.addAttribute("FileSizeMap", fileSizeMap);
         } catch (Exception e) {
             LOGGER.error("查询订单详情失败:",e);
             return "transOrder/orderError";
@@ -313,7 +319,7 @@ public class TransOrderController {
             stateReq.setState(state);
             stateReq.setDisplayFlag(displayFlag);
            
-            OrderStateUpdateResponse stateRes = iOrderStateUpdateSV.updateState(stateReq);
+                OrderStateUpdateResponse stateRes = iOrderStateUpdateSV.updateState(stateReq);
             ResponseHeader resHeader = stateRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息
             if (stateRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
