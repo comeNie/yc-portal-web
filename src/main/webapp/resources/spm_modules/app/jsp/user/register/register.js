@@ -396,6 +396,9 @@ define(
 						_sendDynamiCode : function() {
 							if (this._checkPhone()) {
 								var _this = this;
+								if(!this._checkImageCode()){
+									return;
+								}
 								var btn = $("#send_dynamicode_btn");
 								if (btn.hasClass("biu-btn")) {
 									return;
