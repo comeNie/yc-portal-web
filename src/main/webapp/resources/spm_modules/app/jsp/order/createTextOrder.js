@@ -149,11 +149,21 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				return formValidator.focusInvalid();
 			}
 
-			//文档类型 判断是否上传文件
-			if(!_this._isTextTransType() && $("#fileList ul").length < 1) {
-				_this._showWarn($.i18n.prop('order.upload.error.nofile'));
-				return;
+			//文档类型
+
+			if(!_this._isTextTransType()) {
+				var stats = uploader.getStats();
+				//判断是否上传文件
+				if ($("#fileList ul").length < 1) {
+					_this._showWarn($.i18n.prop('order.upload.error.nofile'));
+					return;
+				} else if(stats.progressNum > 0) { //上传中
+					_this._showWarn($.i18n.prop('order.upload.error.ing'));
+					return;
+				}
 			}
+
+
 
 			//计算字数
 			var totalWords = CountWordsUtil.count($("#translateContent").val());
