@@ -24,6 +24,7 @@
 <script src="${_base}/resources/spm_modules/seajs/seajs-css.js"></script>
 <script src="${_base}/resources/spm_modules/app/core/config.js"></script>
 <script src="${_base}/resources/template/scripts/modular/frame.js"></script>
+<script src="${_base}/resources/template/scripts/modular/jqueryrotate.2.3.js"></script>
 <script>
     
     Date.prototype.stdTimezoneOffset = function() {
