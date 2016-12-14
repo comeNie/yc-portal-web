@@ -145,7 +145,13 @@
                         <tr class="width-16">
                             <td class="text-l pl-20">{{:translateName}}</td>
                             <td>{{if <%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>}}{{:languagePairName}}{{else}}{{:languageNameEn}}{{/if}}</td>
-                            <td>{{:~liToYuan(totalFee)}}</td>
+                            <td>
+                                {{if currencyUnit == '1'}}
+                                <spring:message code="task.center.rmbSame" arguments="{{:~liToYuan(totalFee)}}" />
+                                {{else }}
+                                <spring:message code="task.center.dollarSame" arguments="{{:~liToYuan(totalFee)}}" />
+                                {{/if}}
+                            </td>
                             <td>{{:takeDay}}<spring:message code="task.center.time.day"/> {{:takeTime}}<spring:message code="task.center.time.hour"/> </td>
                             <td  class="text-r">
                                 <%--领取--%>
