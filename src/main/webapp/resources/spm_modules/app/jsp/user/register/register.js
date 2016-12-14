@@ -316,10 +316,11 @@ define(
 						},
 						/* 异步校验图形验证码 */
 						_checkImageCode : function() {
+							var flag = true;
 							var imgCode = $("#verifyCodeImg");
 							var imgCodeVal = imgCode.val();
 							if (!this._checkVerifyCodeImg()) {
-								return;
+								return false;
 							}
 							var _this = this;
 							ajaxController.ajax({
@@ -333,6 +334,7 @@ define(
 								success : function(json) {
 									if (!json.data) {
 										//imgCode.focus();
+										flag = false;
 										_this._showCheckMsg(json.statusInfo);
 									}else{
 										//清除帐号校验错误信息
@@ -340,11 +342,13 @@ define(
 										if(errMsg==registerMsg.verify_code_img_empty||
 										  errMsg==registerMsg.verify_code_img_error){
 											_this._showCheckMsg("");
+											flag = true;
 										}
 									
 									}
 								}
 							});
+							return flag;
 						},
 						/* 异步校验邮箱或手机 */
 						_checkPhoneOrEmail : function() {
