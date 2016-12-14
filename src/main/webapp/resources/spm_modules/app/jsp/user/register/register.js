@@ -113,14 +113,14 @@ define(
 							var phone = $("#phone");
 							var phoneVal = phone.val();
 							if ($.trim(phoneVal) == "") {
-								this._showCheckMsg(registerMsg.account_empty);
+								this._showCheckMsg(registerMsg.account_phone_empty);
 								//phone.focus();
 								return false;
 							}
 							phoneVal =countryCode+phoneVal;
 							reg = eval('/' + reg + '/');
 							if (!reg.test(phoneVal)) {
-								this._showCheckMsg(registerMsg.account_error);
+								this._showCheckMsg(registerMsg.account_phone_error);
 								//phone.focus();
 								return false;
 							}
@@ -131,13 +131,13 @@ define(
 							var email = $("#email");
 							var emailVal = email.val();
 							if ($.trim(emailVal) == "") {
-								this._showCheckMsg(registerMsg.account_empty);
+								this._showCheckMsg(registerMsg.account_email_empty);
 								//email.focus();
 								return false;
 							}
 							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
 									.test(emailVal)) {
-								this._showCheckMsg(registerMsg.account_error);
+								this._showCheckMsg(registerMsg.account_email_error);
 								//email.focus();
 								return false;
 							}
@@ -381,8 +381,10 @@ define(
 										_this._showCheckMsg(json.statusInfo);
 									}else{//清除帐号校验错误信息
 										var errMsg = _this._getCheckMsg();
-										if(errMsg==registerMsg.account_empty||
-										  errMsg==registerMsg.account_error ||
+										if(errMsg==registerMsg.account_email_empty||
+										  errMsg==registerMsg.account_phone_empty||
+										  errMsg==registerMsg.account_email_error ||
+										  errMsg==registerMsg.account_phone_error||
 										  errMsg==registerMsg.account_exists){
 											_this._showCheckMsg("");
 										}
