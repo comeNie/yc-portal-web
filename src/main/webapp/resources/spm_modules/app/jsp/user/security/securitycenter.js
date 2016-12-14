@@ -95,7 +95,9 @@ define("app/jsp/user/security/securitycenter", function(require, exports, module
     			var password = $("#currentPassword");
     			var passwordVal = password.val();
     			if ($.trim(passwordVal) == "") {
-    				showMsg(secCenterMsg.currentPasswordEmpty);
+    				$("#passwordErrMsg").show();
+					$("#passwordErrMsg").text(secCenterMsg.currentPasswordEmpty);
+    				//showMsg(secCenterMsg.currentPasswordEmpty);
     				return false;
     			}
     			
@@ -103,23 +105,31 @@ define("app/jsp/user/security/securitycenter", function(require, exports, module
     			var newPassword = $("#newPassword");
     			var newPasswordVal = newPassword.val();
     			if ($.trim(newPasswordVal) == "") {
-    				showMsg(secCenterMsg.newPasswordEmpty);
+    				$("#passwordErrMsg").show();
+					$("#passwordErrMsg").text(secCenterMsg.newPasswordEmpty);
+    				//showMsg(secCenterMsg.newPasswordEmpty);
     				return false;
     			}
     			if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
     					.test(newPasswordVal)) {
-    				showMsg(secCenterMsg.newPasswordError);
+    				$("#passwordErrMsg").show();
+					$("#passwordErrMsg").text(secCenterMsg.newPasswordError);
+    				//showMsg(secCenterMsg.newPasswordError);
     				return false;
     			}
     			// 确认新密码
     			var newPassword2 = $("#newPassword2");
     			var newPassword2Val = newPassword2.val();
     			if ($.trim(newPassword2Val) == "") {
-    				showMsg(secCenterMsg.newPasswordEmpty);
+    				$("#passwordErrMsg").show();
+					$("#passwordErrMsg").text(secCenterMsg.newPasswordEmpty);
+    				//showMsg(secCenterMsg.newPasswordEmpty);
     				return false;
     			}
     			if (newPassword2Val != newPasswordVal) {
-    				showMsg(secCenterMsg.repeatPasswordError);
+    				$("#passwordErrMsg").show();
+					$("#passwordErrMsg").text(secCenterMsg.repeatPasswordError);
+    				//showMsg(secCenterMsg.repeatPasswordError);
     				return false;
     			}
     			ajaxController.ajax({
@@ -151,7 +161,9 @@ define("app/jsp/user/security/securitycenter", function(require, exports, module
     			var password = $("#pay_currentPassword");
     			var passwordVal = password.val();
     			if ($.trim(passwordVal) == "") {
-    				showMsg(secCenterMsg.currentPasswordEmpty);
+    				$("#payPasswordErrMsg").show();
+					$("#payPasswordErrMsg").text(secCenterMsg.currentPasswordEmpty);
+    				//showMsg(secCenterMsg.currentPasswordEmpty);
     				return false;
     			}
     			
@@ -159,23 +171,31 @@ define("app/jsp/user/security/securitycenter", function(require, exports, module
     			var newPassword = $("#pay_newPassword");
     			var newPasswordVal = newPassword.val();
     			if ($.trim(newPasswordVal) == "") {
-    				showMsg(secCenterMsg.newPasswordEmpty);
+    				$("#payPasswordErrMsg").show();
+					$("#payPasswordErrMsg").text(secCenterMsg.newPasswordEmpty);
+    				//showMsg(secCenterMsg.newPasswordEmpty);
     				return false;
     			}
     			if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
     					.test(newPasswordVal)) {
-    				showMsg(secCenterMsg.newPasswordError);
+    				$("#payPasswordErrMsg").show();
+					$("#payPasswordErrMsg").text(secCenterMsg.newPasswordError);
+    				//showMsg(secCenterMsg.newPasswordError);
     				return false;
     			}
     			// 确认新密码
     			var newPassword2 = $("#pay_newPassword2");
     			var newPassword2Val = newPassword2.val();
     			if ($.trim(newPassword2Val) == "") {
-    				showMsg(secCenterMsg.newPasswordEmpty);
+    				$("#payPasswordErrMsg").show();
+					$("#payPasswordErrMsg").text(secCenterMsg.newPasswordEmpty);
+    				//showMsg(secCenterMsg.newPasswordEmpty);
     				return false;
     			}
     			if (newPassword2Val != newPasswordVal) {
-    				showMsg(secCenterMsg.repeatPasswordError);
+    				$("#payPasswordErrMsg").show();
+					$("#payPasswordErrMsg").text(secCenterMsg.repeatPasswordError);
+    				//showMsg(secCenterMsg.repeatPasswordError);
     				return false;
     			}
     			ajaxController.ajax({
@@ -187,7 +207,9 @@ define("app/jsp/user/security/securitycenter", function(require, exports, module
     				},
     		        success: function(json) {
     		        	if(!json.data){
-    		        		showMsg(json.statusInfo);
+    		        		$("#payPasswordErrMsg").show();
+    						$("#payPasswordErrMsg").text(json.statusInfo);
+    		        		//showMsg(json.statusInfo);
     		        		return false;
     		        	}else{
     		        		password.val("");

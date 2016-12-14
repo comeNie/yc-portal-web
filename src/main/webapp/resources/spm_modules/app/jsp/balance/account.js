@@ -78,13 +78,16 @@ define('app/jsp/balance/account', function (require, exports, module) {
 						var currencyUnit = data[0].currencyUnit;
 						var incomeBalance =  data[0].incomeBalance;
 						var outBalance =  data[0].outBalance;
+						var inYuan,outYuan;
 						if (currencyUnit==0){
-							var yuan = $.i18n.prop('account.tag.dollar');
+							inYuan = $.i18n.prop('account.tag.dollar',incomeBalance/1000);
+							outYuan = $.i18n.prop('account.tag.dollar',outBalance/1000);
 						}else {
-							var yuan = $.i18n.prop('account.tag.yuan');
+							inYuan = $.i18n.prop('account.tag.yuan',incomeBalance/1000);
+							outYuan = $.i18n.prop('account.tag.yuan',outBalance/1000);
 						}
-						$("#income").html(incomeBalance/1000+yuan);
-						$("#out").html(outBalance/1000+yuan);
+						$("#income").html(inYuan);
+						$("#out").html(outYuan);
 						if (data[0].payTime!=null){
 							var template = $.templates("#searchAccountTemple");
 							var htmlOutput = template.render(data);

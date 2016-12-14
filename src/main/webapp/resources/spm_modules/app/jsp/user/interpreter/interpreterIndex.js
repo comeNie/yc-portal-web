@@ -26,24 +26,8 @@ define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, mo
 						 $("#no_rz_container").show();
  	            	}
 					
-				}
-				,
-		        //提交订单
-		        _orderSubmit:function(orderId) {
-		        	ajaxController.ajax({
-						type: "post",
-						url: _base + "/p/trans/order/save",
-						data: {
-							orderId: orderId,
-						},
-						success: function (data) {
-							if ("1" === data.statusCode) {
-								//提交成功
-								window.location.reload();
-							}
-						}
-					});
-		        },
+				},
+
 				/* 获取订单数量 */
 				_orderStatusCount:function(){
 					ajaxController.ajax({

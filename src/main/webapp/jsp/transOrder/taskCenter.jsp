@@ -7,6 +7,13 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>译员-订单大厅</title>
     <%@ include file="/inc/inc.jsp" %>
+    <%--菜单定位--%>
+    <script type="text/javascript">
+        //一级菜单
+        var current = "lookOrders";
+        //二级菜单
+        var divEleId = "taskCenter";
+    </script>
 </head>
 <body>
 <!--头部-->
@@ -138,7 +145,13 @@
                         <tr class="width-16">
                             <td class="text-l pl-20">{{:translateName}}</td>
                             <td>{{if <%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>}}{{:languagePairName}}{{else}}{{:languageNameEn}}{{/if}}</td>
-                            <td>{{:~liToYuan(totalFee)}}</td>
+                            <td>
+                                {{if currencyUnit == '1'}}
+                                <spring:message code="task.center.rmbSame" arguments="{{:~liToYuan(totalFee)}}" />
+                                {{else }}
+                                <spring:message code="task.center.dollarSame" arguments="{{:~liToYuan(totalFee)}}" />
+                                {{/if}}
+                            </td>
                             <td>{{:takeDay}}<spring:message code="task.center.time.day"/> {{:takeTime}}<spring:message code="task.center.time.hour"/> </td>
                             <td  class="text-r">
                                 <%--领取--%>
@@ -160,7 +173,6 @@
 <script type="text/javascript" src="${uedroot}/scripts/modular/jqueryrotate.2.3.js"></script>
 <script type="text/javascript">
     var pager;
-    var current = "taskCenter";
     var lspId="${lspId}";
     (function () {
         //订单领取

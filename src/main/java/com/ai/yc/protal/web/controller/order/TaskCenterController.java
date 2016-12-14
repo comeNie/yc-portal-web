@@ -188,7 +188,7 @@ public class TaskCenterController {
         String interperType = StringUtils.isNotBlank(lspId)?"1":"0";
         baseInfo.setInterperType(interperType);
         baseInfo.setLspId(lspId);
-        baseInfo.setLockTime(DateUtil.getFutureTime());
+        baseInfo.setLockTime(DateUtil.getSysDate());
         receiveRequest.setBaseInfo(baseInfo);
         try {
             IOrderReceiveSV iOrderReceiveSV = DubboConsumerFactory.getService(IOrderReceiveSV.class);

@@ -71,6 +71,15 @@ public class RegisterController {
 		ModelAndView modelView = new ModelAndView(REGISTER);
 		return modelView;
 	}
+	
+	/**
+	 *协议页面
+	 */
+	@RequestMapping("/toUserAgreement")
+	public ModelAndView toUserAgreement(String language){
+		String jspUrl = Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale())?"/user/register/registrationAgreement_ZH_CN":"/user/register/registrationAgreement_EN_US";
+		return new ModelAndView(jspUrl);
+	}
 
 	/**
 	 * 提交注册

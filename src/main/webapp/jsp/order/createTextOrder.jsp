@@ -17,6 +17,7 @@
 <body>
 	<input type="hidden" value="${transType}" id="transType">
 	<input type="hidden" value="${orderSummary.duadName}" id="duadName">
+	<input type="hidden" value="${orderSummary.duadId}" id="duadId">
 	<input type="hidden" value="${order.productInfo.translateLevelInfoList[0].translateLevel}" id="transLv">
 	<input type="hidden" value="${order.productInfo.useCode}" id="useCode">
 	<input type="hidden" value="${order.productInfo.fieldCode}" id="fieldCode">
@@ -108,7 +109,6 @@
 					<!-- 清空 -->
 					<p class="right"><input hidden="" type="button" class="btn border-blue radius20 btn-80"
 											value="<spring:message code="order.clear" />" id="clear-btn"></p>
-					<label></label>
 				</div>
 
   				<div class="translate-int radius bj-ash placeholder" id="fy2" >
@@ -250,6 +250,7 @@
 							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
 							<p><spring:message code="order.pubInfo3"/></p>
 						</li>
+						<label></label>
 					</ul>
 				</div>
 				<!--select-->
@@ -321,8 +322,11 @@
   				</div>
 			</div>	
 			<div class="recharge-btn order-btn placeorder-btn ml-0">
- 				<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="order.subTranslation"/>">
- 				<p><input name="isAgree" type="checkbox" class="radio" checked=""><spring:message code="order.Agreement"/><a href="javaScript:void(0);"><spring:message code="order.AgreementInfo"/></a></p>
+ 				<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10"
+					   value="<spring:message code="order.subTranslation"/>">
+ 				<p><input name="isAgree" type="checkbox" class="radio" checked=""><spring:message
+						code="order.Agreement"/><a href="${_base}/agreement" target="_blank"><spring:message
+						code="order.AgreementInfo"/></a></p>
  			</div>
 		</div>
 		</div>
@@ -346,8 +350,7 @@
             $(this).parent().parent('ul').remove();
 
             var id = $(this).parent().parent('ul').find('li:first').attr("id");
-            var file = uploader.getFile(id);
-            uploader.removeFile(file);
+         	pager._removeFile(id);
         });
 	})();
 	

@@ -57,6 +57,9 @@ import com.ai.yc.order.api.orderquery.param.QueryOrderRequest;
 import com.ai.yc.order.api.orderquery.param.QueryOrderRsponse;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import sun.management.resources.agent;
+
+import static sun.net.www.protocol.http.HttpURLConnection.userAgent;
 
 /**
  * 客户订单
@@ -310,7 +313,9 @@ public class CustomerOrderController {
         String notifyUrl= ConfigUtil.getProperty("NOTIFY_URL")+"/"+orderType+"/"+ UserUtil.getUserId();
 
         //异步通知地址,默认为用户
-        String amount = String.valueOf(AmountUtil.changeLiToYuan(orderAmount));
+        //将订单金额直接转换为小数点后两位
+        java.text.DecimalFormat df =new java.text.DecimalFormat("#0.00");
+        String amount = String.valueOf(df.format(AmountUtil.changeLiToYuan(orderAmount)));
         Map<String, String> map = new HashMap<String, String>();
         map.put("tenantId", tenantId);//租户ID
         map.put("orderId", orderId);//请求单号
@@ -384,6 +389,14 @@ public class CustomerOrderController {
         byte[] b = client.read(fileId);
     
         try {
+
+            String agent = request.getHeader("User-Agent");
+            //不是ie
+            if (agent.indexOf("MSIE") == -1 && agent.indexOf("like Gecko")== -1) {
+                String newFileName = java.net.URLDecoder.decode(fileName,"utf-8");
+                fileName = new String(newFileName.getBytes("utf-8"), "ISO-8859-1");
+            }
+
             OutputStream os = response.getOutputStream();
 //            response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");

@@ -11,6 +11,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>首页</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link href="${uedroot}/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="${uedroot}/css/iconfont.css" rel="stylesheet" type="text/css">
     <link href="${uedroot}/css/modular/global.css" rel="stylesheet" type="text/css"/>
@@ -81,7 +82,7 @@
                             <%--英语--%>
                             <option value="en"><spring:message code="home.trans_language_en"/></option>
                             <%--法语--%>
-                            <option value="fr"><spring:message code="home.trans_language_fr"/></option>
+                            <%--<option value="fr"><spring:message code="home.trans_language_fr"/></option>--%>
                             <%--俄语--%>
                             <option value="ru"><spring:message code="home.trans_language_ru"/></option>
                             <%--葡萄牙语--%>
@@ -96,7 +97,7 @@
                         <%--英语--%>
                         <option value="en"><spring:message code="home.trans_language_en"/></option>
                         <%--法语--%>
-                        <option value="fr"><spring:message code="home.trans_language_fr"/></option>
+                        <%--<option value="fr"><spring:message code="home.trans_language_fr"/></option>--%>
                         <%--俄语--%>
                         <option value="ru"><spring:message code="home.trans_language_ru"/></option>
                         <%--葡萄牙语--%>
@@ -126,7 +127,7 @@
                     <textarea  class="int-post"  id="transResBak" hidden=""></textarea>
                 </div>
                 <label id="transError"></label>
-                <div class="post-cion">
+                <div class="post-cion" style="display: none">
                 	<!-- 播放器 -->
                 	<audio src="" controls="controls" id="audioPlay" hidden>
 						Your browser does not support the audio tag.

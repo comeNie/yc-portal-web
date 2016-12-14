@@ -102,38 +102,6 @@ public class OrderController {
         uiModel.addAttribute("duadList", cacheServcie.getAllDuad(rb.getDefaultLocale(),CacheKey.OrderType.ORDER_TYPE_ORAL));
         return "order/createOralOrder";
     }
-    
-    /**
-     * 系统自动报价
-     * @return
-     */
-    @RequestMapping(value = "/queryAutoOffer",method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseData<QueryAutoOfferRes> queryAutoOffer(String duadId,  String language,
-            String purposeId, boolean isUrgent, String translateLevel,  int wordNum){
-        ResponseData<QueryAutoOfferRes> resData = new ResponseData<QueryAutoOfferRes>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-        try {
-            IQueryAutoOfferSV iQueryAutoOfferSV = DubboConsumerFactory.getService(IQueryAutoOfferSV.class);
-            QueryAutoOfferReq offerInfo =  new QueryAutoOfferReq();
-            offerInfo.setDuadId(duadId);
-            offerInfo.setLanguage(language);
-            offerInfo.setPurposeId(purposeId);
-            offerInfo.setUrgent(isUrgent);
-            offerInfo.setTranslateLevel(translateLevel);
-            offerInfo.setWordNum(wordNum);
-            QueryAutoOfferRes offerRes = iQueryAutoOfferSV.queryAutoOffer(offerInfo);
-            ResponseHeader resHeader = offerRes==null? null:offerRes.getResponseHeader();
-            //如果返回值为空,或返回信息中包含错误信息,则抛出异常
-            if (offerRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-                throw new Exception("返回信息错误");
-            }
-            resData.setData(offerRes);
-        } catch(Exception e) {
-            LOGGER.error("系统自动报价:",e);
-            resData = new ResponseData<QueryAutoOfferRes>(ResponseData.AJAX_STATUS_FAILURE,rb.getMessage(""));
-        }
-        return resData;
-    }
 
     /**
      * 提交订单信息，用于判断用户是否登录
@@ -181,6 +149,7 @@ public class OrderController {
                 offerInfo.setLanguage(language);
                 offerInfo.setTranslateLevel(pro.getTranslateLevelInfoList().get(0).getTranslateLevel());
                 offerInfo.setWordNum(pro.getTranslateSum().intValue());
+                //调用服务计算订单价格
                 QueryAutoOfferRes offerRes = iQueryAutoOfferSV.queryAutoOffer(offerInfo);
                 ResponseHeader resHeader = offerRes==null? null:offerRes.getResponseHeader();
                 //如果返回值为空,或返回信息中包含错误信息,则抛出异常

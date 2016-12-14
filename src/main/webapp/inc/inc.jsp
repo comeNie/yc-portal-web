@@ -24,6 +24,7 @@
         request.setAttribute("my97Lang","en");
     }
 %>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <!-- <link rel="stylesheet" type="text/css" href="${_base}/resources/slpmall/styles/bootstrap.css"> -->
 <link href="${uedroot}/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
 <link href="${uedroot}/css/iconfont.css" rel="stylesheet" type="text/css">

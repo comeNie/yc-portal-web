@@ -25,7 +25,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     	events: {
 			"click #recharge-popo":"_addTextOrderTemp",
 			"click #urgentOrder":"_transPrice",
-			"click .dropdown":"_transPrice",
+            "click #_getSpeed": "_getSpeed",
+			"click .dropdown":"_chDuad",
 			"click #saveContact":"_saveContact",
 			"click #editContact":"_editContactDiv",
 			"click #fy-btn": "_uploadFile",
@@ -148,11 +149,21 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				return formValidator.focusInvalid();
 			}
 
-			//文档类型 判断是否上传文件
-			if(!_this._isTextTransType() && $("#fileList ul").length < 1) {
-				_this._showWarn($.i18n.prop('order.upload.error.nofile'));
-				return;
+			//文档类型
+
+			if(!_this._isTextTransType()) {
+				var stats = uploader.getStats();
+				//判断是否上传文件
+				if ($("#fileList ul").length < 1) {
+					_this._showWarn($.i18n.prop('order.upload.error.nofile'));
+					return;
+				} else if(stats.progressNum > 0) { //上传中
+					_this._showWarn($.i18n.prop('order.upload.error.ing'));
+					return;
+				}
 			}
+
+
 
 			//计算字数
 			var totalWords = CountWordsUtil.count($("#translateContent").val());
@@ -160,7 +171,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			var baseInfo = {};
 			var productInfo = {};
 			var orderSummary = {};
-			orderSummary.duadName = $.trim($("#selectDuad").find("option:selected").text());
+            orderSummary.duadId =  $.trim($(".dropdown .selected").attr('value'));
+            orderSummary.duadName = $.trim($(".dropdown .selected").html());
 			orderSummary.purposeName = $.trim($("#selectPurpose").find("option:selected").text());
 			orderSummary.domainName = $.trim($("#selectDomain").find("option:selected").text());
 			orderSummary.translevel = $.trim($("#transGrade ul.current").find("p").eq(0).html());
@@ -204,12 +216,17 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			}
 			baseInfo.orderLevel = "1";
 			baseInfo.userType = "10"; //"10：个人 11：企业 12：代理人 "??
-			baseInfo.remark = $("#remark").val(); //备注 给译员留言
 			baseInfo.orderDesc=$("#inputFormatConv").val();//格式转换
 			//baseInfo.corporaId
 			//baseInfo.accountId
 
-			var today = new Date();
+            var remark = this.getUrlParam("remark");
+            if (remark != '' || remark != undefined) {
+                baseInfo.remark = remark; //备注 给译员留言
+            }
+
+
+            var today = new Date();
 			if(today.stdTimezoneOffset()/60 > 0)
 				baseInfo.timeZone = 'GMT-'+Math.abs(today.stdTimezoneOffset()/60);
 			else
@@ -327,11 +344,11 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				$("#selectFormatConv").attr("disabled",true);
 			}
 
-
-			//session 语言对
-			if ($("#duadName").val() != '') {
-				$(".dropdown .selected").val($("#duadName").val());
-			}
+            //session 语言对
+            if ($("#duadName").val() != '') {
+                $(".dropdown .selected").html($("#duadName").val());
+                $(".dropdown .selected").attr("value", $("#duadId").val());
+            }
 
 			//翻译级别
 			if ($("#transLv").val() != '') {
@@ -345,6 +362,13 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 						$($(this).siblings()).children('label').remove();
 					}
 				});
+
+                //设置耗时
+                if($("#isUrgent").val() == 'Y')
+                    this._getSpeed($("#transLv").val(),true);
+                else
+                    this._getSpeed($("#transLv").val(),false);
+
 			}
 
 			//首页传过来的参数
@@ -375,15 +399,22 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 
 
 		},
-		
-		//语言对改变，价格改变,翻译速度改变
-		_transPrice:function() {
-			var _this = this;
 
-			//清除remote验证的缓存，重新验证
-			$("#translateContent").removeData("previousValue");
-			var formValidator=_this._initValidate();
-			formValidator.form();
+        //语言对改变触发
+        _chDuad:function () {
+            //清除remote验证的缓存，重新验证
+            $("#translateContent").removeData("previousValue");
+            if ( $.trim($("#translateContent")!='' )) {
+                var formValidator=this._initValidate();
+                formValidator.form();
+            }
+
+            this._transPrice();
+        },
+		
+		//价格改变,翻译速度改变
+		_transPrice:function() {
+			// var _this = this;
 
         	$("#selectDuad").find('option').each(function() {
         		var val = $(this).val();
@@ -425,26 +456,32 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		},
 		
 		//获取翻译速度价格
-		_getSpeed:function() {
+		_getSpeed:function(lvId, isUrge) {
 			var ordSpeed = 2;
 			var ordSpeedUrgent = 1;
 			var proSpeed = 3;
 			var proSpeedUrgent = 2;
 			var pubSpeed = 4;
 			var pubSpeedUrgent = 3;
-			
-			if ($("#urgentOrder").is(':checked')) {
-				if($(".none-ml.current").attr('name') == 0) {
+
+            if (lvId =='' || lvId == undefined)
+                lvId = $(".current").attr('name');
+
+            if (isUrge =='' || isUrge == undefined)
+                isUrge = $("#urgentOrder").is(':checked')
+
+			if (isUrge) {
+				if(lvId == '100210') {
 					$("#speedValue").html(ordSpeedUrgent);
-				} else if($(".none-ml.current").attr('name') == 1) {
+				} else if(lvId == '100220') {
 					$("#speedValue").html(proSpeedUrgent);
 				} else {
 					$("#speedValue").html(pubSpeedUrgent);
 				}
 			} else {
-				if($(".none-ml.current").attr('name') == 0) {
+				if(lvId == '100210') {
 					$("#speedValue").html(ordSpeed);
-				} else if($(".none-ml.current").attr('name') == 1) {
+				} else if(lvId == '100220') {
 					$("#speedValue").html(proSpeed);
 				} else {
 					$("#speedValue").html(pubSpeed);
@@ -530,7 +567,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		getUrlParam:function(name) {
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
 			var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-			if (r != null) return unescape(r[2]); return null; //返回参数值
+			if (r != null) return decodeURI(r[2]); return null; //返回参数值
 		},
 
 		//格式化金钱
@@ -553,7 +590,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		//初始化上传控件
 		_initUpdate:function () {
 			var _this= this;
-            var FILE_TYPES=['rar','zip','doc','docx','pdf','jpg','png','gif'];
+            var FILE_TYPES=['rar','zip','doc','docx','txt','pdf','jpg','png','gif'];
             uploader = WebUploader.create({
                 swf : _base+"/resources/spm_modules/webuploader/Uploader.swf",
                 server: _base+'/order/uploadFile',
@@ -562,7 +599,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 dnd: '#fy2', //拖拽
                 accept: {
                     title: 'intoTypes',
-                    extensions: 'rar,zip,doc,docx,pdf,jpg,png,gif',
+                    extensions: 'rar,zip,doc,docx,txt,pdf,jpg,png,gif',
                     // mimeTypes: 'application/zip,application/msword,application/pdf,image/jpeg,image/png,image/gif'
                 },
                 resize : false,
@@ -578,6 +615,11 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 $("#fileList ul li").each(function() {
                     allSize += $(this).attr("size");
                 });
+
+				if (file.size > 20*1024*1024) {
+					_this._showWarn($.i18n.prop('order.upload.error.fileSizeSingle'));
+					return false;
+				}
 
                 if (allSize > 100*1024*1024) {
 					_this._showWarn($.i18n.prop('order.upload.error.fileSize'));
@@ -610,7 +652,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                         .appendTo(fileId).find('.progress-bar');
                 }
                 fileId.next().find('span').css('width',percentage*100+"%");
-                fileId.next().find('p[name="percent"]').text(percentage*100+"%");
+                fileId.next().find('p[name="percent"]').text(parseInt(percentage*100)+"%");
                 percent.css( 'width', percentage * 100 + '%' );
 
             });
@@ -648,6 +690,11 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 $( '#'+file.id ).find('.progress').fadeOut();
             });
         },
+
+        _removeFile:function (id) {
+            var file = uploader.getFile(id);
+            uploader.removeFile(file);
+        }
 
     });
     

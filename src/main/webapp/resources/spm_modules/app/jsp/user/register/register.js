@@ -53,8 +53,8 @@ define(
 											html.push('<option country_value="'+t.countryValue+'" reg="'
 													+ t.regularExpression
 													+ '" value="' + _code
-													+ '" >' + _code + '+'
-													+ name + '</option>');
+													+ '" >' + name + '+'
+													+ _code + '</option>');
 										}
 										$("#country").html(html.join(""));
 									}
@@ -113,14 +113,14 @@ define(
 							var phone = $("#phone");
 							var phoneVal = phone.val();
 							if ($.trim(phoneVal) == "") {
-								this._showCheckMsg(registerMsg.account_empty);
+								this._showCheckMsg(registerMsg.account_phone_empty);
 								//phone.focus();
 								return false;
 							}
 							phoneVal =countryCode+phoneVal;
 							reg = eval('/' + reg + '/');
 							if (!reg.test(phoneVal)) {
-								this._showCheckMsg(registerMsg.account_error);
+								this._showCheckMsg(registerMsg.account_phone_error);
 								//phone.focus();
 								return false;
 							}
@@ -131,13 +131,13 @@ define(
 							var email = $("#email");
 							var emailVal = email.val();
 							if ($.trim(emailVal) == "") {
-								this._showCheckMsg(registerMsg.account_empty);
+								this._showCheckMsg(registerMsg.account_email_empty);
 								//email.focus();
 								return false;
 							}
 							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
 									.test(emailVal)) {
-								this._showCheckMsg(registerMsg.account_error);
+								this._showCheckMsg(registerMsg.account_email_error);
 								//email.focus();
 								return false;
 							}
@@ -316,10 +316,11 @@ define(
 						},
 						/* 异步校验图形验证码 */
 						_checkImageCode : function() {
+							var flag = true;
 							var imgCode = $("#verifyCodeImg");
 							var imgCodeVal = imgCode.val();
 							if (!this._checkVerifyCodeImg()) {
-								return;
+								return false;
 							}
 							var _this = this;
 							ajaxController.ajax({
@@ -333,6 +334,7 @@ define(
 								success : function(json) {
 									if (!json.data) {
 										//imgCode.focus();
+										flag = false;
 										_this._showCheckMsg(json.statusInfo);
 									}else{
 										//清除帐号校验错误信息
@@ -340,11 +342,13 @@ define(
 										if(errMsg==registerMsg.verify_code_img_empty||
 										  errMsg==registerMsg.verify_code_img_error){
 											_this._showCheckMsg("");
+											flag = true;
 										}
 									
 									}
 								}
 							});
+							return flag;
 						},
 						/* 异步校验邮箱或手机 */
 						_checkPhoneOrEmail : function() {
@@ -381,8 +385,10 @@ define(
 										_this._showCheckMsg(json.statusInfo);
 									}else{//清除帐号校验错误信息
 										var errMsg = _this._getCheckMsg();
-										if(errMsg==registerMsg.account_empty||
-										  errMsg==registerMsg.account_error ||
+										if(errMsg==registerMsg.account_email_empty||
+										  errMsg==registerMsg.account_phone_empty||
+										  errMsg==registerMsg.account_email_error ||
+										  errMsg==registerMsg.account_phone_error||
 										  errMsg==registerMsg.account_exists){
 											_this._showCheckMsg("");
 										}
@@ -390,10 +396,14 @@ define(
 								}
 							});
 						},
+						
 						/* 发送验证码 */
 						_sendDynamiCode : function() {
 							if (this._checkPhone()) {
 								var _this = this;
+								if(!this._checkImageCode()){
+									return;
+								}
 								var btn = $("#send_dynamicode_btn");
 								if (btn.hasClass("biu-btn")) {
 									return;
@@ -418,7 +428,7 @@ define(
 											},
 											success : function(json) {
 												if(json.statusCode=="1" && json.data){
-													btn.val(curCount + " s")
+													btn.val(registerMsg.resend+curCount)
 															.removeClass("btn-green")
 															.addClass("biu-btn")
 															.attr("style","color:#fff;");
@@ -440,7 +450,7 @@ define(
 										"biu-btn").addClass("btn-green");
 							} else {
 								curCount = curCount - 1;
-								$("#send_dynamicode_btn").val(curCount + " s");
+								$("#send_dynamicode_btn").val(registerMsg.resend+curCount);
 							}
 						}
 					});

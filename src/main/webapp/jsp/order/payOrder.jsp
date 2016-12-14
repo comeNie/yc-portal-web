@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -117,7 +118,7 @@
 							<p><spring:message code="pay.order.amount.order"/>：<c:if
 									test="${orderFee.currencyUnit == '2'}">$</c:if><c:if
 									test="${orderFee.currencyUnit == '1' && isEn==true}">¥</c:if><fmt:formatNumber
-									value="${orderFee.totalFee/1000}" pattern="#,##0.00#"/><c:if
+									value="${orderFee.totalFee/1000}" pattern="#,##0.00"/><c:if
 									test="${orderFee.currencyUnit == '1' && isEn!=true}">元</c:if></p>
 						</li>
 						<%--<li class="line-none line-20">--%>
@@ -130,7 +131,7 @@
 							<p><spring:message code="pay.order.payable.order"/>：<c:if
 									test="${orderFee.currencyUnit == '2'}">$</c:if><c:if
 									test="${orderFee.currencyUnit == '1' && isEn==true}">¥</c:if><span><fmt:formatNumber
-									value="${orderFee.totalFee/1000}" pattern="#,##0.00#"/></span><c:if
+									value="${orderFee.totalFee/1000}" pattern="#,##0.00"/></span><c:if
 									test="${orderFee.currencyUnit == '1'&& isEn!=true}">元</c:if></p>
 						</li>
 					</ul>
@@ -156,7 +157,8 @@
 							</ul>
 							<%--使用余额--%>
 							<c:if test="${balanceInfo!=null}">
-								<ul payType="YE" class="none-ml">
+								<ul payType="YE" class="none-ml" >
+									<%--账户余额--%>
 									<li class="payment-balance">
 											<%--账户余额--%>
 										<p><spring:message code="pay.order.account.balance"/></p>
@@ -166,7 +168,7 @@
 												value="${balanceInfo.balance/1000}" pattern="#,##0.00#"/><c:if
 												test="${isEn!=true}">元</c:if></p>
 											<%--充值--%>
-										<p><input type="button" class="btn radius20 border-blue btn-80 ml-10"
+										<p><input type="button" id="depositBtn" class="btn radius20 border-blue btn-80 ml-10"
 												  value="<spring:message code="pay.order.balance.recharge"/>"></p>
 									</li>
 								</ul>
@@ -209,7 +211,12 @@
 </body>
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
+	//是否需要校验密码
 	var needPayPass = "${balanceInfo.payCheck}";
+	//待支付金额，目前为总金额
+	var orderPayFee = ${orderFee.totalFee};
+	//账户余额
+	var acctBalance = ${balanceInfo!=null?balanceInfo.balance:0};
 	(function () {
 		var pager;
 		seajs.use('app/jsp/order/payOrder', function(payOrderPager) {

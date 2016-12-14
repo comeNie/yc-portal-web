@@ -208,30 +208,8 @@ $(".attachment ul li i").click(function () {
 	});
 	}); 
 	
-//下单
-$(function(){
-  $("#st1-btn").click(function(){
-  $("#st1").hide();
-  $("#st2").show();
-  });
-  $("#st1-btn1").click(function(){
-  $("#st2").hide();
-  $("#st3").show();
-  });
-  $("#st1-btn2").click(function(){
-  $("#st3").hide();
-  $("#st4").show();
-  });
-  $("#textarea-empty").click(function(){
-  $("#empty").show();
-  });
-  $("#empty").click(function(){
-  $(this).hide();
-  });
-  
-});
+
 //协议tba
-//我的订单 table
 $(function(){
 $(".subnav-left ul li a").click(function () {
                 $(".subnav-left ul li a").each(function () {
@@ -375,39 +353,41 @@ $(function () {
     });
 });	
 
+//译者认证 table
+$(function(){
+$(".static-tab ul li").click(function () {
+                $(".static-tab ul li").each(function () {
+                    $(this).removeClass("current");
+                });
+                $(this).addClass("current");
+            });
+$('.static-tab ul li').click(function(){
+  var index=$('.static-tab ul li').index(this);
+     if(index==0){
+     $('#renz-table1').show();
+  	 $('#renz-table2').hide();
+  	 $('#renz-table3').hide();
+  	 $('#renz-table4').hide();
+   }
+   if(index==1){
+   $('#renz-table2').show();
+   $('#renz-table1').hide();
+   $('#renz-table3').hide();
+   $('#renz-table4').hide();
+   }
+   if(index==2){
+   $('#renz-table3').show();
+   $('#renz-table2').hide();
+   $('#renz-table1').hide();
+   $('#renz-table4').hide();
+   }
+    if(index==3){
+   $('#renz-table4').show();
+   $('#renz-table3').hide();
+   $('#renz-table2').hide();
+   $('#renz-table1').hide();
+   }
+  }); 
+});
 
 
-
-////旋转
-//$(document).ready(function(){
-//$("#icon1").rotate({ 
-// bind: 
-//   { 
-//      mouseover : function() { 
-//          $(this).rotate({animateTo:180});
-//      },
-//      mouseout : function() { 
-//          $(this).rotate({animateTo:0});
-//      }
-//   } 
-// 
-//});
-//$("#icon2").rotate({ 
-// bind: 
-//   { 
-//      mouseover : function() { 
-//          $(this).rotate({animateTo:180});
-//      },
-//      mouseout : function() { 
-//          $(this).rotate({animateTo:0});
-//      }
-//   } 
-// 
-//});
-//});
-//$(document).ready(function(){
-//$(".static-tab ul li a").click(function(){
-// $(this).children("#tab-icon2").show();
-// $(this).children("#tab-icon1").hide();
-//});
-//});

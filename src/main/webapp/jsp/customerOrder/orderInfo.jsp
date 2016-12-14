@@ -38,9 +38,9 @@
                 <div class="oder-table">
                     <ul>
                     	<!-- 翻译内容 -->
-                        <li><a href="javaScript:void(0);" class="current"><spring:message code="myOrder.translatingContent"/></a></li>
+                        <li><a href="javaScript:void(0);" class="current"   <c:if test="${OrderDetails.translateType == '2'}">hidden</c:if> ><spring:message code="myOrder.translatingContent"/></a></li>
                         <!-- 订单跟踪 -->
-                        <li><a href="javaScript:void(0);"><spring:message code="myOrder.Ordertracking"/></a></li>
+                        <li><a href="javaScript:void(0);"  <c:if test="${OrderDetails.translateType == '2'}">class="current"</c:if> ><spring:message code="myOrder.Ordertracking"/></a></li>
                     </ul>
                 </div>
                 
@@ -451,7 +451,7 @@
 var pager;
 var current = "orderList";
 (function () {
-	seajs.use('app/jsp/customerOrder/orderInfo', function(orderInfoPage) {
+	seajs.use('app/jsp/customerOrder/order', function(orderInfoPage) {
 		pager = new orderInfoPage({element : document.body});
 		pager.render();
 	});
@@ -465,6 +465,17 @@ var current = "orderList";
 	 $("input[name='download']").click(function(){
 		 pager._downLoad($(this).attr('fileId'), $(this).attr('fileName'));
      });
+
+    //支付
+    $("#payOrder").click(function () {
+        pager._orderPay($("#orderId").val(), $("#unit").val());
+    });
+
+    //确认
+    $("#confirmOrder").click(function () {
+        pager._confirm($("#orderId").val());
+    });
+
 
 })();
    

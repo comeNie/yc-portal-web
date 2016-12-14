@@ -260,14 +260,16 @@
 	<script type="text/javascript">
 	var userId ="${user_session_key.userId}";
 	
-	var pager;
+	var pager, orderPager;
 	var current ="index";
 	(function() {
-		seajs.use('app/jsp/user/userIndex', function(userIndexPager) {
+		seajs.use(['app/jsp/user/userIndex', 'app/jsp/customerOrder/order'], function(userIndexPager, orderPage) {
 			pager = new userIndexPager({
 				element : document.body
 			});
+			orderPager = new orderPage({element : document.body});
 			pager.render();
+			orderPager.render();
 		});
 		//订单详情 点击订单标题
 	       $('#order_list').delegate("td[name='translateName']", 'click', function () {
@@ -288,12 +290,12 @@
 	       
 	       <%-- 取消订单 --%>
 	       $("#order_list").delegate("input[name='cancelOrder']","click",function(){
-	    		pager._cancelOrder($(this).parent().parent().parent().find("input[name='orderId']").val());
+			   orderPager._cancelOrder($(this).parent().parent().parent().find("input[name='orderId']").val());
 	       });
 	       
 	       <%-- 确认订单 --%>
 	       $("#order_list").delegate("input[name='confirmOrder']","click",function(){
-	       		pager._confirm($(this).parents("table").find("input[name='orderId']").val());
+			   orderPager._confirm($(this).parents("table").find("input[name='orderId']").val());
 	       });
 	})();
 	$(function(){

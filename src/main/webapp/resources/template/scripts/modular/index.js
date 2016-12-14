@@ -76,17 +76,17 @@ $(function () {
   
 //
 $(function(){
-  $("#img1").click(function(){
+  $("#img1").mouseenter(function(){
   $(".jiaicon1").hide();
   $(".jiaicon2").show();
   $(".jiaicon3").show();
   });
-  $("#img2").click(function(){
+  $("#img2").mouseenter(function(){
   $(".jiaicon2").hide();
   $(".jiaicon1").show();
   $(".jiaicon3").show();
   });
-   $("#img3").click(function(){
+   $("#img3").mouseenter(function(){
   $(".jiaicon3").hide();
   $(".jiaicon1").show();
   $(".jiaicon2").show();
@@ -98,7 +98,7 @@ $(function () {
     $centerwell_first.animate({ width: '500px' }, 300);
     $centerwell_first.find('h3').addClass("on");
 
-    $('#centerwell li').click(function () {
+    $('#centerwell li').mouseenter(function () {
         if (!$(this).is(':animated')) {
             $(this).animate({ width: '500px' }, 300).siblings().animate({ width: '216px' }, 300);
 

@@ -72,8 +72,14 @@ define('app/jsp/order/orderContact', function (require, exports, module) {
                     $('ul li p label').remove()//删除所有隐藏的li p label标签
                     this.defaultShowErrors();
                     $('ul li p label').each(function (index,element) {
-                        if (index > 0)
-                            element.remove();
+                        if (index > 0) {
+                            var _parentElement = element.parentNode;
+                            if(_parentElement){
+                                _parentElement.removeChild(element);
+                            }
+                            // element.remove();
+                        }
+
                     });
                 },
                 rules: {
@@ -227,7 +233,11 @@ define('app/jsp/order/orderContact', function (require, exports, module) {
             if(translateType == 2) { //口译
                 window.history.go($("#toCreateOrder").attr("skip"));
             } else {
-               window.location.href= _base + "/written";
+                var remark = $.trim($("#remark").val());
+                if (remark != '')
+                    window.location.href= _base + "/order/create/text?remark="+window.encodeURI(remark);
+                else
+                    window.location.href= _base + "/written";
             }
 
         }

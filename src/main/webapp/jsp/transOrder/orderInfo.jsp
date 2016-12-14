@@ -33,13 +33,13 @@
 	 			<div class="step-big small-hi"><spring:message code="myOrder.OrderHrefunded"/></div>
 	 		</c:if>
 			<!--订单table-->
-			<div class="confirmation-table mt-20"  <c:if test="${OrderDetails.translateType == '2'}">style="display: none"</c:if> > 
+			<div class="confirmation-table mt-20" >
 					<div class="oder-table">
 			 				<ul>
 			 					<!-- 翻译内容 -->
-			 					<li><a href="javaScript:void(0);" class="current"><spring:message code="myOrder.translatingContent"/></a></li>
+			 					<li><a href="javaScript:void(0);" class="current"  <c:if test="${OrderDetails.translateType == '2'}"> hidden</c:if> ><spring:message code="myOrder.translatingContent"/></a></li>
 			 					<!-- 订单跟踪 -->
-			 					<li><a href="javaScript:void(0);"><spring:message code="myOrder.Ordertracking"/></a></li>
+			 					<li><a href="javaScript:void(0);" <c:if test="${OrderDetails.translateType == '2'}">  class="current" </c:if>><spring:message code="myOrder.Ordertracking"/></a></li>
 			 				</ul>
 			 			</div>
 			 			<div id="translate1">
@@ -140,7 +140,7 @@
                                         <!-- 译文 文档-->
                                         <li class="title"><spring:message code="myOrder.Translatedtext"/>:</li>
                                             <!-- 文档类型翻译 文档list -->
-                                            <li>${prodFile.fileTranslateName}</li>
+                                            <li fileSize="${FileSizeMap.get(prodFile.fileTranslateId)}">${prodFile.fileTranslateName}</li>
                                             <li class="right mr-5">
                                                 <input name="download" fileId="${prodFile.fileTranslateId}" fileName="${prodFile.fileTranslateName}" type="button" class="btn border-blue-small btn-auto radius20" value="<spring:message code="myOrder.downLoad"/>">
 
@@ -175,7 +175,7 @@
 			 			</c:if>
 			 			
 			 		  </div>
-			 		  <div id="translate2" style="display: none;">
+			 		  <div id="translate2"  <c:if test="${OrderDetails.translateType != '2'}"> style="display: none;"</c:if> >
 			 		  	 <!-- 订单轨迹 -->
 			 		  	 <div class="tracking-list">
 			 		  	 	<ul>
@@ -268,6 +268,10 @@
 	                            		<c:if test="${prodLevels.translateLevel == '100210'}"><spring:message code="order.Standard"/></c:if>
 	                            		<c:if test="${prodLevels.translateLevel == '100220'}"><spring:message code="order.Professional"/></c:if>
 	                            		<c:if test="${prodLevels.translateLevel == '100230'}"><spring:message code="order.Publishing"/></c:if>
+
+                                        <c:if test="${prodLevels.translateLevel == '100110'}"><spring:message code="order.interpretationType1"/></c:if>
+                                        <c:if test="${prodLevels.translateLevel == '100120'}"><spring:message code="order.interpretationType2"/></c:if>
+                                        <c:if test="${prodLevels.translateLevel == '100130'}"><spring:message code="order.interpretationType3"/></c:if>
 	                            	</c:forEach>
 	                            </p>
 			  				</li>
@@ -390,7 +394,7 @@
 		 					<!-- 待领取 领取-->
 							<input id="received" name="received" type="button" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="myOrder.Claim"/>">
 		 				</c:when>
-		 				<c:when test="${OrderDetails.state =='21'}">
+		 				<c:when test="${OrderDetails.state =='21' && OrderDetails.translateType!='2'}">
 		 					<!-- 已领取  翻译-->
 							<input id="trans" name="trans" class="btn btn-green btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.Translate"/>">
 							<!-- 暂无 <input id="recharge-popo" class="btn btn-yellow btn-xxxlarge radius10 ml-20" type="button" value="分配">-->
@@ -439,13 +443,15 @@
 <script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
 
 <script type="text/javascript">
-var pager;
+var pager, orderPager;
 var lspId="${lspId}";
 var orderId = "${OrderDetails.orderId}";
 (function () {
-	seajs.use('app/jsp/transOrder/orderInfo', function(orderInfoPage) {
+	seajs.use(['app/jsp/transOrder/orderInfo', 'app/jsp/customerOrder/order'], function(orderInfoPage, orderPage) {
 		pager = new orderInfoPage({element : document.body});
+		orderPager = new orderPage({element : document.body});
 		pager.render();
+		orderPager.render();
 	});
 	
 	//更多 显示全文
@@ -455,7 +461,7 @@ var orderId = "${OrderDetails.orderId}";
 	
 	//下载文件
 	$("input[name='download']").click(function(){
-		 pager._downLoad($(this).attr('fileId'), $(this).attr('fileName'));
+		orderPager._downLoad($(this).attr('fileId'), $(this).attr('fileName'));
 	});
 	
 	//删除
@@ -465,7 +471,7 @@ var orderId = "${OrderDetails.orderId}";
 
 	//提交
 	$("input[name='submit']").click(function() {
-		pager._orderSubmit($("#orderId").val());
+		orderPager._orderSubmit($("#orderId").val());
 	});
 	
 	

@@ -31,7 +31,6 @@ public class BalanceService {
     public AccountBalanceInfo queryOfUser(String userId){
         AccountBalanceInfo accountBalanceInfo = null;
         //获取当前用户
-        /* TODO... 等待获取用户账号*/
         IYCUserServiceSV userServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
         SearchYCUserRequest searchYCUserReq = new SearchYCUserRequest();
         searchYCUserReq.setTenantId(Constants.DEFAULT_TENANT_ID);

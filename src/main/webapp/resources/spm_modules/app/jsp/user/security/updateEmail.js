@@ -33,7 +33,7 @@ define("app/jsp/user/security/updateEmail",
 						events : {
 							//通过邮箱修改邮箱,校验邮箱合法性和邮箱是否存在
 							"blur #emailUpdateEmail":"_checkEmail",
-							"focus #emailUpdateEmail":"_disTishi",
+							// "focus #emailUpdateEmail":"_disLabel",
 							/**
 							 * 通过手机修改邮箱
 							 */
@@ -42,7 +42,7 @@ define("app/jsp/user/security/updateEmail",
 							//手机验证身份下一步
 							"click #update_email_next-bt1":"_checkPhoneDynamicode",
 							//校验邮箱地址
-							//"blur #phoneUEmail":"_pcheckEmail",
+							"blur #phoneUEmail":"_pcheckEmail",
 							//手机方式验证后发送新邮箱
 							"click #phone-send-email-btn":"_psendEmail",
 							//校验手机和动态码是否匹配
@@ -83,7 +83,7 @@ define("app/jsp/user/security/updateEmail",
 							   }
 							});
 							if(email==""){
-								 $("#set-table2").html("<div class='recharge-success mt-40'><ul><li class='word'>"+updateEmailJs.notBindEmailNoVerify+"</li></ul></div>");
+								 $("#set-table2").html("<div class='recharge-success mt-40'><ul><li><img src='"+uedroot+"/images/rech-fail.png' /></li><li class='word'>"+updateEmailJs.notBindEmailNoVerify+"</li></ul></div>");
 							}
 							if(phone==""){
 								 $("#set-table1").html("<div class='recharge-success mt-40'><ul><li><img src='"+uedroot+"/images/rech-fail.png' /></li><li class='word'>"+updateEmailJs.notBindPhoneNoVerify+"</li></ul></div>");
@@ -142,9 +142,9 @@ define("app/jsp/user/security/updateEmail",
 								success : function(data) {
 									var resultCode = data.data;
 									if(!resultCode){
-										//$("#emailErrMsg").show();
-										//$("#emailErrMsg").text(updateEmailJs.sendEmailFail);
-										showMsg(updateEmailJs.sendEmailFail);
+										$("#emailErrMsg").show();
+										$("#emailErrMsg").text(updateEmailJs.sendEmailFail);
+										// showMsg(updateEmailJs.sendEmailFail);
 										$("#sendEmailBtn").removeAttr("disabled"); //移除disabled属性
 									}else{
 										var step = 59;
@@ -177,11 +177,8 @@ define("app/jsp/user/security/updateEmail",
 						 */
 						_psendEmail:function(){
 							var emailVal = $("#phoneUEmail").val();
-							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
-									.test(emailVal)) {
-								//$("#phoneUEmailErrMgs").show();
-								//$("#phoneUEmailErrMgs").text(updateEmailJs.emailFormatIncorrect);
-								showMsg(updateEmailJs.emailFormatIncorrect);
+							if(!this._pcheckEmail()){
+								
 								return;
 							}
 							var _this = this;
@@ -199,9 +196,9 @@ define("app/jsp/user/security/updateEmail",
 								success : function(data) {
 									var resultCode = data.data;
 									if(!resultCode){
-										//$("#phoneUEmailErrMgs").show();
-										//$("#phoneUEmailErrMgs").text(updateEmailJs.sendEmailFail);
-										showMsg(updateEmailJs.sendEmailFail);
+										$("#phoneUEmailErrMgs").show();
+										$("#phoneUEmailErrMgs").text(updateEmailJs.sendEmailFail);
+										//showMsg(updateEmailJs.sendEmailFail);
 										$("#phone-send-email-btn").removeAttr("disabled"); //移除disabled属性
 									}else{
 										var step = 59;
@@ -288,7 +285,9 @@ define("app/jsp/user/security/updateEmail",
 						_checkPhoneDynamicode:function(){
 							 var phoneDynamicode = $("#phoneDynamicode").val();
 							 if(phoneDynamicode==null||phoneDynamicode==""){
-								 showMsg(updateEmailJs.pleaseInputOC);
+								 $("#dynamicode").show();
+								 $("#dynamicode").text(updateEmailJs.pleaseInputOC);
+								 //showMsg(updateEmailJs.pleaseInputOC);
 								 return false;
 							 }
 							 ajaxController.ajax({
@@ -302,9 +301,9 @@ define("app/jsp/user/security/updateEmail",
 				    				},
 				    		        success: function(data) {
 				    		        	if(!data.data){
-				    		        		//$("#dynamicode").show();
-											//$("#dynamicode").text(data.statusInfo);
-				    		        		showMsg(data.statusInfo);
+				    		        		$("#dynamicode").show();
+											$("#dynamicode").text(data.statusInfo);
+				    		        		//showMsg(data.statusInfo);
 											return false;
 				    		        	}else{
 				    		        		 $("#next1").hide();
@@ -323,9 +322,9 @@ define("app/jsp/user/security/updateEmail",
 						_checkUpdatePhoneDynamicode:function(){
 							 var phoneDynamicode = $("#uphoneDynamicode").val();
 							 if(phoneDynamicode==null||phoneDynamicode==""){
-								 //$("#updateEmailErrMsg").show();
-								 //$("#updateEmailErrMsg").text(updateEmailJs.pleaseInputOC);
-								 showMsg(updateEmailJs.pleaseInputOC);
+								 $("#updateEmailErrMsg").show();
+								 $("#updateEmailErrMsg").text(updateEmailJs.pleaseInputOC);
+								 //showMsg(updateEmailJs.pleaseInputOC);
 								 return false;
 							 }
 							 ajaxController.ajax({
@@ -338,9 +337,9 @@ define("app/jsp/user/security/updateEmail",
 				    				},
 				    		        success: function(data) {
 				    		        	if(!data.data){
-				    		        		//$("#uphoneDynamicode").show();
-											//$("#uphoneDynamicode").text(data.statusInfo);
-				    		        		showMsg(data.statusInfo);
+				    		        		$("#uphoneDynamicode").show();
+											$("#uphoneDynamicode").text(data.statusInfo);
+				    		        		//showMsg(data.statusInfo);
 											return false;
 				    		        	}else{
 				    		        		 ajaxController.ajax({
@@ -354,7 +353,9 @@ define("app/jsp/user/security/updateEmail",
 								    				success: function(data) {
 								    					var jsonData = JSON.parse(data);
 								    		        	if(jsonData.statusCode!="1"){
-								    		        		showMsg(updateEmailJs.bindFail)
+								    		        		$("#uphoneDynamicode").show();
+															$("#uphoneDynamicode").text(updateEmailJs.bindFail);
+								    		        		//showMsg(updateEmailJs.bindFail)
 															return false;
 								    		        	}else{
 								    		        		$("#next2").hide();
@@ -372,31 +373,29 @@ define("app/jsp/user/security/updateEmail",
 				    					}
 				    				});
 						},
-						/**
-                         * 获取焦点时去掉提示
-						 */
-						_disTishi : function () {
-							$("#tishi1").html("");
-						},
+
 						/* 邮箱校验 */
 						_checkEmail : function() {
+							$("#emailUErrMsg").hide();
+							var flag = true;
 							var email = $("#emailUpdateEmail");
 							var emailVal = email.val();
 							if ($.trim(emailVal) == "") {
-								//$("#emailUErrMsg").show();
-								//$("#emailUErrMsg").text(emailBindMsg.emailUErrPleaseMsg);
+								$("#emailUErrMsg").show();
+								$("#emailUErrMsg").text(updateEmailJs.emailUErrPleaseMsg);
 								//email.focus();
-								$("#tishi1").html(updateEmailJs.emailUErrPleaseMsg);
+								// $("#tishi1").html(updateEmailJs.emailUErrPleaseMsg);
 								return false;
 							}
 							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
 									.test(emailVal)) {
-								//$("#emailUErrMsg").show();
-								//$("#emailUErrMsg").text(emailBindMsg.emailUErrLegalMsg);
-								$("#tishi1").html(updateEmailJs.emailUErrLegalMsg);
+								$("#emailUErrMsg").show();
+								$("#emailUErrMsg").text(updateEmailJs.emailUErrLegalMsg);
+								// $("#tishi1").html(updateEmailJs.emailUErrLegalMsg);
 								return false;
 							}
 							ajaxController.ajax({
+								async:false,
 								type:"post",
 								url:_base+"/p/security/isExitEmail",
 								data:{
@@ -405,48 +404,69 @@ define("app/jsp/user/security/updateEmail",
 								},
 								success: function(json) {
 									if(!json.data){
-										$("#tishi1").html(json.statusInfo)
+										$("#emailUErrMsg").show();
+										$("#emailUErrMsg").text(json.statusInfo);
+										// $("#tishi1").html(json.statusInfo)
+										flag = false;
 									}
 								},
 								error: function(error) {
-									$("#tishi1").html("error:"+ error);
+									$("#emailUErrMsg").show();
+									$("#emailUErrMsg").text(error);
 								}
 							});
-							$("#emailUErrMsg").hide();
-							return true;
+							// $("#emailUErrMsg").hide();
+							return flag;
 						},
 						_pcheckEmail:function(){
+							$("#phoneUEmailErrMgs").hide();
 							var email = $("#phoneUEmail");
+							var flag = true;
 							var emailVal = email.val();
 							if ($.trim(emailVal) == "") {
-								//$("#phoneUEmailErrMgs").show();
-								//$("#phoneUEmailErrMgs").text(updateEmailJs.emailUErrPleaseMsg);
-								showMsg(updateEmailJs.emailUErrPleaseMsg);
+								$("#phoneUEmailErrMgs").show();
+								$("#phoneUEmailErrMgs").text(updateEmailJs.emailUErrPleaseMsg);
+								//showMsg(updateEmailJs.emailUErrPleaseMsg);
 								//email.focus();
 								return false;
 							}
 							if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
 									.test(emailVal)) {
-								//$("#phoneUEmailErrMgs").show();
-								//$("#phoneUEmailErrMgs").text(updateEmailJs.emailUErrLegalMsg);
-								showMsg(updateEmailJs.emailUErrLegalMsg);
+								$("#phoneUEmailErrMgs").show();
+								$("#phoneUEmailErrMgs").text(updateEmailJs.emailUErrLegalMsg);
+								//showMsg(updateEmailJs.emailUErrLegalMsg);
 								return false;
 							}
-							$("#phoneUEmailErrMgs").hide();
-							return true;
+							ajaxController.ajax({
+								async:false,
+								type:"post",
+								url:_base+"/p/security/isExitEmail",
+								data:{
+									email:$("#phoneUEmail").val(),
+									type:"5",
+								},
+								success: function(json) {
+									if(!json.data){
+										$("#phoneUEmailErrMgs").show();
+										$("#phoneUEmailErrMgs").text(json.statusInfo);
+										// $("#tishi1").html(json.statusInfo)
+										flag = false;
+									}
+								},
+								error: function(error) {
+									$("#phoneUEmailErrMgs").show();
+									$("#phoneUEmailErrMgs").text(error);
+								}
+							});
+							return flag;
 						},
+						
 						/* 发送动态码 */
 						  _sendEmailUEmailDynamiCode : function() {
-								var _this = this;
-							  	var tishi = $("#tishi1").html();
 								var btn = $("#email-sendCode-btn");
 								if (btn.hasClass("biu-btn")) {
 									return;
 								}
-							  	if(tishi!=""){
-									return;
-								}
-							  
 								curCount = count;
 								ajaxController
 									.ajax({
@@ -503,7 +523,9 @@ define("app/jsp/user/security/updateEmail",
 						_checkEmailImageCode:function(){
 							var emailIdentifyCode = $("#emailIdentifyCode").val();
 							if(emailIdentifyCode==""||emailIdentifyCode==null){
-								showMsg(updateEmailJs.pleaseInputOC);
+								$("#emailErrMsg").show();
+	    		        		$("#emailErrMsg").text(updateEmailJs.pleaseInputOC);
+								//showMsg(updateEmailJs.pleaseInputOC);
 								return;
 							}
 							ajaxController.ajax({
@@ -516,9 +538,9 @@ define("app/jsp/user/security/updateEmail",
 			    				},
 			    		        success: function(data) {
 			    		        	if(!data.data){
-			    		        		//$("#emailErrMsg").show();
-			    		        		//$("#emailErrMsg").text(data.statusInfo);
-			    		        		showMsg(data.statusInfo);
+			    		        		$("#emailErrMsg").show();
+			    		        		$("#emailErrMsg").text(data.statusInfo);
+			    		        		//showMsg(data.statusInfo);
 			    		        		return false;
 			    		        	}else{
 			    		        		$("#next4").hide();
@@ -537,9 +559,9 @@ define("app/jsp/user/security/updateEmail",
 							 */
 							 var phoneDynamicode = $("#uEmailCode").val();
 							 if(phoneDynamicode==null||phoneDynamicode==""){
-								 //$("#emailUErrMsg").show();
-								 //$("#emailUErrMsg").text(updateEmailJs.pleaseInputOC);
-								 showMsg(updateEmailJs.pleaseInputOC);
+								 $("#emailUErrMsg").show();
+								 $("#emailUErrMsg").text(updateEmailJs.pleaseInputOC);
+								 //showMsg(updateEmailJs.pleaseInputOC);
 								 return false;
 							 }
 							 ajaxController.ajax({
@@ -552,7 +574,9 @@ define("app/jsp/user/security/updateEmail",
 				    				},
 				    				success: function(json) {
 				    					if(!json.data){
-				    		        		showMsg(json.statusInfo)
+				    						$("#emailUErrMsg").show();
+											$("#emailUErrMsg").text(json.statusInfo);
+				    		        		//showMsg(json.statusInfo)
 										}else{
 				    		        		$("#next5").hide();
 				    		        		$("#next6").show();
@@ -569,9 +593,9 @@ define("app/jsp/user/security/updateEmail",
 							 */
 							 var emailDynamicode = $("#phoneUEmailCode").val();
 							 if(emailDynamicode==null||emailDynamicode==""){
-								 //$("#phoneUEmailErrMgs").show();
-								 //$("#phoneUEmailErrMgs").text(updateEmailJs.pleaseInputOC);
-								 showMsg(updateEmailJs.pleaseInputOC);
+								 $("#phoneUEmailErrMgs").show();
+								 $("#phoneUEmailErrMgs").text(updateEmailJs.pleaseInputOC);
+								 //showMsg(updateEmailJs.pleaseInputOC);
 								 return false;
 							 }
 							 ajaxController.ajax({
@@ -583,7 +607,9 @@ define("app/jsp/user/security/updateEmail",
 				    				},
 				    				success: function(json) {
 				    					if(!json.data){
-				    		        		showMsg(json.statusInfo)
+				    						$("#phoneUEmailErrMgs").show();
+											$("#phoneUEmailErrMgs").text(json.statusInfo);
+				    		        		//showMsg(json.statusInfo)
 											return;
 				    		        	}else{
 				    		        		$("#next2").hide();

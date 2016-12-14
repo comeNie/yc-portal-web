@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,11 @@ import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
+import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.slp.balance.api.accountmaintain.interfaces.IAccountMaintainSV;
 import com.ai.slp.balance.api.accountmaintain.param.AccountUpdateParam;
+import com.ai.yc.common.api.cachekey.key.CacheKey;
+import com.ai.yc.common.api.country.param.CountryVo;
 import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
 import com.ai.yc.order.api.orderquery.param.QueryOrdCountRequest;
 import com.ai.yc.order.api.orderquery.param.QueryOrdCountResponse;
@@ -31,6 +35,7 @@ import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
 import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
 import com.ai.yc.protal.web.service.BalanceService;
 import com.ai.yc.protal.web.utils.PasswordMD5Util.Md5Utils;
+import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.translator.api.translatorservice.interfaces.IYCTranslatorServiceSV;
 import com.ai.yc.translator.api.translatorservice.param.SearchYCTranslatorRequest;
@@ -47,6 +52,7 @@ import com.ai.yc.ucenter.api.members.param.editmobile.UcMembersEditMobileRequest
 import com.ai.yc.ucenter.api.members.param.get.UcMembersGetRequest;
 import com.ai.yc.ucenter.api.members.param.get.UcMembersGetResponse;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 帐号安全设置<br>
@@ -499,10 +505,16 @@ public class SecurityController {
 			Integer codeNumber = responseCode == null ? null : responseCode
 					.getCodeNumber();
 			LOG.info("--------绑定手机返回 :" + JSON.toJSONString(res));
+			GeneralSSOClientUser user = UserUtil.getSsoUser();
 			if (codeNumber != null && codeNumber == 1) {
+				ICacheClient iCacheClient = AiPassUitl.getCommonCacheClient();
+	        	String str = iCacheClient.hget(CacheKey.COUNTRY_D_KEY,countryValue);
+	        	 if(StringUtils.isNotBlank(str)) {
+	             	CountryVo country = JSONObject.parseObject(str, CountryVo.class);
+	             	user.setFullMobile("+"+country.getCountryCode()+phone);
+	             }
 				isOK = true;
 				msg = "ok";
-				GeneralSSOClientUser user = UserUtil.getSsoUser();
 				user.setMobile(phone);
 				UserUtil.saveSsoUser(user);
 			} else {

@@ -69,13 +69,13 @@
 .item2 p{margin:0;line-height:20px;font-size:12px;color:#fff;font-weight:normal;}
 .item2 .img{border:0;position:absolute;width:280px;height:323px;background:#fff;-webkit-box-shadow: #2965e6 0px 0px 4px;-moz-box-shadow: #2965e6 0px 0px 4px;box-shadow: #2965e6 0px 0px 4px;}
 
-.item2-txt{position:absolute;left:50%;top:40px;margin-left:-85px;width:170px;color:#2c3e50;overflow:hidden;}
-.item2-txt span{width: 100%;float:left;line-height:24px;font-size:14px;}
+.item2-txt{position:absolute;top:40px;color:#2c3e50;overflow:hidden;text-align: center;}
+.item2-txt span{width: 100%;float:left;line-height:24px;font-size:14px;text-align: center;}
 .item2-txt .word{text-align:center;font-size:24px;color:#2c3e50;font-weight:bold}
-.item2-txt .exp-icon1{width:113px;height:113px;background:url(../../images/icon-big.png) no-repeat left -1110px;margin:32px 0 0 34px;}
-.item2-txt .exp-icon2{width:113px;height:113px;background:url(../../images/icon-big.png) no-repeat left -1230px;margin:32px 0 0 30px;}
-.item2-txt .exp-icon3{width:113px;height:113px;background:url(../../images/icon-big.png) no-repeat left -1348px;margin:32px 0 0 34px;}
-.item2-txt .exp-icon4{width:113px;height:113px;background:url(../../images/icon-big.png) no-repeat left -1467px;margin:32px 0 0 34px;}
+.item2-txt .exp-icon1{width:113px;height:113px;background:url(../../images/icon-big.png) no-repeat left -1110px;margin:32px 0 0 90px;}
+.item2-txt .exp-icon2{width:113px;height:113px;background:url(../../images/icon-big.png) no-repeat left -1230px;margin:32px 0 0 90px;}
+.item2-txt .exp-icon3{width:113px;height:113px;background:url(../../images/icon-big.png) no-repeat left -1348px;margin:32px 0 0 90px;}
+.item2-txt .exp-icon4{width:113px;height:113px;background:url(../../images/icon-big.png) no-repeat left -1467px;margin:32px 0 0 90px;}
 /**广告位**/
 .banner-wapper{width:100%;float:left;}
 .banner-sm{width:1200px;margin:0 auto;display:none;height:142px;margin-top:20px;background:url(../../images/banner-sm.jpg) no-repeat;}
@@ -117,7 +117,7 @@
 
 
 /**数据**/
-.data-wapper{width:100%;height:321px;background:url(../../images/data-bj.jpg) no-repeat center;min-width:1200px;background-size:100% 321px;float:left;}
+.data-wapper{width:100%;height:321px;background:url(../../images/data-bj.jpg) no-repeat center;min-width:1200px;float:left;}
 .data-container{width:1200px;margin:0 auto;}
 .data-container ul{width:100%;float:left;margin-top:80px;}
 .data-container ul li{width:210px;float:left;margin-right:30px;}
