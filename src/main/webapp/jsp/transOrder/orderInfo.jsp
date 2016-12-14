@@ -32,8 +32,9 @@
 	 			<!-- myOrder.OrderHrefunded -->
 	 			<div class="step-big small-hi"><spring:message code="myOrder.OrderHrefunded"/></div>
 	 		</c:if>
-			<!--订单table-->
-			<div class="confirmation-table mt-20"  <c:if test="${OrderDetails.translateType == '2'}">style="display: none"</c:if> > 
+			<!--订单原文、译文信息table，若为口译，则不显示-->
+			<c:if test="${OrderDetails.translateType != '2'}">
+			<div class="confirmation-table mt-20" >
 					<div class="oder-table">
 			 				<ul>
 			 					<!-- 翻译内容 -->
@@ -194,7 +195,8 @@
 			 		  	 	</ul>
 			 		  	 </div>
 			 		  </div>
-			</div>	
+			</div>
+			</c:if>
 			<!--订单内容-->
 			<div class="oder-detailed">
 				<div class="right-list-title pb-10 pl-20">
