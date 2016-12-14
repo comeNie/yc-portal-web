@@ -236,6 +236,7 @@ public class RegisterController {
 		req.setUid(Integer.parseInt(codes[0]));
 		req.setOperationcode(codes[1]);
 		req.setOperationtype(UcenterOperation.OPERATION_TYPE_EMAIL_ACTIVATE);
+		req.setUserinfo(codes[2]);
 		UcMembersResponse res =DubboConsumerFactory.getService(IUcMembersOperationSV.class).ucActiveMember(req);
 		if (res != null && res.getMessage() != null
 				&& res.getMessage().isSuccess() && res.getCode() != null
@@ -266,7 +267,7 @@ public class RegisterController {
 	private boolean sendRegisterEmaial(InsertYCUserRequest req,YCInsertUserResponse res) {
 		if (!StringUtil.isBlank(req.getEmail())) {
 			String key = UUID.randomUUID().toString().replace("-", "");
-			String value = res.getUserId()+","+res.getOperationcode();
+			String value = res.getUserId()+","+res.getOperationcode()+","+req.getEmail();
 			VerifyUtil.addRedisValue(key, 24*60*60,value);
 			JSONObject config = AiPassUitl.getVerificationCodeConfig();
 			String  baseUrl = config.getString("base_url");
