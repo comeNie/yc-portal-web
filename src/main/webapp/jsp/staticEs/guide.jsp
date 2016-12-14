@@ -47,7 +47,7 @@
 					<p class="icon2" id="tab-icon2"></p>
 					</a>
 					<%--提交翻译任务--%>
-					<p class="word word-font">Submit translation tasks</p>
+					<p class="word word-font">Submit</p>
 				</li>
 				<div class="line"></div>
 				<li id="st1-btn">
@@ -55,7 +55,7 @@
 					<p class="icon3" id="tab-icon3"></p>
 					</a>
 					<%--支付订单--%>
-					<p class="word word-font">Payment order</p>
+					<p class="word word-font">Payment</p>
 				</li>
 				<div class="line1"></div>
 				<li>
@@ -63,7 +63,7 @@
 					<p class="icon5" id="tab-icon5"></p>
 					</a>
 					<%--获取翻译结果--%>
-					<p class="word word-font">Obtain translation results</p>
+					<p class="word word-font">Results</p>
 				</li>
 				<div class="line"></div>
 				<li>
@@ -71,7 +71,7 @@
 					<p class="icon7" id="tab-icon7"></p>
 					</a>
 					<%--确认评价订单--%>
-					<p class="word word-font">Confirm evaluation order</p>
+					<p class="word word-font">Confirm</p>
 				</li>
 			</ul>
 		</div>
@@ -81,7 +81,7 @@
 			<div class="static-list">
 				<ul>
 					<%--第一步 提交翻译任务--%>
-					<li class="word"><span>First step</span>Submit translation tasks</li>
+					<li class="word"><span>First step</span> Submit translation tasks</li>
 					<%--注册/登录译云账户，点击”立即下单“，选择需要的业务类型，根据提示完成并提交您的翻译任务即可。目前，译云提供了快速翻译、文档翻译、简历翻译、创意翻译、证件翻译、口译翻译几大业务类型。--%>
 					<li>Registration / login account and click "order immediately translated cloud,", select the type of business, according to the prompts to complete and submit to your translation task. At present, translation cloud provides fast translation, document translation, translation, creative translation, resume document translation, interpreting several types of business.</li>
 				</ul>

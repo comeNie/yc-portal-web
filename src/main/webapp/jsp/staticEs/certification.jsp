@@ -18,7 +18,7 @@
 	<div class="card-list">
 		<ul>
 			<%--要赚钱，学习，长时间的经验，选择“翻译云”--%>
-			<li><span> To make money, get knowledge, enrich experience, just join YeeCloud!</span><br>
+			<li><span> To make money, get knowledge, enrich experience, just join YeeCloud !</span><br>
 				<%--在线自由接单、交易全程担保、免费语料工具，随时随地 想翻就翻--%>
 				Accept order online conveniently, full-process guarantee in the deal, free linguistic material, translate as you wish, anytime, anywhere</li>
 				<%--加入译云--%>
@@ -31,7 +31,7 @@
 	<div class="static-title">
 		<%--译者认证--%>
 		<p></p>
-		<p class="line1">Translator certification</p>
+		<p class="line1">Certification</p>
 	</div>
 
 
@@ -42,7 +42,7 @@
 					<a href="javascript:">
 						<p class="icon1" id="tab-icon1"></p>
 					</a>
-					<p class="word word-font">Translation cloud registration</p>
+					<p class="word word-font">YeeCloud registration</p>
 				</li>
 				<div class="line"></div>
 				<li id="st1-btn">
@@ -63,7 +63,7 @@
 		<div id="renz-table1">
 			<div class="static-list">
 				<ul>
-					<li class="word"><span>First step</span> Translation cloud registration</li>
+					<li class="word"><span>First step</span> YeeCloud registration</li>
 					<%--您可以使用手机号或者邮箱进行注册。若使用手机号注册，须填入正确的短信验证码，并设置密码，点击“立即注册”即可；若使用邮箱进行注册，在填写完验证码并设置好密码后，还须进入邮箱进行邮件激活，方能完成注册。--%>
 					<li>You can use the phone number or email to register. If you use the mobile phone number registered, shall fill in the SMS verification code correctly, and set a password, click the "register" can; if the use of e-mail registration, in completing the verification code and set the password, must enter mailbox mail activation, can complete the registration.</li>
 				</ul>
