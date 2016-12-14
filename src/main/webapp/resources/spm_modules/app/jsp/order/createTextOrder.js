@@ -149,11 +149,21 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				return formValidator.focusInvalid();
 			}
 
-			//文档类型 判断是否上传文件
-			if(!_this._isTextTransType() && $("#fileList ul").length < 1) {
-				_this._showWarn($.i18n.prop('order.upload.error.nofile'));
-				return;
+			//文档类型
+
+			if(!_this._isTextTransType()) {
+				var stats = uploader.getStats();
+				//判断是否上传文件
+				if ($("#fileList ul").length < 1) {
+					_this._showWarn($.i18n.prop('order.upload.error.nofile'));
+					return;
+				} else if(stats.progressNum > 0) { //上传中
+					_this._showWarn($.i18n.prop('order.upload.error.ing'));
+					return;
+				}
 			}
+
+
 
 			//计算字数
 			var totalWords = CountWordsUtil.count($("#translateContent").val());
@@ -206,12 +216,17 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			}
 			baseInfo.orderLevel = "1";
 			baseInfo.userType = "10"; //"10：个人 11：企业 12：代理人 "??
-			baseInfo.remark = $("#remark").val(); //备注 给译员留言
 			baseInfo.orderDesc=$("#inputFormatConv").val();//格式转换
 			//baseInfo.corporaId
 			//baseInfo.accountId
 
-			var today = new Date();
+            var remark = this.getUrlParam("remark");
+            if (remark != '' || remark != undefined) {
+                baseInfo.remark = remark; //备注 给译员留言
+            }
+
+
+            var today = new Date();
 			if(today.stdTimezoneOffset()/60 > 0)
 				baseInfo.timeZone = 'GMT-'+Math.abs(today.stdTimezoneOffset()/60);
 			else
@@ -552,7 +567,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		getUrlParam:function(name) {
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
 			var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-			if (r != null) return unescape(r[2]); return null; //返回参数值
+			if (r != null) return decodeURI(r[2]); return null; //返回参数值
 		},
 
 		//格式化金钱

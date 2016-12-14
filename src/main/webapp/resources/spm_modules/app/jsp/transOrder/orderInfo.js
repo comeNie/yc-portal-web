@@ -13,7 +13,6 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
     	//事件代理
     	events: {
 			"click #textSave":"_textSave",
-			"click #submit": "_orderSubmit",
 			"click #trans": "_trans",
 			"click #editText": "_editText",
 			"change input[type='file']": "_upload",
@@ -32,12 +31,6 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				async: true
 			});
 		},
-    	
-//    	下载文件
-    	_downLoad:function(fileId, fileName) {
-			fileName = window.encodeURI(window.encodeURI(fileName));
-    		window.open(_base + "/p/customer/order/download?fileId="+fileId+"&fileName="+fileName);
-    	},
     	
     	//上传译文
         _upload: function () {
@@ -78,7 +71,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
                 }
             });
         },
-    	
+
     	//删除译文
     	_delFile:function(fileId) {
     		ajaxController.ajax({
@@ -100,6 +93,11 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
     	
     	//保存译文
     	_textSave:function() {
+			if ($("#transTextArea").val() == '') {
+				this._showWarn($.i18n.prop('order.save.reason.transNull'));
+				return
+			}
+
     		ajaxController.ajax({
 				type: "post",
 				url: _base + "/p/trans/order/updateInfo",
@@ -143,24 +141,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				}
 			});
     	},
-    	
-    	  //提交订单
-        _orderSubmit:function() {
-        	ajaxController.ajax({
-				url: _base + "/p/trans/order/save",
-				data: {
-					orderId: $("#orderId").val(),
-				},
-				success: function (data) {
-					if ("1" === data.statusCode) {
-						//提交成功
-						//刷新页面
-			    		window.location.reload();
-					}
-				}
-			});
-        },
-        
+
 		//领取订单
 		_getOrder:function(){
 			new Dialog({

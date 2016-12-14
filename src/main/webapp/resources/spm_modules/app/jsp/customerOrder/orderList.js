@@ -98,7 +98,7 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
 	            		//把返回结果转换
 		            	for(var i=0;i<data.length;i++){
 		            		//确认截止时间转为 剩余x天x小时x分
-		            		var remainingTime = _this.ftimeDHS(data[i].remainingTime);
+		            		var remainingTime = _this.ftimeDHS(data[i].endChgTime - new Date().getTime());
 		            		data[i].confirmTakeDays = remainingTime.days;
 		            		data[i].confirmTakeHours = remainingTime.hours;
 		            		data[i].confirmTakeMinutes =  remainingTime.minutes;
@@ -117,53 +117,6 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
 	            	}
 	            }
     		});
-        },
-        
-        //确认订单
-        _confirm:function(orderId) {
-        	ajaxController.ajax({
-				type: "post",
-				url: _base + "/p/trans/order/updateState",
-				data: {
-					orderId: orderId,
-					state: "90",
-					displayFlag: "90",
-				},
-				success: function (data) {
-					if ("1" === data.statusCode) {
-						//成功
-						//刷新页面
-			    		window.location.reload();
-					}
-				}
-			});
-        },
-        
-        //取消订单
-        _cancelOrder:function(orderId) {
-			new Dialog({
-				content:$.i18n.prop('order.info.cancel.info'),
-				icon:'prompt',
-				okValue: $.i18n.prop('order.info.dialog.ok'),
-				cancelValue:$.i18n.prop('order.info.dialog.cancel'),
-				title: $.i18n.prop('order.info.cancel.order'),
-				ok:function(){
-					ajaxController.ajax({
-						type: "post",
-						url: _base+"/p/customer/order/cancelOrder",
-						data: {'orderId': orderId},
-						success: function(data){
-							//取消成功,刷新页面
-							if("1"===data.statusCode){
-								window.location.reload();
-							}
-						}
-					});
-				},
-				cancel:function(){
-					this.close();
-				}
-			}).showModal();
         },
         
         //把毫秒数转为 x天x小时x分钟x秒

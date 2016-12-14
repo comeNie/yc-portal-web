@@ -147,7 +147,7 @@
                         <p><spring:message code="order.LeaveMessage"/></p>
                     </div>
                     <div class="lx-textarea">
-                        <p><textarea id="remark" maxlength="50" class="int-text textarea-xlarge-text radius"></textarea></p>
+                        <p><textarea id="remark" maxlength="50" class="int-text textarea-xlarge-text radius">${order.baseInfo.remark}</textarea></p>
                     </div>
                 </c:if>
             </div>

@@ -233,7 +233,11 @@ define('app/jsp/order/orderContact', function (require, exports, module) {
             if(translateType == 2) { //口译
                 window.history.go($("#toCreateOrder").attr("skip"));
             } else {
-               window.location.href= _base + "/written";
+                var remark = $.trim($("#remark").val());
+                if (remark != '')
+                    window.location.href= _base + "/order/create/text?remark="+window.encodeURI(remark);
+                else
+                    window.location.href= _base + "/written";
             }
 
         }
