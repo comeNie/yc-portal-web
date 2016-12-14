@@ -1,4 +1,5 @@
 <%@ page import="com.ai.paas.ipaas.i18n.ZoneContextHolder" %>
+<%@ page import="com.ai.yc.protal.web.constants.OrderConstants" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -217,7 +218,10 @@
 							<td>
 								<!-- <input type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="分 配"> -->
 								<!-- 翻 译 -->
+								<%--若是口译订单，暂时不显示操作--%>
+								{{if translateType != '<%=OrderConstants.TranslateType.ORAL%>'}}
 								<input name="trans" type="button"  class="btn biu-btn btn-auto-25 btn-green radius10"  value="<spring:message code="myOrder.Translate"/>">
+								{{/if}}
 							</td>
 							{{else state  == '221'}}
 							<!-- 已分配 -->

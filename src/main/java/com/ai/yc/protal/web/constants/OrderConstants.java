@@ -31,6 +31,26 @@ public final class OrderConstants {
          */
         public static final String ALREADY_CLAIM = "100002";
     }
+
+    /**
+     * 订单类型
+     */
+    public static class TranslateType{
+        private TranslateType(){}
+
+        /*
+        文本
+         */
+        public static final String TEXT = "0";
+        /*
+        文档
+         */
+        public static final String DOC = "1";
+        /*
+        口译
+         */
+        public static final String ORAL = "2";
+    }
    
     /**
      * 后台状态
