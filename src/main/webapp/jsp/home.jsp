@@ -96,7 +96,7 @@
                         <%--英语--%>
                         <option value="en"><spring:message code="home.trans_language_en"/></option>
                         <%--法语--%>
-                        <option value="fr"><spring:message code="home.trans_language_fr"/></option>
+                        <%--<option value="fr"><spring:message code="home.trans_language_fr"/></option>--%>
                         <%--俄语--%>
                         <option value="ru"><spring:message code="home.trans_language_ru"/></option>
                         <%--葡萄牙语--%>
