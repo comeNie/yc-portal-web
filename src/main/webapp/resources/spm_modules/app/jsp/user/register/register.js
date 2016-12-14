@@ -392,6 +392,7 @@ define(
 								}
 							});
 						},
+						
 						/* 发送验证码 */
 						_sendDynamiCode : function() {
 							if (this._checkPhone()) {
