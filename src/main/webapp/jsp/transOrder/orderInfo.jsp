@@ -394,7 +394,7 @@
 		 					<!-- 待领取 领取-->
 							<input id="received" name="received" type="button" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="myOrder.Claim"/>">
 		 				</c:when>
-		 				<c:when test="${OrderDetails.state =='21'}">
+		 				<c:when test="${OrderDetails.state =='21' && OrderDetails.translateType!='2'}">
 		 					<!-- 已领取  翻译-->
 							<input id="trans" name="trans" class="btn btn-green btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.Translate"/>">
 							<!-- 暂无 <input id="recharge-popo" class="btn btn-yellow btn-xxxlarge radius10 ml-20" type="button" value="分配">-->

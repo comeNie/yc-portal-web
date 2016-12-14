@@ -300,7 +300,7 @@ var current = "orderList";
        
        <%-- 确认订单 --%>
        $("#searchOrderData").delegate("input[name='confirmOrder']","click",function(){
-           orderPager._confirm($(this).parents("table").find("input[name='orderId']").val());
+           window.location.href="${_base}/p/customer/order/"+$(this).parents("table").find("input[name='orderId']").val();
        });
        <%-- 延迟确认订单 --%>
        //$("#confirmOrder").delegate("input[name='lateConfirmOrder']","click",function(){
