@@ -11,6 +11,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>首页</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link href="${uedroot}/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="${uedroot}/css/iconfont.css" rel="stylesheet" type="text/css">
     <link href="${uedroot}/css/modular/global.css" rel="stylesheet" type="text/css"/>
