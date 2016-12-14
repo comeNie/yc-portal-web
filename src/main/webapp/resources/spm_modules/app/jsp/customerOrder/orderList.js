@@ -98,7 +98,7 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
 	            		//把返回结果转换
 		            	for(var i=0;i<data.length;i++){
 		            		//确认截止时间转为 剩余x天x小时x分
-		            		var remainingTime = _this.ftimeDHS(data[i].remainingTime);
+		            		var remainingTime = _this.ftimeDHS(data[i].endChgTime - new Date().getTime());
 		            		data[i].confirmTakeDays = remainingTime.days;
 		            		data[i].confirmTakeHours = remainingTime.hours;
 		            		data[i].confirmTakeMinutes =  remainingTime.minutes;
