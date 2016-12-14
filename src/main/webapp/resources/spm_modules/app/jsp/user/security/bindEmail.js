@@ -129,7 +129,7 @@ define("app/jsp/user/security/bindEmail",
 										            $("#email-sendCode-btn").attr("disabled", true);
 										            var _res = setInterval(function(){
 										                $("#email-sendCode-btn").attr("disabled", true);//设置disabled属性
-										                $('#email-sendCode-btn').val(step + ' s');
+										                $('#email-sendCode-btn').val(emailBindMsg.resend+step);
 										                step-=1;
 										                if(step <= 0){
 										                $("#email-sendCode-btn").removeAttr("disabled"); //移除disabled属性
