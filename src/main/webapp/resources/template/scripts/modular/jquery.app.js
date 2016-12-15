@@ -6,6 +6,7 @@ $(function(){
 		bannerHeight = $(window).height(); 
 	}
 	$('#rollbanner,#rollbanner .r_banner').height(bannerHeight);
+	$("#rollbanner").css('margin-top', '70px')
 	$("#appCopyright").hide();
 	unrollBanner1();
 	unrollBanner2();
@@ -18,6 +19,12 @@ $(function(){
          },
 		//滚动前的回调函数
 		onLeave: function(index, nextIndex, direction){
+			if (nextIndex == 1) {
+				$("#header").show();
+			} else {
+				$("#header").hide();
+			}
+
 			switch(index)
 		    {
 		    case 2:
