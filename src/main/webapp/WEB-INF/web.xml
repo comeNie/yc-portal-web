@@ -3,6 +3,11 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
     <display-name>portal-web</display-name>
+    <!--jquery 的i18n国际化资源文件-->
+    <mime-mapping>
+        <extension>properties</extension>
+        <mime-type>text/plain</mime-type>
+    </mime-mapping>
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:context/core-context.xml</param-value>

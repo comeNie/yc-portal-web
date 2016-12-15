@@ -33,7 +33,7 @@ define("opt-paging/aiopt.simplePagination", ["jquery","simplePagination/jquery.s
         
         setup: function () {
             $.i18n.properties({//加载资浏览器语言对应的资源文件
-                name: ["commonRes"], //资源文件名称，可以是数组
+                name: "commonRes", //资源文件名称，可以是数组
                 path: _i18n_res, //资源文件路径
                 mode: 'both',
                 language: currentLan,
