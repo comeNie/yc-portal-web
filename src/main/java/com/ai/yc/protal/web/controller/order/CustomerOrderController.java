@@ -57,9 +57,6 @@ import com.ai.yc.order.api.orderquery.param.QueryOrderRequest;
 import com.ai.yc.order.api.orderquery.param.QueryOrderRsponse;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import sun.management.resources.agent;
-
-import static sun.net.www.protocol.http.HttpURLConnection.userAgent;
 
 /**
  * 客户订单
