@@ -19,7 +19,7 @@
   		<div class="cloud-breadcrumb">
   			<ul>
   				<li>
-					<select id="langHeadSel" class="select select-topmini none-select" onchange="changeLang()">
+					<select id="langHeadSel" class="select select-topmini select-bj none-select" onchange="changeLang()">
 						<option value="<%= Locale.SIMPLIFIED_CHINESE%>">简体中文</option>
 						<option value="<%= Locale.US%>"
 								<%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"selected":""%>
