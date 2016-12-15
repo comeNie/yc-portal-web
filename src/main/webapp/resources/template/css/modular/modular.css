@@ -425,7 +425,7 @@
 .dropdown.scrollable.bottom div::after{opacity: 0;}
 .dropdown ul{position: absolute;left: 0;top: 0;width: 100%;list-style: none;}
 .dropdown.scrollable.open ul{overflow-y: auto;}
-.dropdown li{list-style: none;float:left;width:108px;text-align:center;margin-top:10px;margin-left:27px;font-size:14px;}
+.dropdown li{list-style: none;float:left;width:155px;text-align:center;margin-top:10px;margin-left:27px;font-size:14px;}
 .dropdown li.focus:hover{background:#2965e6;position: relative;z-index: 3;color: #fff;}
 .dropdown li.active{color:#2965e6;font-weight:bold}
 
