@@ -32,27 +32,7 @@
                     <ul>
                         <li>
                             <p class="blue">快速翻译</p>
-                            <p>适用于短文本翻译服务，最快30分钟即可获得翻译结果。仅限2000字以内的翻译业务；支持中文同英、法、俄、西、日、韩间的互译。</p>
-                        </li>
-                        <li>
-                            <p class="blue">创意翻译</p>
-                            <p>满足您在广告词、起名(商标名、公司名、店名、产品名)、文学性文字（歌词、诗词类）方面的创意性翻译需求。翻译完成后，除译文外，我们将同时提供翻译解释；支持中文同英、法、俄、西、日、韩间的互译。</p>
-                        </li>
-                        <li>
-                            <p class="blue">证件翻译</p>
-                            <p>为您专业提供各类证、证书和其他证明性文件的翻译服务。包含：身份证、护照、驾照、企业执照、毕业证、学位证、荣誉证书、医学证明等文件。翻译完成后，除了获得一份电子版的译文外，还可申请获得一份加盖我司公章的打印件；支持中文同英、法、俄、西、日、韩间的互译。</p>
-                        </li>
-                        <li>
-                            <p class="blue">文档翻译</p>
-                            <p>若翻译内容较多，建议您使用文档翻译服务。所提交的文档必须为doc、docx、txt、pdf、ppt、pptx、xlsx,等格式的翻译业务，若需翻译jpg、png、tif等图片格式或大小超过20M的文件时，请电话与我们联系；支持中文同英、法、俄、西、日、韩间的互译。</p>
-                        </li>
-                        <li>
-                            <p class="blue">简历翻译</p>
-                            <p>为您提供专业的英文简历翻译、译文审校、母语润色等特色服务，有众多简历翻译专家为您提供专业指导，支持在线翻译，可通过简历模版自动生成简历，以高品质的翻译质量，以简单，便捷的翻译流程为您提供专业的简历翻译服务。目前，暂时只支持中译英。</p>
-                        </li>
-                        <li>
-                            <p class="blue">口译</p>
-                            <p>国家级口译服务，提供陪同翻译、交替传译、同声传译等服务。为了更好的为您服务，建议提前三个工作日以上进行申请；提供中英、中俄、中法、中西、中日、中韩间的互译。</p>
+                            <p>目前提供笔译和口译两种翻译服务。笔译翻译：用途包括不限、起名标语、专业论文、简历简介、产品说明、合同标书、留学移民、证书证件、出版书籍、视频字幕、其他。口译翻译：国家级口译服务，提供陪同翻译、交替传译、同声传译等服务。为了更好的为您服务，建议提前三个工作日以上进行申请；提供中英、中俄、中法、中西、中日、中韩间的互译。</p>
                         </li>
                     </ul>
                 </div>
@@ -61,7 +41,7 @@
                 <div class="agreement-word">
                     <ul>
                         <li>
-                            <p class="blue">快速翻译 | 创意翻译 | 证件翻译 | 文档翻译 | 简历翻译</p>
+                            <p class="blue">笔译</p>
                             <p>周一至周五09:00-18:00 (重大节假日除外)，非工作时间提交的订单将顺延至工作时间处理。</p>
                         </li>
                         <li>
@@ -75,67 +55,7 @@
                 <div class="agreement-word">
                     <ul>
                         <li>
-                            <p class="blue">快速翻译</p>
-                            <p>根据不同语种按字收费，提交订单时会提示预计完成时间</p>
-                        </li>
-                        <li>
-                            <table  class="table table-border table-bg  table-bordered  table-height65">
-                                <tr class="bj">
-                                    <th>语言</th>
-                                    <th>价格  元/字</th>
-                                    <th>语言</th>
-                                    <th>价格  元/单词</th>
-                                    <th>语言</th>
-                                    <th>价格  元/字</th>
-                                    <th>语言</th>
-                                    <th>价格  元/单词</th>
-                                </tr>
-                                <tr>
-                                    <td>中→英</td>
-                                    <td>0.28</td>
-                                    <td>英→中</td>
-                                    <td>0.4</td>
-                                    <td>中→西</td>
-                                    <td>0.6</td>
-                                    <td>西→中</td>
-                                    <td>0.6</td>
-                                </tr>
-                                <tr>
-                                    <td>中→法</td>
-                                    <td>0.4</td>
-                                    <td>法→中</td>
-                                    <td>0.6</td>
-                                    <td>中→日</td>
-                                    <td>0.4</td>
-                                    <td>日→中</td>
-                                    <td>0.4</td>
-                                </tr>
-                                <tr>
-                                    <td>中→俄</td>
-                                    <td>0.4</td>
-                                    <td>俄→中</td>
-                                    <td>0.6</td>
-                                    <td>中→韩</td>
-                                    <td>0.4</td>
-                                    <td>韩→中</td>
-                                    <td>0.4</td>
-                                </tr>
-                            </table>
-                        </li>
-                        <li class="mt-20">
-                            <p>译员配置：专业级译员服务；实时待命，立等可取</p>
-                            <p>售后服务：翻译完成48小时内，不满意可以申请译员免费修改</p>
-                        </li>
-                        <li>
-                            <p class="blue">创意翻译</p>
-                            <p>每笔订单仅提供1条内容的翻译服务，采取按条收费，翻译完成后的译文字数需控制在50字以内；服务价格， 100元/条。</p>
-                        </li>
-                        <li>
-                            <p class="blue">证件翻译</p>
-                            <p>每笔订单仅提供1份证件的翻译服务，采取按份收费；服务价格，200元/份。</p>
-                        </li>
-                        <li>
-                            <p class="blue">文档翻译</p>
+                            <p class="blue">笔译</p>
                         </li>
                         <li>
                             <table  class="table table-border table-bg  table-bordered  table-height65">
@@ -245,83 +165,6 @@
                         </li>
                         <li class="mt-20">
                             <p>为了帮助您获得更好的服务体验，我们极力推荐您使用“专业级别”以上的翻译服务</p>
-                        </li>
-                        <li>
-                            <p class="blue">简历翻译</p>
-                        </li>
-                        <li>
-                            <table  class="table table-border table-bg  table-bordered  table-height65">
-                                <tr class="bj">
-                                    <th>等级分类</th>
-                                    <th>产品介绍</th>
-                                    <th>适合人群</th>
-                                </tr>
-                                <tr>
-                                    <td>普通级别</td>
-                                    <td>直接将简历翻译成英文，内容不做修改，<br>与原文意思保持一致。</td>
-                                    <td>对英文简历有普通需求的白领及刚毕业人群</td>
-                                </tr>
-                                <tr>
-                                    <td>母语润色</td>
-                                    <td>将中文简历内容进行校正后，根据所属专业领域<br>译成英文，翻译后的文章能准确传达简历内涵，<br>并按照外籍人士阅读习惯进行简历翻译。</td>
-                                    <td>有外企面试需求、对英文简历专业化程度有一定<br>要求的高级白领人群，对内容专业度、英文简历<br>质量有高端要求的精英白领人</td>
-                                </tr>
-                            </table>
-                        </li>
-                        <li>
-                            <table  class="table table-border table-bg  table-bordered  table-height65">
-                                <tr class="bj">
-                                    <th></th>
-                                    <th>简历翻译</th>
-                                    <th>译文审校</th>
-                                    <th>英文简历排版</th>
-                                    <th>简历修改</th>
-                                    <th>格式转换</th>
-                                    <th>母语润色</th>
-                                </tr>
-                                <tr>
-                                    <td>普通级别</td>
-                                    <td class="blue"><i class="icon iconfont">&#xe64d;</i></td>
-                                    <td class="blue"><i class="icon iconfont">&#xe64d;</i></td>
-                                    <td class="blue"><i class="icon iconfont">&#xe64d;</i></td>
-                                    <td class="blue"></td>
-                                    <td class="blue"></td>
-                                    <td class="blue"></td>
-                                </tr>
-                                <tr>
-                                    <td>母语润色</td>
-                                    <td class="blue"><i class="icon iconfont">&#xe64d;</i></td>
-                                    <td class="blue"><i class="icon iconfont">&#xe64d;</i></td>
-                                    <td class="blue"><i class="icon iconfont">&#xe64d;</i></td>
-                                    <td class="blue"><i class="icon iconfont">&#xe64d;</i></td>
-                                    <td class="blue"><i class="icon iconfont">&#xe64d;</i></td>
-                                    <td class="blue"><i class="icon iconfont">&#xe64d;</i></td>
-                                </tr>
-                            </table>
-                        </li>
-                        <li>
-                            <table  class="table table-border table-bg  table-bordered  table-height65">
-                                <tr class="bj">
-                                    <th></th>
-                                    <th>处理时间</th>
-                                    <th>优惠价</th>
-                                </tr>
-                                <tr>
-                                    <td>普通级别</td>
-                                    <td>千字以内1个工作日；每超过一千字顺延1个工作日</td>
-                                    <td>千字以内20元；超出部分，每超过500字，加收10元</td>
-                                </tr>
-                                <tr>
-                                    <td>母语润色</td>
-                                    <td>千字以内1个工作日；每超过一千字顺延1个工作日</td>
-                                    <td>千字以内200元；超出部分，每超过500字，加收100元</td>
-                                </tr>
-                            </table>
-                        </li>
-                        <li class="mt-20">
-                            <p>注：</p>
-                            <p>1、简历模板内的内容均为非必填项，您可以按需填写，将只收取所填部分的费用；</p>
-                            <p>2、20元为基本价格，限千字以内，超出部分需加收相应的费用；</p>
                         </li>
                         <li class="mt-20">
                             <p class="blue">口译</p>
@@ -478,30 +321,25 @@
             <div id="tab-xy5"  style="display: none;">
                 <div class="agreement-word">
                     <ul>
-                        <li>
-                            <p>译云传承40年的服务品质，整合全球服务资源，承诺保证所有译文的质量，不满意免费修改。</p>
-                        </li>
-                        <li>
-                            <p class="blue">快速翻译</p>
-                            <p>最快每分钟10个字，具体时间需根据翻译内容多少和难度而定；翻译完成48小时内，不满意可以提出申请，我们提供免费修改服务。</p>
-                        </li>
-                        <li>
-                            <p class="blue">创意翻译</p>
-                            <p>翻译完成后，除译文外，我们将同时提供翻译解释；翻译完成48小时内，不满意可以提出申请，我们提供免费修改服务。</p>
-                        </li>
-                        <li>
-                            <p class="blue">证件翻译</p>
-                            <p>翻译完成后，除了获得一份电子版的译文外，还可申请获得一份加盖我司公章的打印件；翻译完成48小时内，不满意可以提出申请，我们提供免费修改服务。</p>
-                        </li>
-                        <li>
-                            <p class="blue">文档翻译</p>
-                            <p>一般性的文档译员处理速度在2000-3000字/天，专业性特别强的内容，译员处理速度1500-2500字/天，处理速度和内容的领域和难度有关，具体时间请下单后咨询我们客服。</p>
-                        </li>
-                        <li>
-                            <p class="blue">简历翻译</p>
-                            <p>普通级别的简历翻译千字以内1个工作日，每超过一千字顺延1个工作日；母语润色级别的简历翻译千字以内1个工作日，每超过一千字顺延1个工作日；处理速度和内容的领域和难度有关，具体时间请下单后咨询我们客服。</p>
-                        </li>
-
+                        <ul>
+                            <li>
+                                <p>1.平台担保交易服务，保证服务质量，不满意可申诉。 </p>
+                            </li>
+                            <li>
+                                <p>2.集技术与法律一体化的严格保密制度，对客户交付的所有资料，都实施严格的保密措施，妥善保管客户所交付的资料文件。 </p>
+                            </li>
+                            <li>
+                                <p>3.聚集全球译员，时刻待命，响应速度块。 </p>
+                            </li>
+                            <li>
+                                <p>4.亿万级的语料库支持，辅助译员更好的完成用户翻译需求。 </p>
+                            </li>
+                            <li>
+                                <p>5.译员可建立和管理自己的语言资产。 </p>
+                            </li>
+                            <li>
+                                <p>6.平台提供开放API借口，实现平台和第三方系统之间的实时内容交互。</p>
+                            </li>
                     </ul>
                 </div>
             </div>
