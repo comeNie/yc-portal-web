@@ -127,9 +127,9 @@
                                 
                                 <c:choose>
 									<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">
-										<p class="right">${stateChg.chgDesc}</p>
+										<p class="right">${stateChg.chgDescD}</p>
 									</c:when>
-									<c:otherwise><p class="right">${stateChg.chgDescEn}</p></c:otherwise>
+									<c:otherwise><p class="right">${stateChg.chgDescUEn}</p></c:otherwise>
 								</c:choose>
                               </li>
                        	   </c:forEach>
