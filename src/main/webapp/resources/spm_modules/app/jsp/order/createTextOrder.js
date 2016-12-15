@@ -126,7 +126,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				return formValidator.focusInvalid();
 			}
 
-			if(!$('#checkbox-id').is(':checked')) {
+			if(!$('#isAgree').is(':checked')) {
 				_this._showWarn( $.i18n.prop('order.place.error.agree'));
 				return;
 			}
