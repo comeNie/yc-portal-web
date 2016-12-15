@@ -9,6 +9,7 @@ import com.ai.paas.ipaas.dss.base.interfaces.IDSSClient;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.yc.order.api.orderdetails.interfaces.IQueryOrderDetailsSV;
 import com.ai.yc.order.api.orderdetails.param.ProdFileVo;
+import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsRequest;
 import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsResponse;
 import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
 import com.ai.yc.order.api.orderquery.param.QueryOrdCountRequest;
@@ -140,7 +141,12 @@ public class TransOrderController {
         
         try {
             IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
-            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(Long.valueOf(orderId), OrderConstants.STATECHG_FLAG);
+
+            QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
+            orderDetailsReq.setOrderId(Long.valueOf(orderId));
+            orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
+
+            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
             ResponseHeader resHeader = orderDetailsRes.getResponseHeader();
             LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
             //如果返回值为空,或返回信息中包含错误信息,返回失败
@@ -207,7 +213,12 @@ public class TransOrderController {
         ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "OK");
         try {
             IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
-            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderId, OrderConstants.STATECHG_FLAG);
+
+            QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
+            orderDetailsReq.setOrderId(orderId);
+            orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
+
+            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
             ResponseHeader resHeader = orderDetailsRes.getResponseHeader();
             LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
             //如果返回值为空,或返回信息中包含错误信息,返回失败
@@ -349,7 +360,12 @@ public class TransOrderController {
         try {
             //查询订单
             IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
-            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderId, OrderConstants.STATECHG_FLAG);
+
+            QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
+            orderDetailsReq.setOrderId(orderId);
+            orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
+
+            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
             List<ProdFileVo> prodFiles = orderDetailsRes.getProdFiles();
             
             //更新订单信息
@@ -403,7 +419,12 @@ public class TransOrderController {
             
             //查询订单
             IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
-            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(Long.valueOf(orderId), OrderConstants.STATECHG_FLAG);
+
+            QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
+            orderDetailsReq.setOrderId(Long.valueOf(orderId));
+            orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
+
+            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
             List<ProdFileVo> prodFiles = orderDetailsRes.getProdFiles();
             String fileId = null;
             boolean isUpload = false; //是否能上传
