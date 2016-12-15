@@ -357,7 +357,7 @@ public class CustomerOrderController {
         LOGGER.info("customer order session "+session.getAttribute("USER_TIME_ZONE"));
         try {
             IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
-            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(Long.valueOf(orderId));
+            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(Long.valueOf(orderId), OrderConstants.STATECHG_FLAG);
             ResponseHeader resHeader = orderDetailsRes.getResponseHeader();
             LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
             //如果返回值为空,或返回信息中包含错误信息,返回失败

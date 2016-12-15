@@ -62,29 +62,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
             var formValidator = $("#textOrderForm").validate({
                 onkeyup: false,
                 focusInvalid: true,
-                errorPlacement: function (error, element) {
-                    if (element.is(":checkbox")) {
-                        error.appendTo(element.parent().parent().parent());
-                    } else {
-                        error.insertAfter(element);
-                    }
-
-                },
-                highlight: function (element, errorClass) {
-
-                },
-                unhighlight: function (element, errorClass) {
-
-                },
-                errorClass: "x-label",
-                showErrors: function (errorMap, errorList) {
-                    this.defaultShowErrors();
-                    $('ul li p label').each(function (index, element) {
-                        if (index > 0)
-                            element.remove();
-                    });
-                    //$('ul li p label').remove();//删除所有隐藏的li p label标签
-                },
                 rules: {
                     translateContent: {
                         required: true,
@@ -119,9 +96,9 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                             }
                         }
                     },
-                    isAgree: {
-                        required: true
-                    }
+                    // isAgree: {
+                    //     required: true
+                    // }
                 },
                 messages: {
                     translateContent: {
@@ -129,9 +106,9 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                         maxlength: $.i18n.prop('order.place.error.Maximum'),//"最大长度不能超过{0}",
                         remote:  $.i18n.prop('order.place.error.contentConsis')//"您输入的内容和源语言不一致"
                     },
-                    isAgree: {
-                        required: $.i18n.prop('order.place.error.agree')//"请阅读并同意翻译协议",
-                    }
+                    // isAgree: {
+                    //     required: $.i18n.prop('order.place.error.agree')//"请阅读并同意翻译协议",
+                    // }
                 }
             });
 
@@ -149,8 +126,11 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				return formValidator.focusInvalid();
 			}
 
+			if(!$('#isAgree').is(':checked')) {
+				_this._showWarn( $.i18n.prop('order.place.error.agree'));
+				return;
+			}
 			//文档类型
-
 			if(!_this._isTextTransType()) {
 				var stats = uploader.getStats();
 				//判断是否上传文件
