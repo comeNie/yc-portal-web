@@ -124,14 +124,11 @@
                 </div>
                 <div id="tgtOld" class="int-post"  style="display: block;">
                     <textarea  class="int-post"  id="transRes" readonly="readonly"></textarea>
-                    <textarea  class="int-post"  id="transResBak" hidden=""></textarea>
+                    <textarea  class="int-post"  id="transResBak" style="display: none"></textarea>
                 </div>
                 <label id="transError"></label>
                 <div class="post-cion" style="display: none">
-                	<!-- 播放器 -->
-                	<audio src="" controls="controls" id="audioPlay" hidden>
-						Your browser does not support the audio tag.
-					</audio>
+
 					<p>
 						<a id="sus-top1" href="javaScript:void(0)" class="ord-icon"><i class="icon iconfont">&#xe639;</i>
                             <!-- 复制译文-->
@@ -167,6 +164,10 @@
 						</a>
 					</p>
 				</div>
+                <!-- 播放器 -->
+                <audio src="" controls="controls" id="audioPlay" style="display: none;">
+                Your browser does not support the audio tag.
+                </audio>
             </div>
         </div>
         <!--file-->
