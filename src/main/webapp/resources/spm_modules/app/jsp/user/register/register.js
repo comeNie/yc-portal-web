@@ -69,6 +69,7 @@ define(
 							var phone_code_container = $("#li_register_phone_code_container");
 							var email_container = $("#li_register_email_container");
 							if ("phone" == register_type) {// 切换到email
+								this._showCheckMsg("");
 								a.attr("register_type", "email");
 								a.html('<i class="icon iconfont">&#xe613;</i>'
 										+ registerMsg.phone_registered);
@@ -76,6 +77,7 @@ define(
 								phone_code_container.hide();
 								email_container.show();
 							} else if ("email" == register_type) {// 切换到手机
+								this._showCheckMsg("");
 								a.attr("register_type", "phone");
 								a.html('<i class="icon iconfont">&#xe614;</i>'
 										+ registerMsg.email_registered);

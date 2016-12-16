@@ -171,7 +171,7 @@
 		<input type="hidden" name="unit" value="{{:currencyUnit}}">
 		<input type="hidden" name="displayFlag" value="{{:displayFlag}}">
 		<tr class="width-16" displayFlag="{{:displayFlag}}">
-            <td name="translateName" orderId="{{:orderId}}">{{:translateName}}</td>
+            <td class="text-l  pl-20"name="translateName" orderId="{{:orderId}}">{{:translateName}}</td>
             <td order_mode="hide">{{:userName}}</td>
   			<td>
 			  	{{for ordProdExtendList}}
