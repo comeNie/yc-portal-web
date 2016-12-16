@@ -258,6 +258,7 @@ public class TransOrderController {
             stateReq.setOrderId(orderId);
             stateReq.setState(OrderConstants.State.UN_CHECK); //待审核
             stateReq.setDisplayFlag(OrderConstants.State.TRANSLATING);
+            stateReq.setUserId(UserUtil.getUserId());
             
             OrderStateUpdateResponse stateRes = iOrderStateUpdateSV.updateState(stateReq);
             resHeader = stateRes.getResponseHeader();
@@ -329,8 +330,9 @@ public class TransOrderController {
             stateReq.setOrderId(orderId);
             stateReq.setState(state);
             stateReq.setDisplayFlag(displayFlag);
+            stateReq.setUserId(UserUtil.getUserId());
            
-                OrderStateUpdateResponse stateRes = iOrderStateUpdateSV.updateState(stateReq);
+            OrderStateUpdateResponse stateRes = iOrderStateUpdateSV.updateState(stateReq);
             ResponseHeader resHeader = stateRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息
             if (stateRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){

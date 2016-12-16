@@ -243,5 +243,35 @@
 <script type="text/javascript" src="${uedroot}/scripts/modular/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/script.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var param = getUrlParam("pro");
+        if (param == 'pay') {
+            $(".subnav-left ul li a").each(function () {
+                $(this).removeClass("current");
+            });
+            $(".subnav-left ul li a").eq(1).addClass("current");
+
+            $('#tab-xy2').show();
+            $('#tab-xy1').hide();
+            $('#tab-xy3').hide();
+            $('#tab-xy4').hide();
+            $('#tab-xy5').hide();
+            $('#tab-xy6').hide();
+            $('#tab-xy7').hide();
+            $('#tab-xy8').hide();
+            $('#tab-xy9').hide();
+            $('#tab-xy10').hide();
+        }
+    });
+
+    //获取url中参数
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return decodeURI(r[2]); return null; //返回参数值
+    }
+
+</script>
 </body>
 </html>

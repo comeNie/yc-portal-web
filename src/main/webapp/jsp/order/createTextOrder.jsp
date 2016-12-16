@@ -101,7 +101,7 @@
 					<p>
 						<!--  翻译内容-->
 						<textarea id="translateContent" maxlength="2000" name="translateContent"
-								  class="int-text textarea-xlarge-100 radius">${order.productInfo.needTranslateInfo}</textarea>
+								  class="int-text textarea-xlarge-100 radius" placeholder="<spring:message code="order.transContent"/>">${order.productInfo.needTranslateInfo}</textarea>
 					</p>
 					<!-- 上传文档btn -->
 					<p class="right"><input type="button" class="btn border-blue radius20 btn-80"
@@ -290,7 +290,7 @@
 							<p class="word"><spring:message code="order.addedSer"/></p>
 							<p>
 							<!-- 排版 无排版 -->
-							<select id="selectAddedSer" class="select select-medium radius" disabled>
+							<select id="selectAddedSer" class="select select-medium radius">
 								<option value="1"><spring:message code="order.layout"/></option>
 								<option value="2" selected="selected"><spring:message code="order.noLayout"/></option>
 							</select>
@@ -299,7 +299,7 @@
 						<li class="width-large">
 							<p class="word"><spring:message code="order.formatConv"/></p>
 							<p>
-								<select id="selectFormatConv" class="select select-medium radius" disabled>
+								<select id="selectFormatConv" class="select select-medium radius" >
 									<option value="1"><spring:message code="order.formatConv"/></option>
 									<option value="2" selected="selected"><spring:message code="order.noFormatConv"/></option>
 								</select>

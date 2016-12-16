@@ -307,8 +307,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				//文档
 				$("#fy1").hide();
 				$("#fy2").show();
-				$("#selectAddedSer").attr("disabled",false);
-				$("#selectFormatConv").attr("disabled",false);
+				// $("#selectAddedSer").attr("disabled",false);
+				// $("#selectFormatConv").attr("disabled",false);
 
 				//格式转换
 				if ($("#format").val() != '') {
@@ -320,8 +320,10 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				//文字
 				$("#fy2").hide();
 				$("#selectFormatConv").val("2");
-				$("#selectAddedSer").attr("disabled",true);
-				$("#selectFormatConv").attr("disabled",true);
+				// $("#selectAddedSer").attr("disabled",true);
+				// $("#selectFormatConv").attr("disabled",true);
+				$("#selectAddedSer option:first").hide();
+				$("#selectFormatConv option:first").hide();
 			}
 
             //session 语言对
@@ -473,16 +475,23 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		_inputText:function() {
 			$("#selectAddedSer").val(2);
 			$("#selectFormatConv").val(2);
-			$("#selectAddedSer").attr("disabled",true);
-			$("#selectFormatConv").attr("disabled",true);
+
+			// $("#selectAddedSer").attr("disabled",true);
+			// $("#selectFormatConv").attr("disabled",true);
+			$("#selectAddedSer option:first").hide();
+			$("#selectFormatConv option:first").hide();
+
 			$("#inputFormatConv").hide();
 			$("#inputFormatConv").val("");
 		},
 	
 		//上传文档，js控制
 		_uploadFile:function() {
-			$("#selectAddedSer").attr("disabled",false);
-			$("#selectFormatConv").attr("disabled",false);
+			// $("#selectAddedSer").attr("disabled",false);
+			// $("#selectFormatConv").attr("disabled",false);
+			$("#selectAddedSer option:first").show();
+			$("#selectFormatConv option:first").show();
+
             if ( !WebUploader.Uploader.support() ) {
                 alert( 'Web Uploader 不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器');
                 throw new Error( 'WebUploader does not support the browser you are using.' );
