@@ -1,6 +1,7 @@
 <%@page import="java.util.Locale"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!--面包屑导航-->
 <div class="placeorder-breadcrumb-big">
     <div class="placeorder-breadcrumb">
@@ -11,7 +12,15 @@
                     <%--登录用户信息--%>
                     <c:set var="loginUser" value="${sessionScope.user_session_key}"/>
                     <c:choose>
-                        <c:when test="${loginUser !=null}">${loginUser.username}
+                        <c:when test="${loginUser !=null}">
+                        	<c:choose>
+								<c:when test="${fn:length(loginUser.username)>8}">
+									${fn:substring(loginUser.username,0,8)}...
+								</c:when>
+								<c:otherwise>
+									${loginUser.username}
+								</c:otherwise>
+							</c:choose>
                             <%--退出--%>
                             <a href="${_base}/ssologout"><spring:message code="user.topMenu.exit"/></a>
                         </c:when>
@@ -31,7 +40,7 @@
                     <a href="${_base}/findyee"><spring:message code="topMenue.Mobile"/></a></p>
                 <p class="none-border none-top">
                     <select id="langHeadSel" class="select select-topmini none-select ash-select"
-                            onchange="changeLang()">
+                            onchange="changeLang(this);">
                         <option value="<%= Locale.SIMPLIFIED_CHINESE%>">简体中文</option>
                         <option value="<%= Locale.US%>"
                                 <%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"selected":""%>
@@ -43,26 +52,3 @@
         </ul>
     </div>
 </div>
-<script type="application/javascript">
-    function changeLang(){
-        var toLang = document.getElementById("langHeadSel").value;
-        if (window.console){
-            console.log("the new lange is "+toLang);
-        }
-        var nowUrl = window.location.href;
-        var lInd = nowUrl.indexOf("lang=");
-        //已存在
-        if (lInd>0){
-            var i = nowUrl.indexOf("&",lInd);
-            var endStr = i>0?nowUrl.substring(i):"";
-            nowUrl = nowUrl.substring(0,lInd)+"lang="+toLang+endStr;
-        }//不存在
-        else if(nowUrl.indexOf("?")>0){
-            nowUrl = nowUrl + "&lang="+toLang;
-        }else {
-            nowUrl = nowUrl + "?lang="+toLang;
-        }
-
-        window.location.replace(nowUrl);//刷新当前页面
-    }
-</script>

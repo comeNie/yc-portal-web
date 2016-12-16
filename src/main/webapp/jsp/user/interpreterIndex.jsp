@@ -107,8 +107,9 @@
                     <ul>
                         <li><img src="${uedroot}/images/none-d1.jpg"/></li>
                         <li class="mt-50"><spring:message code="ycaccountcenter.interpreterIndex.noCertificationMsg"/></li>
-                        <li class="right mt-t500"><input type="button" class="btn border-blue btn-large radius20 blue"
-                                                         value="<spring:message code="ycaccountcenter.interpreterIndex.certification.interpreter"/>"></li>
+                        <li class="right mt-t500">
+                          <input type="button" class="btn border-blue btn-large radius20 blue" onclick="window.open('http://tran.yeecloud.com/yctranslator/redirect.html?v=page/yctranslator/login/logint&language=zh')" value="<spring:message code="ycaccountcenter.interpreterIndex.certification.interpreter"/>">
+                        </li>
                     </ul>
                 </div>
                 <div class="no-step">

@@ -69,7 +69,7 @@ define('app/jsp/balance/depositFund', function (require, exports, module) {
 				},
 				cancel:function(){
 					//跳转到常见问题
-					window.location.href=_base+"/faq";
+					window.location.href=_base+"/faq"+"?pro=pay";
 				}
 			}).showModal();
 			$("#merchantUrl").val(window.location.href);

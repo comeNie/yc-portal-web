@@ -324,7 +324,7 @@
 .selection-level ul li span{font-size:24px;color:#fe6b6b;}
 .selection-level ul .green-li p{font-size:12px;}
 .selection-level ul .green-li p i{font-size:12px;margin-right:20px;color:#43d4b0}
-.selection-level .current{-webkit-box-shadow:0 0px 4px 2px rgba(212, 224, 251,1);-moz-box-shadow:0 0px 4px 2px rgba(212, 224, 251,1);box-shadow:0 0px 4px 2px rgba(212, 224, 251,1)}
+.selection-level .current{background:#fff;-webkit-box-shadow:0 0px 4px 2px rgba(212, 224, 251,1);-moz-box-shadow:0 0px 4px 2px rgba(212, 224, 251,1);box-shadow:0 0px 4px 2px rgba(212, 224, 251,1)}
 .selection-level .current label{position:absolute;right:-6px;top:-14px;background: url(../../images/icon-big.png) no-repeat left -2189px;width:23px;height:23px;}
 .selection-select{width:100%;float:left}
 .selection-select ul{width:100%;float:left}

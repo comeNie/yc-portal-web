@@ -36,7 +36,7 @@
 						<label class="ml-70" id="regsiterMsg"></label>
 						<p class="right">
 							<a id="change_register_type" href="javascript:void(0);"
-								register_type="phone"><i class="icon iconfont">&#xe614;</i>
+								register_type="phone"><i class="icon iconfont">&#xe635;</i>
 								<spring:message code="ycregister.register.email" /></a>
 						</p>
 					</ul>

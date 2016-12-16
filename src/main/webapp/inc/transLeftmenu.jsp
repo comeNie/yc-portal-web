@@ -1,6 +1,7 @@
 <%@page import="com.ai.yc.protal.web.utils.UserUtil"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 UserUtil.getUserPortraitImg();
 %>
@@ -108,11 +109,13 @@ UserUtil.getUserPortraitImg();
             $("#left_menu_list ul li").removeClass("current");
             currentEle.addClass("current");
         }
-        //二级菜单
-		var divEle = $("#" + divEleId);
-        if (divEleId != "" && divEle) {
-            $("#left_menu_list ul div").removeClass("current");
-            divEle.addClass("current");
-        }
+        if(divEleId!=null && divEleId!=""){
+            //二级菜单
+            var divEle = $("#" + divEleId);
+            if (divEle) {
+                $("#left_menu_list ul div").removeClass("current");
+                divEle.addClass("current");
+            }
+		}
     });
 </script>

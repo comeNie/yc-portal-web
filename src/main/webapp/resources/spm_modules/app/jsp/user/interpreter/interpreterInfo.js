@@ -153,7 +153,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 				 $("#area-error").show().html("请选择国家");
 				 return false;
 			 }*/
-			 if($("#provinceInfo").is(":hidden")){
+			 if($("#provinceInfo").is(":disabled")){
 				 $("#provinceInfo").val("");
 			 }else {
 				 var province = $("#provinceInfo").val();
@@ -162,7 +162,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 					 return false;
 				 }
 			 }
-			 if($("#cnCityInfo").is(":hidden")){
+			 if($("#cnCityInfo").is(":disabled")){
 				 $("#cnCityInfo").val("");
 			 }else {
 				 var city = $("#cnCityInfo").val();
@@ -388,16 +388,21 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		        	 }else{
 		        		$("#userName-error").hide().html(""); 
 		        		var data = json.data;
+		        		var html = [];
+		        		var html2=[];
+		        		html.push('<option value=0 selected="selected">' + "请选择" + '</option>');
+		        		$("#provinceInfo").html(html.join(""));
+		        		html2.push('<option value=0>' + "请选择" + '</option>');
+						$("#cnCityInfo").html(html2.join(""));
 						if (data) {
 							if(data.length==0){
-								$("#provinceP").hide();
-								$("#cnCityP").hide();
+								$("#provinceInfo").attr("disabled",true);
+								$("#cnCityInfo").attr("disabled",true);
 								return;
 							}
-							$("#provinceP").show();
+							$("#provinceInfo").attr("disabled",false);
 							// $("#cnCityInfo").show();
-							var html = [];
-							html.push('<option value=0>' + "请选择" + '</option>');
+							
 							for (var i = 0; i < data.length; i++) {
 								var t = data[i];
 								var _code = t.regionCode;
@@ -431,14 +436,15 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		        	 }else{
 		        		$("#userName-error").hide().html(""); 
 		        		var data = json.data;
+		        		var html = [];
+						html.push('<option value=0>' + "请选择" + '</option>');
+						$("#cnCityInfo").html(html.join(""));
 						if (data) {
 							if(data.length==0){
-								$("#cnCityP").hide();
+								$("#cnCityInfo").attr("disabled",true);
 								return;
 							}
-							$("#cnCityP").show();
-							var html = [];
-							html.push('<option value=0>' + "请选择" + '</option>');
+							$("#cnCityInfo").attr("disabled",false);
 							for (var i = 0; i < data.length; i++) {
 								var t = data[i];
 								var _code = t.regionCode;

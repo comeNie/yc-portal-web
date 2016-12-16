@@ -8,8 +8,8 @@ $(function () {
 		$(".show").click(function () {
                 $(this).hide(1);
             });
-	$('.cloud-breadcrumb .show').mouseleave(function () {
-        $('.show').hide(1);
+	$('.cloud-breadcrumb').mouseleave(function () {
+        $('.show').hide();
     });	
 		$('.cloud-breadcrumb ul .user .yonh').mouseleave(function () {
         $(this).children('i').rotate({animateTo:0});
