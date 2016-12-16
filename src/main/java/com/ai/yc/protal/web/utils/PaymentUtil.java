@@ -31,7 +31,8 @@ public final class PaymentUtil {
      */
     public static String generateAutoSubmitForm(String actionUrl, Map<String, String> paramMap) {
         StringBuilder html = new StringBuilder();
-//        html.append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />");
+        html.append("<html>");
+        html.append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n");
         html.append("<script language=\"javascript\">window.onload=function(){document.pay_form.submit();}</script>\n");
         html.append("<form id=\"pay_form\" name=\"pay_form\" action=\"").append(actionUrl)
                 .append("\" method=\"post\">\n");
@@ -46,6 +47,7 @@ public final class PaymentUtil {
                     + value + "\">\n");
         }
         html.append("</form>\n");
+        html.append("</html>");
         LOG.info(html);
         return html.toString();
     }
