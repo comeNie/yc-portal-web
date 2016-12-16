@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page import="java.util.Locale"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 	<div class="header-big">
   	<div class="cloud-header">
   		<div class="logo">
@@ -29,7 +30,17 @@
   				</li>
   				<li class="nav-icon"><a href="#"><i class="icon iconfont">&#xe60b;</i></a></li>
   				<li class="nav-icon mt-2"><a href="#"><i class="icon iconfont">&#xe60a;</i><span class="message">3</span></a></li>
-				<li class="user"><a href="javaScript:void(0)" class="yonh"><span id="top_username">${user_session_key.username}</span><i class="icon-caret-down btg" id="icon2"></i></a>
+				<li class="user"><a href="javaScript:void(0)" class="yonh">
+				<span id="top_username">
+				  <c:choose>
+						<c:when test="${fn:length(user_session_key.username)>8}">
+							${fn:substring(user_session_key.username,0,8)}...
+						</c:when>
+						<c:otherwise>
+							${user_session_key.username}
+						</c:otherwise>
+					</c:choose>
+				</span><i class="icon-caret-down btg" id="icon2"></i></a>
   					<div class="show">
   						<ul>
   							<li><i class="icon-user"></i><a href="${_base}/p/interpreter/interpreterInfoPager?source=user"><spring:message code="user.topMenu.perProfile"/></a></li>

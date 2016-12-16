@@ -1,6 +1,7 @@
 <%@page import="java.util.Locale"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!--面包屑导航-->
 <div class="placeorder-breadcrumb-big">
     <div class="placeorder-breadcrumb">
@@ -11,7 +12,15 @@
                     <%--登录用户信息--%>
                     <c:set var="loginUser" value="${sessionScope.user_session_key}"/>
                     <c:choose>
-                        <c:when test="${loginUser !=null}">${loginUser.username}
+                        <c:when test="${loginUser !=null}">
+                        	<c:choose>
+								<c:when test="${fn:length(loginUser.username)>8}">
+									${fn:substring(loginUser.username,0,8)}...
+								</c:when>
+								<c:otherwise>
+									${loginUser.username}
+								</c:otherwise>
+							</c:choose>
                             <%--退出--%>
                             <a href="${_base}/ssologout"><spring:message code="user.topMenu.exit"/></a>
                         </c:when>

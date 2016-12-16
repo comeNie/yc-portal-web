@@ -129,21 +129,21 @@
   					<li>
   						<p class="word"><spring:message code="interpreter.save.area" /></p>
   						<p>
-  							<select  class="select select-in-small" id="countryInfo" name="country" >
+  							<select  class="select select-in-small" id="countryInfo" name="country">
   							</select>
   						</p>
-  						<p id="provinceP" style="display: none"><select class="select select-in-small" id="provinceInfo" name="province" >
+  						<p id="provinceP"><select class="select select-in-small" id="provinceInfo" name="province" >
   						  </select>
   						  <spring:message code="interpreter.province" />
   						</p>
-  						<p id="cnCityP" style="display: none"><select class="select select-in-small" id="cnCityInfo" name="cnCity" ></select>
+  						<p id="cnCityP"><select class="select select-in-small" id="cnCityInfo" name="cnCity" ></select>
   							<spring:message code="interpreter.cnCity" />
   						</p>
   						<p><label id="area-error"></label></p>
 					</li>
 					<li>
-						<p class="word"><spring:message code="interpreter.address" /></p>
-						<p><input type="text" class="int-text int-in-bi radius" id="address" name="address" value="${interpreterInfo.address}" maxlength="16"/>
+						<p class="word"></p>
+						<p><input type="text" class="int-text int-in-bi radius" id="address" name="address" value="${interpreterInfo.address}" maxlength="100"/>
 							<label id="detail-address"></label>
 						</p>
 					</li>
