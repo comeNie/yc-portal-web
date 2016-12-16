@@ -209,7 +209,8 @@ define('app/jsp/order/orderContact', function (require, exports, module) {
                 url: _base + "/p/order/save",
                 data: {
                     contactInfo:JSON.stringify(contactInfo),
-                    remark: $("#remark").val()
+                    remark: $("#remark").val(),
+                    transType: $("#transType").val()
                 },
                 success: function (data) {
                     if ("1" === data.statusCode) {
@@ -234,7 +235,8 @@ define('app/jsp/order/orderContact', function (require, exports, module) {
             var translateType = $("#transType").val();
 
             if(translateType == 2) { //口译
-                window.history.go($("#toCreateOrder").attr("skip"));
+                // window.history.go($("#toCreateOrder").attr("skip"));
+                window.location.href= _base + "/oral";
             } else {
                 var remark = $.trim($("#remark").val());
                 if (remark != '')

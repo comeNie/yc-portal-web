@@ -6,10 +6,21 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <%@ include file="/inc/inc.jsp" %>
     <title><spring:message code="order.oralTittle"/></title>
-	
+
 	<script src="${_base}/resources/spm_modules/my97DatePicker/WdatePicker.js"></script>
+	<c:set var="order" value="${sessionScope.oralOrderInfo}" scope="session" />
 </head>
-<body>	
+<body>
+
+	<input hidden name="b-transLevel" value="<c:forEach  items="${order.productInfo.translateLevelInfoList }" var="lev">
+		${lev.translateLevel},
+	</c:forEach>"/>
+	<input hidden name="b-language" value="<c:forEach  items="${order.productInfo.languagePairInfoList}" var="lan">
+		${lan.languagePairId},
+	</c:forEach>"/>
+    <input hidden name="b-place" value="${order.productInfo.meetingAddress}"/>
+    <input hidden name="b-sex" value="${order.productInfo.interperGen}"/>
+
 	<!--面包屑导航-->
 	<%@ include file="/inc/topHead.jsp" %>
 	<%@ include file="/inc/topMenu.jsp" %>
@@ -55,7 +66,9 @@
   				<div class="oral-form">
   					<ul>
   						<li>
-  							<p><input id="transSubject" name="transSubject" maxlength="15" type="text" class="int-text int-100 radius" placeholder="<spring:message code="order.descTransRequire"/>"></p>
+  							<p><input id="transSubject" name="transSubject" maxlength="15" type="text" class="int-text int-100 radius"
+                                      value="${order.baseInfo.translateName}" placeholder="<spring:message code="order.descTransRequire"/>">
+                            </p>
   							<label></label>
   						</li>
   					
@@ -97,17 +110,17 @@
   						<p>
   							<!-- 陪同翻译 -->
   							<span><input name="interpretationType" type="checkbox" class="radio"  value="100110"></span>
-  							<span><spring:message code="order.interpretationType1"/></span>
+  							<span name="100110"><spring:message code="order.interpretationType1"/></span>
   						</p>
   						<p>
   							<!-- 交替传译 -->
   							<span><input name="interpretationType" type="checkbox" class="radio" value="100120"></span>
-  							<span><spring:message code="order.interpretationType2"/></span>
+  							<span name="100120"><spring:message code="order.interpretationType2"/></span>
   						</p>
   						<p>
   							<!-- 同声传译  -->
   							<span><input name="interpretationType" type="checkbox" class="radio" value="100130"></span>
-  							<span><spring:message code="order.interpretationType3"/></span>
+  							<span name="100130"><spring:message code="order.interpretationType3"/></span>
   						</p>
   					</li>
   					<label class="x-label"></label>
@@ -119,11 +132,15 @@
 					<ul class="mb-40">
 						<li class="none-ml">
 							<p class="word"><spring:message code="order.StartingTime"/></p>
-							<p><input id="begin_time" name="begin_time" type="text" class="int-text int-in-250 radius" onClick="WdatePicker({onpicked: function(){$dp.$('begin_time').blur();},lang:'${my97Lang}',autoPickDate:true, dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'%y-%M-%d %\H:\%m:%s',maxDate:'#F{$dp.$D(\'end_time\')}'})" readonly="readonly"/></p>
+							<p><input id="begin_time" name="begin_time" type="text" class="int-text int-in-250 radius"
+                                      onClick="WdatePicker({onpicked: function(){$dp.$('begin_time').blur();},lang:'${my97Lang}',autoPickDate:true, dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'%y-%M-%d %\H:\%m:%s',maxDate:'#F{$dp.$D(\'end_time\')}'})"
+                                      value="<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.productInfo.startTime}"/>" readonly="readonly"/></p>
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.EngdingTime"/></p>
-							<p><input id="end_time" name="end_time" type="text" class="int-text int-in-250 radius" onClick="WdatePicker({onpicked: function(){$dp.$('begin_time').blur();},lang:'${my97Lang}',autoPickDate:true, dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'begin_time\')}'})" readonly="readonly"/></p>
+							<p><input id="end_time" name="end_time" type="text" class="int-text int-in-250 radius"
+                                      onClick="WdatePicker({onpicked: function(){$dp.$('begin_time').blur();},lang:'${my97Lang}',autoPickDate:true, dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'begin_time\')}'})"
+                                      value="<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.productInfo.endTime}"/>" readonly="readonly"/></p>
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.Place"/></p>
@@ -136,14 +153,17 @@
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.MeetingAmount"/></p>
-							<p><input id="meetingAmount" name="meetingAmount" type="text" class="int-text int-in-250 radius" placeholder="<spring:message code="order.MeetingAmountInfo"/>"></p>
+							<p><input id="meetingAmount" name="meetingAmount" type="text" class="int-text int-in-250 radius"
+                                  value="${order.productInfo.meetingSum}" placeholder="<spring:message code="order.MeetingAmountInfo"/>"></p>
 							<label></label>
 						</li>
 					</ul>
 					<ul>
 						<li class="none-ml">
 							<p class="word"><spring:message code="order.interpreterNum"/></p>
-							<p><input id="interpreterNum" name="interpreterNum" type="text" class="int-text int-in-250 radius" placeholder="<spring:message code="order.interpreterNumInfo"/>"></p>
+							<p><input id="interpreterNum" name="interpreterNum" type="text" class="int-text int-in-250 radius"
+                                      value="${order.productInfo.interperSum}" placeholder="<spring:message code="order.interpreterNumInfo"/>">
+                            </p>
 							<label></label>
 						</li>
 						<li>

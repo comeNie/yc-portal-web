@@ -48,7 +48,7 @@ public class OrderLoginController {
      * @return
      */
     @RequestMapping(value = "/contact")
-    public String contactView(int skip,Model uiModel){
+    public String contactView(int skip,String transType, Model uiModel){
         uiModel.addAttribute("skip", skip);
         LOGGER.info("skip = " + skip);
 
@@ -61,6 +61,7 @@ public class OrderLoginController {
             if (!CollectionUtil.isEmpty(contactRes.getUsrContactList())) {
                 uiModel.addAttribute("Contact", contactRes.getUsrContactList().get(0));
             }
+            uiModel.addAttribute("TransType", transType);
 
         } catch (Exception e) {
             LOGGER.error("查询联系人失败：", e);
@@ -106,10 +107,16 @@ public class OrderLoginController {
         ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         String remark = request.getParameter("remark");
         String contactInfoStr = request.getParameter("contactInfo");
+        String transType = request.getParameter("transType");
 
         try {
             IOrderSubmissionSV orderSubmissionSV = DubboConsumerFactory.getService(IOrderSubmissionSV.class);
-            OrderSubmissionRequest subReq  = (OrderSubmissionRequest) session.getAttribute("orderInfo");
+            OrderSubmissionRequest subReq;
+            if (transType.equals("2")) {
+                subReq  = (OrderSubmissionRequest) session.getAttribute("oralOrderInfo");
+            } else {
+                subReq  = (OrderSubmissionRequest) session.getAttribute("orderInfo");
+            }
             subReq.setContactInfo(JSON.parseObject(contactInfoStr, ContactInfo.class));
             subReq.getBaseInfo().setUserId(UserUtil.getUserId());
             subReq.getBaseInfo().setOrderTime(new Timestamp(System.currentTimeMillis()));
@@ -128,6 +135,8 @@ public class OrderLoginController {
             }
 
             //清楚会话中的 订单信息
+            session.removeAttribute("oralOrderInfo");
+            session.removeAttribute("oralOrderSummary");
             session.removeAttribute("orderInfo");
             session.removeAttribute("orderSummary");
             session.removeAttribute("fileInfoList");

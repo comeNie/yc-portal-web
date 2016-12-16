@@ -77,11 +77,17 @@ define("app/jsp/user/userIndex",function(require, exports, module) {
 		    		        	if(data != null && data != undefined && data.length>0){
 		    	            		//把返回结果转换
 		    		            	for(var i=0;i<data.length;i++){
-		    		            		//确认截止时间转为 剩余x天x小时x分
-		    		            		var remainingTime = _this.ftimeDHS(data[i].remainingTime);
-		    		            		data[i].confirmTakeDays = remainingTime.days;
-		    		            		data[i].confirmTakeHours = remainingTime.hours;
-		    		            		data[i].confirmTakeMinutes =  remainingTime.minutes;
+										//确认截止时间转为 剩余x天x小时x分
+										var remainingTime = _this.ftimeDHS(data[i].endChgTime - new Date().getTime());
+										data[i].confirmTakeDays = remainingTime.days;
+										data[i].confirmTakeHours = remainingTime.hours;
+										data[i].confirmTakeMinutes =  remainingTime.minutes;
+
+										//支付截止时间转为 剩余x天x小时x分
+										var payRemTime = _this.ftimeDHS(data[i].endChgTime - new Date().getTime());
+										data[i].payTakeDays = payRemTime.days;
+										data[i].payTakeHours = payRemTime.hours;
+										data[i].payTakeMinutes = payRemTime.minutes;
 		    		            		
 		    		            		data[i].currentLan = currentLan; //当前语言
 		    		            	}

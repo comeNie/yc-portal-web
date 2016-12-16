@@ -113,6 +113,8 @@ public class OrderController {
         ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
 
         //清楚会话中的 订单信息
+        session.removeAttribute("oralOrderInfo");
+        session.removeAttribute("oralOrderSummary");
         session.removeAttribute("orderInfo");
         session.removeAttribute("orderSummary");
         session.removeAttribute("fileInfoList");
@@ -168,8 +170,15 @@ public class OrderController {
             subReq.setFeeInfo(feeInfo);
 
             //订单存到session中
-            session.setAttribute("orderInfo", subReq);
-            session.setAttribute("orderSummary", orderSummary);
+            if (subReq.getBaseInfo().getTranslateType().equals("2")) {
+                session.setAttribute("oralOrderInfo", subReq);
+                session.setAttribute("oralOrderSummary", orderSummary);
+            } else {
+                session.setAttribute("orderInfo", subReq);
+                session.setAttribute("orderSummary", orderSummary);
+            }
+
+
             if (fileInfoList != null) {
                 session.setAttribute("fileInfoList", fileInfoList);
             }

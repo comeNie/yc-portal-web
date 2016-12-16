@@ -153,14 +153,14 @@
 				<p>{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',orderTime,'<%=ZoneContextHolder.getZone()%>')}}</p>
  				<p name="orderId" style="cursor:pointer;"><spring:message code="myOrder.Ordernumber"/>：<span>{{:orderId}}</span></p>
 				{{if  displayFlag == '11'}}
-					<!-- 剩余2天23小时59分钟  待支付-->
-    				<p class="right"><spring:message
-                                    code="myOrder.Remaining" arguments="{{:payTakeDays}},{{:payTakeHours}},{{:payTakeMinutes}}"/></p>
+				<!-- 剩余2天23小时59分钟  待支付-->
+				<p class="right"><spring:message
+						code="myOrder.Remaining" arguments="{{:payTakeDays}},{{:payTakeHours}},{{:payTakeMinutes}}"/></p>
 				{{/if}}
 				{{if  displayFlag == '50'}}
-					<!-- 剩余2天23小时59分钟   待确认-->
-    				<p class="right"><spring:message
-                                    code="myOrder.Remaining" arguments="{{:confirmTakeDays}},{{:confirmTakeHours}},{{:confirmTakeMinutes}}"/></p>
+				<!-- 剩余2天23小时59分钟   待确认-->
+				<p class="right"><spring:message
+						code="myOrder.Remaining" arguments="{{:confirmTakeDays}},{{:confirmTakeHours}},{{:confirmTakeMinutes}}"/></p>
 				{{/if}}
       		</div>
     	</th>

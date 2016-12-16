@@ -50,8 +50,35 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 				formValidator.element(this);
 			});
 
-
+            this._initPage();
     	},
+		
+		_initPage:function () {
+			if ($("input[name='b-place']").val() != '') {
+                $("#place option").each(function(){
+                    if($(this).text()==$("input[name='b-place']").val()){
+                        $(this).attr("selected",true)
+                    }
+                });
+            }
+
+            if ($("input[name='b-sex']").val() != '')
+                $("#gender").val($("input[name='b-sex']").val());
+
+            if ($("input[name='b-transLevel']").val() != '') {
+                var levs = $.trim($("input[name='b-transLevel']").val()).split(',');
+                $.each(levs, function(i,val) {
+                    $("span[name="+val+"]").prev().find('input').attr("checked",true);
+                })
+            }
+
+            if ($("input[name='b-language']").val() != '') {
+                var lans = $.trim($("input[name='b-language']").val()).split(',');
+                $.each(lans, function(i,val) {
+                    $("span[name="+val+"]").prev().find('input').attr("checked",true);
+                })
+            }
+		},
         	
         _initValidate:function(){
         	var formValidator=$("#oralOrderForm").validate({
@@ -253,7 +280,7 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 				},
 				success: function (data) {
 					if ("1" === data.statusCode)
-						window.location.href =  _base + "/p/order/contact?skip="+data.data;
+						window.location.href =  _base + "/p/order/contact?skip="+data.data+"&transType=2";
 				}
 			});
 

@@ -7,8 +7,17 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <%@ include file="/inc/inc.jsp" %>
     <title>联系人</title>
-    <c:set var="order" value="${sessionScope.orderInfo}" scope="session" />
-    <c:set var="orderSummary" value="${sessionScope.orderSummary}" scope="session" />
+    <c:choose>
+        <c:when test="${TransType == '2'}">
+            <c:set var="order" value="${sessionScope.oralOrderInfo}" scope="session" />
+            <c:set var="orderSummary" value="${sessionScope.oralOrderSummary}" scope="session" />
+        </c:when>
+        <c:otherwise>
+            <c:set var="order" value="${sessionScope.orderInfo}" scope="session" />
+            <c:set var="orderSummary" value="${sessionScope.orderSummary}" scope="session" />
+        </c:otherwise>
+    </c:choose>
+
     <c:set var="transType" value="${order.baseInfo.translateType}" />
 </head>
 <body>
