@@ -127,7 +127,7 @@
   						<p><input maxlength="10" type="text" class="int-text int-xlarge radius" name="qq" id="qq" value="${interpreterInfo.qq}"/></p>
   					</li>
   					<li>
-  						<p class="word"><spring:message code="interpreter.address" /></p>
+  						<p class="word"><spring:message code="interpreter.save.area" /></p>
   						<p>
   							<select class="select select-in-small" id="countryInfo" name="country">
   							</select>
@@ -139,12 +139,12 @@
   						<p id="cnCityP" style="display: none"><select class="select select-in-small" id="cnCityInfo" name="cnCity" ></select>
   							<spring:message code="interpreter.cnCity" />
   						</p>
-  						<p><input type="text" class="int-text int-in-bi radius" id="address" name="address" maxlength="16"/>
-						</p>
+  						<p><label id="area-error"></label></p>
 					</li>
 					<li>
-						<p>
-							<label id="area-error"></label>
+						<p class="word"><spring:message code="interpreter.address" /></p>
+						<p><input type="text" class="int-text int-in-bi radius" id="address" name="address" maxlength="16"/>
+							<label id="detail-address"></label>
 						</p>
 					</li>
   				</ul>
@@ -179,7 +179,12 @@
     		"nickNameErrorMsg" : '<spring:message code="interpreter.save.nickName.error.msg"/>',
     		"nickNameMaxMsg" : '<spring:message code="interpreter.save.nickName.maxlength.msg"/>',
     		"nickNameMinMsg" : '<spring:message code="interpreter.save.nickName.minlength.msg"/>',
-    		"qqErrorMsg" : '<spring:message code="interpreter.save.qq.error.msg"/>'
+    		"qqErrorMsg" : '<spring:message code="interpreter.save.qq.error.msg"/>',
+   			"provinceErrorMsg" : '<spring:message code="interpreter.provice.error.msg"/>',
+       		"cityErrorMsg" : '<spring:message code="interpreter.cnCity.error.msg"/>',
+       		"detailAddressErrorMsg" : '<spring:message code="interpreter.address.error.msg"/>',
+       		"areaTitle" : '<spring:message code="interpreter.area.title"/>'
+       		
     	};
 	var pager;
 	(function() {
