@@ -85,7 +85,7 @@ define("app/jsp/user/security/securitycenter", function(require, exports, module
             _getMobileWithStart : function (orginalMobile) {
             	var part1 = orginalMobile.substring(0,6);
             	var part2 = "******";
-            	var part3 = orginalMobile.substring(9,11);
+            	var part3 = orginalMobile.substring(11,14);
             	return part1 + part2 + part3;
             },
              /*修改密码*/
