@@ -43,6 +43,7 @@
   	</div>
   </div>
 <script type="application/javascript">
+	var divEleId = "";
 		function changeLang(){
 			var toLang = document.getElementById("langHeadSel").value;
 			if (window.console){
