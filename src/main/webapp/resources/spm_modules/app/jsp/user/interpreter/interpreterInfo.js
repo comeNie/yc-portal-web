@@ -76,6 +76,14 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     		InterPreterInfoPager.superclass.setup.call(this);
     		var formValidator=this._initValidate();
     		this._loadAllCountry();
+    		if(provinceCode!=null){
+    			$("#provinceP").show();
+    			this._getProviceValue();
+    		}
+    		if(cnCityCode!=null){
+    			$("#cnCityP").show();
+    			this._getCnCityValue();
+    		}
     		$(":input").bind("focusout",function(){
 				formValidator.element(this);
 			});
@@ -334,6 +342,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     	},
     	_loadAllCountry:function(){
     		ajaxController.ajax({
+    			async:false,
 				type:"post",
 				url:_base+"/p/interpreter/getAllCountry",
 		        success: function(json) {
@@ -352,7 +361,12 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 								if ("zh_CN" != currentLan) {
 									name = t.regionNameEn;
 								}
-								html.push('<option value=' + _code+ '>' + name + '</option>');
+								if(countryCode==_code){
+									html.push('<option selected="selected" value=' + _code+ '>' +name + '</option>');
+								}else{
+									html.push('<option value=' + _code+ '>' + name + '</option>');
+								}
+								
 							}
 							$("#countryInfo").html(html.join(""));
 						}
@@ -362,6 +376,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     	},
     	_getProviceValue:function(){
     		ajaxController.ajax({
+    			async:false,
 				type:"post",
 				url:_base+"/p/interpreter/getProvice",
 				data:{
@@ -390,7 +405,11 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 								if ("zh_CN" != currentLan) {
 									name = t.regionNameEn;
 								}
-								html.push('<option value=' + _code+ '>' + name + '</option>');
+								if(_code==provinceCode){
+									html.push('<option selected="selected" value=' + _code+ '>' + name + '</option>');
+								}else{
+									html.push('<option value=' + _code+ '>' + name + '</option>');
+								}
 							}
 							$("#provinceInfo").html(html.join(""));
 						}
@@ -400,6 +419,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     	},
     	_getCnCityValue:function(){
     		ajaxController.ajax({
+    			async:false,
 				type:"post",
 				url:_base+"/p/interpreter/getCnCityInfo",
 				data:{
@@ -426,7 +446,11 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 								if ("zh_CN" != currentLan) {
 									name = t.regionNameEn;
 								}
-								html.push('<option value=' + _code+ ' >' + name + '</option>');
+								if(cnCityCode==_code){
+									html.push('<option selected="selected" value=' + _code+ ' >' + name + '</option>');
+								}else{
+									html.push('<option value=' + _code+ ' >' + name + '</option>');
+								}
 							}
 							$("#cnCityInfo").html(html.join(""));
 						}
