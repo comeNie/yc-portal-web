@@ -43,9 +43,9 @@ define('app/jsp/order/orderContact', function (require, exports, module) {
             this._globalRome();
 
             var formValidator=this._initValidate();
-            $(":input").bind("focusout",function(){
-                formValidator.element(this);
-            });
+            // $(":input").bind("focusout",function(){
+            //     formValidator.element(this);
+            // });
 
 
         },
@@ -53,6 +53,9 @@ define('app/jsp/order/orderContact', function (require, exports, module) {
         _initValidate:function(){
             var formValidator=$("#contactForm").validate({
                 focusInvalid:true,
+                onfocusout: function(element){
+                    $(element).valid();
+                },
                 errorPlacement: function(error, element) {
                     if (element.is(":checkbox")) {
                         error.appendTo(element.parent().parent().parent());
