@@ -144,7 +144,7 @@ public class TransOrderController {
 
             QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
             orderDetailsReq.setOrderId(Long.valueOf(orderId));
-            orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
+            orderDetailsReq.setChgStateFlag(null);
 
             QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
             ResponseHeader resHeader = orderDetailsRes.getResponseHeader();

@@ -166,7 +166,6 @@
 				</div>
                 <!-- 播放器 -->
                 <audio src="" controls="controls" id="audioPlay" style="display: none;">
-                Your browser does not support the audio tag.
                 </audio>
             </div>
         </div>
