@@ -66,7 +66,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     		"blur [id='userName']":"_checkUserNameValue",
     		"change [id='countryInfo']":"_getProviceValue",
     		"change [id='provinceInfo']":"_getCnCityValue",
-			"blur [id='countryInfo']":"_checkCountryValue",
+			//"blur [id='countryInfo']":"_checkCountryValue",
 			"blur [id='provinceInfo']":"_checkProvinceValue",
 			"blur [id='cnCityInfo']":"_checkCnCityValue",
 			"blur [id='address']":"_checkAddressValue",
@@ -88,11 +88,9 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		},*/
 		_checkCountryValue:function () {
 			var countryinfo = $("#countryInfo").val();
-			if(countryinfo!="0"){
+			if(countryinfo=="0"){
 				$("#area-error").hide().html("");
 				return ;
-			}else {
-				$("#area-error").show().html("请选择国家");
 			}
 		},
 		_checkProvinceValue:function () {
@@ -103,7 +101,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 				if(province!="0"){
 					$("#area-error").hide().html("");
 				}else {
-					$("#area-error").show().html("请选择省份");
+					$("#area-error").show().html(interpreterInfoMsg.provinceErrorMsg);
 				}
 			}
 		},
@@ -115,16 +113,16 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 				if(city!="0"){
 					$("#area-error").hide().html("");
 				}else {
-					$("#area-error").show().html("请选择地址");
+					$("#area-error").show().html(interpreterInfoMsg.cityErrorMsg);
 				}
 			}
 		},
 		_checkAddressValue:function () {
 			var address = $("#address").val();
 			if(address!=""||address==null){
-				$("#area-error").hide().html("");
+				$("#detail-address").hide().html("");
 			}else {
-				$("#area-error").show().html("请输入详细地址");
+				$("#detail-address").show().html(interpreterInfoMsg.detailAddressErrorMsg);
 			}
 		},
     	_saveInterpreterInfo:function(){
@@ -143,16 +141,16 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 				 return false;
 			 }*/
 			 var countryinfo = $("#countryInfo").val();
-			 if(countryinfo=="0"||countryinfo==""||countryinfo==null){
+			 /*if(countryinfo=="0"||countryinfo==""||countryinfo==null){
 				 $("#area-error").show().html("请选择国家");
 				 return false;
-			 }
+			 }*/
 			 if($("#provinceInfo").is(":hidden")){
 				 $("#provinceInfo").val("");
 			 }else {
 				 var province = $("#provinceInfo").val();
 				 if(province=="0"||province==""||province==null){
-					 $("#area-error").show().html("请选择省份");
+					 $("#area-error").show().html(interpreterInfoMsg.provinceErrorMsg);
 					 return false;
 				 }
 			 }
@@ -161,13 +159,13 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 			 }else {
 				 var city = $("#cnCityInfo").val();
 				 if(city=="0"||city==""||city==null){
-					$("#area-error").show().html("请选择地址");
+					$("#area-error").show().html(interpreterInfoMsg.cityErrorMsg);
 					return false;
 				 }
 			 }
 			var address = $("#address").val();
-			if(address==""||address==null){
-				$("#area-error").show().html("请请输入详细地址");
+			if(countryinfo!="0"&&(address==""||address==null)){
+				$("#detail-address").show().html(interpreterInfoMsg.detailAddressErrorMsg);
 				return false;
 			}
              ajaxController.ajax({
@@ -346,7 +344,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		        		var data = json.data;
 						if (data) {
 							var html = [];
-							html.push('<option value=0>' + "请选择" + '</option>');
+							html.push('<option value=0>' + interpreterInfoMsg.areaTitle + '</option>');
 							for (var i = 0; i < data.length; i++) {
 								var t = data[i];
 								var _code = t.regionCode;
