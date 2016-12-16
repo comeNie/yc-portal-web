@@ -108,11 +108,13 @@ UserUtil.getUserPortraitImg();
             $("#left_menu_list ul li").removeClass("current");
             currentEle.addClass("current");
         }
-        //二级菜单
-		var divEle = $("#" + divEleId);
-        if (divEleId != "" && divEle) {
-            $("#left_menu_list ul div").removeClass("current");
-            divEle.addClass("current");
-        }
+        if(divEleId!=null && divEleId!=""){
+            //二级菜单
+            var divEle = $("#" + divEleId);
+            if (divEle) {
+                $("#left_menu_list ul div").removeClass("current");
+                divEle.addClass("current");
+            }
+		}
     });
 </script>
