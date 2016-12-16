@@ -81,8 +81,8 @@
 .banner-sm{width:1200px;margin:0 auto;display:none;height:142px;margin-top:20px;background:url(../../images/banner-sm.jpg) no-repeat;}
 .banner-sm p{float:left}
 .banner-sm p span{width:100%;float:left;font-size:14px;color:#2c3e50}
-.banner-sm .left{width:540px;float:left;margin:30px 0 0 50px;}
-.banner-sm .left .word{font-size:24px;color:#2c3e50;margin-bottom:22px;}
+.banner-sm .left{width:570px;float:left;margin:30px 0 0 50px;}
+.banner-sm .left .word{font-size:24px;color:#2c3e50;margin-bottom:12px;}
 .banner-sm .right{float:right;margin:55px 74px 0  0;}
 .banner-hover{width:100%;height:26px;background:#f0f0f0;margin-top:20px;text-align: center;}
 .banner-hover p{width:102px;height:26px;background:url(../../images/sj.jpg) no-repeat;margin:0 auto;}
