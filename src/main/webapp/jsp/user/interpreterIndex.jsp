@@ -259,7 +259,6 @@
 	$(function(){
 		var securitylevel = "${securitylevel}";
 		var accLevelInfo = $("#accLevelInfo");
-		alert(accLevelInfo+"-----"+securitylevel);
 		if(parseInt(securitylevel) < 60)
 		{
 			accLevelInfo.html('<spring:message code="ycaccountcenter.acc.level.danger"/>');
