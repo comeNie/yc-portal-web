@@ -129,7 +129,7 @@
   					<li>
   						<p class="word"><spring:message code="interpreter.save.area" /></p>
   						<p>
-  							<select class="select select-in-small" id="countryInfo" name="country">
+  							<select  class="select select-in-small" id="countryInfo" name="country" >
   							</select>
   						</p>
   						<p id="provinceP" style="display: none"><select class="select select-in-small" id="provinceInfo" name="province" >
@@ -143,7 +143,7 @@
 					</li>
 					<li>
 						<p class="word"><spring:message code="interpreter.address" /></p>
-						<p><input type="text" class="int-text int-in-bi radius" id="address" name="address" maxlength="16"/>
+						<p><input type="text" class="int-text int-in-bi radius" id="address" name="address" value="${interpreterInfo.address}" maxlength="16"/>
 							<label id="detail-address"></label>
 						</p>
 					</li>
@@ -167,6 +167,9 @@
     var current ="interpreterInfo";
     var originalNickname="${interpreterInfo.nickname}";
     var originalUsername="${user_session_key.username}";
+    var countryCode = "${interpreterInfo.country}";
+    var provinceCode = "${interpreterInfo.province}";
+    var cnCityCode = "${interpreterInfo.cnCity}";
     var interpreterInfoMsg ={
     		"showOkValueMsg" : '<spring:message code="ycaccountcenter.js.showOkValueMsg"/>',
     		"showTitleMsg" : '<spring:message code="ycaccountcenter.js.showTitleMsg"/>',

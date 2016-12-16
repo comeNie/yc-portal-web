@@ -11,24 +11,6 @@
 <!--头部-->
 <%@ include file="/inc/userTopMenu.jsp" %>
 <!--二级主体-->
-<!--弹出-->
-<div class="eject-big">
-    <div class="prompt-samll" id="rechargepop">
-        <div class="prompt-samll-title">请选择</div>
-        <!--确认删除-->
-        <div class="prompt-samll-confirm">
-            <ul>
-                <li>支付完成前请不要关闭此窗口。</li>
-                <li>完成后请根据您的情况点击下面的按钮</li>
-                <li class="eject-btn">
-                    <input type="button" id="completed" class="btn btn-green btn-120 radius20" value="已完成支付" onclick="javascript:window.location.href='${_base}/p/balance/account'">
-                    <input type="button"  class="btn border-green btn-120 radius20" value="支付遇到困难" onclick="javaScript:window.location.href='${_base}/faq'">
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="mask" id="eject-mask"></div>
-</div>
 <!--外侧背景-->
 <div class="cloud-container">
     <!--内侧内容区域-->
