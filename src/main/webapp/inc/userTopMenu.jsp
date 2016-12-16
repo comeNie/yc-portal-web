@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page import="java.util.Locale"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 	<div class="header-big">
   	<div class="cloud-header">
   		<div class="logo">
@@ -41,15 +40,15 @@
 						</c:otherwise>
 					</c:choose>
 				</span><i class="icon-caret-down btg" id="icon2"></i></a>
-  					<div class="show">
-  						<ul>
-  							<li><i class="icon-user"></i><a href="${_base}/p/interpreter/interpreterInfoPager?source=user"><spring:message code="user.topMenu.perProfile"/></a></li>
-  							<li><i class="icon-lock"></i><a href="${_base}/p/security/seccenter?source=user"><spring:message code="user.topMenu.secSetting"/></a></li>
-  							<li><i class="icon-off"></i><a href="${_base}/ssologout"><spring:message code="user.topMenu.exit"/></a></li>
-  						</ul>
-  					</div>
   				</li>
   			</ul>
+            <div class="show">
+                <ul>
+                    <li><i class="icon-user"></i><a href="${_base}/p/interpreter/interpreterInfoPager?source=user"><spring:message code="user.topMenu.perProfile"/></a></li>
+                    <li><i class="icon-lock"></i><a href="${_base}/p/security/seccenter?source=user"><spring:message code="user.topMenu.secSetting"/></a></li>
+                    <li><i class="icon-off"></i><a href="${_base}/ssologout"><spring:message code="user.topMenu.exit"/></a></li>
+                </ul>
+            </div>
   		</div>
   	</div>
   </div>
