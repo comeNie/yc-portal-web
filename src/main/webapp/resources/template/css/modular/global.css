@@ -14,7 +14,37 @@ input{outline:none;}
 button{outline:none; cursor:pointer;}
 html,body {height:100%; }
 img{vertical-align:middle}
+/****/
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  background:url(../../images/checkbox.jpg);
+  height:20px;
+  vertical-align: middle;
+  width:20px;
+  margin-top:-2px;
+  *background: none;
+}
+input[type="checkbox"]:checked {
+  background:url(../../images/checkbox-chek.jpg);
+}
+input[type="checkbox"]:focus,
+input[type="checkbox"]:hover {  background:url(../../images/checkbox.jpg);
+  outline: none;
+}
 
+input[type="checkbox"]:checked {
+   background:url(../../images/checkbox-chek.jpg);
+}
+
+input[type="checkbox"][disabled] {
+   background:url(../../images/checkbox.jpg);
+}
+
+input[type="checkbox"][disabled]:checked {
+   background:url(../../images/checkbox.jpg);
+}
+
+/****/
 h1,h2,h3,h4,h5,h6{font-weight:200;line-height:1.1;color:inherit;font-family: "微软雅黑";}
 h1 small,h2 small,h3 small,h4 small,h5 small,h6 small,h1 .small,h2 .small,h3 .small,h4 .small,h5 .small,h6 .small{font-weight:normal;line-height:1;color:#999}
 h1,h2,h3{margin-top:10px;margin-bottom:10px}
@@ -468,13 +498,14 @@ select::-ms-expand { display: none; }
 .select-medium{width:190px;height:44px;padding-left:20px;}
 
 .select-in-small{width:120px;height:44px;padding-left:20px;}
-.select-in{width:164px;height:44px;padding-left:20px;}
+.select-in{width:164px;height:44px;padding-left:20px;overflow:hidden;text-overflow: ellipsis; white-space: nowrap; }
+.select-in  option[selected]{ font-weight:bold}
 .select-large{width:268px;height:44px;padding-left:10px;}
 .select-xlarge{width:360px;height:44px;padding-left:10px;}
 .select-xxlarge{width:350px;height:44px;padding-left:10px;}
 .select-xxxlarge{width:500px;height:44px;padding-left:10px;}
 
-.select-topmini{width:82px;height:32px;padding-left:4px;font-size:14px;}
+.select-topmini{width:82px;height:32px;padding-left:4px;font-size:14px;color:#999}
 /**.select-topmini:hover{border:1px solid #fff;}**/
 .select-250{width:250px;height:44px;padding-left:10px;color:#6a6c6f;font-size:14px}
 .select-300{width:300px;height:44px;padding-left:10px;color:#6a6c6f;font-size:14px}

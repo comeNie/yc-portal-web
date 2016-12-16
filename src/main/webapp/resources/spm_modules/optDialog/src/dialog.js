@@ -91,7 +91,7 @@ define(function (require) {
                 value: options.okValue,
                 callback: options.ok,
                 autofocus: true,
-                class:'btn btn-green btn-100 radius20'
+                btnClass: 'btn btn-green btn-100 radius20'
             });
         }
 
@@ -106,7 +106,7 @@ define(function (require) {
                 value: options.cancelValue,
                 callback: options.cancel,
                 display: options.cancelDisplay,
-                class: 'btn border-green btn-100 radius20'
+                btnClass: 'btn border-green btn-100 radius20'
             });
         }
 
@@ -477,7 +477,7 @@ define(function (require) {
                         + ' i-id="' + id + '"'
                         + style
                         + (val.disabled ? ' disabled' : '')
-                        + ' class="' + val.class + '"'
+                        + ' class="' + val.btnClass + '"'
                         + ' value="' + val.value + '"'
                         + '/>';
 

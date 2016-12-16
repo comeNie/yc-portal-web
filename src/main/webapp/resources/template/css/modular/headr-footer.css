@@ -12,6 +12,7 @@
 .cloud-breadcrumb ul{display: inline-block;}
 .cloud-breadcrumb ul li{float:left;position: relative;margin-left:20px;}
 .none-select{background:none;border: none;color:#fff; outline:none;appearance:none;-moz-appearance:none;-webkit-appearance:none;}
+.select-bj{background:#2361ea;}
 .cloud-breadcrumb ul li .icon-caret-down{position: absolute;top:10px;right:6px;color:#fff;}
 .cloud-breadcrumb ul li .btg{position: absolute;top:10px;right:-6px;color:#fff;}
 .cloud-breadcrumb ul li .message{width:16px;height:16px;position: absolute;top:-5px;right:-4px;font-size:12px;background:#fe6b6b;border-radius:50%;text-align:center;color:#fff;line-height:16px;}
@@ -66,12 +67,12 @@
 .footer-about-left ul li{line-height:25px;font-size:12px;color:#fff}
 .footer-about-left ul li a{font-size:12px;color:#5b96ed}
 .footer-about-left ul .title{margin-bottom:35px;}
-.footer-about-right{float:right;margin-top:50px;}
+.footer-about-right{float:right;margin-top:50px;width:270px;}
 .footer-about-right ul{float:left}
-.footer-about-right ul li{}
+.footer-about-right ul li{float:left}
 .footer-about-right ul li .phone{width:158px;height:68px;background:url(../../images/icon-big.png) no-repeat left -983px;float:left;margin-right:20px;}
 .footer-about-right ul li p{float:left}
-.footer-about-right ul .shaw{float:right}
+.footer-about-right ul .shaw{float:right;}
 .footer-about-right ul .shaw p{margin-left:12px;margin-top:32px;}
 .footer-about-right ul li .shaw-a a{width:39px;height:39px;background: url(../../images/icon-big.png) no-repeat left -841px;float:left;}
 .footer-about-right ul li .shaw-a a:hover{width:39px;height:39px;background: url(../../images/icon-big.png) no-repeat -50px -930px;float:left;}

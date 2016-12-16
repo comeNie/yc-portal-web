@@ -40,7 +40,7 @@
 			<ul>
 				<li class="current">
 					<a href="javaScript:void(0);">
-					<p class="icon2" id="tab-icon2"></p>
+					<p class="icon1" id="tab-icon1"></p>
 					</a>
 					<p class="word word-font">提交翻译任务</p>
 				</li>

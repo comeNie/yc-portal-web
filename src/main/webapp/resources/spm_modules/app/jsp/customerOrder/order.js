@@ -57,22 +57,35 @@ define('app/jsp/customerOrder/order', function (require, exports, module) {
 
         //确认订单
         _confirm:function(orderId) {
-            ajaxController.ajax({
-                type: "post",
-                url: _base + "/p/trans/order/updateState",
-                data: {
-                    orderId: orderId,
-                    state: "90",
-                    displayFlag: "90",
+            new Dialog({
+                content:$.i18n.prop('order.info.confirm.info'),
+                icon:'prompt',
+                okValue: $.i18n.prop('order.info.dialog.ok'),
+                cancelValue:$.i18n.prop('order.info.dialog.cancel'),
+                title: $.i18n.prop('order.info.confirm.order'),
+                ok:function(){
+                    ajaxController.ajax({
+                        type: "post",
+                        url: _base + "/p/trans/order/updateState",
+                        data: {
+                            orderId: orderId,
+                            state: "90",
+                            displayFlag: "90",
+                        },
+                        success: function (data) {
+                            if ("1" === data.statusCode) {
+                                //成功
+                                //刷新页面
+                                window.location.reload();
+                            }
+                        }
+                    });
                 },
-                success: function (data) {
-                    if ("1" === data.statusCode) {
-                        //成功
-                        //刷新页面
-                        window.location.reload();
-                    }
+                cancel:function(){
+                    this.close();
                 }
-            });
+            }).showModal();
+
         },
 
         //取消订单

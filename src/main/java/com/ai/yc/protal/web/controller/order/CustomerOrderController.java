@@ -16,6 +16,7 @@ import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.slp.balance.api.deduct.interfaces.IDeductSV;
 import com.ai.slp.balance.api.deduct.param.DeductParam;
 import com.ai.slp.balance.api.deduct.param.DeductResponse;
+import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsRequest;
 import com.ai.yc.order.api.orderfee.interfaces.IOrderFeeQuerySV;
 import com.ai.yc.order.api.orderfee.param.*;
 import com.ai.yc.protal.web.constants.Constants;
@@ -57,9 +58,6 @@ import com.ai.yc.order.api.orderquery.param.QueryOrderRequest;
 import com.ai.yc.order.api.orderquery.param.QueryOrderRsponse;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import sun.management.resources.agent;
-
-import static sun.net.www.protocol.http.HttpURLConnection.userAgent;
 
 /**
  * 客户订单
@@ -357,7 +355,12 @@ public class CustomerOrderController {
         LOGGER.info("customer order session "+session.getAttribute("USER_TIME_ZONE"));
         try {
             IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
-            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(Long.valueOf(orderId));
+
+            QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
+            orderDetailsReq.setOrderId(Long.valueOf(orderId));
+            orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
+
+            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
             ResponseHeader resHeader = orderDetailsRes.getResponseHeader();
             LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
             //如果返回值为空,或返回信息中包含错误信息,返回失败

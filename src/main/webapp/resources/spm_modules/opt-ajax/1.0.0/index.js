@@ -35,7 +35,7 @@ define('opt-ajax/1.0.0/index', function (require, exports, module) {
         ajax: function(options){
         	var _this = this;
         	if(processingDialog==null){
-                processingDialog = Dialog({
+                processingDialog = new Dialog({
                     closeIconShow:false,
                     icon:"loading",
 					//正在处理中，请稍后...

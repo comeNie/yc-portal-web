@@ -40,11 +40,11 @@
 	</div>
 
 	<div id="st1">
-		<div class="static-tab">
+		<div class="static-tab static-tab2">
 			<ul>
-				<li class="current static-tab2">
+				<li class="current">
 					<a href="javaScript:void(0);">
-					<p class="icon2" id="tab-icon2"></p>
+					<p class="icon1" id="tab-icon1"></p>
 					</a>
 					<%--提交翻译任务--%>
 					<p class="word word-font">Submit</p>

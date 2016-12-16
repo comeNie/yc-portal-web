@@ -68,7 +68,7 @@
                                 <li>
                                     <p class="word"><spring:message code="account.amount.to.be.recharged"/>:</p>
                                     <p><input type="text" id="orderAmount" name="orderAmount" class="int-text int-rech-medium radius" onfocus="disTishi()"></p>
-                                    <p><spring:message code="account.yuan"/></p>
+                                    <p><spring:message code="account.account.tag.yuan"/></p>
                                 </li>
                                 <li class="tishi" >
                                     <p id="tishi1">

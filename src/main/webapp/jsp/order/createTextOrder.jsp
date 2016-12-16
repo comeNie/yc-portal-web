@@ -324,7 +324,7 @@
 			<div class="recharge-btn order-btn placeorder-btn ml-0">
  				<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10"
 					   value="<spring:message code="order.subTranslation"/>">
- 				<p><input name="isAgree" type="checkbox" class="radio" checked=""><spring:message
+ 				<p><input id="isAgree" name="isAgree" type="checkbox" class="radio" checked=""><spring:message
 						code="order.Agreement"/><a href="${_base}/agreement" target="_blank"><spring:message
 						code="order.AgreementInfo"/></a></p>
  			</div>

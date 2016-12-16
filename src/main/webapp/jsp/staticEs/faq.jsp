@@ -159,7 +159,7 @@
                 <li>3.The platform gathers translators from worldwide, who are ready to respond to clients’ requirements immediately.</li>
                 <li>4.With the support of the corpus which contains hundreds of millions of entries, translators can meet clients’ needs better.</li>
                 <li>5.Translators are able to create and manage their own language assets.</li>
-                <li>5.Translators are able to create and manage their own language assets.</li>
+                <li>6.YeeCloud provides open API interfaces, realizing real-time content interaction between the platform and the third-party system.</li>
             </ul>
         </div>
     </div>

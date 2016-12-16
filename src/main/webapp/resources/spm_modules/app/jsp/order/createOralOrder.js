@@ -2,6 +2,7 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
+		Dialog = require("optDialog/src/dialog"),
 	    AjaxController = require('opt-ajax/1.0.0/index');
     require("jsviews/jsrender.min");
 
@@ -102,9 +103,9 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
         					min:1,
         					max:100
         				},
-        				isAgree: {
-        					required: true,
-        				}
+        				// isAgree: {
+        				// 	required: true,
+        				// }
     			},
     			messages: {
     				transSubject: {
@@ -135,9 +136,9 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
     					min: $.i18n.prop('order.place.error.min'),//"最小值为{0}",
     					max: $.i18n.prop('order.place.error.max')//"最大值为{0}"
     				},
-    				isAgree: {
-    					required: $.i18n.prop('order.place.error.agree')//"请阅读并同意翻译协议",
-    				}
+    				// isAgree: {
+    				// 	required: $.i18n.prop('order.place.error.agree')//"请阅读并同意翻译协议",
+    				// }
     			}
     		});
     		
@@ -153,7 +154,11 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 				//alert('验证不通过！！！！！');
                 return formValidator.focusInvalid();
 			}
-			
+
+			if(!$('#isAgree').is(':checked')) {
+				_this._showWarn( $.i18n.prop('order.place.error.agree'));
+				return;
+			}
 
 			var duadNameList =[];
 			$('input[name="duad"]:checked').each(function(){
@@ -252,6 +257,18 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 				}
 			});
 
+		},
+
+		_showWarn:function(msg){
+			new Dialog({
+				content:msg,
+				icon:'warning',
+				okValue: $.i18n.prop("order.info.dialog.ok"),
+				title:  $.i18n.prop("order.info.dialog.prompt"),
+				ok:function(){
+					this.close();
+				}
+			}).show();
 		},
 
     });
