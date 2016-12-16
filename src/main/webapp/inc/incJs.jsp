@@ -23,6 +23,7 @@
 <script src="${_base}/resources/spm_modules/seajs/2.3.0/dist/sea.js"></script>
 <script src="${_base}/resources/spm_modules/seajs/seajs-css.js"></script>
 <script src="${_base}/resources/spm_modules/app/core/config.js"></script>
+<script src="${_base}/resources/spm_modules/app/jsp/changeLocale.js"></script>
 <script src="${_base}/resources/template/scripts/modular/frame.js"></script>
 <script src="${_base}/resources/template/scripts/modular/jqueryrotate.2.3.js"></script>
 <script>
@@ -36,7 +37,7 @@
     //get timezone
     Date.prototype.dst = function() {
         return this.getTimezoneOffset() < this.stdTimezoneOffset();
-    }
+    };
     var today = new Date();
 	//send to the back
 	$.post(_base+"/timezone.htm?offset="+today.stdTimezoneOffset());
