@@ -241,7 +241,7 @@
 .rbc_0 .rbcd_txt h4{font-size:30px;}
 .rbc_0 .rbcd_txt p{line-height:40px;padding:30px 0 60px;font-size:24px;}
 .rbc_0 .rbcd_txt dl dd{padding-left:8px;overflow:hidden;}
-.rbc_0 .rbcd_txt dl dd a{display:block;background:url(img/app/download.png) no-repeat 0 0;width:173px;height:53px;padding:10px 0 0 80px;border-radius:3px;margin-bottom:8px;color:#43c3ba;}
+.rbc_0 .rbcd_txt dl dd a{display:block;background:url(img/app/download.png) no-repeat 0 0;width:200px;height:53px;padding:0px 0 0 20px;border-radius:3px;margin-bottom:8px;color:#43c3ba;}
 .rbc_0 .rbcd_txt dl dd a.android{background-color:#ffffff;background-position:14px 10px;}
 .rbc_0 .rbcd_txt dl dd a.android:hover{background-color:#d2fffc;}
 .rbc_0 .rbcd_txt dl dd a.iphone{background-color:#ffffff;background-position:14px -60px;}
