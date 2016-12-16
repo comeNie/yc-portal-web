@@ -1,7 +1,8 @@
 define('app/jsp/balance/depositFund', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
-	    Widget = require('arale-widget/1.2.0/widget');
+		Dialog = require("optDialog/src/dialog"),
+		Widget = require('arale-widget/1.2.0/widget');
 
 	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
     var depositFundPager = Widget.extend({
@@ -9,7 +10,6 @@ define('app/jsp/balance/depositFund', function (require, exports, module) {
     	//事件代理
     	events: {
 			"click #recharge-popo":"_payOrder",
-			"click #completed":"_payRe",
 			"blur #orderAmount":"_check"
            	},
             
@@ -17,7 +17,7 @@ define('app/jsp/balance/depositFund', function (require, exports, module) {
     	setup: function () {
 			depositFundPager.superclass.setup.call(this);
 			$.i18n.properties({//加载资浏览器语言对应的资源文件
-				name: ["myaccount"], //资源文件名称，可以是数组
+				name: ["myaccount","payOrder"], //资源文件名称，可以是数组
 				path: _i18n_res, //资源文件路径
 				mode: 'both',
 				language: currentLan,
@@ -58,22 +58,26 @@ define('app/jsp/balance/depositFund', function (require, exports, module) {
 				$("#tishi1").html($.i18n.prop('account.tishi.validmoney'));
 				return;
 			}
-				$('#eject-mask').fadeIn(100);
-				$('#rechargepop').slideDown(100);
-
-			$('#close-completed').click(function(){
-				$('#eject-mask').fadeOut(200);
-				$('#rechargepop').slideUp(200);
-			})
+			new Dialog({
+				content:$.i18n.prop('pay.msg.tip'),
+				okValue: $.i18n.prop('pay.completed.btn'),
+				cancelValue: $.i18n.prop('pay.error.btn'),
+				title: $.i18n.prop('pay.result.title'),
+				ok:function(){
+					//跳转到我的订单
+					window.location.href=_base+"/p/balance/account";
+				},
+				cancel:function(){
+					//跳转到常见问题
+					window.location.href=_base+"/faq";
+				}
+			}).showModal();
 			$("#merchantUrl").val(window.location.href);
 				//提交
 			$("#toPayForm").submit();
 
 		},
-		_payRe:function () {
-			$('#eject-mask').fadeOut(200);
-			$('#rechargepop').slideUp(200);
-		}
+
     });
     
     module.exports = depositFundPager;
