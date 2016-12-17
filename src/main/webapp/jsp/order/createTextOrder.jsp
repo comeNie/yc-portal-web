@@ -9,8 +9,8 @@
 	<%@ include file="/inc/inc.jsp" %>
 	 <title><spring:message code="order.Translatepage"/></title>
 	<link rel="stylesheet" type="text/css" href="${_base}/resources/spm_modules/webuploader/webuploader.css">
-	<c:set var="order" value="${sessionScope.orderInfo}" scope="session" />
-	<c:set var="orderSummary" value="${sessionScope.orderSummary}" scope="session" />
+	<c:set var="order" value="${sessionScope.writeOrderInfo}" scope="session" />
+	<c:set var="orderSummary" value="${sessionScope.writeOrderSummary}" scope="session" />
 	<c:set var="fileInfoList" value="${sessionScope.fileInfoList}" scope="session" />
 	<c:set var="transType" value="${order.baseInfo.translateType}" />
 </head>
@@ -101,7 +101,7 @@
 					<p>
 						<!--  翻译内容-->
 						<textarea id="translateContent" maxlength="2000" name="translateContent"
-								  class="int-text textarea-xlarge-100 radius" placeholder="<spring:message code="order.transContent"/>">${order.productInfo.needTranslateInfo}</textarea>
+						  	class="int-text textarea-xlarge-100 radius" placeholder="<spring:message code="order.transContent"/>">${fn:replace(order.productInfo.needTranslateInfo,'<br />', '')}</textarea>
 					</p>
 					<!-- 上传文档btn -->
 					<p class="right"><input type="button" class="btn border-blue radius20 btn-80"

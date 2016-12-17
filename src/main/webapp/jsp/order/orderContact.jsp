@@ -13,8 +13,8 @@
             <c:set var="orderSummary" value="${sessionScope.oralOrderSummary}" scope="session" />
         </c:when>
         <c:otherwise>
-            <c:set var="order" value="${sessionScope.orderInfo}" scope="session" />
-            <c:set var="orderSummary" value="${sessionScope.orderSummary}" scope="session" />
+            <c:set var="order" value="${sessionScope.writeOrderInfo}" scope="session" />
+            <c:set var="orderSummary" value="${sessionScope.writeOrderSummary}" scope="session" />
         </c:otherwise>
     </c:choose>
 
