@@ -115,7 +115,7 @@ public class OrderLoginController {
             if (transType.equals("2")) {
                 subReq  = (OrderSubmissionRequest) session.getAttribute("oralOrderInfo");
             } else {
-                subReq  = (OrderSubmissionRequest) session.getAttribute("orderInfo");
+                subReq  = (OrderSubmissionRequest) session.getAttribute("writeOrderInfo");
             }
             subReq.setContactInfo(JSON.parseObject(contactInfoStr, ContactInfo.class));
             subReq.getBaseInfo().setUserId(UserUtil.getUserId());
@@ -137,8 +137,8 @@ public class OrderLoginController {
             //清楚会话中的 订单信息
             session.removeAttribute("oralOrderInfo");
             session.removeAttribute("oralOrderSummary");
-            session.removeAttribute("orderInfo");
-            session.removeAttribute("orderSummary");
+            session.removeAttribute("writeOrderInfo");
+            session.removeAttribute("writeOrderSummary");
             session.removeAttribute("fileInfoList");
         } catch (Exception e) {
             LOGGER.error("提交订单失败:",e);

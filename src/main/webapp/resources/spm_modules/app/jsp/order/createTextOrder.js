@@ -190,7 +190,10 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			} else {
 				baseInfo.translateType = "0"; //0：快速翻译 1：文档翻译
 				baseInfo.subFlag = "0"; // "0：系统自动报价 1：人工报价"
-				productInfo.needTranslateInfo = $("#translateContent").val();
+
+                var transContant = $("#translateContent").val();
+                transContant=transContant.replace(/\n|\r\n/g,"<br>");
+                productInfo.needTranslateInfo = transContant;
 				productInfo.translateInfo = "";
 				baseInfo.translateName = $("#translateContent").val().substring(0,15);
 			}
@@ -319,17 +322,22 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			} else {
 				//文字
 				$("#fy2").hide();
+                $("#clear-btn").show();
 				$("#selectFormatConv").val("2");
 				// $("#selectAddedSer").attr("disabled",true);
 				// $("#selectFormatConv").attr("disabled",true);
-				$("#selectAddedSer option:first").hide();
-				$("#selectFormatConv option:first").hide();
+				// $("#selectAddedSer option:first").hide();
+				// $("#selectFormatConv option:first").hide();
+
+                this.toggleOptionShow($('#selectAddedSer'),'',[0]);
+                this.toggleOptionShow($('#selectFormatConv'),'',[0]);
 			}
 
             //session 语言对
             if ($("#duadName").val() != '') {
                 $(".dropdown .selected").html($("#duadName").val());
                 $(".dropdown .selected").attr("value", $("#duadId").val());
+                this._transPrice();
             }
 
 			//翻译级别
@@ -377,6 +385,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			//加急
 			if ($("#isUrgent").val() == 'Y') {
 				$("#urgentOrder").attr("checked", true);
+				this._transPrice();
 			}
 
 
@@ -478,8 +487,10 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 
 			// $("#selectAddedSer").attr("disabled",true);
 			// $("#selectFormatConv").attr("disabled",true);
-			$("#selectAddedSer option:first").hide();
-			$("#selectFormatConv option:first").hide();
+			// $("#selectAddedSer option:first").hide();
+			// $("#selectFormatConv option:first").hide();
+            this.toggleOptionShow($('#selectAddedSer'),'',[0]);
+            this.toggleOptionShow($('#selectFormatConv'),'',[0]);
 
 			$("#inputFormatConv").hide();
 			$("#inputFormatConv").val("");
@@ -489,8 +500,10 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		_uploadFile:function() {
 			// $("#selectAddedSer").attr("disabled",false);
 			// $("#selectFormatConv").attr("disabled",false);
-			$("#selectAddedSer option:first").show();
-			$("#selectFormatConv option:first").show();
+			// $("#selectAddedSer option:first").show();
+			// $("#selectFormatConv option:first").show();
+            this.toggleOptionShow($('#selectAddedSer'),[0,1],'');
+            this.toggleOptionShow($('#selectFormatConv'),[0,1],'');
 
             if ( !WebUploader.Uploader.support() ) {
                 alert( 'Web Uploader 不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器');
@@ -576,7 +589,36 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			}
 			return t.split("").reverse().join("") + "." + r;
 		},
-		//初始化上传控件
+
+        /*参数说明：
+         需被控制的Select对象，
+         需显示的option序号(留空则不处理) eg:[0,1,3]，
+         需隐藏的option序号(留空则不处理) eg:[2,4,6]
+         */
+        toggleOptionShow:function(obj,arrShow,arrHide){
+            function arrHandle(arr,type){
+                if($.isArray(arr)){
+                    var len=arr.length;
+                    for(var i=0;i<len;i++){
+                        var optionNow=obj.find("option").eq(arr[i]);
+                        var optionP=optionNow.parent("span");
+                        if(type=="show"){
+                            if(optionP.size()){
+                                optionP.children().clone().replaceAll(optionP);
+                            }
+                        }else{
+                            if(!optionP.size()){
+                                optionNow.wrap("<span style='display:none'></span>");
+                            }
+                        }
+                    }
+                }
+        }
+        arrHandle(arrShow,"show");
+        arrHandle(arrHide,"hide");
+    },
+
+    //初始化上传控件
 		_initUpdate:function () {
 			var _this= this;
             var FILE_TYPES=['rar','zip','doc','docx','txt','pdf','jpg','png','gif'];

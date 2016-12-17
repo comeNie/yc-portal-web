@@ -65,6 +65,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import static java.util.Locale.SIMPLIFIED_CHINESE;
+import static javax.swing.text.html.CSS.getAttribute;
 
 /**
  * 通用订单
@@ -84,11 +85,18 @@ public class OrderController {
      * @return
      */
     @RequestMapping("/create/text")
-    public String createTextView(Model uiModel, String selPurpose){
+    public String createTextView(Model uiModel, String selPurpose, String flag, HttpSession session){
         uiModel.addAttribute("duadList", cacheServcie.getAllDuad(rb.getDefaultLocale(),CacheKey.OrderType.ORDER_TYPE_DOC));
         uiModel.addAttribute("domainList", cacheServcie.getAllDomain(rb.getDefaultLocale()));
         uiModel.addAttribute("purposeList", cacheServcie.getAllPurpose(rb.getDefaultLocale()));
         uiModel.addAttribute("selPurpose",selPurpose);
+
+        flag = StringUtils.isEmpty(flag) ? "": flag;
+        if (!flag.equals("return")) {
+            session.removeAttribute("writeOrderInfo");
+            session.removeAttribute("writeOrderSummary");
+            session.removeAttribute("fileInfoList");
+        }
 
         return "order/createTextOrder";
     }
@@ -98,8 +106,14 @@ public class OrderController {
      * @return
      */
     @RequestMapping("/create/oral")
-    public String createOralView(Model uiModel){
+    public String createOralView(Model uiModel, String flag, HttpSession session){
         uiModel.addAttribute("duadList", cacheServcie.getAllDuad(rb.getDefaultLocale(),CacheKey.OrderType.ORDER_TYPE_ORAL));
+
+        flag = StringUtils.isEmpty(flag) ? "": flag;
+        if (!flag.equals("return")) {
+            session.removeAttribute("oralOrderInfo");
+            session.removeAttribute("oralOrderSummary");
+        }
         return "order/createOralOrder";
     }
 
@@ -111,13 +125,6 @@ public class OrderController {
     @ResponseBody
     public ResponseData<String> addOrder(HttpServletRequest request, HttpSession session){
         ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-
-        //清楚会话中的 订单信息
-        session.removeAttribute("oralOrderInfo");
-        session.removeAttribute("oralOrderSummary");
-        session.removeAttribute("orderInfo");
-        session.removeAttribute("orderSummary");
-        session.removeAttribute("fileInfoList");
 
         //取到订单的信息，缓存到 session中
         String productInfoStr = request.getParameter("productInfo");
@@ -174,10 +181,9 @@ public class OrderController {
                 session.setAttribute("oralOrderInfo", subReq);
                 session.setAttribute("oralOrderSummary", orderSummary);
             } else {
-                session.setAttribute("orderInfo", subReq);
-                session.setAttribute("orderSummary", orderSummary);
+                    session.setAttribute("writeOrderInfo", subReq);
+                session.setAttribute("writeOrderSummary", orderSummary);
             }
-
 
             if (fileInfoList != null) {
                 session.setAttribute("fileInfoList", fileInfoList);
@@ -187,6 +193,9 @@ public class OrderController {
             } else {
                 resData.setData("-1");
             }
+
+            Object or1 = session.getAttribute("orderSummary");
+            Object or2 = session.getAttribute("oralOrderSummary");
             LOGGER.info("缓存的订单信息:", subReq);
         } catch(Exception e) {
             LOGGER.error("系统自动报价:",e);
