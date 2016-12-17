@@ -300,10 +300,10 @@ public class CustomerOrderController {
      * @throws Exception
      */
     @RequestMapping(value = "/gotoPay")
-    public void gotoPay(
+    public String gotoPay(
             String orderId,Long orderAmount,String currencyUnit,String merchantUrl,String payOrgCode,
             String orderType,String translateName,
-            HttpServletResponse response)
+            HttpServletResponse response,Model uiModel)
             throws Exception {
         //租户
         String tenantId= ConfigUtil.getProperty("TENANT_ID");
@@ -334,10 +334,13 @@ public class CustomerOrderController {
         map.put("infoMd5", infoMd5);
         LOGGER.info("开始前台通知:" + map);
         String htmlStr = PaymentUtil.generateAutoSubmitForm(ConfigUtil.getProperty("ACTION_URL"), map);
+        uiModel.addAttribute("paramsMap",map);
+        uiModel.addAttribute("actionUrl",ConfigUtil.getProperty("ACTION_URL"));
         LOGGER.info("发起支付申请:" + htmlStr);
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().write(htmlStr);
-        response.getWriter().flush();
+//        response.setStatus(HttpServletResponse.SC_OK);
+//        response.getWriter().write(htmlStr);
+//        response.getWriter().flush();
+        return "gotoPay";
     }
 
     /**

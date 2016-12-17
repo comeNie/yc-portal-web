@@ -160,9 +160,9 @@ public class BalanceController {
      * @throws Exception
      */
     @RequestMapping(value = "/gotoPay")
-    public void gotoPay(
+    public String gotoPay(
             double orderAmount,String currencyUnit,String merchantUrl,String payOrgCode,
-            HttpServletResponse response)
+            HttpServletResponse response,Model uiModel)
             throws Exception {
         //租户
         String tenantId= ConfigUtil.getProperty("TENANT_ID");
@@ -182,7 +182,7 @@ public class BalanceController {
         map.put("requestSource", Constants.SELF_SOURCE);//终端来源
         map.put("currencyUnit",currencyUnit);//币种
         map.put("orderAmount", amount);//金额
-//        map.put("subject", translateName);//订单名称
+        map.put("subject", "账号充值");//订单名称
         map.put("payOrgCode",payOrgCode);
         // 加密
         String infoStr = orderId+ VerifyUtil.SEPARATOR
@@ -194,10 +194,13 @@ public class BalanceController {
         LOGGER.info("开始前台通知:" + map);
         String htmlStr = PaymentUtil.generateAutoSubmitForm(ConfigUtil.getProperty("ACTION_URL"), map);
         LOGGER.info("发起支付申请:" + htmlStr);
-        response.setCharacterEncoding("UTF-8");
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().write(htmlStr);
-        response.getWriter().flush();
+        uiModel.addAttribute("paramsMap",map);
+        uiModel.addAttribute("actionUrl",ConfigUtil.getProperty("ACTION_URL"));
+//        response.setCharacterEncoding("UTF-8");
+//        response.setStatus(HttpServletResponse.SC_OK);
+//        response.getWriter().write(htmlStr);
+//        response.getWriter().flush();
+        return "gotoPay";
     }
 
 }
