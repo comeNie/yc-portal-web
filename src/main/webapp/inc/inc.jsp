@@ -32,4 +32,5 @@
 <link href="${uedroot}/css/modular/frame.css" rel="stylesheet" type="text/css"/>
 <link href="${uedroot}/css/modular/headr-footer.css" rel="stylesheet" type="text/css"/>
 <link href="${uedroot}/css/modular/modular.css" rel="stylesheet" type="text/css"/>
+<script src="${_base}/resources/spm_modules/app/jsp/changeLocale.js"></script>
 
