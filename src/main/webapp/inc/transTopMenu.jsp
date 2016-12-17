@@ -51,3 +51,5 @@
   		</div>
   	</div>
   </div>
+<%--适应二级菜单选中--%>
+<script >var divEleId;</script>
