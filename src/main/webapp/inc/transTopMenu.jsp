@@ -27,8 +27,8 @@
 					</select>
   					<i class="icon-caret-down dingw"></i>
   				</li>
-  				<li class="nav-icon"><a href="#"><i class="icon iconfont">&#xe60b;</i></a></li>
-  				<li class="nav-icon mt-2"><a href="#"><i class="icon iconfont">&#xe60a;</i><span class="message">3</span></a></li>
+  				<li class="nav-icon"><a href="${_base}/findyee"><i class="icon iconfont">&#xe60b;</i></a></li>
+  				<%--<li class="nav-icon mt-2"><a href="#"><i class="icon iconfont">&#xe60a;</i><span class="message">3</span></a></li>--%>
 				<li class="user"><a href="javaScript:void(0)" class="yonh"><span
                         id="top_username"><c:choose>
                     <c:when test="${fn:length(user_session_key.username)>8}">
