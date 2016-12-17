@@ -8,12 +8,12 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>GoToPay</title>
 </head>
-<body >
+<body onload="sub();">
 	<form id="pay_form" name="pay_form" action="${actionUrl}" METHOD="post">
 		<c:forEach var="par" items="${paramsMap}">
 			<input type="hidden" name="${par.key}" value="${par.value}">
 		</c:forEach>
-		<input type="submit" value="submit">
+		<%--<input type="submit" value="submit">--%>
 	</form>
 </body>
 <script language="javascript">
