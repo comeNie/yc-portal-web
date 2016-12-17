@@ -28,6 +28,7 @@
   					<i class="icon-caret-down dingw"></i>
   				</li>
   				<li class="nav-icon"><a href="${_base}/findyee"><i class="icon iconfont">&#xe60b;</i></a></li>
+				<%--暂不实现，隐藏掉--%>
   				<%--<li class="nav-icon mt-2"><a href="#"><i class="icon iconfont">&#xe60a;</i><span class="message">3</span></a></li>--%>
 				<li class="user"><a href="javaScript:void(0)" class="yonh"><span
                         id="top_username"><c:choose>
