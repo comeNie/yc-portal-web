@@ -282,7 +282,7 @@ public class CustomerOrderController {
         if (responseHeader==null||responseHeader.isSuccess()){
             orderService.orderPayProcessResult(userId,deductParam.getAccountId(),
                     Long.parseLong(deductParam.getExternalId()),orderType,
-                    deductParam.getTotalAmount(),"YE",deductResponse.getSerialNo(), DateUtil.getFutureTime());
+                    deductParam.getTotalAmount(),"YE",deductResponse.getSerialNo(), DateUtil.getSysDate());
             payResult = true;
         }
         //订单号
