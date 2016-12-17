@@ -236,13 +236,13 @@ define('app/jsp/order/orderContact', function (require, exports, module) {
 
             if(translateType == 2) { //口译
                 // window.history.go($("#toCreateOrder").attr("skip"));
-                window.location.href= _base + "/oral";
+                window.location.href= _base + "/oral?flag=return";
             } else {
                 var remark = $.trim($("#remark").val());
                 if (remark != '')
-                    window.location.href= _base + "/order/create/text?remark="+window.encodeURI(remark);
+                    window.location.href= _base + "/order/create/text?flag=return&remark="+window.encodeURI(remark);
                 else
-                    window.location.href= _base + "/written";
+                    window.location.href= _base + "/order/create/text?flag=return";
             }
 
         }

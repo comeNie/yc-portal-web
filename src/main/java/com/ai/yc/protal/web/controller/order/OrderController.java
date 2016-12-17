@@ -85,11 +85,18 @@ public class OrderController {
      * @return
      */
     @RequestMapping("/create/text")
-    public String createTextView(Model uiModel, String selPurpose, HttpSession session){
+    public String createTextView(Model uiModel, String selPurpose, String flag, HttpSession session){
         uiModel.addAttribute("duadList", cacheServcie.getAllDuad(rb.getDefaultLocale(),CacheKey.OrderType.ORDER_TYPE_DOC));
         uiModel.addAttribute("domainList", cacheServcie.getAllDomain(rb.getDefaultLocale()));
         uiModel.addAttribute("purposeList", cacheServcie.getAllPurpose(rb.getDefaultLocale()));
         uiModel.addAttribute("selPurpose",selPurpose);
+
+        flag = StringUtils.isEmpty(flag) ? "": flag;
+        if (!flag.equals("return")) {
+            session.removeAttribute("writeOrderInfo");
+            session.removeAttribute("writeOrderSummary");
+            session.removeAttribute("fileInfoList");
+        }
 
         return "order/createTextOrder";
     }
@@ -99,8 +106,14 @@ public class OrderController {
      * @return
      */
     @RequestMapping("/create/oral")
-    public String createOralView(Model uiModel){
+    public String createOralView(Model uiModel, String flag, HttpSession session){
         uiModel.addAttribute("duadList", cacheServcie.getAllDuad(rb.getDefaultLocale(),CacheKey.OrderType.ORDER_TYPE_ORAL));
+
+        flag = StringUtils.isEmpty(flag) ? "": flag;
+        if (!flag.equals("return")) {
+            session.removeAttribute("oralOrderInfo");
+            session.removeAttribute("oralOrderSummary");
+        }
         return "order/createOralOrder";
     }
 
@@ -112,14 +125,6 @@ public class OrderController {
     @ResponseBody
     public ResponseData<String> addOrder(HttpServletRequest request, HttpSession session){
         ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-
-
-        //清楚会话中的 订单信息
-        session.removeAttribute("oralOrderInfo");
-        session.removeAttribute("oralOrderSummary");
-        session.removeAttribute("writeOrderInfo");
-        session.removeAttribute("writeOrderSummary");
-        session.removeAttribute("fileInfoList");
 
         //取到订单的信息，缓存到 session中
         String productInfoStr = request.getParameter("productInfo");

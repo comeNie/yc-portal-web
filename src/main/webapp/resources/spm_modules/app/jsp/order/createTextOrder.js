@@ -337,6 +337,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
             if ($("#duadName").val() != '') {
                 $(".dropdown .selected").html($("#duadName").val());
                 $(".dropdown .selected").attr("value", $("#duadId").val());
+                this._transPrice();
             }
 
 			//翻译级别
