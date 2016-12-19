@@ -55,3 +55,5 @@
   		</div>
   	</div>
   </div>
+<%--菜单选中--%>
+<script >var current = "",divEleId;</script>
