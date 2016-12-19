@@ -151,13 +151,13 @@ define("opt-paging/aiopt.simplePagination", ["jquery","simplePagination/jquery.s
         	var messageId = this.options.messageId;
         	if(messageId){
 	        	if(imageType == "1"){
-	        		document.getElementById(messageId).innerHTML = "<li class='dialog-icon-notquery-1'></li><li>抱歉没有找到相关数据</li>";
+	        		document.getElementById(messageId).innerHTML = "<li class='dialog-icon-notquery-1'></li><li>"+$.i18n.prop('com.ajax.req.fail.null')+"</li>";
 	            	document.getElementById(messageId).className = "query-product-msgimage not-query";
 	
 	//        		this.$element.addClass("query-product-msgimage not-query");
 	//            	this.$element.get(0).innerHTML = "<li class='dialog-icon-notquery-1'></li><li>抱歉没有找到相关商品，更换搜索词试一试吧！</li>";
 	        	}else{
-	        		document.getElementById(messageId).innerHTML = "<li class='dialog-icon-notquery'></li><li>抱歉没有查询到相关数据</li>";
+	        		document.getElementById(messageId).innerHTML = "<li class='dialog-icon-notquery'></li><li>"+$.i18n.prop('com.ajax.req.fail.null')+"</li>";
 	            	document.getElementById(messageId).className = "not-query pt-20 pb-20";
 	        		
 	//        		this.$element.addClass("not-query pt-20 pb-20");
