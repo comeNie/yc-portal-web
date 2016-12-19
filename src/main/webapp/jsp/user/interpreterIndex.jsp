@@ -149,6 +149,14 @@
 </div>
 <%@ include file="/inc/userFoot.jsp"%>
 </body>
+<script type="text/javascript">
+	var interpretrMsg = {
+			"noCertificationMsg" : '<spring:message code="ycaccountcenter.interpreterIndex.noCertificationMsg"/>',
+			"goCertificationMsg" : '<spring:message code="ycaccountcenter.interpreterIndex.goAuthentication"/>',
+			"cancel":'<spring:message code="ycaccountcenter.interpreterIndex.cancel"/>',
+			"showTip":'<spring:message code="ycaccountcenter.js.showTitleMsg"/>',
+	}
+</script>
 <script id="orderTemple" type="text/template">
     
     <tr>

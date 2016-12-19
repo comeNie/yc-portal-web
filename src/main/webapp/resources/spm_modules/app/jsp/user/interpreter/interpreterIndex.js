@@ -8,6 +8,20 @@ define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, mo
 	require("app/util/jsviews-ext");
 	// 实例化AJAX控制处理对象
 	var ajaxController = new AjaxController();
+	var showMsg = function(msg){
+    	var d = Dialog({
+        		content:interpretrMsg.noCertificationMsg,
+    			okValue: interpretrMsg.goCertificationMsg,
+    			cancelValue: interpretrMsg.cancel,
+    			title:interpretrMsg.showTip,
+    			ok:function(){
+    				window.open('http://tran.yeecloud.com/yctranslator/redirect.html?v=page/yctranslator/login/logint&language=zh');
+    			},
+    			cancel:function(){
+    				d.close();
+    			}
+    		}).showModal();
+    };
 	// 定义页面组件类
 	var interpreterIndexPager = Widget
 			.extend({
@@ -23,6 +37,7 @@ define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, mo
 						this._queryOrder();
 						this._queryLspInfo();
 					}else{
+						 showMsg("ssss");
 						 $("#no_rz_container").show();
  	            	}
 					
