@@ -376,8 +376,9 @@
                                 <p class="word"><spring:message code="myOrder.Amountpaid"/>:</p>
                                 <p><b>
                                 	<c:set var="paidFee"><fmt:formatNumber value="${OrderDetails.orderFee.paidFee/1000}" pattern="#,##0.00#"/></c:set>  
-                               		</b><c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb" argumentSeparator="@" arguments="${paidFee}" /> </c:if>
+                               		<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb" argumentSeparator="@" arguments="${paidFee}" /> </c:if>
                                		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar" argumentSeparator="@" arguments="${paidFee}"/> </c:if>
+                                </b>
                                	</p>
                             </li>
                         </ul>
