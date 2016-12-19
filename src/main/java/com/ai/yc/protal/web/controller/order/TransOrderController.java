@@ -57,71 +57,58 @@ public class TransOrderController {
     @Autowired
     private CacheServcie cacheServcie;
     @Autowired
-    ResWebBundle rb;
-    @Autowired
-    OrderService orderService;
-    
+    private ResWebBundle rb;
+
+    private static String TRANS_ERROR_PAGE = "transOrder/orderError";
+    private static int FILE_MAX_SIZE = 104857600; //100*1024*1024 100M
     /**
      * 译员订单,订单列表
      * @return
      */
     @RequestMapping("/list/view")
     public String orderListView(Model uiModel, String state){
-        try {
-            uiModel.addAttribute("domainList", cacheServcie.getAllDomain(rb.getDefaultLocale())); //领域
-            uiModel.addAttribute("purpostList", cacheServcie.getAllPurpose(rb.getDefaultLocale())); //用途
 
-            IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
-            QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
+        uiModel.addAttribute("domainList", cacheServcie.getAllDomain(rb.getDefaultLocale())); //领域
+        uiModel.addAttribute("purpostList", cacheServcie.getAllPurpose(rb.getDefaultLocale())); //用途
 
-            //查询订单大厅数量
-            QueryOrdCountResponse taskNumRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            String userId = UserUtil.getUserId();
+        IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
+        QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
 
-//            TODO 暂时关闭
-            //查询译员信息
-            IYCTranslatorServiceSV translatorServiceSV = DubboConsumerFactory.getService(IYCTranslatorServiceSV.class);
-            SearchYCTranslatorSkillListRequest ycReq = new SearchYCTranslatorSkillListRequest();
-            ycReq.setTenantId(Constants.DEFAULT_TENANT_ID);
-            ycReq.setUserId(UserUtil.getUserId());
-            YCTranslatorSkillListResponse ycRes = translatorServiceSV.getTranslatorSkillList(ycReq);
-            LOGGER.info("译员信息: "+JSONObject.toJSONString(ycRes));
-            //0：认证不通过，1：认证通过
-            if(!"1".equals(ycRes.getApproveState()) ) {
-                return "redirect:/p/security/interpreterIndex";
-            }
-//            "10、译员
-//            11、项目经理
-//            12、超级管理员"
+        String userId = UserUtil.getUserId();
 
-//            YCTranslatorInfoResponse ycRes = new YCTranslatorInfoResponse();
-//            ycRes.setUserId(UserUtil.getUserId());
-//            ycRes.setLspId("10001");
-//            ycRes.setLspRole("10");
-
-            ordCountReq.setInterperId(userId);//设置译员编码
-            //如果是LSP的管理员或项目经理
-            if ("12".equals(ycRes.getLspRole()) || "11".equals(ycRes.getLspRole())) {
-                ordCountReq.setLspId((String) uiModel.asMap().get("lspId"));
-                ordCountReq.setInterperId(null);
-            }
-            
-            QueryOrdCountResponse ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
-            Map<String,Integer> stateCount = ordCountRes.getCountMap();
-
-            // 21：已领取
-            uiModel.addAttribute("ReceivedCount", stateCount.get(OrderConstants.State.RECEIVE));
-            //211：已分配
-            uiModel.addAttribute("AssignedCount", stateCount.get(OrderConstants.State.ASSIGNED));
-            //23：翻译中
-            uiModel.addAttribute("TranteCount", stateCount.get(OrderConstants.State.TRANSLATING));
-            
-            uiModel.addAttribute("interperInfo", ycRes);
-            uiModel.addAttribute("state", state);
-        } catch (Exception e) {
-           LOGGER.info("查询译员信息失败：", e);
+        //查询译员信息
+        IYCTranslatorServiceSV translatorServiceSV = DubboConsumerFactory.getService(IYCTranslatorServiceSV.class);
+        SearchYCTranslatorSkillListRequest ycReq = new SearchYCTranslatorSkillListRequest();
+        ycReq.setTenantId(Constants.DEFAULT_TENANT_ID);
+        ycReq.setUserId(UserUtil.getUserId());
+        YCTranslatorSkillListResponse ycRes = translatorServiceSV.getTranslatorSkillList(ycReq);
+        LOGGER.info("译员信息: "+JSONObject.toJSONString(ycRes));
+        //0：认证不通过，1：认证通过
+        if(!"1".equals(ycRes.getApproveState()) ) {
+            return "redirect:/p/security/interpreterIndex";
         }
-      
+
+        ordCountReq.setInterperId(userId);//设置译员编码
+        //如果是LSP的管理员或项目经理
+        if ("12".equals(ycRes.getLspRole()) || "11".equals(ycRes.getLspRole())) {
+            ordCountReq.setLspId((String) uiModel.asMap().get("lspId"));
+            ordCountReq.setInterperId(null);
+        }
+
+        //查询订单大厅数量
+        QueryOrdCountResponse ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+        Map<String,Integer> stateCount = ordCountRes.getCountMap();
+
+        // 21：已领取
+        uiModel.addAttribute("ReceivedCount", stateCount.get(OrderConstants.State.RECEIVE));
+        //211：已分配
+        uiModel.addAttribute("AssignedCount", stateCount.get(OrderConstants.State.ASSIGNED));
+        //23：翻译中
+        uiModel.addAttribute("TranteCount", stateCount.get(OrderConstants.State.TRANSLATING));
+
+        uiModel.addAttribute("interperInfo", ycRes);
+        uiModel.addAttribute("state", state);
+
         return "transOrder/orderList";
     }
     
@@ -134,53 +121,48 @@ public class TransOrderController {
     @RequestMapping("/{orderId}")
     public String orderInfoView(@PathVariable("orderId") String orderId, Model uiModel){
         if (StringUtils.isEmpty(orderId)) {
-            return "transOrder/orderError";
+            return TRANS_ERROR_PAGE;
         }
         
-        try {
-            IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
 
-            QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
-            orderDetailsReq.setOrderId(Long.valueOf(orderId));
-            orderDetailsReq.setChgStateFlag(null);
+        IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
 
-            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
-            ResponseHeader resHeader = orderDetailsRes.getResponseHeader();
-            LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
-            //如果返回值为空,或返回信息中包含错误信息,返回失败
-            if (orderDetailsRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-                return "transOrder/orderError";
-            }
+        QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
+        orderDetailsReq.setOrderId(Long.valueOf(orderId));
+        orderDetailsReq.setChgStateFlag(null);
+
+        QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
+        ResponseHeader resHeader = orderDetailsRes.getResponseHeader();
+        LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
+        //如果返回值为空,或返回信息中包含错误信息,返回失败
+        if (orderDetailsRes.getOrderId()==null|| (resHeader!=null && (!resHeader.isSuccess()))){
+            return TRANS_ERROR_PAGE;
+        }
 //  getProdLevels  返回的是id,前台把 id转成对应的 中英文文字。    
 //          ("100110", "陪同翻译");("100120", "交替传译");("100130", "同声翻译");
 //          ("100210", "标准级");("100220", "专业级");("100230", "出版级");
-            
-            List<ProdFileVo> prodFileVos = orderDetailsRes.getProdFiles();
-            int uUploadCount = 0; //可以上传文件的数量
-            IDSSClient client = DSSClientFactory.getDSSClient(Constants.IPAAS_ORDER_FILE_DSS);
-            Map<String, Long> fileSizeMap = new HashMap<>();
-            for(ProdFileVo prodFileVo : prodFileVos) {
-                String transId = prodFileVo.getFileTranslateId();
-                if (StringUtils.isEmpty(transId)) {
-                    uUploadCount ++;
-                } else {
-                    fileSizeMap.put(transId, client.getFileSize(transId));
-                }
-            }
 
-            uiModel.addAttribute("UUploadCount", uUploadCount);
-//            orderDetailsRes.setState("20");//TODO... 模拟待领取
-//            orderDetailsRes.setDisplayFlag("20");//TODO... 模拟待领取
-            //若是待领取,则获取用户信息
-            if ("20".equals(orderDetailsRes.getDisplayFlag())){
-                getUserInfo(uiModel);
+        List<ProdFileVo> prodFileVos = orderDetailsRes.getProdFiles();
+        int uUploadCount = 0; //可以上传文件的数量
+        IDSSClient client = DSSClientFactory.getDSSClient(Constants.IPAAS_ORDER_FILE_DSS);
+        Map<String, Long> fileSizeMap = new HashMap<>();
+        for(ProdFileVo prodFileVo : prodFileVos) {
+            String transId = prodFileVo.getFileTranslateId();
+            if (StringUtils.isEmpty(transId)) {
+                uUploadCount ++;
+            } else {
+                fileSizeMap.put(transId, client.getFileSize(transId));
             }
-            uiModel.addAttribute("OrderDetails", orderDetailsRes);
-            uiModel.addAttribute("FileSizeMap", fileSizeMap);
-        } catch (Exception e) {
-            LOGGER.error("查询订单详情失败:",e);
-            return "transOrder/orderError";
         }
+
+        uiModel.addAttribute("UUploadCount", uUploadCount);
+        //若是待领取,则获取用户信息
+        if ("20".equals(orderDetailsRes.getDisplayFlag())){
+            getUserInfo(uiModel);
+        }
+        uiModel.addAttribute("OrderDetails", orderDetailsRes);
+        uiModel.addAttribute("FileSizeMap", fileSizeMap);
+
         return "transOrder/orderInfo";
     }
 
@@ -193,10 +175,6 @@ public class TransOrderController {
         uiModel.addAttribute("lspId",userInfoResponse.getLspId());//lsp标识
         uiModel.addAttribute("lspRole",userInfoResponse.getLspRole());//lsp角色
         uiModel.addAttribute("vipLevel",userInfoResponse.getVipLevel());//译员等级
-//        //TODO... 模拟数据
-//        uiModel.addAttribute("lspId","10086");//lsp标识
-//        uiModel.addAttribute("lspRole","10");//lsp角色
-//        uiModel.addAttribute("vipLevel","4");//译员等级
     }
     
     /**
@@ -208,68 +186,63 @@ public class TransOrderController {
     @RequestMapping("/save")
     @ResponseBody
     public ResponseData<String> orderSubmit(@RequestParam("orderId") Long orderId) {
-        ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "OK");
-        try {
-            IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
+        ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "OK");
 
-            QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
-            orderDetailsReq.setOrderId(orderId);
-            orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
+        IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
 
-            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
-            ResponseHeader resHeader = orderDetailsRes.getResponseHeader();
-            LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
-            //如果返回值为空,或返回信息中包含错误信息,返回失败
-            if (orderDetailsRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
-                return resData;
-            }
-            
-                
-            String transferType = orderDetailsRes.getTranslateType();
-            //文本翻译  翻译信息为空，则返回失败
-            if (transferType.equalsIgnoreCase("0") && 
-                    StringUtils.isEmpty(orderDetailsRes.getProd().getTranslateInfo())) {
-                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage("order.info.transNull"));
-                return resData;
-            }
-            
-            //文档翻译 上传文件为0，则返回失败
-            if (transferType.equalsIgnoreCase("1")) {
-                List<ProdFileVo> files = orderDetailsRes.getProdFiles();
-                int filesCount = 0; //上传文件个数
-                for (ProdFileVo fileVo : files) {
-                    if (StringUtils.isNotEmpty(fileVo.getFileTranslateId())) {
-                        filesCount ++;
-                    }
-                }
-                
-                if (filesCount <= 0) {
-                    resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
-                            rb.getMessage("order.info.uploadFileNull"));
-                    return resData;
-                }
-            }
-            
-            IOrderStateUpdateSV iOrderStateUpdateSV = DubboConsumerFactory.getService(IOrderStateUpdateSV.class);
-            OrderStateUpdateRequest stateReq = new OrderStateUpdateRequest();
-            stateReq.setOrderId(orderId);
-            stateReq.setState(OrderConstants.State.UN_CHECK); //待审核
-            stateReq.setDisplayFlag(OrderConstants.State.TRANSLATING);
-            stateReq.setUserId(UserUtil.getUserId());
-            
-            OrderStateUpdateResponse stateRes = iOrderStateUpdateSV.updateState(stateReq);
-            resHeader = stateRes.getResponseHeader();
-            //如果返回值为空,或返回信息中包含错误信息
-            if (stateRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
-            }
-            
-        } catch(Exception e) {
-            LOGGER.error("提交订单失败:", e);
-            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
+        QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
+        orderDetailsReq.setOrderId(orderId);
+        orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
+
+        QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
+        ResponseHeader resHeader = orderDetailsRes.getResponseHeader();
+        LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
+        //如果返回值为空,或返回信息中包含错误信息,返回失败
+        if (orderDetailsRes.getOrderId()==null|| (resHeader!=null && (!resHeader.isSuccess()))){
+            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
+            return resData;
         }
-        
+
+
+        String transferType = orderDetailsRes.getTranslateType();
+        //文本翻译  翻译信息为空，则返回失败
+        if ("0".equals(transferType) &&
+                StringUtils.isEmpty(orderDetailsRes.getProd().getTranslateInfo())) {
+            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage("order.info.transNull"));
+            return resData;
+        }
+
+        //文档翻译 上传文件为0，则返回失败
+        if ("1".equals(transferType)) {
+            List<ProdFileVo> files = orderDetailsRes.getProdFiles();
+            int filesCount = 0; //上传文件个数
+            for (ProdFileVo fileVo : files) {
+                if (StringUtils.isNotEmpty(fileVo.getFileTranslateId())) {
+                    filesCount ++;
+                }
+            }
+
+            if (filesCount <= 0) {
+                resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE,
+                        rb.getMessage("order.info.uploadFileNull"));
+                return resData;
+            }
+        }
+
+        IOrderStateUpdateSV iOrderStateUpdateSV = DubboConsumerFactory.getService(IOrderStateUpdateSV.class);
+        OrderStateUpdateRequest stateReq = new OrderStateUpdateRequest();
+        stateReq.setOrderId(orderId);
+        stateReq.setState(OrderConstants.State.UN_CHECK); //待审核
+        stateReq.setDisplayFlag(OrderConstants.State.TRANSLATING);
+        stateReq.setUserId(UserUtil.getUserId());
+
+        OrderStateUpdateResponse stateRes = iOrderStateUpdateSV.updateState(stateReq);
+        resHeader = stateRes.getResponseHeader();
+        //如果返回值为空,或返回信息中包含错误信息
+        if (stateRes.getOrderId()==null|| (resHeader!=null && (!resHeader.isSuccess()))){
+            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
+        }
+
         return resData;
     }
     
@@ -286,27 +259,22 @@ public class TransOrderController {
         String orderId = request.getParameter("orderId");
         String translateInfo = request.getParameter("translateInfo");
         
-        try {
-            ITranslateSaveSV iTranslateSaveSV = DubboConsumerFactory.getService(ITranslateSaveSV.class);
-            SaveTranslateInfoRequest updateReq = new SaveTranslateInfoRequest();
-            updateReq.setOrderId(Long.valueOf(orderId));
-            
-            if (StringUtils.isNotEmpty(translateInfo)) {
-                updateReq.setTranslateInfo(translateInfo);
-            }
-            updateReq.setOrderId(Long.valueOf(orderId));
-            
-            BaseResponse updateRes = iTranslateSaveSV.saveTranslateInfo(updateReq);
-            ResponseHeader resHeader = updateRes.getResponseHeader();
-            //如果返回值为空,或返回信息中包含错误信息
-            if (updateRes!=null && (!resHeader.isSuccess())){
-                resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
-            }
-        } catch(Exception e) {
-            LOGGER.error("修改订单信息失败：", e);
+
+        ITranslateSaveSV iTranslateSaveSV = DubboConsumerFactory.getService(ITranslateSaveSV.class);
+        SaveTranslateInfoRequest updateReq = new SaveTranslateInfoRequest();
+        updateReq.setOrderId(Long.valueOf(orderId));
+
+        if (StringUtils.isNotEmpty(translateInfo)) {
+            updateReq.setTranslateInfo(translateInfo);
+        }
+        updateReq.setOrderId(Long.valueOf(orderId));
+
+        BaseResponse updateRes = iTranslateSaveSV.saveTranslateInfo(updateReq);
+        //如果返回值为空,或返回信息中包含错误信息
+        if (!updateRes.getResponseHeader().isSuccess()){
             resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
         }
-        
+
         return resData;
     }
     
@@ -322,26 +290,21 @@ public class TransOrderController {
     public ResponseData<String> updateOrderState(@RequestParam("orderId") Long orderId, @RequestParam("state") String state
             ,@RequestParam("displayFlag") String displayFlag) {
         ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "OK");
-        try {
-            IOrderStateUpdateSV iOrderStateUpdateSV = DubboConsumerFactory.getService(IOrderStateUpdateSV.class);
-            OrderStateUpdateRequest stateReq = new OrderStateUpdateRequest();
-            stateReq.setOrderId(orderId);
-            stateReq.setState(state);
-            stateReq.setDisplayFlag(displayFlag);
-            stateReq.setUserId(UserUtil.getUserId());
-           
-            OrderStateUpdateResponse stateRes = iOrderStateUpdateSV.updateState(stateReq);
-            ResponseHeader resHeader = stateRes.getResponseHeader();
-            //如果返回值为空,或返回信息中包含错误信息
-            if (stateRes.getOrderId()==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-                resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
-            }
-            
-        } catch(Exception e) {
-            LOGGER.error("修改订单状态失败：", e);
+
+        IOrderStateUpdateSV iOrderStateUpdateSV = DubboConsumerFactory.getService(IOrderStateUpdateSV.class);
+        OrderStateUpdateRequest stateReq = new OrderStateUpdateRequest();
+        stateReq.setOrderId(orderId);
+        stateReq.setState(state);
+        stateReq.setDisplayFlag(displayFlag);
+        stateReq.setUserId(UserUtil.getUserId());
+
+        OrderStateUpdateResponse stateRes = iOrderStateUpdateSV.updateState(stateReq);
+        ResponseHeader resHeader = stateRes.getResponseHeader();
+        //如果返回值为空,或返回信息中包含错误信息
+        if (stateRes.getOrderId()==null|| (resHeader!=null && (!resHeader.isSuccess()))){
             resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
         }
-        
+
         return resData;
     }
     
@@ -356,44 +319,40 @@ public class TransOrderController {
     @ResponseBody 
     public ResponseData<String> deleteFile(@RequestParam("orderId") Long orderId, @RequestParam("fileId") String fileId){
         ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "OK");
-        
-        try {
-            //查询订单
-            IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
 
-            QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
-            orderDetailsReq.setOrderId(orderId);
-            orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
+        //查询订单
+        IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
 
-            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
-            List<ProdFileVo> prodFiles = orderDetailsRes.getProdFiles();
-            
-            //更新订单信息
-            for(ProdFileVo prodFile : prodFiles) {
-                if (prodFile.getFileTranslateId().equals(fileId)) {
-                    prodFile.setFileTranslateId(null);
-                    prodFile.setFileTranslateName(null);
-                    break;
-                }
+        QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
+        orderDetailsReq.setOrderId(orderId);
+        orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
+
+        QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
+        List<ProdFileVo> prodFiles = orderDetailsRes.getProdFiles();
+
+        //更新订单信息
+        for(ProdFileVo prodFile : prodFiles) {
+            if (prodFile.getFileTranslateId().equals(fileId)) {
+                prodFile.setFileTranslateId(null);
+                prodFile.setFileTranslateName(null);
+                break;
             }
-            
-            //保存文件信息到订单中
-            ITranslateSaveSV iTranslateSaveSV = DubboConsumerFactory.getService(ITranslateSaveSV.class);
-            
-            SaveTranslateInfoRequest updateReq = new SaveTranslateInfoRequest();
-            updateReq.setOrderId(orderId);
-            List<TranslateFileVo> uProdFileVo = JSONArray.parseArray(JSONObject.toJSONString(prodFiles), TranslateFileVo.class)  ;
-            updateReq.setFileVos(uProdFileVo);
-            
-            BaseResponse updateRes = iTranslateSaveSV.saveTranslateInfo(updateReq);
-            ResponseHeader resHeader = updateRes.getResponseHeader();
-            //如果返回值为空,或返回信息中包含错误信息
-            if (resHeader!=null && (!resHeader.isSuccess())){
-                resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
-            }
-        } catch (Exception e) {
-            LOGGER.error("删除译员文件失败", e);
         }
+
+        //保存文件信息到订单中
+        ITranslateSaveSV iTranslateSaveSV = DubboConsumerFactory.getService(ITranslateSaveSV.class);
+
+        SaveTranslateInfoRequest updateReq = new SaveTranslateInfoRequest();
+        updateReq.setOrderId(orderId);
+        List<TranslateFileVo> uProdFileVo = JSONArray.parseArray(JSONObject.toJSONString(prodFiles), TranslateFileVo.class)  ;
+        updateReq.setFileVos(uProdFileVo);
+
+        BaseResponse updateRes = iTranslateSaveSV.saveTranslateInfo(updateReq);
+        //如果返回值为空,或返回信息中包含错误信息
+        if (!updateRes.getResponseHeader().isSuccess()){
+            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
+        }
+
         return resData;
     }
     
@@ -442,7 +401,7 @@ public class TransOrderController {
                 }
             }
 
-            if (allFileSize > 100*1024*1024) {
+            if (allFileSize > FILE_MAX_SIZE) {
                 isUpload = false;
                 errInfo = rb.getMessage("order.info.fileMaxSize");
             }
@@ -475,9 +434,8 @@ public class TransOrderController {
             updateReq.setFileVos(uProdFileVo);
             
             BaseResponse updateRes = iTranslateSaveSV.saveTranslateInfo(updateReq);
-            ResponseHeader resHeader = updateRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息
-            if (resHeader!=null && (!resHeader.isSuccess())){
+            if (!updateRes.getResponseHeader().isSuccess()){
                 resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
             }
         } catch (Exception e) {
