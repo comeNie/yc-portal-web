@@ -55,5 +55,5 @@
   		</div>
   	</div>
   </div>
-<%--菜单选中--%>
+<%--菜单选中 current为一级菜单 divEleId为二级菜单--%>
 <script >var current = "",divEleId;</script>
