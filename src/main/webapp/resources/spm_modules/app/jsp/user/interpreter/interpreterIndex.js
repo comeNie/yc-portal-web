@@ -8,7 +8,7 @@ define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, mo
 	require("app/util/jsviews-ext");
 	// 实例化AJAX控制处理对象
 	var ajaxController = new AjaxController();
-	var showMsg = function(msg){
+	var showMsg = function(){
     	var d = Dialog({
         		content:interpretrMsg.noCertificationMsg,
     			okValue: interpretrMsg.goCertificationMsg,
@@ -37,7 +37,7 @@ define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, mo
 						this._queryOrder();
 						this._queryLspInfo();
 					}else{
-						 showMsg("ssss");
+						 showMsg();
 						 $("#no_rz_container").show();
  	            	}
 					
