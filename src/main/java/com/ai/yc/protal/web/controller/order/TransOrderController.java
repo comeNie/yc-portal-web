@@ -26,9 +26,7 @@ import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.service.OrderService;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.translator.api.translatorservice.interfaces.IYCTranslatorServiceSV;
-import com.ai.yc.translator.api.translatorservice.param.SearchYCTranslatorRequest;
 import com.ai.yc.translator.api.translatorservice.param.SearchYCTranslatorSkillListRequest;
-import com.ai.yc.translator.api.translatorservice.param.YCTranslatorInfoResponse;
 import com.ai.yc.translator.api.translatorservice.param.YCTranslatorSkillListResponse;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -301,7 +299,7 @@ public class TransOrderController {
             BaseResponse updateRes = iTranslateSaveSV.saveTranslateInfo(updateReq);
             ResponseHeader resHeader = updateRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息
-            if (updateRes==null|| (updateRes!=null && (!resHeader.isSuccess()))){
+            if (updateRes!=null && (!resHeader.isSuccess())){
                 resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
             }
         } catch(Exception e) {
@@ -335,7 +333,7 @@ public class TransOrderController {
             OrderStateUpdateResponse stateRes = iOrderStateUpdateSV.updateState(stateReq);
             ResponseHeader resHeader = stateRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息
-            if (stateRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
+            if (stateRes.getOrderId()==null|| (resHeader!=null && (!resHeader.isSuccess()))){
                 resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
             }
             
@@ -390,7 +388,7 @@ public class TransOrderController {
             BaseResponse updateRes = iTranslateSaveSV.saveTranslateInfo(updateReq);
             ResponseHeader resHeader = updateRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息
-            if (updateRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
+            if (resHeader!=null && (!resHeader.isSuccess())){
                 resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
             }
         } catch (Exception e) {
@@ -428,7 +426,7 @@ public class TransOrderController {
 
             QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
             List<ProdFileVo> prodFiles = orderDetailsRes.getProdFiles();
-            String fileId = null;
+            String fileId;
             boolean isUpload = false; //是否能上传
             long allFileSize = file.getSize(); //文件总大小
             String errInfo = rb.getMessage("order.info.fileMaxNum", new Object[]{prodFiles.size()});
@@ -479,7 +477,7 @@ public class TransOrderController {
             BaseResponse updateRes = iTranslateSaveSV.saveTranslateInfo(updateReq);
             ResponseHeader resHeader = updateRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息
-            if (updateRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
+            if (resHeader!=null && (!resHeader.isSuccess())){
                 resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
             }
         } catch (Exception e) {

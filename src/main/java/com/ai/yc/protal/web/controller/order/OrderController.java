@@ -194,8 +194,6 @@ public class OrderController {
                 resData.setData("-1");
             }
 
-            Object or1 = session.getAttribute("orderSummary");
-            Object or2 = session.getAttribute("oralOrderSummary");
             LOGGER.info("缓存的订单信息:", subReq);
         } catch(Exception e) {
             LOGGER.error("系统自动报价:",e);
