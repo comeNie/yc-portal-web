@@ -331,43 +331,54 @@ public class RegisterController {
 	}
 	
 	private String getIpAddr(HttpServletRequest request) {
-		try{
-			String remoteAddr = request.getHeader("X-Forwarded-For");
-			// 如果通过多级反向代理，X-Forwarded-For的值不止一个，而是一串用逗号分隔的IP值，此时取X-Forwarded-For中第一个非unknown的有效IP字符串
-			if (isEffective(remoteAddr) && (remoteAddr.indexOf(",") > -1)) {
-				String[] array = remoteAddr.split(",");
-				for (String element : array) {
-					if (isEffective(element)) {
-						remoteAddr = element;
-						break;
-					}
-				}
-			}
-			if (!isEffective(remoteAddr)) {
-				remoteAddr = request.getHeader("X-Real-IP");
-			}
-			if (!isEffective(remoteAddr)) {
-				remoteAddr = request.getRemoteAddr();
-			}
-			return remoteAddr;
-		}catch(Exception e){
-			LOG.error("get romote ip error,error message:"+e.getMessage());
-			return "";
-		}
-	}
-	/**
-	 * 远程地址是否有效.
-	 * 
-	 * @param remoteAddr
-	 *            远程地址
-	 * @return true代表远程地址有效，false代表远程地址无效
-	 */
-	private static boolean isEffective(final String remoteAddr) {
-		boolean isEffective = false;
-		if ((null != remoteAddr) && (!"".equals(remoteAddr.trim()))
-				&& (!"unknown".equalsIgnoreCase(remoteAddr.trim()))) {
-			isEffective = true;
-		}
-		return isEffective;
+		// 获取请求主机IP地址,如果通过代理进来，则透过防火墙获取真实IP地址  
+		  
+        String ip = request.getHeader("X-Forwarded-For");  
+        if (LOG.isInfoEnabled()) {  
+        	LOG.info("getIpAddress(HttpServletRequest) - X-Forwarded-For - String ip=" + ip);  
+        }  
+  
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip.trim())) {  
+            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip.trim())) {  
+                ip = request.getHeader("Proxy-Client-IP");  
+                if (LOG.isInfoEnabled()) {  
+                	LOG.info("getIpAddress(HttpServletRequest) - Proxy-Client-IP - String ip=" + ip);  
+                }  
+            }  
+            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip.trim())) {  
+                ip = request.getHeader("WL-Proxy-Client-IP");  
+                if (LOG.isInfoEnabled()) {  
+                	LOG.info("getIpAddress(HttpServletRequest) - WL-Proxy-Client-IP - String ip=" + ip);  
+                }  
+            }  
+            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip.trim())) {  
+                ip = request.getHeader("HTTP_CLIENT_IP");  
+                if (LOG.isInfoEnabled()) {  
+                	LOG.info("getIpAddress(HttpServletRequest) - HTTP_CLIENT_IP - String ip=" + ip);  
+                }  
+            }  
+            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip.trim())) {  
+                ip = request.getHeader("HTTP_X_FORWARDED_FOR");  
+                if (LOG.isInfoEnabled()) {  
+                	LOG.info("getIpAddress(HttpServletRequest) - HTTP_X_FORWARDED_FOR - String ip=" + ip);  
+                }  
+            }  
+            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip.trim())) {  
+                ip = request.getRemoteAddr();  
+                if (LOG.isInfoEnabled()) {  
+                	LOG.info("getIpAddress(HttpServletRequest) - getRemoteAddr - String ip=" + ip);  
+                }  
+            }  
+        } else if (ip.length() > 15) {  
+            String[] ips = ip.split(",");  
+            for (int index = 0; index < ips.length; index++) {  
+                String strIp = ((String) ips[index]).trim();  
+                if (!("unknown".equalsIgnoreCase(strIp))) {  
+                    ip = strIp;  
+                    break;  
+                }  
+            }  
+        }  
+        return ip; 
 	}
 }
