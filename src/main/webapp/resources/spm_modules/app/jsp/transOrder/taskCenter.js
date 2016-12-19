@@ -103,12 +103,40 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
 	           	visiblePages:5,
 	            render: function (data) {
 	            	if(data != null && data != 'undefined' && data.length>0){
+                        //把返回结果转换
+                        for(var i=0;i<data.length;i++){
+                            //订单完成剩余时间 转为 剩余x天x小时x分
+                            var tempMM=data[i].esEndTime - new Date().getTime();
+                            var remainingTime = _this.ftimeDHS(tempMM);
+                            data[i].finishRemTime = tempMM	;
+                            if(tempMM<=0){
+                                data[i].finishTakeDays = 0;
+                                data[i].finishTakeHours = 0;
+                                data[i].finishTakeMinutes = 0;
+							}else {
+                                data[i].finishTakeDays = remainingTime.days;
+                                data[i].finishTakeHours = remainingTime.hours;
+                                data[i].finishTakeMinutes =  remainingTime.minutes;
+							}
+
+                            data[i].currentLan = currentLan; //当前语言
+                        }
 	            		var template = $.templates("#searchOrderTemple");
 	            	    var htmlOutput = template.render(data);
 	            	    $("#orderInfoTable").html(htmlOutput);
 	            	}
 	            }
     		});
+        },
+        //把毫秒数转为 x天x小时x分钟x秒
+        ftimeDHS:function(ts) {
+            var res = {};
+            res.days = parseInt( ts / (1000 * 60 * 60 * 24) );
+            res.hours = parseInt( (ts % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) );
+            res.minutes = parseInt( (ts % (1000 * 60 * 60)) / (1000 * 60) );
+            res.seconds = parseInt( (ts % (1000 * 60)) / 1000 );
+
+            return res;
         }
     });
     module.exports = taskCenterPage;
