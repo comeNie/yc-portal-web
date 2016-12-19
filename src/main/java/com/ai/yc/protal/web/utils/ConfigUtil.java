@@ -1,5 +1,7 @@
 package com.ai.yc.protal.web.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,13 +10,10 @@ import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 public class ConfigUtil {
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(ConfigUtil.class);
 	private static Properties mConfig;
-	private static Log log = LogFactory.getLog(ConfigUtil.class);
 	private static String default_config_1 = "/config.properties";
 
 	/**
@@ -34,10 +33,10 @@ public class ConfigUtil {
 			Class config_class = ConfigUtil.class;
 			InputStream is = config_class.getResourceAsStream(propertSrc);
 			mConfig.load(is);
-			log.info("successfully loaded propertSrc properties...");
+			LOGGER.info("successfully loaded propertSrc properties...");
 			return mConfig.getProperty(key);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("",e);
 		}
 		return "";
 	}
@@ -57,8 +56,8 @@ public class ConfigUtil {
 		try {
 			mConfig.load(new FileInputStream(propertSrc));
 			return mConfig.getProperty(key);	
-		} catch (Exception e1) {
-			e1.printStackTrace();
+		} catch (Exception e) {
+			LOGGER.error("",e);
 		} 
 		return "";
 	}
@@ -75,7 +74,7 @@ public class ConfigUtil {
 			is = new FileInputStream(new File(config_class.getResource(
 					default_config_1).toURI()));
 			mConfig.load(is);
-			log.info("successfully loaded default properties.");
+			LOGGER.info("successfully loaded default properties.");
 
 			// now, see if we can find our custom config
 			/*
@@ -83,32 +82,32 @@ public class ConfigUtil {
 			 * new FileInputStream(new
 			 * File(config_class.getResource(default_config_2).toURI())); if (is
 			 * != null) { mConfig.load(is);
-			 * log.info("successfully loaded custom properties file from classpath"
+			 * LOGGER.info("successfully loaded custom properties file from classpath"
 			 * ); } else {
-			 * log.info("no custom properties file found in classpath"); }
+			 * LOGGER.info("no custom properties file found in classpath"); }
 			 */
 
 			// some debugging for those that want it
-			if (log.isDebugEnabled()) {
-				log.debug("AiCasConfig looks like this ...");
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("AiCasConfig looks like this ...");
 
 				String key = null;
 				@SuppressWarnings("rawtypes")
 				Enumeration keys = mConfig.keys();
 				while (keys.hasMoreElements()) {
 					key = (String) keys.nextElement();
-					log.debug(key + "=" + mConfig.getProperty(key));
+					LOGGER.debug(key + "=" + mConfig.getProperty(key));
 				}
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("",e);
 		} finally {
 			if (is != null) {
 				try {
 					is.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					LOGGER.error("",e);
 				}
 			}
 		}
@@ -123,7 +122,7 @@ public class ConfigUtil {
 	 * @return String Value of property requested, null if not found
 	 */
 	public static String getProperty(String key) {
-		log.debug("Fetching property [" + key + "=" + mConfig.getProperty(key)
+		LOGGER.debug("Fetching property [" + key + "=" + mConfig.getProperty(key)
 				+ "]");
 		return mConfig.getProperty(key);
 	}
@@ -138,7 +137,7 @@ public class ConfigUtil {
 	 * @return String Value of property requested or defaultValue
 	 */
 	public static String getProperty(String key, String defaultValue) {
-		log.debug("Fetching property [" + key + "=" + mConfig.getProperty(key)
+		LOGGER.debug("Fetching property [" + key + "=" + mConfig.getProperty(key)
 				+ ",defaultValue=" + defaultValue + "]");
 		String value = mConfig.getProperty(key);
 		if (value == null)
@@ -221,7 +220,7 @@ public class ConfigUtil {
 			is = new FileInputStream(new File(config_class.getResource(
 					default_config_1).toURI()));
 			mConfig.load(is);
-			log.info("successfully loaded default properties.");
+			LOGGER.info("successfully loaded default properties.");
 
 			// now, see if we can find our custom config
 			// is = config_class.getResourceAsStream(default_config_2);
@@ -229,20 +228,20 @@ public class ConfigUtil {
 			 * is = new FileInputStream(new
 			 * File(config_class.getResource(default_config_2).toURI())); if (is
 			 * != null) { mConfig.load(is);
-			 * log.info("successfully loaded custom properties file from classpath"
+			 * LOGGER.info("successfully loaded custom properties file from classpath"
 			 * ); } else {
-			 * log.info("no custom properties file found in classpath"); }
+			 * LOGGER.info("no custom properties file found in classpath"); }
 			 */
 
 			// some debugging for those that want it
-			if (log.isDebugEnabled()) {
-				log.debug("AiCasConfig looks like this ...");
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("AiCasConfig looks like this ...");
 
 				String key = null;
 				Enumeration keys = mConfig.keys();
 				while (keys.hasMoreElements()) {
 					key = (String) keys.nextElement();
-					log.debug(key + "=" + mConfig.getProperty(key));
+					LOGGER.debug(key + "=" + mConfig.getProperty(key));
 				}
 			}
 

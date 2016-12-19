@@ -163,7 +163,7 @@ public class CustomerOrderController {
             
             IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
             QueryOrderRsponse orderRes = iOrderQuerySV.queryOrder(orderReq);
-            ResponseHeader resHeader = orderRes.getResponseHeader();
+            ResponseHeader resHeader = orderRes==null?null:orderRes.getResponseHeader();
             LOGGER.info("订单列表查询 ：" + JSONObject.toJSONString(orderRes));
             //如果返回值为空,或返回信息中包含错误信息,返回失败
             if (orderRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
@@ -207,7 +207,7 @@ public class CustomerOrderController {
             cancelReq.setOrderId(Long.valueOf(orderId));
             cancelReq.setOperId(UserUtil.getUserId()); //操作员id 传入的是用户id
             BaseResponse baseRes = iOrderCancelSV.handCancelNoPayOrder(cancelReq);
-            ResponseHeader resHeader = baseRes.getResponseHeader();
+            ResponseHeader resHeader = baseRes==null?null:baseRes.getResponseHeader();
             LOGGER.info("取消订单返回 ："+JSONObject.toJSONString(baseRes));
             //如果返回值为空,或返回信息中包含错误信息,返回失败
             if (baseRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
@@ -364,7 +364,7 @@ public class CustomerOrderController {
             orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
 
             QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
-            ResponseHeader resHeader = orderDetailsRes.getResponseHeader();
+            ResponseHeader resHeader = orderDetailsRes==null?null:orderDetailsRes.getResponseHeader();
             LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
             //如果返回值为空,或返回信息中包含错误信息,返回失败
             if (orderDetailsRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
