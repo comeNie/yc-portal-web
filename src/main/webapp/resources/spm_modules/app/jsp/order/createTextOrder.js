@@ -96,6 +96,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                             }
                         }
                     },
+					inputFormatConv: {required: true}
                     // isAgree: {
                     //     required: true
                     // }
@@ -106,6 +107,9 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                         maxlength: $.i18n.prop('order.place.error.Maximum'),//"最大长度不能超过{0}",
                         remote:  $.i18n.prop('order.place.error.contentConsis')//"您输入的内容和源语言不一致"
                     },
+					inputFormatConv: {
+						required: $.i18n.prop('order.place.error.format') //请输入转换格式
+                    }
                     // isAgree: {
                     //     required: $.i18n.prop('order.place.error.agree')//"请阅读并同意翻译协议",
                     // }

@@ -1,5 +1,6 @@
 package com.ai.yc.protal.web.controller.order;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.Timestamp;
 import java.util.HashMap;
@@ -68,11 +69,11 @@ import com.alibaba.fastjson.JSONObject;
 public class CustomerOrderController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerOrderController.class);
     @Autowired
-    BalanceService balanceService;
+    private BalanceService balanceService;
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
     @Autowired
-    ResWebBundle rb;
+    private ResWebBundle rb;
 
     /**
      * 我的订单,订单列表
@@ -82,33 +83,30 @@ public class CustomerOrderController {
     public String orderListView(Model uiModel, String displayFlag){
         //查询 订单数量
         //待支付数量
-        try {
-            String userId = UserUtil.getUserId();
-            IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
-            QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
-            ordCountReq.setUserId(userId);
 
-            QueryOrdCountResponse ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+        String userId = UserUtil.getUserId();
+        IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
+        QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
+        ordCountReq.setUserId(userId);
 
-            LOGGER.info(JSONObject.toJSONString(ordCountRes));
-            uiModel.addAttribute("CountMap", ordCountRes.getCountMap());
+        QueryOrdCountResponse ordCountRes = iOrderQuerySV.queryOrderCount(ordCountReq);
 
-            Map<String,Integer> stateCount = ordCountRes.getCountMap();
-            //待支付
-            uiModel.addAttribute("UnPaidCount", stateCount.get(OrderConstants.DisplayState.UN_PAID));
-            //翻译中
-            uiModel.addAttribute("TranslateCount", stateCount.get(OrderConstants.DisplayState.TRANSLATING));
-            //待确认
-            uiModel.addAttribute("UnConfirmCount", stateCount.get(OrderConstants.DisplayState.UN_CONFIRM));
-            //待评价
-            uiModel.addAttribute("UnEvaluateCount", stateCount.get(OrderConstants.DisplayState.UN_EVALUATE));
-            
-            uiModel.addAttribute("userId", UserUtil.getUserId());
-            uiModel.addAttribute("displayFlag", displayFlag);
-        } catch (Exception e) {
-            LOGGER.error("查询订单数量:",e);
-        }
-            
+        LOGGER.info(JSONObject.toJSONString(ordCountRes));
+        uiModel.addAttribute("CountMap", ordCountRes.getCountMap());
+
+        Map<String,Integer> stateCount = ordCountRes.getCountMap();
+        //待支付
+        uiModel.addAttribute("UnPaidCount", stateCount.get(OrderConstants.DisplayState.UN_PAID));
+        //翻译中
+        uiModel.addAttribute("TranslateCount", stateCount.get(OrderConstants.DisplayState.TRANSLATING));
+        //待确认
+        uiModel.addAttribute("UnConfirmCount", stateCount.get(OrderConstants.DisplayState.UN_CONFIRM));
+        //待评价
+        uiModel.addAttribute("UnEvaluateCount", stateCount.get(OrderConstants.DisplayState.UN_EVALUATE));
+
+        uiModel.addAttribute("userId", UserUtil.getUserId());
+        uiModel.addAttribute("displayFlag", displayFlag);
+
         return "customerOrder/orderList";
     }
     
@@ -121,7 +119,7 @@ public class CustomerOrderController {
     @RequestMapping("/orderList")
     @ResponseBody
     public ResponseData<PageInfo<OrdOrderVo> > orderList(HttpServletRequest request,  QueryOrderRequest orderReq){
-        ResponseData<PageInfo<OrdOrderVo>> resData = new ResponseData<PageInfo<OrdOrderVo>>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        ResponseData<PageInfo<OrdOrderVo>> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
 
         String orderTimeStart = request.getParameter("orderTimeStartStr");  //订单查询开始时间
         String orderTimeEnd = request.getParameter("orderTimeEndStr"); //订单查询结束时间
@@ -167,7 +165,7 @@ public class CustomerOrderController {
             LOGGER.info("订单列表查询 ：" + JSONObject.toJSONString(orderRes));
             //如果返回值为空,或返回信息中包含错误信息,返回失败
             if (orderRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-
+                resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
             } else {
                 PageInfo<OrdOrderVo> pageInfo = orderRes.getPageInfo();
                 //返回订单分页信息
@@ -175,7 +173,7 @@ public class CustomerOrderController {
             }
         } catch (Exception e) {
             LOGGER.error("查询订单分页失败:",e);
-            resData = new ResponseData<PageInfo<OrdOrderVo>>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
+            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
         }
         return resData;
     }
@@ -199,25 +197,19 @@ public class CustomerOrderController {
     @RequestMapping("/cancelOrder")
     @ResponseBody
     public ResponseData<String> cancelOrder(String orderId) {
-        ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
 
-        try {
-            IOrderCancelSV iOrderCancelSV = DubboConsumerFactory.getService(IOrderCancelSV.class);
-            OrderCancelRequest cancelReq = new OrderCancelRequest();
-            cancelReq.setOrderId(Long.valueOf(orderId));
-            cancelReq.setOperId(UserUtil.getUserId()); //操作员id 传入的是用户id
-            BaseResponse baseRes = iOrderCancelSV.handCancelNoPayOrder(cancelReq);
-            ResponseHeader resHeader = baseRes==null?null:baseRes.getResponseHeader();
-            LOGGER.info("取消订单返回 ："+JSONObject.toJSONString(baseRes));
-            //如果返回值为空,或返回信息中包含错误信息,返回失败
-            if (baseRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
-            }
-        } catch(Exception e) {
-            LOGGER.error("取消订单失败：", e);
-            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
+        IOrderCancelSV iOrderCancelSV = DubboConsumerFactory.getService(IOrderCancelSV.class);
+        OrderCancelRequest cancelReq = new OrderCancelRequest();
+        cancelReq.setOrderId(Long.valueOf(orderId));
+        cancelReq.setOperId(UserUtil.getUserId()); //操作员id 传入的是用户id
+        BaseResponse baseRes = iOrderCancelSV.handCancelNoPayOrder(cancelReq);
+        LOGGER.info("取消订单返回 ："+JSONObject.toJSONString(baseRes));
+        //如果返回值为空,或返回信息中包含错误信息,返回失败
+        if (!baseRes.getResponseHeader().isSuccess()){
+            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
         }
-        
+
         return resData;
     }
 
@@ -296,14 +288,12 @@ public class CustomerOrderController {
      * 跳转支付页面,需要登录后才能进行支付
      * @param orderId
      * @param orderAmount
-     * @param response
      * @throws Exception
      */
     @RequestMapping(value = "/gotoPay")
     public String gotoPay(
             String orderId,Long orderAmount,String currencyUnit,String merchantUrl,String payOrgCode,
-            String orderType,String translateName,
-            HttpServletResponse response,Model uiModel)
+            String orderType,String translateName, Model uiModel)
             throws Exception {
         //租户
         String tenantId= ConfigUtil.getProperty("TENANT_ID");
@@ -314,7 +304,7 @@ public class CustomerOrderController {
         //将订单金额直接转换为小数点后两位
         java.text.DecimalFormat df =new java.text.DecimalFormat("#0.00");
         String amount = String.valueOf(df.format(AmountUtil.changeLiToYuan(orderAmount)));
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         map.put("tenantId", tenantId);//租户ID
         map.put("orderId", orderId);//请求单号
         map.put("returnUrl", ConfigUtil.getProperty("RETURN_URL"));//页面跳转地址
@@ -398,7 +388,7 @@ public class CustomerOrderController {
 
             String agent = request.getHeader("User-Agent");
             //不是ie
-            if (agent.indexOf("MSIE") == -1 && agent.indexOf("like Gecko")== -1) {
+            if (agent.contains("MSIE") && agent.contains("like Gecko")) {
                 String newFileName = java.net.URLDecoder.decode(fileName,"utf-8");
                 fileName = new String(newFileName.getBytes("utf-8"), "ISO-8859-1");
             }
@@ -410,7 +400,7 @@ public class CustomerOrderController {
             response.setHeader("Content-Length", b.length+"");
             os.write(b);
             os.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
            LOGGER.info("下载文件异常：", e);
         }
     }

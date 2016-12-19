@@ -304,7 +304,7 @@
 									<option value="2" selected="selected"><spring:message code="order.noFormatConv"/></option>
 								</select>
 							</p>
-							<p class="ml-20"><input id="inputFormatConv" hidden="" type="text" class="int-text int-in-bi radius"></p>
+							<p class="ml-20"><input id="inputFormatConv" name="inputFormatConv" hidden="" type="text" class="int-text int-in-bi radius"></p>
 						</li>
 					</ul>
 				</div>

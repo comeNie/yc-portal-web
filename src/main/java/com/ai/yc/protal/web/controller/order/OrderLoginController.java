@@ -3,7 +3,6 @@ package com.ai.yc.protal.web.controller.order;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.yc.order.api.ordersubmission.param.*;
@@ -14,7 +13,6 @@ import com.ai.yc.user.api.userservice.param.YCContactInfoResponse;
 import com.ai.yc.user.api.userservice.param.YCInsertContactResponse;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.hssf.extractor.ExcelExtractor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +21,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
@@ -77,7 +71,7 @@ public class OrderLoginController {
     @RequestMapping(value = "/saveContact",method = RequestMethod.POST)
     @ResponseBody
     public ResponseData<String> saveContact(InsertYCContactRequest contactReq) {
-        ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
 
 //        保存联系人信息
         try {
@@ -87,11 +81,11 @@ public class OrderLoginController {
             ResponseHeader resHeader = contactRes==null?null:contactRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息,则抛出异常
             if (contactRes==null|| (resHeader!=null && (!resHeader.isSuccess()))) {
-                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
+                resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
             }
         } catch(Exception e) {
             LOGGER.error("保存联系人失败：", e);
-            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
+            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
         }
 
         return  resData;
@@ -104,7 +98,7 @@ public class OrderLoginController {
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     @ResponseBody
     public ResponseData<String> submitOrder(HttpServletRequest request, HttpSession session) {
-        ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         String remark = request.getParameter("remark");
         String contactInfoStr = request.getParameter("contactInfo");
         String transType = request.getParameter("transType");
@@ -129,7 +123,7 @@ public class OrderLoginController {
             LOGGER.info(JSONObject.toJSONString(subRes));
             //如果返回值为空,或返回信息中包含错误信息,则抛出异常
             if (subRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, "");
+                resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, "");
             } else {
                 resData.setData(subRes.getOrderId()+"");//返回订单信息
             }
@@ -142,7 +136,7 @@ public class OrderLoginController {
             session.removeAttribute("fileInfoList");
         } catch (Exception e) {
             LOGGER.error("提交订单失败:",e);
-            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"");
+            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE,"");
         }
 
         return  resData;
