@@ -122,7 +122,7 @@ public class HttpUtil {
                 result = IOUtils.toString(instream, "UTF-8");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("The get is error.",e);
         }
         return result;
     }
@@ -211,13 +211,13 @@ public class HttpUtil {
             System.out.println(response.getStatusLine().getStatusCode());
             httpStr = EntityUtils.toString(entity, "UTF-8");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("The post is error.",e);
         } finally {
             if (response != null) {
                 try {
                     EntityUtils.consume(response.getEntity());
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.error("The post consume response is error.",e);
                 }
             }
         }
@@ -249,13 +249,13 @@ public class HttpUtil {
             System.out.println(response.getStatusLine().getStatusCode());
             httpStr = EntityUtils.toString(entity, "UTF-8");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("The port is error.",e);
         } finally {
             if (response != null) {
                 try {
                     EntityUtils.consume(response.getEntity());
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.error("The post consume response is error.",e);
                 }
             }
         }
@@ -294,13 +294,13 @@ public class HttpUtil {
             }
             httpStr = EntityUtils.toString(entity, "utf-8");
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("The port(SSL) is error.",e);
         } finally {
             if (response != null) {
                 try {
                     EntityUtils.consume(response.getEntity());
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.error("The post(SSL) consume response is error.",e);
                 }
             }
         }
@@ -336,13 +336,13 @@ public class HttpUtil {
             }
             httpStr = EntityUtils.toString(entity, "utf-8");
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("The port(SSL) is error.",e);
         } finally {
             if (response != null) {
                 try {
                     EntityUtils.consume(response.getEntity());
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.error("The post(SSL) consume response is error.",e);
                 }
             }
         }
@@ -383,7 +383,7 @@ public class HttpUtil {
                 }
             });
         } catch (GeneralSecurityException e) {
-            e.printStackTrace();
+            LOGGER.error("The ssl socket factory is error.",e);
         }
         return sslsf;
     }

@@ -107,13 +107,13 @@ public class HcicloudService {
             //写入文件
             outByte = intoFile(entity.getContent(),audioformat);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("",e);
         } finally {
             if (ttsResponse != null) {
                 try {
                     EntityUtils.consume(ttsResponse.getEntity());
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.error("",e);
                 }
             }
         }
@@ -170,9 +170,9 @@ public class HcicloudService {
             is.close();
 //            fos.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.error("",e);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("",e);
         }
         return audioByte;
     }

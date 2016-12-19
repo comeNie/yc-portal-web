@@ -172,7 +172,7 @@ public class VerifyUtil {
 			responseData.setResponseHeader(header);
 			return responseData;
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e.getMessage(), e);
 		}
 		return responseData;
 	}

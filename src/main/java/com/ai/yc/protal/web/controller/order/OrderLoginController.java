@@ -84,7 +84,7 @@ public class OrderLoginController {
             IYCUserServiceSV iYCUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
             contactReq.setUserId(UserUtil.getUserId());
             YCInsertContactResponse contactRes = iYCUserServiceSV.insertYCContact(contactReq);
-            ResponseHeader resHeader = contactRes.getResponseHeader();
+            ResponseHeader resHeader = contactRes==null?null:contactRes.getResponseHeader();
             //如果返回值为空,或返回信息中包含错误信息,则抛出异常
             if (contactRes==null|| (resHeader!=null && (!resHeader.isSuccess()))) {
                 resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));

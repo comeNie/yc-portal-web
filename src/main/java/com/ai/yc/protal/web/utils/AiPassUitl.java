@@ -8,9 +8,11 @@ import com.ai.paas.ipaas.util.StringUtil;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.Register;
 import com.alibaba.fastjson.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AiPassUitl {
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(AiPassUitl.class);
 	/**
 	 * 获取缓存客户端 TODO 区分国内、国外
 	 * 
@@ -46,7 +48,7 @@ public class AiPassUitl {
 				return json;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e.getMessage(),e);
 		}
 		return null;
 	}

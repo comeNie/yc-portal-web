@@ -7,8 +7,11 @@ import com.order.cc.sms.entity.FocusSms;
 import com.order.cc.sms.entity.Head;
 import com.order.cc.sms.entity.Message;
 import com.order.cc.sms.entity.Messages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SmsSenderUtil {
+	private static final Logger LOGGER = LoggerFactory.getLogger(SmsSenderUtil.class);
 	public static boolean sendMessage(String telephone,String text){
 		SmsSender sender=new SmsSender();
 		Head head=new Head();
@@ -58,7 +61,7 @@ public class SmsSenderUtil {
 				flag = false;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e.getMessage(),e);
 		} 
 		return flag;
 	}

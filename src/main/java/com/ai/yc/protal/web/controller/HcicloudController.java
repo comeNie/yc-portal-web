@@ -42,7 +42,7 @@ public class HcicloudController {
             os.write(audioByte);
             os.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(),e);
         }
     }
 
