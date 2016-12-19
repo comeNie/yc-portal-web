@@ -142,8 +142,7 @@
   						<p><label id="area-error"></label></p>
 					</li>
 					<li>
-						<p class="word"></p>
-						<p><input type="text" class="int-text int-in-bi radius" id="address" name="address" value="${interpreterInfo.address}" maxlength="100"/>
+						<p style="margin-left: 120px"><input type="text" class="int-text int-in-bi radius" id="address" name="address" value="${interpreterInfo.address}" style="width: 420px" maxlength="100"/>
 							<label id="detail-address"></label>
 						</p>
 					</li>
