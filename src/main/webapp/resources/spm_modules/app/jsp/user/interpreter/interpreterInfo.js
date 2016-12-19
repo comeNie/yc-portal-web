@@ -390,9 +390,9 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		        		var data = json.data;
 		        		var html = [];
 		        		var html2=[];
-		        		html.push('<option value=0 selected="selected">' + "请选择" + '</option>');
+		        		html.push('<option value=0 selected="selected">' + interpreterInfoMsg.areaTitle + '</option>');
 		        		$("#provinceInfo").html(html.join(""));
-		        		html2.push('<option value=0>' + "请选择" + '</option>');
+		        		html2.push('<option value=0>' + interpreterInfoMsg.areaTitle + '</option>');
 						$("#cnCityInfo").html(html2.join(""));
 						if (data) {
 							if(data.length==0){
@@ -437,7 +437,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		        		$("#userName-error").hide().html(""); 
 		        		var data = json.data;
 		        		var html = [];
-						html.push('<option value=0>' + "请选择" + '</option>');
+						html.push('<option value=0>' + interpreterInfoMsg.areaTitle + '</option>');
 						$("#cnCityInfo").html(html.join(""));
 						if (data) {
 							if(data.length==0){
