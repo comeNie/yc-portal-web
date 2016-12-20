@@ -190,7 +190,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				baseInfo.subFlag = "1";
 				//productInfo.needTranslateInfo = JSON.stringify(fileInfoList);
 				productInfo.translateInfo = "";
-				baseInfo.translateName = $("#fileList").find('li:first').text().substring(0,15);
+				var translateName = $("#fileList").find('li:first').text();
+				baseInfo.translateName = translateName.substring(0, translateName.length>15? 15:translateName.length);
 			} else {
 				baseInfo.translateType = "0"; //0：快速翻译 1：文档翻译
 				baseInfo.subFlag = "0"; // "0：系统自动报价 1：人工报价"
@@ -199,7 +200,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 transContant=transContant.replace(/\n|\r\n/g,"<br>");
                 productInfo.needTranslateInfo = transContant;
 				productInfo.translateInfo = "";
-				baseInfo.translateName = $("#translateContent").val().substring(0,15);
+				var translateName =  $("#translateContent").val();
+				baseInfo.translateName = translateName.substring(0, translateName.length>15? 15:translateName.length);
 			}
 			baseInfo.orderLevel = "1";
 			baseInfo.userType = "10"; //"10：个人 11：企业 12：代理人 "??

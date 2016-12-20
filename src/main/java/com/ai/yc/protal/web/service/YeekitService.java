@@ -60,17 +60,20 @@ public class YeekitService {
      */
     public String dotranslate(String from, String to, String text)
             throws IOException, HttpStatusException {
-        JSONObject  postParams =new JSONObject();
-        postParams.put("srcl", from);// 源语言
-        postParams.put("tgtl", to);// 目标语言
-       // postParams.put("app_kid", APP_KID);// 授权APP ID
-       // postParams.put("app_key", APP_KEY);// 授权APP KEY
-        postParams.put("detoken", true);
-        postParams.put("align", true);
+        Map<String, Object>  postParams =new HashMap();
+//        postParams.put("srcl", from);// 源语言
+//        postParams.put("tgtl", to);// 目标语言
+        postParams.put("from", from);// 源语言
+        postParams.put("to", to);// 目标语言
+        postParams.put("app_kid", APP_KID);// 授权APP ID
+        postParams.put("app_key", APP_KEY);// 授权APP KEY
+//        postParams.put("detoken", true);
+//        postParams.put("align", true);
         postParams.put("text", text);// 待翻译文本,UTF-8编码
         String resultStr="";
         try {
-            resultStr = HttpsUtil.HttpsPost(SERVER_URL, postParams.toString(), "UTF-8");
+//            resultStr = HttpsUtil.HttpsPost(SERVER_URL, postParams.toString(), "UTF-8");
+            resultStr = HttpUtil.doPost(client, SERVER_URL, postParams);
             LOGGER.info("dotranslate result:{}", resultStr);
 
             //失败
