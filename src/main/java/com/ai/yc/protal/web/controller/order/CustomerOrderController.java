@@ -388,15 +388,17 @@ public class CustomerOrderController {
 
             String agent = request.getHeader("User-Agent");
             //不是ie
-            if (agent.contains("MSIE") && agent.contains("like Gecko")) {
-                String newFileName = java.net.URLDecoder.decode(fileName,"utf-8");
+            if (agent.indexOf("MSIE") == -1 && agent.indexOf("like Gecko")== -1) {
+                //空格、（、）、；、@、#、&
+                String newFileName = java.net.URLDecoder.decode(fileName,"utf-8")
+                      ;
                 fileName = new String(newFileName.getBytes("utf-8"), "ISO-8859-1");
             }
 
             OutputStream os = response.getOutputStream();
 //            response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");
-            response.setHeader("Content-Disposition", "attachment;fileName="+fileName);
+            response.setHeader("Content-Disposition", "attachment;fileName=\"" + fileName +"\"");
             response.setHeader("Content-Length", b.length+"");
             os.write(b);
             os.close();

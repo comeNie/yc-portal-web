@@ -7,7 +7,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
-    
+	var processingDialog;
     var orderInfoPage = Widget.extend({
 
     	//事件代理
@@ -24,18 +24,18 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 			orderInfoPage.superclass.setup.call(this);
 			//初始化国际化
 			$.i18n.properties({//加载资浏览器语言对应的资源文件
-				name: ["orderInfo"], //资源文件名称，可以是数组
+				name: ["orderInfo","commonRes"], //资源文件名称，可以是数组
 				path: _i18n_res, //资源文件路径
 				mode: 'both',
 				language: currentLan,
 				async: true
 			});
+
 		},
 
-    	//上传译文
+    	//上传译文校验
         _upload: function () {
             var _this = this;
-            var formData = new FormData($("#uploadForm")[0]);
             //添加上传文件验证
             var FILE_TYPES=['rar','zip','doc','docx','txt','pdf','jpg','png','gif'];
             var filePath = $("#upload").val();
@@ -56,7 +56,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
                 allSize += parseInt($(this).attr("fileSize"));
             });
 
-            if (file.size > 20*1024*1024) {
+            if (file.size > 100*1024*1024) {
                 _this._showWarn($.i18n.prop('order.upload.error.fileSizeSingle'));
                 return
             }
@@ -66,15 +66,31 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
                 return
             }
 
-			$.ajax({
+			if(processingDialog==null){
+				processingDialog = new Dialog({
+					closeIconShow:false,
+					icon:"loading",
+					//正在处理中，请稍后...
+					content: $.i18n.prop('com.ajax.def.content')
+				});
+			}
+
+			processingDialog.showModal();
+            this._uploadFile();
+        },
+
+        _uploadFile:function() {
+            var formData = new FormData($("#uploadForm")[0]);
+            $.ajax({
                 url: _base + "/p/trans/order/upload",
                 type: 'POST',
                 data: formData,
-                async: false,
+                async: true,
                 cache: false,
                 contentType: false,
                 processData: false,
                 success: function (data) {
+            	processingDialog.close();
                     if ("1" === data.statusCode) {
                         //保存成功
                         //刷新页面
@@ -84,6 +100,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
                     }
                 },
                 error: function (data) {
+            	processingDialog.close();
                     _this._showFail($.i18n.prop('order.upload.error.upload'));
                 }
             });

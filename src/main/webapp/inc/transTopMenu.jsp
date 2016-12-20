@@ -55,3 +55,5 @@
   </div>
 <%--菜单选中 current为一级菜单 divEleId为二级菜单--%>
 <script >var current = "",divEleId;</script>
+<script src="${uedroot}/scripts/modular/jquery-1.9.1.min.js"></script>
+<script src="${uedroot}/scripts/modular/alignment.js"></script>

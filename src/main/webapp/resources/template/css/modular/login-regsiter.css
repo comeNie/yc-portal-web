@@ -6,9 +6,9 @@
 .login-headr .word{font-size:20px;color:#2361ea;padding:5px 0 0 20px;font-weight:bold;}
 .login-wrapper{width:100%;float:left}
 .login-left{width:500px;height:264px;float:left;margin:200px 0 0 0;}
-.login-right{width:460px;float:left;background:#fff;margin:50px 0 0 230px;padding:20px 30px;}
+.login-right{width:460px;float:left;background:#fff;margin-top:50px;margin-left:230px;*margin-left:170px;padding:20px 30px;*padding:20px 20px;display:inline;}
 .login-title{width:100%;float:left;border-bottom:1px solid #2361ea;padding-bottom:20px;text-align:center;font-size:18px;color:#2361ea;font-weight:bold;}
-.login-form-title{width:100%;float:left;padding:30px;}
+.login-form-title{width:100%;float:left;padding:30px;*padding:30px 15px;}
 .login-form-title label{float:left;color:#fe6b6b;font-size:12px;}
 .login-form-title .right{float:right;font-size:12px;}
 .login-form-title .right a{color:#9ba3af;font-size:12px;}
@@ -16,7 +16,7 @@
 .login-form-title .icon-mt a i{margin-top:4px;}
 
 
-.login-form{width:100%;float:left;padding:0 30px;}
+.login-form{width:100%;float:left;padding:0 30px;*padding:0px 15px;display: inline;}
 .login-form ul,.login-form ul li{width:100%;float:left;}
 .login-form ul li{margin-bottom:20px;}
 .login-form ul li p{float:left}
@@ -89,7 +89,7 @@
 .forget{width:530px;margin:0 auto;}
 .recharge-unionPay{width:100%;float:left;margin-top:40px;}
 .recharge-unionPay ul{}
-.recharge-unionPay ul a{width:230px;height:130px;background:#f8f8f8;border-radius:5px;float:left;}
+.recharge-unionPay ul a{width:230px;height:130px;background:#f8f8f8;behavior:url(resources/template/scripts/modular/PIE.htc);border-radius:5px;float:left;}
 .recharge-unionPay ul .unicon{background:url(../../images/icon-big.png) no-repeat left 0px; width:140px;height:35px;margin:50px 0 0 50px;}
 .recharge-unionPay ul .zhifb{background:url(../../images/icon-big.png) no-repeat left -37px; width:118px;height:34px;margin:50px 0 0 50px;}
 .recharge-unionPay ul .current{background:#fff;-webkit-box-shadow: #3292f8 0px 0px 6px;-moz-box-shadow: #3292f8 0px 0px 6px;box-shadow: #3292f8 0px 0px 6px;}
@@ -125,17 +125,17 @@
 
 .shezh-line p{top:18px;}
 /**进行中**/
-.adopt-stgreen-bj ul .circle{width:32px;height:32px;background:#39d5b0;border-radius:50%;line-height:32px;margin-left:36px;color:#fff;text-align: center;}
+.adopt-stgreen-bj ul .circle{width:32px;height:32px;background:#39d5b0;behavior:url(resources/template/scripts/modular/PIE.htc);border-radius:50%;line-height:32px;margin-left:36px;color:#fff;text-align: center;}
 .adopt-stgreen-bj ul .circle i{color:#fff;font-size:20px}
 .adopt-stgreen-bj ul .word{color:#39d5b0;font-size:12px;font-weight:bold;}
 .adopt-stgreen-bj .line{border-bottom:2px solid #39d5b0;}
 /**未进行**/
-.adopt-stash-bj ul .circle{width:32px;height:32px;border:1px solid #e6e6e6;background:#fff;border-radius:50%;line-height:32px;margin-left:36px;color:#e6e6e6;text-align: center;}
+.adopt-stash-bj ul .circle{width:32px;height:32px;border:1px solid #e6e6e6;background:#fff;behavior:url(resources/template/scripts/modular/PIE.htc);border-radius:50%;line-height:32px;margin-left:36px;color:#e6e6e6;text-align: center;}
 .adopt-stash-bj ul .circle i{color:#fff;font-size:20px}
 .adopt-stash-bj ul .word{color:#e6e6e6;font-size:12px;}
 .adopt-stash-bj .line{border-bottom:2px solid #e3e6ed;}
 /**已经进行**/
-.adopt-lightgreen-bj ul .circle{width:32px;height:32px;background:#8eddce;border-radius:50%;line-height:32px;margin-left:36px;color:#fff;text-align: center;}
+.adopt-lightgreen-bj ul .circle{width:32px;height:32px;background:#8eddce;behavior:url(resources/template/scripts/modular/PIE.htc);border-radius:50%;line-height:32px;margin-left:36px;color:#fff;text-align: center;}
 .adopt-lightgreen-bj ul .circle i{color:#fff;font-size:20px}
 .adopt-lightgreen-bj ul .word{color:#8eddce;font-size:12px;}
 .adopt-lightgreen-bj .line{border-bottom:2px solid #8eddce;}

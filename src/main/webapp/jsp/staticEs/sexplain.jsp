@@ -67,7 +67,7 @@
                     <ul>
                         <li>
                             <%--笔译--%>
-                            <p class="blue">Written translation/p>
+                            <p class="blue">Written translation</p>
                         </li>
                         <li>
                             <table  class="table table-border table-bg  table-bordered  table-height65">

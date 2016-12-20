@@ -149,7 +149,7 @@
 <table class="table  table-bg tb-border mb-20">
 	<thead>
 	<tr>
- 		<th colspan="6" class="text-l">
+ 		<th colspan="5" class="text-l">
  			<div class="table-thdiv">
 				<p>{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',orderTime,'<%=ZoneContextHolder.getZone()%>')}}</p>
  				<p name="orderId"><spring:message code="myOrder.Ordernumber"/>：<span>{{:orderId}}</span></p>
