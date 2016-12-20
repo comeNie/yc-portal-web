@@ -42,7 +42,7 @@ define('app/jsp/balance/account', function (require, exports, module) {
     	setup: function () {
 			accountListPage.superclass.setup.call(this);
 			$.i18n.properties({//加载资浏览器语言对应的资源文件
-				name: ["myaccount"], //资源文件名称，可以是数组
+				name: ["myaccount","commonRes"], //资源文件名称，可以是数组
 				path: _i18n_res, //资源文件路径
 				mode: 'both',
 				language: currentLan,
@@ -93,12 +93,13 @@ define('app/jsp/balance/account', function (require, exports, module) {
 							var htmlOutput = template.render(data);
 							$("#searchAccountData").html(htmlOutput);
 						}else {
-							document.getElementById("showAccountDiv").innerHTML = "<li class='dialog-icon-notquery'></li><li>抱歉没有查询到相关数据</li>";
-							document.getElementById("showAccountDiv").className = "not-query pt-20 pb-20";						}
+							document.getElementById("showAccountDiv").innerHTML = "<li class='dialog-icon-notquery'></li><li>"+$.i18n.prop('com.ajax.req.fail.null')+"</li>";
+							document.getElementById("showAccountDiv").className = "not-query pt-20 pb-20";
+						}
 	            	}
 	            }
     		});
-        },
+        }
 		
     });
     module.exports = accountListPage;
