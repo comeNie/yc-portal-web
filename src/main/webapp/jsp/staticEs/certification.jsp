@@ -30,8 +30,8 @@
 	<!--标题-->
 	<div class="static-title">
 		<%--译者认证--%>
-		<p></p>
-		<p class="line1">Certification</p>
+		<p>Certification</p>
+		<p class="line1"></p>
 	</div>
 
 
