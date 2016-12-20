@@ -39,7 +39,7 @@ docker run -d --name yc-portal-web  -p 14101:8080  \
 -e "HCICLOUD_URL=http://test.api.hcicloud.com:8880/tts/SynthText" \
 -e "HCICLOUD_APPKEY=ad5d5421" \
 -e "HCICLOUD_DEVKEY=bca4b0015b309b76301bb10efdf90561" \
--e "YEEKIT_TRANSLATE_URL=https://translateport.yeekit.com/translate" \
+-e "YEEKIT_TRANSLATE_URL=http://api.yeekit.com/dotranslate.php" \
 -e "YEEKIT_TRANSLATE_APPKID=58105e00cabc3" \
 -e "YEEKIT_TRANSLATE_APPKEY=53eeb0bb6c1b613ab361a4f8057b2bd9" \
 -e "YEE_DETECTION_URL=http://translateport.yeekit.com:9006/detection" \
