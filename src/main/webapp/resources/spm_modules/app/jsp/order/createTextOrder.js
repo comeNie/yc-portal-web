@@ -714,6 +714,20 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 }
             });
 
+			//  验证大小
+			uploader.on("error",function (type){
+				if(type == "F_DUPLICATE"){
+					_this._showWarn($.i18n.prop('order.upload.error.repeat'));
+				}else if(type == "Q_EXCEED_SIZE_LIMIT"){
+					_this._showWarn($.i18n.prop('order.upload.error.fileSize'));
+				}else if(type == "Q_EXCEED_NUM_LIMIT"){
+					_this._showWarn($.i18n.prop('order.upload.error.fileNum'));
+				}else if(type == "Q_TYPE_DENIED"){
+					_this._showWarn($.i18n.prop('order.upload.error.type'));
+				}
+
+			});
+
             uploader.on( 'uploadError', function( file, reason ) {
 				_this._showFail($.i18n.prop('order.upload.error.upload'));
 
