@@ -70,7 +70,7 @@
                     <ul>
                         <li>
                             <input type="hidden" name="contactId" value="${Contact.contactId}"/>
-                            <p><input id="userName" name="userName" value="${Contact.userName}" maxlength="15" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterName"/>"></p>
+                            <p><input id="userName" name="userName" value="${Contact.userName}" maxlength="10" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterName"/>"></p>
                             <p><select id="globalRome" name="gnCountryId" class="select select-in radius"></select></p>
                             <p><input id="mobilePhone" name="mobilePhone"  value="${Contact.mobilePhone}" pattern="^1\d{10}$" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterPhone"/>"></p>
                             <p class="mr-0"><input id="email" name="email" value="${Contact.email}" type="text" class="int-text int-large-mail radius" placeholder="<spring:message code="order.EnterEmail"/>"></p>
