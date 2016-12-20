@@ -32,6 +32,7 @@ sed -i "s%ccs.zk_address=.*%ccs.zk_address=${ZK_ADDR}%g" ./paas/paas-conf.proper
 sed -i "s%dubbo.registry.address=.*%dubbo.registry.address=${REST_REGISTRY_ADDR}%g" ./dubbo.properties
 #email-conf.properties
 sed -i "s%email.hostname=.*%email.hostname=${EMAIL_HOSTNAME}%g" ./email/email-conf.properties
+sed -i "s%email.smtpport=.*%email.smtpport=${EMAIL_SMTPPORT}%g" ./email/email-conf.properties
 sed -i "s%email.from.mail=.*%email.from.mail=${EMAIL_FROM_MAIL}%g" ./email/email-conf.properties
 sed -i "s%email.from.name=.*%email.from.name=${EMAIL_FROM_NAME}%g" ./email/email-conf.properties
 sed -i "s%email.from.user=.*%email.from.user=${EMAIL_FROM_USER}%g" ./email/email-conf.properties

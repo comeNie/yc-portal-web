@@ -31,6 +31,7 @@ docker run -d --name yc-portal-web  -p 14101:8080  \
 -e "PAAS_CCS_PWD=123456" \
 -e "REST_REGISTRY_ADDR=10.19.13.13:29181"  \
 -e "EMAIL_HOSTNAME=mail.asiainfo.com" \
+-e "EMAIL_SMTPPORT=25" \
 -e "EMAIL_FROM_MAIL=opt-common@asiainfo.com" \
 -e "EMAIL_FROM_NAME=译云" \
 -e "EMAIL_FROM_USER=opt-common@asiainfo.com" \
@@ -61,7 +62,7 @@ docker run -d --name yc-portal-web  -p 14101:8080  \
 -e "yeecloudUser=yeecloud" \
 -e "yeecloudPassword=yee123" \
 -e "MessageFormYeecloud=yeecloud" \
-10.19.13.36:5000/yc/yc-portal-web:v1.0_11
+10.19.13.36:5000/yc/yc-portal-web:v1.0_20
 
 #查看镜像启动日志
 docker logs yc-portal-web-v1.0
