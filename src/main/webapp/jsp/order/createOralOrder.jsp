@@ -12,14 +12,14 @@
 </head>
 <body>
 
-	<input hidden name="b-transLevel" value="<c:forEach  items="${order.productInfo.translateLevelInfoList }" var="lev">
+	<input type="hidden" name="b-transLevel" value="<c:forEach  items="${order.productInfo.translateLevelInfoList }" var="lev">
 		${lev.translateLevel},
 	</c:forEach>"/>
-	<input hidden name="b-language" value="<c:forEach  items="${order.productInfo.languagePairInfoList}" var="lan">
+	<input type="hidden" name="b-language" value="<c:forEach  items="${order.productInfo.languagePairInfoList}" var="lan">
 		${lan.languagePairId},
 	</c:forEach>"/>
-    <input hidden name="b-place" value="${order.productInfo.meetingAddress}"/>
-    <input hidden name="b-sex" value="${order.productInfo.interperGen}"/>
+    <input type="hidden" name="b-place" value="${order.productInfo.meetingAddress}"/>
+    <input type="hidden" name="b-sex" value="${order.productInfo.interperGen}"/>
 
 	<!--面包屑导航-->
 	<%@ include file="/inc/topHead.jsp" %>

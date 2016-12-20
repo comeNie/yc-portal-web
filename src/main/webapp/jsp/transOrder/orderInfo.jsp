@@ -37,7 +37,7 @@
 					<div class="oder-table">
 			 				<ul>
 			 					<!-- 翻译内容 -->
-			 					<li><a href="javaScript:void(0);" class="current"  <c:if test="${OrderDetails.translateType == '2'}"> hidden</c:if> ><spring:message code="myOrder.translatingContent"/></a></li>
+			 					<li><a href="javaScript:void(0);" class="current"  <c:if test="${OrderDetails.translateType == '2'}"> style="display: none;" </c:if> ><spring:message code="myOrder.translatingContent"/></a></li>
 			 					<!-- 订单跟踪 -->
 			 					<li><a href="javaScript:void(0);" <c:if test="${OrderDetails.translateType == '2'}">  class="current" </c:if>><spring:message code="myOrder.Ordertracking"/></a></li>
 			 				</ul>
