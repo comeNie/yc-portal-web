@@ -33,18 +33,18 @@
 /**右侧内容**/
 .right-wrapper{width:920px;float:left;margin:20px 0 0 20px;}
 .right-title{width:100%;height:140px;float:left;border:1px solid #e3e6ed;background:#fff;}
-.right-title-left{width:400px;float:left;margin:16px 0 0 20px;}
+.right-title-left{width:450px;float:left;margin:16px 0 0 20px;}
 .right-title-left-tu{width:100px;height:100px;float:left}
 .right-title-left-tu img{width:100px;height:100px;border:1px solid #0a5dd2;border-radius:50%;}
-.right-title-left-word{width:260px;float:left;margin:0 0 0 30px;}
+.right-title-left-word{width:335px;float:left;margin:0 0 0 15px;}
 .right-title-left-word ul{width:100%;float:left}
 .right-title-left-word ul li{float:left;margin-top:5px;}
 .right-title-left-word ul li p{float:left}
 .right-title-left-word ul .word-red{font-size:24px;color:#2c3e50}
 .right-title-left-word ul .word-black{font-size:24px;color:#2c3e50}
-.right-title-left-word ul .c-red{padding:0 10px;height:20px;border:1px solid #fe6b6b;border-radius:3px;margin:12px 0 0 16px;color:#fe6b6b}
-.right-title-left-word ul .c-yellow{padding:0 10px;height:20px;border:1px solid #fdb72f;border-radius:3px;margin:12px 0 0 16px;color:#fdb72f}
-.right-title-left-word ul .c-green{padding:0 10px;height:20px;border:1px solid #fdb72f;border-radius:3px;margin:12px 0 0 16px;color:#fdb72f}
+.right-title-left-word ul .c-red{padding:0 5px;height:20px;border:1px solid #fe6b6b;border-radius:3px;margin:12px 0 0 16px;color:#fe6b6b}
+.right-title-left-word ul .c-yellow{padding:0 5px;height:20px;border:1px solid #fdb72f;border-radius:3px;margin:12px 0 0 16px;color:#fdb72f}
+.right-title-left-word ul .c-green{padding:0 5px;height:20px;border:1px solid #fdb72f;border-radius:3px;margin:12px 0 0 16px;color:#fdb72f}
 .right-title-left-word ul .bule{color:#2361ea}
 .right-title-left-word .word-li li{float:left;margin-right:20px;}
 .right-title-left-word .word-li li p{float:left;margin-right:6px;}
