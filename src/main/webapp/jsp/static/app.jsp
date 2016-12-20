@@ -17,14 +17,13 @@
 
 </head>
 <body>
-<div id="header">
+<div  class="suspension-headr">
 	<!--面包屑导航-->
 	<%@include file="/inc/topHead.jsp" %>
 	<!--主导航-->
 	<%@include file="/inc/topMenu.jsp" %>
 </div>
 <div class="rollbanner" id="rollbanner">
-
 
 	<div class="r_banner">
 		<div class="rb_public rb_con0">
