@@ -152,7 +152,7 @@
                                 <spring:message code="task.center.dollarSame" arguments="{{:~liToYuan(totalFee)}}" />
                                 {{/if}}
                             </td>
-                            <td><spring:message code="task.center.time.rest" arguments="{{:finishTakeDays}},{{:finishTakeHours}}"/></td>
+                            <td><spring:message code="task.center.time.rest" arguments="{{:finishTakeDays}},{{:finishTakeHours}},{{:finishTakeMinutes}}"/></td>
                             <td  class="text-r">
                                 <%--领取--%>
                                 <input type="button" name="getOrder" orderId="{{:orderId}}"
