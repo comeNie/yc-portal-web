@@ -1,21 +1,18 @@
-//导航下拉
 $(function () {
     var st = 100;
-    $('.cloud-breadcrumb ul .user .yonh').mouseenter(function () {
-		$('.show').show(1);
-		 $(this).children('i').rotate({animateTo:180});
+    $('#user').mouseenter(function () {
+		$('#user .show-hover').show(1);
+		$('#user .yonh').children('i').addClass("icon-caret-up");
     })
-		$(".show").click(function () {
+		$("#user .show-hover").click(function () {
                 $(this).hide(1);
-            });
-	$('.cloud-breadcrumb').mouseleave(function () {
-        $('.show').hide();
+           });	
+		$('#user').mouseleave(function () {
+        $('#user .show-hover').hide(1);
+        $('#user .yonh').children('i').removeClass("icon-caret-up");
     });	
-		$('.cloud-breadcrumb ul .user .yonh').mouseleave(function () {
-        $(this).children('i').rotate({animateTo:0});
-    });	
-    
   });
+
  
 //左侧菜单关闭
 $(function(){
@@ -390,4 +387,8 @@ $('.static-tab ul li').click(function(){
   }); 
 });
 
-
+$(function () {
+    $("#inselect-bj").click(function () {
+		$('#inselect-bj').css("background","#2361ea");
+    });
+});	

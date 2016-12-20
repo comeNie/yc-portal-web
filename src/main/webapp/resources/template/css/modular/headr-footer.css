@@ -20,13 +20,13 @@
 .cloud-breadcrumb ul .user a{font-size:14px;color:#fff;line-height:35px;}
 .cloud-breadcrumb ul .user a .icon-caret-down{font-size:14px;}
 .cloud-breadcrumb ul .user a .icon-caret-up{font-size:14px;}
-.cloud-breadcrumb ul .user .show{width:160px;height:140px;background:#fff;border:1px solid #e3e6ed;position:absolute;right:-10px;display:none;top:45px;border-radius:5px;z-index: 99;}
-.cloud-breadcrumb ul .user .show ul{width:100%;float:left}
-.cloud-breadcrumb ul .user .show ul li{width:100%;float:left;height:46px;border-bottom:1px solid #e3e6ed;margin-left:0;line-height:46px;padding-left:32px;}
-.cloud-breadcrumb ul .user .show ul li:hover{background:#e6e6e6;}
-.cloud-breadcrumb ul .user .show ul li a{color:#6a6c6f;font-size:14px;}
-.cloud-breadcrumb ul .user .show ul li a:hover{color:#2361ea;}
-.cloud-breadcrumb ul .user .show ul li i{color:#2361ea;margin-right: 6px;}
+.cloud-breadcrumb ul .user .show-hover{width:160px;height:140px;background:#fff;border:1px solid #e3e6ed;position:absolute;right:-10px;top:36px;border-radius:5px;z-index: 99;}
+.cloud-breadcrumb ul .user .show-hover ul{width:100%;float:left}
+.cloud-breadcrumb ul .user .show-hover ul li{width:100%;float:left;height:46px;border-bottom:1px solid #e3e6ed;margin-left:0;line-height:46px;padding-left:32px;}
+.cloud-breadcrumb ul .user .show-hover ul li:hover{background:#e6e6e6;}
+.cloud-breadcrumb ul .user .show-hover ul li a{color:#6a6c6f;font-size:14px;}
+.cloud-breadcrumb ul .user .show-hover ul li a:hover{color:#2361ea;}
+.cloud-breadcrumb ul .user .show-hover ul li i{color:#2361ea;margin-right: 6px;}
 
 
 /**下单头部**/

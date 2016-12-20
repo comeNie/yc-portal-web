@@ -270,17 +270,17 @@
 .place-step-none ul li{width:100%;text-align:center;line-height:30px;}
 
 /**进行中**/
-.adopt-blue-bj ul .circle{width:50px;height:50px;background:#2965e6;border-radius:50%;line-height:50px;margin-left:22px;behavior: url(resources/template/scripts/modular/PIE.htc);}
+.adopt-blue-bj ul .circle{width:50px;height:50px;background:#2965e6;border-radius:50%;line-height:50px;margin-left:22px;}
 .adopt-blue-bj ul .circle i{color:#fff;font-size:20px}
 .adopt-blue-bj ul .word{color:#2965e6;font-size:14px;font-weight:bold;}
 .adopt-blue-bj .line{border-bottom:1px solid #2965e6;}
 /**为进行**/
-.adopt-ash-bj ul .circle{width:50px;height:50px;background:#e3e6ed;border-radius:50%;line-height:50px;margin-left:22px;behavior: url(resources/template/scripts/modular/PIE.htc);}
+.adopt-ash-bj ul .circle{width:50px;height:50px;background:#e3e6ed;border-radius:50%;line-height:50px;margin-left:22px;}
 .adopt-ash-bj ul .circle i{color:#fff;font-size:20px}
 .adopt-ash-bj ul .word{color:#e3e6ed;font-size:14px;}
 .adopt-ash-bj .line{border-bottom:1px solid #e3e6ed;}
 /**已经进行**/
-.adopt-wathet-bj ul .circle{width:50px;height:50px;background:#8fb0f6;border-radius:50%;line-height:50px;margin-left:22px;behavior: url(resources/template/scripts/modular/PIE.htc);}
+.adopt-wathet-bj ul .circle{width:50px;height:50px;background:#8fb0f6;border-radius:50%;line-height:50px;margin-left:22px;}
 .adopt-wathet-bj ul .circle i{color:#fff;font-size:20px}
 .adopt-wathet-bj ul .word{color:#8fb0f6;font-size:14px;}
 .adopt-wathet-bj .line{border-bottom:1px solid #8fb0f6;}

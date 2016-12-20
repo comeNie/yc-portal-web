@@ -47,7 +47,7 @@
   			<input id="userId" name="userId" hidden="" type="text" value="${userId}">
   			<div class="oder-form-lable mt-20">
   				<ul>
-  					<li class="mb-20">
+  					<li>
   						<!-- 订单状态 -->
   						<p><spring:message code="myOrder.orderStatus"/></p> 
   						<p>

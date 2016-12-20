@@ -30,7 +30,7 @@
   				<li class="nav-icon"><a href="${_base}/findyee"><i class="icon iconfont">&#xe60b;</i></a></li>
 				<%--暂不实现，隐藏掉--%>
   				<%--<li class="nav-icon mt-2"><a href="#"><i class="icon iconfont">&#xe60a;</i><span class="message">3</span></a></li>--%>
-				<li class="user"><a href="javaScript:void(0)" class="yonh"><span
+				<li class="user" id="user"><a href="javaScript:void(0)" class="yonh"><span
                         id="top_username"><c:choose>
                     <c:when test="${fn:length(user_session_key.username)>8}">
                         ${fn:substring(user_session_key.username,0,8)}...
@@ -40,15 +40,16 @@
                     </c:otherwise>
                 </c:choose></span><i
                         class="icon-caret-down btg" id="icon2"></i></a>
+					<div class="show-hover" style="display:none;">
+						<ul>
+							<li><i class="icon-user"></i><a href="${_base}/p/interpreter/interpreterInfoPager?source=interpreter"><spring:message code="user.topMenu.perProfile"/></a></li>
+							<li><i class="icon-lock"></i><a href="${_base}/p/security/seccenter?source=interpreter"><spring:message code="user.topMenu.secSetting"/></a></li>
+							<li><i class="icon-off"></i><a href="${_base}/ssologout"><spring:message code="user.topMenu.exit"/></a></li>
+						</ul>
+					</div>
   				</li>
   			</ul>
-            <div class="show">
-                <ul>
-                    <li><i class="icon-user"></i><a href="${_base}/p/interpreter/interpreterInfoPager?source=interpreter"><spring:message code="user.topMenu.perProfile"/></a></li>
-                    <li><i class="icon-lock"></i><a href="${_base}/p/security/seccenter?source=interpreter"><spring:message code="user.topMenu.secSetting"/></a></li>
-                    <li><i class="icon-off"></i><a href="${_base}/ssologout"><spring:message code="user.topMenu.exit"/></a></li>
-                </ul>
-            </div>
+
   		</div>
   	</div>
   </div>
