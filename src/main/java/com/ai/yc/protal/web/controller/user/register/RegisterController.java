@@ -1,5 +1,6 @@
 package com.ai.yc.protal.web.controller.user.register;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -18,10 +19,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.BeanUtils;
 import com.ai.opt.sdk.util.CollectionUtil;
+import com.ai.opt.sdk.util.UUIDUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.util.StringUtil;
+import com.ai.slp.balance.api.accountmaintain.interfaces.IAccountMaintainSV;
+import com.ai.slp.balance.api.accountmaintain.param.RegAccReq;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.PhoneVerify;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
@@ -40,7 +45,9 @@ import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckeMobileRequest;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersActiveRequest;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.InsertYCUserRequest;
+import com.ai.yc.user.api.userservice.param.UpdateYCUserRequest;
 import com.ai.yc.user.api.userservice.param.YCInsertUserResponse;
+import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
@@ -381,4 +388,49 @@ public class RegisterController {
         }  
         return ip; 
 	}
+	
+	
+	/**
+	 * 校验邮箱或手机
+	 */
+	@RequestMapping("/createAccount")
+	@ResponseBody
+	public ResponseData<String> createAccount() {
+		ResponseData<String> responseData = null;
+		IYCUserServiceSV usSV = DubboConsumerFactory.getService(
+				IYCUserServiceSV.class);
+		List<YCUserInfoResponse> list = usSV.getAllUserInfo();
+		for(int i=0;i<list.size();i++){
+			YCUserInfoResponse response = list.get(i);
+			response.setIsChange("1");
+			IAccountMaintainSV iAccountMaintainSV = DubboConsumerFactory.getService(IAccountMaintainSV.class);
+			RegAccReq vo = new RegAccReq();
+			vo.setExternalId(UUIDUtil.genId32());// 外部流水号ID
+			vo.setSystemId("Cloud-UAC_WEB");// 系统ID
+			vo.setTenantId("yeecloud");// 租户ID
+			vo.setRegCustomerId(response.getUserId());
+			vo.setAcctName("迁移数据");
+			vo.setAcctType("1");//1预付费
+	        try {
+	        	UpdateYCUserRequest request = new UpdateYCUserRequest();
+	        	long accountId = iAccountMaintainSV.createAccount(vo);
+	            response.setAccountId(accountId);
+	            BeanUtils.copyProperties(request,response);
+	            LOG.info(JSON.toJSONString(request));
+	            usSV.updateYCUserInfo(request);
+	            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,
+						"用户创建账号成功", "ok");
+	            LOG.info("param:"+JSON.toJSONString(vo));
+	            LOG.info("账户ID:"+accountId);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            LOG.error("出错：" + e.getMessage());
+	        }
+	        LOG.info(JSON.toJSONString(response));
+		}
+		return responseData;
+	}
+	
+	
+	
 }
