@@ -3,7 +3,7 @@
 .cloud-wrapper{width:1170px;margin:0 auto;background:url(../../images/leftbj.png) repeat-y left;overflow:hidden;position:relative;}
 .translate-cloud-wrapper{width:1170px;margin:0 auto;background:url(../../images/yiybj.png) repeat-y left;overflow:hidden;position:relative;}
 /**左侧菜单**/
-.left-subnav{width:230px;height:auto;float:left;padding:18px 0;display: inline-block;min-height:900px;}
+.left-subnav{width:230px;height:auto;float:left;padding:18px 0;display: inline-block;min-height:769px;}
 .left-title{width:230px;float:left;padding-left:20px;border-bottom: 1px solid #d4d9e3;padding-bottom: 14px;}
 .left-title ul{width:230px;float:left}
 .left-title ul li{float:left}
@@ -35,7 +35,7 @@
 .left-tplist i{position:absolute;top:6px;right:20px;cursor:pointer;color:#fff}
 .left-tplist img{width:200px;height:200px;}
 /**译员左侧菜单**/
-.interpreter-subanav{min-height:900px;}
+.interpreter-subanav{min-height:769px;}
 .interpreter-subanav .left-list ul .current{background:#f6f8fa;}
 .interpreter-subanav .left-list ul li:hover{background:#f6f8fa;}
 .interpreter-subanav .left-list ul .list-p{width:100%;height:40px;padding-left:78px;line-height:40px;margin-top:5px;}

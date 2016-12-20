@@ -127,7 +127,7 @@
 .recharge-success ul .word .red{font-size:36px;color:#39d5b0;margin:10px;}
 
 /**没下过订单**/
-.no-order{width:750px;margin:0 auto;}
+.no-order{width:800px;margin:0 auto;}
 .no-order ul{width:100%;float:left;margin-top:30px;}
 .no-order ul li{float:left;font-size:18px;color:#2c3e50;line-height:48px;}
 .no-order-cl ul li{line-height:22px;}
