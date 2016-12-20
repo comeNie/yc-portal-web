@@ -3,9 +3,7 @@ package com.ai.yc.protal.web.service;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.yc.protal.web.exception.HttpStatusException;
 import com.ai.yc.protal.web.utils.HttpUtil;
-import com.ai.yc.protal.web.utils.HttpsUtil;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.slf4j.Logger;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,8 +73,8 @@ public class YeekitService {
             resultStr = HttpUtil.doPost(client, SERVER_URL, postParams);
             LOGGER.info("dotranslate result:{}", resultStr);
 
-            //失败
-            JSONObject translated = JSON.parseObject(resultStr);
+            //失败 解析为json异常
+           JSON.parseObject(resultStr);
         }  catch (Exception e) {
             LOGGER.error("机器翻译失败:", e);
             throw new BusinessException(TRAINNS_FAIL,"The detection is fail.");
