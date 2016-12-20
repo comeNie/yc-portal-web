@@ -62,7 +62,7 @@ docker run -d --name yc-portal-web  -p 14101:8080  \
 -e "yeecloudUser=yeecloud" \
 -e "yeecloudPassword=yee123" \
 -e "MessageFormYeecloud=yeecloud" \
-10.19.13.36:5000/yc/yc-portal-web:v1.0_20
+10.19.13.36:5000/yc/yc-portal-web:v1.0_76
 
 #查看镜像启动日志
 docker logs yc-portal-web-v1.0
