@@ -1,6 +1,4 @@
 #!/bin/sh
-echo '43.240.136.154  translateport.yeekit.com' >> /etc/hosts
-echo '43.240.136.193  api.yeekit.com' >> /etc/hosts
 #env
 APP_NAME="yc.portal.web"
 

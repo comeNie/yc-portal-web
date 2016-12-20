@@ -11,8 +11,5 @@ RUN cd /opt/tomcat/webapps/ROOT && jar -xf ROOT.war && rm -rf /opt/tomcat/webapp
 ADD ./script/start-web.sh /start-web.sh
 RUN chmod 755 /*.sh
 
-#RUN echo '43.240.136.154  translateport.yeekit.com' >> /etc/hosts
-#RUN echo '43.240.136.193  api.yeekit.com' >> /etc/hosts
-
 # Define default command.
 CMD ["/start-web.sh"]
