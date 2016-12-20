@@ -107,7 +107,7 @@
 					<p class="right"><input type="button" class="btn border-blue radius20 btn-80"
 											value="<spring:message code="order.uploadDoc"/>" id="fy-btn"></p>
 					<!-- 清空 -->
-					<p class="right"><input hidden="" type="button" class="btn border-blue radius20 btn-80"
+					<p class="right"><input style="display: none;" type="button" class="btn border-blue radius20 btn-80"
 											value="<spring:message code="order.clear" />" id="clear-btn"></p>
 				</div>
 
@@ -304,7 +304,7 @@
 									<option value="2" selected="selected"><spring:message code="order.noFormatConv"/></option>
 								</select>
 							</p>
-							<p class="ml-20"><input id="inputFormatConv" name="inputFormatConv" maxlength="15" hidden="" type="text" class="int-text int-in-bi radius"></p>
+							<p class="ml-20"><input id="inputFormatConv" name="inputFormatConv" maxlength="15" style="display: none;" type="text" class="int-text int-in-bi radius"></p>
 						</li>
 					</ul>
 				</div>

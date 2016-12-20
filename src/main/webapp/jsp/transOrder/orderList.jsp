@@ -38,12 +38,12 @@
 	 				</ul>
 	 			</div>
 	 			<div id="table-da1">
-					<input id="stateP" name="stateP" hidden="" type="text" value="${state}">
+					<input id="stateP" name="stateP" type="hidden" value="${state}">
 	 				<form id="orderQuery">
 	 				
-	 				<input id="interperId" name="interperId" hidden="" type="text" value="${interperInfo.userId}">
+	 				<input id="interperId" name="interperId" type="hidden" value="${interperInfo.userId}">
 	 				<c:if test="${interperInfo.lspRole == '12' || interperInfo.lspRole == '11'}">
-	 					<input id="lspId"  name="lspId" hidden="" type="text" value="${interperInfo.lspId}">
+	 					<input id="lspId"  name="lspId" type="hidden" value="${interperInfo.lspId}">
 	 				</c:if>
 	 				
 		 			<div class="oder-form-lable mt-20">

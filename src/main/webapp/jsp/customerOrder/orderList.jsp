@@ -41,6 +41,7 @@
   				</ul>
   			</div>
   			<div id="table-da1">
+
                 <input id="displayFlagP" name="displayFlagP" type="hidden" value="${displayFlag}">
   			<form id="orderQuery">
   			<input id="userId" name="userId" type="hidden" value="${userId}">
