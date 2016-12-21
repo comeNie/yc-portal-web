@@ -4,17 +4,18 @@ define('app/jsp/home', function (require, exports, module) {
         Widget = require('arale-widget/1.2.0/widget'),
         AjaxController = require('opt-ajax/1.0.0/index');
     require("jsviews/jsrender.min");
-	require("zeroclipboard/ZeroClipboard.min");
+	require("zeroclipboard/ZeroClipboard");
+    require("audio/audio.min");
     require("jquery-validation/1.15.1/jquery.validate");
     require("app/util/aiopt-validate-ext");
-	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');	
+	require('jquery-i18n/1.2.2/jquery.i18n.properties');
     var SendMessageUtil = require("app/util/sendMessage");
 
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
-
+    var languageaudio;
 	var sourYiWen="";
-	var clip;
+	// var clip;
 	var homePage = Widget.extend({
         //属性，使用时由类的构造函数传入
         attrs: {
@@ -38,7 +39,7 @@ define('app/jsp/home', function (require, exports, module) {
         //重写父类
         setup: function () {
             homePage.superclass.setup.call(this);
-            
+
         	//初始化国际化
 			$.i18n.properties({//加载资浏览器语言对应的资源文件
 				name: ["home"], //资源文件名称，可以是数组
@@ -50,16 +51,35 @@ define('app/jsp/home', function (require, exports, module) {
             this._initPage();
 
 			// 定义一个新的复制对象
-			var  clip = new ZeroClipboard( document.getElementById("sus-top1"));
-			// 复制内容到剪贴板成功后的操作
-			clip.on('copy', function (event) {
-				event.clipboardData.setData('text/plain', $('#transRes').val());
-			});
+            // ZeroClipboard.config( { swfPath: _base+"/resources/spm_modules/zeroclipboard/ZeroClipboard.swf" });
+			// var  clip = new ZeroClipboard( document.getElementById("sus-top1"));
+            //
+			// // 复制内容到剪贴板成功后的操作
+			// clip.on('copy', function (event) {
+			// 	event.clipboardData.setData('text/plain', $('#transRes').val());
+			// });
+            //
+			// clip.on( 'complete', function(client, args) {
+			// });
 
-			clip.on( 'complete', function(client, args) {
-			});
+            ZeroClipboard.setMoviePath(_base+"/resources/spm_modules/zeroclipboard/ZeroClipboard.swf");
 
+            var clip = new ZeroClipboard.Client();
 
+            clip.setHandCursor( true );
+            clip.setCSSEffects( true );
+
+            clip.addEventListener('mouseDown', function(client){
+                clip.setText( $('#transRes').val() );
+            });
+            clip.addEventListener('complete', function(){
+                // alert('复制成功');
+            });
+            clip.glue( 'sus-top1' );
+
+            audiojs.events.ready(function() {
+                languageaudio = audiojs.createAll();
+            });
         },
 
         _initPage:function () {
@@ -257,20 +277,26 @@ define('app/jsp/home', function (require, exports, module) {
         _text2audio:function() {
 			//获取目标语言编码
 			var to =$(".dropdown .selected").eq(1).attr("value");
-
-        	var myAudio = document.getElementById('audioPlay');
-	    	if(myAudio.paused){
-		        var itostr = $.trim($("#transRes").val());
-		        if(itostr != null){
-	        		 var playUrl = _base + '/Hcicloud/text2audio?lan='+to+'&text='+ window.encodeURI(window.encodeURI(itostr));
-	        		
-	        		 $("#audioPlay").attr("src", playUrl);
-	        		 console.log(playUrl);
-	        		 myAudio.play();
-		        }
-	        }else{
-	            myAudio.pause();
-	        }
+            var audio = languageaudio[0];
+            var itostr = $.trim($("#transRes").val());
+            var playUrl = _base + '/Hcicloud/text2audio?lan='+to+'&text='+ window.encodeURI(window.encodeURI(itostr));
+            //
+            // 		 $("#audioPlay").attr("src", playUrl);
+            audio.load(_base + '/Hcicloud/text2audio?lan='+to+'&text='+ window.encodeURI(window.encodeURI(itostr)));
+            $(".audiojs .play").click();
+        	//var myAudio = document.getElementById('audioPlay');
+            // if(myAudio.paused){
+		     //    var itostr = $.trim($("#transRes").val());
+		     //    if(itostr != null){
+	        // 		 var playUrl = _base + '/Hcicloud/text2audio?lan='+to+'&text='+ window.encodeURI(window.encodeURI(itostr));
+	        //
+	        // 		 $("#audioPlay").attr("src", playUrl);
+	        // 		 console.log(playUrl);
+	        // 		 myAudio.play();
+		     //    }
+	        // }else{
+	        //     myAudio.pause();
+	        // }
         },
         
         //保存

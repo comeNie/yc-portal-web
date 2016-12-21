@@ -18,6 +18,7 @@
     <link href="${uedroot}/css/modular/headr-footer.css" rel="stylesheet" type="text/css"/>
     <link href="${uedroot}/css/modular/index.css" rel="stylesheet" type="text/css"/>
 
+
     <style type="text/css">
         /*分词高亮*/
         .before-translation span.b_cur {background: #fff444 none repeat scroll 0 0;}
@@ -38,6 +39,21 @@
             overflow: auto;
             overflow-x: hidden;
         }
+
+
+        .audiojs {
+            width: 30px;
+            height: 22px;
+            overflow:hidden;
+        }
+        .audiojs .error-message {
+            display: none;
+        }
+        .audiojs .loading  {
+            overflow: hidden;
+        }
+
+
     </style>
     </head>
 
@@ -123,14 +139,14 @@
                 <div id="tgtNew" class="int-post tb_text" onmousemove="srcMove()" onmouseout="srcOut()"  style="display: none">
                 </div>
                 <div id="tgtOld" class="int-post"  style="display: block;">
-                    <textarea  class="int-post"  id="transRes" readonly="readonly"></textarea>
+                    <textarea  class="int-post"  id="transRes" ></textarea>
                     <textarea  class="int-post"  id="transResBak" style="display: none"></textarea>
                 </div>
                 <label id="transError"></label>
-                <div class="post-cion" style="display: none">
+                <div class="post-cion" style="display: block">
 
 					<p>
-						<a id="sus-top1" href="javaScript:void(0)" class="ord-icon"><i class="icon iconfont">&#xe639;</i>
+						<a id="sus-top1" href="javaScript:void(0)" class="ord-icon"><i id="copy" class="icon iconfont">&#xe639;</i>
                             <!-- 复制译文-->
                             <span class="suspension1"><spring:message code="home.Copytranslation"/></span>
                         </a>
@@ -165,8 +181,8 @@
 					</p>
 				</div>
                 <!-- 播放器 -->
-                <audio src="" controls="controls" id="audioPlay" style="display: none;">
-                </audio>
+                <audio src=""  id="audioPlay"   />
+
             </div>
         </div>
         <!--file-->
@@ -403,6 +419,8 @@
             pager = new homePage({element : document.body});
             pager.render();
         });
+
+
     })();
 </script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/drop-down.js"></script>

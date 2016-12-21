@@ -399,12 +399,14 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 
         //语言对改变触发
         _chDuad:function () {
-            //清除remote验证的缓存，重新验证
-            $("#translateContent").removeData("previousValue");
-            if ( $.trim($("#translateContent")!='' )) {
-                var formValidator=this._initValidate();
-                formValidator.form();
-            }
+			if ($.trim($("#translateContent").val()) != '') {
+				//清除remote验证的缓存，重新验证
+				$("#translateContent").removeData("previousValue");
+				if ( $.trim($("#translateContent")!='' )) {
+					var formValidator=this._initValidate();
+					formValidator.form();
+				}
+			}
 
             this._transPrice();
         },

@@ -26,7 +26,7 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
     	events: {
 			"change #fieldCode":"_getOrderList",
 			"change #useCode":"_getOrderList",
-			"keyup #endDate":"_getOrderList",
+			"change #endDate":"_getOrderList",
 			"click #searchBtn":"_getOrderList",
 			"click #feeSort":"_feeSortFun",
 			"click #endSort":"_endSortFun",

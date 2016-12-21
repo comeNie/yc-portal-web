@@ -22,7 +22,7 @@
 	<input type="hidden" value="${order.productInfo.useCode}" id="useCode">
 	<input type="hidden" value="${order.productInfo.fieldCode}" id="fieldCode">
 	<input type="hidden" value="${order.productInfo.isSetType}" id="isSetType">
-	<input type="hidden" value="${order.baseInfo.orderDesc}" id="format">
+	<input type="hidden" value="${order.productInfo.typeDesc}" id="format">
 	<input type="hidden" value="${order.productInfo.isUrgent}" id="isUrgent">
 
 	<!--面包屑导航-->
