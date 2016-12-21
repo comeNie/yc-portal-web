@@ -128,13 +128,13 @@
                             <th ><spring:message code="account.detailed.instruction"/></th>
                         </tr>
                         </thead>
-
+                       <tbody id="searchAccountData"></tbody>
                     </table>
 
                 </div>
                 <!-- 订单列表 -->
-                <div class="right-list-table" id="searchAccountData">
-                </div>
+                <%--<div class="right-list-table" id="searchAccountData">
+                </div>--%>
                 <!-- 订单列表结束 -->
                 <div id="showAccountDiv"></div>
                 <!--分页-->
@@ -155,22 +155,34 @@
 </body>
 <%@ include file="/inc/incJs.jsp" %>
 <script id="searchAccountTemple" type="text/template">
-    <table class="table table-bg  table-striped-even table-height50">
-        <tbody>
+    <%--<table class="table table-bg  table-striped-even table-height50">--%>
+        <%--<tbody>--%>
         <input type="hidden" name="unit" value="{{:incomeFlag}}">
         <input type="hidden" name="unit" value="{{:optType}}">
         <tr>
             <td style="width: 200px">{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',payTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
             <td class="red" style="width: 108px;size: 18px">
                 {{if  incomeFlag == '1'}}
-                +{{:~liToYuan(totalAmount)}}
+                +
+                {{if  currencyUnit == '1'}}
+                ¥
+                {{else currencyUnit == '2'}}
+                $
+                {{/if}}
+                {{:~liToYuan(totalAmount)}}
                 {{else }}
                 0
                 {{/if}}
             </td>
             <td class="green" style="width: 134px">
                 {{if  incomeFlag == '0'}}
-                -{{:~liToYuan(-totalAmount)}}
+                -
+                {{if  currencyUnit == '1'}}
+                ¥
+                {{else currencyUnit == '2'}}
+                $
+                {{/if}}
+                {{:~liToYuan(-totalAmount)}}
                 {{else }}
                     0
                 {{/if}}
@@ -190,8 +202,8 @@
             <td style="width: 78px">{{:channel}}</td>
             <td>{{:remark}}</td>
         </tr>
-        </tbody>
-    </table>
+        <%--</tbody>--%>
+    <%--</table>--%>
 </script>
 
 <script type="text/javascript">
