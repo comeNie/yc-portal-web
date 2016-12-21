@@ -49,9 +49,7 @@ define('app/jsp/home', function (require, exports, module) {
 
 
 			// 定义一个新的复制对象
-			var  clip = new ZeroClipboard( document.getElementById("sus-top1"), {
-				moviePath:  "${_base}/resources/spm_modules/zeroclipboard/ZeroClipboard.swf"
-			});
+			var  clip = new ZeroClipboard( document.getElementById("sus-top1"));
 			// 复制内容到剪贴板成功后的操作
 			clip.on('copy', function (event) {
 				event.clipboardData.setData('text/plain', $('#transRes').val());
@@ -65,16 +63,16 @@ define('app/jsp/home', function (require, exports, module) {
 
         _initPage:function () {
             var _this = this;
-            $('.dropdown').eq(0).attr('id', 'drop-a');
-            $('.dropdown').eq(1).attr('id', 'drop-b');
+            // $('.dropdown').eq(0).attr('id', 'drop-a');
+            // $('.dropdown').eq(1).attr('id', 'drop-b');
 
             //源语言改变
-            $("#drop-a .selected").bind('DOMNodeInserted', function (e) {
+			$(".dropdown .selected").eq(0).bind('DOMNodeInserted', function (e) {
                 _this._diffSrc();
             });
 
             //目标语言改变
-            $("#drop-b .selected").bind('DOMNodeInserted', function (e) {
+			$(".dropdown .selected").eq(1).bind('DOMNodeInserted', function (e) {
                 _this._mt();
             });
         },
@@ -90,9 +88,9 @@ define('app/jsp/home', function (require, exports, module) {
 			var _this=this;
 			var ywText="";
         	var from=$(".dropdown .selected").eq(0).attr("value");
-        	var to='';
+        	var to=$(".dropdown .selected").eq(1).attr("value");
             $("#showb option").each(function () {
-                if ($("#drop-b .selected").html() == $(this).text()) {
+                if ($(".dropdown .selected").eq(1).html() == $(this).text()) {
                     to = $(this).val();
                     return false;
                 }
@@ -224,8 +222,8 @@ define('app/jsp/home', function (require, exports, module) {
 				});
 			}
 
-            $("#drop-b li").each(function () {
-                if ($(this).html() == $("#drop-a .selected").html())
+			$(".dropdown").eq(1).find('li').each(function () {
+                if ($(this).html() == $(".selected").eq(0).html())
                     $(this).hide();
                 else
                     $(this).show();
