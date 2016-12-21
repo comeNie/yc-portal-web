@@ -157,7 +157,7 @@ public class PayController {
             String result = iDepositSV.depositFund(depositParam);
 
         }catch (Exception e){
-            LOG.error("The deposit is fail.");
+            LOG.error("The deposit is fail."+depositParam.toString());
             return "FAIL456";
         }
        /* if (result==null){
