@@ -109,7 +109,23 @@
                     <table class="table table-bg  table-striped-even table-height50">
                         <thead>
                         <tr>
-                            <th style="width: 200px"><spring:message code="account.time"/></th>
+                            <th><spring:message code="account.time"/></th>
+                            <th ><spring:message code="account.income"/>( <c:choose>
+                                <c:when test="${currencyUnit==2}">
+                                    <spring:message code="account.dollar"/>
+                                </c:when>
+                                <c:otherwise><spring:message code="account.account.tag.yuan"/></c:otherwise>
+                            </c:choose>)</th>
+                            <th ><spring:message code="account.expenditure"/>( <c:choose>
+                                <c:when test="${currencyUnit==2}">
+                                    <spring:message code="account.dollar"/>
+                                </c:when>
+                                <c:otherwise><spring:message code="account.account.tag.yuan"/></c:otherwise>
+                            </c:choose>)</th>
+                            <th ><spring:message code="balance"/></th>
+                            <th ><spring:message code="account.type"/></th>
+                            <th ><spring:message code="account.counterpart"/></th>
+                            <%--<th style="width: 200px"><spring:message code="account.time"/></th>
                             <th style="width: 108px"><spring:message code="account.income"/>( <c:choose>
                                 <c:when test="${currencyUnit==2}">
                                     <spring:message code="account.dollar"/>
@@ -124,17 +140,17 @@
                             </c:choose>)</th>
                             <th style="width: 125px"><spring:message code="balance"/></th>
                             <th style="width: 52px"><spring:message code="account.type"/></th>
-                            <th style="width: 78px"><spring:message code="account.counterpart"/></th>
+                            <th style="width: 78px"><spring:message code="account.counterpart"/></th>--%>
                             <th ><spring:message code="account.detailed.instruction"/></th>
                         </tr>
                         </thead>
-
+                       <tbody id="searchAccountData"></tbody>
                     </table>
 
                 </div>
                 <!-- 订单列表 -->
-                <div class="right-list-table" id="searchAccountData">
-                </div>
+                <%--<div class="right-list-table" id="searchAccountData">
+                </div>--%>
                 <!-- 订单列表结束 -->
                 <div id="showAccountDiv"></div>
                 <!--分页-->
@@ -155,28 +171,40 @@
 </body>
 <%@ include file="/inc/incJs.jsp" %>
 <script id="searchAccountTemple" type="text/template">
-    <table class="table table-bg  table-striped-even table-height50">
-        <tbody>
+    <%--<table class="table table-bg  table-striped-even table-height50">--%>
+        <%--<tbody>--%>
         <input type="hidden" name="unit" value="{{:incomeFlag}}">
         <input type="hidden" name="unit" value="{{:optType}}">
         <tr>
-            <td style="width: 200px">{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',payTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
-            <td class="red" style="width: 108px;size: 18px">
+            <td >{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',payTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
+            <td class="red" >
                 {{if  incomeFlag == '1'}}
-                +{{:~liToYuan(totalAmount)}}
+                +
+                {{if  currencyUnit == '1'}}
+                ¥
+                {{else currencyUnit == '2'}}
+                $
+                {{/if}}
+                {{:~liToYuan(totalAmount)}}
                 {{else }}
                 0
                 {{/if}}
             </td>
-            <td class="green" style="width: 134px">
+            <td class="green" >
                 {{if  incomeFlag == '0'}}
-                -{{:~liToYuan(-totalAmount)}}
+                -
+                {{if  currencyUnit == '1'}}
+                ¥
+                {{else currencyUnit == '2'}}
+                $
+                {{/if}}
+                {{:~liToYuan(-totalAmount)}}
                 {{else }}
                     0
                 {{/if}}
             </td><%--{{:~liToYuan()}}--%>
-            <td style="width: 125px">{{:~liToYuan(balancePre)}}</td>
-            <td style="width: 52px">
+            <td >{{:~liToYuan(balancePre)}}</td>
+            <td>
                 {{if  optType == '1'}}
                 <spring:message code="account.recharge"/>
                 {{else optType == '2'}}
@@ -187,11 +215,11 @@
                 <spring:message code="account.refund"/>
                 {{/if}}
             </td>
-            <td style="width: 78px">{{:channel}}</td>
+            <td >{{:channel}}</td>
             <td>{{:remark}}</td>
         </tr>
-        </tbody>
-    </table>
+        <%--</tbody>--%>
+    <%--</table>--%>
 </script>
 
 <script type="text/javascript">
