@@ -47,6 +47,7 @@ define('app/jsp/home', function (require, exports, module) {
 				language: currentLan,
 			});
 
+            this._initPage();
 
 			// 定义一个新的复制对象
 			var  clip = new ZeroClipboard( document.getElementById("sus-top1"));
@@ -58,7 +59,7 @@ define('app/jsp/home', function (require, exports, module) {
 			clip.on( 'complete', function(client, args) {
 			});
 
-            this._initPage();
+
         },
 
         _initPage:function () {
