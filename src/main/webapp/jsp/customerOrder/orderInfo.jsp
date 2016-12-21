@@ -208,7 +208,7 @@
                                 <p class="word"><spring:message code="myOrder.Creationtime"/>:</p>
                                 <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${OrderDetails.orderTime}"/> </p>
                             </li>
-                            <c:if test="${OrderDetails.state == '11' || OrderDetails.state == '23'}">
+                            <c:if test="${OrderDetails.displayFlag == '11' || OrderDetails.displayFlag == '23'}">
                                 <li>
                                     <!-- 预计翻译耗时 -->
                                     <p class="word"><spring:message code="myOrder.Estimatedtime"/>:</p>
@@ -340,11 +340,11 @@
                                     </c:choose>
                                 </p>
                             </li>
-                            <li class="width-large">
-                            	<!-- 需求备注 -->
-                                <p class="word"><spring:message code="myOrder.Demandnotes"/>:</p>
-                                <p class="p-large">${OrderDetails.remark}</p>
-                            </li>
+                            <%--<li class="width-large">--%>
+                            	<%--<!-- 需求备注 -->--%>
+                                <%--<p class="word"><spring:message code="myOrder.Demandnotes"/>:</p>--%>
+                                <%--<p class="p-large">${OrderDetails.remark}</p>--%>
+                            <%--</li>--%>
                         </ul>
                     </div>
                 	</c:if>

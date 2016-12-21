@@ -325,6 +325,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 					$("#inputFormatConv").show();
 					$("#inputFormatConv").val($("#format").val());
 				}
+
+				this._uploadFile();
 			} else {
 				//文字
 				$("#fy2").hide();

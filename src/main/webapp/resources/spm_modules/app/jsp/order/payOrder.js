@@ -2,14 +2,17 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
         Dialog = require("optDialog/src/dialog"),
-	    Widget = require('arale-widget/1.2.0/widget');
+	    Widget = require('arale-widget/1.2.0/widget'),
+		AjaxController = require('opt-ajax/1.0.0/index');
 
 	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
+	//实例化AJAX控制处理对象
+	var ajaxController = new AjaxController();
     var payOrderPager = Widget.extend({
     	
     	//事件代理
     	events: {
-			"click #recharge-popo":"_payOrder",
+			"click #recharge-popo":"_isPay",
 			"click #payment-method ul":"_changePayType",
 			"click #depositBtn":"_toDeposit",
 			"click #completed":"_submitYEpay",//余额支付确认
@@ -29,6 +32,23 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 				async: true
 			});
     	},
+
+		_isPay:function () {
+			var _this = this;
+			ajaxController.ajax({
+				type: "post",
+				url: _base+"/p/customer/order/isPay",
+				data: {'orderId': $("input[name='orderId']").val()},
+				success: function(data){
+					//可以支付
+					if("1"===data.statusCode){
+						_this._payOrder();
+					} else {
+						this._showWarn($.i18n.prop('pay.error.paid'));
+					}
+				}
+			});
+		},
 		//支付订单
 		_payOrder:function(){
 			//获取支付方式
