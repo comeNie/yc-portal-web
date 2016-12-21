@@ -210,7 +210,7 @@ public class CustomerOrderController {
 
         //状态不是待支付
         if (!OrderConstants.State.UN_PAID.equals(orderDetailsRes.getState())) {
-            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, "");
+            resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "FAIL");
         }
         return resData;
     }

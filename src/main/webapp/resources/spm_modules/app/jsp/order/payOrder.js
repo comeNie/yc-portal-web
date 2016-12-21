@@ -41,10 +41,10 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 				data: {'orderId': $("input[name='orderId']").val()},
 				success: function(data){
 					//可以支付
-					if("1"===data.statusCode){
+					if("OK"===data.statusInfo){
 						_this._payOrder();
 					} else {
-						this._showWarn($.i18n.prop('pay.error.paid'));
+						_this._showWarn($.i18n.prop('pay.error.paid'));
 					}
 				}
 			});
