@@ -40,18 +40,10 @@
             overflow-x: hidden;
         }
 
-
-        .audiojs {
-            width: 30px;
-            height: 22px;
-            overflow:hidden;
-        }
-        .audiojs .error-message {
-            display: none;
-        }
-        .audiojs .loading  {
-            overflow: hidden;
-        }
+        .mcpd_icon .audiojs{float:left;}
+        .audiojs{overflow:hidden;}
+        .audiojs div{display:none;}
+        .audiojs .error-message{display:none;}
 
 
     </style>
@@ -181,7 +173,9 @@
 					</p>
 				</div>
                 <!-- 播放器 -->
-                <audio src=""  id="audioPlay"   />
+                <div class="mcpd_icon clearfix">
+                 <audio src=""  id="audioPlay"   />
+                </div>
 
             </div>
         </div>
