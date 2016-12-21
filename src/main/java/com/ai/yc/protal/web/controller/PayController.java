@@ -153,13 +153,19 @@ public class PayController {
         }
         //内部系统充值
         depositParam.setBusiOperCode("300000");
-        String result = iDepositSV.depositFund(depositParam);
-        if (result==null){
+        try {
+            String result = iDepositSV.depositFund(depositParam);
+
+        }catch (Exception e){
+            LOG.error("The deposit is fail.");
+            return "FAIL456";
+        }
+       /* if (result==null){
             LOG.error("The deposit is fail.");
             return "faile1";
         }else {
             LOG.debug("The deposit is success.");
-        }
+        }*/
         return "OK";
     }
     /**
