@@ -11,7 +11,7 @@ $(function () {
         $('#user .show-hover').hide(1);
         $('#user .yonh').children('i').removeClass("icon-caret-up");
     });	
-  });
+});
 
  
 //左侧菜单关闭
@@ -112,6 +112,17 @@ $(function () {
         $('.table-show').hide(1);
     });	
  }); 
+
+//头像显示
+$(function(){
+  $(".portrait").mouseenter(function(){
+  $(".portrait-file").show();
+  });
+  $(".portrait-file").mouseleave(function(){
+  $(".portrait-file").hide();
+  });
+  });
+  
  
 //设置密码
 $(function(){

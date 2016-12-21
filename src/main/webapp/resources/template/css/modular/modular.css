@@ -240,10 +240,11 @@
 .form-lable ul .toux{line-height:100px;position:relative;}
 .form-lable ul li .portrait{width:100px;height:100px;float:left;}
 .form-lable ul li .portrait img{width:100px;height:100px;border:1px solid #0a5dd2;border-radius:50%}
-.form-lable ul .toux  .portrait-file{opacity:0;filter:alpha(opacity=0); -moz-opacity:0; -khtml-opacity:0;}
-.form-lable ul .toux  .portrait-file:hover{opacity:0.8;filter:alpha(opacity=80); -moz-opacity:0.8; -khtml-opacity:0.8;}
-.form-lable ul .toux  .portrait-file a{width:98px;height:98px;float:left;background:#000;position:absolute;top:2px;left:121px;border-radius:50%;text-align: center;color:#fff; }
-.form-lable ul .toux  .portrait-file .file-opacity{width:98px;height:98px;float:left;background:#000;position:absolute;top:1px;left:121px;border-radius:50%;opacity:0;filter:alpha(opacity=0); -moz-opacity:0; -khtml-opacity:0;}
+.form-lable ul .toux .portrait-file{width:98px;height:98px;float:left;background:#000;position:absolute;top:2px;left:121px;border-radius:50%;text-align:center;color:#fff;
+opacity:0.8;filter:alpha(opacity=80); -moz-opacity:80; -khtml-opacity:80;display:none;}
+.form-lable ul .toux .portrait-file a{color:#fff}
+.form-lable ul .toux  .portrait-file .file-opacity{width:98px;height:98px;float:left;position:absolute;top:1px;left:0;border-radius:50%;
+opacity:0;filter:alpha(opacity=0); -moz-opacity:0; -khtml-opacity:0;}
 .form-lable ul li label{color:#fe6b6b}
 .form-lable ul li .x-label{position:absolute;top:-32px;left:80px;font-size:12px;color:#fe6b6b}
 
