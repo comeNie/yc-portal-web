@@ -53,7 +53,7 @@
 								</p>
 								<p class="ml-20">
 									<input id="phone" name="phone" maxlength="100" type="text"
-										class="int-text int-in-bi radius">
+										class="int-text int-in-bi radius" placeholder="<spring:message code="ycregister.register.phone.tip" />">
 								</p>
 							</li>
 
@@ -72,7 +72,7 @@
 								</p>
 								<p>
 									<input id="password"  name="password"
-										type="password" class="int-text int-in-big radius">
+										type="password" class="int-text int-in-big radius" placeholder="<spring:message code="ycregister.register.password.tip" />">
 								</p>
 							</li>
 							<li>
@@ -82,7 +82,7 @@
 								<p>
 									<input id="confirmPassword" 
 										name="confirmPassword" type="password"
-										class="int-text int-in-big radius">
+										class="int-text int-in-big radius" placeholder="<spring:message code="ycregister.register.confirmPassword.tip" />"/>
 								</p>
 							</li>
 							<li>
@@ -91,7 +91,7 @@
 								</p>
 								<p>
 									<input id="verifyCodeImg" name="imgCode" maxlength="4"
-										type="text" class="int-text int-in-280 radius">
+										type="text" class="int-text int-in-280 radius" placeholder="<spring:message code="ycregister.register.verificationCode.tip" />">
 								</p>
 								<p class="img">
 									<img id="refreshVerificationCode"
@@ -104,7 +104,7 @@
 									<spring:message code="ycregister.dynamiCode" />
 								</p>
 								<p>
-									<input id="smsCode" name="smsCode" maxlength="6" type="text" class="int-text int-in-280 radius">
+									<input id="smsCode" name="smsCode" maxlength="6" type="text" class="int-text int-in-280 radius" placeholder="<spring:message code="ycregister.register.dynamiCode.tip" />"/>
 								</p>
 								<p>
 									<input id="send_dynamicode_btn" type="button" class="btn btn-green btn-280 radius ml-20"

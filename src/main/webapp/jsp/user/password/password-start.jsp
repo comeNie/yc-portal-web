@@ -32,13 +32,13 @@
  								<input type="hidden" id="tcode"/>
  								<input type="hidden" id="t_userName" name="t_userName"/>
  								<p class="word"><spring:message code="ycfindpassword.account"/></p>
- 								<p><input type="text" class="int-text int-in-big radius" name="userName" id="userName"></p>
+ 								<p><input type="text" class="int-text int-in-big radius" name="userName" id="userName" placeholder="<spring:message code="ycfindpassword.account.tip"/>"></p>
  								<label id="userNameErrMsg" style="display: none;"><span class="ash" id="userNameText"></span></label>
  								
  							</li>
  							<li>
  								<p class="word"><spring:message code="ycfindpassword.captcha"/></p>
- 								<p><input type="text" class="int-text int-large radius" id="verifyCodeImg"></p>
+ 								<p><input type="text" class="int-text int-large radius" id="verifyCodeImg" placeholder="<spring:message code="ycfindpassword.verificationCode.tip"/>"></p>
  								<p><img id="refreshVerificationCode"
 										src="${_base}/userCommon/imageVerifyCode" height="44"
 										style="cursor: pointer"></p>
