@@ -701,7 +701,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
             uploader.on( 'uploadSuccess', function( file, responseData ) {
                 if(responseData.statusCode=="1"){
                     var fileData = responseData.data;
-                    console.log(fileData);
+                    // console.log(fileData);
                     //文件上传成功
                     if(fileData){
                         $("#"+file.id).attr("fileId", fileData);
