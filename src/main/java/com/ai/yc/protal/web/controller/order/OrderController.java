@@ -222,4 +222,13 @@ public class OrderController {
         return tmp;
     }
 
+    /**
+     * 显示订单错误页面
+     * @return
+     */
+    @RequestMapping("/error")
+    public String orderSysError(){
+        return "sysError";
+    }
+
 }

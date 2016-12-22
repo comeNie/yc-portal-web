@@ -2,9 +2,13 @@ package com.ai.yc.protal.web.service;
 
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.yc.order.api.orderdetails.interfaces.IQueryOrderDetailsSV;
+import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsRequest;
+import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsResponse;
 import com.ai.yc.order.api.orderpay.interfaces.IOrderPayProcessedResultSV;
 import com.ai.yc.order.api.orderpay.param.*;
 import com.ai.yc.protal.web.constants.OrderConstants;
+import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -69,5 +73,21 @@ public class OrderService {
         ResponseHeader header = resultResponse.getResponseHeader();
         LOGGER.info("The order pay process result:{},orderId:{}",
                 header==null?true:header.getIsSuccess(),resultResponse.getOrderId());
+    }
+
+    /**
+     * 查询订单是否未支付
+     * @param orderId
+     * @return
+     * @author mimw
+     */
+    public boolean isUnPay(String orderId) {
+        IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
+        QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
+        orderDetailsReq.setOrderId(Long.valueOf(orderId));
+        orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
+        QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
+        LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
+        return OrderConstants.State.UN_PAID.equals(orderDetailsRes.getState());
     }
 }

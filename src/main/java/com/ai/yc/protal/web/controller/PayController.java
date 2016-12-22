@@ -103,11 +103,18 @@ public class PayController {
             LOG.error("The pay is fail.");
             return "fail";
         }
+        else{
+        	LOG.info("verifyData OK");
+        }
+        LOG.info("计算totalFee开始。。。。");
         //支付费用
         Double totalFee = Double.valueOf(payNotify.getOrderAmount())*1000;
+        LOG.info("计算totalFee结束 totalFee="+totalFee);
        //后场充值
         //
+        LOG.info("开始获取IDepositSV dubbo服务");
         IDepositSV iDepositSV = DubboConsumerFactory.getService(IDepositSV.class);
+        LOG.info("结束获取IDepositSV dubbo服务");
         DepositParam depositParam = new DepositParam();
         TransSummary summary = new TransSummary();
         summary.setAmount(new Double(totalFee).longValue());
@@ -116,12 +123,16 @@ public class PayController {
         List<TransSummary> transSummaryList = new ArrayList<TransSummary>();
         transSummaryList.add(summary);
         depositParam.setTransSummary(transSummaryList);
+        LOG.info("开始获取userServiceSV dubbo服务");
         IYCUserServiceSV userServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
+        LOG.info("结束获取userServiceSV dubbo服务");
         SearchYCUserRequest searchYCUserReq = new SearchYCUserRequest();
         searchYCUserReq.setTenantId(Constants.DEFAULT_TENANT_ID);
 //        String userId = UserUtil.getUserId();
         searchYCUserReq.setUserId(userId);
+        LOG.info("开始调用userServiceSV.searchYCUserInfo服务");
         YCUserInfoResponse userInfoResponse = userServiceSV.searchYCUserInfo(searchYCUserReq);
+        LOG.info("结束调用userServiceSV.searchYCUserInfo服务");
         //若没有账户信息,直接返回null
         if (userInfoResponse==null||userInfoResponse.getAccountId()==null){
             LOG.error("没有该帐户信息.请创建帐户");
@@ -153,6 +164,7 @@ public class PayController {
         }
         //内部系统充值
         depositParam.setBusiOperCode("300000");
+        LOG.info("开始调用iDepositSV.depositFund服务");
         try {
             String result = iDepositSV.depositFund(depositParam);
 
@@ -160,6 +172,7 @@ public class PayController {
             LOG.error("The deposit is fail.accountID="+accountId);
             return "FAIL456";
         }
+        LOG.info("结束调用iDepositSV.depositFund服务");
        /* if (result==null){
             LOG.error("The deposit is fail.");
             return "faile1";

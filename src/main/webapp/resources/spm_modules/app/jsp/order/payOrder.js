@@ -37,6 +37,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 			var _this = this;
 			ajaxController.ajax({
 				type: "post",
+                processing:true,
 				url: _base+"/p/customer/order/isPay",
 				data: {'orderId': $("input[name='orderId']").val()},
 				success: function(data){
@@ -44,7 +45,9 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 					if("OK"===data.statusInfo){
 						_this._payOrder();
 					} else {
-						_this._showWarn($.i18n.prop('pay.error.paid'));
+						// _this._showWarn($.i18n.prop('pay.error.paid'));
+						//订单错误，跳转到订单错误页面。
+						window.location.href= _base+"/order/error";
 					}
 				}
 			});
