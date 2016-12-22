@@ -87,8 +87,8 @@
                             <p></p>
                             <p></p>
                             <p></p>
+                            <p class="right"><a href="javaScript:void(0);" id="editContact"><i class="icon-edit"></i></a></p>
                         </li>
-                        <li class="right"><a href="javaScript:void(0);" id="editContact"><i class="icon-edit"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -100,26 +100,26 @@
                 </div>
                 <div class="right-list-table">
                     <c:if test="${transType != '2'}">
-                    <table id="textOrderTable" class="table table-th-color">
-                        <thead>
-                        <tr>
-                            <th><spring:message code="order.Subject"/></th>
-                            <th><spring:message code="order.Language"/></th>
-                            <th><spring:message code="order.Fields"/></th>
-                            <th><spring:message code="order.purpose"/></th>
-                            <th><spring:message code="order.TranslationGrade"/></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>${order.baseInfo.translateName}</td>
-                            <td>${orderSummary.duadName}</td>
-                            <td>${orderSummary.purposeName}</td>
-                            <td>${orderSummary.domainName}</td>
-                            <td>${orderSummary.translevel}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                        <table id="textOrderTable" class="table table-th-color">
+                            <thead>
+                            <tr>
+                                <th width="32%"><spring:message code="order.Subject"/></th>
+                                <th width="17%"><spring:message code="order.Language"/></th>
+                                <th width="17%"><spring:message code="order.Fields"/></th>
+                                <th width="17%"><spring:message code="order.purpose"/></th>
+                                <th width="17%"><spring:message code="order.TranslationGrade"/></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>${order.baseInfo.translateName}</td>
+                                <td>${orderSummary.duadName}</td>
+                                <td>${orderSummary.purposeName}</td>
+                                <td>${orderSummary.domainName}</td>
+                                <td>${orderSummary.translevel}</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </c:if>
 
                     <c:if test="${transType == '2'}">
@@ -140,8 +140,10 @@
                                 <td>${order.baseInfo.translateName}</td>
                                 <td>${orderSummary.duadName}</td>
                                 <td>${orderSummary.translevel}</td>
-                                <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.productInfo.startTime}"/></td>
-                                <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.productInfo.endTime}"/></td>
+                                <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss"
+                                                    value="${order.productInfo.startTime}"/></td>
+                                <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss"
+                                                    value="${order.productInfo.endTime}"/></td>
                                 <td>${order.productInfo.meetingAddress}</td>
                                 <td>${order.productInfo.meetingSum}</td>
                             </tr>
