@@ -8,7 +8,7 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 
     require("jquery-validation/1.15.1/jquery.validate");
 	require("app/util/aiopt-validate-ext");
-	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');	
+	require('jquery-i18n/1.2.2/jquery.i18n.properties');
 	
     var SendMessageUtil = require("app/util/sendMessage");
     

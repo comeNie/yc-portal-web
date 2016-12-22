@@ -8,7 +8,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 
     require("jquery-validation/1.15.1/jquery.validate");
 	require("app/util/aiopt-validate-ext");
-	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
+	require('jquery-i18n/1.2.2/jquery.i18n.properties');
 	require('webuploader/webuploader');
     var CountWordsUtil = require("app/util/countWords");
     
@@ -190,7 +190,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				baseInfo.subFlag = "1";
 				//productInfo.needTranslateInfo = JSON.stringify(fileInfoList);
 				productInfo.translateInfo = "";
-				var translateName = $("#fileList").find('li:first').text();
+				var translateName = $.trim($("#fileList").find('li:first').text());
 				baseInfo.translateName = translateName.substring(0, translateName.length>15? 15:translateName.length);
 			} else {
 				baseInfo.translateType = "0"; //0：快速翻译 1：文档翻译
@@ -322,7 +322,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				//格式转换
 				if ($("#format").val() != '') {
 					$("#selectFormatConv").val("1");
-					$("#inputFormatConv").show();
+					$("#inputFormatConvP").show();
 					$("#inputFormatConv").val($("#format").val());
 				}
 
@@ -502,7 +502,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
             this.toggleOptionShow($('#selectAddedSer'),'',[0]);
             this.toggleOptionShow($('#selectFormatConv'),'',[0]);
 
-			$("#inputFormatConv").hide();
+			$("#inputFormatConvP").hide();
 			$("#inputFormatConv").val("");
 		},
 	
@@ -542,9 +542,9 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		//input 格式转换控制
 		_formatControl:function() {
 			if (1 == $("#selectFormatConv").val()) {
-				$("#inputFormatConv").show();
+				$("#inputFormatConvP").show();
 			} else {
-				$("#inputFormatConv").hide();
+				$("#inputFormatConvP").hide();
 				$("#inputFormatConv").val("");
 			}
 				

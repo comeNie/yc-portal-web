@@ -8,7 +8,7 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
     require("jsviews/jsviews.min");
     require("app/util/jsviews-ext");
 	require("opt-paging/aiopt.simplePagination");
-	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
+	require('jquery-i18n/1.2.2/jquery.i18n.properties');
 
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();

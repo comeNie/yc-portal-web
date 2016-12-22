@@ -5,7 +5,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 	    Widget = require('arale-widget/1.2.0/widget'),
 		AjaxController = require('opt-ajax/1.0.0/index');
 
-	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
+	require('jquery-i18n/1.2.2/jquery.i18n.properties');
 	//实例化AJAX控制处理对象
 	var ajaxController = new AjaxController();
     var payOrderPager = Widget.extend({

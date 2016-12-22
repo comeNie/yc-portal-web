@@ -5,7 +5,7 @@ define('opt-ajax/1.0.0/index', function (require, exports, module) {
     Base = require('arale-base/1.2.0/base');
     
     require('jquery-form/3.51.0/jquery.form');
-    require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
+    require('jquery-i18n/1.2.2/jquery.i18n.properties');
     
     var processingDialog;
     

@@ -9,7 +9,7 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
     require("app/util/jsviews-ext");
 	require("opt-paging/aiopt.simplePagination");
 	require("my97DatePicker/WdatePicker");
-	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
+	require('jquery-i18n/1.2.2/jquery.i18n.properties');
 
     var ajaxController = new AjaxController();
     var taskCenterPage = Widget.extend({

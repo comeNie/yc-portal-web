@@ -4,7 +4,7 @@ define('app/jsp/balance/depositFund', function (require, exports, module) {
 		Dialog = require("optDialog/src/dialog"),
 		Widget = require('arale-widget/1.2.0/widget');
 
-	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
+	require('jquery-i18n/1.2.2/jquery.i18n.properties');
     var depositFundPager = Widget.extend({
     	
     	//事件代理
