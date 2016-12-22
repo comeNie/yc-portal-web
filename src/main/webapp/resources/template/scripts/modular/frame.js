@@ -128,6 +128,10 @@ $(function(){
 $(function(){
   $("#next-bt1").click(function(){
   $(this).hide();
+  $("#next1").show();
+  });
+   $("#next-bt1").click(function(){
+  $("#next1").hide();
   $("#next2").show();
   });
   $("#next-bt2").click(function(){

@@ -183,15 +183,15 @@
 							<p class="ml-30"><span>1</span><spring:message code="order.freeChanges"/></p>
 						</li>
 						<li class="green-li">
-							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
+							<p class="icon"><i class="icon iconfont">&#xe68b;</i></p>
 							<p><spring:message code="order.stanInfo1"/></p>
 						</li>
 						<li class="green-li">
-							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
+							<p class="icon"><i class="icon iconfont">&#xe68b;</i></p>
 							<p><spring:message code="order.stanInfo2"/></p>
 						</li>
 						<li class="green-li">
-							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
+							<p class="icon"><i class="icon iconfont">&#xe68b;</i></p>
 							<p><spring:message code="order.stanInfo3"/></p>
 						</li>
 						<label></label>
@@ -214,15 +214,15 @@
 							<p class="ml-30"><span>1</span><spring:message code="order.freeChanges"/></p>
 						</li>
 						<li class="green-li">
-							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
+							<p class="icon"><i class="icon iconfont">&#xe68b;</i></p>
 							<p><spring:message code="order.proInfo1"/></p>
 						</li>
 						<li class="green-li">
-							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
+							<p class="icon"><i class="icon iconfont">&#xe68b;</i></p>
 							<p><spring:message code="order.proInfo2"/></p>
 						</li>
 						<li class="green-li">
-							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
+							<p class="icon"><i class="icon iconfont">&#xe68b;</i></p>
 							<p><spring:message code="order.proInfo3"/></p>
 						</li>
 						<label></label>
@@ -245,15 +245,15 @@
 							<p class="ml-30"><span>1</span><spring:message code="order.freeChanges"/></p>
 						</li>
 						<li class="green-li">
-							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
+							<p class="icon"><i class="icon iconfont">&#xe68b;</i></p>
 							<p><spring:message code="order.pubInfo1"/></p>
 						</li>
 						<li class="green-li">
-							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
+							<p class="icon"><i class="icon iconfont">&#xe68b;</i></p>
 							<p><spring:message code="order.pubInfo2"/></p>
 						</li>
 						<li class="green-li">
-							<p class="icon"><i class="icon iconfont">&#xe616;</i></p>
+							<p class="icon"><i class="icon iconfont">&#xe68b;</i></p>
 							<p><spring:message code="order.pubInfo3"/></p>
 						</li>
 						<label></label>
@@ -311,7 +311,7 @@
 								</select>
 							</p>
 							<p class="ml-20"  id="inputFormatConvP" style="display: none;">
-								<input id="inputFormatConv" name="inputFormatConv" maxlength="15" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.formatInfo"/>">
+								<input id="inputFormatConv" name="inputFormatConv" maxlength="15" type="text" class="int-text int-in-bi-text radius" placeholder="<spring:message code="order.formatInfo"/>">
 							</p>
 						</li>
 					</ul>
