@@ -6,6 +6,12 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <%@ include file="/inc/inc.jsp" %>
     <title><spring:message code="myOrder.Orderdetails"/></title>
+    <link rel="stylesheet" type="text/css" href="${_base}/resources/spm_modules/webuploader/webuploader.css">
+    <style>
+        .webuploader-pick {width:80px;height:25px;font-size:12px;color:#2965e6;border:1px solid #2361ea;
+            background:#fff;color:#2361ea;font-weight:normal;line-height:5px;left: 80px;
+            cursor:pointer;text-align:center;outline:none;border-radius:30px;}
+    </style>
 </head>
 <body>
 <!--头部-->
@@ -161,13 +167,18 @@
                    					<c:if test="${UUploadCount > 0}">
 			 						<!-- 可以上传 -->
 			 							<!-- 上传译文 -->
-										<form  id="uploadForm" method="POST" enctype="multipart/form-data" action="${_base}/p/trans/order/upload">
-								   			<p>
-									   			<input class="btn border-blue-small btn-80 radius20" type="button" value="<spring:message code="myOrder.Upload"/>">
-									   			<input id="upload" name="file" class="fany-file" type="file">
-									   			<input name="orderId" type="hidden" value="${OrderDetails.orderId}">
-								   			</p>  
-										</form>　   
+                                        <p>
+                                        <div id="selectFile"><spring:message code="myOrder.Upload"/></div>
+                                        <input id="orderId" name="orderId" type="hidden" value="${OrderDetails.orderId}">
+                                        </p>
+										<%--<form  id="uploadForm" method="POST" enctype="multipart/form-data" action="${_base}/p/trans/order/upload">--%>
+								   			<%--<p>--%>
+									   			<%--<input class="btn border-blue-small btn-80 radius20" type="button" value="<spring:message code="myOrder.Upload"/>">--%>
+									   			<%--<input id="upload" name="file" class="fany-file" type="file">--%>
+
+									   			<%--<input name="orderId" type="hidden" value="${OrderDetails.orderId}">--%>
+								   			<%--</p>  --%>
+										<%--</form>　   --%>
 			 						</c:if>
 
 				 				</c:if>

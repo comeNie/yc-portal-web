@@ -187,7 +187,7 @@ public class OrderController {
      */
     @RequestMapping("/uploadFile")
     @ResponseBody
-    public ResponseData<String> uploadFile(HttpServletRequest request) throws IOException {
+    public String uploadFile(HttpServletRequest request) throws IOException {
         ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS,
                 "OK");
 
@@ -218,8 +218,8 @@ public class OrderController {
 //                }
 //            }
 
-
-        return resData;
+        String tmp =  JSONObject.toJSONString(resData);
+        return tmp;
     }
 
 }

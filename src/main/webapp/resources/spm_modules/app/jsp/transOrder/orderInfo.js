@@ -5,9 +5,11 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 		Dialog = require("optDialog/src/dialog"),
 	    AjaxController = require('opt-ajax/1.0.0/index');
 	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
+	require('webuploader/webuploader');
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
 	var processingDialog;
+	var uploader = null;
     var orderInfoPage = Widget.extend({
 
     	//事件代理
@@ -15,7 +17,6 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 			"click #textSave":"_textSave",
 			"click #trans": "_trans",
 			"click #editText": "_editText",
-			"change input[type='file']": "_upload",
 			//领取订单
 			"click #received":"_getOrder"
     	},
@@ -30,81 +31,125 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				language: currentLan,
 				async: true
 			});
-
+            this._uploadFileWeb();
 		},
 
-    	//上传译文校验
-        _upload: function () {
-            var _this = this;
-            //添加上传文件验证
-            var FILE_TYPES=['rar','zip','doc','docx','txt','pdf','jpg','png','gif'];
-            var filePath = $("#upload").val();
-            if(filePath == null || filePath=== '')
-            	return;
-            var extStart = filePath.lastIndexOf(".");
-            var ext = filePath.substring(extStart+1, filePath.length).toLowerCase();
-            //没有扩展名或扩展名不在允许范围内，则进行提示
-            if (extStart < 1 || $.inArray(ext, FILE_TYPES)<0) {
-                _this._showWarn($.i18n.prop('order.upload.error.type'));
-                return false;
-            }
+		//上传文档，js控制
+		_uploadFileWeb:function() {
 
-			var form = document.forms["uploadForm"];
-			var file = form["file"].files[0];
-            var allSize = file.size;
-            $("li[fileSize]").each(function () {
-                allSize += parseInt($(this).attr("fileSize"));
-            });
-
-            if (file.size > 100*1024*1024) {
-                _this._showWarn($.i18n.prop('order.upload.error.fileSizeSingle'));
-                return
-            }
-
-            if (allSize > 100*1024*1024) {
-                _this._showWarn($.i18n.prop('order.upload.error.fileSize'));
-                return
-            }
-
-			if(processingDialog==null){
-				processingDialog = new Dialog({
-					closeIconShow:false,
-					icon:"loading",
-					//正在处理中，请稍后...
-					content: $.i18n.prop('com.ajax.def.content')
-				});
+			if ( !WebUploader.Uploader.support() ) {
+				alert( 'Web Uploader 不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器');
+				throw new Error( 'WebUploader does not support the browser you are using.' );
+			}else if(uploader==null){
+				this._initUpdate();
 			}
+		},
 
-			processingDialog.showModal();
-            this._uploadFile();
-        },
+		_initUpdate:function () {
+            if(processingDialog==null){
+                processingDialog = new Dialog({
+                    closeIconShow:false,
+                    icon:"loading",
+                    //正在处理中，请稍后...
+                    //content: $.i18n.prop('com.ajax.def.content')
+                });
+            }
 
-        _uploadFile:function() {
-            var formData = new FormData($("#uploadForm")[0]);
-            $.ajax({
-                url: _base + "/p/trans/order/upload",
-                type: 'POST',
-                data: formData,
-                async: true,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (data) {
-            	processingDialog.close();
-                    if ("1" === data.statusCode) {
-                        //保存成功
-                        //刷新页面
-                        window.location.reload();
-                    } else {
-                        _this._showWarn(data.statusInfo);
-                    }
+			var _this= this;
+			var FILE_TYPES=['rar','zip','doc','docx','txt','pdf','jpg','png','gif'];
+			uploader = WebUploader.create({
+				swf : _base+"/resources/spm_modules/webuploader/Uploader.swf",
+				server: _base+'/p/trans/order/upload',
+				auto : true,
+				pick : "#selectFile",
+				accept: {
+					title: 'intoTypes',
+					extensions: 'rar,zip,doc,docx,txt,pdf,jpg,png,gif',
+					// mimeTypes: 'application/zip,application/msword,application/pdf,image/jpeg,image/png,image/gif'
+				},
+                formData: {
+                    orderId: $("#orderId").val()
                 },
-                error: function (data) {
-            	processingDialog.close();
-                    _this._showFail($.i18n.prop('order.upload.error.upload'));
-                }
+                resize : false,
+				// 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
+				disableGlobalDnd: true,
+				// fileNumLimit: 10,
+				fileSizeLimit: 100 * 1024 * 1024,    // 100 M
+			});
+
+            uploader.addButton({
+                id: '#upload-btn',
+                innerHTML: '选择文件'
             });
-        },
+
+			uploader.on("beforeFileQueued", function (file) {
+				var allSize = file.size;
+                $("li[fileSize]").each(function () {
+                    allSize += parseInt($(this).attr("fileSize"));
+                });
+
+				if (file.size > 20*1024*1024) {
+					_this._showWarn($.i18n.prop('order.upload.error.fileSizeSingle'));
+					return false;
+				}
+
+				if (allSize > 100*1024*1024) {
+					_this._showWarn($.i18n.prop('order.upload.error.fileSize'));
+					return false;
+				}
+
+				if ($.inArray(file.ext, FILE_TYPES)<0) {
+					_this._showWarn($.i18n.prop('order.upload.error.type'));
+					return false;
+				}
+
+                processingDialog.showModal();
+			});
+
+			uploader.on("fileQueued",function(file){
+			});
+
+			uploader.on("uploadProgress",function(file,percentage){
+			});
+
+			uploader.on( 'uploadSuccess', function( file, responseData ) {
+				if(responseData.statusCode=="1"){
+                    window.location.reload();
+				}//上传失败
+				else{
+					_this._showFail($.i18n.prop('order.upload.error.upload'));
+					//删除文件
+					var file = uploader.getFile(file.id);
+					uploader.removeFile(file);
+					return;
+				}
+			});
+
+			//  验证大小
+			// uploader.on("error",function (type){
+			// 	if(type == "F_DUPLICATE"){
+			// 		_this._showWarn($.i18n.prop('order.upload.error.repeat'));
+			// 	}else if(type == "Q_EXCEED_SIZE_LIMIT"){
+			// 		_this._showWarn($.i18n.prop('order.upload.error.fileSize'));
+			// 	}else if(type == "Q_EXCEED_NUM_LIMIT"){
+			// 		_this._showWarn($.i18n.prop('order.upload.error.fileNum'));
+			// 	}else if(type == "Q_TYPE_DENIED"){
+			// 		_this._showWarn($.i18n.prop('order.upload.error.type'));
+			// 	}
+			// });
+
+			uploader.on( 'uploadError', function( file, reason ) {
+				_this._showFail($.i18n.prop('order.upload.error.upload'));
+
+				//删除文件
+				var file = uploader.getFile(file.id);
+				uploader.removeFile(file);
+			});
+
+			uploader.on( 'uploadComplete', function( file ) {
+                processingDialog.close();
+			});
+		},
 
     	//删除译文
     	_delFile:function(fileId) {
