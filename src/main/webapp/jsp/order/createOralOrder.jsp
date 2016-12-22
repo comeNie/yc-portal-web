@@ -132,15 +132,15 @@
 					<ul class="mb-40">
 						<li class="none-ml">
 							<p class="word"><spring:message code="order.StartingTime"/></p>
-							<p><input id="begin_time" name="begin_time" type="text" class="int-text int-in-250 radius"
+							<p class="int-posit"><input id="begin_time" name="begin_time" type="text" class="int-text int-in-250 radius"
                                       onClick="WdatePicker({onpicked: function(){$dp.$('begin_time').blur();},lang:'${my97Lang}',autoPickDate:true, dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'%y-%M-%d %\H:\%m:%s',maxDate:'#F{$dp.$D(\'end_time\')}'})"
-                                      value="<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.productInfo.startTime}"/>" readonly="readonly"/></p>
+                                      value="<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.productInfo.startTime}"/>" readonly="readonly"/><i class=" icon-sort-down"></i></p>
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.EngdingTime"/></p>
-							<p><input id="end_time" name="end_time" type="text" class="int-text int-in-250 radius"
+							<p class="int-posit"><input id="end_time" name="end_time" type="text" class="int-text int-in-250 radius"
                                       onClick="WdatePicker({onpicked: function(){$dp.$('begin_time').blur();},lang:'${my97Lang}',autoPickDate:true, dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'begin_time\')}'})"
-                                      value="<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.productInfo.endTime}"/>" readonly="readonly"/></p>
+                                      value="<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.productInfo.endTime}"/>" readonly="readonly"/><i class=" icon-sort-down"></i></p>
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.Place"/></p>
