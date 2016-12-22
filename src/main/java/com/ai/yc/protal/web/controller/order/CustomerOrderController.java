@@ -189,30 +189,19 @@ public class CustomerOrderController {
 
 
     /**
-     * 查询订单是否未支付，未支付返回成功
+     * 查询订单是否未支付
      * @param orderId
      * @return
      * @author mimw
      */
-    @RequestMapping("/isPay")
-    @ResponseBody
-    public ResponseData<String> isPay(String orderId) {
-        ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-
+    private boolean isUnPay(String orderId) {
         IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
-
         QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
         orderDetailsReq.setOrderId(Long.valueOf(orderId));
         orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
-
         QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
         LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
-
-        //状态不是待支付
-        if (!OrderConstants.State.UN_PAID.equals(orderDetailsRes.getState())) {
-            resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "FAIL");
-        }
-        return resData;
+        return OrderConstants.State.UN_PAID.equals(orderDetailsRes.getState());
     }
 
     /**
@@ -284,6 +273,10 @@ public class CustomerOrderController {
      */
     @RequestMapping("/payOrder/balance")
     public String balancePay(DeductParam deductParam,String orderType,Model uiModel){
+        //若订单不是未支付状态，则跳转到系统异常
+        if(!isUnPay(deductParam.getExternalId())){
+            return "sysError";
+        }
         String userId = UserUtil.getUserId();
         //进行余额扣款,页面
         deductParam.setTenantId(Constants.DEFAULT_TENANT_ID);
@@ -322,6 +315,10 @@ public class CustomerOrderController {
             String orderId,Long orderAmount,String currencyUnit,String merchantUrl,String payOrgCode,
             String orderType,String translateName, Model uiModel)
             throws Exception {
+        //若订单不是未支付状态，则跳转到系统异常
+        if(!isUnPay(orderId)){
+            return "sysError";
+        }
         //租户
         String tenantId= ConfigUtil.getProperty("TENANT_ID");
         //服务异步通知地址

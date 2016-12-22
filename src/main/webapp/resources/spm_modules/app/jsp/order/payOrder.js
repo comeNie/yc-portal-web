@@ -12,7 +12,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
     	
     	//事件代理
     	events: {
-			"click #recharge-popo":"_isPay",
+			"click #recharge-popo":"_payOrder",
 			"click #payment-method ul":"_changePayType",
 			"click #depositBtn":"_toDeposit",
 			"click #completed":"_submitYEpay",//余额支付确认
@@ -33,22 +33,6 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 			});
     	},
 
-		_isPay:function () {
-			var _this = this;
-			ajaxController.ajax({
-				type: "post",
-				url: _base+"/p/customer/order/isPay",
-				data: {'orderId': $("input[name='orderId']").val()},
-				success: function(data){
-					//可以支付
-					if("OK"===data.statusInfo){
-						_this._payOrder();
-					} else {
-						_this._showWarn($.i18n.prop('pay.error.paid'));
-					}
-				}
-			});
-		},
 		//支付订单
 		_payOrder:function(){
 			//获取支付方式
