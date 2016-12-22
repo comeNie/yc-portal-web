@@ -135,7 +135,7 @@
                     <textarea  class="int-post"  id="transResBak" style="display: none"></textarea>
                 </div>
                 <label id="transError"></label>
-                <div class="post-cion" style="display: block">
+                <div class="post-cion" style="display: none;">
 
 					<p>
 						<a id="sus-top1" href="javaScript:void(0)" class="ord-icon"><i id="copy" class="icon iconfont">&#xe639;</i>
