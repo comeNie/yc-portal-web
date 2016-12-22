@@ -366,7 +366,8 @@ public class TransOrderController {
      */
     @RequestMapping(value="/upload", method=RequestMethod.POST)
     @ResponseBody 
-    public ResponseData<String> fileUpload(HttpServletRequest request){
+    public String fileUpload(HttpServletRequest request){
+        String retRes;
         ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "OK");
         
         String orderId = request.getParameter("orderId");
@@ -409,7 +410,8 @@ public class TransOrderController {
             //不能上传了,返回失败
             if (!isUpload) {
                 resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, errInfo);
-                return resData;
+                retRes = JSONObject.toJSONString(resData);
+                return retRes;
             }
             
             //把文件保存到DSS中
@@ -442,8 +444,8 @@ public class TransOrderController {
             LOGGER.error("上传译文失败:", e);
             resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
         }
-        
-        return resData;
+        retRes = JSONObject.toJSONString(resData);
+        return retRes;
     }
     
 }
