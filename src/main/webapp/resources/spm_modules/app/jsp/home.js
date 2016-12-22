@@ -8,7 +8,7 @@ define('app/jsp/home', function (require, exports, module) {
     require("audio/audio.min");
     require("jquery-validation/1.15.1/jquery.validate");
     require("app/util/aiopt-validate-ext");
-	require('jquery-i18n/1.2.2/jquery.i18n.properties');
+	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
     var SendMessageUtil = require("app/util/sendMessage");
 
     //实例化AJAX控制处理对象

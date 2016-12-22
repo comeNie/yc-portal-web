@@ -4,7 +4,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 	    Widget = require('arale-widget/1.2.0/widget'),
 		Dialog = require("optDialog/src/dialog"),
 	    AjaxController = require('opt-ajax/1.0.0/index');
-	require('jquery-i18n/1.2.2/jquery.i18n.properties');
+	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
 	var processingDialog;
