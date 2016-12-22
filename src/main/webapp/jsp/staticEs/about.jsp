@@ -53,7 +53,7 @@
             </li>
         </ul>
     </div>
-
+</div>
     <div class="contact">
         <div class="contact-main">
             <div class="static-title">
@@ -132,7 +132,7 @@
             </div>
         </div>
     </div>
-</div>
+
 <!--底部-->
 <%@include file="/inc/indexFoot.jsp" %>
 
