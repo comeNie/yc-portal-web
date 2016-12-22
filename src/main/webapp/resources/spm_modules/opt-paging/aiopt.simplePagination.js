@@ -30,17 +30,20 @@ define("opt-paging/aiopt.simplePagination", ["jquery","simplePagination/jquery.s
 
     RunnerPagination.prototype = {
         constructor: RunnerPagination,
-        
+
         setup: function () {
+            var _this = this;
             $.i18n.properties({//加载资浏览器语言对应的资源文件
                 name: "commonRes", //资源文件名称，可以是数组
                 path: _i18n_res, //资源文件路径
                 mode: 'both',
                 language: currentLan,
-                async: true
+                async: true,
+                callback:function () {
+                    _this.destroy();
+                    _this.loadData(1);
+                }
             });
-           this.destroy();
-           this.loadData(1);
         },
         
         destroy: function () {
