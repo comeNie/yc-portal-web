@@ -75,7 +75,7 @@
                             <p><input id="mobilePhone" name="mobilePhone"  value="${Contact.mobilePhone}" pattern="^1\d{10}$" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterPhone"/>"></p>
                             <p class="mr-0"><input id="email" name="email" value="${Contact.email}" type="text" class="int-text int-large-mail radius" placeholder="<spring:message code="order.EnterEmail"/>"></p>
                         </li>
-                        <li class="right-btn"><input id="saveContact" maxlength="18" type="button" class="btn radius20 border-blue btn-80" value="<spring:message code="order.Save"/>"></li>
+                        <li class="right-btn"><input id="saveContact" maxlength="18" type="button" class="btn radius20 border-blue btn-50" value="<spring:message code="order.Save"/>"></li>
 
                     </ul>
                 </div>

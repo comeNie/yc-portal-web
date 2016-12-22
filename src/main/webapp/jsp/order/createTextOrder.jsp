@@ -13,6 +13,12 @@
 	<c:set var="orderSummary" value="${sessionScope.writeOrderSummary}" scope="session" />
 	<c:set var="fileInfoList" value="${sessionScope.fileInfoList}" scope="session" />
 	<c:set var="transType" value="${order.baseInfo.translateType}" />
+
+	<style>
+		.uploadDiv .webuploader-pick{border:2px solid #39d5b0;background:#fff;color:#39d5b0;
+			width:178px;height:48px;border-radius:30px;
+			cursor:pointer;text-align:center;outline:none;font-size:18px;}
+	</style>
 </head>
 <body>
 	<input type="hidden" value="${transType}" id="transType">
@@ -139,7 +145,7 @@
 	  						<ul>
 	  							<!-- 上传文档 -->
 	  							<li>
-                                    <div id="selectFile"><spring:message code="order.choosefile"/></div>
+                                    <div id="selectFile" class="uploadDiv"><spring:message code="order.Docupload"/></div>
 	  							   	<!-- 选择文件 -->
 	  							</li>
 	  							<!-- 将文件拖拽至此区域可上传 -->
@@ -304,7 +310,9 @@
 									<option value="2" selected="selected"><spring:message code="order.noFormatConv"/></option>
 								</select>
 							</p>
-							<p class="ml-20"  id="inputFormatConvP" style="display: none;"><input id="inputFormatConv" name="inputFormatConv" maxlength="15" type="text" class="int-text int-in-bi radius"></p>
+							<p class="ml-20"  id="inputFormatConvP" style="display: none;">
+								<input id="inputFormatConv" name="inputFormatConv" maxlength="15" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.formatInfo"/>">
+							</p>
 						</li>
 					</ul>
 				</div>

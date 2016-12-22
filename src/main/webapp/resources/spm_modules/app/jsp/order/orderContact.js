@@ -227,10 +227,10 @@ define('app/jsp/order/orderContact', function (require, exports, module) {
 
         //返回上一页
         _toCreateOrder:function () {
-            if ($("#saveContactDiv").css("display") != 'none') {
-                if (this._saveContact() == false)
-                    return
-            }
+            // if ($("#saveContactDiv").css("display") != 'none') {
+            //     if (this._saveContact() == false)
+            //         return
+            // }
 
             var translateType = $("#transType").val();
 
