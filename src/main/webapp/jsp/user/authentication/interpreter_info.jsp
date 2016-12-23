@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title></title>
-   <%@ include file="/inc/inc.jsp" %>
+	<%@ include file="/inc/inc.jsp" %>
+	<title><spring:message code="ycleftmenu.myinfo"/></title>
 </head>
 <body>
 	<!--头部-->
