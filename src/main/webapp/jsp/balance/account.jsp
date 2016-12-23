@@ -73,7 +73,7 @@
 --%>
                             <%--<p id="income"></p>
                             <p id="out"></p>--%>
-                            <p><a href="#" class="is"><spring:message code="account.advanced.screening"/><i class="icon-angle-down"></i></a></p>
+                            <p><a href="#" class="is" id="saixuan" onclick="saixuan(this)"><span><spring:message code="account.advanced.screening"/></span><i class="icon-angle-down"></i></a></p>
                         </li>
                     </ul>
                 </div>
@@ -203,7 +203,14 @@
                     0
                 {{/if}}
             </td><%--{{:~liToYuan()}}--%>
-            <td >{{:~liToYuan(balancePre)}}</td>
+            <td >
+                {{if  currencyUnit == '1'}}
+                ¥
+                {{else currencyUnit == '2'}}
+                $
+                {{/if}}
+                {{:~liToYuan(balancePre)}}
+            </td>
             <td>
                 {{if  optType == '1'}}
                 <spring:message code="account.recharge"/>
@@ -215,8 +222,20 @@
                 <spring:message code="account.refund"/>
                 {{/if}}
             </td>
-            <td >{{:channel}}</td>
-            <td>{{:remark}}</td>
+            <td>
+                {{if channel.length > 8}}
+                {{:~subStr(8,channel)}}
+                {{else}}
+                {{:channel}}
+                {{/if}}
+            </td>
+            <td>
+                {{if remark.length > 8}}
+                {{:~subStr(8,remark)}}
+                {{else}}
+                {{:remark}}
+                {{/if}}
+            </td>
         </tr>
         <%--</tbody>--%>
     <%--</table>--%>
@@ -231,6 +250,15 @@
             pager.render();
         });
     })();
+    //高级筛选,收起筛选互换
+    function saixuan(target) {
+        var iClass = $("#saixuan").children("i").attr("class");
+        if(iClass=="icon-angle-down"){
+            $("#saixuan").children("span").text("收起筛选");
+        }else {
+            $("#saixuan").children("span").text("高级筛选")
+        }
+    }
     //选择结束时间触发
     function endtime() {
         pager._incomeList();
