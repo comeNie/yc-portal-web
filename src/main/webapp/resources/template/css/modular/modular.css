@@ -69,9 +69,9 @@
 .right-list-table table .table-thdiv p{float:left;font-weight:normal;margin-right:40px;}
 .right-list-table table .table-thdiv p .ash-color{color:#bdbdbd}
 .right-list-table table .table-thdiv .right{float:right;color:#fe6b6b}
-.right-list-table table .table-thdiv  span{color:#2361ea}
+.right-list-table table .table-thdiv  span{color:#2361ea;cursor:pointer;}
 .right-list-table table .table-thdiv  span a{color:#2361ea}
-
+.right-list-table table .text-l{cursor:pointer;}
 /**我的账户**/
 .user-account-title{width:600px;float:left;margin:16px 0 0 0px;}
 .user-account-title-word{width:100%;float:left;margin:0 0 0 20px;}
@@ -94,6 +94,7 @@
 .query-order ul .right{float:right;}
 .query-order ul .right p{margin-left:35px;display:inline;}
 .query-order ul .right p a{color:#2361ea}
+.query-order ul .right p i{color:#2361ea}
 .query-order ul .right p i{margin-left:12px;}
 .query-order ul .li-xlarge{float:left;width: 100%;margin-top: 17px;}
 .query-order ul .li-xlarge-ml p{margin-right:22px;}
@@ -685,6 +686,7 @@ opacity:0;filter:alpha(opacity=0); -moz-opacity:0; -khtml-opacity:0;}
 .consultation-list ul li{width:100%;float:left;line-height:60px;}
 .consultation-list ul li p{float:left;}
 .consultation-list ul li a{width:100%;float:left;font-size:16px;color:#2c3e50}
+.consultation-list ul li .color-blue{color:#2965e6}
 .consultation-list ul li i{font-size:30px;margin-top:15px;float:right;}
 .consultation-show{width:100%;background:#f5f7fb;padding:20px 35px;float:left;display: none;z-index:-1;}
 .consultation-show p{font-size:14px;color:#2c3e50;line-height:30px;}

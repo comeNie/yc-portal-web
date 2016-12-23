@@ -39,29 +39,33 @@
 		<div class="static-tab static-tab2">
 			<ul>
 				<li class="current">
-					<a href="javaScript:void(0);">
-					<p class="icon1" id="tab-icon1"></p>
+					<a href="javascript:">
+						<p class="icon1" id="tab-icon1" style="display:none;"></p>
+						<p class="icon2" id="tab-icon2"></p>
 					</a>
 					<p class="word word-font">提交翻译任务</p>
 				</li>
 				<div class="line"></div>
 				<li id="st1-btn">
-					<a href="javaScript:void(0);">
-					<p class="icon3" id="tab-icon3"></p>
+					<a href="javascript:">
+						<p class="icon3" id="tab-icon3"></p>
+						<p class="icon4" id="tab-icon4" style="display:none;"></p>
 					</a>
 					<p class="word word-font">支付订单</p>
 				</li>
 				<div class="line1"></div>
 				<li>
-					<a href="javaScript:void(0);">
-					<p class="icon5" id="tab-icon5"></p>
+					<a href="javascript:">
+						<p class="icon5" id="tab-icon5"></p>
+						<p class="icon6" id="tab-icon6" style="display:none;"></p>
 					</a>
 					<p class="word word-font">获取翻译结果</p>
 				</li>
 				<div class="line"></div>
 				<li>
-					<a href="javaScript:void(0);">
-					<p class="icon7" id="tab-icon7"></p>
+					<a href="javascript:">
+						<p class="icon7" id="tab-icon7"></p>
+						<p class="icon8" id="tab-icon8" style="display:none;"></p>
 					</a>
 					<p class="word word-font">确认评价订单</p>
 				</li>

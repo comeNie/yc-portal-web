@@ -23,9 +23,9 @@ $(".left-tplist i").click(function () {
 	
 //我的订单 点击展开
 $(function () {
-    $(".query-order ul .right p .is").click(function () {
+    $(".query-order ul .right p").click(function () {
 		$(this).children('i').toggleClass("icon-angle-down  icon-angle-up");
-		$(this).parent().parent().parent().parent().parent().children('.order-hiddn').slideToggle(100);
+		$(this).parent().parent().parent().parent().children('.order-hiddn').slideToggle(100);
     });
 });	
 
@@ -160,7 +160,88 @@ $(function(){
   });
 });
 
+//设置密码
+$(function(){
+  $("#screen-a").click(function(){
+  $(this).hide();
+  $("#screen-b").show();
+  });
+   $("#screen-b").click(function(){
+  $(this).hide();
+  $("#screen-a").show();
+  });
+});
 
+//设置密码
+$(function(){
+  $("#tab-icon1").click(function(){
+  $(this).hide();
+  $("#tab-icon2").show();
+  $("#tab-icon3").show();
+  $("#tab-icon5").show();
+  $("#tab-icon7").show();
+  $("#tab-icon4").hide();
+  $("#tab-icon6").hide();
+  $("#tab-icon8").hide();
+  });
+  $("#tab-icon3").click(function(){
+  $(this).hide();
+  $("#tab-icon1").show();
+  $("#tab-icon5").show();
+  $("#tab-icon7").show();
+  $("#tab-icon4").show();
+  $("#tab-icon2").hide();
+  $("#tab-icon6").hide();
+  $("#tab-icon8").hide();
+  });
+  $("#tab-icon5").click(function(){
+  $(this).hide();
+  $("#tab-icon6").show();
+  $("#tab-icon1").show();
+  $("#tab-icon3").show();
+  $("#tab-icon7").show();
+  $("#tab-icon2").hide();
+  $("#tab-icon4").hide();
+  $("#tab-icon8").hide();
+  });
+  $("#tab-icon7").click(function(){
+  $(this).hide();
+  $("#tab-icon8").show();
+  $("#tab-icon1").show();
+  $("#tab-icon3").show();
+  $("#tab-icon5").show();
+  $("#tab-icon2").hide();
+  $("#tab-icon4").hide();
+  $("#tab-icon6").hide();
+  });
+});  
+//设置密码
+$(function(){
+  $("#tab-icon13").click(function(){
+  $(this).hide();
+  $("#tab-icon14").show();
+  $("#tab-icon9").show();
+  $("#tab-icon11").show();
+  $("#tab-icon10").hide();
+  $("#tab-icon12").hide();
+  });
+  $("#tab-icon9").click(function(){
+  $(this).hide();
+  $("#tab-icon10").show();
+  $("#tab-icon11").show();
+  $("#tab-icon13").show();
+  $("#tab-icon14").hide();
+  $("#tab-icon12").hide();
+  });
+  $("#tab-icon11").click(function(){
+  $(this).hide();
+  $("#tab-icon12").show();
+  $("#tab-icon13").show();
+  $("#tab-icon9").show();
+  $("#tab-icon14").hide();
+  $("#tab-icon10").hide();
+  });
+});  
 //设置密码 table
 $(function(){
 $(".set-up a").click(function () {
@@ -359,7 +440,7 @@ $('.subnav-left ul li a').click(function(){
 $(function () {
     $(".consultation-list ul li a").click(function () {
 		$(this).children('i').toggleClass("icon-angle-down  icon-angle-up");
-		$(this).css("color","#2965e6");
+		$(this).toggleClass("color-blue");
 		$(this).parent().parent().parent().parent().children('.consultation-show').slideToggle(100);
 		
     });
@@ -371,6 +452,13 @@ $(".static-tab ul li").click(function () {
                 $(".static-tab ul li").each(function () {
                     $(this).removeClass("current");
                 });
+                $(".static-tab ul li a").each(function () {
+                    $(this).find("p").eq(1).hide();
+                    $(this).find("p").eq(0).show();
+                });
+                $(this).find("p").eq(0).hide();
+                $(this).find("p").eq(1).show();
+
                 $(this).addClass("current");
             });
 $('.static-tab ul li').click(function(){

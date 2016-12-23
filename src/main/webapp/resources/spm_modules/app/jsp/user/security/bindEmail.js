@@ -99,6 +99,7 @@ define("app/jsp/user/security/bindEmail",
 							    if(!this._checkEmail()){
 							    	return;
 							    }
+								$("#email-sendCode-btn").attr("class", "btn biu-btn radius btn-medium");
 								var _this = this;
 								var btn = $("#email-sendCode-btn");
 								if (btn.hasClass("biu-btn")) {
@@ -120,7 +121,8 @@ define("app/jsp/user/security/bindEmail",
 												$("#dynamicodeErrMsg").text(data.statusInfo);
 												//showMsg(data.statusInfo);
 												$("#email-sendCode-btn").removeAttr("disabled"); //移除disabled属性
-									            $('#email-sendCode-btn').val(emailBindMsg.getOperationCode);
+												$("#email-sendCode-btn").attr("class", "btn border-green border-sma radius btn-medium");
+												$('#email-sendCode-btn').val(emailBindMsg.getOperationCode);
 												return;
 											}else{
 												if(data.data){
@@ -133,7 +135,8 @@ define("app/jsp/user/security/bindEmail",
 										                step-=1;
 										                if(step <= 0){
 										                $("#email-sendCode-btn").removeAttr("disabled"); //移除disabled属性
-										                $('#email-sendCode-btn').val(emailBindMsg.inputOperationCode);
+														$("#email-sendCode-btn").attr("class", "btn border-green border-sma radius btn-medium");
+														$('#email-sendCode-btn').val(emailBindMsg.inputOperationCode);
 										                clearInterval(_res);//清除setInterval
 										                }
 										            },1000);
