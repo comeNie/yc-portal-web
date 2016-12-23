@@ -82,7 +82,7 @@ public class TaskCenterController {
             //0：认证不通过，1：认证通过
             if(!"1".equals(userInfoResponse.getApproveState())
                     || StringUtils.isBlank(userInfoResponse.getVipLevel())){
-                retView = "redirect:/p/security/interpreterIndex";
+                retView = "forward:/p/security/interpreterIndex?showCert=true";
             }else {
                 //查询订单大厅数量
                 IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);

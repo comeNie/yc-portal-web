@@ -76,16 +76,23 @@ public class SecurityController {
 	BalanceService balanceService;
 	@Autowired
 	ResWebBundle rb;
-	// 译员首页
+
+	/**
+	 * 译员首页
+	 * @param showCert 是否弹出认证提示框，目前只有订单大厅弹出。
+	 * @return
+	 */
 	@RequestMapping("/interpreterIndex")
 	@ResponseBody
-	public ModelAndView toRegister() {
+	public ModelAndView toRegister(Boolean showCert) {
 		ModelAndView modelView = new ModelAndView(INTERPRETER_INDEX);
 		long balance = 0;
 		AccountBalanceInfo balanceInfo = queryBalanceInfo();
 		if (balanceInfo != null) {
 			balance = balanceInfo.getBalance();
 		}
+		//是否弹出未认证提示信息
+		modelView.addObject("showCert",showCert);
 		modelView.addObject("balance", balance);
         String userId = UserUtil.getUserId();
         modelView.addObject("userId", userId);
