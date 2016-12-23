@@ -127,6 +127,7 @@ define("app/jsp/user/security/bindEmail",
 											}else{
 												if(data.data){
 													var step = 59;
+													$("#dynamicodeErrMsg").hide();
 										            $('#email-sendCode-btn').val(emailBindMsg.resend60);
 										            $("#email-sendCode-btn").attr("disabled", true);
 										            var _res = setInterval(function(){
