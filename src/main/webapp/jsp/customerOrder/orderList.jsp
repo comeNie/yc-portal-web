@@ -92,8 +92,9 @@
   							
   							</select>
   						</p>
-  						<p class="iocn-oder"><input id="translateName" name="translateName" type="text" maxlength='50' class="int-text int-medium radius pr-30">
-  						<i id="submitQuery" href="javaScript:void(0)" class=" icon-search"></i>
+  						<p class="iocn-oder">
+							<input id="translateName" name="translateName" type="text" maxlength='50' class="int-text int-medium radius pr-30" placeholder="<spring:message code="myOrder.inputContent"/>">
+  							<i id="submitQuery" href="javaScript:void(0)" class=" icon-search"></i>
   						</p>
   					</li>
   					<!--  暂时只有个人
@@ -185,7 +186,7 @@
 			</td>
 
 			{{if displayFlag == '13'}}
-				<td>————</td>
+				<td>-</td>
 			{{else }}
            		 <td>
 					{{if  currencyUnit == '1'}}

@@ -81,8 +81,8 @@
 		</div>
 	</c:when>
 	
-	<c:when test="${OrderDetails.displayFlag == '23'}">
-	<!-- 步骤  翻译中 -->
+	<c:when test="${OrderDetails.displayFlag == '23' || OrderDetails.displayFlag == '50'}">
+	<!-- 步骤  翻译中 待确认-->
 		<div class="step-big"> 
 			<!--步骤-->
 		 	<div class="step">
@@ -122,19 +122,19 @@
 	</c:when>
 	
 	<c:when test="${OrderDetails.displayFlag == '91'}">
-	<!-- 步骤 待确认 已取消-->
+	<!-- 步骤  已取消-->
 		<!-- 订单已取消 -->
 		<div class="step-big small-hi"><spring:message code="myOrder.ordecancelled"/></div>
 	</c:when>
 	
 	<c:when test="${OrderDetails.displayFlag == '92'}">
-	<!-- 步骤 待确认 已退款-->
+	<!-- 步骤  已退款-->
 		<!-- 订单已退款 -->
 		<div class="step-big small-hi"><spring:message code="myOrder.orderrefunded"/></div>
 	</c:when>
 	
 	<c:otherwise>
-	<!-- 步骤 待确认 已完成 待评价-->
+	<!-- 步骤  已完成 待评价-->
 		<div class="step-big"> 
 				<!--步骤-->
 			 	<div class="step">

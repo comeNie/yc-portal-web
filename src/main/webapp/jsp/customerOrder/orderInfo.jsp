@@ -359,7 +359,7 @@
                                 <c:choose>
                                 	<c:when test="${OrderDetails.displayFlag=='13'}">
                                 		<!-- 待报价-->
-                                		<p>————</p>
+                                		<p>-</p>
                                 	</c:when>
                                 	<c:otherwise>
                                 		 <p>
@@ -474,7 +474,10 @@ var current = "orderList";
 	
 	//更多 显示全文
 	$("a[name='more']").click(function() {
-		$(this).siblings("span").show();
+        if ($(this).siblings("span").css('display') ==='none')
+		    $(this).siblings("span").show();
+        else
+            $(this).siblings("span").hide();
 	});
 	
 	//下载文件
