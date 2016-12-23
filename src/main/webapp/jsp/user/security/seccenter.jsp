@@ -244,15 +244,17 @@
 				barColor: {
 	                0: '#FF0000',
 	                33: '#FFFF00',
-	                66: '#0066FF',
-	                100: '#33CC33'
+	                60: '#39d5b0',
+	                100: '#39d5b0'
 	            },
 	            frameTime : 20,
 	            percentage: true
 		});
 		var radialObj = $('#indicatorContainer').data('radialIndicator');
 		radialObj.animate(parseInt(securitylevel));
-		
+		if(securitylevel >= 60){
+			$('#sec-level-info-account-level').attr("class","green");
+		}
 	});
 	function showUpdatePwd(){
 		if(isexistloginpassword=='true'){
