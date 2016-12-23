@@ -188,7 +188,7 @@
 						<input type="hidden" name="unit" value="{{:currencyUnit}}">
 						<input type="hidden" name="state" value="{{:state}}">
 						<tr class="width-16">
-							<td name="translateName" class="text-l pl-20">{{:translateName}}</td>
+							<td name="translateName" class="text-l pl-20" style="cursor: pointer;">{{:translateName}}</td>
 							<td>
 								{{for ordProdExtendList}}
 								{{if #parent.parent.data.currentLan == 'zh_CN'}}
