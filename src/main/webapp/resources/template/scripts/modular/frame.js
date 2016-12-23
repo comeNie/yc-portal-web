@@ -452,6 +452,13 @@ $(".static-tab ul li").click(function () {
                 $(".static-tab ul li").each(function () {
                     $(this).removeClass("current");
                 });
+                $(".static-tab ul li a").each(function () {
+                    $(this).find("p").eq(1).hide();
+                    $(this).find("p").eq(0).show();
+                });
+                $(this).find("p").eq(0).hide();
+                $(this).find("p").eq(1).show();
+
                 $(this).addClass("current");
             });
 $('.static-tab ul li').click(function(){

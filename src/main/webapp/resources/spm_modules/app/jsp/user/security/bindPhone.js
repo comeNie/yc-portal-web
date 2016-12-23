@@ -111,8 +111,8 @@ define("app/jsp/user/security/bindPhone",
 									},
 									success : function(data) {
 										if(data.data==false){
-											$("#dynamicode").show();
-											$("#dynamicode").text(data.statusInfo);
+											$("#dynamicode1").show();
+											$("#dynamicode1").text(data.statusInfo);
 											//showMsg(data.statusInfo);
 											_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
 											_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");

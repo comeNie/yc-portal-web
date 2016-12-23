@@ -54,6 +54,7 @@
  								<p><input id="telephone" type="text" class="int-text int-large radius"></p>
  							</li>
  							<li>
+								<label class="ml-70" id="dynamicode1" style="display: none;"></label>
  								<p class="word"><spring:message code="ycaccountcenter.bindphone.dynamicnumber"/></p>
  								<p><input id="dynamicode" type="text" class="int-text int-in radius"></p>
  								<p><input type="button" id="send_dynamicode_btn" class="btn border-green border-sma radius btn-medium" value='<spring:message code="ycaccountcenter.bindphone.getdynamiccode"/>'></p>
