@@ -133,6 +133,7 @@ define("app/jsp/user/security/updateMobilePhone",
 							var _this = this;
 							var _sendEmailBtn =$("#sendEmailBtn");
 							_sendEmailBtn.attr("disabled", true);
+							_sendEmailBtn.attr("class", "btn biu-btn radius btn-medium");
 							ajaxController.ajax({
 								type : "POST",
 								data : {
@@ -150,6 +151,7 @@ define("app/jsp/user/security/updateMobilePhone",
 										//$("#emailErrMsg").text(updatePhoneJs.sendEmailFail);
 										showMsg(updatePhoneJs.sendEmailFail);
 										_sendEmailBtn.removeAttr("disabled"); //移除disabled属性
+										_sendEmailBtn.attr("class", "btn border-green border-sma radius btn-medium");
 									}else{
 										var step = 59;
 										_sendEmailBtn.val(updatePhoneJs.resend60);
@@ -158,6 +160,7 @@ define("app/jsp/user/security/updateMobilePhone",
 							                step-=1;
 							                if(step <= 0){
 							                _sendEmailBtn.removeAttr("disabled"); //移除disabled属性
+											_sendEmailBtn.attr("class", "btn border-green border-sma radius btn-medium");
 							                $('#sendEmailBtn').val(updatePhoneJs.getOperationCode);
 							                clearInterval(_res);//清除setInterval
 							                }
@@ -177,6 +180,7 @@ define("app/jsp/user/security/updateMobilePhone",
                                 var _this = this;
 								var _dynamicode_btn = $("#usend_dynamicode_btn");
 								_dynamicode_btn.attr("disabled", true);
+							  _dynamicode_btn.attr("class", "btn biu-btn radius btn-medium");
 								ajaxController
 									.ajax({
 										type : "post",
@@ -193,6 +197,7 @@ define("app/jsp/user/security/updateMobilePhone",
 												$("#uphoneErrMsg").text(data.statusInfo);
 												//showMsg(data.statusInfo);
 												_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
+												_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
 												_dynamicode_btn.val(updatePhoneJs.getOperationCode);
 												return;
 											}else{
@@ -203,7 +208,8 @@ define("app/jsp/user/security/updateMobilePhone",
 										            	_dynamicode_btn.val(step + ' s');
 										                step-=1;
 										                if(step <= 0){
-										                _dynamicode_btn.removeAttr("disabled"); //移除disabled属性
+														_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
+														_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
 										                _dynamicode_btn.val(updatePhoneJs.getOperationCode);
 										                clearInterval(_res);//清除setInterval
 										                }
@@ -223,6 +229,7 @@ define("app/jsp/user/security/updateMobilePhone",
 							var _this = this;
 							var _dynamicode_btn = $("#send_dynamicode_btn");
 							_dynamicode_btn.attr("disabled", true);
+						    _dynamicode_btn.attr("class", "btn biu-btn radius btn-medium");
 							ajaxController
 								.ajax({
 									type : "post",
@@ -239,6 +246,7 @@ define("app/jsp/user/security/updateMobilePhone",
 											$("#dynamicode").text(data.statusInfo);
 											//showMsg(data.statusInfo);
 											_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
+											_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
 											_dynamicode_btn.val(updatePhoneJs.getOperationCode);
 											return;
 										}else{
@@ -250,6 +258,7 @@ define("app/jsp/user/security/updateMobilePhone",
 									                step-=1;
 									                if(step <= 0){
 									                _dynamicode_btn.removeAttr("disabled"); //移除disabled属性
+													_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
 									                _dynamicode_btn.val(updatePhoneJs.getOperationCode);
 									                clearInterval(_res);//清除setInterval
 									                }
@@ -433,6 +442,7 @@ define("app/jsp/user/security/updateMobilePhone",
 								var _this = this;
 								var _emailUpDynamicodeBtn = $("#emailUpDynamicodeBtn");
 								_emailUpDynamicodeBtn.attr("disabled", true);
+							  _emailUpDynamicodeBtn.attr("class", "btn biu-btn radius btn-medium");
 								if(!this._checkEmailUpdatePhone()){
 									return;
 								}
@@ -452,6 +462,7 @@ define("app/jsp/user/security/updateMobilePhone",
 												$("#emailUpdatePhoneErrMsg").text(data.statusInfo);
 												//showMsg(data.statusInfo);
 												_emailUpDynamicodeBtn.removeAttr("disabled"); //移除disabled属性
+												_emailUpDynamicodeBtn.attr("class", "btn border-green border-sma radius btn-medium");
 												_emailUpDynamicodeBtn.val(updatePhoneJs.getOperationCode);
 												return;
 											}else{
@@ -463,6 +474,7 @@ define("app/jsp/user/security/updateMobilePhone",
 										                step-=1;
 										                if(step <= 0){
 										                _emailUpDynamicodeBtn.removeAttr("disabled"); //移除disabled属性
+														_emailUpDynamicodeBtn.attr("class", "btn border-green border-sma radius btn-medium");
 										                _emailUpDynamicodeBtn.val(updatePhoneJs.inputOperationCode);
 										                clearInterval(_res);//清除setInterval
 										                }
