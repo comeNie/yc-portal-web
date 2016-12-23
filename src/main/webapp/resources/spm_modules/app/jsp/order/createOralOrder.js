@@ -108,6 +108,7 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
     			rules: {
     				transSubject: {
     					required:true,
+						notNull:true,
     					maxlength:15
     					},
     					duad: 'required',
@@ -137,6 +138,7 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
     			messages: {
     				transSubject: {
     					required: $.i18n.prop('order.place.error.subject'), //"请填写翻译主题",
+						notNull: $.i18n.prop('order.place.error.subject'),
     					maxlength: $.i18n.prop('order.place.error.Maximum') //"最大长度不能超过{0}"
     				},
     				duad: {

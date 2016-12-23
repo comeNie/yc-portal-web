@@ -65,6 +65,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 rules: {
                     translateContent: {
                         required: true,
+						notNull: true,
                         maxlength: 2000,
                         remote: {                                          //验证检查语言
                             type: "POST",
@@ -96,7 +97,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                             }
                         }
                     },
-					inputFormatConv: {required: true}
+					inputFormatConv: {required: true,notNull: true,}
                     // isAgree: {
                     //     required: true
                     // }
@@ -104,11 +105,13 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 messages: {
                     translateContent: {
                         required: $.i18n.prop('order.place.error.translation'), //"请输入翻译内容",
+						notNull: $.i18n.prop('order.place.error.translation'),
                         maxlength: $.i18n.prop('order.place.error.Maximum'),//"最大长度不能超过{0}",
                         remote:  $.i18n.prop('order.place.error.contentConsis')//"您输入的内容和源语言不一致"
                     },
 					inputFormatConv: {
-						required: $.i18n.prop('order.place.error.format') //请输入转换格式
+						required: $.i18n.prop('order.place.error.format'), //请输入转换格式
+						notNull: $.i18n.prop('order.place.error.format'),
                     }
                     // isAgree: {
                     //     required: $.i18n.prop('order.place.error.agree')//"请阅读并同意翻译协议",
@@ -146,7 +149,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 					return;
 				}
 			}
-
 
 
 			//计算字数
@@ -200,12 +202,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 transContant=transContant.replace(/\n|\r\n/g,"<br>");
                 productInfo.needTranslateInfo = transContant;
 				productInfo.translateInfo = "";
-				var translateName =  $("#translateContent").val();
+				var translateName =  $.trim($("#translateContent").val());
 				baseInfo.translateName = translateName.substring(0, translateName.length>15? 15:translateName.length);
 			}
 			baseInfo.orderLevel = "1";
 			baseInfo.userType = "10"; //"10：个人 11：企业 12：代理人 "??
-			productInfo.typeDesc=$("#inputFormatConv").val();//格式转换
+			productInfo.typeDesc=$.trim($("#inputFormatConv").val());//格式转换
 			//baseInfo.corporaId
 			//baseInfo.accountId
 
