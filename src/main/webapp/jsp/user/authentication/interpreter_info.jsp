@@ -115,12 +115,26 @@
   					<li>
   						<p class="word"><spring:message code="interpreter.email" /></p>
   						<p  class="rightword">${user_session_key.email}</p>
-  						<p><a href="${_base}/p/security/seccenter?source=${source}"><spring:message code="interpreter.update" /></a></p>
+  						<p>
+  						 <c:if test="${user_session_key.email!=null}">
+  						  <a href="${_base}/p/security/seccenter?source=${source}"><spring:message code="interpreter.update" /></a>
+  						 </c:if>
+  						 <c:if test="${user_session_key.email==null||user_session_key.email==''}">
+  						  <a href="${_base}/p/security/seccenter?source=${source}"><spring:message code="interpreter.setting" /></a>
+  						 </c:if>
+  						</p>
   					</li>
   					<li>
   						<p class="word"><spring:message code="interpreter.mobilePhone" /></p>
   						<p  class="rightword">${user_session_key.fullMobile}</p>
-  						<p><a href="${_base}/p/security/seccenter?source=${source}"><spring:message code="interpreter.setting" /></a></p>
+						<p>
+  							<c:if test="${user_session_key.fullMobile==null||user_session_key.fullMobile==''}">
+  						    	<a href="${_base}/p/security/seccenter?source=${source}"><spring:message code="interpreter.setting" /></a>
+  							</c:if>
+  							<c:if test="${user_session_key.fullMobile!=null}">
+  								<a href="${_base}/p/security/seccenter?source=${source}"><spring:message code="interpreter.update" /></a>
+  							</c:if>
+  						</p>
   					</li>
   					<li>
   						<p class="word">QQ:</p>

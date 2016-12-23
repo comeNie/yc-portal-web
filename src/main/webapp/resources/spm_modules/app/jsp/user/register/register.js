@@ -22,7 +22,6 @@ define(
 							"blur #password":"_checkPassword",
 							"blur #confirmPassword":"_checkConfirmPassword",
 							"blur #smsCode":"_checkSmsCode"
-							
 						},
 						/* 重写父类 */
 						setup : function() {

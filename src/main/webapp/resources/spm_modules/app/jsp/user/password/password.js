@@ -175,12 +175,16 @@ define("app/jsp/user/password/password",
 				       _nextStep:function(){
 				    	 var userNameVal= $("#userName").val();
 						if($.trim(userNameVal)==""){
-							showMsg(passwordMsg.account_empty);
+							$("#accountErrMsg").show();
+							$("#accountErrMsg").text(passwordMsg.account_empty);
+							//showMsg(passwordMsg.account_empty);
 							return false;
 						 }  
 						var imgCodeVal = $("#verifyCodeImg").val();
 						if($.trim(imgCodeVal)==""){
-							showMsg(passwordMsg.verify_code_img_empty);
+							$("#accountErrMsg").show();
+							$("#accountErrMsg").text(passwordMsg.verify_code_img_empty);
+							//showMsg(passwordMsg.verify_code_img_empty);
 							return false;
 						}
 						ajaxController.ajax({
@@ -195,7 +199,9 @@ define("app/jsp/user/password/password",
 							success : function(json) {
 								var data = json.data;
 								if (!data.isOk) {
-									showMsg(json.statusInfo);
+									$("#accountErrMsg").show();
+									$("#accountErrMsg").text(json.statusInfo);
+									//showMsg(json.statusInfo);
 								}else{
 									$("#t_userName").val(data.username);
 									var userId = data.uid;
