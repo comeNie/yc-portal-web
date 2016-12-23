@@ -12,7 +12,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
     	
     	//事件代理
     	events: {
-			"click #recharge-popo":"_isPay",
+			"click #recharge-popo":"_payOrder",
 			"click #payment-method ul":"_changePayType",
 			"click #depositBtn":"_toDeposit",
 			"click #completed":"_submitYEpay",//余额支付确认
@@ -32,7 +32,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 				async: true
 			});
     	},
-
+		//检查订单是否已经支付，
 		_isPay:function () {
 			var _this = this;
 			ajaxController.ajax({
@@ -43,7 +43,8 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 				success: function(data){
 					//可以支付
 					if("OK"===data.statusInfo){
-						_this._payOrder();
+						//模拟点击事件
+						$("#subForm").click();
 					} else {
 						// _this._showWarn($.i18n.prop('pay.error.paid'));
 						//订单错误，跳转到订单错误页面。
