@@ -67,8 +67,10 @@
 .right-list-table table .width-16 td{width:16.666%;}
 .right-list-table table .table-thdiv{width:100%;padding-left:20px;font-size:12px}
 .right-list-table table .table-thdiv p{float:left;font-weight:normal;margin-right:40px;}
+.right-list-table table .table-thdiv p .ash-color{color:#bdbdbd}
 .right-list-table table .table-thdiv .right{float:right;color:#fe6b6b}
 .right-list-table table .table-thdiv  span{color:#2361ea}
+.right-list-table table .table-thdiv  span a{color:#2361ea}
 
 /**我的账户**/
 .user-account-title{width:600px;float:left;margin:16px 0 0 0px;}
@@ -78,7 +80,8 @@
 .right-title-left-word ul .c-bj-bule a:hover{background:#2361ea;color:#fff;font-size:14px}
 .right-title-left-word ul .word{color:#fe6b6b;line-height:38px;}
 .right-title-left-word ul .word span{font-size:30px}
-.right-title-left-word .word-li li{font-size:12px;}
+.right-title-left-word .word-li li{font-size:16px;}
+.right-title-left-word .word-li li span{color:#2361ea}
 .right-title-left-word ul .user-word{color:#2c3e50;font-size:16px}
 .user-title-right{float:right;margin:10px;}
 .query-order{width:100%;float:left;}
