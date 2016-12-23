@@ -245,6 +245,7 @@
 <script type="text/javascript">
     var pager, orderPager;
     var current = "index";
+    var showCert = ${showCert==true?true:false};
     (function () {
         seajs.use(['app/jsp/user/interpreter/interpreterIndex', 'app/jsp/customerOrder/order'], function (interpreterIndexPager, orderPage) {
             pager = new interpreterIndexPager({

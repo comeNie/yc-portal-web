@@ -20,7 +20,10 @@ define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, mo
     			cancel:function(){
     				d.close();
     			}
-    		}).showModal();
+    		});
+    	if(showCert == true){
+    		d.showModal();
+		}
     };
 	// 定义页面组件类
 	var interpreterIndexPager = Widget

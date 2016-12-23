@@ -8,6 +8,11 @@
         <extension>properties</extension>
         <mime-type>text/plain</mime-type>
     </mime-mapping>
+
+    <mime-mapping>
+        <extension>ico</extension>
+        <mime-type>image/x-icon</mime-type>
+    </mime-mapping>
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:context/core-context.xml</param-value>
@@ -114,6 +119,7 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+
     <error-page>
         <error-code>404</error-code>
         <location>/jsp/404.jsp</location>
