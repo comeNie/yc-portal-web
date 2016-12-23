@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -141,11 +141,11 @@
 									<li>
 		 								<label class="ml-70" id="passwordMsg" style="display: none;"></label>
 		 								<p class="word"><spring:message code="ycregister.password" /></p>
-		 								<p><input type="password" maxlength="16" class="int-text int-xlarge radius" id="password"></p>
+		 								<p><input type="password" autocomplete="off"  maxlength="16" class="int-text int-xlarge radius" id="password"></p>
 		 							</li>
 		 							<li>
 		 								<p class="word"><spring:message code="ycregister.confirmPassword" /></p>
-		 								<p><input type="password" maxlength="16"  class="int-text int-xlarge radius" id="confirmPassword"></p>
+		 								<p><input type="password" autocomplete="off"  maxlength="16"  class="int-text int-xlarge radius" id="confirmPassword"></p>
 		 							</li>
 									</ul>
 								</div>
@@ -279,11 +279,11 @@
 										<li>
 			 								<label class="ml-70" id="emailPasswordErrMsg" style="display: none;"></label>
 			 								<p class="word"><spring:message code="ycregister.password" /></p>
-			 								<p><input maxlength="16" type="password" class="int-text int-xlarge radius" id="emailPassword"></p>
+			 								<p><input maxlength="16" type="password" autocomplete="off"  class="int-text int-xlarge radius" id="emailPassword"></p>
 	 									</li>
 			 							<li>
 			 								<p class="word"><spring:message code="ycregister.confirmPassword" /></p>
-			 								<p><input maxlength="16" type="password" class="int-text int-xlarge radius" id="emailConfirmPassword"></p>
+			 								<p><input maxlength="16" type="password" autocomplete="off"  class="int-text int-xlarge radius" id="emailConfirmPassword"></p>
 			 							</li>
 									</ul>
 								</div>
