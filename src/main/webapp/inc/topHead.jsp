@@ -15,10 +15,10 @@
                         <c:when test="${loginUser !=null}">
                         	<c:choose>
 								<c:when test="${fn:length(loginUser.username)>8}">
-									${fn:substring(loginUser.username,0,8)}...
+									<a href="${_base}/p/security/index">${fn:substring(loginUser.username,0,8)}...</a>
 								</c:when>
 								<c:otherwise>
-									${loginUser.username}
+                                    <a href="${_base}/p/security/index">${loginUser.username}</a>
 								</c:otherwise>
 							</c:choose>
                             <%--退出--%>
