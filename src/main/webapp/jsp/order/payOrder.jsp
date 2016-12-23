@@ -19,7 +19,7 @@
 			<ul>
 				<%--请输入支付密码，完成订单支付--%>
 				<li><spring:message code="pay.order.passwd.prompt"/></li>
-				<li><input id="payPass" type="password" class="int-text int-large radius" maxlength="16"></li>
+				<li><input id="payPass" type="password" autocomplete="off"  class="int-text int-large radius" maxlength="16"></li>
 				<li class="eject-btn">
 					<%--确 定--%>
 					<input type="button" id="completed" class="btn btn-green btn-120 radius20" value="<spring:message code="pay.order.ok"/>">

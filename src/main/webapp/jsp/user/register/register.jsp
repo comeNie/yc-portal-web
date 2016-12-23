@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -72,7 +72,7 @@
 								</p>
 								<p>
 									<input id="password"  name="password"
-										type="password" class="int-text int-in-big radius" placeholder="<spring:message code="ycregister.register.password.tip" />">
+										type="password" autocomplete="off"  class="int-text int-in-big radius" placeholder="<spring:message code="ycregister.register.password.tip" />">
 								</p>
 							</li>
 							<li>
@@ -81,7 +81,7 @@
 								</p>
 								<p>
 									<input id="confirmPassword" 
-										name="confirmPassword" type="password"
+										name="confirmPassword" type="password" autocomplete="off" 
 										class="int-text int-in-big radius" placeholder="<spring:message code="ycregister.register.confirmPassword.tip" />"/>
 								</p>
 							</li>

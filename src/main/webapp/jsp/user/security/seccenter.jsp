@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -19,15 +19,15 @@
 			<ul class="pass-list">
 			<li>
 				<p class="word"><spring:message code="ycaccountcenter.updatePassword.currentPassword"/></p>
-				<p><input maxlength="16" id="currentPassword" type="password" class="int-text int-in-200 radius"></p>
+				<p><input maxlength="16" id="currentPassword" type="password" autocomplete="off"  class="int-text int-in-200 radius"></p>
 			</li>
 			<li>
 				<p class="word"><spring:message code="ycaccountcenter.updatePassword.newPassword"/></p>
-				<p><input maxlength="16" id="newPassword" type="password" class="int-text int-in-200 radius"></p>
+				<p><input maxlength="16" id="newPassword" type="password" autocomplete="off"  class="int-text int-in-200 radius"></p>
 			</li>
 			<li>
 				<p class="word"><spring:message code="ycaccountcenter.updatePassword.repeatPassword"/></p>
-				<p><input maxlength="16" id="newPassword2" type="password" class="int-text int-in-200 radius"></p>
+				<p><input maxlength="16" id="newPassword2" type="password" autocomplete="off"  class="int-text int-in-200 radius"></p>
 				<label class="ml-70" id="passwordErrMsg" style="display: none;color: red"></label>
 			</li>
 			<li class="eject-btn">
@@ -49,15 +49,15 @@
 			<ul class="pass-list">
 			<li>
 				<p class="word"><spring:message code="ycaccountcenter.updatePassword.currentPassword"/></p>
-				<p><input maxlength="16" id="pay_currentPassword" type="password" class="int-text int-in-200 radius"></p>
+				<p><input maxlength="16" id="pay_currentPassword" type="password" autocomplete="off"  class="int-text int-in-200 radius"></p>
 			</li>
 			<li>
 				<p class="word"><spring:message code="ycaccountcenter.updatePassword.newPassword"/></p>
-				<p><input maxlength="16" id="pay_newPassword" type="password" class="int-text int-in-200 radius"></p>
+				<p><input maxlength="16" id="pay_newPassword" type="password" autocomplete="off"  class="int-text int-in-200 radius"></p>
 			</li>
 			<li>
 				<p class="word"><spring:message code="ycaccountcenter.updatePassword.repeatPassword"/></p>
-				<p><input maxlength="16" id="pay_newPassword2" type="password" class="int-text int-in-200 radius"></p>
+				<p><input maxlength="16" id="pay_newPassword2" type="password" autocomplete="off"  class="int-text int-in-200 radius"></p>
 				<label class="ml-70" id="payPasswordErrMsg" style="display: none;color: red"></label>
 			</li>
 			<li class="eject-btn">
