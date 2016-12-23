@@ -34,7 +34,8 @@
 			<ul>
 				<li class="current">
 					<a href="javascript:">
-						<p class="icon1" id="tab-icon1"></p>
+						<p class="icon1" id="tab-icon13" style="display:none;"></p>
+						<p class="icon2" id="tab-icon14"></p>
 					</a>
 					<p class="word word-font">注册译云</p>
 				</li>
@@ -42,6 +43,7 @@
 				<li id="st1-btn">
 					<a href="javascript:">
 						<p class="icon9" id="tab-icon9"></p>
+						<p class="icon10" id="tab-icon10" style="display:none;"></p>
 					</a>
 					<p class="word word-font">认证译员</p>
 				</li>
@@ -49,6 +51,7 @@
 				<li>
 					<a href="javascript:">
 						<p class="icon11" id="tab-icon11"></p>
+						<p class="icon12" id="tab-icon12" style="display:none;"></p>
 					</a>
 					<p class="word word-font">开始接单</p>
 				</li>
