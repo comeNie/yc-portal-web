@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>首页</title>
+    <title><spring:message code="home.nav.title"/></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="icon" href="${uedroot}/images/icon32.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="${uedroot}/images/icon32.ico" type="image/x-icon" />

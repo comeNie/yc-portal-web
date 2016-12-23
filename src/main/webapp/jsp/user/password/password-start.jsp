@@ -120,7 +120,7 @@
 	 						<!--进行的状态-->
 				 		<div class="place-step-none adopt-lightgreen-bj shezh-line">
 				 			<ul>
-				 				<li class="circle">1</li>
+				 				<li class="circle"><i class="icon iconfont">&#xe60e;</i></li>
 				 				<li class="word"><spring:message code="ycfindpassword.step1"/></li>
 				 			</ul>
 				 			<p class="line"></p>
@@ -136,7 +136,7 @@
 				 		<!--未进行的状态-->
 				 		<div class="place-step-none adopt-stash-bj shezh-line">
 				 			<ul>
-				 				<li class="circle">3</li>
+				 				<li class="circle"><i class="icon iconfont">&#xe60e;</i></li>
 				 				<li class="word"><spring:message code="ycfindpassword.step3"/></li>
 				 			</ul>
 				 			<p class="line"></p>
@@ -169,7 +169,7 @@
  						<!--进行的状态-->
 			 		<div class="place-step-none adopt-lightgreen-bj shezh-line">
 			 			<ul>
-			 				<li class="circle">1</li>
+			 				<li class="circle"><i class="icon iconfont">&#xe60e;</i></li>
 			 				<li class="word"><spring:message code="ycfindpassword.step1"/></li>
 			 			</ul>
 			 			<p class="line"></p>
@@ -177,7 +177,7 @@
 			 		<!--未进行的状态-->
 			 		<div class="place-step-none adopt-lightgreen-bj shezh-line">
 			 			<ul>
-			 				<li class="circle">2</li>
+			 				<li class="circle"><i class="icon iconfont">&#xe60e;</i></li>
 			 				<li class="word"><spring:message code="ycfindpassword.step2"/></li>
 			 			</ul>
 			 			<p class="line"></p>
@@ -185,7 +185,7 @@
 			 		<!--未进行的状态-->
 			 		<div class="place-step-none adopt-stgreen-bj shezh-line">
 			 			<ul>
-			 				<li class="circle">3</li>
+			 				<li class="circle"><i class="icon iconfont">&#xe60e;</i></li>
 			 				<li class="word"><spring:message code="ycfindpassword.step3"/></li>
 			 			</ul>
 			 			<p class="line"></p>
@@ -260,7 +260,7 @@
 	 						<!--进行的状态-->
 				 		<div class="place-step-none adopt-lightgreen-bj shezh-line" >
 				 			<ul>
-				 				<li class="circle">1</li>
+				 				<li class="circle"><i class="icon iconfont">&#xe60e;</i></li>
 				 				<li class="word"><spring:message code="ycfindpassword.step1"/></li>
 				 			</ul>
 				 			<p class="line"></p>
@@ -309,7 +309,7 @@
  						<!--进行的状态-->
 			 		<div class="place-step-none adopt-lightgreen-bj shezh-line">
 			 			<ul>
-			 				<li class="circle">1</li>
+			 				<li class="circle"><i class="icon iconfont">&#xe60e;</i></li>
 			 				<li class="word"><spring:message code="ycfindpassword.step1"/></li>
 			 			</ul>
 			 			<p class="line"></p>
@@ -317,7 +317,7 @@
 			 		<!--未进行的状态-->
 			 		<div class="place-step-none adopt-lightgreen-bj shezh-line">
 			 			<ul>
-			 				<li class="circle">2</li>
+			 				<li class="circle"><i class="icon iconfont">&#xe60e;</i></li>
 			 				<li class="word"><spring:message code="ycfindpassword.step2"/></li>
 			 			</ul>
 			 			<p class="line"></p>
@@ -325,7 +325,7 @@
 			 		<!--未进行的状态-->
 			 		<div class="place-step-none adopt-stgreen-bj shezh-line">
 			 			<ul>
-			 				<li class="circle">3</li>
+			 				<li class="circle"><i class="icon iconfont">&#xe60e;</i></li>
 			 				<li class="word"><spring:message code="ycfindpassword.step3"/></li>
 			 			</ul>
 			 			<p class="line"></p>

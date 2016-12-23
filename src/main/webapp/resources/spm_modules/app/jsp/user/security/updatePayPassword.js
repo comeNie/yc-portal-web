@@ -235,6 +235,7 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
           var _this = this;
           var sendEmailBtn= $("#sendEmailBtn");
           sendEmailBtn.attr("disabled", true);
+			sendEmailBtn.attr("class", "btn biu-btn radius btn-medium");
 			ajaxController.ajax({
 				type : "POST",
 				data : {
@@ -252,6 +253,7 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 						//$("#emailErrMsg").show();
 						//$("#emailErrMsg").text("发送邮件失败");
 						showMsg(updatePayPasswordMsg.sendMailError);
+						sendEmailBtn.attr("class", "btn border-green border-sma radius btn-medium");
 					}else{
 						var step = 59;
 						sendEmailBtn.val(updatePayPasswordMsg.resend60);
@@ -259,6 +261,7 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 			            	sendEmailBtn.val(updatePayPasswordMsg.resend+step);
 			                step-=1;
 			                if(step <= 0){
+								sendEmailBtn.attr("class", "btn border-green border-sma radius btn-medium");
 			                sendEmailBtn.removeAttr("disabled"); //移除disabled属性
 			                sendEmailBtn.val(updatePayPasswordMsg.sendEmailCode);
 			                clearInterval(_res);//清除setInterval
@@ -279,6 +282,7 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 			var _this = this;
 			var btn = $("#send_dynamicode_btn");
 			btn.attr("disabled", true);
+			  btn.attr("class", "btn biu-btn radius btn-medium");
 			ajaxController
 				.ajax({
 					type : "post",
@@ -294,6 +298,7 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 							//$("#dynamicode").show();
 							//$("#dynamicode").text(data.statusInfo);
 							showMsg(data.statusInfo);
+							btn.attr("class", "btn border-green border-sma radius btn-medium");
 							btn.removeAttr("disabled"); //移除disabled属性
 							btn.val(updatePayPasswordMsg.getDynamiCode);
 							return;
@@ -305,6 +310,7 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 					                btn.val(updatePayPasswordMsg.resend+step);
 					                step-=1;
 					                if(step <= 0){
+										btn.attr("class", "btn border-green border-sma radius btn-medium");
 					                	btn.removeAttr("disabled"); //移除disabled属性
 					                	btn.val(updatePayPasswordMsg.getDynamiCode);
 					                clearInterval(_res);//清除setInterval

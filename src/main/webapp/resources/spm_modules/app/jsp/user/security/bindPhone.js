@@ -96,7 +96,9 @@ define("app/jsp/user/security/bindPhone",
 						  }
 							var _this = this;
 							var _dynamicode_btn = $("#send_dynamicode_btn");
-							_dynamicode_btn.attr("disabled", true);
+						  _dynamicode_btn.attr("class", "btn biu-btn radius btn-medium");
+
+						  _dynamicode_btn.attr("disabled", true);
 							ajaxController
 								.ajax({
 									type : "post",
@@ -113,6 +115,7 @@ define("app/jsp/user/security/bindPhone",
 											$("#dynamicode").text(data.statusInfo);
 											//showMsg(data.statusInfo);
 											_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
+											_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
 											_dynamicode_btn.val(phoneBindMsg.getOperationCode);
 											return;
 										}else{
@@ -124,6 +127,7 @@ define("app/jsp/user/security/bindPhone",
 									                step-=1;
 									                if(step <= 0){
 									                _dynamicode_btn.removeAttr("disabled"); //移除disabled属性
+													_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
 									                _dynamicode_btn.val(phoneBindMsg.inputOperationCode);
 									                clearInterval(_res);//清除setInterval
 									                }

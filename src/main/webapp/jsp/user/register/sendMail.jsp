@@ -28,7 +28,9 @@
 				<div class="verification">
 					<ul>
 						<li><img src="${uedroot}/images/rech-win.png" /></li>
-						<li class="word"><spring:message code="ycregister.registerMailSuccessMsg1" />${email}</li>
+						<li class="word"><spring:message code="ycregister.registerMailSuccessMsg1"/>
+							${email}
+						</li>
 						<li><spring:message code="ycregister.registerMailSuccessMsg2" />
 						</li>
 					</ul>

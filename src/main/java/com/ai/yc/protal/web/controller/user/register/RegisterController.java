@@ -185,7 +185,8 @@ public class RegisterController {
 			LOG.debug("-------进入邮箱界面-------");
 		}
 		ModelAndView modelView = new ModelAndView(EMAIL);
-		modelView.addObject("email", email);
+		String newEmail = email.substring(0,1)+"*****"+email.substring(email.indexOf("@")-1,email.length());
+		modelView.addObject("email", newEmail);
 		return modelView;
 	}
 
@@ -392,7 +393,7 @@ public class RegisterController {
 	
 	/**
 	 * 校验邮箱或手机
-	 */
+	 *//*
 	@RequestMapping("/createAccount")
 	@ResponseBody
 	public ResponseData<String> createAccount() {
@@ -430,7 +431,7 @@ public class RegisterController {
 		}
 		return responseData;
 	}
-	
+	*/
 	
 	
 }

@@ -1,13 +1,14 @@
 <%@page import="com.ai.paas.ipaas.i18n.ZoneContextHolder"%>
 <%@ page language="java" contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title></title>
-<%@ include file="/inc/inc.jsp"%>
+	<%@ include file="/inc/inc.jsp"%>
+	<title><spring:message code="ycleftmenu.mymainpage"/></title>
 <%@ include file="/inc/incJs.jsp"%>
 </head>
 <body>

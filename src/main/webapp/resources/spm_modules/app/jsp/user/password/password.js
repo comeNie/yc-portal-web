@@ -133,6 +133,8 @@ define("app/jsp/user/password/password",
 							var _this = this;
 							var sendEmailBtn =$("#sendEmailBtn");
 							sendEmailBtn.attr("disabled", true);
+							sendEmailBtn.attr("class", "btn biu-btn radius btn-medium");
+
 							ajaxController.ajax({
 								type : "POST",
 								data : {
@@ -150,6 +152,7 @@ define("app/jsp/user/password/password",
 									if(!resultCode){
 										showMsg(passwordMsg.sendMailError);
 										sendEmailBtn.removeAttr("disabled"); //移除disabled属性
+										sendEmailBtn.attr("class", "btn border-green border-sma radius btn-medium");
 									}else{
 										var step = 59;
 										sendEmailBtn.val(passwordMsg.resend60);
@@ -158,7 +161,8 @@ define("app/jsp/user/password/password",
 							                step-=1;
 							                if(step <= 0){
 							                	sendEmailBtn.removeAttr("disabled"); //移除disabled属性
-							                	sendEmailBtn.val(passwordMsg.getDynamiCode);
+												sendEmailBtn.attr("class", "btn border-green border-sma radius btn-medium");
+												sendEmailBtn.val(passwordMsg.getDynamiCode);
 							                clearInterval(_res);//清除setInterval
 							                }
 							            },1000);
@@ -175,12 +179,16 @@ define("app/jsp/user/password/password",
 				       _nextStep:function(){
 				    	 var userNameVal= $("#userName").val();
 						if($.trim(userNameVal)==""){
-							showMsg(passwordMsg.account_empty);
+							$("#accountErrMsg").show();
+							$("#accountErrMsg").text(passwordMsg.account_empty);
+							//showMsg(passwordMsg.account_empty);
 							return false;
 						 }  
 						var imgCodeVal = $("#verifyCodeImg").val();
 						if($.trim(imgCodeVal)==""){
-							showMsg(passwordMsg.verify_code_img_empty);
+							$("#accountErrMsg").show();
+							$("#accountErrMsg").text(passwordMsg.verify_code_img_empty);
+							//showMsg(passwordMsg.verify_code_img_empty);
 							return false;
 						}
 						ajaxController.ajax({
@@ -195,7 +203,9 @@ define("app/jsp/user/password/password",
 							success : function(json) {
 								var data = json.data;
 								if (!data.isOk) {
-									showMsg(json.statusInfo);
+									$("#accountErrMsg").show();
+									$("#accountErrMsg").text(json.statusInfo);
+									//showMsg(json.statusInfo);
 								}else{
 									$("#t_userName").val(data.username);
 									var userId = data.uid;
@@ -241,6 +251,7 @@ define("app/jsp/user/password/password",
 						var _this = this;
 						var btn = $("#send_dynamicode_btn");
 						btn.attr("disabled", true);
+					    btn.attr("class", "btn biu-btn radius btn-medium");
 			            ajaxController
 							.ajax({
 								type : "post",
@@ -256,6 +267,7 @@ define("app/jsp/user/password/password",
 									if(!data.data){
 										showMsg(data.statusInfo);
 										btn.removeAttr("disabled"); //移除disabled属性
+										btn.attr("class", "btn border-green border-sma radius btn-medium");
 										btn.val(passwordMsg.getDynamiCode);
 										return;
 									}else{
@@ -266,6 +278,7 @@ define("app/jsp/user/password/password",
 							            	btn.val(passwordMsg.resend+step);
 							                step-=1;
 							                if(step <= 0){
+											btn.attr("class", "btn border-green border-sma radius btn-medium");
 							                btn.removeAttr("disabled"); //移除disabled属性
 							                btn.val(passwordMsg.getDynamiCode);
 							                clearInterval(_res);//清除setInterval

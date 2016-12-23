@@ -53,26 +53,26 @@ define("app/jsp/user/security/securitycenter", function(require, exports, module
             },
             _setSecSettingList : function () {
             	if(isexistloginpassword=="true"){
-            		$("#login_password_icon").html("&#xe651;");
+            		$("#login_password_icon").html("&#xe64f;");
             		$("#login_password_icon_color").attr("class","green");
             		$("#login_password_text").html(secCenterMsg.password_set);
             	}
             	if(isexistemail == "true") {
-            		$("#login_email_icon").html("&#xe651;");
+            		$("#login_email_icon").html("&#xe64f;");
             		$("#login_email_icon_color").attr("class","green");
             		var userEmailWithStart = this._getEmailWithStart(userEmail);
             		$("#login_email_text").html(secCenterMsg.email_set + userEmailWithStart );
             	}
             	if(isexistphone == "true") {
-            		$("#login_phone_icon").html("&#xe651;");
+            		$("#login_phone_icon").html("&#xe64f;");
             		$("#login_phone_icon_color").attr("class","green");
             		var userMobileWithStart = this._getMobileWithStart(userMobile);
             		$("#login_phone_text").html(secCenterMsg.login_phone_set + " " + userMobileWithStart);
             	}
             	if(isexistpaypassword == "true") {
-            		$("#pay_password_icon").html("&#xe651;");
+            		$("#pay_password_icon").html("&#xe64f;");
             		$("#pay_password_icon_color").attr("class","green");
-            		$("#pay_password_text").html(secCenterMsg.paypassword_set);
+            		$("#pay_password_text").html(secCenterMsg.paypassword_update);
             	}
             },
             _getEmailWithStart : function (orginalEmail) {

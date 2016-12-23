@@ -237,6 +237,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
           var _this = this;
           var sendEmailBtn= $("#sendEmailBtn");
           sendEmailBtn.attr("disabled", true);
+			sendEmailBtn.attr("class", "btn biu-btn radius btn-medium");
 			ajaxController.ajax({
 				type : "POST",
 				data : {
@@ -250,6 +251,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 				success : function(data) {
 					var resultCode = data.data;
 					if(!resultCode){
+						sendEmailBtn.attr("class", "btn border-green border-sma radius btn-medium");
 						sendEmailBtn.removeAttr("disabled"); //移除disabled属性
 						//$("#emailErrMsg").show();
 						//$("#emailErrMsg").text("发送邮件失败");
@@ -261,6 +263,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 			            	sendEmailBtn.val(updatePasswordMsg.resend+step);
 			                step-=1;
 			                if(step <= 0){
+								sendEmailBtn.attr("class", "btn border-green border-sma radius btn-medium");
 			                sendEmailBtn.removeAttr("disabled"); //移除disabled属性
 			                sendEmailBtn.val(updatePasswordMsg.sendEmailCode);
 			                clearInterval(_res);//清除setInterval
@@ -280,6 +283,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 		  _sendDynamiCode : function() {
 			var _this = this;
 			var btn = $("#send_dynamicode_btn");
+		    btn.attr("class", "btn biu-btn radius btn-medium");
 			btn.attr("disabled", true);
 			ajaxController
 				.ajax({
@@ -296,6 +300,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 							//$("#dynamicode").show();
 							//$("#dynamicode").text(data.statusInfo);
 							showMsg(data.statusInfo);
+							btn.attr("class", "btn border-green border-sma radius btn-medium");
 							btn.removeAttr("disabled"); //移除disabled属性
 							btn.val(updatePasswordMsg.getDynamiCode);
 							return;
@@ -307,6 +312,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 					                btn.val(updatePasswordMsg.resend+step);
 					                step-=1;
 					                if(step <= 0){
+										btn.attr("class", "btn border-green border-sma radius btn-medium");
 					                	btn.removeAttr("disabled"); //移除disabled属性
 					                	btn.val(updatePasswordMsg.getDynamiCode);
 					                clearInterval(_res);//清除setInterval

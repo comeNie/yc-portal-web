@@ -28,6 +28,8 @@
                         <p><a href="${_base}/faq"><spring:message code="indexFoot.FAQ"/></a></p>
                         <!-- 服务说明 -->
                         <p><a href="${_base}/sexplain"><spring:message code="indexFoot.ServiceDesc"/></a></p>
+                        <!-- 服务协议 -->
+                        <p><a href="${_base}/serviceAgree"><spring:message code="indexFoot.ServiceAgree"/></a></p>
                     </li>
                 </ul>
                 <ul>

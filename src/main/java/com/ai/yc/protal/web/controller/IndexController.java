@@ -165,6 +165,14 @@ public class IndexController {
     }
 
     /**
+     * 服务协议
+     * @return
+     */
+    @RequestMapping("/serviceAgree")
+    public String serviceAgreement(){
+        return staticUrl()+"/serviceAgreement";
+    }
+    /**
      * 译者咨询
      * @return
      */
