@@ -81,9 +81,9 @@
 			<div class="static-list">
 				<ul>
 					<%--第一步 提交翻译任务--%>
-					<li class="word"><span>First step</span> Submit translation tasks</li>
+					<li class="word"><span>Step 1 </span>Submit translation task</li>
 					<%--注册/登录译云账户，点击”立即下单“，选择需要的业务类型，根据提示完成并提交您的翻译任务即可。目前，译云提供了快速翻译、文档翻译、简历翻译、创意翻译、证件翻译、口译翻译几大业务类型。--%>
-					<li>Registration / login account and click "order immediately translated cloud,", select the type of business, according to the prompts to complete and submit to your translation task. At present, translation cloud provides fast translation, document translation, translation, creative translation, resume document translation, interpreting several types of business.</li>
+					<li>Register for/login to your YeeCloud account, then click "Order Now." Choose the type of services required, and then submit your translation task based on our guidelines. Currently, YeeCloud's translation services fall into several categories, including quick translation, document translation, resume translation, creative translation, credential translation, and interpretation.</li>
 				</ul>
 			</div>
 		</div>
@@ -91,9 +91,9 @@
 			<div class="static-list">
 				<ul>
 					<%--第二步 支付订单--%>
-					<li class="word"><span>Second step</span> Payment order</li>
+					<li class="word"><span>Step 2 </span>Pay for order</li>
 					<%--订单完成支付后，才会进入翻译审校环节，为了不耽误您的时间，请您下单后及时付款。其中，文档翻译在提交订单后，将会有客服人员为您报价并引导您完成支付；其它业务类型，系统将会自动计算服务价格。--%>
-					<li>In order to complete the payment, will enter the translation verification link, in order not to delay your time, please order immediately after payment. Among them, the document translation in the submission of orders, customer service staff will provide you with a quotation and guide you to complete the payment; other types of business, the system will automatically calculate the price of services.</li>
+					<li>The translation and proofreading will not become active until payment is finished. In order to save your time, please pay immediately after placing an order. For document translation, our customer service personnel will provide a quote to you and guide you through your payment options after you place an order; for other translation services, the system will calculate the service price automatically.</li>
 				</ul>
 			</div>
 		</div>
@@ -101,19 +101,18 @@
 			<div class="static-list">
 				<ul>
 					<%--第三步 获取翻译结果--%>
-					<li class="word"><span>Third step</span> Obtain translation results</li>
+					<li class="word"><span>Step 3 </span>Receive translation</li>
 					<%--订单经过严格的翻译审校后，系统会将第一时间将翻译结果通过Email发送给您，所以，请务必保证邮件地址的准确性。同时，您也可登录译云账户，在“我的订单”中随时查询翻译进度，以及查询&下载译文。--%>
-					<li>Order through strict translation and revision, the system will be the first time the translation results through Email sent to you, so please make sure the accuracy of the mail address. At the same time, you can also login account at any time in the query translation cloud, "my order" in the translation process, translation and query &amp; download.</li>
-				</ul>
+					<li>The system will send you the finished translation via email at the earliest possible time, but only after the document has gone through our strict translation and proofreading procedures. With this in mind, please ensure to provide an accurate email address. Meanwhile, you can log into your YeeCloud account to check the progress of the translation in the "My Order" at any time; you can also download the translation there.</li>
 			</div>
 		</div>
 		<div id="renz-table4"  style="display: none;">
 			<div class="static-list">
 				<ul>
 					<%--第四步 确认评价订单--%>
-					<li class="word"><span>Fourth step</span> Confirm evaluation order</li>
+					<li class="word"><span>Step 4 </span>Confirm and comment</li>
 					<%--品质和信誉是译云的生命，译云全流程、全方位保障翻译服务质量，获取翻译结果后，您可以对订单和译员服务进行监督和评价，不满意免费修改。--%>
-					<li>Quality and reputation is the life of the whole process of translation cloud, and translation cloud to protect the full range of translation service quality, to obtain the translation results, you can supervise and evaluate to the order and interpreter service, not satisfied with free modification.</li>
+					<li>Quality and reputation are vital to YeeCloud, which guarantees translation service quality through the entire process and in all aspects. You can comment on and monitor your order and the translator after you receive the finished translation. If you are not satisfied with the finished translation, changes will be provided free of charge.</li>
 				</ul>
 			</div>
 		</div>

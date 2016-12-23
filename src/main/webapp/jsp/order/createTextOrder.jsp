@@ -211,7 +211,7 @@
 								<span id="proPrice"></span>
 								<c:if test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>"><spring:message code="order.yuan"/></c:if>
 								<spring:message code="order.thousandWords"/></p>
-							<p class="ml-30"><span>1</span><spring:message code="order.freeChanges"/></p>
+							<p class="ml-30"><span>2</span><spring:message code="order.freeChanges"/></p>
 						</li>
 						<li class="green-li">
 							<p class="icon"><i class="icon iconfont">&#xe68b;</i></p>
@@ -242,7 +242,7 @@
 								<span id="pubPrice"></span>
 								<c:if test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>"><spring:message code="order.yuan"/></c:if>
 								<spring:message code="order.thousandWords"/></p>
-							<p class="ml-30"><span>1</span><spring:message code="order.freeChanges"/></p>
+							<p class="ml-30"><span>5</span><spring:message code="order.freeChanges"/></p>
 						</li>
 						<li class="green-li">
 							<p class="icon"><i class="icon iconfont">&#xe68b;</i></p>
