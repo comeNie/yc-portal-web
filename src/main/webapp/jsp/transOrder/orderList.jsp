@@ -126,7 +126,8 @@
 										</c:forEach>
 			 						</select>
 		 						</p>
-		 						<p class="iocn-oder right"><input id="translateName" name="translateName" type="text" class="int-text int-medium radius pr-30">
+		 						<p class="iocn-oder right">
+									<input id="translateName" name="translateName" type="text" class="int-text int-medium radius pr-30" placeholder="<spring:message code="myOrder.inputContent"/>">
 		 							<i id="submitQuery" class=" icon-search"></i></p>
 		 					</li>
 		 					
