@@ -148,11 +148,11 @@
 	 							<li>
 	 								<label class="ml-70" id="passwordMsg" style="display: none;"></label>
 	 								<p class="word"><spring:message code="ycfindpassword.password"/></p>
-	 								<p><input type="password" maxlength="16" class="int-text int-xlarge radius" id="password"></p>
+	 								<p><input type="password" autocomplete="off"  maxlength="16" class="int-text int-xlarge radius" id="password"></p>
 	 							</li>
 	 							<li>
 	 								<p class="word"><spring:message code="ycfindpassword.confirmPassword"/></p>
-	 								<p><input type="password" maxlength="16" class="int-text int-xlarge radius" id="confirmPassword"></p>
+	 								<p><input type="password" autocomplete="off"  maxlength="16" class="int-text int-xlarge radius" id="confirmPassword"></p>
 	 							</li>
 	 						</ul>
 	 					</div>
@@ -288,11 +288,11 @@
 	 							<li>
 	 								<label class="ml-70" id="emailPasswordErrMsg" style="display: none;"></label>
 	 								<p class="word"><spring:message code="ycfindpassword.password"/></p>
-	 								<p><input type="password" class="int-text int-xlarge radius" id="emailPassword"></p>
+	 								<p><input type="password" autocomplete="off"  class="int-text int-xlarge radius" id="emailPassword"></p>
 	 							</li>
 	 							<li>
 	 								<p class="word"><spring:message code="ycfindpassword.confirmPassword"/></p>
-	 								<p><input type="password" class="int-text int-xlarge radius" id="emailConfirmPassword"></p>
+	 								<p><input type="password" autocomplete="off"  class="int-text int-xlarge radius" id="emailConfirmPassword"></p>
 	 							</li>
 	 						</ul>
 	 					</div>
