@@ -48,7 +48,7 @@
  							<li>	
  								<label class="ml-70" id="emailUErrMsg" style="display: none;"></label>
  								<p class="word"><spring:message code="ycaccountcenter.bindemial.label.word1"/></p>
- 								<p><input type="text" class="int-text int-large radius" id="bindEmail"></p>
+ 								<p><input type="text" class="int-text int-xlarge-mail radius" id="bindEmail"></p>
  							</li>
  							<li>
  								<p class="word"><spring:message code="ycaccountcenter.bindemial.label.word2"/></p>
