@@ -168,7 +168,7 @@ public class IndexController {
      * 服务协议
      * @return
      */
-    @RequestMapping("/serviceAgree")
+    @RequestMapping("/rule")
     public String serviceAgreement(){
         return staticUrl()+"/serviceAgreement";
     }
