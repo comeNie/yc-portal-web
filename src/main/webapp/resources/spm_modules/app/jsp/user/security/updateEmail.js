@@ -154,7 +154,7 @@ define("app/jsp/user/security/updateEmail",
 							            $("#sendEmailBtn").attr("disabled", true);
 							            var _res = setInterval(function(){
 							                $("#sendEmailBtn").attr("disabled", true);//设置disabled属性
-											$('#sendEmailBtn').val(updateEmailJs.resend+step);
+											$('#sendEmailBtn').val(step+"S"+updateEmailJs.resend);
 							                step-=1;
 							                if(step <= 0){
 							                $("#sendEmailBtn").removeAttr("disabled"); //移除disabled属性
@@ -211,7 +211,7 @@ define("app/jsp/user/security/updateEmail",
 							            $("#phone-send-email-btn").attr("disabled", true);
 							            var _res = setInterval(function(){
 							                $("#phone-send-email-btn").attr("disabled", true);//设置disabled属性
-							                $('#phone-send-email-btn').val(updateEmailJs.resend+step);
+							                $('#phone-send-email-btn').val(step+"S"+updateEmailJs.resend);
 							                step-=1;
 							                if(step <= 0){
 											$("#phone-send-email-btn").attr("class", "btn border-green border-sma radius btn-medium");
@@ -271,7 +271,7 @@ define("app/jsp/user/security/updateEmail",
 									            $("#send_dynamicode_btn").attr("disabled", true);
 									            var _res = setInterval(function(){
 									                $("#send_dynamicode_btn").attr("disabled", true);//设置disabled属性
-									                $('#send_dynamicode_btn').val(updateEmailJs.resend+step);
+									                $('#send_dynamicode_btn').val(step+"S"+updateEmailJs.resend);
 									                step-=1;
 									                if(step <= 0){
 													btn.attr("class", "btn border-green border-sma radius btn-medium");
@@ -504,7 +504,7 @@ define("app/jsp/user/security/updateEmail",
 										            $("#email-sendCode-btn").attr("disabled", true);
 										            var _res = setInterval(function(){
 										                $("#email-sendCode-btn").attr("disabled", true);//设置disabled属性
-										                $('#email-sendCode-btn').val(updateEmailJs.resend+step);
+										                $('#email-sendCode-btn').val(step+"S"+updateEmailJs.resend);
 										                step-=1;
 										                if(step <= 0){
 														btn.attr("class", "btn border-green border-sma radius btn-medium");
