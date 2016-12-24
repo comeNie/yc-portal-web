@@ -407,13 +407,13 @@
 		 				</c:when>
 		 				<c:when test="${OrderDetails.state =='21' && OrderDetails.translateType!='2'}">
 		 					<!-- 已领取  翻译-->
-							<input id="trans" name="trans" class="btn btn-green btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.Translate"/>">
+							<input id="trans" name="trans" class="btn btn-green btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.btn.Translate"/>">
 							<!-- 暂无 <input id="recharge-popo" class="btn btn-yellow btn-xxxlarge radius10 ml-20" type="button" value="分配">-->
 		 				</c:when>
 		 				<c:when test="${OrderDetails.state =='23' && not empty OrderDetails.prod.translateInfo}">
 		 					<!-- 文本 翻译中  有译文-->
 		 					<!-- 提交 -->
-			 				<input id="submit" name="submit" class="btn btn-green btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.Submit"/>">
+			 				<input id="submit" name="submit" class="btn btn-green btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.btn.Submit"/>">
 							<!-- <input id="check" name="check" class="btn btn-yellow btn-xxxlarge radius10 ml-20" type="button" value="审校">-->
 		 				</c:when>
 		 				<c:when test="${OrderDetails.state =='23' && OrderDetails.translateType == '1'}">
@@ -421,14 +421,14 @@
 		 					
 		 						<c:if test="${UUploadCount < fn:length(OrderDetails.prodFiles)}">
 		 						<!-- 提交 -->
-		 						<input id="recharge-popo" name="submit" class="btn btn-green btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.Submit"/>">
+		 						<input id="recharge-popo" name="submit" class="btn btn-green btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.btn.Submit"/>">
 		 						</c:if>
 							<!--<input id="tran-popo" class="btn btn-yellow btn-xxxlarge radius10 ml-20" type="button" value="CAT翻译">-->
 		 				</c:when>
 		 				<c:when test="${OrderDetails.state =='25'}">
 		 					<!-- 修改中 -->
 		 					<!-- 提交 -->
-			 				<input name="submit" class="btn btn-green btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.Submit"/>">
+			 				<input name="submit" class="btn btn-green btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.btn.Submit"/>">
 		 				</c:when>
 		 				<c:otherwise>
 		 				<!-- 翻译中无译文 待确认  已完成 已退款 -->

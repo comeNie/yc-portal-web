@@ -426,15 +426,15 @@
 	                	<c:when test="${OrderDetails.displayFlag=='11'}">
 	                	<!-- 待支付 -->
 	                		<!-- 支付订单 -->
-	                		<input id="payOrder" type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="myOrder.Payorder"/>">
+	                		<input id="payOrder" type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="myOrder.btn.Payorder"/>">
 	                	</c:when>
                 		<c:when test="${OrderDetails.displayFlag=='13'}">
                 		<!-- 待报价 -->
-                			<input  class="btn btn-ash btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.status.tobeQuoted"/>">
+                			<input  class="btn btn-ash btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.btn.tobeQuoted"/>">
                 		</c:when>
                 		<c:when test="${OrderDetails.displayFlag=='23'}">
                 		<!-- 翻译中 -->
-                			<input class="btn btn-ash btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.status.translating"/>">
+                			<input class="btn btn-ash btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.btn.translating"/>">
                 		</c:when>
                 		<c:when test="${OrderDetails.displayFlag=='50'}">
                 		<!-- 待确认 -->
