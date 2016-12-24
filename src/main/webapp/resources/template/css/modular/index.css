@@ -26,6 +26,7 @@
 .post-cion{width: 100%;float:left;}
 .post-cion p{float:left;}
 .post-cion p a{color:#2965e6;float:left;margin-left:20px;}
+.post-cion p a:hover{color:#2361ea}
 .post-cion p i{}
 .post-cion p .radio-icon{}
 .post-cion p .radio-icon i{font-size:24px;}

@@ -13,7 +13,36 @@ $(function () {
     });	
 });
 
- 
+//切换语言1
+$(function () {
+    var st = 100;
+    $('#switch').mouseenter(function () {
+		$('#switch .switch-hover').show(1);
+		$('#switch a').children('i').addClass("icon-caret-up");
+    })
+		$("#switch .switch-hover").click(function () {
+                $(this).hide(1);
+           });	
+		$('#switch').mouseleave(function () {
+        $('#switch .switch-hover').hide(1);
+        $('#switch a').children('i').removeClass("icon-caret-up");
+    });	
+});
+ //切换语言2
+$(function () {
+    var st = 100;
+    $('#in-switch').mouseenter(function () {
+		$('.in-switch-hover').show(1);
+		$('#in-switch a').children('i').addClass("icon-caret-up");
+    })
+		$(".in-switch-hover").click(function () {
+                $(this).hide(1);
+           });
+		$('.placeorder-breadcrumb .in-switch-hover').mouseleave(function () {
+        $('.in-switch-hover').hide(1);
+        $('#in-switch a').children('i').removeClass("icon-caret-up");
+    });
+});
 //左侧菜单关闭
 $(function(){
 $(".left-tplist i").click(function () {
@@ -173,75 +202,75 @@ $(function(){
 });
 
 //设置密码
-$(function(){
-  $("#tab-icon1").click(function(){
-  $(this).hide();
-  $("#tab-icon2").show();
-  $("#tab-icon3").show();
-  $("#tab-icon5").show();
-  $("#tab-icon7").show();
-  $("#tab-icon4").hide();
-  $("#tab-icon6").hide();
-  $("#tab-icon8").hide();
-  });
-  $("#tab-icon3").click(function(){
-  $(this).hide();
-  $("#tab-icon1").show();
-  $("#tab-icon5").show();
-  $("#tab-icon7").show();
-  $("#tab-icon4").show();
-  $("#tab-icon2").hide();
-  $("#tab-icon6").hide();
-  $("#tab-icon8").hide();
-  });
-  $("#tab-icon5").click(function(){
-  $(this).hide();
-  $("#tab-icon6").show();
-  $("#tab-icon1").show();
-  $("#tab-icon3").show();
-  $("#tab-icon7").show();
-  $("#tab-icon2").hide();
-  $("#tab-icon4").hide();
-  $("#tab-icon8").hide();
-  });
-  $("#tab-icon7").click(function(){
-  $(this).hide();
-  $("#tab-icon8").show();
-  $("#tab-icon1").show();
-  $("#tab-icon3").show();
-  $("#tab-icon5").show();
-  $("#tab-icon2").hide();
-  $("#tab-icon4").hide();
-  $("#tab-icon6").hide();
-  });
-});  
-//设置密码
-$(function(){
-  $("#tab-icon13").click(function(){
-  $(this).hide();
-  $("#tab-icon14").show();
-  $("#tab-icon9").show();
-  $("#tab-icon11").show();
-  $("#tab-icon10").hide();
-  $("#tab-icon12").hide();
-  });
-  $("#tab-icon9").click(function(){
-  $(this).hide();
-  $("#tab-icon10").show();
-  $("#tab-icon11").show();
-  $("#tab-icon13").show();
-  $("#tab-icon14").hide();
-  $("#tab-icon12").hide();
-  });
-  $("#tab-icon11").click(function(){
-  $(this).hide();
-  $("#tab-icon12").show();
-  $("#tab-icon13").show();
-  $("#tab-icon9").show();
-  $("#tab-icon14").hide();
-  $("#tab-icon10").hide();
-  });
-});  
+//$(function(){
+//$("#tab-icon1").click(function(){
+//$(this).hide();
+//$("#tab-icon2").show();
+//$("#tab-icon3").show();
+//$("#tab-icon5").show();
+//$("#tab-icon7").show();
+//$("#tab-icon4").hide();
+//$("#tab-icon6").hide();
+//$("#tab-icon8").hide();
+//});
+//$("#tab-icon3").click(function(){
+//$(this).hide();
+//$("#tab-icon1").show();
+//$("#tab-icon5").show();
+//$("#tab-icon7").show();
+//$("#tab-icon4").show();
+//$("#tab-icon2").hide();
+//$("#tab-icon6").hide();
+//$("#tab-icon8").hide();
+//});
+//$("#tab-icon5").click(function(){
+//$(this).hide();
+//$("#tab-icon6").show();
+//$("#tab-icon1").show();
+//$("#tab-icon3").show();
+//$("#tab-icon7").show();
+//$("#tab-icon2").hide();
+//$("#tab-icon4").hide();
+//$("#tab-icon8").hide();
+//});
+//$("#tab-icon7").click(function(){
+//$(this).hide();
+//$("#tab-icon8").show();
+//$("#tab-icon1").show();
+//$("#tab-icon3").show();
+//$("#tab-icon5").show();
+//$("#tab-icon2").hide();
+//$("#tab-icon4").hide();
+//$("#tab-icon6").hide();
+//});
+//});  
+////设置密码
+//$(function(){
+//$("#tab-icon13").click(function(){
+//$(this).hide();
+//$("#tab-icon14").show();
+//$("#tab-icon9").show();
+//$("#tab-icon11").show();
+//$("#tab-icon10").hide();
+//$("#tab-icon12").hide();
+//});
+//$("#tab-icon9").click(function(){
+//$(this).hide();
+//$("#tab-icon10").show();
+//$("#tab-icon11").show();
+//$("#tab-icon13").show();
+//$("#tab-icon14").hide();
+//$("#tab-icon12").hide();
+//});
+//$("#tab-icon11").click(function(){
+//$(this).hide();
+//$("#tab-icon12").show();
+//$("#tab-icon13").show();
+//$("#tab-icon9").show();
+//$("#tab-icon14").hide();
+//$("#tab-icon10").hide();
+//});
+//});  
 //设置密码 table
 $(function(){
 $(".set-up a").click(function () {

@@ -466,20 +466,23 @@
 <script type="text/javascript">
 var pager;
 var current = "orderList";
+//更多 显示全文
+$("a[name='more']").click(function() {
+    if ($(this).siblings("span").css('display') ==='none') {
+        $(this).siblings("span").show();
+        $(this).html("<spring:message code="myOrder.less"/>");
+    } else {
+        $(this).siblings("span").hide();
+        $(this).html("<spring:message code="myOrder.more"/>");
+    }
+});
 (function () {
+
 	seajs.use('app/jsp/customerOrder/order', function(orderInfoPage) {
 		pager = new orderInfoPage({element : document.body});
 		pager.render();
 	});
-	
-	//更多 显示全文
-	$("a[name='more']").click(function() {
-        if ($(this).siblings("span").css('display') ==='none')
-		    $(this).siblings("span").show();
-        else
-            $(this).siblings("span").hide();
-	});
-	
+
 	//下载文件
 	 $("input[name='download']").click(function(){
 		 pager._downLoad($(this).attr('fileId'), $(this).attr('fileName'));

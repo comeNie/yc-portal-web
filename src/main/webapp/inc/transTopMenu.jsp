@@ -18,15 +18,24 @@
   		<!--导航-->
   		<div class="cloud-breadcrumb">
   			<ul>
-  				<li>
-					<select id="langHeadSel" class="select select-topmini select-bj none-select" onchange="changeLang(this);">
-						<option value="<%= Locale.SIMPLIFIED_CHINESE%>">简体中文</option>
-						<option value="<%= Locale.US%>"
-								<%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"selected":""%>
-						>ENGLISH</option>
-					</select>
-  					<i class="icon-caret-down dingw"></i>
-  				</li>
+                <li class="switch" id="switch" >
+                    <a href="javaScript:void(0);"><%= Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())? "简体中文":"English"%><i class="icon-caret-down dingw" ></i></a>
+                    <div class="switch-hover" style="display:none;">
+                        <ul>
+                            <li><a href="javaScript:void(0);" onclick="changeLang('zh_CN')">简体中文</a></li>
+                            <li class="border-none"><a href="javaScript:void(0);" onclick="changeLang('en_US')">English</a></li>
+                        </ul>
+                    </div>
+                </li>
+  				<%--<li>--%>
+					<%--<select id="langHeadSel" class="select select-topmini select-bj none-select" onchange="changeLang(this);">--%>
+						<%--<option value="<%= Locale.SIMPLIFIED_CHINESE%>">简体中文</option>--%>
+						<%--<option value="<%= Locale.US%>"--%>
+								<%--<%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"selected":""%>--%>
+						<%-->ENGLISH</option>--%>
+					<%--</select>--%>
+  					<%--<i class="icon-caret-down dingw"></i>--%>
+  				<%--</li>--%>
   				<li class="nav-icon"><a href="${_base}/findyee"><i class="icon iconfont">&#xe60b;</i></a></li>
 				<%--暂不实现，隐藏掉--%>
   				<%--<li class="nav-icon mt-2"><a href="#"><i class="icon iconfont">&#xe60a;</i><span class="message">3</span></a></li>--%>

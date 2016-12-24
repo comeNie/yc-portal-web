@@ -38,16 +38,25 @@
                 <%--手机版--%>
                 <p class="none-border"><i class="icon iconfont">&#xe60b;</i>
                     <a href="${_base}/findyee"><spring:message code="topMenue.Mobile"/></a></p>
-                <p class="none-border none-top">
-                    <select id="langHeadSel" class="select select-topmini none-select ash-select"
-                            onchange="changeLang(this);">
-                        <option value="<%= Locale.SIMPLIFIED_CHINESE%>">简体中文</option>
-                        <option value="<%= Locale.US%>"
-                                <%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"selected":""%>
-                        >ENGLISH</option>
-                    </select>
-                    <i class="icon-caret-down"></i>
+                <p class="in-switch" id="in-switch">
+                    <a href="javaScript:void(0);"><%= Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())? "简体中文":"English"%><i class="icon-caret-down"></i></a>
                 </p>
+                <div class="in-switch-hover" style="display: none;">
+                    <ul>
+                        <li><a href="javaScript:void(0);" onclick="changeLang('zh_CN')">简体中文</a></li>
+                        <li class="border-none"><a href="javaScript:void(0);" onclick="changeLang('en_US')">English</a></li>
+                    </ul>
+                </div>
+                <%--<p class="none-border none-top">--%>
+                    <%--<select id="langHeadSel" class="select select-topmini none-select ash-select"--%>
+                            <%--onchange="changeLang(this);">--%>
+                        <%--<option value="<%= Locale.SIMPLIFIED_CHINESE%>">简体中文</option>--%>
+                        <%--<option value="<%= Locale.US%>"--%>
+                                <%--<%= !Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())?"selected":""%>--%>
+                        <%-->ENGLISH</option>--%>
+                    <%--</select>--%>
+                    <%--<i class="icon-caret-down"></i>--%>
+                <%--</p>--%>
             </li>
         </ul>
     </div>

@@ -1,5 +1,6 @@
 function changeLang(localeEl){
-    var toLang = localeEl.value;
+    // var toLang = localeEl.value;
+    var toLang = localeEl;
     if (window.console){
         console.log("the new lange is "+toLang);
     }
