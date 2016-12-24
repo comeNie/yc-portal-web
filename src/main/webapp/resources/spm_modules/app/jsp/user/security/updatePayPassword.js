@@ -258,7 +258,7 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 						var step = 59;
 						sendEmailBtn.val(updatePayPasswordMsg.resend60);
 			            var _res = setInterval(function(){
-			            	sendEmailBtn.val(updatePayPasswordMsg.resend+step);
+			            	sendEmailBtn.val(step+"S"+updatePayPasswordMsg.resend);
 			                step-=1;
 			                if(step <= 0){
 								sendEmailBtn.attr("class", "btn border-green border-sma radius btn-medium");
@@ -307,7 +307,7 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 								var step = 59;
 								btn.val(updatePayPasswordMsg.resend60);
 					            var _res = setInterval(function(){
-					                btn.val(updatePayPasswordMsg.resend+step);
+					                btn.val(step+"S"+updatePayPasswordMsg.resend);
 					                step-=1;
 					                if(step <= 0){
 										btn.attr("class", "btn border-green border-sma radius btn-medium");

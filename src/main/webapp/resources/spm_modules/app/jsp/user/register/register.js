@@ -451,7 +451,7 @@ define(
 										"biu-btn").addClass("btn-green");
 							} else {
 								curCount = curCount - 1;
-								$("#send_dynamicode_btn").val(registerMsg.resend+curCount);
+								$("#send_dynamicode_btn").val(curCount+"S"+registerMsg.resend);
 							}
 						}
 					});

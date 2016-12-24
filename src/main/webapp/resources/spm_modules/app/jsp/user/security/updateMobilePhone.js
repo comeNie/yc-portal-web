@@ -470,7 +470,7 @@ define("app/jsp/user/security/updateMobilePhone",
 													var step = 59;
 													_emailUpDynamicodeBtn.val(updatePhoneJs.resend60);
 										            var _res = setInterval(function(){
-										                _emailUpDynamicodeBtn.val(step + ' s');
+										                _emailUpDynamicodeBtn.val(step+"S"+updatePhoneJs.resend);
 										                step-=1;
 										                if(step <= 0){
 										                _emailUpDynamicodeBtn.removeAttr("disabled"); //移除disabled属性
