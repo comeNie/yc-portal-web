@@ -477,7 +477,15 @@ opacity:0;filter:alpha(opacity=0); -moz-opacity:0; -khtml-opacity:0;}
 .renz-list{width:100%;float:left;text-align:center;margin-top:40px;font-size:14px;color:#6a6c6f;}
 .renz-list a{color:#2361ea;font-size:14px;}
 /**404**/
-.fourhundred{width:100%;margin:0 auto;text-align: center;}
+.four-bj{background:#f0f2f5;}
+.fourhundred{width:580px;margin:0 auto;text-align: center;}
+.four-img{width:100%;float:left;height:250px;margin-top:56px;}
+.four-word{width:100%;float:left;text-align:center;font-size:16px;color:#2c3e50;margin-top:18px;}
+.four-btn-img{width:100%;float:left;height:310px;background: url(../../images/404_02.png) no-repeat;margin-top:18px;}
+
+
+
+
 /****/
 .limit-height{height:250px;}
 /**下单指南**/
