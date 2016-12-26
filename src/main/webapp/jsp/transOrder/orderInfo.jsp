@@ -216,7 +216,7 @@
 		 			<!--第一列信息-->
 		 			<div class="info-list info-title">
 	  					<!-- 订单金额  -->
-	  					<span><spring:message code="myOrder.OrderAmount"/>:</span>
+	  					<span><spring:message code="myOrder.OrderAmount"/>：</span>
 						<ul>
 							<li>
 							<p>
@@ -227,7 +227,7 @@
 						</ul>
 						<c:if test="${OrderDetails.translateType != '2'}">
 						<!-- 非口译显示 -->
-							<span><spring:message code="myOrder.Words"/></span>
+							<span><spring:message code="myOrder.Words"/>：</span>
 							<ul>
 								<li>
 									<p><spring:message
@@ -235,7 +235,7 @@
 								</li>
 							</ul>
 							<!-- 预计交稿 -->
-							<span><spring:message code="myOrder.ExpectedSubmTime"/>:</span>
+							<span><spring:message code="myOrder.ExpectedSubmTime"/>：</span>
 							<ul>
 								<li>
 									<p><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${OrderDetails.stateChgTime}"/></p>
@@ -250,17 +250,17 @@
 			  			<ul>
 			  				<li>
 		  						<!-- 订单号 -->
-			  					<p class="word"><spring:message code="myOrder.Ordernumber"/>:</p>
+			  					<p class="word"><spring:message code="myOrder.Ordernumber"/>：</p>
 			  					<p>${OrderDetails.orderId}</p>
 			  				</li>
 			  				<li>
 			  					<!-- 翻译主题 -->
-			  					<p class="word"><spring:message code="myOrder.SubjectTrante"/>:</p>
+			  					<p class="word"><spring:message code="myOrder.SubjectTrante"/>：</p>
 	                            <p>${OrderDetails.translateName}</p>
 			  				</li>
 			  				<li>
 			  					<!-- 翻译语言 -->
-	                             <p class="word"><spring:message code="myOrder.Language"/>:</p>
+	                             <p class="word"><spring:message code="myOrder.Language"/>：</p>
 	                             <p>
 	                             	<c:forEach items="${OrderDetails.prodExtends}" var="prodExtends">
 		                             	<c:choose>
@@ -272,7 +272,7 @@
 			  				</li>
 			  				<li>
 			  					<!-- 翻译级别 -->
-	                            <p class="word"><spring:message code="myOrder.Trantegrade"/>:</p>
+	                            <p class="word"><spring:message code="myOrder.Trantegrade"/>：</p>
 	                            <p>
 	                            	<!-- 依次是 标准级  专业级  出版级-->
 	                            	<c:forEach items="${OrderDetails.prodLevels}" var="prodLevels">
@@ -291,7 +291,7 @@
 			  					<!-- 文本、文档 类订单信息 -->
 				  				<li>
 				  					<!-- 用途 -->
-		                            <p class="word"><spring:message code="myOrder.Purpose"/>:</p>
+		                            <p class="word"><spring:message code="myOrder.Purpose"/>：</p>
 		                            <p>
 			                            <c:choose>
 											<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${OrderDetails.prod.useCn}</c:when>
@@ -301,7 +301,7 @@
 				  				</li>
 				  				<li>
 			  						<!-- 领域-->
-		                             <p class="word"><spring:message code="myOrder.Field"/>:</p>
+		                             <p class="word"><spring:message code="myOrder.Field"/>：</p>
 		                             <p>
 		                             	<c:choose>
 											<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${OrderDetails.prod.fieldCn}</c:when>
@@ -316,14 +316,14 @@
 				  				<%--</li>--%>
 				  				<li>
 				  					<!-- 预计翻译耗时 -->
-		                            <p class="word"><spring:message code="myOrder.Estimatedtime"/>:</p>
+		                            <p class="word"><spring:message code="myOrder.Estimatedtime"/>：</p>
 		                            <p><spring:message
 		                                code="myOrder.tranteNeedTime" arguments="${OrderDetails.prod.takeDay},${OrderDetails.prod.takeTime}"/></p>
 		                 
 				  				</li>
 				  				<li>
 				  					<!-- 其他  -->
-		                            <p class="word"><spring:message code="myOrder.Others"/>:</p>
+		                            <p class="word"><spring:message code="myOrder.Others"/>：</p>
 		                            <!-- 加急;需要排版 -->
 		                            <p><c:if test="${OrderDetails.prod.isUrgent == '1'}">
 		                            	<spring:message code="myOrder.Urgent"/>;
@@ -342,37 +342,37 @@
 			  					<!-- 口译类信息 -->
 			  					<li>
 	                             	<!-- 会议开始时间 -->
-	                                <p class="word"><spring:message code="myOrder.meetStartTime"/>:</p>
+	                                <p class="word"><spring:message code="myOrder.meetStartTime"/>：</p>
 	                                <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${OrderDetails.prod.stateTime}"/> </p>
                            		</li>
                            		<li>
 	                            	<!-- 会议结束时间-->
-	                                <p class="word"><spring:message code="myOrder.meetEndTime"/>:</p>
+	                                <p class="word"><spring:message code="myOrder.meetEndTime"/>：</p>
 	                                <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${OrderDetails.prod.endTime}"/> </p>
                            		</li>
                            		<%--<li>--%>
 	                            	<%--<!-- 创建时间-->--%>
-	                                <%--<p class="word"><spring:message code="myOrder.Creationtime"/>:</p>--%>
+	                                <%--<p class="word"><spring:message code="myOrder.Creationtime"/>：</p>--%>
 	                                <%--<p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${OrderDetails.orderTime}"/> </p>--%>
                            		<%--</li>--%>
 	                            <li>
 	                            	<!-- 译员数量 -->
-	                                <p class="word"><spring:message code="myOrder.interpreterNum"/>:</p>
+	                                <p class="word"><spring:message code="myOrder.interpreterNum"/>：</p>
 	                                <p>${OrderDetails.prod.interperSum}</p>
 	                            </li>
 	                             <li>
 	                            	<!-- 会议地点 -->
-	                                <p class="word"><spring:message code="myOrder.place"/>:</p>
+	                                <p class="word"><spring:message code="myOrder.place"/>：</p>
 	                              	<p>${OrderDetails.prod.meetingAddress}</p>
 	                            </li>
 	                              <li>
 	                            	<!-- 会场数量 -->
-	                                <p class="word"><spring:message code="myOrder.venueNum"/>:</p>
+	                                <p class="word"><spring:message code="myOrder.venueNum"/>：</p>
 	                                <p>${OrderDetails.prod.meetingSum}</p>
 	                            </li>
 	                             <li>
 	                            	<!-- 译员性别 -->
-	                                <p class="word"><spring:message code="myOrder.Gender"/>:</p>
+	                                <p class="word"><spring:message code="myOrder.Gender"/>：</p>
 	                                <p>
 										<c:choose>
 											<c:when test="${OrderDetails.prod.interperGen == 0}">
@@ -391,7 +391,7 @@
 			  				
 			  				<li class="width-large">
 			  					<!-- 需求备注 -->
-	                            <p class="word"><spring:message code="myOrder.Demandnotes"/>:</p>
+	                            <p class="word"><spring:message code="myOrder.Demandnotes"/>：</p>
 	                            <p class="p-large">${OrderDetails.remark}</p>
 			  				</li>
 			  			</ul>
