@@ -142,13 +142,7 @@ public class BalanceController {
 
     //充值页面
     @RequestMapping("/depositFund")
-    public String toDepositFund(Model uiModel, IncomeQueryRequest incomeQueryRequest){
-        GeneralSSOClientUser ssoUser = UserUtil.getSsoUser();
-        if (ssoUser ==null){
-            LOGGER.error("用户名查询失败!");
-        }
-        String loginName = ssoUser.getLoginName();
-        uiModel.addAttribute("loginName",loginName);
+    public String toDepositFund(){
         return "balance/depositFund";
     }
 
