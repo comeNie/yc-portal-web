@@ -305,6 +305,7 @@
 						<li class="width-large">
 							<p class="word"><spring:message code="order.formatConv"/></p>
 							<p>
+								<%--是否进行格式转换--%>
 								<select id="selectFormatConv" class="select select-medium radius" >
 									<option value="1"><spring:message code="order.formatConv"/></option>
 									<option value="2" selected="selected"><spring:message code="order.noFormatConv"/></option>
