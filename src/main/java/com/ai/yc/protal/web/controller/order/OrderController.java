@@ -140,7 +140,7 @@ public class OrderController {
             }
 
             //订单设置费用信息
-            if (offerRes.getPrice() != null) {
+            if (!offerRes.getPrice().equals(null)) {
                 feeInfo.setTotalFee(offerRes.getPrice().longValue());
             } else {
                 resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE,"FAIL");

@@ -92,10 +92,11 @@ public class HttpUtil {
         StringBuffer param = new StringBuffer();
         int i = 0;
         for (String key : params.keySet()) {
-            if (i == 0)
+            if (i == 0) {
                 param.append("?");
-            else
+            } else {
                 param.append("&");
+            }
             param.append(key).append("=").append(params.get(key));
             i++;
         }
@@ -106,7 +107,7 @@ public class HttpUtil {
             HttpResponse response = httpClient.execute(httpPost);
             int statusCode = response.getStatusLine().getStatusCode();
 
-            System.out.println("执行状态码 : " + statusCode);
+            LOGGER.info("执行状态码 : " + statusCode);
 
             HttpEntity entity = response.getEntity();
             if (entity != null) {
@@ -158,8 +159,9 @@ public class HttpUtil {
             LOGGER.info("结束httpClient,当前时间戳:{},用时:{}",httpEnd,(httpEnd-httpStart));
             int statusCode = response.getStatusLine().getStatusCode();
             LOGGER.info("http status:{},\r\nHttp responst:{}",statusCode,response.toString());
-            if (statusCode!=200)
+            if (statusCode!=200) {
                 throw new HttpStatusException("the http status code:"+statusCode);
+            }
             HttpEntity entity = response.getEntity();
             httpStr = EntityUtils.toString(entity, "UTF-8");
             LOGGER.debug("Http responst entiey:{}",httpStr);
@@ -200,7 +202,7 @@ public class HttpUtil {
             httpPost.setEntity(stringEntity);
             response = httpClient.execute(httpPost);
             HttpEntity entity = response.getEntity();
-            System.out.println(response.getStatusLine().getStatusCode());
+            LOGGER.info(response.getStatusLine().getStatusCode() + "");
             httpStr = EntityUtils.toString(entity, "UTF-8");
         } catch (IOException e) {
             LOGGER.error("The post is error.",e);
@@ -237,7 +239,7 @@ public class HttpUtil {
             httpPost.setEntity(stringEntity);
             response = httpClient.execute(httpPost);
             HttpEntity entity = response.getEntity();
-            System.out.println(response.getStatusLine().getStatusCode());
+            LOGGER.info(response.getStatusLine().getStatusCode() + "");
             httpStr = EntityUtils.toString(entity, "UTF-8");
         } catch (IOException e) {
             LOGGER.error("The port is error.",e);

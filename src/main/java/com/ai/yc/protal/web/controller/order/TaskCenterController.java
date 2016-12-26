@@ -129,8 +129,9 @@ public class TaskCenterController {
             //订单状态 固定为待领取
             orderReq.setState(OrderConstants.State.UN_RECEIVE);
             //若没有页面,则使用第1页为默认
-            if (orderReq.getPageNo()==null || orderReq.getPageNo()<1)
+            if (orderReq.getPageNo()==null || orderReq.getPageNo()<1) {
                 orderReq.setPageNo(1);
+            }
             //获取当前用户所处时区
             TimeZone timeZone = TimeZone.getTimeZone(ZoneContextHolder.getZone());
             //添加下单开始时间

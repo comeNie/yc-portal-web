@@ -197,9 +197,10 @@ public class PayController {
         //如果成功,跳转到支付成功页面
         if (PayNotify.PAY_STATES_SUCCESS.equals(payNotify.getPayStates())){
             return "balance/depositResultSuccess";
-        }
-        else
+        } else {
             return "balance/depositResultFailed";
+        }
+
     }
     /**
      * 验证签名是否正常
