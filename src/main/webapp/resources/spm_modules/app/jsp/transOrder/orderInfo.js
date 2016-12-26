@@ -172,7 +172,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 
     	//保存译文
     	_textSave:function() {
-			if ($("#transTextArea").val() == '') {
+			if ($.trim($("#transTextArea").val()) == '') {
 				this._showWarn($.i18n.prop('order.save.reason.transNull'));
 				return
 			}
