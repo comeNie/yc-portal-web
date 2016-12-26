@@ -101,7 +101,6 @@ define("app/jsp/user/security/bindEmail",
 							    if(!this._checkEmail()){
 							    	return;
 							    }
-								$("#email-sendCode-btn").attr("class", "btn biu-btn radius btn-medium");
 								var _this = this;
 								var btn = $("#email-sendCode-btn");
 								if (btn.hasClass("biu-btn")) {
@@ -130,6 +129,7 @@ define("app/jsp/user/security/bindEmail",
 												if(data.data){
 													var step = 59;
 													$("#dynamicodeErrMsg").hide();
+													$("#email-sendCode-btn").attr("class", "btn biu-btn radius btn-medium");
 										            $('#email-sendCode-btn').val(emailBindMsg.resend60);
 										            $("#email-sendCode-btn").attr("disabled", true);
 										            var _res = setInterval(function(){
