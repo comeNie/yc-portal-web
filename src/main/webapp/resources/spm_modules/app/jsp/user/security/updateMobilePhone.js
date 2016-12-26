@@ -116,8 +116,8 @@ define("app/jsp/user/security/updateMobilePhone",
 											html.push('<option country_value="'+t.countryValue+'" reg="'
 													+ t.regularExpression
 													+ '" value="' + _code
-													+ '" >' + _code + '+'
-													+ name + '</option>');
+													+ '" >' + name + '+'
+													+ _code + '</option>');
 										}
 										$("#country").html(html.join(""));
 										$("#country2").html(html.join(""));
@@ -156,7 +156,7 @@ define("app/jsp/user/security/updateMobilePhone",
 										var step = 59;
 										_sendEmailBtn.val(updatePhoneJs.resend60);
 							            var _res = setInterval(function(){
-							            	_sendEmailBtn.val(updatePhoneJs.resend+step);
+							            	_sendEmailBtn.val(step+"S"+updatePhoneJs.resend);
 							                step-=1;
 							                if(step < 0){
 							                _sendEmailBtn.removeAttr("disabled"); //移除disabled属性
@@ -205,7 +205,7 @@ define("app/jsp/user/security/updateMobilePhone",
 													var step = 59;
 													_dynamicode_btn.val(updatePhoneJs.resend60);
 										            var _res = setInterval(function(){
-										            	_dynamicode_btn.val(step + ' s');
+										            	_dynamicode_btn.val(step+"S"+updatePhoneJs.resend);
 										                step-=1;
 										                if(step < 0){
 														_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
@@ -254,7 +254,7 @@ define("app/jsp/user/security/updateMobilePhone",
 												var step = 59;
 												_dynamicode_btn.val(updatePhoneJs.resend60);
 									            var _res = setInterval(function(){
-									            	_dynamicode_btn.val(step + ' s');
+									            	_dynamicode_btn.val(step+"S"+updatePhoneJs.resend);
 									                step-=1;
 									                if(step < 0){
 									                _dynamicode_btn.removeAttr("disabled"); //移除disabled属性

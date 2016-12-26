@@ -220,7 +220,7 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 			baseInfo.busiType = 1;
 
 			baseInfo.translateType = "2"; //2：口译翻译"
-			baseInfo.translateName = $("#transSubject").val();
+			baseInfo.translateName = $.trim($("#transSubject").val());
 			baseInfo.orderLevel = "1"; //??
 			baseInfo.subFlag = "1"; // "0：系统自动报价 1：人工报价"
 			baseInfo.userType = "10"; //"10：个人 11：企业 12：代理人 "??

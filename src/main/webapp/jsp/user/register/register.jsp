@@ -62,8 +62,8 @@
 									<spring:message code="ycregister.email" />
 								</p>
 								<p>
-									<input id="email" maxlength="100" name="email" type="text"
-										class="int-text int-in-big radius">
+									<input id="email" maxlength="64" name="email" type="text"
+										class="int-text int-in-big radius" placeholder="<spring:message code="ycregister.register.email.tip" />">
 								</p>
 							</li>
 							<li>

@@ -116,7 +116,7 @@
   						<p class="word"><spring:message code="interpreter.email" /></p>
   						<p  class="rightword">${user_session_key.email}</p>
   						<p>
-  						 <c:if test="${user_session_key.email!=null}">
+  						 <c:if test="${user_session_key.email!=null&&user_session_key.email!=''}">
   						  <a href="${_base}/p/security/seccenter?source=${source}"><spring:message code="interpreter.update" /></a>
   						 </c:if>
   						 <c:if test="${user_session_key.email==null||user_session_key.email==''}">

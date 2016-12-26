@@ -105,8 +105,8 @@ define("app/jsp/user/password/password",
 											html.push('<option reg="'
 													+ t.regularExpression
 													+ '" value="' + _code
-													+ '" >' + _code + '+'
-													+ name + '</option>');
+													+ '" >' + name + '+'
+													+ _code + '</option>');
 										}
 										$("#country").html(html.join(""));
 									}
