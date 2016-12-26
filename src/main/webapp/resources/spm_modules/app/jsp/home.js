@@ -163,7 +163,19 @@ define('app/jsp/home', function (require, exports, module) {
 			var _this = this;
 			var from = $(".dropdown .selected").eq(0).attr("value");
 
-			if ($.trim($("#int-before").val()) != '') {
+			var key =  $.trim($("#int-before").val());
+			if (key) {
+				var key_le = key.length;
+				if(key_le > 1000){
+					//如果元素区字符数大于最大字符数，按照最大字符数截断；
+					key = key.substring(0, 1000);
+					//$("#text").val(key);
+					// document.getElementById('positionDescLen').innerHTML=0;
+				}else{
+					//在记数区文本框内显示剩余的字符数；
+					console.log(1000 - key_le);
+					// document.getElementById('positionDescLen').innerHTML=1000 - key_le;
+				}
 				//语言检测
 				ajaxController.ajax({
 					type: "post",
