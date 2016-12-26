@@ -88,7 +88,9 @@ define("app/jsp/user/security/bindEmail",
 								},
 								success : function(json) {
 									if (!json.data) {
-										showMsg(json.statusInfo);
+										$("#emailUErrMsg").show();
+										$("#emailUErrMsg").text(json.statusInfo);
+										//showMsg(json.statusInfo);
 									}
 								}
 							});

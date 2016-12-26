@@ -312,8 +312,7 @@
 								</select>
 							</p>
 							<p class="ml-20"  id="inputFormatConvP" style="display: none;">
-								<%--要转换的格式--%>
-								<input id="inputFormatConv" name="inputFormatConv" maxlength="15" type="text" class="int-text int-in-bi-text radius" placeholder="<spring:message code="order.formatInfo"/>">
+								<input id="inputFormatConv" name="inputFormatConv" maxlength="20" type="text" class="int-text int-in-bi-text radius" placeholder="<spring:message code="order.formatInfo"/>">
 							</p>
 						</li>
 					</ul>

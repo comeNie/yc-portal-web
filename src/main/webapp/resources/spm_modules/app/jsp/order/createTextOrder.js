@@ -633,7 +633,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     //初始化上传控件
 		_initUpdate:function () {
 			var _this= this;
-            var FILE_TYPES=['rar','zip','doc','docx','txt','pdf','jpg','png','gif'];
+            var FILE_TYPES=['rar','doc','docx','txt','pdf','jpg','png','gif'];
             uploader = WebUploader.create({
                 swf : _base+"/resources/spm_modules/webuploader/Uploader.swf",
                 server: _base+'/order/uploadFile',
@@ -642,7 +642,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 dnd: '#fy2', //拖拽
                 accept: {
                     title: 'intoTypes',
-                    extensions: 'rar,zip,doc,docx,txt,pdf,jpg,png,gif',
+                    extensions: 'rar,doc,docx,txt,pdf,jpg,png,gif',
                     // mimeTypes: 'application/zip,application/msword,application/pdf,image/jpeg,image/png,image/gif'
                 },
                 resize : false,

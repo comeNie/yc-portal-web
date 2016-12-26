@@ -402,6 +402,12 @@
 </div>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
+<script type="text/javascript" src="${uedroot}/scripts/modular/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="${uedroot}/scripts/modular/drop-down.js"></script>
+<script type="text/javascript" src="${uedroot}/scripts/modular/index.js"></script>
+<script type="text/javascript" src="${uedroot}/scripts/modular/digital-scroll.js"></script>
+<script type="text/javascript" src="${spmRes}/jquery-zclip-master/jquery.zclip.js"></script>
+<script type="text/javascript" src="${spmRes}/app/jsp/index.js"></script>
 <script type="text/javascript">
     (function () {
         <%-- 笔译下单 --%>
@@ -416,12 +422,15 @@
             pager.render();
         });
 
-
+        $("#sus-top1").zclip({
+            path:"${base}/resources/spm_modules/jquery-zclip-master/ZeroClipboard.swf",
+            copy:function(){
+                return $('#transRes').val();
+            },
+            afterCopy:function () {
+            }
+        });
     })();
 </script>
-<script type="text/javascript" src="${uedroot}/scripts/modular/drop-down.js"></script>
-<script type="text/javascript" src="${uedroot}/scripts/modular/index.js"></script>
-<script type="text/javascript" src="${uedroot}/scripts/modular/digital-scroll.js"></script>
-<script type="text/javascript" src="${spmRes}/app/jsp/index.js"></script>
 
 </html>

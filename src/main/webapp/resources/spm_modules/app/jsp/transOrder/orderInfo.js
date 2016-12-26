@@ -56,7 +56,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
             }
 
 			var _this= this;
-			var FILE_TYPES=['rar','zip','doc','docx','txt','pdf','jpg','png','gif'];
+			var FILE_TYPES=['rar','doc','docx','txt','pdf','jpg','png','gif'];
 			uploader = WebUploader.create({
 				swf : _base+"/resources/spm_modules/webuploader/Uploader.swf",
 				server: _base+'/p/trans/order/upload',
@@ -64,7 +64,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				pick : "#selectFile",
 				accept: {
 					title: 'intoTypes',
-					extensions: 'rar,zip,doc,docx,txt,pdf,jpg,png,gif',
+					extensions: 'rar,doc,docx,txt,pdf,jpg,png,gif',
 					// mimeTypes: 'application/zip,application/msword,application/pdf,image/jpeg,image/png,image/gif'
 				},
                 formData: {
