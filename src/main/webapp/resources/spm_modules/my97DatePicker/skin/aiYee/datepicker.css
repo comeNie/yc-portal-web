@@ -148,6 +148,7 @@
 }
 
 .WdateDiv .WdayTable{
+	padding-bottom: 10px;
 	line-height:30px;
 	background:#fff;
 	border-radius:0 0 5px 5px;
@@ -155,7 +156,7 @@
 }
 .WdateDiv .WdayTable td{
 	text-align:center;
-	width:32px;height:38px;
+	/*width:32px;height:38px;*/
 	
 }/**改**/
 
@@ -188,7 +189,7 @@
 .WdateDiv .Wtoday{
 	cursor:pointer;
 	color:blue;
-	width:32px;height:34px;
+	width:32px;height:30px;
 }
 .WdateDiv .Wselday{
 	background-color:#2361ea;
@@ -202,7 +203,7 @@
 
 .WdateDiv .WotherDay{ 
 	cursor:pointer;
-	color:#6A6AFF;	
+	color:#999;
 }
 
 .WdateDiv .WotherDayOn{ 
@@ -280,7 +281,10 @@
 .WdateDiv .dpButton{ 
 	height:20px;
 	width:45px;
-	border:#ccc 1px solid;
+	border:none;
+	background: #2361ea;
+	color: #fff;
+	font-size: 12px;
 	margin-top:2px;
 	margin-right:1px;
 }
