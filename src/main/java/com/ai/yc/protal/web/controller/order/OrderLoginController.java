@@ -106,7 +106,7 @@ public class OrderLoginController {
         try {
             IOrderSubmissionSV orderSubmissionSV = DubboConsumerFactory.getService(IOrderSubmissionSV.class);
             OrderSubmissionRequest subReq;
-            if (transType.equals("2")) {
+            if ("2".equals(transType)) {
                 subReq  = (OrderSubmissionRequest) session.getAttribute("oralOrderInfo");
             } else {
                 subReq  = (OrderSubmissionRequest) session.getAttribute("writeOrderInfo");

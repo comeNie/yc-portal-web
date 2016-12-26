@@ -158,7 +158,7 @@ define("app/jsp/user/security/updateMobilePhone",
 							            var _res = setInterval(function(){
 							            	_sendEmailBtn.val(updatePhoneJs.resend+step);
 							                step-=1;
-							                if(step <= 0){
+							                if(step < 0){
 							                _sendEmailBtn.removeAttr("disabled"); //移除disabled属性
 											_sendEmailBtn.attr("class", "btn border-green border-sma radius btn-medium");
 							                $('#sendEmailBtn').val(updatePhoneJs.getOperationCode);
@@ -207,7 +207,7 @@ define("app/jsp/user/security/updateMobilePhone",
 										            var _res = setInterval(function(){
 										            	_dynamicode_btn.val(step + ' s');
 										                step-=1;
-										                if(step <= 0){
+										                if(step < 0){
 														_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
 														_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
 										                _dynamicode_btn.val(updatePhoneJs.getOperationCode);
@@ -256,7 +256,7 @@ define("app/jsp/user/security/updateMobilePhone",
 									            var _res = setInterval(function(){
 									            	_dynamicode_btn.val(step + ' s');
 									                step-=1;
-									                if(step <= 0){
+									                if(step < 0){
 									                _dynamicode_btn.removeAttr("disabled"); //移除disabled属性
 													_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
 									                _dynamicode_btn.val(updatePhoneJs.getOperationCode);
@@ -472,7 +472,7 @@ define("app/jsp/user/security/updateMobilePhone",
 										            var _res = setInterval(function(){
 										                _emailUpDynamicodeBtn.val(step+"S"+updatePhoneJs.resend);
 										                step-=1;
-										                if(step <= 0){
+										                if(step < 0){
 										                _emailUpDynamicodeBtn.removeAttr("disabled"); //移除disabled属性
 														_emailUpDynamicodeBtn.attr("class", "btn border-green border-sma radius btn-medium");
 										                _emailUpDynamicodeBtn.val(updatePhoneJs.inputOperationCode);

@@ -140,8 +140,9 @@ public class ConfigUtil {
 		LOGGER.debug("Fetching property [" + key + "=" + mConfig.getProperty(key)
 				+ ",defaultValue=" + defaultValue + "]");
 		String value = mConfig.getProperty(key);
-		if (value == null)
+		if (value == null) {
 			return defaultValue;
+		}
 
 		return value;
 	}
@@ -161,8 +162,9 @@ public class ConfigUtil {
 		// get the value first, then convert
 		String value = getProperty(name);
 
-		if (value == null)
+		if (value == null){
 			return defaultValue;
+		}
 
 		return (Boolean.valueOf(value));
 	}
@@ -181,8 +183,9 @@ public class ConfigUtil {
 		// get the value first, then convert
 		String value = ConfigUtil.getProperty(name);
 
-		if (value == null)
+		if (value == null) {
 			return defaultValue;
+		}
 
 		return (new Integer(value)).intValue();
 	}

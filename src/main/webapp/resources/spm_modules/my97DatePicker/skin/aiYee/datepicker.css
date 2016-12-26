@@ -5,7 +5,7 @@
 .WdateDiv{
 	width:262px;
 	background-color:#fff;
-	-webkit-box-shadow: #77b8fc 0px 0px 6px;-moz-box-shadow: #77b8fc 0px 0px 6px;box-shadow: #77b8fc 0px 0px 6px;
+	-webkit-box-shadow:1px 1px 6px #77b8fc ;-moz-box-shadow: #77b8fc 0px 0px 6px;box-shadow: #77b8fc 0px 0px 6px;
 	padding:2px;
 	z-index: 999;
 }/**改动**/

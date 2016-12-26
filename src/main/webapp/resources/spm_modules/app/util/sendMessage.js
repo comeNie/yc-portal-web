@@ -34,7 +34,7 @@ define('app/util/sendMessage', function (require, exports, module) {
                      $("#PHONE_IDENTIFY").attr("disabled", true);//设置disabled属性
                      $('#PHONE_IDENTIFY').val('重新发送'+step);
                      step-=1;
-                     if(step <= 0){
+                     if(step < 0){
 	                     $("#PHONE_IDENTIFY").removeAttr("disabled"); //移除disabled属性
 	                     $('#PHONE_IDENTIFY').val('获取验证码');
 	                     clearInterval(_res);//清除setInterval

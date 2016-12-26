@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ai.opt.sdk.web.model.ResponseData;
 
+import java.io.UnsupportedEncodingException;
+
 
 /**
  * 译库机器翻译
@@ -66,7 +68,7 @@ public class YeekitController {
         try {
             lan = yeekitService.detection(text);
             resData.setData(lan);
-        } catch (Exception e) {
+        } catch (UnsupportedEncodingException e) {
             LOGGER.error("",e.getMessage());
             resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "FAIL");
         }
