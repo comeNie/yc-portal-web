@@ -3,8 +3,6 @@ define('app/jsp/home', function (require, exports, module) {
     var $=require('jquery'),
         Widget = require('arale-widget/1.2.0/widget'),
         AjaxController = require('opt-ajax/1.0.0/index');
-    require("jsviews/jsrender.min");
-	require("zeroclipboard/ZeroClipboard");
     require("audio/audio.min");
     require("jquery-validation/1.15.1/jquery.validate");
     require("app/util/aiopt-validate-ext");
@@ -15,7 +13,7 @@ define('app/jsp/home', function (require, exports, module) {
     var ajaxController = new AjaxController();
     var languageaudio;
 	var sourYiWen="";
-	// var clip;
+	var clip;
 	var homePage = Widget.extend({
         //属性，使用时由类的构造函数传入
         attrs: {
@@ -48,34 +46,7 @@ define('app/jsp/home', function (require, exports, module) {
 				language: currentLan,
 			});
 
-            this._initPage();
-
-			// 定义一个新的复制对象
-            // ZeroClipboard.config( { swfPath: _base+"/resources/spm_modules/zeroclipboard/ZeroClipboard.swf" });
-			// var  clip = new ZeroClipboard( document.getElementById("sus-top1"));
-            //
-			// // 复制内容到剪贴板成功后的操作
-			// clip.on('copy', function (event) {
-			// 	event.clipboardData.setData('text/plain', $('#transRes').val());
-			// });
-            //
-			// clip.on( 'complete', function(client, args) {
-			// });
-
-            ZeroClipboard.setMoviePath(_base+"/resources/spm_modules/zeroclipboard/ZeroClipboard.swf");
-
-            var clip = new ZeroClipboard.Client();
-
-            clip.setHandCursor( true );
-            clip.setCSSEffects( true );
-
-            clip.addEventListener('mouseDown', function(client){
-                clip.setText( $('#transRes').val() );
-            });
-            clip.addEventListener('complete', function(){
-                // alert('复制成功');
-            });
-            clip.glue( 'sus-top1' );
+			this._initPage();
 
             audiojs.events.ready(function() {
                 languageaudio = audiojs.createAll();
