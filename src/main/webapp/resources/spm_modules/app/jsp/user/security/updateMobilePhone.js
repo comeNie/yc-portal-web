@@ -254,7 +254,7 @@ define("app/jsp/user/security/updateMobilePhone",
 												var step = 59;
 												_dynamicode_btn.val(updatePhoneJs.resend60);
 									            var _res = setInterval(function(){
-									            	_dynamicode_btn.val(step + ' s');
+									            	_dynamicode_btn.val(step+"S"+updatePhoneJs.resend);
 									                step-=1;
 									                if(step < 0){
 									                _dynamicode_btn.removeAttr("disabled"); //移除disabled属性
