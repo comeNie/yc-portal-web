@@ -125,7 +125,7 @@ define("app/jsp/user/security/bindPhone",
 									            var _res = setInterval(function(){
 									            	_dynamicode_btn.val(step+"S"+phoneBindMsg.resend);
 									                step-=1;
-									                if(step <= 0){
+									                if(step < 0){
 									                _dynamicode_btn.removeAttr("disabled"); //移除disabled属性
 													_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
 									                _dynamicode_btn.val(phoneBindMsg.inputOperationCode);
