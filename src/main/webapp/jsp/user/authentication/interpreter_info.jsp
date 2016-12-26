@@ -67,10 +67,10 @@
   						</c:if>
   						<c:if test="${interpreterInfo.isChange!='1'}">
   						<input  maxlength="16" type="text" class="int-text int-xlarge radius" id="userName"  name="userName" value="${user_session_key.username}"/>
-  						<label id="userName-error" class="error" for="userName"></label>
+  						 <label id="userNameErrMsg"><spring:message code="interpreter.userName.allows.modify.once"/></label>
+  						 <label id="userName-error" class="error" for="userName"></label>
   						</c:if>
   						</p>
-  					   <!-- <label id="userNameErrMsg" style="display: none;"></label> -->
   					</li>
   					<li>
   						<p class="word">
