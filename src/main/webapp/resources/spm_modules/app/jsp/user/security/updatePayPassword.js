@@ -260,7 +260,7 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 			            var _res = setInterval(function(){
 			            	sendEmailBtn.val(step+"S"+updatePayPasswordMsg.resend);
 			                step-=1;
-			                if(step <= 0){
+			                if(step < 0){
 								sendEmailBtn.attr("class", "btn border-green border-sma radius btn-medium");
 			                sendEmailBtn.removeAttr("disabled"); //移除disabled属性
 			                sendEmailBtn.val(updatePayPasswordMsg.sendEmailCode);
@@ -309,7 +309,7 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 					            var _res = setInterval(function(){
 					                btn.val(step+"S"+updatePayPasswordMsg.resend);
 					                step-=1;
-					                if(step <= 0){
+					                if(step < 0){
 										btn.attr("class", "btn border-green border-sma radius btn-medium");
 					                	btn.removeAttr("disabled"); //移除disabled属性
 					                	btn.val(updatePayPasswordMsg.getDynamiCode);

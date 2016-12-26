@@ -156,7 +156,7 @@ define("app/jsp/user/security/updateEmail",
 							                $("#sendEmailBtn").attr("disabled", true);//设置disabled属性
 											$('#sendEmailBtn').val(step+"S"+updateEmailJs.resend);
 							                step-=1;
-							                if(step <= 0){
+							                if(step < 0){
 							                $("#sendEmailBtn").removeAttr("disabled"); //移除disabled属性
 											$("#sendEmailBtn").attr("class", "btn border-green border-sma radius btn-medium");
 							                $('#sendEmailBtn').val(updateEmailJs.getOperationCode);
@@ -213,7 +213,7 @@ define("app/jsp/user/security/updateEmail",
 							                $("#phone-send-email-btn").attr("disabled", true);//设置disabled属性
 							                $('#phone-send-email-btn').val(step+"S"+updateEmailJs.resend);
 							                step-=1;
-							                if(step <= 0){
+							                if(step < 0){
 											$("#phone-send-email-btn").attr("class", "btn border-green border-sma radius btn-medium");
 							                $("#phone-send-email-btn").removeAttr("disabled"); //移除disabled属性
 							                $('#phone-send-email-btn').val(updateEmailJs.getOperationCode);
@@ -273,7 +273,7 @@ define("app/jsp/user/security/updateEmail",
 									                $("#send_dynamicode_btn").attr("disabled", true);//设置disabled属性
 									                $('#send_dynamicode_btn').val(step+"S"+updateEmailJs.resend);
 									                step-=1;
-									                if(step <= 0){
+									                if(step < 0){
 													btn.attr("class", "btn border-green border-sma radius btn-medium");
 									                $("#send_dynamicode_btn").removeAttr("disabled"); //移除disabled属性
 									                $('#send_dynamicode_btn').val(updateEmailJs.getOperationCode);
@@ -506,7 +506,7 @@ define("app/jsp/user/security/updateEmail",
 										                $("#email-sendCode-btn").attr("disabled", true);//设置disabled属性
 										                $('#email-sendCode-btn').val(step+"S"+updateEmailJs.resend);
 										                step-=1;
-										                if(step <= 0){
+										                if(step < 0){
 														btn.attr("class", "btn border-green border-sma radius btn-medium");
 										                $("#email-sendCode-btn").removeAttr("disabled"); //移除disabled属性
 										                $('#email-sendCode-btn').val(updateEmailJs.getOperationCode);
