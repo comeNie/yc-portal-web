@@ -116,8 +116,8 @@ define("app/jsp/user/security/updateMobilePhone",
 											html.push('<option country_value="'+t.countryValue+'" reg="'
 													+ t.regularExpression
 													+ '" value="' + _code
-													+ '" >' + _code + '+'
-													+ name + '</option>');
+													+ '" >' + name + '+'
+													+ _code + '</option>');
 										}
 										$("#country").html(html.join(""));
 										$("#country2").html(html.join(""));
