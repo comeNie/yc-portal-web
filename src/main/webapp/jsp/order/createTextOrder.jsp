@@ -305,12 +305,14 @@
 						<li class="width-large">
 							<p class="word"><spring:message code="order.formatConv"/></p>
 							<p>
+								<%--是否进行格式转换--%>
 								<select id="selectFormatConv" class="select select-medium radius" >
 									<option value="1"><spring:message code="order.formatConv"/></option>
 									<option value="2" selected="selected"><spring:message code="order.noFormatConv"/></option>
 								</select>
 							</p>
 							<p class="ml-20"  id="inputFormatConvP" style="display: none;">
+								<%--要转换的格式--%>
 								<input id="inputFormatConv" name="inputFormatConv" maxlength="15" type="text" class="int-text int-in-bi-text radius" placeholder="<spring:message code="order.formatInfo"/>">
 							</p>
 						</li>
