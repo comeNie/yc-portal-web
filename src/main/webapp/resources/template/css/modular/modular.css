@@ -167,7 +167,8 @@
 .oder-form-lable{width: 100%;float:left}
 .oder-form-lable ul{width: 100%;float:left}
 .oder-form-lable ul li{width: 100%;float:left;line-height:26px;}
-.oder-form-lable ul li p{float:left;margin-right:10px;}
+.oder-form-lable ul li p{float:left;margin-left:11px;}
+.oder-form-lable ul li .none-left{margin-left:0px;}
 .oder-form-lable ul li .iocn-oder{position:relative;}
 .oder-form-lable ul li .iocn-oder i{position:absolute;right:10px;top:5px}
 .oder-form-lable ul li .iocn-oder .pr-10{ padding-right:30px;}
@@ -321,6 +322,9 @@ opacity:0;filter:alpha(opacity=0); -moz-opacity:0; -khtml-opacity:0;}
 .translate-int{width:100%;min-height:316px;border:1px solid #e6e6e6;float:left;position:relative;}
 .white-bj .right{float:right;margin:0 20px 0 0;}
 .translate-int1 label{position:absolute;top:-40px;right:0px;font-size:12px;color:#fe6b6b}
+/**已输入文字**/
+.already{width:100%;font-size:14px;color:#e6e6e6;padding-left:20px;}
+.already span{color:#fe6b6b}
 /**选择级别**/
 .selection-level{width:100%;float:left}
 .selection-level ul{width:352px;height:250px;float:left;background:#f8f8f8;border-radius:5px;margin-left:34px;padding:20px 30px 30px 30px;position:relative;}

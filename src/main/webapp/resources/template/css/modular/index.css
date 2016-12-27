@@ -22,10 +22,10 @@
 .translate-title ul .change a{width:36px;height:36px;border:1px solid #c4c4c4;border-radius:2px;background:#fff;float:left;text-align: center;line-height:32px;color:#666;font-size:12px;}
 /**翻译内容**/
 .translate-wapper{width:100%;float:left;margin-top:20px;}
-.before-translation{width:570px;height:210px;float:left;word-break:break-all;border:1px solid #dbdbdb;background:#fff;padding:5px 10px;position:relative;}
+.before-translation{width:570px;height:210px;float:left;word-break:break-all;border:1px solid #dbdbdb;background:#fff;padding:5px 0 5px 15px;position:relative;}
 .post-cion{width: 100%;float:left;}
 .post-cion p{float:left;}
-.post-cion p a{color:#2965e6;float:left;margin-left:20px;}
+.post-cion p a{color:#2965e6;float:left;margin-right:20px;}
 .post-cion p a:hover{color:#2361ea}
 .post-cion p i{}
 .post-cion p .radio-icon{}
@@ -34,7 +34,7 @@
 .post-cion p .ord-icon i{font-size:24px;}
 .post-cion p .stars-icon i{font-size:24px;}
 .post-cion p .edit-icon i{font-size:20px;}
-.post-cion .right{float:right;margin-top:3px;}
+.post-cion .right{float:right;margin-top:3px;/*margin-right:15px;*/}
 .post-cion .right a{overflow:auto;}
 .post-cion .right span{float:left;margin-left:10px;}
 .translate-file{width:100%;float:left;margin-top:20px;}
@@ -50,6 +50,10 @@
 .post-cion .suspension1{width:65px;height:32px;background:url(../../images/suspension-bj.png) no-repeat;position:absolute;left:-21px;bottom:32px;border-radius:5px;text-align:center;line-height:28px;color:#666;font-size:12px;display:none;}
 .post-cion .suspension2{width:65px;height:32px;background:url(../../images/suspension-bj.png) no-repeat;position:absolute;left:-21px;bottom:32px;border-radius:5px;text-align:center;line-height:28px;color:#666;font-size:12px;display:none;}
 .post-cion .suspension3{width:65px;height:32px;background:url(../../images/suspension-bj.png) no-repeat;position:absolute;left:-21px;bottom:32px;border-radius:5px;text-align:center;line-height:28px;color:#666;font-size:12px;display:none;}
+/**已输入文字**/
+.already{width:100%;float:left;font-size:14px;color:#e6e6e6}
+.already span{color:#fe6b6b}
+
 
 /**说明**/
 .explain-big{width:100%;float:left;}
