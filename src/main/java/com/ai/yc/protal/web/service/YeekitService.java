@@ -65,7 +65,7 @@ public class YeekitService {
         postParams.put("app_kid", APP_KID);// 授权APP ID
         postParams.put("app_key", APP_KEY);// 授权APP KEY
 //        postParams.put("detoken", true);
-//        postParams.put("align", true);
+        postParams.put("align", true);
         postParams.put("text", text);// 待翻译文本,UTF-8编码
         String resultStr="";
         try {
