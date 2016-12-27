@@ -424,7 +424,7 @@
         });
 
         $("#sus-top1").zclip({
-            path:"${base}/resources/spm_modules/jquery-zclip-master/ZeroClipboard.swf",
+            path:"${_base}/resources/spm_modules/jquery-zclip-master/ZeroClipboard.swf",
             copy:function(){
                 return $('#transRes').val();
             },
