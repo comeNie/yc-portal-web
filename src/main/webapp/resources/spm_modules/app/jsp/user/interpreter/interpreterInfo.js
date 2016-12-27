@@ -76,11 +76,13 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     		InterPreterInfoPager.superclass.setup.call(this);
     		var formValidator=this._initValidate();
     		this._loadAllCountry();
-    		if(provinceCode!=null){
+    		var countryValue = $("#countryInfo").val();
+    		var provinceInfo = $("#provinceInfo").val();
+    		if(provinceCode!=null&&countryValue!='0'){
     			$("#provinceP").show();
     			this._getProviceValue();
     		}
-    		if(cnCityCode!=null){
+    		if(cnCityCode!=null&&provinceInfo!='0'){
     			$("#cnCityP").show();
     			this._getCnCityValue();
     		}
@@ -370,6 +372,8 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 								}
 								if(countryCode==_code){
 									html.push('<option selected="selected" value=' + _code+ '>' +name + '</option>');
+								}else if(_code=='3385'){
+									html.push('<option selected="selected" value=' + _code+ '>' + name + '</option>');
 								}else{
 									html.push('<option value=' + _code+ '>' + name + '</option>');
 								}
