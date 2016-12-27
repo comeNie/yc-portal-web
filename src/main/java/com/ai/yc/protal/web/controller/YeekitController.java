@@ -47,7 +47,7 @@ public class YeekitController {
             String result = yeekitService.dotranslate(fromTmp,to,text);
             if (result.startsWith("error:")) {
                 //机器返回错误
-                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, rb.getMessage(""));
+                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
             }
             resData.setData(result);
         } catch (Exception e) {
