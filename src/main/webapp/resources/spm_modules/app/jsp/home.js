@@ -75,6 +75,16 @@ define('app/jsp/home', function (require, exports, module) {
 			window.location.href=_base+"/written";
 		},
 
+        _resetMt:function () {
+            $('#tgtNew').empty();
+            $('#srcNew').empty();
+            $('#transRes').val('');
+            $('#transResBak').val('');
+            $("#tgtOld").show();
+            $("#tgtNew").hide();
+            $(".post-cion").hide();
+        },
+
         //翻译
         _mt:function() {
 			var _this=this;
@@ -91,16 +101,11 @@ define('app/jsp/home', function (require, exports, module) {
 				console.log("from:"+from+",to:"+to);
 			}
 
+            _this._resetMt();
+
 			if (from == 'auto' || $("#int-before") == '') {
 				return
 			}
-
-			$('#tgtNew').empty();
-			$('#srcNew').empty();
-            $('#transRes').val('');
-            $('#transResBak').val('');
-            $("#tgtOld").show();
-            $("#tgtNew").hide();
 
         	ajaxController.ajax({
 				type: "post",
@@ -169,13 +174,7 @@ define('app/jsp/home', function (require, exports, module) {
 
 			var key =  $("#int-before").val();
 
-            $('#tgtNew').empty();
-            $('#srcNew').empty();
-            $('#transRes').val('');
-            $('#transResBak').val('');
-            $("#tgtOld").show();
-            $("#tgtNew").hide();
-
+            _this._resetMt();
 			if (key) {
 				var key_le = key.length;
 				if(key_le > 1000){
