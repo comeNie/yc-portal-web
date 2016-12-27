@@ -81,7 +81,7 @@
                                       type="text" readonly
                                       onfocus="WdatePicker({lang:'${my97Lang}',el:id,readOnly:true,dateFmt:'yyyy-MM-dd',
                                       minDate:'#F{$dp.$D(\'startDate\');}',
-                                      onpicking:function(dp){if(dp.cal.getDateStr() != dp.cal.getNewDateStr())pager._getOrderList()}})"/>
+                                      onpicked:function(dp){pager._getOrderList();}})"/>
                             </p>
                             <p class="iocn-oder">
                                 <input type="text" name="translateName" class="int-text int-medium radius pr-30 in-x"
