@@ -27,8 +27,8 @@ body{width:100%;font:14px/22px "Microsoft YaHei","微软雅黑","helvetica neue"
 .f30{font-size:30px;}
 
 .da_notice{background:#ff6767;height:28px;font-size:12px;text-align:center;}
-.da_notice span{display:inline-block;/*background:url(img/addown15101.jpg) no-repeat 0 center;padding-left:25px;*/width:1200px;height:28px;line-height:28px;color:#ffffff;}
+.da_notice span{display:inline-block;/*background:url(../../images/addown15101.jpg) no-repeat 0 center;padding-left:25px;*/width:1200px;height:28px;line-height:28px;color:#ffffff;}
 
 /*元旦公告*/
 .da_tfirefox15101{background:#ff6767;height:28px;font-size:12px;text-align:center;}
-.da_tfirefox15101 span{display:inline-block;background:url(img/addown15101.jpg) no-repeat 0 center;line-height:28px;padding-left:25px;color:#ffffff;}
+.da_tfirefox15101 span{display:inline-block;background:url(../../images/addown15101.jpg) no-repeat 0 center;line-height:28px;padding-left:25px;color:#ffffff;}
