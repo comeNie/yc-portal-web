@@ -39,11 +39,11 @@
                 <p class="none-border"><i class="icon iconfont">&#xe60b;</i>
                     <a href="${_base}/findyee"><spring:message code="topMenue.Mobile"/></a></p>
                 <p class="in-switch" id="in-switch">
-                    <a href="javaScript:void(0);"><%= Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())? "中文":"English"%><i class="icon-caret-down"></i></a>
+                    <a href="javaScript:void(0);"><%= Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())? "中文简体":"English"%><i class="icon-caret-down"></i></a>
                 </p>
                 <div class="in-switch-hover" style="display: none;">
                     <ul>
-                        <li><a href="javaScript:void(0);" onclick="changeLang('zh_CN')">中文</a></li>
+                        <li><a href="javaScript:void(0);" onclick="changeLang('zh_CN')">中文简体</a></li>
                         <li class="border-none"><a href="javaScript:void(0);" onclick="changeLang('en_US')">English</a></li>
                     </ul>
                 </div>
