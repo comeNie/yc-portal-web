@@ -69,15 +69,16 @@ public class YeekitService {
         postParams.put("text", text);// 待翻译文本,UTF-8编码
         String resultStr="";
         try {
+            LOGGER.info("机器翻译入参:", JSONObject.toJSONString(postParams));
 //            resultStr = HttpsUtil.HttpsPost(SERVER_URL, postParams.toString(), "UTF-8");
             resultStr = HttpUtil.doPost(client, SERVER_URL, postParams);
             LOGGER.info("dotranslate result:{}", resultStr);
 
-            //失败 解析为json异常
-            if(resultStr.startsWith("error:")) {
-                LOGGER.error("机器翻译失败:", resultStr);
-                throw new BusinessException(TRAINNS_FAIL,"The detection is fail.");
-            }
+//            //失败 解析为json异常
+//            if(resultStr.startsWith("error:")) {
+//                LOGGER.error("机器翻译失败:", resultStr);
+//                throw new BusinessException(TRAINNS_FAIL,"The detection is fail.");
+//            }
         }  catch (Exception e) {
             LOGGER.error("机器翻译失败:", e);
             throw new BusinessException(TRAINNS_FAIL,"The detection is fail.");
