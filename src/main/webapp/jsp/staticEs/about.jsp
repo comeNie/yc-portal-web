@@ -18,7 +18,7 @@
 <div class="about-banner">
     <div class="about-list">
         <ul>
-            <li class="word">a new YeeCloud, this is just a start</li>
+            <li class="word">Brand-new YeeCloud, more to come</li>
             <%--体验即时翻译 --%>
             <li class="pacbtn"><input  id="trans-btn" type="button" class="btn btn-blue btn-168 radius20" value="Instant translation"></li>
         </ul>
@@ -66,7 +66,7 @@
                     <%--公司位置：北京市石景山区石景山路20号中铁建设大厦16层--%>
                     <li>F/16, China Railway Construction Building, No. 20 Shijingshan Road, Shijingshan District, Beijing</li>
                     <%--联系电话--%>
-                    <li>Contact number;：+86 10 5322 3600</li>
+                    <li>Phone：+86 10 5322 3600</li>
                     <li>
                         <p class="icon1"><a href="javaScrpt:void(0);"></a></p>
                         <p class="icon2"><a href="javaScrpt:void(0);"></a></p>

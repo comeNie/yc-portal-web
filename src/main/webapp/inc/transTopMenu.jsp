@@ -19,7 +19,7 @@
   		<div class="cloud-breadcrumb">
   			<ul>
                 <li class="switch" id="switch" >
-                    <a href="javaScript:void(0);"><%= Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())? "简体中文":"English"%><i class="icon-caret-down dingw" ></i></a>
+                    <a href="javaScript:void(0);"><%= Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())? "中文简体":"English"%><i class="icon-caret-down dingw" ></i></a>
                     <div class="switch-hover" style="display:none;">
                         <ul>
                             <li><a href="javaScript:void(0);" onclick="changeLang('zh_CN')">中文简体</a></li>

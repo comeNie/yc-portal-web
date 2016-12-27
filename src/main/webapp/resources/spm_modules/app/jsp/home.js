@@ -75,6 +75,16 @@ define('app/jsp/home', function (require, exports, module) {
 			window.location.href=_base+"/written";
 		},
 
+        _resetMt:function () {
+            $('#tgtNew').empty();
+            $('#srcNew').empty();
+            $('#transRes').val('');
+            $('#transResBak').val('');
+            $("#tgtOld").show();
+            $("#tgtNew").hide();
+            $(".post-cion").hide();
+        },
+
         //翻译
         _mt:function() {
 			var _this=this;
@@ -91,12 +101,11 @@ define('app/jsp/home', function (require, exports, module) {
 				console.log("from:"+from+",to:"+to);
 			}
 
+            _this._resetMt();
+
 			if (from == 'auto' || $("#int-before") == '') {
 				return
 			}
-
-			$('#tgtNew').empty();
-			$('#srcNew').empty();
 
         	ajaxController.ajax({
 				type: "post",
@@ -163,18 +172,19 @@ define('app/jsp/home', function (require, exports, module) {
 			var _this = this;
 			var from = $(".dropdown .selected").eq(0).attr("value");
 
-			var key =  $.trim($("#int-before").val());
+			var key =  $("#int-before").val();
+
+            _this._resetMt();
 			if (key) {
 				var key_le = key.length;
 				if(key_le > 1000){
 					//如果元素区字符数大于最大字符数，按照最大字符数截断；
 					key = key.substring(0, 1000);
-					//$("#text").val(key);
-					// document.getElementById('positionDescLen').innerHTML=0;
+					$("#int-before").val(key);
+					$("#inputsLen").html(0);
 				}else{
 					//在记数区文本框内显示剩余的字符数；
-					console.log(1000 - key_le);
-					// document.getElementById('positionDescLen').innerHTML=1000 - key_le;
+					$("#inputsLen").html(key_le);
 				}
 				//语言检测
 				ajaxController.ajax({
@@ -186,14 +196,25 @@ define('app/jsp/home', function (require, exports, module) {
 					success: function (data) {
 						if("OK" === data.statusInfo) {
 							var vLan = data.data;
+							var checkFlag = false;
 							if ( vLan!= '') {
 								$("#showa option").each(function () {
 									if ($(this).val() == vLan) {
+										checkFlag = true;
 										$('.selected').eq(0).html( $(this).text());
 										return false;
 									}
 								});
-								$('.selected').eq(0).attr('value', vLan);
+
+								if (!checkFlag && $('.selected').eq(0).attr('value')=='auto') {
+									//检测结果在源语言里没找到。
+									$("#transError").html($.i18n.prop("home.error.verify"));
+									return;
+								}
+
+                                if (checkFlag) {
+                                    $('.selected').eq(0).attr('value', vLan);
+                                }
 
 								_this._diffSrc();
 								_this._mt();

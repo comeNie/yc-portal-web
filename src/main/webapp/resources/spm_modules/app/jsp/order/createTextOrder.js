@@ -536,6 +536,17 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			var variable = $("#translateContent").val();
 			if (variable !== '')  {
 				$("#clear-btn").show();
+
+                var key_le = variable.length;
+                if(key_le > 2000){
+                    //如果元素区字符数大于最大字符数，按照最大字符数截断；
+                    variable = variable.substring(0, 2000);
+                    $("#int-before").val(variable);
+                    $("#inputsLen").html(0);
+                }else{
+                    //在记数区文本框内显示剩余的字符数；
+                    $("#inputsLen").html(key_le);
+                }
 			} else {
 				$("#clear-btn").hide();
 			}

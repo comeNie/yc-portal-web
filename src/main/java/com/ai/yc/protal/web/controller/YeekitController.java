@@ -44,7 +44,12 @@ public class YeekitController {
             if ("auto".equals(from)) {
                 fromTmp = yeekitService.detection(text);
             }
-            resData.setData(yeekitService.dotranslate(fromTmp,to,text));
+            String result = yeekitService.dotranslate(fromTmp,to,text);
+            if (result.startsWith("error:")) {
+                //机器返回错误
+                resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
+            }
+            resData.setData(result);
         } catch (Exception e) {
             LOGGER.error("机器翻译失败：", e);
             resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, rb.getMessage(""));

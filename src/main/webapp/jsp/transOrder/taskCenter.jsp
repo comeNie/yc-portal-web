@@ -47,7 +47,7 @@
                     <ul>
                         <li class="mb-20">
                             <%--领域--%>
-                            <p><spring:message  code="order.Fields"/></p>
+                            <p class="none-left"><spring:message  code="order.Fields"/></p>
                             <p><select name="fieldCode" id="fieldCode" class="select select-small radius">
                                 <%--全部--%>
                                 <option value=""><spring:message code="task.center.select.all"/></option>
@@ -84,7 +84,8 @@
                                       onpicking:function(dp){if(dp.cal.getDateStr() != dp.cal.getNewDateStr())pager._getOrderList()}})"/>
                             </p>
                             <p class="iocn-oder">
-                                <input type="text" name="translateName" class="int-text int-medium radius pr-30" maxlength="16">
+                                <input type="text" name="translateName" class="int-text int-medium radius pr-30 in-x"
+                                       maxlength="16" placeholder="<spring:message code="myOrder.inputContent"/>" >
                                 <i class="icon-search" id="searchBtn"></i></p>
                         </li>
                     </ul>
