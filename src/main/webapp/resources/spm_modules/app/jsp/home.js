@@ -97,6 +97,8 @@ define('app/jsp/home', function (require, exports, module) {
 
 			$('#tgtNew').empty();
 			$('#srcNew').empty();
+            $('#transRes').val('');
+            $('#transResBak').val('');
 
         	ajaxController.ajax({
 				type: "post",
@@ -164,6 +166,12 @@ define('app/jsp/home', function (require, exports, module) {
 			var from = $(".dropdown .selected").eq(0).attr("value");
 
 			var key =  $("#int-before").val();
+
+            $('#tgtNew').empty();
+            $('#srcNew').empty();
+            $('#transRes').val('');
+            $('#transResBak').val('');
+
 			if (key) {
 				var key_le = key.length;
 				if(key_le > 1000){
