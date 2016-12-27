@@ -134,7 +134,7 @@
                 <div id="tgtNew" class="int-post tb_text" onmousemove="srcMove()" onmouseout="srcOut()"  style="display: none">
                 </div>
                 <div id="tgtOld" class="int-post"  style="display: block;">
-                    <textarea  class="int-post"  id="transRes" ></textarea>
+                    <textarea  class="int-post"  id="transRes" readonly="readonly"></textarea>
                     <textarea  class="int-post"  id="transResBak" style="display: none"></textarea>
                 </div>
                 <label id="transError"></label>

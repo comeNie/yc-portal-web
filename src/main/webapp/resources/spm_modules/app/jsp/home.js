@@ -211,7 +211,10 @@ define('app/jsp/home', function (require, exports, module) {
 									$("#transError").html($.i18n.prop("home.error.verify"));
 									return;
 								}
-								$('.selected').eq(0).attr('value', vLan);
+
+                                if (checkFlag) {
+                                    $('.selected').eq(0).attr('value', vLan);
+                                }
 
 								_this._diffSrc();
 								_this._mt();
