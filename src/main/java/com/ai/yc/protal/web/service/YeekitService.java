@@ -74,7 +74,10 @@ public class YeekitService {
             LOGGER.info("dotranslate result:{}", resultStr);
 
             //失败 解析为json异常
-           JSON.parseObject(resultStr);
+            if(resultStr.startsWith("error:")) {
+                LOGGER.error("机器翻译失败:", resultStr);
+                throw new BusinessException(TRAINNS_FAIL,"The detection is fail.");
+            }
         }  catch (Exception e) {
             LOGGER.error("机器翻译失败:", e);
             throw new BusinessException(TRAINNS_FAIL,"The detection is fail.");
