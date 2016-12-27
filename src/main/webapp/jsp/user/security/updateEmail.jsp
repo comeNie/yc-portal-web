@@ -142,7 +142,7 @@
  							<li>
  								<label class="ml-70" id="phoneUEmailErrMgs" style="display: none;"></label>
  								<p class="word"><spring:message code="ycupdateemail.email"/></p>
- 								<p><input type="text" class="int-text int-xlarge-mail radius" id="phoneUEmail"></p>
+ 								<p><input type="text" class="int-text int-xlarge-mail radius" id="phoneUEmail" maxlength="64"></p>
  							</li>
  							<li>
  								<p class="word"><spring:message code="ycupdateemail.veritycode"/></p>
@@ -281,7 +281,7 @@
  							<li>
  								<label class="ml-70" id="emailUErrMsg" style="display: none;"></label>
  								<p class="word"><spring:message code="ycupdateemail.email"/></p>
- 								<p><input type="text" class="int-text int-xlarge-mail radius" id="emailUpdateEmail"></p>
+ 								<p><input type="text" class="int-text int-xlarge-mail radius" id="emailUpdateEmail" maxlength="64"></p>
 								<%--<p style="color: #fe6b6b" id="tishi1"></p>--%>
  							</li>
 							<%--<li class="tishi" >
