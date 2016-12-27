@@ -49,7 +49,7 @@
   				<ul>
   					<li>
   						<!-- 订单状态 -->
-  						<p><spring:message code="myOrder.orderStatus"/></p> 
+  						<p class="none-left"><spring:message code="myOrder.orderStatus"/></p>
   						<p>
 	  						<select class="select select-small radius" name="displayFlag" id="displayFlag">
 	  							<!-- 全部 -->
@@ -99,7 +99,7 @@
   					</li>
   					<!--  暂时只有个人
   					<li>
-  						<p><input type="checkbox" class="checkbox-n" checked="checked">个人</p>
+  						<p class="none-left"><input type="checkbox" class="checkbox-n" checked="checked">个人</p>
   						<p><input type="checkbox" class="checkbox-n">企业</p>
   					</li>
   					-->

@@ -50,7 +50,7 @@
 		 				<ul>
 		 					<li class="mb-20">
 		 						<!-- 订单状态 -->
-  								<p><spring:message code="myOrder.orderStatus"/></p> 
+  								<p class="none-left"><spring:message code="myOrder.orderStatus"/></p>
 		 						<p>
 		 							<select class="select select-small radius"  name="state" id="state">
 		 								<!-- 全部  -->
@@ -111,7 +111,7 @@
 		 					</li>
 		 					<li class="mb-20">
 		 						<!--翻译用途  -->
-		 						<p><spring:message code="myOrder.purpose"/></p>
+		 						<p class="none-left"><spring:message code="myOrder.purpose"/></p>
 		 						<p>
 			 						<select class="select select-small radius" name="useCode" id="useCode">
 										<!--全部 -->
