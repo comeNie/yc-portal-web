@@ -99,6 +99,7 @@ define('app/jsp/home', function (require, exports, module) {
 			$('#srcNew').empty();
             $('#transRes').val('');
             $('#transResBak').val('');
+            $("#tgtOld").show();
 
         	ajaxController.ajax({
 				type: "post",
@@ -171,6 +172,7 @@ define('app/jsp/home', function (require, exports, module) {
             $('#srcNew').empty();
             $('#transRes').val('');
             $('#transResBak').val('');
+            $("#tgtOld").show();
 
 			if (key) {
 				var key_le = key.length;
