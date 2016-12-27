@@ -82,7 +82,7 @@ define('app/jsp/home', function (require, exports, module) {
             $('#transResBak').val('');
             $("#tgtOld").show();
             $("#tgtNew").hide();
-            $(".post-cion").hide();
+            $(".post-cion").css("visibility","hidden");
         },
 
         //翻译
@@ -119,7 +119,7 @@ define('app/jsp/home', function (require, exports, module) {
 					if("OK" === data.statusInfo) {
 
 						//图标展示
-						$(".post-cion").show();
+                        $(".post-cion").css("visibility","visible");
 						$("#transError").html('');
 
 						$('#tgtNew').empty();
@@ -158,7 +158,7 @@ define('app/jsp/home', function (require, exports, module) {
 						}
 					} else {
 						//图标隐藏
-						$(".post-cion").hide();
+                        $(".post-cion").css("visibility","hidden");
 						$("#transError").html($.i18n.prop("home.error.trans"));
 						//alert($.i18n.prop("home.error.trans"));
 					}
@@ -307,9 +307,9 @@ define('app/jsp/home', function (require, exports, module) {
         _saveText:function() {
         	$("#transRes").attr("readonly","readonly");
 			if ($.trim( $("#transRes").val())=='')
-				$(".post-cion").hide();
+                $(".post-cion").css("visibi lity","hidden");
 			else
-				$(".post-cion").show()
+                $(".post-cion").css("visibility","visible");
 
 			if ($.trim(sourYiWen) == $("#transRes").val()) {
 				$("#tgtOld").hide();

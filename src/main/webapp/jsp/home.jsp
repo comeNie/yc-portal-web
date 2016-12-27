@@ -138,7 +138,7 @@
                     <textarea  class="int-post"  id="transResBak" style="display: none"></textarea>
                 </div>
                 <label id="transError"></label>
-                <div class="post-cion" style="display: none;">
+                <div class="post-cion" style="visibility: hidden">
 
 					<p>
 						<a id="sus-top1" href="javaScript:void(0)" class="ord-icon"><i id="copy" class="icon iconfont">&#xe639;</i>
@@ -431,6 +431,8 @@
             afterCopy:function () {
             }
         });
+
+//        $(".post-cion").hide();
     })();
 </script>
 
