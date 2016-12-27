@@ -133,7 +133,7 @@
 						<li class="none-ml">
 							<p class="word"><spring:message code="order.StartingTime"/></p>
 							<p class="int-posit"><input id="begin_time" name="begin_time" type="text" class="int-text int-in-250 radius"
-                                      onClick="WdatePicker({onpicked: function(){$dp.$('begin_time').blur();},lang:'${my97Lang}',isShowOK:true,autoPickDate:true, dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'end_time\',{m:-1})}'})"
+                                      onClick="WdatePicker({onpicked: function(){$dp.$('begin_time').blur();},lang:'${my97Lang}',isShowOK:true,autoPickDate:true, dateFmt:'yyyy-MM-dd HH:mm:ss',opposite:true,minDate: new Date().format('yyyy-MM-dd 00:00:00'),maxDate:'#F{$dp.$D(\'end_time\',{m:-1})}'})"
                                       value="<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.productInfo.startTime}"/>" readonly="readonly"/><i class=" icon-sort-down"></i></p>
 						</li>
 						<li>
