@@ -18,13 +18,13 @@
 <div class="subnav-left">
     <ul>
         <%--翻译服务问题--%>
-        <li><a href="javascript:" class="current">Translation service issues</a></li>
+        <li><a href="javascript:" class="current">Translation problems</a></li>
             <%--支付问题--%>
         <li><a href="javascript:">Payments problems</a></li>
             <%--账户问题--%>
         <li><a href="javascript:">Account problem</a></li>
             <%--售后服务--%>
-        <li><a href="javascript:">After - sales service</a></li>
+        <li><a href="javascript:">After-sales service</a></li>
             <%--发票问题--%>
         <!--<li><a href="javascript:">Invoices problems</a></li>
         <%--积分说明--%>
@@ -32,7 +32,7 @@
         <%--客户等级--%>
         <li><a href="javascript:">The customer hierarchy</a></li>-->
             <%--译员等级--%>
-        <li><a href="javascript:">Level translator</a></li>
+        <li><a href="javascript:">Translator's level</a></li>
     </ul>
 </div>
 <div class="agreement-right">
