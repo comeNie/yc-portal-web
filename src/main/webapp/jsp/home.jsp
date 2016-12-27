@@ -126,7 +126,7 @@
                 </div>
                 <div id="srcOld" class="int-before"  style="display: block;">
                     <textarea maxlength="2000" class="int-before" id="int-before"></textarea>
-                    <div class="already"><spring:message code="home.Alreadyinput" /><span id="inputsLen">0</span><spring:message code="home.Maxinput" arguments="1000"/></div>
+                    <div class="already"><spring:message code="home.Alreadyinput" arguments="0,1000"/></div>
                  </div>
 
             </div>
@@ -134,7 +134,7 @@
                 <div id="tgtNew" class="int-post tb_text" onmousemove="srcMove()" onmouseout="srcOut()"  style="display: none">
                 </div>
                 <div id="tgtOld" class="int-post"  style="display: block;">
-                    <textarea  class="int-post"  id="transRes" ></textarea>
+                    <textarea  class="int-post"  id="transRes" readonly="readonly"></textarea>
                     <textarea  class="int-post"  id="transResBak" style="display: none"></textarea>
                 </div>
                 <label id="transError"></label>

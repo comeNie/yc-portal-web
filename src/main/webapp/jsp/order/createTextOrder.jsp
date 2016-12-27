@@ -116,7 +116,7 @@
 					<p class="right"><input style="display: none;" type="button" class="btn border-blue radius20 btn-80"
 											value="<spring:message code="order.clear" />" id="clear-btn"></p>
 
-					<div class="already"><spring:message code="home.Alreadyinput" /><span id="inputsLen">0</span><spring:message code="home.Maxinput" arguments="2000"/></div>
+					<div class="already"><spring:message code="home.Alreadyinput" arguments="0,2000"/></div>
 				</div>
 
   				<div class="translate-int radius bj-ash placeholder" id="fy2" >
