@@ -206,7 +206,7 @@ define('app/jsp/home', function (require, exports, module) {
 									}
 								});
 
-								if (!checkFlag) {
+								if (!checkFlag && $('.selected').eq(0).attr('value')=='auto') {
 									//检测结果在源语言里没找到。
 									$("#transError").html($.i18n.prop("home.error.verify"));
 									return;
