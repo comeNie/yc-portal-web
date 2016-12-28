@@ -48,9 +48,10 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
 			});
     	},
 		//改变查询的结束时间
-		_changeEndDate:function(dp){
-			//若截止时间发生变更,则刷新页面
-			if(dp.cal.getDateStr() != dp.cal.getNewDateStr()){
+		_changeDate:function(dp,dateObj){
+			//若时间发生变更且dateObj不为空,则刷新页面
+			if(dp.cal.getDateStr() != dp.cal.getNewDateStr()
+				&& dateObj!=null && dateObj !=""){
 				this._getOrderList();
 			}
 		},
