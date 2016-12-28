@@ -176,7 +176,7 @@ public class IndexController {
      * 译者咨询
      * @return
      */
-    @RequestMapping("/tconsul")
+    @RequestMapping("/tconsult")
     public String tconsul(){
         return staticUrl() + "/tconsul";
     }
