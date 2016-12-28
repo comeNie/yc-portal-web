@@ -181,7 +181,7 @@ define('app/jsp/home', function (require, exports, module) {
 					//如果元素区字符数大于最大字符数，按照最大字符数截断；
 					key = key.substring(0, 1000);
 					$("#int-before").val(key);
-					$("#inputsLen").html(0);
+					$("#inputsLen").html(1000);
 				}else{
 					//在记数区文本框内显示剩余的字符数；
 					$("#inputsLen").html(key_le);
