@@ -99,7 +99,7 @@
 	</p>
 	<p>Copyright &copy;2015 <a href="http://www.yeecloud.com">www.yeecloud.com</a> All rights reserved. 京ICP备13002826号-7 </p>
 </div>
-<script type="text/javascript" src="${uedroot}/scripts/modular/index.js"></script>
+<script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/jquery.pagepiling.min.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/jquery.app.js"></script>
 </body>
