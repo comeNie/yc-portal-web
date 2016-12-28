@@ -126,7 +126,7 @@
                 </div>
                 <div id="srcOld" class="int-before"  style="display: block;">
                     <textarea maxlength="2000" class="int-before" id="int-before"></textarea>
-                    <div class="already"><spring:message code="home.Alreadyinput" arguments="0,1000"/></div>
+                    <div class="already"><spring:message code="home.Alreadyinput" arguments="0,2000"/></div>
                  </div>
 
             </div>
