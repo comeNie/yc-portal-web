@@ -102,9 +102,10 @@ public class OrderLoginController {
         String remark = request.getParameter("remark");
         String contactInfoStr = request.getParameter("contactInfo");
         String transType = request.getParameter("transType");
-
+        LOGGER.info("联系人信息: ", contactInfoStr);
+        LOGGER.info("remark: ", remark);
+        LOGGER.info("transType: ", transType);
         try {
-            LOGGER.info("联系人信息: ", contactInfoStr);
             IOrderSubmissionSV orderSubmissionSV = DubboConsumerFactory.getService(IOrderSubmissionSV.class);
             OrderSubmissionRequest subReq;
             if ("2".equals(transType)) {
@@ -112,13 +113,15 @@ public class OrderLoginController {
             } else {
                 subReq  = (OrderSubmissionRequest) session.getAttribute("writeOrderInfo");
             }
+            LOGGER.info("订单信息: ", JSONObject.toJSONString(subReq));
+
             subReq.setContactInfo(JSON.parseObject(contactInfoStr, ContactInfo.class));
             subReq.getBaseInfo().setUserId(UserUtil.getUserId());
             subReq.getBaseInfo().setOrderTime(new Timestamp(System.currentTimeMillis()));
             if (StringUtils.isNotEmpty(remark)) {
                 subReq.getBaseInfo().setRemark(remark);
             }
-            LOGGER.info("订单信息: ", JSONObject.toJSONString(subReq));
+
             OrderSubmissionResponse subRes = orderSubmissionSV.orderSubmission(subReq);
             ResponseHeader resHeader = subRes==null?null:subRes.getResponseHeader();
             LOGGER.info(JSONObject.toJSONString(subRes));
