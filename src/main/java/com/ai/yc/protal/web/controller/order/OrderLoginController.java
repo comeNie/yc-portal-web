@@ -104,6 +104,7 @@ public class OrderLoginController {
         String transType = request.getParameter("transType");
 
         try {
+            LOGGER.info("联系人信息: ", contactInfoStr);
             IOrderSubmissionSV orderSubmissionSV = DubboConsumerFactory.getService(IOrderSubmissionSV.class);
             OrderSubmissionRequest subReq;
             if ("2".equals(transType)) {
@@ -117,7 +118,7 @@ public class OrderLoginController {
             if (StringUtils.isNotEmpty(remark)) {
                 subReq.getBaseInfo().setRemark(remark);
             }
-
+            LOGGER.info("订单信息: ", JSONObject.toJSONString(subReq));
             OrderSubmissionResponse subRes = orderSubmissionSV.orderSubmission(subReq);
             ResponseHeader resHeader = subRes==null?null:subRes.getResponseHeader();
             LOGGER.info(JSONObject.toJSONString(subRes));
