@@ -248,7 +248,7 @@
 				-->
 			{{else displayFlag == '91'}}	
 				<!-- 关闭  -->
-				<td><spring:message code="myOrder.status.Close"/></td>
+				<td><spring:message code="myOrder.status.Cancelled"/></td>
 				<td></td>
 			{{else }}
 				<!-- 已退款  -->

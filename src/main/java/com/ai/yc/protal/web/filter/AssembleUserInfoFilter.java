@@ -1,5 +1,26 @@
 package com.ai.yc.protal.web.filter;
 
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.security.Principal;
+import java.util.Map;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.StringUtils;
+import org.jasig.cas.client.authentication.AttributePrincipal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.ai.opt.base.vo.BaseResponse;
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sso.client.filter.SSOClientConstants;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
@@ -7,22 +28,12 @@ import com.ai.yc.common.api.cachekey.key.CacheKey;
 import com.ai.yc.common.api.country.param.CountryVo;
 import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
 import com.ai.yc.protal.web.utils.AiPassUitl;
+import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
+import com.ai.yc.user.api.userservice.param.CompleteUserInfoRequest;
+import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
+import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-
-import org.apache.commons.lang.StringUtils;
-import org.jasig.cas.client.authentication.AttributePrincipal;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.security.Principal;
-import java.util.Map;
 
 
 public class AssembleUserInfoFilter implements Filter {
@@ -52,6 +63,14 @@ public class AssembleUserInfoFilter implements Filter {
             if(user!=null){
                 session.setAttribute(SSOClientConstants.USER_SESSION_KEY, user);
                 LOG.info("已封装的用户信息为：" + JSON.toJSONString(user));
+                // 判断客户表信息是否存在，不存在则依据登录信息创建默认的客户信息
+                try{
+                	populateUsrUserInfo(user);
+                }
+                catch(Exception e){
+                	LOG.error("自动填充客户信息[populateUsrUserInfo]失败："+e.getMessage(),e);
+                }
+                
             }
             else{
                 LOG.info("未获取到用户信息");
@@ -63,7 +82,55 @@ public class AssembleUserInfoFilter implements Filter {
         }
     }
 
-    @Override
+    //如果客户表中不存在客户信息，则依据登录信息创建默认的客户信息
+    private void populateUsrUserInfo(GeneralSSOClientUser user) {
+    	long startTime = System.currentTimeMillis();
+    	LOG.info("=====开始populateUsrUserInfo,当前时间戳:"+startTime);
+    	SearchYCUserRequest userReq=new SearchYCUserRequest();
+    	userReq.setUserId(user.getUserId());
+    	long startTimeQryUser = System.currentTimeMillis();
+    	LOG.info("开始查询客户信息,当前时间戳:"+startTimeQryUser);
+    	IYCUserServiceSV userSv=DubboConsumerFactory.getService(IYCUserServiceSV.class);
+    	YCUserInfoResponse userResp= userSv.searchYCUserInfo(userReq);
+    	long endTimeQryUser = System.currentTimeMillis();
+    	LOG.info("结束查询客户信息,当前时间戳:{}，耗时:{}毫秒",endTimeQryUser,(endTimeQryUser-startTimeQryUser));
+    	
+    	if(userResp==null||StringUtil.isBlank(userResp.getUserId())){
+    		long startTimeCompleteUser = System.currentTimeMillis();
+    		LOG.info("客户信息不存在，需自动补全,当前时间戳:"+startTimeCompleteUser);
+    		//说明客户信息不存在，需要依据登录信息创建默认的客户信息
+    		CompleteUserInfoRequest cmpUser=new CompleteUserInfoRequest();
+    		cmpUser.setUserId(user.getUserId());
+    		cmpUser.setLoginName(user.getLoginName());
+    		cmpUser.setMobilePhone(user.getMobile());
+    		//避免网络瞬间中断异常，尝试三次补全
+    		boolean flag=false;
+    		for(int i=0;i<3;i++){
+    			BaseResponse resp=userSv.completeUserInfo(cmpUser);
+    			if(resp.getResponseHeader().getIsSuccess()){
+    				flag=true;
+    				long endTimeCompleteUser = System.currentTimeMillis();
+    		    	LOG.info("结束自动补全客户信息,当前时间戳:{}，耗时:{}毫秒",endTimeCompleteUser,(endTimeCompleteUser-startTimeCompleteUser));
+    				break;
+    			}
+    		}
+    		if(flag){
+    			LOG.info("结束自动补全客户信息OK");
+    		}
+    		else{
+    			LOG.info("结束自动补全客户信息FAILURE");
+    		}
+    		
+    	}
+    	else{
+    		LOG.info("客户存在，不需补全");
+    	}
+    	
+     	long endTime = System.currentTimeMillis();
+        LOG.info("=====结束populateUsrUserInfo,客户信息补全,当前时间戳:{}，耗时:{}毫秒",endTime,(endTime-startTime));
+	}
+
+	@Override
     public void destroy() {
 
     }
