@@ -5,16 +5,13 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="keywords" content="翻译,旅行翻译,在线翻译,找翻译工作,找译员,笔译,口译,兼职翻译,语言工作,语言人才">
 	<meta name="description" content="出国旅行翻译，提供语言翻译，找翻译人才，兼职翻译，语言工作者,就在找翻译">
+	<title>您随身的翻译专家-找翻译</title>
 	<%@include file="/inc/inc.jsp" %>
 	<link rel="stylesheet" type="text/css" href="${uedroot}/css/modular/base.css" />
 	<link rel="stylesheet" type="text/css" href="${uedroot}/css/modular/common.css" />
 	<link rel="stylesheet" type="text/css" href="${uedroot}/css/modular/other.css" />
 	<link rel="shortcut icon" href="favicon.ico" />
 	<script type="text/javascript" src="${uedroot}/scripts/modular/jquery-1.9.1.min.js"></script>
-
-
-	<title>您随身的翻译专家-找翻译</title>
-
 </head>
 <body>
 <div  class="suspension-headr">
@@ -102,6 +99,7 @@
 	</p>
 	<p>Copyright &copy;2015 <a href="http://www.yeecloud.com">www.yeecloud.com</a> All rights reserved. 京ICP备13002826号-7 </p>
 </div>
+<script type="text/javascript" src="${uedroot}/scripts/modular/index.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/jquery.pagepiling.min.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/jquery.app.js"></script>
 </body>
