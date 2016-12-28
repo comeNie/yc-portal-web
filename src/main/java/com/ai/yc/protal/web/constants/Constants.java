@@ -194,7 +194,7 @@ public final class Constants {
 		public static final String ACCOUNT_ENABLE = "1";
 		/** 账户余额充值禁用*/
 		public static final String ACCOUNT_DISABLE = "0";
-		/** 待确认*/
+		/** 账户余额充值是否启用配置中心路径*/
 		public static final String CCS_PATH_ACCOUNT_ENABLE = "/account_enable";
 		
 	}
