@@ -186,4 +186,16 @@ public final class Constants {
 		/** 已领取*/
 		public static final String ORDER_STATUS_RECEIVE = "21";
 	}
+	
+	public final class Account {
+		private Account() {
+		}
+		/** 账户余额充值启用 */
+		public static final String ACCOUNT_ENABLE = "1";
+		/** 账户余额充值禁用*/
+		public static final String ACCOUNT_DISABLE = "0";
+		/** 待确认*/
+		public static final String CCS_PATH_ACCOUNT_ENABLE = "/account_enable";
+		
+	}
 }
