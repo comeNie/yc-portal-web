@@ -332,7 +332,9 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			} else {
 				//文字
 				$("#fy2").hide();
-                $("#clear-btn").show();
+				if ($("#translateContent").val() !='') {
+					$("#clear-btn").show();
+				}
 				$("#selectFormatConv").val("2");
 				// $("#selectAddedSer").attr("disabled",true);
 				// $("#selectFormatConv").attr("disabled",true);
