@@ -27,7 +27,7 @@ define('app/jsp/transOrder/orderList', function (require, exports, module) {
 			"change #state":"_change",
 			"change #fieldCode":"_orderList",
 			"change #useCode":"_orderList",
-			"change #stateListStr":"_orderList",	
+			"change #stateListStr":"_orderList",
     	},
     	
       	//重写父类
@@ -44,6 +44,12 @@ define('app/jsp/transOrder/orderList', function (require, exports, module) {
 			} else {
 				this._orderListByType(state);
 			}
+		},
+
+		//时间查询
+		_timesearch:function () {
+			if ($("#orderTimeStart").val() != '' && $("#orderTimeEnd").val() !='')
+				this._getOrderList();
 		},
     	
     	//状态改变并查询
