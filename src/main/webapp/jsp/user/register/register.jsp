@@ -114,7 +114,7 @@
 
 							<li class="alink">
 								<p class="ml-100"><input id="agreement" type="checkbox" class="radio" checked="checked"></p>
-								<p><spring:message code="ycregister.agreement" arguments="toUserAgreement"/></p>
+								<p><spring:message code="ycregister.agreement" arguments="${_base}/agreement"/></p>
 								<p class="right"><a href="${_base}/p/index"><spring:message	code="ycregister.haveAccounts" /></a></p>
 							</li>
 							<li class="ml-100"><input id="regsiterBtn" type="button" class="btn btn-blue btn-415 radius20" value="<spring:message code="ycregister.registerNow" />"></li></ul>

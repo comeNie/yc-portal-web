@@ -292,6 +292,10 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     			/*如果参数值存在，则进行校验*/
     			var empty = $.trim(value).length?false:true;
     			if(empty)return true;
+    			var userNameLength = $.trim(value).length;
+    			if(userNameLength<6||userNameLength>16){
+    				$("#userNameErrMsg").hide();
+    			}
     			var valid =  (_this._regCheckUserName(value))?true:false;	
     			if(!valid){
     				$("#userNameErrMsg").hide();
