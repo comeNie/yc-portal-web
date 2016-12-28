@@ -37,12 +37,12 @@ $(function () {
     })
 		$(".in-switch-hover").click(function () {
                 $(this).hide(1);
-           });
-		$('.in-switch-hover').mouseleave(function () {
+           });	
+		$('.placeorder-breadcrumb').mouseleave(function () {
         $('.in-switch-hover').hide(1);
         $('#in-switch a').children('i').removeClass("icon-caret-up");
-    });
-});
+    });	
+}); 
 //左侧菜单关闭
 $(function(){
 $(".left-tplist i").click(function () {
