@@ -52,6 +52,12 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
 				this._orderListByType(displayFlag);
 			}
 		},
+
+		//时间查询
+		_timesearch:function () {
+			if ($("#orderTimeStart").val() != '' && $("#orderTimeEnd").val() !='')
+				this._getOrderList();
+		},
     	
     	//改变状态并查询
     	_change:function() {
