@@ -66,8 +66,5 @@
                }
         }
         return format;
-  }
-    $(document).ready(function(){
-        $("input, textarea").placeholder();
-    });
+  };
 </script>

@@ -365,6 +365,8 @@
             var id = $(this).parent().parent('ul').find('li:first').attr("id");
          	pager._removeFile(id);
         });
+        //IE8的输入框提示信息兼容
+        $("input,textarea").placeholder();
 	})();
 	
 

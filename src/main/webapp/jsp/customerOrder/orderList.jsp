@@ -306,7 +306,7 @@ var current = "orderList";
        <%-- 延迟确认订单 --%>
        //$("#confirmOrder").delegate("input[name='lateConfirmOrder']","click",function(){
        //});
-      
+    $("input").placeholder();
 })();
 
 //选择结束时间触发

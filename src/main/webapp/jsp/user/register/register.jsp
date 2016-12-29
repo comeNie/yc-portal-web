@@ -134,6 +134,7 @@
 			});
 			pager.render();
 		});
+        $("input").placeholder();
 	})();
 	var registerMsg = {
 		"account_phone_empty" : '<spring:message code="ycregisterMsg.accountPhoneEmpty" />',

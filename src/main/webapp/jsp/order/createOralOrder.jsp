@@ -201,6 +201,7 @@
 			pager = new createOralOrderPage({element : document.body});
 			pager.render();
 		});
+        $("input").placeholder();
 	})();
 </script>
 </html>
