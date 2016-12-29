@@ -117,7 +117,9 @@ define('app/jsp/home', function (require, exports, module) {
 				},
 				success: function (data) {
 					if("OK" === data.statusInfo) {
-
+						//设置启用分词
+                        $("#tgtNew").attr("onmousemove","srcMove()");
+                        $("#tgtNew").attr("onmouseout","srcOut()");
 						//图标展示
                         $(".post-cion").css("visibility","visible");
 						$("#transError").html('');
@@ -147,11 +149,14 @@ define('app/jsp/home', function (require, exports, module) {
 									var srcTokenized  = item["src-tokenized"];
 									if(tgtTokenized){
 										_this._yiwenSpan(alignmentRaw,tgtTokenized,srcTokenized,i+1);
-									}else{
+									}//若没有分词信息，则不触发分词。
+									else{
 										$("#srcNew").append(" <span id='src_10'>"+$("#int-before").val()+"</span> ");
 										$("#tgtOld").hide();
 										$("#tgtNew").show();
-										$("#tgtNew").append(" <span class='' id='10'  onmousemove='tgtMove(10)' onmouseout='tgtOut(10)'>"+ywText+"</span> ");
+                                        $("#tgtNew").removeAttr("onmousemove");
+                                        $("#tgtNew").removeAttr("onmouseout");
+										$("#tgtNew").append(" <span class='' id='10'>"+ywText+"</span> ");
 									}
 								});
 							});
