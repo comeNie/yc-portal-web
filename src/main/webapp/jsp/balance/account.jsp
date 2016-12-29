@@ -1,3 +1,5 @@
+<%@page import="com.ai.yc.protal.web.constants.Constants"%>
+<%@page import="com.ai.opt.sdk.components.ccs.CCSClientFactory"%>
 <%@ page import="com.ai.paas.ipaas.i18n.ZoneContextHolder" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -8,6 +10,17 @@
     <%@ include file="/inc/inc.jsp" %>
     <title><spring:message code="account.my.account"/></title>
 </head>
+<%
+//默认设置成1为开启，0为关闭
+String accountEnable="1";
+try{
+	accountEnable=CCSClientFactory.getDefaultConfigClient().get(Constants.Account.CCS_PATH_ACCOUNT_ENABLE);
+	System.out.println("accountEnable="+accountEnable);
+}
+catch(Exception e){
+	//获取配置出错，直接忽略，视为开启
+}
+%>
 <body>
 <!--头部-->
 <%@ include file="/inc/userTopMenu.jsp" %>
@@ -39,7 +52,7 @@
                                 </span>
                                 <%--<span>${balance}</span>--%>
                             </li>
-                            <% if(Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())){ %>
+                            <% if(Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())&&Constants.Account.ACCOUNT_ENABLE.equals(accountEnable)){ %>
                             <li class="c-bj-bule"><a href="${_base}/p/balance/depositFund"><spring:message code="account.recharge"/></a></li>
                             <% } %>
                         </ul>
