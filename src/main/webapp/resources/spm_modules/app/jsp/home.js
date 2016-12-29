@@ -154,6 +154,7 @@ define('app/jsp/home', function (require, exports, module) {
 										$("#srcNew").append(" <span id='src_10'>"+$("#int-before").val()+"</span> ");
 										$("#tgtOld").hide();
 										$("#tgtNew").show();
+										//取消分词触发
                                         $("#tgtNew").removeAttr("onmousemove");
                                         $("#tgtNew").removeAttr("onmouseout");
 										$("#tgtNew").append(" <span class='' id='10'>"+ywText+"</span> ");
