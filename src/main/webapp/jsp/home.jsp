@@ -125,7 +125,7 @@
                 <div id="srcNew" class="int-before ta_text"  style="display: none;">
                 </div>
                 <div id="srcOld" class="int-before"  style="display: block;">
-                    <textarea maxlength="2000" class="int-before" id="int-before"></textarea>
+                    <textarea onkeyup="textCounter(this,'inputsLen',2000);" onkeydown="textCounter(this,'inputsLen',2000);" class="int-before" id="int-before"></textarea>
                     <div class="already"><spring:message code="home.Alreadyinput" arguments="0,2000"/></div>
                  </div>
 
