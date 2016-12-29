@@ -50,7 +50,8 @@
 .placeorder-breadcrumb ul li a{color:#333}
 .placeorder-breadcrumb ul .left{line-height:38px;}
 .placeorder-breadcrumb ul .left i{margin-right:10px;}
-.placeorder-breadcrumb ul .right{float:right;position:relative;}
+/*.placeorder-breadcrumb ul .right{float:right;position:relative;}*/
+.placeorder-breadcrumb ul .right{float:right;position:relative;height:38px;}
 .placeorder-breadcrumb ul .right p{height:18px;margin-top:10px;line-height:18px;}
 .placeorder-breadcrumb ul .right p a{padding-right:10px;margin-left:10px;color:#333;border-right:1px solid #d3d3d3;}
 .placeorder-breadcrumb ul .right p a:hover{color:#0083ff}
