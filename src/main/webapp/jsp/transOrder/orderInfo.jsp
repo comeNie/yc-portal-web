@@ -8,9 +8,10 @@
     <title><spring:message code="myOrder.Orderdetails"/></title>
     <link rel="stylesheet" type="text/css" href="${_base}/resources/spm_modules/webuploader/webuploader.css">
     <style>
-        .webuploader-pick {width:80px;height:25px;font-size:12px;color:#2965e6;border:1px solid #2361ea;
+       .webuploader-pick{width:80px;height:25px;font-size:12px;color:#2965e6;border:1px solid #2361ea;
             background:#fff;color:#2361ea;font-weight:normal;line-height:5px;left: 80px;
             cursor:pointer;text-align:center;outline:none;border-radius:30px;}
+       .webuploader-container{ width:80px;height: auto;  }
     </style>
 </head>
 <body>
@@ -184,7 +185,7 @@
 				 				</c:if>
 							</div>
 			 			</c:if>
-			 			
+
 			 		  </div>
 			 		  <div id="translate2"  <c:if test="${OrderDetails.translateType != '2'}"> style="display: none;"</c:if> >
 			 		  	 <!-- 订单轨迹 -->
