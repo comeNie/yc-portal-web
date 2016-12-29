@@ -97,7 +97,7 @@ catch(Exception e){
                             <p><a href="#"><spring:message code="account.starting.endingtime"/></a></p>
                             <p><input style="width: 140px" id="beginDate" name="beginDate" type="text" value="" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}',onpicked:function(dp){begintime();}})" readonly="readonly"></p>
                             <p>~</p>
-                            <p><input style="width: 140px" id="endDate" name="endDate" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'beginDate\')}',onpicked:function(dp){endtime();}})" readonly="readonly"></p>
+                            <p><input style="width: 140px" id="endDate" name="endDate" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'beginDate\')}',maxDate:'%y-%M-%d',onpicked:function(dp){endtime();}})" readonly="readonly"></p>
                         </li>
                         <li class="left li-xlarge" id="incomes">
                             <input type="hidden" id="incomeFlag" name="incomeFlag" value=""/>
@@ -268,8 +268,10 @@ catch(Exception e){
         var iClass = $("#saixuan").children("i").attr("class");
         if(iClass=="icon-angle-down"){
             $("#saixuan").children("span").text("收起筛选");
+            $("#saixuan").children("i").attr("class","icon-angle-up");
         }else {
             $("#saixuan").children("span").text("高级筛选")
+            $("#saixuan").children("i").attr("class","icon-angle-down");
         }
     }
     //选择结束时间触发
@@ -293,6 +295,47 @@ catch(Exception e){
         });
         $(target).parent().attr("class","current");
         $("#incomeFlag").val(aval);
+        //收支,类型联动
+        if (aval=='1'){
+            if($("#tixian").parent().attr("class")=="current"||$("#xiadan").parent().attr("class")=="current"){
+                $("#allType").parent().attr("class","current");
+                var aval = $("#allType").attr("aval");
+                $("#optType").val(aval);
+                pager._incomeList();
+            }
+            $("#tixian").removeAttr('onclick');
+            $("#xiadan").removeAttr('onclick');
+            $("#tixian").parent().attr("class","current-hid");
+            $("#xiadan").parent().attr("class","current-hid");
+            $("#chongzhi").attr("onclick","totype('#chongzhi');");
+            $("#tuikuan").attr("onclick","totype('#tuikuan');");
+            $("#chongzhi").parent().attr("class",null);
+            $("#tuikuan").parent().attr("class",null);
+        }else if (aval=='0'){
+            if($("#chongzhi").parent().attr("class")=="current"||$("#tuikuan").parent().attr("class")=="current"){
+                $("#allType").parent().attr("class","current");
+                var aval = $("#allType").attr("aval");
+                $("#optType").val(aval);
+                pager._incomeList();
+            }
+            $("#chongzhi").removeAttr('onclick');
+            $("#tuikuan").removeAttr('onclick');
+            $("#chongzhi").parent().attr("class","current-hid");
+            $("#tuikuan").parent().attr("class","current-hid");
+            $("#tixian").attr("onclick","totype('#tixian');");
+            $("#xiadan").attr("onclick","totype('#xiadan');");//current-hid
+            $("#tixian").parent().attr("class",null);
+            $("#xiadan").parent().attr("class",null);
+        }else {
+            $("#chongzhi").attr("onclick","totype('#chongzhi');");
+            $("#tuikuan").attr("onclick","totype('#tuikuan');");
+            $("#tixian").attr("onclick","totype('#tixian');");
+            $("#xiadan").attr("onclick","totype('#xiadan');");
+            $("#chongzhi").parent().attr("class",null);
+            $("#tuikuan").parent().attr("class",null);
+            $("#tixian").parent().attr("class",null);
+            $("#xiadan").parent().attr("class",null);
+        }
     }
     //日期切换
     function todate(target,id) {
@@ -338,7 +381,10 @@ catch(Exception e){
             return;
         }
         $("#types p").each(function(){
-            $(this).attr("class",null);
+            var current = $(this).attr("class");
+            if (current=="current"){
+                $(this).attr("class",null);
+            }
         });
         $(target).parent().attr("class","current");
     }
