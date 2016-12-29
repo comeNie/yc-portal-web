@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.ai.opt.sdk.components.ccs.CCSClientFactory;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.slp.balance.api.deduct.interfaces.IDeductSV;
@@ -257,6 +258,17 @@ public class CustomerOrderController {
             //是否显示待充值信息
             uiModel.addAttribute("needPay",
                     (balanceInfo!=null&&balanceInfo.getBalance()<orderFeeInfo.getTotalFee())?true:false);
+
+            //默认设置成1为开启，0为关闭
+            String accountEnable="1";
+            try{
+                accountEnable = CCSClientFactory.getDefaultConfigClient().get(Constants.Account.CCS_PATH_ACCOUNT_ENABLE);
+                LOGGER.info("The account enable is {}",accountEnable);
+            } catch(Exception e){
+                //获取配置出错，直接忽略，视为开启
+                LOGGER.error("获取配置信息{}错误，使用默认值{}",Constants.Account.CCS_PATH_ACCOUNT_ENABLE,accountEnable);
+            }
+            uiModel.addAttribute("accountEnable",accountEnable);
         }
         //订单编号
         uiModel.addAttribute("orderId",orderId);
