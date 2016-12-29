@@ -531,6 +531,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		//清空输入文字
 		_clearText:function() {
 			$("#translateContent").val("");
+            $("#inputsLen").html(0);
 			$("#clear-btn").hide();
 		},
 
@@ -552,6 +553,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 // }
 			} else {
 				$("#clear-btn").hide();
+                $("#inputsLen").html(0);
 			}
 		},
 
