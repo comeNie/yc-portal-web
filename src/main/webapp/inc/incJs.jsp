@@ -68,6 +68,6 @@
         return format;
   }
     $(document).ready(function(){
-        $("input").placeholder();
+        $("input, textarea").placeholder();
     });
 </script>

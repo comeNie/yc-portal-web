@@ -340,6 +340,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				// $("#selectFormatConv").attr("disabled",true);
 				// $("#selectAddedSer option:first").hide();
 				// $("#selectFormatConv option:first").hide();
+                $("#inputsLen").html($("#translateContent").val().length);
 
                 this.toggleOptionShow($('#selectAddedSer'),'',[0]);
                 this.toggleOptionShow($('#selectFormatConv'),'',[0]);
@@ -530,6 +531,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		//清空输入文字
 		_clearText:function() {
 			$("#translateContent").val("");
+            $("#inputsLen").html(0);
 			$("#clear-btn").hide();
 		},
 
@@ -539,18 +541,19 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			if (variable !== '')  {
 				$("#clear-btn").show();
 
-                var key_le = variable.length;
-                if(key_le > 2000){
-                    //如果元素区字符数大于最大字符数，按照最大字符数截断；
-                    variable = variable.substring(0, 2000);
-                    $("#int-before").val(variable);
-                    $("#inputsLen").html(2000);
-                }else{
-                    //在记数区文本框内显示剩余的字符数；
-                    $("#inputsLen").html(key_le);
-                }
+                // var key_le = variable.length;
+                // if(key_le > 2000){
+                //     //如果元素区字符数大于最大字符数，按照最大字符数截断；
+                //     variable = variable.substring(0, 2000);
+                //     $("#int-before").val(variable);
+                //     $("#inputsLen").html(2000);
+                // }else{
+                //     //在记数区文本框内显示剩余的字符数；
+                //     $("#inputsLen").html(key_le);
+                // }
 			} else {
 				$("#clear-btn").hide();
+                $("#inputsLen").html(0);
 			}
 		},
 

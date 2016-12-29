@@ -106,8 +106,9 @@
 				<div class="translate-int translate-int1 radius" id="fy1">
 					<p>
 						<!--  翻译内容-->
-						<textarea id="translateContent" maxlength="2000" name="translateContent"
-						  	class="int-text textarea-xlarge-100 radius" placeholder="<spring:message code="order.transContent"/>">${fn:replace(order.productInfo.needTranslateInfo,'<br />', '')}</textarea>
+						<textarea id="translateContent"  name="translateContent"
+								  onkeyup="textCounter(this,'inputsLen',2000);" onkeydown="textCounter(this,'inputsLen',2000);"
+								  class="int-text textarea-xlarge-100 radius" placeholder="<spring:message code="order.transContent"/>">${fn:replace(order.productInfo.needTranslateInfo,'<br />', '')}</textarea>
 					</p>
 					<!-- 上传文档btn -->
 					<p class="right"><input type="button" class="btn border-blue radius20 btn-80"
@@ -349,6 +350,7 @@
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript" src="${uedroot}/scripts/modular/drop-down.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
+<script type="text/javascript" src="${spmRes}/app/jsp/index.js"></script>
 <script type="text/javascript">
 	(function () {
 		var pager;

@@ -1,6 +1,5 @@
 package com.ai.yc.protal.web.controller.user.register;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -19,14 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.opt.sdk.util.BeanUtils;
 import com.ai.opt.sdk.util.CollectionUtil;
-import com.ai.opt.sdk.util.UUIDUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.util.StringUtil;
-import com.ai.slp.balance.api.accountmaintain.interfaces.IAccountMaintainSV;
-import com.ai.slp.balance.api.accountmaintain.param.RegAccReq;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.PhoneVerify;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
@@ -45,9 +40,7 @@ import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckeMobileRequest;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersActiveRequest;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.InsertYCUserRequest;
-import com.ai.yc.user.api.userservice.param.UpdateYCUserRequest;
 import com.ai.yc.user.api.userservice.param.YCInsertUserResponse;
-import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
@@ -269,9 +262,9 @@ public class RegisterController {
 	
 	public String test() {
 		InsertYCUserRequest req = new InsertYCUserRequest();
-		req.setEmail("714115852@qq.com");
+		req.setEmail("");
 		YCInsertUserResponse res = new YCInsertUserResponse();
-		res.setUsername("小徐");
+		res.setUsername("");
 		res.setUserId("1");
 		res.setOperationcode("222333");
 		sendRegisterEmaial(req,res);
