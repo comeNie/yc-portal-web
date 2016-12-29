@@ -75,14 +75,14 @@
                                        readonly type="text"
                                       onfocus="WdatePicker({lang:'${my97Lang}',el:id,readOnly:true,
                                               dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')||\'%y-%M-%d\';}',
-                                              ychanging:_changeDate,Mchanging:_changeDate,dchanging:_changeDate})"/>
+                                              onpicked:function(dp){_changeStartDate();}})"/>
                             </p>
                             <p>－</p>
                             <p><input id="endDate" name="endDateStr" class="int-text int-small radius"
                                       type="text" readonly
                                       onfocus="WdatePicker({lang:'${my97Lang}',el:id,readOnly:true,dateFmt:'yyyy-MM-dd',
                                       minDate:'#F{$dp.$D(\'startDate\');}',maxDate:'%y-%M-%d',
-                                      ychanging:_changeDate,Mchanging:_changeDate,dchanging:_changeDate})"/>
+                                              onpicked:function(dp){_changeEndDate();}})"/>
                             </p>
                             <p class="iocn-oder">
                                 <input type="text" name="translateName" class="int-text int-medium radius pr-30 in-x"
@@ -189,16 +189,26 @@
         $("input").placeholder();
     })();
     //时间变更处理
-    function _changeDate() {
-        var startDate = $("#startDate").val();
+    function _changeStartDate() {
         var endDate = $("#endDate").val();
         //若时间发生变更且dateObj不为空,则刷新页面
         if (window.console){
-            console.log(startDate+","+endDate);
+            console.log("end:"+endDate);
         }
-        //开始时间和结束时间均不为空时，进行查询
-        if(startDate !=null && startDate!=""
-            && endDate!=null && endDate!=""){
+        //结束时间不为空时，进行查询
+        if(endDate!=null && endDate!=""){
+            pager._getOrderList();
+        }
+    }
+    //时间变更处理
+    function _changeEndDate() {
+        var startDate = $("#startDate").val();
+        //若时间发生变更且dateObj不为空,则刷新页面
+        if (window.console){
+            console.log("start:"+startDate);
+        }
+        //开始时间不为空时，进行查询
+        if(startDate !=null && startDate!=""){
             pager._getOrderList();
         }
     }
