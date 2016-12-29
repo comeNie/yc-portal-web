@@ -336,6 +336,7 @@ catch(Exception e){
             $("#tixian").parent().attr("class",null);
             $("#xiadan").parent().attr("class",null);
         }
+        pager._incomeList();
     }
     //日期切换
     function todate(target,id) {
@@ -387,6 +388,7 @@ catch(Exception e){
             }
         });
         $(target).parent().attr("class","current");
+        pager._incomeList();
     }
 
 </script>
