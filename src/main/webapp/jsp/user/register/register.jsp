@@ -11,7 +11,7 @@
 <%@ include file="/inc/inc.jsp"%>
 <link href="${uedroot}/css/modular/login-regsiter.css" rel="stylesheet"
 	type="text/css" />
-<%@ include file="/inc/incJs.jsp" %>
+
 </head>
 <body class="login-body">
 	<div class="login-big">
@@ -122,10 +122,9 @@
 				</form>
 			</div>
 		</div>
-
-
 	</div>
 </body>
+<%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
 	var pager;
 	(function() {

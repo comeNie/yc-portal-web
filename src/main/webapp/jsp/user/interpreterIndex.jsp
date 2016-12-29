@@ -7,7 +7,7 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title></title>
     <%@ include file="/inc/inc.jsp" %>
-    <%@ include file="/inc/incJs.jsp" %>
+
 </head>
 <body>
 <!--头部-->
@@ -149,6 +149,7 @@
 </div>
 <%@ include file="/inc/userFoot.jsp"%>
 </body>
+<%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
 	var interpretrMsg = {
 			"noCertificationMsg" : '<spring:message code="ycaccountcenter.interpreterIndex.noCertificationMsg"/>',

@@ -9,7 +9,7 @@
 	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<%@ include file="/inc/inc.jsp"%>
 	<title><spring:message code="ycleftmenu.mymainpage"/></title>
-<%@ include file="/inc/incJs.jsp"%>
+
 </head>
 <body>
 	<!--头部-->
@@ -145,6 +145,7 @@
 	</div>
 	<%@ include file="/inc/userFoot.jsp"%>
 </body>
+<%@ include file="/inc/incJs.jsp"%>
 	<script id="orderTemple1" type="text/template">
 				<table class="table  table-bg tb-border mb-20">
 	<thead>
