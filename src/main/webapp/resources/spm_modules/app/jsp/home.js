@@ -177,7 +177,7 @@ define('app/jsp/home', function (require, exports, module) {
 			var _this = this;
 			var from = $(".dropdown .selected").eq(0).attr("value");
 
-			// var key =  $("#int-before").val();
+			var key =  $("#int-before").val();
 
             _this._resetMt();
 			if (key) {
