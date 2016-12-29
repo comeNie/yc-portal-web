@@ -20,6 +20,33 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    <!-- 安全过滤器-->
+    <filter>
+        <filter-name>xss-firewall</filter-name>
+        <filter-class>com.ai.net.xss.filter.XSSFilter</filter-class>
+    </filter>
+   
+    <filter-mapping>
+        <filter-name>xss-firewall</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- 统一会话 -->
+    <filter>
+        <filter-name>sessionFilter</filter-name>
+        <filter-class>com.ai.opt.uni.session.filter.CacheSessionFilter</filter-class>
+        <init-param>
+            <param-name>ignore_suffix</param-name>
+            <param-value>.png,.jpg,.jpeg,.gif,.css,.js,.html,.htm</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cookie_name</param-name>
+            <param-value>YC_PORTAL_JESSIONID</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>sessionFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <!-- 编码过滤器 -->
     <filter>
         <filter-name>encoding</filter-name>
@@ -46,34 +73,7 @@
 		<filter-name>timeZoneFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-    <!-- 安全过滤器-->
-    <filter>
-        <filter-name>xss-firewall</filter-name>
-        <filter-class>com.ai.net.xss.filter.XSSFilter</filter-class>
-    </filter>
-   
-    <filter-mapping>
-        <filter-name>xss-firewall</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
 
-    <!-- 统一会话 -->
-    <filter>
-        <filter-name>sessionFilter</filter-name>
-        <filter-class>com.ai.opt.uni.session.filter.CacheSessionFilter</filter-class>
-        <init-param>
-            <param-name>ignore_suffix</param-name>
-            <param-value>.png,.jpg,.jpeg,.gif,.css,.js,.html,.htm</param-value>
-        </init-param>
-        <init-param>
-            <param-name>cookie_name</param-name>
-            <param-value>YC_PORTAL_JESSIONID</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>sessionFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
     <!-- 单点登录 -->
     <filter>
         <filter-name>ssoProxyFilter</filter-name>
