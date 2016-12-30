@@ -236,14 +236,14 @@ catch(Exception e){
                 {{/if}}
             </td>
             <td>
-                {{if channel && channel.length > 8}}
+                {{if channel!=null && channel.length > 8}}
                 {{:~subStr(8,channel)}}
                 {{else}}
                 {{:channel}}
                 {{/if}}
             </td>
             <td>
-                {{if channel && remark.length > 8}}
+                {{if remark!=null && remark.length > 8}}
                 {{:~subStr(8,remark)}}
                 {{else}}
                 {{:remark}}
