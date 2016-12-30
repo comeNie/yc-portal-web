@@ -77,7 +77,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                     translateContent: {
                         required: true,
 						notNull: true,
-                        maxlength: 2000,
+                        // maxlength: 2000,
                         remote: {                                          //验证检查语言
                             type: "POST",
                             url: _base + "/translateLan",
@@ -117,7 +117,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                     translateContent: {
                         required: $.i18n.prop('order.place.error.translation'), //"请输入翻译内容",
 						notNull: $.i18n.prop('order.place.error.translation'),
-                        maxlength: $.i18n.prop('order.place.error.Maximum'),//"最大长度不能超过{0}",
+                        // maxlength: $.i18n.prop('order.place.error.Maximum'),//"最大长度不能超过{0}",
                         remote:  $.i18n.prop('order.place.error.contentConsis')//"您输入的内容和源语言不一致"
                     },
 					inputFormatConv: {
