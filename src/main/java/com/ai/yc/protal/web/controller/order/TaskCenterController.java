@@ -41,6 +41,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.*;
 
+import static com.ai.yc.protal.web.constants.OrderConstants.State.RECEIVE;
+
 /**
  * 订单大厅
  * Created by liutong on 16/11/15.
@@ -184,9 +186,9 @@ public class TaskCenterController {
         OrderReceiveBaseInfo baseInfo = new OrderReceiveBaseInfo();
         baseInfo.setOrderId(orderId);
         if (OrderConstants.TranslateType.ORAL.equals(translateType)) {
-            baseInfo.setState(OrderConstants.State.RECEIVE);//状态为固定的
-        } else {
             baseInfo.setState(OrderConstants.State.TRANSLATING);//状态为固定的
+        } else {
+            baseInfo.setState(OrderConstants.State.RECEIVE);//状态为固定的
         }
 
         baseInfo.setInterperId(userId);
