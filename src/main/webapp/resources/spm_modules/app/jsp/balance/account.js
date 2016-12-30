@@ -46,6 +46,7 @@ define('app/jsp/balance/account', function (require, exports, module) {
 				path: _i18n_res, //资源文件路径
 				mode: 'both',
 				language: currentLan,
+                checkAvailableLanguages: true,
 				async: false
 			});
 
@@ -93,7 +94,7 @@ define('app/jsp/balance/account', function (require, exports, module) {
 							var htmlOutput = template.render(data);
 							$("#searchAccountData").html(htmlOutput);
 						}else {
-							document.getElementById("showAccountDiv").innerHTML = "<li class='dialog-icon-notquery'></li><li>"+$.i18n.prop('com.ajax.req.fail.null')+"</li>";
+							document.getElementById("showAccountDiv").innerHTML = "<li class='dialog-icon-notquery'></li><li>"+$.i18n.prop('com.ajax.req.fail.empty')+"</li>";
 							document.getElementById("showAccountDiv").className = "not-query pt-20 pb-20";
 						}
 	            	}
