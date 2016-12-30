@@ -183,7 +183,7 @@ public class TaskCenterController {
         OrderReceiveRequest receiveRequest = new OrderReceiveRequest();
         OrderReceiveBaseInfo baseInfo = new OrderReceiveBaseInfo();
         baseInfo.setOrderId(orderId);
-        baseInfo.setState(OrderConstants.State.RECEIVE);//状态为固定的
+        baseInfo.setState(OrderConstants.State.TRANSLATING);//状态为固定的
         baseInfo.setInterperId(userId);
         //译员类型 0:普通译员 1:LSP
         String interperType = StringUtils.isNotBlank(lspId)?"1":"0";

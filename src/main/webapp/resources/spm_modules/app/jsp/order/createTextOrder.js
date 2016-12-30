@@ -57,6 +57,16 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			this._initPage();
     	},
 
+        textCounter:function($this,desc,maxlimit) {
+            var totalWords =  CountWordsUtil.count( $($this).val());
+            if (totalWords > maxlimit){
+                //如果元素区字符数大于最大字符数，按照最大字符数截断；
+                $($this).val($($this).val().substring(0, maxlimit));
+            }
+            //在记数区文本框内显示剩余的字符数；
+            $("#"+desc).html(totalWords);
+        },
+
         _initValidate: function () {
             var _this = this;
             var formValidator = $("#textOrderForm").validate({
