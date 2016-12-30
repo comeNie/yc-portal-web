@@ -263,14 +263,18 @@ catch(Exception e){
             pager.render();
         });
     })();
+    var account = {
+        screening	: '<spring:message code="account.advanced.screening"/>',
+        roll : '<spring:message code="account.advanced.roll"/>'
+    };
     //高级筛选,收起筛选互换
     function saixuan(target) {
         var iClass = $("#saixuan").children("i").attr("class");
         if(iClass=="icon-angle-down"){
-            $("#saixuan").children("span").text("收起筛选");
+            $("#saixuan").children("span").text(account.roll);
             $("#saixuan").children("i").attr("class","icon-angle-up");
         }else {
-            $("#saixuan").children("span").text("高级筛选")
+            $("#saixuan").children("span").text(account.screening);
             $("#saixuan").children("i").attr("class","icon-angle-down");
         }
     }
