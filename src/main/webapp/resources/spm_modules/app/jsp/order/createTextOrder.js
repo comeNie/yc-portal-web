@@ -351,7 +351,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				// $("#selectFormatConv").attr("disabled",true);
 				// $("#selectAddedSer option:first").hide();
 				// $("#selectFormatConv option:first").hide();
-                $("#inputsLen").html($("#translateContent").val().length);
+
+                $("#inputsLen").html( CountWordsUtil.count( $("#translateContent").val() ) );
 
                 this.toggleOptionShow($('#selectAddedSer'),'',[0]);
                 this.toggleOptionShow($('#selectFormatConv'),'',[0]);
