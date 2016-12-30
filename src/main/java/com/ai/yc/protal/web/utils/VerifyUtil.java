@@ -27,6 +27,7 @@ import com.ai.yc.protal.web.constants.Constants.PhoneVerify;
 import com.ai.yc.protal.web.constants.Constants.PictureVerify;
 import com.ai.yc.protal.web.model.mail.SendEmailRequest;
 import com.alibaba.fastjson.JSONObject;
+import com.esotericsoftware.minlog.Log;
 
 public class VerifyUtil {
 	private static final Logger LOGGER = LoggerFactory
@@ -296,6 +297,7 @@ public class VerifyUtil {
 	public static String getRedisValue(String key){
 		if (!StringUtil.isBlank(key)) {
 			ICacheClient iCacheClient = AiPassUitl.getCacheClient();
+			Log.info("从缓存中获取值"+iCacheClient.get(key));
 			return iCacheClient.get(key);
 		}
 		return "";
@@ -307,6 +309,7 @@ public class VerifyUtil {
 	 * @return
 	 */
 	public static boolean checkRedisValue(String key,String ckValue){
+		Log.info("校验缓存值"+key+"ckValue======="+ckValue);
 		String code = getRedisValue(key);
 		boolean isOk = false;
 		if (!StringUtil.isBlank(code) && !StringUtil.isBlank(ckValue)

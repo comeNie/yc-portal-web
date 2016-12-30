@@ -202,6 +202,22 @@ public class PayController {
         }
 
     }
+
+    /**
+     * 余额支付结果
+     * @param orderId
+     * @param payResult
+     * @param uiModel
+     * @return
+     */
+    @RequestMapping("/yePayResultView")
+    public String yePayResultView(String orderId,Boolean payResult,Model uiModel){
+        //订单号
+        uiModel.addAttribute("orderId",orderId);
+        //支付结果
+        uiModel.addAttribute("payResult",payResult);
+        return "order/orderPayResult";
+    }
     /**
      * 验证签名是否正常
      * @param payNotify

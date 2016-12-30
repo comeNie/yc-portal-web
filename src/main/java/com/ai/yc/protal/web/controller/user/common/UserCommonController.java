@@ -144,6 +144,9 @@ public class UserCommonController {
 			maxCountKey = PhoneVerify.UPDATE_DATA_PHONE_CODE_MAX_COUNT;
 			maxCountOverTimeKey = PhoneVerify.UPDATE_DATA_PHONE_CODE_MAX_COUNT_OVERTIME;
 		}
+		
+		LOG.info("codeKey"+codeKey+"codeOverTimeKey"+codeOverTimeKey+"nowCountKey"+nowCountKey);
+		
 		req.setCodeKey(codeKey);
 		req.setCodeOverTimeKey(codeOverTimeKey);
 		req.setMaxCountKey(maxCountKey);
