@@ -359,6 +359,7 @@ var pager;
 		});
 		pager.render();
 	});
+    $("input").placeholder();
 })();
 </script>
 <script src="${_base}/resources/spm_modules/email/emailHandle.js"></script>

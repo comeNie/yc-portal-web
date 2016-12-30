@@ -13,8 +13,21 @@
 define(function (require, exports, module) {
 
 require("jquery-validation/1.15.1/jquery.validate");
+var CountWordsUtil = require("app/util/countWords");
 
 /***====AIOPT 扩展校验方法   开始====***/
+/**
+ * FUNCTION: 字数统计不能超过最大限制
+ * PARAMETER: 字符串s
+ * RETURNS: true/false
+ */
+$.validator.addMethod( "wordsMax", function( value, element, param ) {
+	if(param==false)return true;
+	/*如果参数值存在，则进行校验*/
+	var valid = CountWordsUtil.count(value) > 2000? false:true;
+	return valid;
+}, $.validator.format( "超出最大长度" ) );
+
 /**
 * FUNCTION: isDate 校验日期是否合法yyyy-mm-dd这种格式的日期
 * PARAMETER: 字符串s

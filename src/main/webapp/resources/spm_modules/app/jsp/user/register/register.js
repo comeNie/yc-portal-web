@@ -39,7 +39,10 @@ define(
 								data : {},
 								success : function(json) {
 									var data = json.data;
-									console.log(currentLan);
+									if(window.console){
+                                        console.log(currentLan);
+									}
+
 									if (json.statusCode == "1" && data) {
 										var html = [];
 										for (var i = 0; i < data.length; i++) {

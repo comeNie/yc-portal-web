@@ -44,6 +44,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				name: ["orderInfo"], //资源文件名称，可以是数组
 				path: _i18n_res, //资源文件路径
 				mode: 'both',
+                checkAvailableLanguages: true,
 				language: currentLan
 			});
 
@@ -57,6 +58,16 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			this._initPage();
     	},
 
+        textCounter:function($this,desc,maxlimit) {
+            var totalWords =  CountWordsUtil.count( $($this).val());
+            // if (totalWords > maxlimit){
+            //     //如果元素区字符数大于最大字符数，按照最大字符数截断；
+            //     $($this).val($($this).val().substring(0, maxlimit));
+            // }
+            //在记数区文本框内显示剩余的字符数；
+            $("#"+desc).html(totalWords);
+        },
+
         _initValidate: function () {
             var _this = this;
             var formValidator = $("#textOrderForm").validate({
@@ -66,7 +77,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                     translateContent: {
                         required: true,
 						notNull: true,
-                        maxlength: 2000,
+                        wordsMax: 2000,
                         remote: {                                          //验证检查语言
                             type: "POST",
                             url: _base + "/translateLan",
@@ -106,7 +117,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                     translateContent: {
                         required: $.i18n.prop('order.place.error.translation'), //"请输入翻译内容",
 						notNull: $.i18n.prop('order.place.error.translation'),
-                        maxlength: $.i18n.prop('order.place.error.Maximum'),//"最大长度不能超过{0}",
+                        wordsMax: $.i18n.prop('order.place.error.MaximumWords'),//"超出最大长度,
                         remote:  $.i18n.prop('order.place.error.contentConsis')//"您输入的内容和源语言不一致"
                     },
 					inputFormatConv: {
@@ -332,12 +343,16 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			} else {
 				//文字
 				$("#fy2").hide();
-                $("#clear-btn").show();
+				if ($("#translateContent").val() !='') {
+					$("#clear-btn").show();
+				}
 				$("#selectFormatConv").val("2");
 				// $("#selectAddedSer").attr("disabled",true);
 				// $("#selectFormatConv").attr("disabled",true);
 				// $("#selectAddedSer option:first").hide();
 				// $("#selectFormatConv option:first").hide();
+
+                $("#inputsLen").html( CountWordsUtil.count( $("#translateContent").val() ) );
 
                 this.toggleOptionShow($('#selectAddedSer'),'',[0]);
                 this.toggleOptionShow($('#selectFormatConv'),'',[0]);
@@ -528,6 +543,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		//清空输入文字
 		_clearText:function() {
 			$("#translateContent").val("");
+            $("#inputsLen").html(0);
 			$("#clear-btn").hide();
 		},
 
@@ -537,18 +553,19 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			if (variable !== '')  {
 				$("#clear-btn").show();
 
-                var key_le = variable.length;
-                if(key_le > 2000){
-                    //如果元素区字符数大于最大字符数，按照最大字符数截断；
-                    variable = variable.substring(0, 2000);
-                    $("#int-before").val(variable);
-                    $("#inputsLen").html(0);
-                }else{
-                    //在记数区文本框内显示剩余的字符数；
-                    $("#inputsLen").html(key_le);
-                }
+                // var key_le = variable.length;
+                // if(key_le > 2000){
+                //     //如果元素区字符数大于最大字符数，按照最大字符数截断；
+                //     variable = variable.substring(0, 2000);
+                //     $("#int-before").val(variable);
+                //     $("#inputsLen").html(2000);
+                // }else{
+                //     //在记数区文本框内显示剩余的字符数；
+                //     $("#inputsLen").html(key_le);
+                // }
 			} else {
 				$("#clear-btn").hide();
+                $("#inputsLen").html(0);
 			}
 		},
 

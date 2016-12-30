@@ -106,8 +106,9 @@
 				<div class="translate-int translate-int1 radius" id="fy1">
 					<p>
 						<!--  翻译内容-->
-						<textarea id="translateContent" maxlength="2000" name="translateContent"
-						  	class="int-text textarea-xlarge-100 radius" placeholder="<spring:message code="order.transContent"/>">${fn:replace(order.productInfo.needTranslateInfo,'<br />', '')}</textarea>
+						<textarea id="translateContent"  name="translateContent"
+								  onkeyup="pager.textCounter(this,'inputsLen',2000);" onkeydown="pager.textCounter(this,'inputsLen',2000);"
+								  class="int-text textarea-xlarge-100 radius" placeholder="<spring:message code="order.transContent"/>">${fn:replace(order.productInfo.needTranslateInfo,'<br />', '')}</textarea>
 					</p>
 					<!-- 上传文档btn -->
 					<p class="right"><input type="button" class="btn border-blue radius20 btn-80"
@@ -336,7 +337,7 @@
  				<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10"
 					   value="<spring:message code="order.subTranslation"/>">
  				<p><input id="isAgree" name="isAgree" type="checkbox" class="radio" checked=""><spring:message
-						code="order.Agreement"/><a href="${_base}/agreement" target="_blank"><spring:message
+						code="order.Agreement"/><a href="${_base}/rule" target="_blank"><spring:message
 						code="order.AgreementInfo"/></a></p>
  			</div>
 		</div>
@@ -350,8 +351,8 @@
 <script type="text/javascript" src="${uedroot}/scripts/modular/drop-down.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
 <script type="text/javascript">
+	var pager;
 	(function () {
-		var pager;
 		seajs.use(['app/jsp/order/createTextOrder'], function(textOrderAddPager) {
 			pager = new textOrderAddPager({element : document.body});
 			pager.render();
@@ -363,6 +364,8 @@
             var id = $(this).parent().parent('ul').find('li:first').attr("id");
          	pager._removeFile(id);
         });
+        //IE8的输入框提示信息兼容
+        $("input,textarea").placeholder();
 	})();
 	
 

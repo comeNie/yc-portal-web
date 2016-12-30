@@ -52,7 +52,7 @@
  							</li>
  							<li>
  								<p class="word"><spring:message code="ycaccountcenter.bindemial.label.word2"/></p>
- 								<p><input type="text" class="int-text int-in radius" id="emailValue"></p>
+ 								<p><input type="text" class="int-text int-in radius" id="emailValue" maxlength="64"></p>
  								<p><input type="button" class="btn border-green border-sma radius btn-medium" id="email-sendCode-btn" value='<spring:message code="ycaccountcenter.bindemial.getcode"/>'></p>
  								<p><a id="goEmail" href="javascript:void(0);"><spring:message code="ycaccountcenter.bindemial.enteremail"/></a></p>
  							</li>

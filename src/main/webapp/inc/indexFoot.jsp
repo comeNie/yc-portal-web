@@ -39,7 +39,7 @@
                       	 <!-- 译者认证 -->
                         <p><a href="${_base}/tident"><spring:message code="indexFoot.Certification"/></a></p>
                         <!-- 译者咨询 -->
-                        <p><a href="${_base}/tconsul"><spring:message code="indexFoot.Q&A"/></a></p>
+                        <p><a href="${_base}/tconsult"><spring:message code="indexFoot.Q&A"/></a></p>
                     </li>
                 </ul>
                 <ul>

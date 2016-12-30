@@ -44,6 +44,7 @@ define('app/jsp/home', function (require, exports, module) {
 				path: _i18n_res, //资源文件路径
 				mode: 'both',
 				language: currentLan,
+                checkAvailableLanguages: true
 			});
 
 			this._initPage();
@@ -82,7 +83,7 @@ define('app/jsp/home', function (require, exports, module) {
             $('#transResBak').val('');
             $("#tgtOld").show();
             $("#tgtNew").hide();
-            $(".post-cion").hide();
+            $(".post-cion").css("visibility","hidden");
         },
 
         //翻译
@@ -117,9 +118,11 @@ define('app/jsp/home', function (require, exports, module) {
 				},
 				success: function (data) {
 					if("OK" === data.statusInfo) {
-
+						//设置启用分词
+                        $("#tgtNew").attr("onmousemove","srcMove()");
+                        $("#tgtNew").attr("onmouseout","srcOut()");
 						//图标展示
-						$(".post-cion").show();
+                        $(".post-cion").css("visibility","visible");
 						$("#transError").html('');
 
 						$('#tgtNew').empty();
@@ -147,18 +150,22 @@ define('app/jsp/home', function (require, exports, module) {
 									var srcTokenized  = item["src-tokenized"];
 									if(tgtTokenized){
 										_this._yiwenSpan(alignmentRaw,tgtTokenized,srcTokenized,i+1);
-									}else{
+									}//若没有分词信息，则不触发分词。
+									else{
 										$("#srcNew").append(" <span id='src_10'>"+$("#int-before").val()+"</span> ");
 										$("#tgtOld").hide();
 										$("#tgtNew").show();
-										$("#tgtNew").append(" <span class='' id='10'  onmousemove='tgtMove(10)' onmouseout='tgtOut(10)'>"+ywText+"</span> ");
+										//取消分词触发
+                                        $("#tgtNew").removeAttr("onmousemove");
+                                        $("#tgtNew").removeAttr("onmouseout");
+										$("#tgtNew").append(" <span class='' id='10'>"+ywText+"</span> ");
 									}
 								});
 							});
 						}
 					} else {
 						//图标隐藏
-						$(".post-cion").hide();
+                        $(".post-cion").css("visibility","hidden");
 						$("#transError").html($.i18n.prop("home.error.trans"));
 						//alert($.i18n.prop("home.error.trans"));
 					}
@@ -176,16 +183,16 @@ define('app/jsp/home', function (require, exports, module) {
 
             _this._resetMt();
 			if (key) {
-				var key_le = key.length;
-				if(key_le > 1000){
-					//如果元素区字符数大于最大字符数，按照最大字符数截断；
-					key = key.substring(0, 1000);
-					$("#int-before").val(key);
-					$("#inputsLen").html(0);
-				}else{
-					//在记数区文本框内显示剩余的字符数；
-					$("#inputsLen").html(key_le);
-				}
+			// 	var key_le = key.length;
+			// 	if(key_le > 2000){
+			// 		//如果元素区字符数大于最大字符数，按照最大字符数截断；
+			// 		key = key.substring(0, 2000);
+			// 		$("#int-before").val(key);
+			// 		$("#inputsLen").html(2000);
+			// 	}else{
+			// 		//在记数区文本框内显示剩余的字符数；
+			// 		$("#inputsLen").html(key_le);
+			// 	}
 				//语言检测
 				ajaxController.ajax({
 					type: "post",
@@ -307,9 +314,9 @@ define('app/jsp/home', function (require, exports, module) {
         _saveText:function() {
         	$("#transRes").attr("readonly","readonly");
 			if ($.trim( $("#transRes").val())=='')
-				$(".post-cion").hide();
+                $(".post-cion").css("visibi lity","hidden");
 			else
-				$(".post-cion").show()
+                $(".post-cion").css("visibility","visible");
 
 			if ($.trim(sourYiWen) == $("#transRes").val()) {
 				$("#tgtOld").hide();

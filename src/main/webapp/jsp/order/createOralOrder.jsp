@@ -133,13 +133,13 @@
 						<li class="none-ml">
 							<p class="word"><spring:message code="order.StartingTime"/></p>
 							<p class="int-posit"><input id="begin_time" name="begin_time" type="text" class="int-text int-in-250 radius"
-                                      onClick="WdatePicker({onpicked: function(){$dp.$('begin_time').blur();},lang:'${my97Lang}',isShowOK:true,autoPickDate:true, dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'end_time\',{m:-1})}'})"
+                                      onClick="WdatePicker({onpicked: function(){$dp.$('begin_time').blur();},lang:'${my97Lang}',isShowOK:true,autoPickDate:true, dateFmt:'yyyy-MM-dd HH:mm:ss',opposite:true,minDate: new Date().format('yyyy-MM-dd 00:00:00'),maxDate:'#F{$dp.$D(\'end_time\',{m:-1})}'})"
                                       value="<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.productInfo.startTime}"/>" readonly="readonly"/><i class=" icon-sort-down"></i></p>
 						</li>
 						<li>
 							<p class="word"><spring:message code="order.EngdingTime"/></p>
 							<p class="int-posit"><input id="end_time" name="end_time" type="text" class="int-text int-in-250 radius"
-                                      onClick="WdatePicker({onpicked: function(){$dp.$('begin_time').blur();},lang:'${my97Lang}',isShowOK:true,autoPickDate:true, dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'begin_time\',{m:+1})}'})"
+                                      onClick="WdatePicker({onpicked: function(){$dp.$('begin_time').blur();},lang:'${my97Lang}',isShowOK:true,autoPickDate:true, dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'begin_time\',{m:+1})||\'%y-%M-%d\'}'})"
                                       value="<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.productInfo.endTime}"/>" readonly="readonly"/><i class=" icon-sort-down"></i></p>
 						</li>
 						<li>
@@ -182,7 +182,7 @@
 			<div class="recharge-btn order-btn placeorder-btn ml-0">
  				<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="order.subTranslation"/>">
  				<p><input id="isAgree" name="isAgree" type="checkbox" class="radio" checked=""><spring:message
-						code="order.Agreement"/><a href="${_base}/agreement" target="_blank"><spring:message
+						code="order.Agreement"/><a href="${_base}/rule" target="_blank"><spring:message
 						code="order.AgreementInfo"/></a></p>
  			</div>
 			
@@ -201,6 +201,7 @@
 			pager = new createOralOrderPage({element : document.body});
 			pager.render();
 		});
+        $("input").placeholder();
 	})();
 </script>
 </html>

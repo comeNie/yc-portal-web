@@ -68,10 +68,6 @@ define('app/user/interpreter/interpreterInfo', function (require, exports, modul
     					maxlength:10,
     					minlength:3,
     					},
-    			    fullName:{
-    			    	required:false,
-    					maxlength:50,
-    			    },
     			    QQ:{
     			    	required:false,
     					maxlength:10,
@@ -113,9 +109,6 @@ define('app/user/interpreter/interpreterInfo', function (require, exports, modul
     					},
     				nickName: {
     					required:"请输入昵称信息",
-    					maxlength:"最大长度不能超过{0}",
-    				},
-    				fullName:{
     					maxlength:"最大长度不能超过{0}",
     				},
     				QQ:{

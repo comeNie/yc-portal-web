@@ -105,9 +105,9 @@
 		 						</p>
 		 						<!-- 订单时间 -->
 		 						<p><spring:message code="myOrder.orderTime"/></p>
-		 						<p><input id="orderTimeStart" name="orderTimeStartStr" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'orderTimeEnd\')}'})" readonly="readonly"></p>
+		 						<p><input id="orderTimeStart" name="orderTimeStartStr" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'orderTimeEnd\'||\'%y-%M-%d\')}',onpicked:function(dp){pager._timesearch();}})" readonly="readonly"></p>
   								<p>－</p>
-  								<p><input id="orderTimeEnd" name="orderTimeEndStr" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'orderTimeStart\')}',onpicked:function(dp){endtime();}})" readonly="readonly"></p>
+  								<p><input id="orderTimeEnd" name="orderTimeEndStr" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'orderTimeStart\')}',maxDate:'%y-%M-%d',onpicked:function(dp){pager._timesearch();}})" readonly="readonly"></p>
 		 					</li>
 		 					<li class="mb-20">
 		 						<!--翻译用途  -->
@@ -123,7 +123,7 @@
 													<c:otherwise>${purpose.purposeEn}</c:otherwise>
 												</c:choose>
 											</option>
-										</c:forEach>
+										</c:forEach>f
 			 						</select>
 		 						</p>
 		 						<p class="iocn-oder right">
@@ -355,9 +355,8 @@ var current = "orderList";
 	$('#searchOrderData').delegate("input[name='trans']", 'click', function () {
 		 window.location.href="${_base}/p/trans/order/"+$(this).parents("table").find("input[name='orderId']").val();
 	});
-	
+//    $("input").placeholder();
 })();
-
 
   
 </script>

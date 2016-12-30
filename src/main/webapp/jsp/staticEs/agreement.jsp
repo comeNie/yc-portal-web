@@ -6,9 +6,9 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title><spring:message code="ycregister.register" /></title>
+<title>agreement</title>
 <%@ include file="/inc/inc.jsp" %>
-<%@ include file="/inc/incJs.jsp" %>
+
 </head>
 <body class="agreement-body">	
 	<!--面包屑导航-->
@@ -136,4 +136,5 @@
 		<!--底部-->	
 		<%@include file="/inc/indexFoot.jsp"%>
 </body>
+<%@ include file="/inc/incJs.jsp" %>
 </html>

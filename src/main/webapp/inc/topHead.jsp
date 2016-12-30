@@ -36,8 +36,8 @@
                 <%--我是服务商--%>
                 <p><a href="${_base}/p/security/interpreterIndex"><spring:message code="topMenue.Suppliers"/></a></p>
                 <%--手机版--%>
-                <p class="none-border"><i class="icon iconfont">&#xe60b;</i>
-                    <a href="${_base}/findyee"><spring:message code="topMenue.Mobile"/></a></p>
+                <p class="none-border">
+                    <a href="${_base}/findyee"><i class="icon iconfont">&#xe60b;</i><spring:message code="topMenue.Mobile"/></a></p>
                 <p class="in-switch" id="in-switch">
                     <a href="javaScript:void(0);"><%= Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())? "中文简体":"English"%><i class="icon-caret-down"></i></a>
                 </p>

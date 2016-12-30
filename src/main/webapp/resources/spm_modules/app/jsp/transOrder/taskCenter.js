@@ -44,13 +44,15 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
 				path: _i18n_res, //资源文件路径
 				mode: 'both',
 				language: currentLan,
+                checkAvailableLanguages: true,
 				async: true
 			});
     	},
 		//改变查询的结束时间
-		_changeEndDate:function(dp){
-			//若截止时间发生变更,则刷新页面
-			if(dp.cal.getDateStr() != dp.cal.getNewDateStr()){
+		_changeDate:function(dp,dateObj){
+			//若时间发生变更且dateObj不为空,则刷新页面
+			if(dp.cal.getDateStr() != dp.cal.getNewDateStr()
+				&& dateObj!=null && dateObj !=""){
 				this._getOrderList();
 			}
 		},
@@ -89,8 +91,21 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
         //查询订单
         _getOrderList:function() {
         	var _this = this;
-			if(window.console)
-				console.log("quer list");
+            var startDate = $("#startDate").val();
+            var endDate = $("#endDate").val();
+            if (window.console){
+                console.log("quer list");
+                console.log("start:"+startDate+"，end:"+endDate);
+            }
+        	//若时间段只有一个，则不进行查询操作
+            if(endDate!="" && endDate!=null
+				&& (startDate==null || startDate=="")){
+                return;
+            }
+            else if(startDate!="" && startDate!=null
+                && (endDate==null || endDate=="")){
+            	return;
+			}
           	$("#pagination-ul").runnerPagination({
 	 			url: _base+"/p/taskcenter/list",
 	 			method: "POST",

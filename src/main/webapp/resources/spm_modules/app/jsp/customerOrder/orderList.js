@@ -38,6 +38,7 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
 				path: _i18n_res, //资源文件路径
 				mode: 'both',
 				language: currentLan,
+                checkAvailableLanguages: true,
 				async: true
 			});
 			this._initPage();
@@ -51,6 +52,12 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
 			} else {
 				this._orderListByType(displayFlag);
 			}
+		},
+
+		//时间查询
+		_timesearch:function () {
+			if ($("#orderTimeStart").val() != '' && $("#orderTimeEnd").val() !='')
+				this._getOrderList();
 		},
     	
     	//改变状态并查询

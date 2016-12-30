@@ -359,7 +359,7 @@
                                 <c:choose>
                                 	<c:when test="${OrderDetails.displayFlag=='13'}">
                                 		<!-- 待报价-->
-                                		<p>-</p>
+                                		<p><spring:message code="myOrder.waitquote"/></p>
                                 	</c:when>
                                 	<c:otherwise>
                                 		 <p>
@@ -387,6 +387,7 @@
                                		<%--<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb" argumentSeparator="@" arguments="${discountFee}"/></c:if>--%>
                                		<%--<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar" argumentSeparator="@" arguments="${discountFee}"/></c:if></p>--%>
                             <%--</li>--%>
+                            <c:if test="${OrderDetails.displayFlag!='13'}">
                             <li class="width-large red">
                             	<!-- 实付金额 -->
                                 <p class="word"><spring:message code="myOrder.Amountpaid"/>:</p>
@@ -396,6 +397,7 @@
                                		<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar.bold" argumentSeparator="@" arguments="${paidFee}"/> </c:if>
                                	</p>
                             </li>
+                            </c:if>
                         </ul>
                     </div>
                     <div class="info-list">
@@ -430,7 +432,7 @@
 	                	</c:when>
                 		<c:when test="${OrderDetails.displayFlag=='13'}">
                 		<!-- 待报价 -->
-                			<input  class="btn btn-ash btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.btn.tobeQuoted"/>">
+                			<%--<input  class="btn btn-ash btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.btn.tobeQuoted"/>">--%>
                 		</c:when>
                 		<c:when test="${OrderDetails.displayFlag=='23'}">
                 		<!-- 翻译中 -->

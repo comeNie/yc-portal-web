@@ -74,9 +74,9 @@
   						</p>
   						<!-- 订单时间 -->
   						<p><spring:message code="myOrder.orderTime"/></p>
-  						<p><input id="orderTimeStart" name="orderTimeStartStr" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'orderTimeEnd\')}'})" readonly="readonly"></p>
+  						<p><input id="orderTimeStart" name="orderTimeStartStr" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'orderTimeEnd\')||\'%y-%M-%d\'}',onpicked:function(dp){pager._timesearch();}})" readonly="readonly"></p>
   						<p>－</p>
-  						<p><input id="orderTimeEnd" name="orderTimeEndStr" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'orderTimeStart\')}',onpicked:function(dp){endtime();}})" readonly="readonly"></p>
+  						<p><input id="orderTimeEnd" name="orderTimeEndStr" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'orderTimeStart\')}',maxDate:'%y-%M-%d',onpicked:function(dp){pager._timesearch();}})" readonly="readonly"></p>
   						<!-- 翻译内容 -->
   						<p><spring:message code="myOrder.translatingContent"/></p>
   						<p>
@@ -248,7 +248,7 @@
 				-->
 			{{else displayFlag == '91'}}	
 				<!-- 关闭  -->
-				<td><spring:message code="myOrder.status.Close"/></td>
+				<td><spring:message code="myOrder.status.Cancelled"/></td>
 				<td></td>
 			{{else }}
 				<!-- 已退款  -->
@@ -306,7 +306,7 @@ var current = "orderList";
        <%-- 延迟确认订单 --%>
        //$("#confirmOrder").delegate("input[name='lateConfirmOrder']","click",function(){
        //});
-      
+    $("input").placeholder();
 })();
 
 //选择结束时间触发

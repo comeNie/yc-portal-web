@@ -125,8 +125,8 @@
                 <div id="srcNew" class="int-before ta_text"  style="display: none;">
                 </div>
                 <div id="srcOld" class="int-before"  style="display: block;">
-                    <textarea maxlength="2000" class="int-before" id="int-before"></textarea>
-                    <div class="already"><spring:message code="home.Alreadyinput" arguments="0,1000"/></div>
+                    <textarea onkeyup="textCounter(this,'inputsLen',2000);" onkeydown="textCounter(this,'inputsLen',2000);" class="int-before" id="int-before"></textarea>
+                    <div class="already"><spring:message code="home.Alreadyinput" arguments="0,2000"/></div>
                  </div>
 
             </div>
@@ -138,7 +138,7 @@
                     <textarea  class="int-post"  id="transResBak" style="display: none"></textarea>
                 </div>
                 <label id="transError"></label>
-                <div class="post-cion" style="display: none;">
+                <div class="post-cion" style="visibility: hidden">
 
 					<p>
 						<a id="sus-top1" href="javaScript:void(0)" class="ord-icon"><i id="copy" class="icon iconfont">&#xe639;</i>
@@ -234,7 +234,7 @@
                         <span><input type="button" class="btn border-blue place-btn-none radius20" purpose="2"
                                      value="<spring:message code="home.manual_order_now_btn"/>"></span>
                     </div>
-                    <div class="caption caption2" purpose="2">
+                    <div class="caption caption2" purpose="8">
                         <%--翻译中英文简历--%>
                         <p class="title"><spring:message code="home.resume_translation_tips"/></p>
                             <%--按模板填写简历内容，简单、便捷、译审结合，不满意免费修改--%>
@@ -256,7 +256,7 @@
                         <span><input type="button" class="btn border-blue place-btn-none radius20" purpose="3"
                                      value="<spring:message code="home.manual_order_now_btn"/>"></span>
                     </div>
-                    <div class="caption caption3" purpose="3">
+                    <div class="caption caption3" purpose="4">
                         <%--翻译产品说明--%>
                         <p class="title"><spring:message code="home.manual_translation_tips"/></p>
                             <%--提供最快速最精准的翻译服务，译员时刻待命，立等可取--%>
@@ -278,7 +278,7 @@
                         <span><input type="button" class="btn border-blue place-btn-none radius20" purpose="4"
                                      value="<spring:message code="home.manual_order_now_btn"/>"></span>
                     </div>
-                    <div class="caption caption4" purpose="4">
+                    <div class="caption caption4" purpose="6">
                         <%--翻译各种证件--%>
                         <p class="title"><spring:message code="home.certificate_translation_tips"/></p>
                             <%--提供身份证、护照、驾照等证件的翻译服务，可加盖公章--%>
@@ -424,13 +424,15 @@
         });
 
         $("#sus-top1").zclip({
-            path:"${base}/resources/spm_modules/jquery-zclip-master/ZeroClipboard.swf",
+            path:"${_base}/resources/spm_modules/jquery-zclip-master/ZeroClipboard.swf",
             copy:function(){
                 return $('#transRes').val();
             },
             afterCopy:function () {
             }
         });
+
+//        $(".post-cion").hide();
     })();
 </script>
 

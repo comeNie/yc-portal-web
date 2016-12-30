@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * timezone
@@ -21,10 +22,12 @@ public class TimeZoneController {
 	private Logger logger=LoggerFactory.getLogger(getClass());
 
     @RequestMapping("/timezone.htm")
-    public void timezone(HttpServletRequest request, HttpSession session){
+	@ResponseBody
+    public String timezone(HttpServletRequest request, HttpSession session){
     	String offset = request.getParameter("offset");
     	logger.info("session "+session.getAttribute("USER_TIME_ZONE"));
     	logger.info("offset="+offset);
+    	return "OK";
     }
 
 }
