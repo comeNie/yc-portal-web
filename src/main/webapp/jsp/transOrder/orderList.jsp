@@ -355,7 +355,7 @@ var current = "orderList";
 	$('#searchOrderData').delegate("input[name='trans']", 'click', function () {
 		 window.location.href="${_base}/p/trans/order/"+$(this).parents("table").find("input[name='orderId']").val();
 	});
-    $("input").placeholder();
+//    $("input").placeholder();
 })();
 
   
