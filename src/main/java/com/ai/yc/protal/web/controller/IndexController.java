@@ -1,5 +1,6 @@
 package com.ai.yc.protal.web.controller;
 
+import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.sso.client.filter.SSOClientConstants;
 import com.ai.opt.sso.client.filter.SSOClientUtil;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
@@ -39,16 +40,24 @@ public class IndexController {
         //获取基础数据
         ICacheClient cacheClient = AiPassUitl.getCacheClient();
         String homeDataStr = cacheClient.get(CacheKey.HOME_DATA_CONFIG_KEY);
-        //TODO... 模拟数据
-        HomeDataConfig homeDataCon = new HomeDataConfig();
-        if (StringUtils.isNotBlank(homeDataStr)) {
+
+        HomeDataConfig homeDataCon = null;
+        try {
+            if (StringUtils.isBlank(homeDataStr)) {
+                throw new BusinessException("未找到相关数据");
+            }
+            LOGGER.info("the footer date:{}",homeDataStr);
             homeDataCon = JSON.parseObject(homeDataStr, HomeDataConfig.class);
+        } catch (Exception e) {
+            LOGGER.error("Query the footer data failed.",e);
+            homeDataCon = new HomeDataConfig();
+            homeDataCon.setCustomNum("54900");//客户
+            homeDataCon.setLgdataNum("26783000");//语料
+            homeDataCon.setOrderNum("600892");//订单数量
+            homeDataCon.setInterpreterNum("78239");//译员数量
+            homeDataCon.setLanguageNum("60");//语种
         }
-        homeDataCon.setCustomNum("54900");//客户
-        homeDataCon.setLgdataNum("26783000");//语料
-        homeDataCon.setOrderNum("600892");//订单数量
-        homeDataCon.setInterpreterNum("78239");//译员数量
-        homeDataCon.setLanguageNum("60");//语种
+
         uiModel.addAttribute("homeData",homeDataCon);
         return "/home";
     }
