@@ -177,6 +177,7 @@ define("app/jsp/user/password/password",
 					   * 账号下一步
 					   */
 				       _nextStep:function(){
+				       	var _this = this;
 				    	 var userNameVal= $("#userName").val();
 						if($.trim(userNameVal)==""){
 							$("#accountErrMsg").show();
@@ -205,6 +206,7 @@ define("app/jsp/user/password/password",
 								if (!data.isOk) {
 									$("#accountErrMsg").show();
 									$("#accountErrMsg").text(json.statusInfo);
+                                    _this._refreshVerificationCode();
 									//showMsg(json.statusInfo);
 								}else{
 									$("#t_userName").val(data.username);
@@ -227,6 +229,7 @@ define("app/jsp/user/password/password",
 										accountFlag = true;
 									}else{
 										location.href=_base + "/password/notBind";
+                                        _this._refreshVerificationCode();
 										return;
 									}
 									if(!isBindPhone){//没有绑定手机
@@ -234,14 +237,21 @@ define("app/jsp/user/password/password",
 									}
                                     if(!isBindEmail){//没有绑定邮箱
                                     	$("#set-table2").html("<div class='recharge-success mt-40'><ul><li><img src='"+uedroot+"/images/rech-fail.png' /></li><li class='word'>"+passwordMsg.notBindingEmail+"</li></ul></div>");
-                                     }
+									}
                                     $("#back-pass").hide();
      							    $("#back-pass1").show();
      							   if(isBindEmail&&!isBindPhone){
      								  $("#emailVerification a").click(); 
      							   }
      							}
-							}
+							},
+                            failure : function(){
+                                _this._refreshVerificationCode();
+                            },
+                            error : function(){
+                                _this._refreshVerificationCode();
+                            }
+
 						});
 						
 						
