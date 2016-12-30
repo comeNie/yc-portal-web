@@ -168,6 +168,7 @@ public class UserCommonController {
 		String type = request.getParameter("type");
 		String ckValue = request.getParameter("code");
 		boolean isOk = VerifyUtil.checkSmsCode(phone, type, ckValue);
+		LOG.info("checkSmsCode中发送的手机号是"+phone+"发送type"+type+"校验验证码是"+ckValue+"checkSmsCode发法中的isOK的值"+isOk);
 		String msg = "ok";
 		if (!isOk) {
 			msg = rb.getMessage("ycfindpassword.smsCodeError");
@@ -231,7 +232,9 @@ public class UserCommonController {
 		    request.getSession().setAttribute(req.getCodeKey()+PhoneVerify.PHONE_CODE_REGISTER_UID, ucenterRes[3]);
 		    phone = request.getParameter("fullPhone");//+86格式
 		}
-		boolean sendOk =  SmsSenderUtil.sendMessage(phone,req.getContent());
+		LOG.info("短信内容是====="+randomStr);
+		boolean sendOk = SmsSenderUtil.sendMessage(phone,req.getContent());
+		LOG.info("发送======="+sendOk+"发送手机号"+phone+"======发送内容"+req.getContent());
 		if (sendOk) {
 			// 最多发送次数超时时间
 			int maxOverTimeCount = config.getIntValue(req

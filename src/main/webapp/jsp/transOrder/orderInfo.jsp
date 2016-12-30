@@ -458,6 +458,7 @@
 var pager, orderPager;
 var lspId="${lspId}";
 var orderId = "${OrderDetails.orderId}";
+var translateType = "${OrderDetails.translateType}";
 (function () {
 	seajs.use(['app/jsp/transOrder/orderInfo', 'app/jsp/customerOrder/order'], function(orderInfoPage, orderPage) {
 		pager = new orderInfoPage({element : document.body});

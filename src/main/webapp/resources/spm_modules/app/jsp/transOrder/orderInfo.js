@@ -234,7 +234,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 					ajaxController.ajax({
 						type: "post",
 						url: _base+"/p/taskcenter/claim",
-						data: {'orderId': orderId,"lspId":lspId},
+						data: {'orderId': orderId,"lspId":lspId,"translateType":translateType},
 						success: function(data){
 							//领取成功,刷新页面
 							if("1"===data.statusCode){
