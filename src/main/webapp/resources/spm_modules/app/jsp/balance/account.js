@@ -23,14 +23,14 @@ define('app/jsp/balance/account', function (require, exports, module) {
     	
     	//事件代理
     	events: {
-			"click #all":"_incomeList",
+			/*"click #all":"_incomeList",
 			"click #allType":"_incomeList",
 			"click #shouru":"_incomeList",
 			"click #zhichu":"_incomeList",
 			"click #chongzhi":"_incomeList",
 			"click #tixian":"_incomeList",
 			"click #xiadan":"_incomeList",
-			"click #tuikuan":"_incomeList",
+			"click #tuikuan":"_incomeList",*/
 			"click #today":"_incomeList",
 			"click #oneMonth":"_incomeList",
 			"click #threeMonth":"_incomeList",

@@ -236,14 +236,14 @@ catch(Exception e){
                 {{/if}}
             </td>
             <td>
-                {{if channel.length > 8}}
+                {{if channel!=null && channel.length > 8}}
                 {{:~subStr(8,channel)}}
                 {{else}}
                 {{:channel}}
                 {{/if}}
             </td>
             <td>
-                {{if remark.length > 8}}
+                {{if remark!=null && remark.length > 8}}
                 {{:~subStr(8,remark)}}
                 {{else}}
                 {{:remark}}
@@ -336,6 +336,7 @@ catch(Exception e){
             $("#tixian").parent().attr("class",null);
             $("#xiadan").parent().attr("class",null);
         }
+        pager._incomeList();
     }
     //日期切换
     function todate(target,id) {
@@ -387,6 +388,7 @@ catch(Exception e){
             }
         });
         $(target).parent().attr("class","current");
+        pager._incomeList();
     }
 
 </script>
