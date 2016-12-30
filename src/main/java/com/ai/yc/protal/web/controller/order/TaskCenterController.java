@@ -175,7 +175,7 @@ public class TaskCenterController {
      */
     @RequestMapping("/claim")
     @ResponseBody
-    public ResponseData<String> claimOrder(Long orderId,String lspId){
+    public ResponseData<String> claimOrder(Long orderId,String lspId,String translateType){
         ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         String userId = UserUtil.getUserId();
         //译员类型
@@ -183,7 +183,12 @@ public class TaskCenterController {
         OrderReceiveRequest receiveRequest = new OrderReceiveRequest();
         OrderReceiveBaseInfo baseInfo = new OrderReceiveBaseInfo();
         baseInfo.setOrderId(orderId);
-        baseInfo.setState(OrderConstants.State.TRANSLATING);//状态为固定的
+        if (OrderConstants.TranslateType.ORAL.equals(translateType)) {
+            baseInfo.setState(OrderConstants.State.RECEIVE);//状态为固定的
+        } else {
+            baseInfo.setState(OrderConstants.State.TRANSLATING);//状态为固定的
+        }
+
         baseInfo.setInterperId(userId);
         //译员类型 0:普通译员 1:LSP
         String interperType = StringUtils.isNotBlank(lspId)?"1":"0";
