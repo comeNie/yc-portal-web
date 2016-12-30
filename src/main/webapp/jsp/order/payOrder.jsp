@@ -78,7 +78,7 @@
   					<p><spring:message code="pay.order.title"/></p>
   				</div>
 				<form id="toPayForm" method="post" action="${_base}/p/customer/order/gotoPay" target="_blank">
-					<input type="hidden" name="orderId" value="${orderId}">
+					<input type="hidden" id="orderId" name="orderId" value="${orderId}">
 					<input type="hidden" name="orderAmount" value="${orderFee.totalFee}">
 					<input type="hidden" name="currencyUnit" value="${orderFee.currencyUnit}">
 					<input type="hidden" name="translateName" value="${translateName}">

@@ -40,7 +40,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 				type: "post",
                 processing:true,
 				url: _base+"/p/customer/order/isPay",
-				data: {'orderId': $("input[name='orderId']").val()},
+				data: {'orderId': $("#orderId").val()},
 				success: function(data){
 					//可以支付
 					if("OK"===data.statusInfo){
@@ -91,7 +91,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
                     $('#rechargepop').slideDown(100);
                 }//余额支付不需要密码
                 else{
-                    $("#yePayForm").submit();
+                    this._YEPaySubmit();
                 }
 			}
 
@@ -124,13 +124,60 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 			var payPass=$("#payPass").val().trim();
 			//密码不能为空
 			if(payPass==""||payPass==null){
-				alert($.i18n.prop('pay.pass.null'));
+				this._showWarn($.i18n.prop('pay.pass.empty'));
 				return;
 			}
 			$("#balancePass").val(payPass);
 			//提交
-			$("#yePayForm").submit();
+			this._YEPaySubmit();
 		},
+		//余额支付
+		_YEPaySubmit:function () {
+			var _this= this;
+            ajaxController.ajax({
+                type: "post",
+                processing:true,
+                url: _base+"/p/customer/order/payOrder/balance",
+                data: $("#yePayForm").serializeArray(),
+                success: function(data){
+                	var payResult = data.data;
+                    //支付成功，跳转到支付成功页面
+                    if("success"===payResult.payResultCode){
+                        window.location.href= _base+"/pay/yePayResultView?payResult=true&orderId="+payResult.orderId;
+                    }//1.密码错误，进行提示，确认
+                    else if("000006"===payResult.payResultCode){
+                        _this._showWarn($.i18n.prop('pay.error.passwd'));
+					}//未设置密码，进行提示，点击按钮进入密码设置页面
+					else if("000007"===payResult.payResultCode){
+                        new Dialog({
+                            content:$.i18n.prop('pay.error.pass.empty'),
+                            icon:'warning',
+                            okValue: $.i18n.prop("pay.dialog.setpw.btn"),
+                            title:  $.i18n.prop("pay.dialog.prompt"),
+                            ok:function(){
+                                window.location.href= _base+"/p/security/seccenter?source=user";
+                            }
+                        }).showModal();
+					}//余额不足，刷新当前页面
+                    else if("300002"===payResult.payResultCode){
+                        new Dialog({
+                            content:$.i18n.prop('pay.error.balance.noenough'),
+                            icon:'warning',
+                            okValue: $.i18n.prop("pay.dialog.ok"),
+                            title:  $.i18n.prop("pay.dialog.prompt"),
+                            ok:function(){
+                                window.location.reload();
+                            }
+                        }).showModal();
+                    }//其他错误，进入订单异常页面
+                    else {
+                        // _this._showWarn($.i18n.prop('pay.error.paid'));
+                        //订单错误，跳转到订单错误页面。
+                        window.location.href= _base+"/order/error";
+                    }
+                }
+            });
+        },
 		//调转到充值页面
 		_toDeposit:function(){
 			window.location.href=_base+"/p/balance/depositFund";

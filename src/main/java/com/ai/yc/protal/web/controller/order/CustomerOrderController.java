@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.sdk.components.ccs.CCSClientFactory;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
@@ -22,8 +24,11 @@ import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsRequest;
 import com.ai.yc.order.api.orderfee.interfaces.IOrderFeeQuerySV;
 import com.ai.yc.order.api.orderfee.param.*;
 import com.ai.yc.protal.web.constants.Constants;
+import com.ai.yc.protal.web.constants.ErrorCode;
 import com.ai.yc.protal.web.constants.OrderConstants;
+import com.ai.yc.protal.web.constants.YEPayResultConstants;
 import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
+import com.ai.yc.protal.web.model.pay.YEPayResult;
 import com.ai.yc.protal.web.service.BalanceService;
 import com.ai.yc.protal.web.service.OrderService;
 import com.ai.yc.protal.web.utils.*;
@@ -284,10 +289,16 @@ public class CustomerOrderController {
      * @return
      */
     @RequestMapping("/payOrder/balance")
-    public String balancePay(DeductParam deductParam,String orderType,Model uiModel){
+    @ResponseBody
+    public ResponseData<YEPayResult> balancePay(DeductParam deductParam,String orderType,Model uiModel){
+        YEPayResult yePayResult = new YEPayResult();
+        yePayResult.setOrderId(deductParam.getExternalId());
+        ResponseData<YEPayResult> responseData = new ResponseData<YEPayResult>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         //若订单不是未支付状态，则跳转到系统异常
         if(!orderService.isUnPay(deductParam.getExternalId())){
-            return "sysError";
+            yePayResult.setPayResultCode(YEPayResultConstants.ORDER_PAID);
+            responseData.setData(yePayResult);
+            return responseData;
         }
         String userId = UserUtil.getUserId();
         //进行余额扣款,页面
@@ -298,23 +309,30 @@ public class CustomerOrderController {
         deductParam.setChannel("中译语通科技有限公司");
         deductParam.setBusiDesc("订单支付,订单号:"+deductParam.getExternalId());
         IDeductSV deductSV = DubboConsumerFactory.getService(IDeductSV.class);
-        DeductResponse deductResponse = deductSV.deductFund(deductParam);
-        ResponseHeader responseHeader = deductResponse.getResponseHeader();
-        //支付结果,默认为失败
-        boolean payResult = false;
-        //扣款成功,同步订单状态
-        if (responseHeader==null||responseHeader.isSuccess()){
-            orderService.orderPayProcessResult(userId,deductParam.getAccountId(),
-                    Long.parseLong(deductParam.getExternalId()),orderType,
-                    deductParam.getTotalAmount(),"YE",deductResponse.getSerialNo(), DateUtil.getSysDate());
-            payResult = true;
+        try {
+            DeductResponse deductResponse = deductSV.deductFund(deductParam);
+            ResponseHeader responseHeader = deductResponse.getResponseHeader();
+            //支付结果,默认为失败
+            //扣款成功,同步订单状态
+            if (responseHeader==null){
+                throw new BusinessException("responseHeader is null");
+            }//余额支付成功
+            else if(responseHeader.isSuccess()
+                    && YEPayResultConstants.RESULT_SUCCESS.equals(responseHeader.getResultCode())){
+                orderService.orderPayProcessResult(userId,deductParam.getAccountId(),
+                        Long.parseLong(deductParam.getExternalId()),orderType,
+                        deductParam.getTotalAmount(),"YE",deductResponse.getSerialNo(), DateUtil.getSysDate());
+            }
+            //返回指定的的状态码
+            yePayResult.setPayResultCode(responseHeader.getResultCode());
+
+        } catch (Exception e) {
+            LOGGER.error("",e);
+            yePayResult.setPayResultCode(ErrorCode.SYSTEM_ERROR);//系统异常
         }
-        //订单号
-        uiModel.addAttribute("orderId",deductParam.getExternalId());
-        //支付结果
-        uiModel.addAttribute("payResult",payResult);
+        responseData.setData(yePayResult);
         //显示订单支付结果
-        return "order/orderPayResult";
+        return responseData;
     }
      /**
      * 跳转支付页面,需要登录后才能进行支付
