@@ -308,6 +308,7 @@ public class CustomerOrderController {
         deductParam.setBusinessCode("001");//目前无用,使用固定内容
         deductParam.setChannel("中译语通科技有限公司");
         deductParam.setBusiDesc("订单支付,订单号:"+deductParam.getExternalId());
+        deductParam.setPassword(PasswordMD5Util.Md5Utils.md5(deductParam.getPassword()));
         IDeductSV deductSV = DubboConsumerFactory.getService(IDeductSV.class);
         try {
             DeductResponse deductResponse = deductSV.deductFund(deductParam);
