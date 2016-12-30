@@ -190,10 +190,11 @@
     })();
     //时间变更处理
     function _changeStartDate() {
+        var startDate = $("#startDate").val();
         var endDate = $("#endDate").val();
         //若时间发生变更且dateObj不为空,则刷新页面
         if (window.console){
-            console.log("end:"+endDate);
+            console.log("end:"+endDate+",start:"+startDate);
         }
         //结束时间不为空时，进行查询
         if(endDate!=null && endDate!=""){
@@ -203,9 +204,10 @@
     //时间变更处理
     function _changeEndDate() {
         var startDate = $("#startDate").val();
+        var endDate = $("#endDate").val();
         //若时间发生变更且dateObj不为空,则刷新页面
         if (window.console){
-            console.log("start:"+startDate);
+            console.log("start:"+startDate+"，end:"+endDate);
         }
         //开始时间不为空时，进行查询
         if(startDate !=null && startDate!=""){
