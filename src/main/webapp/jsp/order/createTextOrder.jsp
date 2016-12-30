@@ -107,7 +107,7 @@
 					<p>
 						<!--  翻译内容-->
 						<textarea id="translateContent"  name="translateContent"
-								  onkeyup="textCounter(this,'inputsLen',2000);" onkeydown="textCounter(this,'inputsLen',2000);"
+								  onkeyup="pager.textCounter(this,'inputsLen',2000);" onkeydown="pager.textCounter(this,'inputsLen',2000);"
 								  class="int-text textarea-xlarge-100 radius" placeholder="<spring:message code="order.transContent"/>">${fn:replace(order.productInfo.needTranslateInfo,'<br />', '')}</textarea>
 					</p>
 					<!-- 上传文档btn -->
@@ -350,10 +350,9 @@
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript" src="${uedroot}/scripts/modular/drop-down.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
-<script type="text/javascript" src="${spmRes}/app/jsp/index.js"></script>
 <script type="text/javascript">
+	var pager;
 	(function () {
-		var pager;
 		seajs.use(['app/jsp/order/createTextOrder'], function(textOrderAddPager) {
 			pager = new textOrderAddPager({element : document.body});
 			pager.render();

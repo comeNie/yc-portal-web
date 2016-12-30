@@ -29,6 +29,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				path: _i18n_res, //资源文件路径
 				mode: 'both',
 				language: currentLan,
+                checkAvailableLanguages: true,
 				async: true
 			});
             this._uploadFileWeb();

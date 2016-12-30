@@ -44,6 +44,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				name: ["orderInfo"], //资源文件名称，可以是数组
 				path: _i18n_res, //资源文件路径
 				mode: 'both',
+                checkAvailableLanguages: true,
 				language: currentLan
 			});
 
@@ -57,6 +58,16 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			this._initPage();
     	},
 
+        textCounter:function($this,desc,maxlimit) {
+            var totalWords =  CountWordsUtil.count( $($this).val());
+            if (totalWords > maxlimit){
+                //如果元素区字符数大于最大字符数，按照最大字符数截断；
+                $($this).val($($this).val().substring(0, maxlimit));
+            }
+            //在记数区文本框内显示剩余的字符数；
+            $("#"+desc).html(totalWords);
+        },
+
         _initValidate: function () {
             var _this = this;
             var formValidator = $("#textOrderForm").validate({
@@ -66,7 +77,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                     translateContent: {
                         required: true,
 						notNull: true,
-                        maxlength: 2000,
+                        // maxlength: 2000,
                         remote: {                                          //验证检查语言
                             type: "POST",
                             url: _base + "/translateLan",
@@ -106,7 +117,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                     translateContent: {
                         required: $.i18n.prop('order.place.error.translation'), //"请输入翻译内容",
 						notNull: $.i18n.prop('order.place.error.translation'),
-                        maxlength: $.i18n.prop('order.place.error.Maximum'),//"最大长度不能超过{0}",
+                        // maxlength: $.i18n.prop('order.place.error.Maximum'),//"最大长度不能超过{0}",
                         remote:  $.i18n.prop('order.place.error.contentConsis')//"您输入的内容和源语言不一致"
                     },
 					inputFormatConv: {
@@ -340,7 +351,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				// $("#selectFormatConv").attr("disabled",true);
 				// $("#selectAddedSer option:first").hide();
 				// $("#selectFormatConv option:first").hide();
-                $("#inputsLen").html($("#translateContent").val().length);
+
+                $("#inputsLen").html( CountWordsUtil.count( $("#translateContent").val() ) );
 
                 this.toggleOptionShow($('#selectAddedSer'),'',[0]);
                 this.toggleOptionShow($('#selectFormatConv'),'',[0]);
