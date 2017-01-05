@@ -304,9 +304,9 @@ define("app/jsp/user/password/password",
 						_checkDynamicode:function(){
 							 var phoneDynamicode = $("#phoneDynamicode").val();
 							 if($.trim(phoneDynamicode)==""){
-								 //$("#dynamicode").show();
-								 //$("#dynamicode").text("请输入验证码");
-								 showMsg(passwordMsg.smsCodeEmpty);
+								 $("#dynamicode").show();
+								 $("#dynamicode").text(passwordMsg.smsCodeEmpty);
+								 //showMsg(passwordMsg.smsCodeEmpty);
 								 return false;
 							 }
 							 ajaxController.ajax({
@@ -320,7 +320,9 @@ define("app/jsp/user/password/password",
 				    				},
 				    		        success: function(data) {
 				    		        	if(!data.data){
-				    		        		showMsg(data.statusInfo);
+				    		        		$("#dynamicode").show();
+											$("#dynamicode").text(data.statusInfo);
+				    		        		//showMsg(data.statusInfo);
 											return false;
 				    		        	}else{
 				    		        		 $("#tcode").val(phoneDynamicode);
