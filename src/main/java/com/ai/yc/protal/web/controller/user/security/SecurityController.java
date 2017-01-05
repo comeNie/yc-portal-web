@@ -331,7 +331,7 @@ public class SecurityController {
 			}
 			String nowPayPassword =balanceInfo.getPayPassword();
 			//设置支付密码后修改需要校验先前支付密码
-			if(!Md5Utils.md5(Constants.DEFAULT_PAY_PASSWORD).equals(nowPayPassword)){
+			if(!Md5Utils.md5(Constants.DEFAULT_PAY_PASSWORD).equals(nowPayPassword)&&nowPayPassword!=""&&nowPayPassword!=null){
 				String oldPwd = request.getParameter("oldPwd");//旧支付密码
 				oldPwd= Md5Utils.md5(oldPwd);
 				//校验支付密码
