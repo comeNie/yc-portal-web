@@ -23,6 +23,8 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
     	setup: function () {
 			payOrderPager.superclass.setup.call(this);
 			this._changePayType();
+            //默认选择第一个支付方式
+            $("#payment-method ul:first").click();
 			//初始化国际化
 			$.i18n.properties({//加载资浏览器语言对应的资源文件
 				name: ["payOrder"], //资源文件名称，可以是数组
@@ -80,10 +82,14 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 					}
 				}).showModal();
 				$("#toPayForm").submit();
-			}else {
+			}//使用余额支付
+			else {
 				//判断余额是否足够
 				if(acctBalance<orderPayFee){
 					this._showWarn($.i18n.prop('pay.dialog.recharge'));
+				}//未设置支付密码
+				else if(payPassExist == false){
+					this._showToSetPass();
 				}//余额支付,需要密码
              	else if(needPayPass==="1"){
                     $("#payPass").val("");
@@ -149,15 +155,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
                         _this._showWarn($.i18n.prop('pay.error.passwd'));
 					}//未设置密码，进行提示，点击按钮进入密码设置页面
 					else if("000007"===payResult.payResultCode){
-                        new Dialog({
-                            content:$.i18n.prop('pay.error.pass.empty'),
-                            icon:'warning',
-                            okValue: $.i18n.prop("pay.dialog.setpw.btn"),
-                            title:  $.i18n.prop("pay.dialog.prompt"),
-                            ok:function(){
-                                window.location.href= _base+"/p/security/seccenter?source=user";
-                            }
-                        }).showModal();
+                        _this._showToSetPass();
 					}//余额不足，刷新当前页面
                     else if("300002"===payResult.payResultCode){
                         new Dialog({
@@ -182,6 +180,18 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 		_toDeposit:function(){
 			window.location.href=_base+"/p/balance/depositFund";
 		},
+		//显示设置密码的提示信息
+		_showToSetPass:function () {
+            new Dialog({
+                content:$.i18n.prop('pay.error.pass.empty'),
+                icon:'warning',
+                okValue: $.i18n.prop("pay.dialog.setpw.btn"),
+                title:  $.i18n.prop("pay.dialog.prompt"),
+                ok:function(){
+                    window.location.href= _base+"/p/security/seccenter?source=user";
+                }
+            }).showModal();
+        },
         _showWarn:function(msg){
             new Dialog({
                 content:msg,

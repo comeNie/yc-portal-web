@@ -263,7 +263,9 @@ public class CustomerOrderController {
             //是否显示待充值信息
             uiModel.addAttribute("needPay",
                     (balanceInfo!=null&&balanceInfo.getBalance()<orderFeeInfo.getTotalFee())?true:false);
-
+            //是否已设置支付密码
+            uiModel.addAttribute("payPassExist",
+                    (balanceInfo != null && StringUtils.isNotBlank(balanceInfo.getPayPassword()))?true:false);
             //默认设置成1为开启，0为关闭
             String accountEnable="1";
             try{

@@ -146,8 +146,29 @@
 					<c:choose>
 						<%--人民币--%>
 						<c:when test="${orderFee.currencyUnit == '1'}">
+							<%--使用余额 余额大于等于订单金额--%>
+							<c:if test="${balanceInfo!=null && needPay==false}">
+								<ul payType="YE" class="none-ml" >
+										<%--账户余额--%>
+									<li class="payment-balance">
+											<%--账户余额--%>
+										<p><spring:message code="pay.order.account.balance"/></p>
+											<%--支付余额--%>
+										<p class="word"><spring:message code="pay.order.pay.balance"/>：<c:if
+												test="${isEn==true}">¥</c:if><fmt:formatNumber
+												value="${balanceInfo.balance/1000}" pattern="#,##0.00#"/><c:if
+												test="${isEn!=true}">元</c:if></p>
+											<%--充值--%>
+										<c:if test="${accountEnable=='1'}">
+											<p><input type="button" id="depositBtn" class="btn radius20 border-blue btn-80 ml-10"
+													  value="<spring:message code="pay.order.balance.recharge"/>"></p>
+										</c:if>
+
+									</li>
+								</ul>
+							</c:if>
 							<%--银联--%>
-							<ul payType="YL" class="current">
+							<ul payType="YL">
 								<li class="union"></li>
 								<label><i class="icon iconfont">&#xe617;</i></label>
 							</ul>
@@ -155,8 +176,8 @@
 							<ul payType="ZFB">
 								<li class="zhifb"></li>
 							</ul>
-							<%--使用余额--%>
-							<c:if test="${balanceInfo!=null}">
+							<%--使用余额 余额小于订单金额--%>
+							<c:if test="${balanceInfo!=null && needPay==true}">
 								<ul payType="YE" class="none-ml" >
 									<%--账户余额--%>
 									<li class="payment-balance">
@@ -175,22 +196,24 @@
 
 									</li>
 								</ul>
-							<%--余额支付--%>
-							<form id="yePayForm" method="post" action="${_base}/p/customer/order/payOrder/balance">
-								<input type="hidden" name="externalId" value="${orderId}">
-								<input type="hidden" name="accountId" value="${balanceInfo.accountId}">
-								<input type="hidden" id="balancePass" name="password" />
-								<input type="hidden" name="totalAmount" value="${orderFee.totalFee}">
-								<input type="hidden" name="currencyUnit" value="${orderFee.currencyUnit}">
-									<%--订单类型 目前只支持用户--%>
-								<input type="hidden" name="orderType" value="1">
-							</form>
+							</c:if>
+							<c:if test="${balanceInfo!=null}">
+								<%--余额支付--%>
+								<form id="yePayForm" method="post" action="${_base}/p/customer/order/payOrder/balance">
+									<input type="hidden" name="externalId" value="${orderId}">
+									<input type="hidden" name="accountId" value="${balanceInfo.accountId}">
+									<input type="hidden" id="balancePass" name="password" />
+									<input type="hidden" name="totalAmount" value="${orderFee.totalFee}">
+									<input type="hidden" name="currencyUnit" value="${orderFee.currencyUnit}">
+										<%--订单类型 目前只支持用户--%>
+									<input type="hidden" name="orderType" value="1">
+								</form>
 							</c:if>
 						</c:when>
 						<%--美元--%>
 						<c:when test="${orderFee.currencyUnit == '2'}">
 							<%--paypal--%>
-							<ul payType="PP" class="current">
+							<ul payType="PP">
 								<li class="paypal"></li>
 								<label><i class="icon iconfont">&#xe617;</i></label>
 							</ul>
@@ -216,10 +239,14 @@
 <script type="text/javascript">
 	//是否需要校验密码
 	var needPayPass = "${balanceInfo.payCheck}";
+	//是否需要充值
+	var needRecharge = ${needPay};
 	//待支付金额，目前为总金额
 	var orderPayFee = ${orderFee.totalFee};
 	//账户余额
 	var acctBalance = ${balanceInfo!=null?balanceInfo.balance:0};
+	//是否已设置支付密码
+	var payPassExist = ${payPassExist};
 	(function () {
 		var pager;
 		seajs.use('app/jsp/order/payOrder', function(payOrderPager) {

@@ -17,6 +17,9 @@ public class AccountBalanceInfo {
     是否需要密码
      */
     private String payCheck;
+    /**
+     * 支付密码
+     */
     private String payPassword;
     /*
     币种

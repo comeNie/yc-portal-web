@@ -58,13 +58,15 @@ public class BalanceService {
         AccountInfoVo accountInfoVo = accountQuerySV.queryAccontById(accountInfoReq);
 
         //TODO....模拟数据
-//        FundInfo fundInfo = new FundInfo();
+//        fundInfo = new FundInfo();
 //        fundInfo.setAccountId(23423l);
-//        fundInfo.setBalance(110000l);
-
-//        AccountInfoVo accountInfoVo = new AccountInfoVo();
+//        fundInfo.setBalance(110l);
+        //TODO....模拟数据
+//        accountInfoVo = new AccountInfoVo();
 //        0 不验证 1 验证
 //        accountInfoVo.setPayCheck(BalanceConstants.PAY_CHECK_TRUE);
+        //支付密码
+//        accountInfoVo.setPayPassword(null);
 
         accountBalanceInfo = new AccountBalanceInfo();
         BeanUtils.copyProperties(accountBalanceInfo,fundInfo);
