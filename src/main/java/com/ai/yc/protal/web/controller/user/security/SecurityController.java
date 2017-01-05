@@ -218,7 +218,7 @@ public class SecurityController {
 		Boolean isexistloginpassword = true;
 		Boolean isexistpaypassword = true;
 		AccountBalanceInfo accountBalanceInfo =queryBalanceInfo();
-		if(accountBalanceInfo!=null){
+		if(StringUtil.isBlank(accountBalanceInfo.getPayPassword())){
 			isexistpaypassword = false;
 		}
 		int securitylevel = 0;
