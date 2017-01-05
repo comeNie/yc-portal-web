@@ -82,13 +82,13 @@
   						<p class="word">
   							<spring:message code="interpreter.lastName" />
   						</p>
-  						<p><input maxlength="100" type="text" class="int-text int-xlarge radius" name="lastname" id="lastname" value="${interpreterInfo.lastname}" /></p>
+  						<p><input maxlength="50" type="text" class="int-text int-xlarge radius" name="lastname" id="lastname" value="${interpreterInfo.lastname}" /></p>
   					</li>
   					<li>
   						<p class="word"><b>*</b>
   							<spring:message code="interpreter.nickName" />
   						</p>
-  						<p><input  maxlength="24" type="text" class="int-text int-xlarge radius" name="nickname" id="nickname" value="${interpreterInfo.nickname}"/>
+  						<p><input  type="text" class="int-text int-xlarge radius" name="nickname" id="nickname" value="${interpreterInfo.nickname}"/>
   						<label id="nickname-error" class="error" for="nickname"></label>
   						</p>
   					</li>
