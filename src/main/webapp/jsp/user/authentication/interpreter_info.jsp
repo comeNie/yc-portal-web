@@ -1,3 +1,5 @@
+<%@page import="com.ai.yc.protal.web.constants.Constants"%>
+<%@page import="com.ai.opt.sdk.components.ccs.CCSClientFactory"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -7,6 +9,16 @@
 	<%@ include file="/inc/inc.jsp" %>
 	<title><spring:message code="ycleftmenu.myinfo"/></title>
 </head>
+<%
+//默认设置成1为开启，0为关闭
+String accountEnable="1";
+try{
+	accountEnable=CCSClientFactory.getDefaultConfigClient().get(Constants.Account.CCS_PATH_ACCOUNT_ENABLE);
+}
+catch(Exception e){
+	//获取配置出错，直接忽略，视为开启
+}
+%>
 <body>
 	<!--头部-->
 	<c:if test="${source=='user'}">
@@ -163,7 +175,9 @@
   				</ul>
   			</div>
   			<div class="recharge-btn order-btn">
+ 				 <% if(Constants.Account.ACCOUNT_ENABLE.equals(accountEnable)){ %>
  				<input type="button" class="btn btn-green btn-xxxlarge radius10" id="saveButton"  value="<spring:message code="interpreter.save" />">
+ 				<% } %>
  				<input type="hidden" id="uploadImgFlag" value="0"/>
  				<input type="hidden" id="nickNameFlag" value="0"/>
  				<input type="hidden" id="portraitId" name="portraitId" value="${interpreterInfo.portraitId}"/>
