@@ -6,6 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <%@ include file="/inc/inc.jsp"%>
+<link href="${uedroot}/css/modular/login-regsiter.css" rel="stylesheet"
+	type="text/css" />
 </head>
 <body>
 	<!--头部-->
@@ -87,14 +89,14 @@
 											<p id="telephone">${user.fullMobile}</p>
 										</li>
 										<li>
-											<p class="word"><spring:message code="ycregister.dynamiCode" /></p>
+											<p class="word"><spring:message code="ycaccountcenter.updatePayPassword.dynamiCode" /></p>
 											<p>
 												<input id="phoneDynamicode" type="text" class="int-text int-in radius">
 											</p>
 											<p>
 												<input type="button" id="send_dynamicode_btn"
 													class="btn border-green border-sma radius btn-medium"
-													value="<spring:message code="ycregister.getDynamiCode"/>">
+													value="<spring:message code="ycaccountcenter.updatePayPassword.getcode"/>">
 											</p>
 										</li>
 									</ul>
@@ -226,11 +228,12 @@
 								<div class="recharge-form-label mt-30 ">
 									<ul>
 										<li>
+											<label class="ml-70" id="payErrMsg" style="display: none;"></label>
 											<p class="word"><spring:message code="ycaccountcenter.updatePassword.bindEmail"/></p>
 											<p id="passwordEmail">${user.email}</p>
 										</li>
 										<li>
-											<p class="word"><spring:message code="ycregister.dynamiCode" /></p>
+											<p class="word"><spring:message code="ycaccountcenter.updatePayPassword.dynamiCode" /></p>
  								            <p><input type="text" class="int-text int-in radius" id="emailIdentifyCode"></p>
  								            <p><input type="button" class="btn border-green border-sma radius btn-medium" value="<spring:message code="ycaccountcenter.updatePassword.sendEmailCode"/>" id="sendEmailBtn"></p>
  								            <p><a href="javascript:void(0);" id="goEmail"><spring:message code="ycaccountcenter.updatePassword.goEmail"/></a></p>

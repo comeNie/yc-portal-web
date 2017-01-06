@@ -61,9 +61,9 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
         _phoneNext:function(){
 			 var phoneDynamicode = $("#phoneDynamicode").val();
 			 if(phoneDynamicode==""){
-				 //$("#dynamicode").show();
-				 //$("#dynamicode").text("请输入验证码");
-				 showMsg(updatePayPasswordMsg.dynamicCodeEmpty);
+				 $("#dynamicode").show();
+				 $("#dynamicode").text(updatePayPasswordMsg.dynamicCodeEmpty);
+				 //showMsg(updatePayPasswordMsg.dynamicCodeEmpty);
 				 return false;
 			 }
 			 ajaxController.ajax({
@@ -77,9 +77,9 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
     				},
     		        success: function(data) {
     		        	if(!data.data){
-    		        		//$("#dynamicode").show();
-							//$("#dynamicode").text(data.statusInfo);
-    		        		showMsg(data.statusInfo);
+    		        		$("#dynamicode").show();
+							$("#dynamicode").text(data.statusInfo);
+    		        		//showMsg(data.statusInfo);
 							return false;
     		        	}else{
     		        		 $("#next1").hide();
@@ -98,33 +98,33 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 			var password = $("#password");
 			var passwordVal = password.val();
 			if ($.trim(passwordVal) == "") {
-				//$("#passwordMsg").html("密码不能为空");
-				//$("#passwordMsg").show();
+				$("#passwordMsg").html("密码不能为空");
+				$("#passwordMsg").show();
 				//password.focus();
-				showMsg(updatePayPasswordMsg.passwordEmpty);
+				//showMsg(updatePayPasswordMsg.passwordEmpty);
 				return false;
 			}
 			if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
 					.test(passwordVal)) {
-				//$("#passwordMsg").html("密码格式错误");
-				//$("#passwordMsg").show();
+				$("#passwordMsg").show();
+				$("#passwordMsg").text(updatePayPasswordMsg.passwordError);
 				//password.focus();
-				showMsg(updatePayPasswordMsg.passwordError);
+				//showMsg(updatePayPasswordMsg.passwordError);
 				return false;
 			}
 			// 确认密码
 			var confirmPassword = $("#confirmPassword");
 			var confirmPasswordVal = confirmPassword.val();
 			if ($.trim(confirmPasswordVal) == "") {
-				//$("#passwordMsg").html("确认密码不能为空");
-				//$("#passwordMsg").show();
-				showMsg(updatePayPasswordMsg.passwordEmpty);
+				$("#passwordMsg").show();
+				$("#passwordMsg").text(updatePayPasswordMsg.passwordEmpty);
+				//showMsg(updatePayPasswordMsg.passwordEmpty);
 				return false;
 			}
 			if (confirmPasswordVal != passwordVal) {
-				//$("#passwordMsg").html("密码不一致");
-				//$("#passwordMsg").show();
-				showMsg(updatePayPasswordMsg.confirmPasswordError);
+				$("#passwordMsg").show();
+				$("#passwordMsg").text(updatePayPasswordMsg.confirmPasswordError);
+				//showMsg(updatePayPasswordMsg.confirmPasswordError);
 				return false;
 			}
 			ajaxController.ajax({
@@ -138,6 +138,7 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 		        		showMsg(json.statusInfo);
 		        		return false;
 		        	}else if(json.data){
+		        		$("#passwordMsg").hide();
 		        		$("#next2").hide();
 						$("#next3").show();
 		        	}
@@ -150,7 +151,9 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
         _emailNext1:function(){
         	var emailIdentifyCode = $("#emailIdentifyCode").val();
 			if($.trim(emailIdentifyCode)==""){
-				showMsg(updatePayPasswordMsg.dynamicCodeEmpty);
+				$("#payErrMsg").show();
+				$("#payErrMsg").text(updatePayPasswordMsg.dynamicCodeEmpty);
+				//showMsg(updatePayPasswordMsg.dynamicCodeEmpty);
 				return;
 			}
 			var _this = this;
@@ -165,8 +168,11 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 				},
 		        success: function(json) {
 		        	if(!json.data){
-		        	 showMsg(json.statusInfo);
+		        	 $("#payErrMsg").show();
+					 $("#payErrMsg").text(json.statusInfo);
+		        	 //showMsg(json.statusInfo);
 		        	}else{
+		        		$("#payErrMsg").hide();
 		        		$("#code").val(codeVal);
 		        		$("#next4").hide();
 						$("#next5").show();
@@ -179,33 +185,33 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 			var password = $("#emailPassword");
 			var passwordVal = password.val();
 			if ($.trim(passwordVal) == "") {
-				//$("#emailPasswordErrMsg").show();
-				//$("#emailPasswordErrMsg").text("密码不能为空");
+				$("#emailPasswordErrMsg").show();
+				$("#emailPasswordErrMsg").text(updatePayPasswordMsg.passwordEmpty);
 				//password.focus();
-				showMsg(updatePayPasswordMsg.passwordEmpty);
+				//showMsg(updatePayPasswordMsg.passwordEmpty);
 				return false;
 			}
 			if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
 					.test(passwordVal)) {
-				//$("#emailPasswordErrMsg").text("密码格式错误");
-				//$("#emailPasswordErrMsg").show();
+				$("#emailPasswordErrMsg").show();
+				$("#emailPasswordErrMsg").text(updatePayPasswordMsg.passwordError);
 				//password.focus();
-				showMsg(updatePayPasswordMsg.passwordError);
+				//showMsg(updatePayPasswordMsg.passwordError);
 				return false;
 			}
 			// 确认密码
 			var confirmPassword = $("#emailConfirmPassword");
 			var confirmPasswordVal = confirmPassword.val();
 			if ($.trim(confirmPasswordVal) == "") {
-				//$("#emailPasswordErrMsg").text("确认密码为空");
-				//$("#emailPasswordErrMsg").show();
-				showMsg(updatePayPasswordMsg.passwordEmpty);
+				$("#emailPasswordErrMsg").show();
+				$("#emailPasswordErrMsg").text(updatePayPasswordMsg.passwordEmpty);
+				//showMsg(updatePayPasswordMsg.passwordEmpty);
 				return false;
 			}
 			if (confirmPasswordVal != passwordVal) {
-				//$("#emailPasswordErrMsg").text("密码不一致");
-				//$("#emailPasswordErrMsg").show();
-				showMsg(updatePayPasswordMsg.confirmPasswordError);
+				$("#emailPasswordErrMsg").show();
+				$("#emailPasswordErrMsg").text(updatePayPasswordMsg.confirmPasswordError);
+				//showMsg(updatePayPasswordMsg.confirmPasswordError);
 				return false;
 			}
 			ajaxController.ajax({
@@ -250,9 +256,9 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 					var resultCode = data.data;
 					if(!resultCode){
 						sendEmailBtn.removeAttr("disabled"); //移除disabled属性
-						//$("#emailErrMsg").show();
-						//$("#emailErrMsg").text("发送邮件失败");
-						showMsg(updatePayPasswordMsg.sendMailError);
+						$("#emailErrMsg").show();
+						$("#emailErrMsg").text(updatePayPasswordMsg.sendMailError);
+						//showMsg(updatePayPasswordMsg.sendMailError);
 						sendEmailBtn.attr("class", "btn border-green border-sma radius btn-medium");
 					}else{
 						var step = 59;
@@ -295,9 +301,9 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 					},
 					success : function(data) {
 						if(data.data==false){
-							//$("#dynamicode").show();
-							//$("#dynamicode").text(data.statusInfo);
-							showMsg(data.statusInfo);
+							$("#dynamicode").show();
+							$("#dynamicode").text(data.statusInfo);
+							//showMsg(data.statusInfo);
 							btn.attr("class", "btn border-green border-sma radius btn-medium");
 							btn.removeAttr("disabled"); //移除disabled属性
 							btn.val(updatePayPasswordMsg.getDynamiCode);
