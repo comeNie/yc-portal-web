@@ -240,7 +240,7 @@ public class TaskCenterController {
 //        languageIdList.add("1");
 //        languageIdList.add("10");
 //        languageIdList.add("109");
-        if (CollectionUtil.isEmpty(languageIdList)){
+        if (CollectionUtil.isEmpty(languageList)){
             return languageIdList;
         }
         for (UsrLanguageMessage languageMessage:languageList){
