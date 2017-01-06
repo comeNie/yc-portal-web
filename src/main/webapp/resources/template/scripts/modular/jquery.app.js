@@ -6,7 +6,6 @@ $(function(){
 		bannerHeight = $(window).height(); 
 	}
 	$('#rollbanner,#rollbanner .r_banner').height(bannerHeight);
-	$("#rollbanner").css('margin-top', '70px')
 	$("#appCopyright").hide();
 	unrollBanner1();
 	unrollBanner2();
@@ -19,12 +18,6 @@ $(function(){
          },
 		//滚动前的回调函数
 		onLeave: function(index, nextIndex, direction){
-			if (nextIndex == 1) {
-				$("#header").show();
-			} else {
-				$("#header").hide();
-			}
-
 			switch(index)
 		    {
 		    case 2:
@@ -82,7 +75,7 @@ $(function(){
 	//roll banner 2 connect
 	  function rollBanner2(){
 	    var imgLeft = new Array(30,30,160);
-	    var imgTop = new Array(30,140,234);
+	    var imgTop = new Array(130,240,334);
 	    $("#rbCon2 .rbcd_txt").fadeIn(1000);
 	    $("#rbCon2 .rbcd_img").children("img").eq(0).show(300);
 	    $("#rbCon2 .rbcd_img").children("img").eq(1).delay(300).show(300).animate({"top":imgTop[1]+"px"},300);
@@ -91,11 +84,11 @@ $(function(){
 	//roll banner 2 reset
 	  function unrollBanner2(){
 	    $("#rbCon2 .rbcd_txt").hide();
-	    $("#rbCon2 .rbcd_img").children("img").eq(2).css({"display":"none","top":140+"px","left":90+"px"}).siblings().css({"display":"none","top":30+"px","left":30+"px"});
+	    $("#rbCon2 .rbcd_img").children("img").eq(2).css({"display":"none","top":140+"px","left":90+"px"}).siblings().css({"display":"none","top":130+"px","left":30+"px"});
 	  }
 	//roll banner 3 connect
 	  function rollBanner3(){
-	    var imgTop = new Array(70,444,226);
+	    var imgTop = new Array(170,444,226);
 	    $("#rbCon3 .rbcd_img").show(500);
 	    for(var i=1;i<3;i++){
 	      $("#rbCon3 .rbcd_img").children("img").eq(i).animate({"width":37+"px","top":imgTop[i]+"px"},i*500);
