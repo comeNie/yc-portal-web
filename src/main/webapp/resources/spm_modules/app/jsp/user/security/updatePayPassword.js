@@ -135,7 +135,9 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 				},
 		        success: function(json) {
 		        	if(!json.data){
-		        		showMsg(json.statusInfo);
+		        		$("#passwordMsg").show();
+						$("#passwordMsg").text(json.statusInfo);
+		        		//showMsg(json.statusInfo);
 		        		return false;
 		        	}else if(json.data){
 		        		$("#passwordMsg").hide();
