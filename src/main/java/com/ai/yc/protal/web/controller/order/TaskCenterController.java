@@ -237,9 +237,9 @@ public class TaskCenterController {
     private List<Object> getLanguageId(List<UsrLanguageMessage> languageList){
         List<Object> languageIdList = new ArrayList<>();
         //TODO ...模拟数据
-        languageIdList.add("1");
-        languageIdList.add("10");
-        languageIdList.add("109");
+//        languageIdList.add("1");
+//        languageIdList.add("10");
+//        languageIdList.add("109");
         if (CollectionUtil.isEmpty(languageIdList)){
             return languageIdList;
         }
