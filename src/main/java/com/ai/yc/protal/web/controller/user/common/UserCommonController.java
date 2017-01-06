@@ -237,7 +237,6 @@ public class UserCommonController {
 		}
 		LOG.info("短信内容是====="+randomStr);
 		boolean sendOk = SmsSenderUtil.sendMessage(phone,req.getContent());
-		LOG.info("发送======="+sendOk+"发送手机号"+phone+"======发送内容"+req.getContent());
 		if (sendOk) {
 			// 最多发送次数超时时间
 			int maxOverTimeCount = config.getIntValue(req
@@ -310,6 +309,11 @@ public class UserCommonController {
 		String type = request.getParameter("type");
 		String randomStr = "";
 		String msg = "";
+		/**
+		 * 保证最后发送的激活链接有效
+		 */
+		AiPassUitl.getCacheClient().del(EmailVerify.EMAIL_VERIFICATION_CODE + email);
+		
 		if (UcenterOperation.OPERATION_TYPE_EMAIL_VERIFY.equals(type)) {// 邮箱验证
 			randomStr = RandomUtil.randomNum(6);
 			String uid = request.getParameter("uid");
