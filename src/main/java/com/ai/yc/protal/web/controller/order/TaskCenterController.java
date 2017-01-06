@@ -5,6 +5,7 @@ import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
@@ -26,6 +27,7 @@ import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.translator.api.translatorservice.interfaces.IYCTranslatorServiceSV;
 import com.ai.yc.translator.api.translatorservice.param.SearchYCTranslatorSkillListRequest;
+import com.ai.yc.translator.api.translatorservice.param.UsrLanguageMessage;
 import com.ai.yc.translator.api.translatorservice.param.YCTranslatorSkillListResponse;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -86,11 +88,16 @@ public class TaskCenterController {
                     || StringUtils.isBlank(userInfoResponse.getVipLevel())){
                 retView = "forward:/p/security/interpreterIndex?showCert=true";
             }else {
+                //语言对集合
+                List<Object> languageIdList = getLanguageId(userInfoResponse.getUsrLanguageList());
+                uiModel.addAttribute("languageIds",languageIdList);
                 //查询订单大厅数量
                 IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
                 QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
                 ordCountReq.setState(OrderConstants.State.UN_RECEIVE);//订单状态
                 ordCountReq.setInterperLevel(userInfoResponse.getVipLevel());//译员等级
+                ordCountReq.setLspId(userInfoResponse.getLspId());//lspid
+                ordCountReq.setLanguageIds(languageIdList);
                 QueryOrdCountResponse taskNumRes = iOrderQuerySV.queryOrderCount(ordCountReq);
                 Map<String, Integer> taskNumMap = taskNumRes.getCountMap();
                 Integer taskNum = taskNumMap.get(OrderConstants.State.UN_RECEIVE);
@@ -118,7 +125,6 @@ public class TaskCenterController {
     @RequestMapping("/list")
     @ResponseBody
     public ResponseData<PageInfo<OrderWaitReceiveSearchInfo>> taskCenter(
-            @RequestParam(value = "lspId",required = false) String lspId,
             @RequestParam(value = "startDateStr",required = false)String startDateStr,
             @RequestParam(value = "endDateStr",required = false)String endDateStr,
             OrderWaitReceiveSearchRequest orderReq){
@@ -226,5 +232,20 @@ public class TaskCenterController {
                     rb.getMessage("common.res.sys.error",new String[]{ErrorCode.SYSTEM_ERROR}));
         }
         return responseData;
+    }
+
+    private List<Object> getLanguageId(List<UsrLanguageMessage> languageList){
+        List<Object> languageIdList = new ArrayList<>();
+        //TODO ...模拟数据
+        languageIdList.add("1");
+        languageIdList.add("10");
+        languageIdList.add("109");
+        if (CollectionUtil.isEmpty(languageIdList)){
+            return languageIdList;
+        }
+        for (UsrLanguageMessage languageMessage:languageList){
+            languageIdList.add(languageMessage.getExtendId());
+        }
+        return languageIdList;
     }
 }
