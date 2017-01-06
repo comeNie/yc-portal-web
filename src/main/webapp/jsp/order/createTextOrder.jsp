@@ -107,7 +107,8 @@
 					<p>
 						<!--  翻译内容-->
 						<textarea id="translateContent"  name="translateContent"
-								  onkeyup="pager.textCounter(this,'inputsLen',2000);" onkeydown="pager.textCounter(this,'inputsLen',2000);"
+                                  oninput="pager.textCounter(this,'inputsLen',2000);pager._clearControl();"  onpropertychange="pager.textCounter(this,'inputsLen',2000);pager._clearControl();"
+                                  onkeyup="pager.textCounter(this,'inputsLen',2000);" onkeydown="pager.textCounter(this,'inputsLen',2000);"
 								  class="int-text textarea-xlarge-100 radius" placeholder="<spring:message code="order.transContent"/>">${fn:replace(order.productInfo.needTranslateInfo,'<br />', '')}</textarea>
 					</p>
 					<!-- 上传文档btn -->
@@ -367,7 +368,7 @@
         //IE8的输入框提示信息兼容
         $("input,textarea").placeholder();
 	})();
-	
 
+//    $(document).bind("contextmenu",function(){return false;});
 </script>
 </html>
