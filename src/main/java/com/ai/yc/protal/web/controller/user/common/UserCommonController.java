@@ -338,9 +338,9 @@ public class UserCommonController {
 			_template = EmailVerify.EMAIL_VERIFY_EN_US_TEMPLATE;
 			_subject = EmailVerify.EMAIL_VERIFY_EN_US_SUBJECT;
 		}
-		String userName = UserUtil.getSsoUser()==null?null:UserUtil.getSsoUser().getUsername();
+		String userName = request.getParameter("userName");
 		if(StringUtil.isBlank(userName)){
-			userName = request.getParameter("userName");
+			userName = UserUtil.getSsoUser()==null?null:UserUtil.getSsoUser().getUsername();
 		}
 		emailRequest.setData(new String[] {_subject,userName,randomStr,logoUrl,phoneUrl,ermaUrl});
 		emailRequest.setTemplateURL(_template);
