@@ -32,7 +32,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 				mode: 'both',
 				language: currentLan,
                 checkAvailableLanguages: true,
-				async: true
+				async: false
 			});
     	},
 		//检查订单是否已经支付，
@@ -66,6 +66,12 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 			//若不为余额支付
 			if("YE" != payType){
 				$("#merchantUrl").val(window.location.href);
+				if(window.console){
+					console.info("content:"+$.i18n.prop('pay.msg.tip'));
+					console.info("okValue:"+$.i18n.prop('pay.completed.btn'));
+					console.log("cancelVal:"+$.i18n.prop('pay.error.btn'));
+					console.log("title:"+$.i18n.prop('pay.result.title'))
+				}
 				//提交
 				new Dialog({
                     content:$.i18n.prop('pay.msg.tip'),

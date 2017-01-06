@@ -19,12 +19,12 @@
     var currentLan = "<%=response.getLocale()%>";
 
 </script>
-<script src="${_base}/resources/spm_modules/jquery/1.9.1/jquery.min.js"></script>
-<script  type="text/javascript" src="${_base}/resources/template/scripts/modular/placeholder.min.js"></script>
 <script src="${_base}/resources/spm_modules/seajs/2.3.0/dist/sea.js"></script>
 <script src="${_base}/resources/spm_modules/seajs/seajs-css.js"></script>
 <script src="${_base}/resources/spm_modules/app/core/config.js"></script>
 <script src="${_base}/resources/spm_modules/app/jsp/changeLocale.js"></script>
+<script src="${_base}/resources/spm_modules/jquery/1.9.1/jquery.min.js"></script>
+<script  type="text/javascript" src="${_base}/resources/template/scripts/modular/placeholder.min.js"></script>
 <script src="${_base}/resources/template/scripts/modular/frame.js"></script>
 <script src="${_base}/resources/template/scripts/modular/jqueryrotate.2.3.js"></script>
 

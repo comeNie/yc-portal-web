@@ -342,23 +342,31 @@ define("app/jsp/user/password/password",
 							var password = $("#password");
 							var passwordVal = password.val();
 							if ($.trim(passwordVal) == "") {
-								showMsg(passwordMsg.password_empty);
+								$("#passwordMsg").show();
+								$("#passwordMsg").text(passwordMsg.password_empty);
+								//showMsg(passwordMsg.password_empty);
 								return false;
 							}
 							if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
 									.test(passwordVal)) {
-								showMsg(passwordMsg.password_error);
+								$("#passwordMsg").show();
+								$("#passwordMsg").text(passwordMsg.password_error);
+								//showMsg(passwordMsg.password_error);
 								return false;
 							}
 							// 确认密码
 							var confirmPassword = $("#confirmPassword");
 							var confirmPasswordVal = confirmPassword.val();
 							if ($.trim(confirmPasswordVal) == "") {
-								showMsg(passwordMsg.confirm_password_empty);
+								$("#passwordMsg").show();
+								$("#passwordMsg").text(passwordMsg.confirm_password_empty);
+								//showMsg(passwordMsg.confirm_password_empty);
 								return false;
 							}
 							if (confirmPasswordVal != passwordVal) {
-								showMsg(passwordMsg.confirm_password_error);
+								$("#passwordMsg").show();
+								$("#passwordMsg").text(passwordMsg.confirm_password_error);
+								//showMsg(passwordMsg.confirm_password_error);
 								return false;
 							}
 							ajaxController.ajax({
@@ -371,7 +379,9 @@ define("app/jsp/user/password/password",
 			    				},
 			    		        success: function(json) {
 			    		        	if(!json.data){
-			    		        		showMsg(json.statusInfo);
+			    		        		$("#passwordMsg").show();
+										$("#passwordMsg").text(json.statusInfo);
+			    		        		//showMsg(json.statusInfo);
 			    		        		return false;
 			    		        	}else if(json.data){
 			    		        		$("#next2").hide();
@@ -426,7 +436,9 @@ define("app/jsp/user/password/password",
 						_checkEmailImageCode:function(){
 							var emailIdentifyCode = $("#emailIdentifyCode").val();
 							if($.trim(emailIdentifyCode)==""){
-								showMsg(passwordMsg.emailCodeEmpty);
+								$("#emailErrMsg").show();
+								$("#emailErrMsg").text(passwordMsg.emailCodeEmpty);
+								//showMsg(passwordMsg.emailCodeEmpty);
 								return;
 							}
 							ajaxController.ajax({
@@ -439,7 +451,9 @@ define("app/jsp/user/password/password",
 			    				},
 			    		        success: function(data) {
 			    		        	if(!data.data){
-			    		        		showMsg(data.statusInfo);
+			    		        		$("#emailErrMsg").show();
+										$("#emailErrMsg").text(data.statusInfo);
+			    		        		//showMsg(data.statusInfo);
 			    		        		return false;
 			    		        	}else{
 			    		        		$("#next4").hide();
@@ -458,12 +472,16 @@ define("app/jsp/user/password/password",
 							var emailPassword = $("#emailPassword");
 							var emailPasswordVal = emailPassword.val();
 							if ($.trim(emailPasswordVal) == "") {
-								showMsg(passwordMsg.password_empty)
+								$("#emailPasswordErrMsg").show();
+								$("#emailPasswordErrMsg").text(passwordMsg.password_empty);
+								//showMsg(passwordMsg.password_empty)
 								return false;
 							}
 							if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
 									.test(emailPasswordVal)) {
-								showMsg(passwordMsg.password_error);
+								$("#emailPasswordErrMsg").show();
+								$("#emailPasswordErrMsg").text(passwordMsg.password_error);
+								//showMsg(passwordMsg.password_error);
 								return false;
 							}
 							$("#emailPasswordErrMsg").hide();
@@ -490,23 +508,32 @@ define("app/jsp/user/password/password",
 							var password = $("#emailPassword");
 							var passwordVal = password.val();
 							if ($.trim(passwordVal) == "") {
-								showMsg(passwordMsg.password_empty);
+								$("#emailPasswordErrMsg").show();
+								$("#emailPasswordErrMsg").text(passwordMsg.password_empty);
+								//showMsg(passwordMsg.password_empty);
 								return false;
 							}
 							if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
 									.test(passwordVal)) {
-								showMsg(passwordMsg.password_error);
+								$("#emailPasswordErrMsg").show();
+								$("#emailPasswordErrMsg").text(passwordMsg.password_error);
+								//showMsg(passwordMsg.password_error);
 								return false;
 							}
+							$("#emailPasswordErrMsg").hide();
 							// 确认密码
 							var confirmPassword = $("#emailConfirmPassword");
 							var confirmPasswordVal = confirmPassword.val();
 							if ($.trim(confirmPasswordVal) == "") {
-								showMsg(passwordMsg.confirm_password_empty);
+								$("#emailPasswordErrMsg").show();
+								$("#emailPasswordErrMsg").text(passwordMsg.confirm_password_empty);
+								//showMsg(passwordMsg.confirm_password_empty);
 								return false;
 							}
 							if (confirmPasswordVal != passwordVal) {
-								showMsg(passwordMsg.confirm_password_error);
+								$("#emailPasswordErrMsg").show();
+								$("#emailPasswordErrMsg").text(passwordMsg.confirm_password_error);
+								//showMsg(passwordMsg.confirm_password_error);
 								return false;
 							}
 							ajaxController.ajax({
@@ -519,7 +546,9 @@ define("app/jsp/user/password/password",
 			    				},
 			    		        success: function(json) {
 			    		        	if(!json.data){
-			    		        		showMsg(json.statusInfo);
+			    		        		$("#emailPasswordErrMsg").show();
+										$("#emailPasswordErrMsg").text(json.statusInfo);
+			    		        		//showMsg(json.statusInfo);
 			    		        		return false;
 			    		        	}else{
 			    		        		$("#next5").hide();

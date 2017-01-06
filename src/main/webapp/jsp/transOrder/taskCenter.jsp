@@ -44,6 +44,10 @@
                         <input type="hidden" name="sortFlag" id="sortFlag" value="0">
                         <%--升降序字段--%>
                         <input type="hidden" name="sortField" id="sortField" value="0">
+                        <%--译员支持语言对--%>
+                        <c:forEach var="languageId" items="${languageIds}">
+                            <input type="hidden" name="languageIds" value="${languageId}">
+                        </c:forEach>
                     <ul>
                         <li class="mb-20">
                             <%--领域--%>
