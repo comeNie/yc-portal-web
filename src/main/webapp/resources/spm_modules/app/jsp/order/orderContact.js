@@ -38,6 +38,7 @@ define('app/jsp/order/orderContact', function (require, exports, module) {
                 name: ["orderInfo"], //资源文件名称，可以是数组
                 path: _i18n_res, //资源文件路径
                 mode: 'both',
+                cache: true,
                 checkAvailableLanguages: true,
                 language: currentLan
             });

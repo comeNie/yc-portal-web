@@ -20,6 +20,7 @@ define('app/jsp/balance/depositFund', function (require, exports, module) {
 				name: ["myaccount","payOrder"], //资源文件名称，可以是数组
 				path: _i18n_res, //资源文件路径
 				mode: 'both',
+                cache: true,
 				language: currentLan,
                 checkAvailableLanguages: true,
 				async: false

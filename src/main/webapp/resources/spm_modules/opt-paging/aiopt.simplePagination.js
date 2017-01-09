@@ -38,6 +38,7 @@ define("opt-paging/aiopt.simplePagination", ["jquery","simplePagination/jquery.s
                 path: _i18n_res, //资源文件路径
                 mode: 'both',
                 language: currentLan,
+                cache: true,
                 checkAvailableLanguages: true,
                 async: true,
                 callback:function () {

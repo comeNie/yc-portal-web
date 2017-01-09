@@ -2,7 +2,6 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
-		Dialog = require("optDialog/src/dialog"),
 	    AjaxController = require('opt-ajax/1.0.0/index');
     require("jsviews/jsrender.min");
     require("jsviews/jsviews.min");
@@ -37,16 +36,17 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
       	//重写父类
     	setup: function () {
 			taskCenterPage.superclass.setup.call(this);
-    		this._getOrderList();
 			//初始化国际化
 			$.i18n.properties({//加载资浏览器语言对应的资源文件
 				name: ["taskCenter"], //资源文件名称，可以是数组
 				path: _i18n_res, //资源文件路径
 				mode: 'both',
 				language: currentLan,
+                cache: true,
                 checkAvailableLanguages: true,
 				async: true
 			});
+            this._getOrderList();
     	},
 		//改变查询的结束时间
 		_changeDate:function(dp,dateObj){
