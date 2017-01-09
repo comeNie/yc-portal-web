@@ -23,6 +23,7 @@ import com.ai.yc.order.api.orderreceivesearch.param.OrderWaitReceiveSearchRespon
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.ErrorCode;
 import com.ai.yc.protal.web.constants.OrderConstants;
+import com.ai.yc.protal.web.constants.TranslatorConstants;
 import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.translator.api.translatorservice.interfaces.IYCTranslatorServiceSV;
@@ -75,8 +76,15 @@ public class TaskCenterController {
             YCTranslatorSkillListResponse userInfoResponse = userServiceSV.getTranslatorSkillList(searchYCUserReq);
 //        包括译员的等级,是否为LSP译员,LSP中的角色,支持的语言对
             String lspId = userInfoResponse.getLspId();
-            uiModel.addAttribute("lspId",userInfoResponse.getLspId());//lsp标识
-            uiModel.addAttribute("lspRole",userInfoResponse.getLspRole());//lsp角色
+            String lspRole = userInfoResponse.getLspRole();
+            //如果不为
+            if(!TranslatorConstants.LSP_ADMIN_ROLE.equals(lspRole)
+                    && !TranslatorConstants.LSP_PM_ROLE.equals(lspRole)){
+                lspId="";
+                lspRole="";
+            }
+            uiModel.addAttribute("lspId",lspId);//lsp标识
+            uiModel.addAttribute("lspRole",lspRole);//lsp角色
             uiModel.addAttribute("vipLevel",userInfoResponse.getVipLevel());//译员等级
             /* TODO... 模拟数据 */
 //            userInfoResponse.setApproveState("1");
@@ -97,7 +105,7 @@ public class TaskCenterController {
                 QueryOrdCountRequest ordCountReq = new QueryOrdCountRequest();
                 ordCountReq.setState(OrderConstants.State.UN_RECEIVE);//订单状态
                 ordCountReq.setInterperLevel(userInfoResponse.getVipLevel());//译员等级
-                ordCountReq.setLspId(userInfoResponse.getLspId());//lspid
+                ordCountReq.setLspId(lspId);//lspid
                 ordCountReq.setLanguageIds(languageIdList);
                 QueryOrdCountResponse taskNumRes = iOrderQuerySV.queryOrderCount(ordCountReq);
                 Map<String, Integer> taskNumMap = taskNumRes.getCountMap();
