@@ -74,6 +74,7 @@ public class TaskCenterController {
             searchYCUserReq.setUserId(userId);
             YCTranslatorSkillListResponse userInfoResponse = userServiceSV.getTranslatorSkillList(searchYCUserReq);
 //        包括译员的等级,是否为LSP译员,LSP中的角色,支持的语言对
+            String lspId = userInfoResponse.getLspId();
             uiModel.addAttribute("lspId",userInfoResponse.getLspId());//lsp标识
             uiModel.addAttribute("lspRole",userInfoResponse.getLspRole());//lsp角色
             uiModel.addAttribute("vipLevel",userInfoResponse.getVipLevel());//译员等级
@@ -244,7 +245,7 @@ public class TaskCenterController {
             return languageIdList;
         }
         for (UsrLanguageMessage languageMessage:languageList){
-            languageIdList.add(languageMessage.getExtendId());
+            languageIdList.add(languageMessage.getDuadId());
         }
         return languageIdList;
     }
