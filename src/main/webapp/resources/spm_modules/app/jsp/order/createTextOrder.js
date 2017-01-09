@@ -669,7 +669,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 pick : "#selectFile",
                 dnd: '#fy2', //拖拽
                 accept: {
-                    title: 'intoTypes',
+                    title: 'fileTypes',
                     extensions: 'rar,doc,docx,txt,pdf,jpg,png,gif',
                     // mimeTypes: 'application/zip,application/msword,application/pdf,image/jpeg,image/png,image/gif'
                 },
