@@ -15,7 +15,6 @@
 String accountEnable="1";
 try{
 	accountEnable=CCSClientFactory.getDefaultConfigClient().get(Constants.Account.CCS_PATH_ACCOUNT_ENABLE);
-	System.out.println("accountEnable="+accountEnable);
 }
 catch(Exception e){
 	//获取配置出错，直接忽略，视为开启
