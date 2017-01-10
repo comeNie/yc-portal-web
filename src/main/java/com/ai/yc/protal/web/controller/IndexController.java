@@ -39,7 +39,7 @@ public class IndexController {
     public String indexView(Model uiModel){
         //获取基础数据
         ICacheClient cacheClient = AiPassUitl.getCacheClient();
-        String homeDataStr = cacheClient.get(CacheKey.HOME_DATA_CONFIG_KEY);
+        String homeDataStr = cacheClient.hget(CacheKey.HOME_DATA_CONFIG_KEY,CacheKey.HOME_DATA_CONFIG_KEY);
 
         HomeDataConfig homeDataCon = null;
         try {
