@@ -104,6 +104,6 @@
 .footer-list{width:100%;float:left;margin-top:40px;border-top:1px solid #528fea;padding-top:25px;}
 .footer-list ul li{text-align: center;line-height:30px;font-size:12px;color:#5b96ed}
 .footer-list ul li img{margin-left:10px;}
-
+.footer-list ul li a{color:#5b96ed}
 /**客户中心底部**/
 .second-footer{width:100%;text-align:center;height:60px;line-height:60px;float:left}
