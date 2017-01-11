@@ -402,6 +402,7 @@
         </div>
     </div>
     <!--底部-->
+    <c:set var="showTb" value="true"/>
     <%@include file="/inc/indexFoot.jsp"%>
 </div>
 </body>

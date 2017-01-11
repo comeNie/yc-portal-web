@@ -240,13 +240,13 @@
 	//是否需要校验密码
 	var needPayPass = "${balanceInfo.payCheck}";
 	//是否需要充值
-	var needRecharge = ${needPay};
+	var needRecharge = ${needPay!=null?needPay:true};
 	//待支付金额，目前为总金额
 	var orderPayFee = ${orderFee.totalFee};
 	//账户余额
 	var acctBalance = ${balanceInfo!=null?balanceInfo.balance:0};
 	//是否已设置支付密码
-	var payPassExist = ${payPassExist};
+	var payPassExist = ${payPassExist!=null?payPassExist:false};
 	(function () {
 		var pager;
 		seajs.use('app/jsp/order/payOrder', function(payOrderPager) {

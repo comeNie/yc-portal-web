@@ -88,9 +88,9 @@
             	<!--译云专业语言服务平台 版权所有  -->
                 <li class="di-icon"><spring:message code="indexFoot.companyName"/><img src="${uedroot}/images/di-icon.png" /></li>
               	<!-- 京ICP备13002826号-7 -->
-                <li><spring:message code="indexFoot.copyRright"/><a target="_blank"
+                <li><spring:message code="indexFoot.copyRright"/><c:if test="${showTb == 'true'}"><a target="_blank"
                         href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010702001426"><img
-                        src="${uedroot}/images/tb.png"> 京公网安备 11010702001426号</a></li>
+                        src="${uedroot}/images/tb.png"> 京公网安备 11010702001426号</a></c:if></li>
             </ul>
         </div>
     </div>
