@@ -10,7 +10,7 @@ define('app/jsp/transOrder/orderList', function (require, exports, module) {
     
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
-    
+	var holder=$("#translateName").attr('placeholder');
     var orderListPage = Widget.extend({
     	//属性，使用时由类的构造函数传入
     	attrs: {
@@ -78,11 +78,15 @@ define('app/jsp/transOrder/orderList', function (require, exports, module) {
         _getOrderList:function(reqdata) {
         	var _this = this;
         	var data;
+
+			if ($("#translateName").val() == $("#translateName").attr('placeholder')) {
+				$("#translateName").val('');
+			}
         	if (reqdata == undefined)
         		data = $('#orderQuery').serializeArray();
         	else
         		data = reqdata;
-        	
+
           	$("#pagination-ul").runnerPagination({
 	 			url: _base+"/p/customer/order/orderList",
 	 			method: "POST",
