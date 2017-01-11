@@ -15,7 +15,7 @@ button{outline:none; cursor:pointer;}
 html,body {height:100%; }
 img{vertical-align:middle}
 /****/
-input[type="checkbox"] {
+/*input[type="checkbox"] {
   -webkit-appearance: none;
   background:url(../../images/checkbox.jpg);
   height:20px;
@@ -42,7 +42,7 @@ input[type="checkbox"][disabled] {
 
 input[type="checkbox"][disabled]:checked {
    background:url(../../images/checkbox.jpg);
-}
+}*/
 .int-text::-webkit-input-placeholder { /* WebKit browsers */  
     color:    #e6e6e6;  
 }  
@@ -57,7 +57,9 @@ input[type="checkbox"][disabled]:checked {
 .int-text:-ms-input-placeholder { /* Internet Explorer 10+ */  
    color:    #e6e6e6;  
 }  
-
+.placeholder { /* Internet Explorer 8 */  
+   color:    #e6e6e6;  
+}  
 
 /****/
 h1,h2,h3,h4,h5,h6{font-weight:200;line-height:1.1;color:inherit;font-family: "微软雅黑";}
