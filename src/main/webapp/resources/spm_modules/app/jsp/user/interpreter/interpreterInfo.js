@@ -251,13 +251,27 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		},
 		_checkUserNameValue:function(){
 			var userName =  $("#userName").val();
-			if(originalUsername==userName||userName==""){//用户名未改变无需校验
+			if(userName==""){
 				$("#userNameErrMsg").hide();
 				return;
+			}
+			if(originalUsername==userName){//用户名未改变无需校验
+				return;
+			}else{
+				$("#userNameErrMsg").show();
+			}
+			var userNameLength = $.trim(userName).length;
+			if(userNameLength<6||userNameLength>16||userNameLength==0){
+				$("#userNameErrMsg").hide();
+				return;
+			}else{
+				$("#userNameErrMsg").show();
 			}
 			if(!this._regCheckUserName(userName)){
 				$("#userNameErrMsg").hide();
 				return;
+			}else{
+				$("#userNameErrMsg").show();
 			}
 			ajaxController.ajax({
 				type:"post",
@@ -278,7 +292,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		}
 		,
 		_regCheckUserName:function(value){
-			var re = /^(?![0-9]+$)(?![a-zA-Z]+$)[a-z0-9A-Z][a-z0-9A-Z_]{5,15}$/;
+			var re = /^[0-9a-zA-Z]\w{5,15}$/;
 			return re.test(value);
 		},
 		_regCheckNickName:function(value){
