@@ -101,8 +101,15 @@
   			<div id="sec-level" class="security-title">
   			
   				<div class="security-chart">
-  					<!-- <img  src="${uedroot}/images/anq.jpg" /> -->
-  					<div id="indicatorContainer"></div>
+  					<c:if test="${securitylevel=='33' }">
+  					 <img  src="${uedroot}/images/33.jpg" />
+  					</c:if>
+  					<c:if test="${securitylevel=='66' }">
+  					 <img  src="${uedroot}/images/66.jpg" />
+  					</c:if>
+  					<c:if test="${securitylevel=='100' }">
+  					 <img  src="${uedroot}/images/100.jpg" />
+  					</c:if>
   				</div>
   				
   				<div  id="sec-level-info"  class="security-word">
@@ -180,15 +187,14 @@
 </body>
 
 <%@ include file="/inc/incJs.jsp" %>
-
+<!--[if lt IE 9]>
+<script>
+document.createElement("canvas");
+</script>
+<![endif]-->
 <script src="${_base}/resources/spm_modules/radia/radialIndicator.js"></script>
-
 <script type="text/javascript">
    var current = "seccenterSettings";
-   
-   
-   
-   
 	var pager;
 	(function() {
 		seajs.use('app/jsp/user/security/securitycenter', function(secXXXPager) {
@@ -219,7 +225,19 @@
 			"password_set" : '<spring:message code="ycaccountcenter.setting.loginpassword.tip"/>',
 			"password_set_ok" : '<spring:message code="ycaccountcenter.updatePassword.ok"/>',	
 	};
-
+	
+	function showUpdatePwd(){
+		if(isexistloginpassword=='true'){
+			$("#currentPassword").val("");
+			$("#newPassword").val("");
+			$("#newPassword2").val("");
+			$('#eject-mask').fadeIn(100);
+			$('#modify-password').slideDown(100);
+		}else{
+			location.href="${_base}/p/security/updatePassword?source=${source}";
+		}
+	}
+	
 	$(document).ready(function(){
 		var accLevelInfo = $("#sec-level-info-account-level");
 		if(parseInt(securitylevel) < 60)
@@ -237,36 +255,8 @@
 			accLevelInfo.html('<spring:message code="ycaccountcenter.acc.level.safe"/>');
 			$("#sec-level-info-account-warn").html('<spring:message code="ycaccountcenter.acc.level.safe.warning"/>');
 		}
-		
-		// 环形
-		$('#indicatorContainer').radialIndicator({
-				radius : 100,
-				barColor: {
-	                0: '#FF0000',
-	                33: '#FFFF00',
-	                60: '#39d5b0',
-	                100: '#39d5b0'
-	            },
-	            frameTime : 20,
-	            percentage: true
-		});
-		var radialObj = $('#indicatorContainer').data('radialIndicator');
-		radialObj.animate(parseInt(securitylevel));
-		if(securitylevel >= 60){
-			$('#sec-level-info-account-level').attr("class","green");
-		}
 	});
-	function showUpdatePwd(){
-		if(isexistloginpassword=='true'){
-			$("#currentPassword").val("");
-			$("#newPassword").val("");
-			$("#newPassword2").val("");
-			$('#eject-mask').fadeIn(100);
-			$('#modify-password').slideDown(100);
-		}else{
-			location.href="${_base}/p/security/updatePassword?source=${source}";
-		}
-	}
+	
 	function showUpdatePayPwd(){
 		if(isexistpaypassword=='true'){
 			$("#pay_currentPassword").val('');
