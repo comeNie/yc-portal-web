@@ -157,6 +157,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
     	_delFile:function(fileId) {
     		ajaxController.ajax({
 				type: "post",
+				processing: true,
 				url: _base + "/p/trans/order/deleteFile",
 				data: {
 					orderId: $("#orderId").val(),
@@ -181,6 +182,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 
     		ajaxController.ajax({
 				type: "post",
+				processing: true,
 				url: _base + "/p/trans/order/updateInfo",
 				data: {
 					orderId: $("#orderId").val(),
@@ -207,6 +209,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
     	_trans:function() {
     		ajaxController.ajax({
 				type: "post",
+				processing: true,
 				url: _base + "/p/trans/order/updateState",
 				data: {
 					orderId: $("#orderId").val(),
@@ -234,6 +237,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				ok:function(){
 					ajaxController.ajax({
 						type: "post",
+						processing: true,
 						url: _base+"/p/taskcenter/claim",
 						data: {'orderId': orderId,"lspId":lspId,"translateType":translateType},
 						success: function(data){

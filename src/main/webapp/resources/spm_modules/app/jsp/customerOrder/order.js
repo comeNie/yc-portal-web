@@ -38,6 +38,7 @@ define('app/jsp/customerOrder/order', function (require, exports, module) {
                 ok:function(){
                     ajaxController.ajax({
                         type: "post",
+                        processing: true,
                         url: _base + "/p/trans/order/save",
                         data: {
                             orderId: orderId,
@@ -68,6 +69,7 @@ define('app/jsp/customerOrder/order', function (require, exports, module) {
                 ok:function(){
                     ajaxController.ajax({
                         type: "post",
+                        processing: true,
                         url: _base + "/p/trans/order/updateState",
                         data: {
                             orderId: orderId,
@@ -101,6 +103,7 @@ define('app/jsp/customerOrder/order', function (require, exports, module) {
                 ok:function(){
                     ajaxController.ajax({
                         type: "post",
+                        processing: true,
                         url: _base+"/p/customer/order/cancelOrder",
                         data: {'orderId': orderId},
                         success: function(data){
