@@ -12,7 +12,7 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
 
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
-    
+	var holder=$("#translateName").attr('placeholder');
     var orderListPage = Widget.extend({
     	//属性，使用时由类的构造函数传入
     	attrs: {
@@ -86,11 +86,19 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
         _getOrderList:function(reqdatadf) {
         	var _this = this;
         	var data;
+
+			if ($("#translateName").val() == $("#translateName").attr('placeholder')) {
+				$("#translateName").val('');
+			}
         	if (reqdatadf == undefined)
         		data = $('#orderQuery').serializeArray();
         	else
         		data = reqdatadf;
-        	
+
+			if ($("#translateName").val() == '') {
+				$("#translateName").attr('placeholder', holder);
+			}
+
           	$("#pagination-ul").runnerPagination({
 	 			url: _base+"/p/customer/order/orderList",
 	 			method: "POST",
