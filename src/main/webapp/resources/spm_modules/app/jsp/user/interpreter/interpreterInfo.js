@@ -252,9 +252,11 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		_checkUserNameValue:function(){
 			var userName =  $("#userName").val();
 			if(originalUsername==userName||userName==""){//用户名未改变无需校验
+				$("#userNameErrMsg").hide();
 				return;
 			}
 			if(!this._regCheckUserName(userName)){
+				$("#userNameErrMsg").hide();
 				return;
 			}
 			ajaxController.ajax({
@@ -293,7 +295,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     			var empty = $.trim(value).length?false:true;
     			if(empty)return true;
     			var userNameLength = $.trim(value).length;
-    			if(userNameLength<6||userNameLength>16){
+    			if(userNameLength<6||userNameLength>16||userNameLength==0){
     				$("#userNameErrMsg").hide();
     			}
     			var valid =  (_this._regCheckUserName(value))?true:false;	
