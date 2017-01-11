@@ -432,7 +432,7 @@ define(
 											},
 											success : function(json) {
 												if(json.statusCode=="1" && json.data){
-													btn.val(registerMsg.resend+curCount)
+													btn.val(curCount+"S"+registerMsg.resend)
 															.removeClass("btn-green")
 															.addClass("biu-btn")
 															.attr("style","color:#fff;");
