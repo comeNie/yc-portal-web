@@ -2,6 +2,7 @@
 <%@page import="com.ai.opt.sdk.components.ccs.CCSClientFactory"%>
 <%@ page import="com.ai.paas.ipaas.i18n.ZoneContextHolder" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -94,9 +95,9 @@ catch(Exception e){
                     <ul>
                         <li class="left li-xlarge li-xlarge-ml">
                             <p><a href="#"><spring:message code="account.starting.endingtime"/></a></p>
-                            <p><input style="width: 140px" id="beginDate" name="beginDate" type="text" value="" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}',onpicked:function(dp){begintime();}})" readonly="readonly"></p>
+                            <p><input style="width: 140px" id="beginDate" name="beginDate" type="text" value="${beginTime}" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}',onpicked:function(dp){begintime();}})"></p>
                             <p>~</p>
-                            <p><input style="width: 140px" id="endDate" name="endDate" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'beginDate\')}',maxDate:'%y-%M-%d',onpicked:function(dp){endtime();}})" readonly="readonly"></p>
+                            <p><input style="width: 140px" id="endDate" name="endDate" type="text" value="${endTime}" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',readOnly:true,dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'beginDate\')}',maxDate:'%y-%M-%d',onpicked:function(dp){endtime();}})"></p>
                         </li>
                         <li class="left li-xlarge" id="incomes">
                             <input type="hidden" id="incomeFlag" name="incomeFlag" value=""/>
@@ -176,12 +177,13 @@ catch(Exception e){
         </div>
     </div>
 </div>
-<script type="text/javascript" src="${_base}/resources/template/scripts/modular/jquery-1.11.1.min.js"></script>
-<%--<script type="text/javascript" src="${_base}/resources/template/scripts/modular/frame.js"></script>--%>
-<script src="${_base}/resources/spm_modules/my97DatePicker/WdatePicker.js"></script>
+
 <%@include file="/inc/indexFoot.jsp"%>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
+<script type="text/javascript" src="${_base}/resources/template/scripts/modular/jquery-1.11.1.min.js"></script>
+<%--<script type="text/javascript" src="${_base}/resources/template/scripts/modular/frame.js"></script>--%>
+<script src="${_base}/resources/spm_modules/my97DatePicker/WdatePicker.js"></script>
 <script id="searchAccountTemple" type="text/template">
     <%--<table class="table table-bg  table-striped-even table-height50">--%>
         <%--<tbody>--%>

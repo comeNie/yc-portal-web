@@ -74,7 +74,10 @@ define('app/jsp/balance/account', function (require, exports, module) {
 	           	pageSize: accountListPage.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
 	            render: function (data) {
-	            	console.log(data);
+					if(window.console){
+						console.log(data);
+					}
+
 	            	if(data != null && data != 'undefined' && data.length>0){
 						// for(var i=0;i<data.length;i++) {
 						var currencyUnit = data[0].currencyUnit;

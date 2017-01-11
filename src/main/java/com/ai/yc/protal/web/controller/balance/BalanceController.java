@@ -58,6 +58,16 @@ public class BalanceController {
         AccountBalanceInfo balanceInfo =  balanceService.queryOfUser(UserUtil.getUserId());
         uiModel.addAttribute("currencyUnit",balanceInfo.getCurrencyUnit());
         uiModel.addAttribute("balance",String.valueOf(AmountUtil.changeLiToYuan(balanceInfo.getBalance())));
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date beginDate = new Date();
+        beginDate.setMonth(beginDate.getMonth()-1);
+        String date1 = formatter.format(beginDate);
+        Date endDate = new Date();
+        endDate.setMonth(endDate.getMonth());
+        String date2 = formatter.format(endDate);
+
+        uiModel.addAttribute("beginTime",date1);
+        uiModel.addAttribute("endTime",date2);
         return "balance/account";
     }
 
