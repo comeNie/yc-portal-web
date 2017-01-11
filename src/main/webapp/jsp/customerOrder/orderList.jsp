@@ -74,9 +74,9 @@
   						</p>
   						<!-- 订单时间 -->
   						<p><spring:message code="myOrder.orderTime"/></p>
-  						<p><input id="orderTimeStart" name="orderTimeStartStr" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'orderTimeEnd\')||\'%y-%M-%d\'}',onpicked:function(dp){pager._timesearch();}})" readonly="readonly"></p>
+  						<p><input id="orderTimeStart" name="orderTimeStartStr" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'orderTimeEnd\')||\'%y-%M-%d\'}',onpicked:function(dp){pager._timesearch();}})" ></p>
   						<p>－</p>
-  						<p><input id="orderTimeEnd" name="orderTimeEndStr" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'orderTimeStart\')}',maxDate:'%y-%M-%d',onpicked:function(dp){pager._timesearch();}})" readonly="readonly"></p>
+  						<p><input id="orderTimeEnd" name="orderTimeEndStr" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',readOnly:true,dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'orderTimeStart\')}',maxDate:'%y-%M-%d',onpicked:function(dp){pager._timesearch();}})" ></p>
   						<!-- 翻译内容 -->
   						<p><spring:message code="myOrder.translatingContent"/></p>
   						<p>
