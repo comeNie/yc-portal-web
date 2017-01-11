@@ -114,9 +114,11 @@ public class OrderLoginController {
                 subReq  = (OrderSubmissionRequest) session.getAttribute("writeOrderInfo");
             }
             LOGGER.info("订单信息: " + JSONObject.toJSONString(subReq));
-
             subReq.setContactInfo(JSON.parseObject(contactInfoStr, ContactInfo.class));
             subReq.getBaseInfo().setUserId(UserUtil.getUserId());
+            StateChgInfo stateChgInfo = new StateChgInfo();
+            stateChgInfo.setOperName(UserUtil.getUserName());
+            subReq.setStateChgInfo(stateChgInfo);
             subReq.getBaseInfo().setOrderTime(new Timestamp(System.currentTimeMillis()));
             if (StringUtils.isNotEmpty(remark)) {
                 subReq.getBaseInfo().setRemark(remark);

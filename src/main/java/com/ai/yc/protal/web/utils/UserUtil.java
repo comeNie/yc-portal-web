@@ -34,6 +34,15 @@ public class UserUtil {
     }
 
     /**
+     * 获取客户的用户名
+     * @return
+     */
+    public static String getUserName(){
+        GeneralSSOClientUser ssoClientUser = getSsoUser();
+        return ssoClientUser!=null?ssoClientUser.getUsername():null;
+    }
+
+    /**
      * 获取单点登陆的用户信息
      * @return
      */
