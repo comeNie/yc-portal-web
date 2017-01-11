@@ -94,9 +94,9 @@ catch(Exception e){
                     <ul>
                         <li class="left li-xlarge li-xlarge-ml">
                             <p><a href="#"><spring:message code="account.starting.endingtime"/></a></p>
-                            <p><input style="width: 140px" id="beginDate" name="beginDate" type="text" value="" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}',onpicked:function(dp){begintime();}})" readonly="readonly"></p>
+                            <p><input style="width: 140px" id="beginDate" name="beginDate" type="text" value="${beginTime}" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}',onpicked:function(dp){begintime();}})"></p>
                             <p>~</p>
-                            <p><input style="width: 140px" id="endDate" name="endDate" type="text" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'beginDate\')}',maxDate:'%y-%M-%d',onpicked:function(dp){endtime();}})" readonly="readonly"></p>
+                            <p><input style="width: 140px" id="endDate" name="endDate" type="text" value="${endTime}" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',readOnly:true,dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'beginDate\')}',maxDate:'%y-%M-%d',onpicked:function(dp){endtime();}})"></p>
                         </li>
                         <li class="left li-xlarge" id="incomes">
                             <input type="hidden" id="incomeFlag" name="incomeFlag" value=""/>
