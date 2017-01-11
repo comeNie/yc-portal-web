@@ -95,10 +95,6 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
         	else
         		data = reqdatadf;
 
-			if ($("#translateName").val() == '') {
-				$("#translateName").attr('placeholder', holder);
-			}
-
           	$("#pagination-ul").runnerPagination({
 	 			url: _base+"/p/customer/order/orderList",
 	 			method: "POST",
