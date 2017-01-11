@@ -67,7 +67,7 @@ define('app/jsp/balance/account', function (require, exports, module) {
 	 			url: _base+"/p/balance/accountList",
 	 			method: "POST",
 	 			dataType: "json",
-	 			// renderId:"searchAccountData",searchAccountData
+	 			renderId:"searchAccountData",
 	 			messageId:"showAccountDiv",
 //	 			 $('#orderQuery').serialize()
 	 			data: $("#accountQuery").serializeArray(),
