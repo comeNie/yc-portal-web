@@ -96,7 +96,6 @@ define('app/jsp/balance/account', function (require, exports, module) {
 						if (data[0].payTime!=null){
 							var template = $.templates("#searchAccountTemple");
 							var htmlOutput = template.render(data);
-							alert(htmlOutput);
 							$("#searchAccountData").html(htmlOutput);
 						}else {
 							document.getElementById("showAccountDiv").innerHTML = "<li class='dialog-icon-notquery'></li><li>"+$.i18n.prop('com.ajax.req.fail.empty')+"</li>";
