@@ -157,10 +157,7 @@ catch(Exception e){
                             <th ><spring:message code="account.detailed.instruction"/></th>
                         </tr>
                         </thead>
-                        <tbody id="searchAccountData">
-
-
-                        </tbody>
+                        <tbody id="searchAccountData"></tbody>
                     </table>
 
                 </div>
@@ -187,8 +184,8 @@ catch(Exception e){
 <script src="${_base}/resources/spm_modules/my97DatePicker/WdatePicker.js"></script>
 <script id="searchAccountTemple" type="text/template">
         <%--<tbody>--%>
-        <input type="hidden" name="unit" value="{{:incomeFlag}}">
-        <input type="hidden" name="unit" value="{{:optType}}">
+        <%--<input type="hidden" name="unit" value="{{:incomeFlag}}">
+        <input type="hidden" name="unit" value="{{:optType}}">--%>
         <tr>
             <td >{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',payTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
             <td class="red" >
