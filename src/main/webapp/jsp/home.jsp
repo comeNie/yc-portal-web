@@ -418,7 +418,7 @@
         var _webProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
         //百度统计
         var hm = document.createElement("script");
-        hm.src = _webProtocol + "//hm.baidu.com/hm.js?abc0c1bd59df490d1d8c8e6a44b09fdc";
+        hm.src =  "//hm.baidu.com/hm.js?abc0c1bd59df490d1d8c8e6a44b09fdc";
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
         //百度商桥统计
