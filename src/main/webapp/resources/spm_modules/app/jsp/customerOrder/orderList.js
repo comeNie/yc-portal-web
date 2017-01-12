@@ -87,13 +87,14 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
         	var _this = this;
         	var data;
 
-			if ($("#translateName").val() == $("#translateName").attr('placeholder')) {
-				$("#translateName").val('');
+        	if (reqdatadf == undefined) {
+				data = $('#orderQuery').serializeArray();
+				if ($("#translateName").val() == $("#translateName").attr('placeholder')) {
+					data[data.length - 1] = {name: 'translateName', value:''};
+				}
+			} else {
+				data = reqdatadf;
 			}
-        	if (reqdatadf == undefined)
-        		data = $('#orderQuery').serializeArray();
-        	else
-        		data = reqdatadf;
 
           	$("#pagination-ul").runnerPagination({
 	 			url: _base+"/p/customer/order/orderList",

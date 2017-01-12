@@ -190,7 +190,7 @@
             pager = new taskCenterPage({element: document.body});
             pager.render();
         });
-//        $("input").placeholder();
+        $("input").placeholder();
     })();
     //时间变更处理
     function _changeStartDate() {

@@ -46,79 +46,80 @@ define('app/jsp/transOrder/orderList', function (require, exports, module) {
 			}
 		},
 
+		//查询订单 reqdata不传时，表单数据序列化
+		_getOrderList:function(reqdata) {
+			var _this = this;
+			var data;
+
+			if (reqdata == undefined) {
+				data = $('#orderQuery').serializeArray();
+				if ($("#translateName").val() == $("#translateName").attr('placeholder')) {
+					data[data.length - 1] = {name: 'translateName', value:''};
+				}
+			} else {
+				data = reqdata;
+			}
+
+			$("#pagination-ul").runnerPagination({
+				url: _base+"/p/customer/order/orderList",
+				method: "POST",
+				dataType: "json",
+				renderId:"searchOrderData",
+				messageId:"showMessageDiv",
+//	 			 $('#orderQuery').serializeArray()
+				data:  data,
+				pageSize: orderListPage.DEFAULT_PAGE_SIZE,
+				visiblePages:5,
+				render: function (data) {
+					if(data != null && data != 'undefined' && data.length>0){
+						//把返回结果转换
+						for(var i=0;i<data.length;i++){
+							//订单完成剩余时间 转为 剩余x天x小时x分
+							var tempMM=data[i].endTime - new Date().getTime();
+							var remainingTime = _this.ftimeDHS(tempMM);
+							data[i].finishRemTime = tempMM	;
+							data[i].finishTakeDays = remainingTime.days;
+							data[i].finishTakeHours = remainingTime.hours;
+							data[i].finishTakeMinutes =  remainingTime.minutes;
+
+							data[i].currentLan = currentLan; //当前语言
+						}
+						var template = $.templates("#searchOrderTemple");
+						var htmlOutput = template.render(data);
+						$("#searchOrderData").html(htmlOutput);
+					}
+				}
+			});
+		},
+
 		//时间查询
 		_timesearch:function () {
 			if ($("#orderTimeStart").val() != '' && $("#orderTimeEnd").val() !='')
 				this._getOrderList();
 		},
-    	
+
     	//状态改变并查询
     	_change:function() {
 	    	$(".oder-table a").removeClass('current');
 			$(".oder-table a").eq(0).addClass('current');
 			this._getOrderList();
     	},
-    	
+
         //表单查询订单列表
         _orderList:function() {
         	this._getOrderList();
         },
-        
+
         //根据状态查询订单
         _orderListByType:function(state) {
-        	var reqdata = {'state': state, 
+        	var reqdata = {'state': state,
         			'interperId': $("#interperId").val(),
         			'lspId': $("#lspId").val()
         		};
         	$("#state").val(state);
         	this._getOrderList(reqdata);
         },
-        
-        //查询订单 reqdata不传时，表单数据序列化
-        _getOrderList:function(reqdata) {
-        	var _this = this;
-        	var data;
 
-			if ($("#translateName").val() == $("#translateName").attr('placeholder')) {
-				$("#translateName").val('');
-			}
-        	if (reqdata == undefined)
-        		data = $('#orderQuery').serializeArray();
-        	else
-        		data = reqdata;
-
-          	$("#pagination-ul").runnerPagination({
-	 			url: _base+"/p/customer/order/orderList",
-	 			method: "POST",
-	 			dataType: "json",
-	 			renderId:"searchOrderData",
-	 			messageId:"showMessageDiv",
-//	 			 $('#orderQuery').serializeArray()
-	 			data:  data,
-	           	pageSize: orderListPage.DEFAULT_PAGE_SIZE,
-	           	visiblePages:5,
-	            render: function (data) {
-	            	if(data != null && data != 'undefined' && data.length>0){
-	            		//把返回结果转换
-		            	for(var i=0;i<data.length;i++){
-		            		//订单完成剩余时间 转为 剩余x天x小时x分
-							var tempMM=data[i].endTime - new Date().getTime();
-		            		var remainingTime = _this.ftimeDHS(tempMM);
-		            		data[i].finishRemTime = tempMM	;
-		            		data[i].finishTakeDays = remainingTime.days;
-		            		data[i].finishTakeHours = remainingTime.hours;
-		            		data[i].finishTakeMinutes =  remainingTime.minutes;
-		            	    
-		            		data[i].currentLan = currentLan; //当前语言
-		            	}
-	            		var template = $.templates("#searchOrderTemple");
-	            	    var htmlOutput = template.render(data);
-	            	    $("#searchOrderData").html(htmlOutput);
-	            	}
-	            }
-    		});
-        },
-        
         //把毫秒数转为 x天x小时x分钟x秒
         ftimeDHS:function(ts) {
         	var res = {};

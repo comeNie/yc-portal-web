@@ -106,6 +106,11 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
                 && (endDate==null || endDate=="")){
             	return;
 			}
+
+			var data = $("#orderQuery").serializeArray();
+			if ($("input[name='translateName']").val() == $("input[name='translateName']").attr('placeholder')) {
+				data[data.length - 1] = {name: 'translateName', value:''};
+			}
           	$("#pagination-ul").runnerPagination({
 	 			url: _base+"/p/taskcenter/list",
 	 			method: "POST",
@@ -113,7 +118,7 @@ define('app/jsp/transOrder/taskCenter', function (require, exports, module) {
 	 			renderId:"orderInfoTable",
 	 			messageId:"showMessageDiv",
 //	 			 $('#orderQuery').serialize()
-	 			data: $("#orderQuery").serializeArray(),
+	 			data: data,
 	           	pageSize: taskCenterPage.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
 	            render: function (data) {
