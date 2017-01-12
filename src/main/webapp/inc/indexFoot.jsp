@@ -89,6 +89,15 @@
                 <li class="di-icon"><spring:message code="indexFoot.companyName"/>
                     <%--<img src="${uedroot}/images/di-icon.png" />--%>
                     <script type="text/javascript">
+                        (function () {
+                            //百度统计
+                            var hm = document.createElement("script");
+                            hm.src =  "//hm.baidu.com/hm.js?abc0c1bd59df490d1d8c8e6a44b09fdc";
+                            var s = document.getElementsByTagName("script")[0];
+                            s.parentNode.insertBefore(hm, s);
+                        })();
+                    </script>
+                    <script type="text/javascript">
                         //cnzz统计
                         var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
                         document.write(unescape("%3Cspan id='cnzz_stat_icon_1254831074'%3E%3C/span%3E%3Cscript src='"
