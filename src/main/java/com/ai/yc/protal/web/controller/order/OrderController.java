@@ -1,5 +1,6 @@
 package com.ai.yc.protal.web.controller.order;
 
+import com.ai.net.xss.util.StringUtil;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.components.dss.DSSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
@@ -106,7 +107,10 @@ public class OrderController {
         String fileInfoListStr = request.getParameter("fileInfoList");
 
         JSONObject orderSummary = JSON.parseObject(orderSummaryStr);
-        JSONArray fileInfoList = JSONArray.parseArray(fileInfoListStr);
+        JSONArray fileInfoList = null;
+        if(!StringUtil.isBlank(fileInfoListStr)&&!"undefined".equalsIgnoreCase(fileInfoListStr)){
+        	fileInfoList=JSONArray.parseArray(fileInfoListStr);
+        }
         OrderSubmissionRequest subReq = new OrderSubmissionRequest();
         subReq.setBaseInfo(JSON.parseObject(baseInfoStr, BaseInfo.class));
         subReq.setProductInfo(JSON.parseObject(productInfoStr, ProductInfo.class));
