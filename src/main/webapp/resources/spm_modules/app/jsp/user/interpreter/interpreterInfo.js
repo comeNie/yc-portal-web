@@ -92,6 +92,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     		$(":input").bind("focusout",function(){
 				formValidator.element(this);
 			});
+			this._uploadFile();
     	},
 		//校验地址库是否合法
 		/*_checkArea: function () {
@@ -317,8 +318,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		        swf : _base+"/resources/spm_modules/webuploader/Uploader.swf",
 		        server: _base+'/p/interpreter/uploadImage',
 		        auto : true,
-		        pick : "#uploadImg",
-		        dnd: '#dndArea',  //拖拽
+		        pick : ".portrait-file",
 		        accept: {
 		            title: 'Images',
 		            extensions: 'gif,jpg,png,jpeg,bmp,GIF,JPG,PNG,JPEG,BMP',
@@ -342,26 +342,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		    
 		    // 当有文件添加进来的时候  
 		     uploader.on( 'fileQueued', function( file ) {  // webuploader事件.当选择文件后，文件被加载到文件队列中，触发该事件。等效于 uploader.onFileueued = function(file){...} ，类似js的事件定义。  
-		          var $li = $(  
-		                 '<div id="' + file.id + '" class="file-item thumbnail">' +  
-		                      '<img>' +  
-		                      '<div class="info">' + file.name + '</div>' +  
-		                      '</div>'  
-		                     ),  
-		                  $img = $li.find('img');  
-		              // $list为容器jQuery实例  
-		              $list.append( $li );  
-		              // 创建缩略图  
-		              // 如果为非图片文件，可以不用调用此方法。  
-		              // thumbnailWidth x thumbnailHeight 为 100 x 100  
-		            uploader.makeThumb( file, function( error, src ) {   //webuploader方法  
-		                if ( error ) {  
-		                    $img.replaceWith('<span>不能预览</span>');  
-		                    return;  
-		                }  
-		     
-		                $img.attr( 'src', src );  
-		            }, 100, 100 );  
+
 		        });  
 		     // 文件上传成功，给item添加成功class, 用样式标记上传成功。  
 		        uploader.on( 'uploadSuccess', function( file ) {  
