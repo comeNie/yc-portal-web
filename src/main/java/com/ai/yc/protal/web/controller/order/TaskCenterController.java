@@ -107,7 +107,7 @@ public class TaskCenterController {
                 ordCountReq.setInterperLevel(userInfoResponse.getVipLevel());//译员等级
                 ordCountReq.setLspId(lspId);//lspid
                 ordCountReq.setLanguageIds(languageIdList);
-                QueryOrdCountResponse taskNumRes = iOrderQuerySV.queryOrderCount(ordCountReq);
+                QueryOrdCountResponse taskNumRes = iOrderQuerySV.queryOrderCount4TaskCenter(ordCountReq);
                 Map<String, Integer> taskNumMap = taskNumRes.getCountMap();
                 Integer taskNum = taskNumMap.get(OrderConstants.State.UN_RECEIVE);
                 if (taskNum == null || taskNum < 0) {
