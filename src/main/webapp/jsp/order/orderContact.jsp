@@ -158,7 +158,10 @@
                         <p><spring:message code="order.LeaveMessage"/></p>
                     </div>
                     <div class="lx-textarea">
-                        <p><textarea id="remark" maxlength="50" class="int-text textarea-xlarge-text radius">${order.baseInfo.remark}</textarea></p>
+                        <p><textarea id="remark"
+                                 onkeyup="textLimit(this,50);" onkeydown="textLimit(this,50);"
+                                 oninput="textLimit(this,50);"  onpropertychange="textLimit(this,50);"
+                                class="int-text textarea-xlarge-text radius">${order.baseInfo.remark}</textarea></p>
                     </div>
                 </c:if>
             </div>
@@ -207,5 +210,13 @@
         //IE8的输入框提示信息兼容
         $("input,textarea").placeholder();
     })();
+
+    function textLimit(field, maxlimit) {
+        // 函数，3个参数，表单名字，表单域元素名，限制字符；
+        if (field.value.length > maxlimit){
+            //如果元素区字符数大于最大字符数，按照最大字符数截断；
+            field.value = field.value.substring(0, maxlimit);
+        }
+    }
 </script>
 </html>
