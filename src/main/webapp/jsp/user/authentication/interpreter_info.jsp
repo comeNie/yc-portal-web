@@ -222,7 +222,7 @@ catch(Exception e){
 		$('#dataForm').delegate('.fa-calendar','click',function(){
 			var calInput = $(this).parent().prev();
 			var timeId = calInput.attr('id');
-			console.log("click calendar "+timeId);
+			//console.log("click calendar "+timeId); ie8兼容
 			WdatePicker({
 				el:timeId,
 				readOnly:true,
