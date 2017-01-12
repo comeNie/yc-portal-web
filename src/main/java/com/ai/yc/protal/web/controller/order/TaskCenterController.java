@@ -16,6 +16,7 @@ import com.ai.yc.order.api.orderreceive.interfaces.IOrderReceiveSV;
 import com.ai.yc.order.api.orderreceive.param.OrderReceiveBaseInfo;
 import com.ai.yc.order.api.orderreceive.param.OrderReceiveRequest;
 import com.ai.yc.order.api.orderreceive.param.OrderReceiveResponse;
+import com.ai.yc.order.api.orderreceive.param.OrderReceiveStateChgInfo;
 import com.ai.yc.order.api.orderreceivesearch.interfaces.IOrderWaitReceiveSV;
 import com.ai.yc.order.api.orderreceivesearch.param.OrderWaitReceiveSearchInfo;
 import com.ai.yc.order.api.orderreceivesearch.param.OrderWaitReceiveSearchRequest;
@@ -205,7 +206,9 @@ public class TaskCenterController {
         } else {
             baseInfo.setState(OrderConstants.State.RECEIVE);//状态为固定的
         }
-
+        //添加领单人的用户名
+        OrderReceiveStateChgInfo stateChgInfo = new OrderReceiveStateChgInfo();
+        stateChgInfo.setOperName(UserUtil.getUserName());
         baseInfo.setInterperId(userId);
         //译员类型 0:普通译员 1:LSP
         String interperType = StringUtils.isNotBlank(lspId)?"1":"0";
