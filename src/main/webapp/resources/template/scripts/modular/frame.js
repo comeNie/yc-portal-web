@@ -546,35 +546,3 @@ if(!placeholderSupport()){   // 判断浏览器是否支持 placeholder
 function placeholderSupport() {
     return 'placeholder' in document.createElement('input');
 }
-
-//复选框兼容
- $(document).ready(function(){
-              $('.regsiter-form input').iCheck({
-                checkboxClass: 'icheckbox_flat-blue',
-                radioClass: 'iradio_flat-blue'
-              });
- });
- $(document).ready(function(){
-              $('.oder-form-lable input').iCheck({
-                checkboxClass: 'icheckbox_flat-blue',
-                radioClass: 'iradio_flat-blue'
-              });
- });
- $(document).ready(function(){
-              $('.form-lable input').iCheck({
-                checkboxClass: 'icheckbox_flat-blue',
-                radioClass: 'iradio_flat-blue'
-              });
- });
- $(document).ready(function(){
-              $('.urgent input').iCheck({
-                checkboxClass: 'icheckbox_flat-blue',
-                radioClass: 'iradio_flat-blue'
-              });
- });
-  $(document).ready(function(){
-              $('.recharge-btn input').iCheck({
-                checkboxClass: 'icheckbox_flat-blue',
-                radioClass: 'iradio_flat-blue'
-              });
- });

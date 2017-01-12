@@ -307,6 +307,11 @@ var current = "orderList";
        //$("#confirmOrder").delegate("input[name='lateConfirmOrder']","click",function(){
        //});
     $("input").placeholder();
+    //checkbox兼容ie8
+//    $('.recharge-btn input').iCheck({
+//        checkboxClass: 'icheckbox_flat-blue',
+//        radioClass: 'iradio_flat-blue'
+//    });
 })();
 
 //选择结束时间触发

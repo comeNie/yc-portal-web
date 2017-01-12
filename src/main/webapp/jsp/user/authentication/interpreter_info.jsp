@@ -235,6 +235,11 @@ catch(Exception e){
 					});
 					pager.render();
 				});
+        //checkbox兼容ie8
+//        $('.form-lable input').iCheck({
+//            checkboxClass: 'icheckbox_flat-blue',
+//            radioClass: 'iradio_flat-blue'
+//        });
 	})();
 </script>
 

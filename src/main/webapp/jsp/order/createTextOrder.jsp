@@ -367,6 +367,16 @@
         });
         //IE8的输入框提示信息兼容
         $("input,textarea").placeholder();
+		//checkbox兼容ie8
+        $('.urgent :checkbox').iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'iradio_flat-blue'
+        });
+        //checkbox兼容ie8
+        $('.recharge-btn :checkbox').iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'iradio_flat-blue'
+        });
 	})();
 
 //    $(document).bind("contextmenu",function(){return false;});

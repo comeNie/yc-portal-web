@@ -135,6 +135,11 @@
 			pager.render();
 		});
         $("input").placeholder();
+        //checkbox兼容ie8
+        $('.regsiter-form :checkbox').iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'iradio_flat-blue'
+        });
 	})();
 	var registerMsg = {
 		"account_phone_empty" : '<spring:message code="ycregisterMsg.accountPhoneEmpty" />',
