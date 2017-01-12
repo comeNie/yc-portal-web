@@ -84,36 +84,23 @@ public class InterpreterController {
 	@RequestMapping(value = "/uploadImage")
 	@ResponseBody
 	public String uploadImage(HttpServletRequest request) {
-		ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS,
-                "OK");
-		//Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		MultipartHttpServletRequest file = (MultipartHttpServletRequest) request;
-		MultipartFile mFile = file.getFile("file");
+		MultipartFile multiFile = file.getFile("file");
 		String idpsns = "yc-portal-web";
 		try {
-			IDSSClient client = DSSClientFactory.getDSSClient(idpsns);
-			// 获取请求的参数
-	        String fileId = "";
-	        if (mFile.getSize() != 0 && !"".equals(mFile.getName())) {
-	            fileId = client.save(mFile.getBytes(), mFile.getOriginalFilename());
-	            LOGGER.info(mFile.getOriginalFilename() + mFile.getSize() + fileId);
-
-	        }
-	        resData.setData(fileId);
-			/*String idpsId = im.upLoadImage(multiFile.getBytes(),
+			IImageClient im = IDPSClientFactory.getImageClient(idpsns);
+			String idpsId = im.upLoadImage(multiFile.getBytes(),
 					UUIDUtil.genId32() + ".png");
 			String url = im.getImageUrl(idpsId, ".jpg", "100x100");
 			map.put("isTrue", true);
 			map.put("idpsId", idpsId);
-			map.put("url", url);*/
+			map.put("url", url);
 		} catch (Exception e) {
-			LOGGER.error("上传失败",e);
-			resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE,
-	                "fail");
+			LOGGER.error("上传失败");
+			map.put("isTrue", false);
 		}
-		//return JSON.toJSONString(map);
-		String tmp =  JSONObject.toJSONString(resData);
-        return tmp;
+		return JSON.toJSONString(map);
 	}
 
 	@RequestMapping("/checkNickName")

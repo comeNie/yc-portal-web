@@ -5,13 +5,19 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<%@ include file="/inc/inc.jsp" %>
 	<title><spring:message code="ycleftmenu.myinfo"/></title>
 	<link rel="stylesheet" type="text/css" href="${_base}/resources/spm_modules/webuploader/webuploader.css">
 
 	<style>
-		.portrait-file  .webuploader-pick, .portrait-file  .webuploader-pick-hover {background-color: transparent;}
+		.portrait-file  .webuploader-pick, .portrait-file  .webuploader-pick-hover {background-color: transparent;  padding: 0;}
+		.webuploader-element-invisible {
+		    position: absolute !important;
+		    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+		    clip: rect(1px,1px,1px,1px);
+		}
 	</style>
 </head>
 <%
@@ -68,9 +74,9 @@ catch(Exception e){
   						<p class="portrait">
   							<img src="${userPortraitImg}" id="portraitFileId" />
   							<div class="portrait-file" style="display:block;">
-  								<a href="javascript:void(0);"><spring:message code="interpreter.updatePortrait" /></a>
-								<div id="uploadImg"></div>
-  								<%--<input type="file"  class="file-opacity" id="uploadImg" name="uploadImg" onchange="uploadPortraitImg('uploadImg')"/>--%>
+  								<a href="javascript:" style="cursor: pointer;"><spring:message code="interpreter.updatePortrait" /></a>
+								 <div id="uploadImg" class="file-opacity"></div>
+  								<!-- <input type="file"  class="file-opacity" id="uploadImg" name="uploadImg" onchange="uploadPortraitImg('uploadImg')"/> -->
   							</div>
 
   						</p>
@@ -242,11 +248,11 @@ catch(Exception e){
 					});
 					pager.render();
 				});
-        //checkbox兼容ie8
-//        $('.form-lable input').iCheck({
-//            checkboxClass: 'icheckbox_flat-blue',
-//            radioClass: 'iradio_flat-blue'
-//        });
+		 //checkbox兼容ie8
+//      $('.form-lable input').iCheck({
+//          checkboxClass: 'icheckbox_flat-blue',
+//          radioClass: 'iradio_flat-blue'
+//      });
 	})();
 </script>
 
