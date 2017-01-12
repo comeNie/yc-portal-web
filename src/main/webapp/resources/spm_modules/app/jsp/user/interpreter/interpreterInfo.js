@@ -92,6 +92,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     		$(":input").bind("focusout",function(){
 				formValidator.element(this);
 			});
+			this._uploadFile();
     	},
 		//校验地址库是否合法
 		/*_checkArea: function () {
@@ -317,8 +318,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		        swf : _base+"/resources/spm_modules/webuploader/Uploader.swf",
 		        server: _base+'/p/interpreter/uploadImage',
 		        auto : true,
-		        pick : "#uploadImg",
-		        dnd: '#dndArea',  //拖拽
+		        pick : ".portrait-file",
 		        accept: {
 		            title: 'Images',
 		            extensions: 'gif,jpg,png,jpeg,bmp,GIF,JPG,PNG,JPEG,BMP',

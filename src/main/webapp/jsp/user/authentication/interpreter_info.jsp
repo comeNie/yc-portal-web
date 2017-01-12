@@ -8,6 +8,11 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<%@ include file="/inc/inc.jsp" %>
 	<title><spring:message code="ycleftmenu.myinfo"/></title>
+	<link rel="stylesheet" type="text/css" href="${_base}/resources/spm_modules/webuploader/webuploader.css">
+
+	<style>
+		.portrait-file  .webuploader-pick, .portrait-file  .webuploader-pick-hover {background-color: transparent;}
+	</style>
 </head>
 <%
 //默认设置成1为开启，0为关闭
@@ -62,10 +67,12 @@ catch(Exception e){
   						</p>
   						<p class="portrait">
   							<img src="${userPortraitImg}" id="portraitFileId" />
-  							<div class="portrait-file">
+  							<div class="portrait-file" style="display:block;">
   								<a href="javascript:void(0);"><spring:message code="interpreter.updatePortrait" /></a>
-  								<input type="file"  class="file-opacity" id="uploadImg" name="uploadImg" onchange="uploadPortraitImg('uploadImg')"/>
+								<div id="uploadImg"></div>
+  								<%--<input type="file"  class="file-opacity" id="uploadImg" name="uploadImg" onchange="uploadPortraitImg('uploadImg')"/>--%>
   							</div>
+
   						</p>
   						<label id="uploadImgErrMsg" style="display: none;"><span class="ash" id="uploadImgText"></span></label>
   					</li>
