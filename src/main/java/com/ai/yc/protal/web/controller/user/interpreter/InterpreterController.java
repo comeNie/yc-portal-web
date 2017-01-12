@@ -107,7 +107,7 @@ public class InterpreterController {
 			map.put("idpsId", idpsId);
 			map.put("url", url);*/
 		} catch (Exception e) {
-			LOGGER.error("上传失败");
+			LOGGER.error("上传失败",e);
 			resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE,
 	                "fail");
 		}
