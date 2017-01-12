@@ -86,7 +86,15 @@
         <div class="footer-list">
             <ul>
             	<!--译云专业语言服务平台 版权所有  -->
-                <li class="di-icon"><spring:message code="indexFoot.companyName"/><img src="${uedroot}/images/di-icon.png" /></li>
+                <li class="di-icon"><spring:message code="indexFoot.companyName"/>
+                    <%--<img src="${uedroot}/images/di-icon.png" />--%>
+                    <script type="text/javascript">
+                        //cnzz统计
+                        var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+                        document.write(unescape("%3Cspan id='cnzz_stat_icon_1254831074'%3E%3C/span%3E%3Cscript src='"
+                            + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1254831074%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+                    </script>
+                </li>
               	<!-- 京ICP备13002826号-7 -->
                 <li><spring:message code="indexFoot.copyRright"/><c:if test="${showTb == 'true'}"><a target="_blank"
                         href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010702001426"><img

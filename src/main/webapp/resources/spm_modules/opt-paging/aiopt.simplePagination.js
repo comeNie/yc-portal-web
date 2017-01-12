@@ -63,8 +63,8 @@ define("opt-paging/aiopt.simplePagination", ["jquery","simplePagination/jquery.s
         	this.showLoadingMessage();
         	var renderId = opt.renderId;
         	if(renderId){
-        		var showDoc = document.getElementById(renderId);
-            	showDoc.innerHTML="";
+        		$("#"+renderId).html("");
+
         	}
         	var data = opt.data?opt.data:{};
         	var currentPageSize = opt.pageSize?opt.pageSize:10;

@@ -157,13 +157,11 @@ catch(Exception e){
                             <th ><spring:message code="account.detailed.instruction"/></th>
                         </tr>
                         </thead>
-                       <tbody id="searchAccountData"></tbody>
+                        <tbody id="searchAccountData"></tbody>
                     </table>
 
                 </div>
-                <!-- 订单列表 -->
-                <%--<div class="right-list-table" id="searchAccountData">
-                </div>--%>
+
                 <!-- 订单列表结束 -->
                 <div id="showAccountDiv"></div>
                 <!--分页-->
@@ -185,10 +183,9 @@ catch(Exception e){
 <%--<script type="text/javascript" src="${_base}/resources/template/scripts/modular/frame.js"></script>--%>
 <script src="${_base}/resources/spm_modules/my97DatePicker/WdatePicker.js"></script>
 <script id="searchAccountTemple" type="text/template">
-    <%--<table class="table table-bg  table-striped-even table-height50">--%>
         <%--<tbody>--%>
-        <input type="hidden" name="unit" value="{{:incomeFlag}}">
-        <input type="hidden" name="unit" value="{{:optType}}">
+        <%--<input type="hidden" name="unit" value="{{:incomeFlag}}">
+        <input type="hidden" name="unit" value="{{:optType}}">--%>
         <tr>
             <td >{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',payTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
             <td class="red" >
@@ -252,7 +249,6 @@ catch(Exception e){
             </td>
         </tr>
         <%--</tbody>--%>
-    <%--</table>--%>
 </script>
 
 <script type="text/javascript">

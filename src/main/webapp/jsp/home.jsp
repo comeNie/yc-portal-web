@@ -415,6 +415,15 @@
 <script type="text/javascript" src="${spmRes}/app/jsp/index.js"></script>
 <script type="text/javascript">
     (function () {
+        var _webProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        //百度统计
+        var hm = document.createElement("script");
+        hm.src = _webProtocol + "//hm.baidu.com/hm.js?abc0c1bd59df490d1d8c8e6a44b09fdc";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+        //百度商桥统计
+        document.write(unescape("%3Cscript src='" + _webProtocol
+            + "hm.baidu.com/h.js%3F0f7edd714a27976c6673e5db7079b08a' type='text/javascript'%3E%3C/script%3E"));
         <%-- 笔译下单 --%>
         $('.item2').delegate('div.caption','click',function(){
             //用途编码
