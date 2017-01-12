@@ -20,12 +20,14 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     
 	require("my97DatePicker/WdatePicker");
 	
-	require("app/jsp/user/ajaxfileupload");
+	require('webuploader/webuploader');
 	
     var SendMessageUtil = require("app/util/sendMessage");
     
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
+    var uploader = null;
+    
     var showMsg = function(msg){
     	var d = Dialog({
 			content:msg,
@@ -70,6 +72,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 			"blur [id='provinceInfo']":"_checkProvinceValue",
 			"blur [id='cnCityInfo']":"_checkCnCityValue",
 			"blur [id='address']":"_checkAddressValue",
+			"change [id='uploadImg']":"_uploadFile"
         },
         //重写父类
     	setup: function () {
@@ -298,9 +301,86 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		_regCheckNickName:function(value){
 			var re = /^[\-_0-9a-zA-Z\u4e00-\u9fa5]{1,24}$/;
 			return re.test(value);
-		}
-		
-		,
+		},
+		_uploadFile:function(){
+			if ( !WebUploader.Uploader.support() ) {
+				alert( 'Web Uploader 不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器');
+				throw new Error( 'WebUploader does not support the browser you are using.' );
+		     }else if(uploader==null){
+		         this._initUpdate();
+		     }
+		},
+		_initUpdate:function(){
+			var _this= this;
+		    var FILE_TYPES=['gif','jpg','png','jpeg','bmp','GIF','JPG','PNG','JPEG','BMP'];
+		    uploader = WebUploader.create({
+		        swf : _base+"/resources/spm_modules/webuploader/Uploader.swf",
+		        server: _base+'/p/interpreter/uploadImage',
+		        auto : true,
+		        pick : "#uploadImg",
+		        dnd: '#dndArea',  //拖拽
+		        accept: {
+		            title: 'Images',
+		            extensions: 'gif,jpg,png,jpeg,bmp,GIF,JPG,PNG,JPEG,BMP',
+		            // mimeTypes: 'application/zip,application/msword,application/pdf,image/jpeg,image/png,image/gif'
+		        },
+		        method:'POST',
+		        resize : false,
+		        // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
+		        disableGlobalDnd: true,
+		        fileNumLimit: 10,
+		        fileSizeLimit: 5 * 1024 * 1024,    // 5 M
+		    });
+
+		    uploader.on("beforeFileQueued", function (file) {
+		        var allSize = file.size;
+		        if (allSize > 5*1024*1024) {
+					_this._showWarn("aabcdcse");
+		            return false;
+		        }
+		    });
+		    
+		    // 当有文件添加进来的时候  
+		     uploader.on( 'fileQueued', function( file ) {  // webuploader事件.当选择文件后，文件被加载到文件队列中，触发该事件。等效于 uploader.onFileueued = function(file){...} ，类似js的事件定义。  
+		          var $li = $(  
+		                 '<div id="' + file.id + '" class="file-item thumbnail">' +  
+		                      '<img>' +  
+		                      '<div class="info">' + file.name + '</div>' +  
+		                      '</div>'  
+		                     ),  
+		                  $img = $li.find('img');  
+		              // $list为容器jQuery实例  
+		              $list.append( $li );  
+		              // 创建缩略图  
+		              // 如果为非图片文件，可以不用调用此方法。  
+		              // thumbnailWidth x thumbnailHeight 为 100 x 100  
+		            uploader.makeThumb( file, function( error, src ) {   //webuploader方法  
+		                if ( error ) {  
+		                    $img.replaceWith('<span>不能预览</span>');  
+		                    return;  
+		                }  
+		     
+		                $img.attr( 'src', src );  
+		            }, 100, 100 );  
+		        });  
+		     // 文件上传成功，给item添加成功class, 用样式标记上传成功。  
+		        uploader.on( 'uploadSuccess', function( file ) {  
+		            $( '#'+file.id ).addClass('upload-state-done');  
+		        });  
+		       
+		        // 文件上传失败，显示上传出错。  
+		        uploader.on( 'uploadError', function( file ) {  
+		            var $li = $( '#'+file.id ),  
+		                $error = $li.find('div.error');  
+		       
+		            // 避免重复创建  
+		            if ( !$error.length ) {  
+		                $error = $('<div class="error"></div>').appendTo( $li );  
+		            }  
+		       
+		            $error.text('上传失败');  
+		       });  
+		},
     	_initValidate:function(){
     		var _this = this;
     		$.validator.addMethod( "checkUserName", function( value, element, param ) {
@@ -502,6 +582,92 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     })
     module.exports = InterPreterInfoPager
 });
+
+/*function uploadFile(){
+	alert("sfeefrfsef");
+	 if ( !WebUploader.Uploader.support() ) {
+         alert( 'Web Uploader 不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器');
+         throw new Error( 'WebUploader does not support the browser you are using.' );
+     }else if(uploader==null){
+         this.initUpdate();
+     }
+	this.initUpdate();
+}
+
+//初始化上传控件
+function initUpdate() {
+	var _this= this;
+    var FILE_TYPES=['gif','jpg','png','jpeg','bmp','GIF','JPG','PNG','JPEG','BMP'];
+    uploader = WebUploader.create({
+        swf : _base+"/resources/spm_modules/webuploader/Uploader.swf",
+        server: _base+'/p/interpreter/uploadImage',
+        auto : true,
+        pick : "#selectFile",
+       // dnd: '#fy2', //拖拽
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,png,jpeg,bmp,GIF,JPG,PNG,JPEG,BMP',
+            // mimeTypes: 'application/zip,application/msword,application/pdf,image/jpeg,image/png,image/gif'
+        },
+        method:'POST',
+        resize : false,
+        // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
+        disableGlobalDnd: true,
+        fileNumLimit: 10,
+        fileSizeLimit: 5 * 1024 * 1024,    // 5 M
+    });
+
+    uploader.on("beforeFileQueued", function (file) {
+        var allSize = file.size;
+        if (allSize > 5*1024*1024) {
+			_this._showWarn("aabcdcse");
+            return false;
+        }
+    });
+    
+    // 当有文件添加进来的时候  
+     uploader.on( 'fileQueued', function( file ) {  // webuploader事件.当选择文件后，文件被加载到文件队列中，触发该事件。等效于 uploader.onFileueued = function(file){...} ，类似js的事件定义。  
+          var $li = $(  
+                 '<div id="' + file.id + '" class="file-item thumbnail">' +  
+                      '<img>' +  
+                      '<div class="info">' + file.name + '</div>' +  
+                      '</div>'  
+                     ),  
+                  $img = $li.find('img');  
+              // $list为容器jQuery实例  
+              $list.append( $li );  
+              // 创建缩略图  
+              // 如果为非图片文件，可以不用调用此方法。  
+              // thumbnailWidth x thumbnailHeight 为 100 x 100  
+            uploader.makeThumb( file, function( error, src ) {   //webuploader方法  
+                if ( error ) {  
+                    $img.replaceWith('<span>不能预览</span>');  
+                    return;  
+                }  
+     
+                $img.attr( 'src', src );  
+            }, 100, 100 );  
+        });  
+     // 文件上传成功，给item添加成功class, 用样式标记上传成功。  
+        uploader.on( 'uploadSuccess', function( file ) {  
+            $( '#'+file.id ).addClass('upload-state-done');  
+        });  
+       
+        // 文件上传失败，显示上传出错。  
+        uploader.on( 'uploadError', function( file ) {  
+            var $li = $( '#'+file.id ),  
+                $error = $li.find('div.error');  
+       
+            // 避免重复创建  
+            if ( !$error.length ) {  
+                $error = $('<div class="error"></div>').appendTo( $li );  
+            }  
+       
+            $error.text('上传失败');  
+       });  
+     // 完成上传完了，成功或者失败，先删除进度条。  
+}*/
+
 function uploadPortraitImg(uploadImgFile){
 	
 	var image = $("#uploadImg").val();

@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.opt.base.vo.ResponseHeader;
+import com.ai.opt.sdk.components.dss.DSSClientFactory;
 import com.ai.opt.sdk.components.idps.IDPSClientFactory;
 import com.ai.opt.sdk.components.mcs.MCSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
@@ -29,6 +30,7 @@ import com.ai.opt.sdk.util.DateUtil;
 import com.ai.opt.sdk.util.StringUtil;
 import com.ai.opt.sdk.util.UUIDUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.paas.ipaas.dss.base.interfaces.IDSSClient;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.image.IImageClient;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
@@ -48,6 +50,7 @@ import com.ai.yc.user.api.userservice.param.UpdateYCUserRequest;
 import com.ai.yc.user.api.userservice.param.YCUpdateUserResponse;
 import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 @RequestMapping("/p/interpreter")
 @RestController
@@ -78,27 +81,39 @@ public class InterpreterController {
 		return new ModelAndView("/user/authentication/interpreter_info", model);
 	}
 
-	@RequestMapping(value = "/uploadImage", produces = "text/html;charset=utf-8")
+	@RequestMapping(value = "/uploadImage")
 	@ResponseBody
 	public String uploadImage(HttpServletRequest request) {
-
-		Map<String, Object> map = new HashMap<String, Object>();
+		ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS,
+                "OK");
+		//Map<String, Object> map = new HashMap<String, Object>();
 		MultipartHttpServletRequest file = (MultipartHttpServletRequest) request;
-		MultipartFile multiFile = file.getFile("uploadImg");
+		MultipartFile mFile = file.getFile("file");
 		String idpsns = "yc-portal-web";
 		try {
-			IImageClient im = IDPSClientFactory.getImageClient(idpsns);
-			String idpsId = im.upLoadImage(multiFile.getBytes(),
+			IDSSClient client = DSSClientFactory.getDSSClient(idpsns);
+			// 获取请求的参数
+	        String fileId = "";
+	        if (mFile.getSize() != 0 && !"".equals(mFile.getName())) {
+	            fileId = client.save(mFile.getBytes(), mFile.getOriginalFilename());
+	            LOGGER.info(mFile.getOriginalFilename() + mFile.getSize() + fileId);
+
+	        }
+	        resData.setData(fileId);
+			/*String idpsId = im.upLoadImage(multiFile.getBytes(),
 					UUIDUtil.genId32() + ".png");
 			String url = im.getImageUrl(idpsId, ".jpg", "100x100");
 			map.put("isTrue", true);
 			map.put("idpsId", idpsId);
-			map.put("url", url);
+			map.put("url", url);*/
 		} catch (Exception e) {
 			LOGGER.error("上传失败");
-			map.put("isTrue", false);
+			resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE,
+	                "fail");
 		}
-		return JSON.toJSONString(map);
+		//return JSON.toJSONString(map);
+		String tmp =  JSONObject.toJSONString(resData);
+        return tmp;
 	}
 
 	@RequestMapping("/checkNickName")
