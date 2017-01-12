@@ -87,7 +87,7 @@
 							<thead>
 								<tr>
 									<th width="16.666%"><spring:message code="myOrder.SubjectOrder"/></th>
-									<th order_mode="hide" width="16.666%"><spring:message code="myOrder.Orderedby"/></th>
+									<%--<th order_mode="hide" width="16.666%"><spring:message code="myOrder.Orderedby"/></th>--%>
 									<th width="16.666%"><spring:message code="myOrder.translatingContent"/></th>
 									<th width="16.666%"><spring:message code="myOrder.Amount"/></th>
 									<th width="16.666%"><spring:message code="myOrder.Status"/></th>
@@ -150,7 +150,7 @@
 				<table class="table  table-bg tb-border mb-20">
 	<thead>
 	<tr>
- 		<th order_mode_colspan="hide" colspan="6" class="text-l">
+ 		<th order_mode_colspan="hide" colspan="5" class="text-l">
  			<div class="table-thdiv">
 				<p>{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',orderTime,'<%=ZoneContextHolder.getZone()%>')}}</p>
  				<p name="orderId" style="cursor:pointer;"><spring:message code="myOrder.Ordernumber"/>：<span>{{:orderId}}</span></p>
@@ -174,7 +174,7 @@
 		<input type="hidden" name="displayFlag" value="{{:displayFlag}}">
 		<tr class="width-16" displayFlag="{{:displayFlag}}">
             <td class="text-l  pl-20"name="translateName" orderId="{{:orderId}}">{{:translateName}}</td>
-            <td order_mode="hide">{{:userName}}</td>
+            <%--<td order_mode="hide">{{:userName}}</td>--%>
   			<td>
 			  	{{for ordProdExtendList}}
 					{{if #parent.parent.data.currentLan == 'zh_CN'}}
@@ -186,7 +186,7 @@
 			</td>
 
 			{{if displayFlag == '13'}}
-				<td>————</td>
+				<td>-</td>
 			{{else }}
            		 <td>
 					{{if  currencyUnit == '1'}}
