@@ -312,19 +312,9 @@
 				  				</li>
 
                                 <li>
-								<c:choose>
-									<c:when test="${OrderDetails.displayFlag =='23'}">
-                                        <!-- 预计翻译耗时 -->
-                                        <p class="word"><spring:message code="myOrder.Estimatedtime"/>：</p>
-                                        <p><spring:message
-                                                code="myOrder.tranteNeedTime" arguments="${OrderDetails.prod.takeDay},${OrderDetails.prod.takeTime}"/></p>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <!-- 创建时间-->
-                                        <p class="word"><spring:message code="myOrder.Creationtime"/>:</p>
-                                        <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${OrderDetails.orderTime}"/> </p>
-                                    </c:otherwise>
-								</c:choose>
+									<!-- 创建时间-->
+									<p class="word"><spring:message code="myOrder.Creationtime"/>:</p>
+									<p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${OrderDetails.orderTime}"/> </p>
                                 </li>
 
 				  				<li>

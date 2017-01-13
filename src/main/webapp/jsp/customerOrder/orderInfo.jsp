@@ -102,15 +102,15 @@
 	                    
 	                   	<c:if test="${OrderDetails.translateType == '1'  && (OrderDetails.displayFlag=='50' || OrderDetails.displayFlag=='52' || OrderDetails.displayFlag=='90')}">
 		                   	<c:forEach items="${OrderDetails.prodFiles}" var="prodFile" varStatus="status">
+                                <c:if test="${not empty prodFile.fileTranslateName}">
 		                        <ul class="mt-30">
 		                        	<!-- 译文 文档-->
 		                            <li class="title"><spring:message code="myOrder.Translatedtext"/>:</li>
 		                            	<!-- 文档类型翻译 文档list -->
-		                            	<c:if test="${not empty prodFile.fileTranslateName}">
 		                            		<li>${prodFile.fileTranslateName}</li>
 		  								<li class="right mr-5"><input name="download" fileId="${prodFile.fileTranslateId}" fileName="${prodFile.fileTranslateName}" type="button" class="btn border-blue-small btn-auto radius20" value="<spring:message code="myOrder.downLoad"/>"></li>
-		                            	</c:if>
 		                    	</ul>
+                                </c:if>
 	                   		</c:forEach>
                         </c:if>
                     </div>
