@@ -52,7 +52,7 @@
 						</c:otherwise>
 					</c:choose>
 				</span><i class="icon-caret-down btg" id="icon2"></i></a>
-					<div class="show-hover" style="display:none;">
+					<div class="show-hover" style="height:100px;display:none;">
 						<ul>
 							<%-- <li><i class="icon-user"></i><a href="${_base}/p/interpreter/interpreterInfoPager?source=user"> <spring:message code="user.topMenu.perProfile"/></a></li> --%>
 							<li><i class="icon-lock"></i><a href="${_base}/p/security/seccenter?source=user"> <spring:message code="user.topMenu.secSetting"/></a></li>
