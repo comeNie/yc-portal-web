@@ -155,7 +155,7 @@ catch(Exception e){
   							<c:if test="${user_session_key.fullMobile==null||user_session_key.fullMobile==''}">
   						    	<a href="${_base}/p/security/seccenter?source=${source}"><spring:message code="interpreter.setting" /></a>
   							</c:if>
-  							<c:if test="${user_session_key.fullMobile!=null}">
+  							<c:if test="${user_session_key.fullMobile!=null&&user_session_key.fullMobile!=''}">
   								<a href="${_base}/p/security/seccenter?source=${source}"><spring:message code="interpreter.update" /></a>
   							</c:if>
   						</p>
