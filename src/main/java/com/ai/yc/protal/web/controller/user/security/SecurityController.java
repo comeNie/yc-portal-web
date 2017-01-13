@@ -61,7 +61,7 @@ import com.alibaba.fastjson.JSONObject;
  * 
  * @author xuyw
  */
-@RequestMapping("p/security")
+@RequestMapping("/p/security")
 @Controller
 public class SecurityController {
 	private static final Logger LOG = LoggerFactory
