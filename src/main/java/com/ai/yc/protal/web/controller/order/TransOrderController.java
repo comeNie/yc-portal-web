@@ -17,13 +17,13 @@ import com.ai.yc.order.api.orderquery.param.QueryOrdCountResponse;
 import com.ai.yc.order.api.orderstate.interfaces.IOrderStateUpdateSV;
 import com.ai.yc.order.api.orderstate.param.OrderStateUpdateRequest;
 import com.ai.yc.order.api.orderstate.param.OrderStateUpdateResponse;
+import com.ai.yc.order.api.orderstate.param.UpdateStateChgInfo;
 import com.ai.yc.order.api.translatesave.interfaces.ITranslateSaveSV;
 import com.ai.yc.order.api.translatesave.param.SaveTranslateInfoRequest;
 import com.ai.yc.order.api.translatesave.param.TranslateFileVo;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.OrderConstants;
 import com.ai.yc.protal.web.service.CacheServcie;
-import com.ai.yc.protal.web.service.OrderService;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.translator.api.translatorservice.interfaces.IYCTranslatorServiceSV;
 import com.ai.yc.translator.api.translatorservice.param.SearchYCTranslatorSkillListRequest;
@@ -236,6 +236,10 @@ public class TransOrderController {
         stateReq.setDisplayFlag(OrderConstants.State.TRANSLATING);
         stateReq.setUserId(UserUtil.getUserId());
 
+        UpdateStateChgInfo stateChgInfo = new UpdateStateChgInfo();
+        stateChgInfo.setOperName(UserUtil.getUserName());
+        stateReq.setStateChgInfo(stateChgInfo);
+
         OrderStateUpdateResponse stateRes = iOrderStateUpdateSV.updateState(stateReq);
         resHeader = stateRes.getResponseHeader();
         //如果返回值为空,或返回信息中包含错误信息
@@ -297,6 +301,10 @@ public class TransOrderController {
         stateReq.setState(state);
         stateReq.setDisplayFlag(displayFlag);
         stateReq.setUserId(UserUtil.getUserId());
+
+        UpdateStateChgInfo stateChgInfo = new UpdateStateChgInfo();
+        stateChgInfo.setOperName(UserUtil.getUserName());
+        stateReq.setStateChgInfo(stateChgInfo);
 
         OrderStateUpdateResponse stateRes = iOrderStateUpdateSV.updateState(stateReq);
         ResponseHeader resHeader = stateRes.getResponseHeader();

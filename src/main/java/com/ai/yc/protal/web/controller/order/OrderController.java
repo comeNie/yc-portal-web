@@ -116,6 +116,11 @@ public class OrderController {
         subReq.setBaseInfo(JSON.parseObject(baseInfoStr, BaseInfo.class));
         subReq.setProductInfo(JSON.parseObject(productInfoStr, ProductInfo.class));
 
+        String transName = subReq.getBaseInfo().getTranslateName();
+        if (transName.endsWith("...")) {
+            subReq.getBaseInfo().setTranslateName(transName.substring(0,transName.length() - 3));
+        }
+
         //设置费用信息
         FeeInfo feeInfo = new FeeInfo();
         if (OrderConstants.TranslateType.TEXT.equals(subReq.getBaseInfo().getTranslateType()) ) { //快速翻译，查询报价
