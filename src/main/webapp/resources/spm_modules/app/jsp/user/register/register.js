@@ -95,8 +95,8 @@ define(
 						_ie8palceholder:function(){
 							this._showCheckMsg("");
 							$("#regsiterMsg").hide();
-							$("input").trigger("focus");
-							$("input").trigger("blur");	
+							$("input.int-text").trigger("focus");
+							$("input.int-text").trigger("blur");	
 							
 							//切换时将原有的文本清空
 							$("#phone").val("");
@@ -105,7 +105,6 @@ define(
 							$("#confirmPassword").val("");
 							$("#verifyCodeImg").val("");
 							$("#smsCode").val("");
-							
 							
 							this._showCheckMsg("");
 							$("#regsiterMsg").show();
