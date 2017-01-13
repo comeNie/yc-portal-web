@@ -203,15 +203,15 @@
 		});
         $("input").placeholder();
         //checkbox兼容ie8
-        $('.form-lable input').iCheck({
-            checkboxClass: 'icheckbox_flat-blue',
-            radioClass: 'iradio_flat-blue'
-        });
+//        $('.form-lable input').iCheck({
+//            checkboxClass: 'icheckbox_flat-blue',
+//            radioClass: 'iradio_flat-blue'
+//        });
         //checkbox兼容ie8
-        $('.recharge-btn :checkbox').iCheck({
-            checkboxClass: 'icheckbox_flat-blue',
-            radioClass: 'iradio_flat-blue'
-        });
+//        $('.recharge-btn input').iCheck({
+//            checkboxClass: 'icheckbox_flat-blue',
+//            radioClass: 'iradio_flat-blue'
+//        });
 	})();
 </script>
 </html>
