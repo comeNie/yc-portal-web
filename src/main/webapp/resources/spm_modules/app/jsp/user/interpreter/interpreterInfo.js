@@ -321,15 +321,15 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		        pick : ".portrait-file",
 		        accept: {
 		            title: 'Images',
-		            extensions: 'gif,jpg,png,jpeg,bmp,GIF,JPG,PNG,JPEG,BMP',
-		            // mimeTypes: 'application/zip,application/msword,application/pdf,image/jpeg,image/png,image/gif'
+		            extensions: 'gif,jpg,jpeg,bmp,png',
+		            mimeTypes: 'image/*'
 		        },
 		        method:'POST',
 		        resize : false,
 		        // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
 		        disableGlobalDnd: true,
 		        fileNumLimit: 10,
-		        fileSizeLimit: 5 * 1024 * 1024,    // 5 M
+		        fileSizeLimit: 5 * 1024 * 1024    // 5 M
 		    });
 
 		    uploader.on("beforeFileQueued", function (file) {
