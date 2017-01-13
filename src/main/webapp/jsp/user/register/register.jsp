@@ -135,6 +135,7 @@
 			pager.render();
 		});
         $("input").placeholder();
+        $("#regsiterMsg").html("");
         //checkbox兼容ie8
 //        $('.regsiter-form :checkbox').iCheck({
 //            checkboxClass: 'icheckbox_flat-blue',
