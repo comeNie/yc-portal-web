@@ -13,7 +13,7 @@
 
 	<style>
 		.portrait-file  .webuploader-pick, .webuploader-pick-hover {background-color: transparent;  padding: 0;}
-		.webuploader-element-invisible {
+		.webuploader-element-invisible, .element-invisible {
 		    position: absolute !important;
 		    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
 		    clip: rect(1px,1px,1px,1px);

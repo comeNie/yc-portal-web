@@ -547,3 +547,4 @@ if(!placeholderSupport()){   // 判断浏览器是否支持 placeholder
 function placeholderSupport() {
     return 'placeholder' in document.createElement('input');
 }
+
