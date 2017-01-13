@@ -99,7 +99,12 @@ define(
 							$("input").trigger("blur");	
 							
 							//切换时将原有的文本清空
-							$("input").val("");
+							$("#phone").val("");
+							$("#email").val("");
+							$("#password").val("");
+							$("#confirmPassword").val("");
+							$("#verifyCodeImg").val("");
+							$("#smsCode").val("");
 							
 							
 							this._showCheckMsg("");
