@@ -340,7 +340,7 @@ public class TransOrderController {
 
         //更新订单信息
         for(ProdFileVo prodFile : prodFiles) {
-            if (prodFile.getFileTranslateId().equals(fileId)) {
+            if (fileId.equals(prodFile.getFileTranslateId())) {
                 prodFile.setFileTranslateId(null);
                 prodFile.setFileTranslateName(null);
                 break;
