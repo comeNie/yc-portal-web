@@ -15,7 +15,7 @@ button{outline:none; cursor:pointer;}
 html,body {height:100%; }
 img{vertical-align:middle}
 /****/
-/*input[type="checkbox"] {
+input[type="checkbox"] {
   -webkit-appearance: none;
   background:url(../../images/checkbox.jpg);
   height:20px;
@@ -42,7 +42,7 @@ input[type="checkbox"][disabled] {
 
 input[type="checkbox"][disabled]:checked {
    background:url(../../images/checkbox.jpg);
-}*/
+}
 .int-text::-webkit-input-placeholder { /* WebKit browsers */  
     color:    #e6e6e6;  
 }  
