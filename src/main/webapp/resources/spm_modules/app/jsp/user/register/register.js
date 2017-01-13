@@ -27,7 +27,8 @@ define(
 						setup : function() {
 							registerPager.superclass.setup.call(this);
 							this._loadCountry();
-
+							this._showCheckMsg("");
+							this._ie8palceholder();
 						},
 						/* 加载国家 */
 						_loadCountry : function() {
@@ -65,6 +66,7 @@ define(
 						},
 						/* 切换注册方式 */
 						_changeRegisterType : function() {
+							var _this=this;
 							var a = $("#change_register_type");
 							var register_type = a.attr("register_type");
 							var phone_container = $("#li_register_phone_container");
@@ -78,6 +80,7 @@ define(
 								phone_container.hide();
 								phone_code_container.hide();
 								email_container.show();
+								
 							} else if ("email" == register_type) {// 切换到手机
 								this._showCheckMsg("");
 								a.attr("register_type", "phone");
@@ -87,6 +90,16 @@ define(
 								phone_code_container.show();
 								email_container.hide();
 							}
+							_this._ie8palceholder();
+						},
+						_ie8palceholder:function(){
+							this._showCheckMsg("");
+							$("#regsiterMsg").hide();
+							$("input").trigger("focus");
+							$("input").trigger("blur");							
+							this._showCheckMsg("");
+							$("#regsiterMsg").show();
+							
 						},
 						/* 刷新验证码 */
 						_refreshVerificationCode : function() {
