@@ -120,7 +120,7 @@ public class OrderController {
         /*
         *  为之后在展示时显示省略号，引起误会，将省略号删除掉
         */
-        if (transName.endsWith("...")) {
+        if (StringUtils.isNotBlank(transName) && transName.endsWith("...")) {
             subReq.getBaseInfo().setTranslateName(transName.substring(0,transName.length() - 3));
         }
 
