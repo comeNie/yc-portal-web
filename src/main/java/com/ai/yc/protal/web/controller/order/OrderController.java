@@ -16,6 +16,7 @@ import com.ai.yc.order.api.ordersubmission.param.FeeInfo;
 import com.ai.yc.order.api.ordersubmission.param.OrderSubmissionRequest;
 import com.ai.yc.order.api.ordersubmission.param.ProductInfo;
 import com.ai.yc.protal.web.constants.Constants;
+import com.ai.yc.protal.web.constants.OrderConstants;
 import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.alibaba.fastjson.JSON;
@@ -117,7 +118,7 @@ public class OrderController {
 
         //设置费用信息
         FeeInfo feeInfo = new FeeInfo();
-        if ( "0".equals(subReq.getBaseInfo().getTranslateType()) ) { //快速翻译，查询报价
+        if (OrderConstants.TranslateType.TEXT.equals(subReq.getBaseInfo().getTranslateType()) ) { //快速翻译，查询报价
             ProductInfo pro = subReq.getProductInfo();
             IQueryAutoOfferSV iQueryAutoOfferSV = DubboConsumerFactory.getService(IQueryAutoOfferSV.class);
             QueryAutoOfferReq offerInfo =  new QueryAutoOfferReq();
@@ -160,7 +161,7 @@ public class OrderController {
         subReq.setFeeInfo(feeInfo);
 
         //订单存到session中
-        if ("2".equals(subReq.getBaseInfo().getTranslateType())) {
+        if (OrderConstants.TranslateType.ORAL.equals(subReq.getBaseInfo().getTranslateType())) {
             session.setAttribute("oralOrderInfo", subReq);
             session.setAttribute("oralOrderSummary", orderSummary);
         } else {
