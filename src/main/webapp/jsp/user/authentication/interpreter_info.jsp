@@ -74,11 +74,9 @@ catch(Exception e){
   						<p class="portrait">
   							<img src="${userPortraitImg}" id="portraitFileId" />
   							<div class="portrait-file" style="display:block;">
-  								<a href="javascript:" style="cursor: pointer;"><spring:message code="interpreter.updatePortrait" /></a>
+  								<a href="javascript:void(0)" style="cursor: pointer;"><spring:message code="interpreter.updatePortrait" /></a>
 								 <div id="uploadImg" class="file-opacity"></div>
-  								<!-- <input type="file"  class="file-opacity" id="uploadImg" name="uploadImg" onchange="uploadPortraitImg('uploadImg')"/> -->
   							</div>
-
   						</p>
   						<label id="uploadImgErrMsg" style="display: none;"><span class="ash" id="uploadImgText"></span></label>
   					</li>
