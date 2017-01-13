@@ -15,6 +15,8 @@
 	<c:set var="transType" value="${order.baseInfo.translateType}" />
 
 	<style>
+        .uploadDiv { width: 178px;  height: 48px;     margin: 0 auto;}
+
 		.uploadDiv .webuploader-pick{border:2px solid #39d5b0;background:#fff;color:#39d5b0;
 			width:178px;height:48px;border-radius:30px;
 			cursor:pointer;text-align:center;outline:none;font-size:18px;}
@@ -113,7 +115,7 @@
 					</p>
 					<!-- 上传文档btn -->
 					<p class="right"><input type="button" class="btn border-blue radius20 btn-80"
-											value="<spring:message code="order.uploadDoc"/>" id="fy-btn"></p>
+											value="<spring:message code="order.uploadDoc"/>" id="fy-btn" onclick="uploadFile()"></p>
 					<!-- 清空 -->
 					<p class="right"><input style="display: none;" type="button" class="btn border-blue radius20 btn-80"
 											value="<spring:message code="order.clear" />" id="clear-btn"></p>
@@ -378,6 +380,10 @@
 //            radioClass: 'iradio_flat-blue'
 //        });
 	})();
+
+	function uploadFile() {
+       $("input[type='file']").click()
+	}
 
 //    $(document).bind("contextmenu",function(){return false;});
 </script>

@@ -53,10 +53,11 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			$(":input").bind("focusout",function(){
 				formValidator.element(this);
 			});
-
+            this._initUpdate();
 			this._transGrade();
 			this._transPrice();
 			this._initPage();
+
     	},
 
         textCounter:function($this,desc,maxlimit) {
@@ -339,7 +340,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 					$("#inputFormatConvP").show();
 					$("#inputFormatConv").val($("#format").val());
 				}
-
 				this._uploadFile();
 			} else {
 				//文字
