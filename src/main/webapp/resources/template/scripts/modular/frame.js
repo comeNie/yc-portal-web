@@ -146,9 +146,10 @@ $(function () {
 $(function(){
   $(".portrait").mouseenter(function(){
   $(".portrait-file").show();
+  $(".portrait-file").removeClass("webuploader-element-invisible");
   });
   $(".portrait-file").mouseleave(function(){
-  $(".portrait-file").hide();
+   $(".portrait-file").addClass("webuploader-element-invisible");
   });
   });
   
@@ -546,3 +547,4 @@ if(!placeholderSupport()){   // 判断浏览器是否支持 placeholder
 function placeholderSupport() {
     return 'placeholder' in document.createElement('input');
 }
+

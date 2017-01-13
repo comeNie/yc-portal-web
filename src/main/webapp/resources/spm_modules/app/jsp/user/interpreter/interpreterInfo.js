@@ -3,17 +3,11 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     var $=require('jquery'),
     Widget = require('arale-widget/1.2.0/widget'),
     Dialog = require("optDialog/src/dialog"),
-    Paging = require('paging/0.0.1/paging-debug'),
-    Uploader = require('arale-upload/1.2.0/index'),
     AjaxController = require('opt-ajax/1.0.0/index'),
     Calendar = require('arale-calendar/1.1.2/index');
     
     require("jsviews/jsrender.min");
     require("jsviews/jsviews.min");
-    require("bootstrap-paginator/bootstrap-paginator.min");
-    require("app/util/jsviews-ext");
-    require("opt-paging/aiopt.pagination");
-    require("twbs-pagination/jquery.twbsPagination.min");
     
     require("jquery-validation/1.15.1/jquery.validate");
 	require("app/util/aiopt-validate-ext");
@@ -21,13 +15,11 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 	require("my97DatePicker/WdatePicker");
 	
 	require('webuploader/webuploader');
-	
-    var SendMessageUtil = require("app/util/sendMessage");
     
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
     var uploader = null;
-    
+    $(".portrait-file").addClass("webuploader-element-invisible");
     var showMsg = function(msg){
     	var d = Dialog({
 			content:msg,
@@ -318,15 +310,13 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		        swf : _base+"/resources/spm_modules/webuploader/Uploader.swf",
 		        server: _base+'/p/interpreter/uploadImage',
 		        auto : true,
-		        pick : ".portrait-file",
+		        pick : "#portraitbox",
 		        accept: {
 		            title: 'Images',
 		            extensions: 'gif,jpg,jpeg,bmp,png',
 		            mimeTypes: 'image/*'
-		        },
-		        method:'POST',
+		        },		        
 		        resize : false,
-		        // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
 		        disableGlobalDnd: true,
 		        fileNumLimit: 10,
 		        fileSizeLimit: 5 * 1024 * 1024    // 5 M

@@ -331,6 +331,7 @@ define(
 								type : "post",
 								processing : false,
 								message : " ",
+								async:false,
 								url : _base + "/userCommon/checkImageVerifyCode",
 								data : {
 									'imgCode' : imgCodeVal

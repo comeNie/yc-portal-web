@@ -243,7 +243,7 @@
 .form-lable ul li .word{width:100px;text-align: right;margin-right:20px;}
 .form-lable ul li .word b{color:#fe6b6b}
 .form-lable ul li p span{float:left;margin-right:10px;}
-.radio{width:14px;height:14px;background:#000;}
+.radio{width:14px;height:14px;background:#000;margin-top:2px;}
 .form-lable ul li p i{position:absolute;right:20px;top:12px;color:#2361ea;font-size:18px;cursor:pointer;}
 .form-lable ul li .rightword{width:310px;}
 .form-lable ul li  a{color:#2361ea;font-size:14px;}
@@ -754,4 +754,11 @@ opacity:0;filter:alpha(opacity=0); -moz-opacity:0; -khtml-opacity:0;}
     right: 30px;
     bottom: 350px;
   }
+}
+/**隐藏头像**/
+.portrait-file  .webuploader-pick, .webuploader-pick-hover {background-color: transparent;  padding: 0;}
+.webuploader-element-invisible, .element-invisible {
+		    position: absolute !important;
+		    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+		    clip: rect(1px,1px,1px,1px);
 }

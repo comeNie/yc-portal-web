@@ -12,8 +12,8 @@
 	<link rel="stylesheet" type="text/css" href="${_base}/resources/spm_modules/webuploader/webuploader.css">
 
 	<style>
-		.portrait-file  .webuploader-pick, .portrait-file  .webuploader-pick-hover {background-color: transparent;  padding: 0;}
-		.webuploader-element-invisible {
+		.portrait-file  .webuploader-pick, .webuploader-pick-hover {background-color: transparent;  padding: 0;}
+		.webuploader-element-invisible, .element-invisible {
 		    position: absolute !important;
 		    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
 		    clip: rect(1px,1px,1px,1px);
@@ -71,13 +71,13 @@ catch(Exception e){
   						<p class="word">
   							<spring:message code="interpreter.portrait" />:
   						</p>
-  						<p class="portrait">
+  						<div class="portrait" >
   							<img src="${userPortraitImg}" id="portraitFileId" />
-  							<div class="portrait-file" style="display:block;">
+  							<div id="portraitbox" class="portrait-file" style="display:block;">
   								<a href="javascript:void(0)" style="cursor: pointer;"><spring:message code="interpreter.updatePortrait" /></a>
 								 <div id="uploadImg" class="file-opacity"></div>
   							</div>
-  						</p>
+  						</div>
   						<label id="uploadImgErrMsg" style="display: none;"><span class="ash" id="uploadImgText"></span></label>
   					</li>
   					<li>
@@ -154,7 +154,7 @@ catch(Exception e){
   							<c:if test="${user_session_key.fullMobile==null||user_session_key.fullMobile==''}">
   						    	<a href="${_base}/p/security/seccenter?source=${source}"><spring:message code="interpreter.setting" /></a>
   							</c:if>
-  							<c:if test="${user_session_key.fullMobile!=null}">
+  							<c:if test="${user_session_key.fullMobile!=null&&user_session_key.fullMobile!=''}">
   								<a href="${_base}/p/security/seccenter?source=${source}"><spring:message code="interpreter.update" /></a>
   							</c:if>
   						</p>
