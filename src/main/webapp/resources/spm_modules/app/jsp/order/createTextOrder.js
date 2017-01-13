@@ -591,7 +591,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				ok:function(){
 					this.close();
 				}
-			}).show();
+			}).showModal();
 		},
 
 		_showFail:function(msg){

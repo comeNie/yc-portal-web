@@ -299,7 +299,7 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
 				ok:function(){
 					this.close();
 				}
-			}).show();
+			}).showModal();
 		},
 
     });
