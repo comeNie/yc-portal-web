@@ -29,7 +29,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 			"click .dropdown":"_chDuad",
 			"click #saveContact":"_saveContact",
 			"click #editContact":"_editContactDiv",
-			"click #fy-btn": "_uploadFile",
+			// "click #fy-btn": "_uploadFile",
 			"click #fy-btn1": "_inputText",
 			"click #clear-btn": "_clearText",
 			"keyup #translateContent": "_clearControl",

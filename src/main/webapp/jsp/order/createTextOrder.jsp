@@ -382,7 +382,12 @@
 	})();
 
 	function uploadFile() {
-       $("input[type='file']").click()
+        var file = $("input[type='file']");
+        //文件上传使用h5方式
+	    if(file !=null && file.length > 0){
+            $("input[type='file'] :first").click()
+		}
+		pager._uploadFile();
 	}
 
 //    $(document).bind("contextmenu",function(){return false;});
