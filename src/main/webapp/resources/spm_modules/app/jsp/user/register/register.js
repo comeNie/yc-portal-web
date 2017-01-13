@@ -96,7 +96,12 @@ define(
 							this._showCheckMsg("");
 							$("#regsiterMsg").hide();
 							$("input").trigger("focus");
-							$("input").trigger("blur");							
+							$("input").trigger("blur");	
+							
+							//切换时将原有的文本清空
+							$("input").val("");
+							
+							
 							this._showCheckMsg("");
 							$("#regsiterMsg").show();
 							
