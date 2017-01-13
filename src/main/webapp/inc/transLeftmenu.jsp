@@ -68,12 +68,12 @@ UserUtil.getUserPortraitImg();
 				</a>
 			</li> 
 			-->
-			<li id="interpreterInfo">
+			<%-- <li id="interpreterInfo">
 				<a href="${_base}/p/interpreter/interpreterInfoPager?source=interpreter">
 					<span><i class="icon iconfont">&#xe642;</i></span>
 					<span><spring:message code="ycleftmenu.myinfo"/></span>
 				</a>
-			</li>
+			</li> --%>
 			<li id="seccenterSettings">
 				<a  href="${_base}/p/security/seccenter?source=interpreter">
 					<span><i class="icon iconfont">&#xe63f;</i></span>
