@@ -146,9 +146,10 @@ $(function () {
 $(function(){
   $(".portrait").mouseenter(function(){
   $(".portrait-file").show();
+  $(".portrait-file").removeClass("webuploader-element-invisible");
   });
   $(".portrait-file").mouseleave(function(){
-  $(".portrait-file").hide();
+   $(".portrait-file").addClass("webuploader-element-invisible");
   });
   });
   

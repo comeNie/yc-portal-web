@@ -19,7 +19,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
     var uploader = null;
-    
+    $(".portrait-file").addClass("webuploader-element-invisible");
     var showMsg = function(msg){
     	var d = Dialog({
 			content:msg,
@@ -311,7 +311,6 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		        server: _base+'/p/interpreter/uploadImage',
 		        auto : true,
 		        pick : "#portraitbox",
-		        dnd: '#fy2',
 		        accept: {
 		            title: 'Images',
 		            extensions: 'gif,jpg,jpeg,bmp,png',
@@ -323,7 +322,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		        fileSizeLimit: 5 * 1024 * 1024    // 5 M
 		    });
 
-		    /*uploader.on("beforeFileQueued", function (file) {
+		    uploader.on("beforeFileQueued", function (file) {
 		    	var image = file.name;
 		    	 var allSize = file.size;
 		    	if(!/\.(gif|jpg|png|jpeg|bmp|GIF|JPG|PNG|JPEG|BMP)$/.test(image)){
@@ -344,7 +343,7 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		    		$("#uploadImgText").text('');
 		    		$("#uploadImgFlag").val("1");
 		    	}
-		    });*/
+		    });
 	     // 文件上传成功，给item添加成功class, 用样式标记上传成功。  
 	        uploader.on( 'uploadSuccess', function( file, data) {  
 	        	if(data.isTrue){

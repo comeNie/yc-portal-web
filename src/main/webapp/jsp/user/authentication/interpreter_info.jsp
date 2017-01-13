@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="${_base}/resources/spm_modules/webuploader/webuploader.css">
 
 	<style>
-		.portrait-file  .webuploader-pick, .portrait-file  .webuploader-pick-hover {background-color: transparent;  padding: 0;}
+		.portrait-file  .webuploader-pick, .webuploader-pick-hover {background-color: transparent;  padding: 0;}
 		.webuploader-element-invisible {
 		    position: absolute !important;
 		    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
@@ -78,7 +78,6 @@ catch(Exception e){
 								 <div id="uploadImg" class="file-opacity"></div>
   							</div>
   						</div>
-  						<div id="fy2" style="display: none;"></div>
   						<label id="uploadImgErrMsg" style="display: none;"><span class="ash" id="uploadImgText"></span></label>
   					</li>
   					<li>
