@@ -28,6 +28,7 @@ define(
 							registerPager.superclass.setup.call(this);
 							this._loadCountry();
 							this._showCheckMsg("");
+							this._ie8palceholder();
 						},
 						/* 加载国家 */
 						_loadCountry : function() {
