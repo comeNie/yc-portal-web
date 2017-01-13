@@ -71,13 +71,14 @@ catch(Exception e){
   						<p class="word">
   							<spring:message code="interpreter.portrait" />:
   						</p>
-  						<p class="portrait">
+  						<div class="portrait" >
   							<img src="${userPortraitImg}" id="portraitFileId" />
-  							<div class="portrait-file" style="display:block;">
+  							<div id="portraitbox" class="portrait-file" style="display:block;">
   								<a href="javascript:void(0)" style="cursor: pointer;"><spring:message code="interpreter.updatePortrait" /></a>
 								 <div id="uploadImg" class="file-opacity"></div>
   							</div>
-  						</p>
+  						</div>
+  						<div id="fy2" style="display: none;"></div>
   						<label id="uploadImgErrMsg" style="display: none;"><span class="ash" id="uploadImgText"></span></label>
   					</li>
   					<li>
