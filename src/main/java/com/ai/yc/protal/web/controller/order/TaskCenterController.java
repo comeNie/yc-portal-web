@@ -216,6 +216,7 @@ public class TaskCenterController {
         baseInfo.setLspId(lspId);
         baseInfo.setLockTime(DateUtil.getSysDate());
         receiveRequest.setBaseInfo(baseInfo);
+        receiveRequest.setStateChgInfo(stateChgInfo);
         try {
             IOrderReceiveSV iOrderReceiveSV = DubboConsumerFactory.getService(IOrderReceiveSV.class);
             OrderReceiveResponse receiveResponse = iOrderReceiveSV.orderReceive(receiveRequest);
