@@ -21,6 +21,7 @@ import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
+import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.paas.ipaas.util.StringUtil;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.Constants.PhoneVerify;
@@ -248,7 +249,8 @@ public class RegisterController {
 		req.setOperationtype(UcenterOperation.OPERATION_TYPE_EMAIL_ACTIVATE);
 		req.setUserinfo(codes[2]);
 		UcMembersResponse res =DubboConsumerFactory.getService(IUcMembersOperationSV.class).ucActiveMember(req);
-		if (res != null && res.getMessage() != null
+		if (value.equals(VerifyUtil.getRedisValue(codes[2]))
+				&&res != null && res.getMessage() != null
 				&& res.getMessage().isSuccess() && res.getCode() != null
 				&& res.getCode().getCodeNumber() != null
 				&& res.getCode().getCodeNumber() == 1) {
@@ -275,10 +277,13 @@ public class RegisterController {
 	 * 发送验证邮件
 	 */
 	private boolean sendRegisterEmaial(InsertYCUserRequest req,YCInsertUserResponse res) {
+		ICacheClient iCacheClient = AiPassUitl.getCacheClient();
 		if (!StringUtil.isBlank(req.getEmail())) {
 			String key = UUID.randomUUID().toString().replace("-", "");
 			String value = res.getUserId()+","+res.getOperationcode()+","+req.getEmail();
 			VerifyUtil.addRedisValue(key, 24*60*60,value);
+			iCacheClient.del(req.getEmail());
+			iCacheClient.set(req.getEmail(),value);
 			JSONObject config = AiPassUitl.getVerificationCodeConfig();
 			String  baseUrl = config.getString("base_url");
 			String url = baseUrl+"/reg/emailActivate/"+key;
