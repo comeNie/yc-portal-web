@@ -121,18 +121,18 @@
                             </tbody>
                         </table>
                     </c:if>
-
+                    <%--口译订单--%>
                     <c:if test="${transType == '2'}">
                         <table class="table table-th-color" id="oralOrderTable">
                             <thead>
                             <tr>
-                                <th><spring:message code="order.Subject"/></th>
-                                <th><spring:message code="order.translateLan"/></th>
-                                <th><spring:message code="order.InterpretationType"/></th>
-                                <th><spring:message code="order.StartingTime"/></th>
-                                <th><spring:message code="order.EngdingTime"/></th>
-                                <th><spring:message code="order.Place"/></th>
-                                <th><spring:message code="order.MeetingAmount"/></th>
+                                <th width="24%"><spring:message code="order.Subject"/></th>
+                                <th width="12%"><spring:message code="order.translateLan"/></th>
+                                <th width="12%"><spring:message code="order.InterpretationType"/></th>
+                                <th width="12%"><spring:message code="order.StartingTime"/></th>
+                                <th width="12%"><spring:message code="order.EngdingTime"/></th>
+                                <th width="12%"><spring:message code="order.Place"/></th>
+                                <th width="12%"><spring:message code="order.MeetingAmount"/></th>
                             </tr>
                             </thead>
                             <tbody>
