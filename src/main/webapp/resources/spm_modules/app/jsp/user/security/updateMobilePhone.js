@@ -334,7 +334,9 @@ define("app/jsp/user/security/updateMobilePhone",
 				    				},
 				    				success: function(json) {
 				    					if(!json.data){
-				    						showMsg(json.statusInfo);
+				    						$("#uphoneErrMsg").show();
+				    						$("#uphoneErrMsg").text(json.statusInfo);
+				    						//showMsg(json.statusInfo);
 											return false;
 				    		        	}else{
 				    		        		$("#next2").hide();
