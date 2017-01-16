@@ -256,9 +256,9 @@ define("app/jsp/user/security/bindPhone",
 								    			 url:_base+"/p/security/updatePhone",
 								    			 data:{
 								    					phone:$("#telephone").val(),
+								    					code:phoneDynamicode,
 								    					type:"2",
-								    					countryValue:countryValue,
-								    					submitPhone:$("#telephone").val()
+								    					countryValue:countryValue
 								    				},
 								    				success: function(json) {
 								    					if(!json.data){
