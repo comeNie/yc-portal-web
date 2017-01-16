@@ -454,17 +454,19 @@ define(
 												'type':'1'
 											},
 											success : function(json) {
-												if(json.statusCode=="1" && json.data){
-													btn.val(curCount+"S"+registerMsg.resend)
-															.removeClass("btn-green")
-															.addClass("biu-btn")
-															.attr("style","color:#fff;");
-													smsObj = window.setInterval(
-															_this.startSmsTime,
-															1000); // 启动计时器，1秒执行一次
-												}else{
-													_this._showCheckMsg(json.statusInfo);
-												}
+												$("#send_dynamicode_btn").val(
+														registerMsg.getDynamiCode).removeClass(
+														"btn-green").addClass("biu-btn").attr("style","color:#fff;");
+												_this._showCheckMsg(json.statusInfo);
+											},
+											beforeSend: function(){
+												btn.val(curCount+"S"+registerMsg.resend)
+												.removeClass("btn-green")
+												.addClass("biu-btn")
+												.attr("style","color:#fff;");
+												smsObj = window.setInterval(
+												_this.startSmsTime,
+												1000); // 启动计时器，1秒执行一次
 											}
 										});
 							}

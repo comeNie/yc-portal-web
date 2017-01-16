@@ -22,9 +22,9 @@
 				<li><input id="payPass" type="password" autocomplete="off"  class="int-text int-large radius" maxlength="16"></li>
 				<li class="eject-btn">
 					<%--确 定--%>
-					<input type="button" id="completed" class="btn btn-green btn-120 radius20" value="<spring:message code="pay.order.ok"/>">
+					<input type="button" id="completed" class="btn btn-green btn-120 btn-120-dialog radius20" value="<spring:message code="pay.order.ok"/>">
 					<%--取 消--%>
-					<input type="button" id="close-completed" class="btn border-green btn-120 radius20" value="<spring:message code="pay.order.cancell"/>">
+					<input type="button" id="close-completed" class="btn border-green btn-120 btn-120-dialog radius20" value="<spring:message code="pay.order.cancell"/>">
 				</li>
 			</ul>
 		</div>

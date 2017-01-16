@@ -177,10 +177,12 @@ define("app/jsp/user/security/updateMobilePhone",
 						},
 					  _sendUDynamiCode:function(){
 						  if (this._checkPhone()) {
-                                var _this = this;
-								var _dynamicode_btn = $("#usend_dynamicode_btn");
-								_dynamicode_btn.attr("disabled", true);
+                              var _this = this;
+							  var _dynamicode_btn = $("#usend_dynamicode_btn");
+							  _dynamicode_btn.attr("disabled", true);
 							  _dynamicode_btn.attr("class", "btn biu-btn radius btn-medium");
+							  var countryValue = $("#country2").find("option:selected").attr("value");
+							  var _res;
 								ajaxController
 									.ajax({
 										type : "post",
@@ -188,7 +190,7 @@ define("app/jsp/user/security/updateMobilePhone",
 										message : updatePhoneJs.saveingMsg,
 										url : _base + "/userCommon/sendSmsCode",
 										data : {
-											'phone' : $("#uPhone").val(),
+											'phone' : "+"+countryValue+$("#uPhone").val(),
 											'type':"2"
 										},
 										success : function(data) {
@@ -201,25 +203,24 @@ define("app/jsp/user/security/updateMobilePhone",
 												_dynamicode_btn.val(updatePhoneJs.getOperationCode);
 												return;
 											}else{
-												if(data.data){
-													var step = 59;
-													_dynamicode_btn.val(updatePhoneJs.resend60);
-										            var _res = setInterval(function(){
-										            	_dynamicode_btn.val(step+"S"+updatePhoneJs.resend);
-										                step-=1;
-										                if(step < 0){
-														_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
-														_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
-										                _dynamicode_btn.val(updatePhoneJs.getOperationCode);
-										                clearInterval(_res);//清除setInterval
-										                }
-										            },1000);
-										            $("#uphoneErrMsg").hide();
-												}else{
-													_dynamicode_btn.removeAttr("disabled");
-												}
+									            $("#uphoneErrMsg").hide();
 										  }
+										},
+										beforeSend: function(){
+											var step = 59;
+											_dynamicode_btn.val(updatePhoneJs.resend60);
+								             _res = setInterval(function(){
+								            	_dynamicode_btn.val(step+"S"+updatePhoneJs.resend);
+								                step-=1;
+								                if(step < 0){
+												_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
+												_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
+								                _dynamicode_btn.val(updatePhoneJs.getOperationCode);
+								                clearInterval(_res);//清除setInterval
+								                }
+								            },1000);
 										}
+									
 									});
 							
 						  }
@@ -230,6 +231,7 @@ define("app/jsp/user/security/updateMobilePhone",
 							var _dynamicode_btn = $("#send_dynamicode_btn");
 							_dynamicode_btn.attr("disabled", true);
 						    _dynamicode_btn.attr("class", "btn biu-btn radius btn-medium");
+						    var _res;
 							ajaxController
 								.ajax({
 									type : "post",
@@ -250,24 +252,23 @@ define("app/jsp/user/security/updateMobilePhone",
 											_dynamicode_btn.val(updatePhoneJs.getOperationCode);
 											return;
 										}else{
-											if(data.data){
-												var step = 59;
-												_dynamicode_btn.val(updatePhoneJs.resend60);
-									            var _res = setInterval(function(){
-									            	_dynamicode_btn.val(step+"S"+updatePhoneJs.resend);
-									                step-=1;
-									                if(step < 0){
-									                _dynamicode_btn.removeAttr("disabled"); //移除disabled属性
-													_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
-									                _dynamicode_btn.val(updatePhoneJs.getOperationCode);
-									                clearInterval(_res);//清除setInterval
-									                }
-									            },1000);
-									            $("#dynamicode").hide();
-											}else{
-												_dynamicode_btn.removeAttr("disabled");
-											}
+											$("#dynamicode").hide();
 									  }
+									},
+									beforeSend: function(){
+										var step = 59;
+										_dynamicode_btn.val(updatePhoneJs.resend60);
+							            var _res = setInterval(function(){
+							            	_dynamicode_btn.val(step+"S"+updatePhoneJs.resend);
+							                step-=1;
+							                if(step < 0){
+							                _dynamicode_btn.removeAttr("disabled"); //移除disabled属性
+											_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
+							                _dynamicode_btn.val(updatePhoneJs.getOperationCode);
+							                clearInterval(_res);//清除setInterval
+							                }
+							            },1000);
+							            
 									}
 								});
 						},
@@ -320,18 +321,21 @@ define("app/jsp/user/security/updateMobilePhone",
 								 return false;
 							 }
 							 var countryValue = $("#country2").find("option:selected").attr("country_value");
+							 var countryCode = $("#country2").find("option:selected").attr("value");
 							 ajaxController.ajax({
     		        			 type:"post",
 				    			 url:_base+"/p/security/updatePhone",
 				    			 data:{
-				    					phone:$("#uPhone").val(),
+				    					phone:"+"+countryCode+$("#uPhone").val(),
 				    					type:"2",
 				    					code:phoneDynamicode,
 				    					countryValue:countryValue
 				    				},
 				    				success: function(json) {
 				    					if(!json.data){
-				    						showMsg(json.statusInfo);
+				    						$("#uphoneErrMsg").show();
+				    						$("#uphoneErrMsg").text(json.statusInfo);
+				    						//showMsg(json.statusInfo);
 											return false;
 				    		        	}else{
 				    		        		$("#next2").hide();
@@ -349,12 +353,13 @@ define("app/jsp/user/security/updateMobilePhone",
 							var reg = country.attr("reg");
 							var phone = $("#uPhone");
 							var phoneVal = phone.val();
+							var flag = true;
 							if ($.trim(phoneVal) == "") {
 								$("#uphoneErrMsg").show();
 								$("#uphoneErrMsg").html(updatePhoneJs.phoneNumCanNotEmpty);
 								//showMsg(updatePhoneJs.phoneNumCanNotEmpty);
 //								phone.focus();
-								return false;
+								flag = false;
 							}else{
 								$("#uphoneErrMsg").hide();
 								reg = eval('/' + reg + '/');
@@ -363,7 +368,7 @@ define("app/jsp/user/security/updateMobilePhone",
 									$("#uphoneErrMsg").html(updatePhoneJs.pleaseInputRightPhoneNum);
 									//showMsg(updatePhoneJs.pleaseInputRightPhoneNum);
 //									phone.focus();
-									return false;
+									flag = false;
 								}else{
 									$("#uphoneErrMsg").hide();
 									ajaxController.ajax({
@@ -371,6 +376,7 @@ define("app/jsp/user/security/updateMobilePhone",
 										processing : false,
 										message : updatePhoneJs.saveingMsg,
 										url : _base + "/reg/checkPhoneOrEmail",
+										async:false,
 										data : {
 											'checkType' : "phone",
 											"checkVal" : $("#uPhone").val()
@@ -379,15 +385,17 @@ define("app/jsp/user/security/updateMobilePhone",
 											if (!json.data) {
 												$("#uphoneErrMsg").show();
 												$("#uphoneErrMsg").html(json.statusInfo);
+												flag = false;
 												//showMsg(json.statusInfo);
 											}else{
 												$("#uphoneErrMsg").hide();
+												flag = true;
 											}
 										}
 									});
 								}
 							}
-							return true;
+							return flag;
 						},
 						/**
 						 *  通过邮箱地址修改手机号 
@@ -443,9 +451,11 @@ define("app/jsp/user/security/updateMobilePhone",
 								var _emailUpDynamicodeBtn = $("#emailUpDynamicodeBtn");
 								_emailUpDynamicodeBtn.attr("disabled", true);
 							  _emailUpDynamicodeBtn.attr("class", "btn biu-btn radius btn-medium");
-								if(!this._checkEmailUpdatePhone()){
+							  var _res;
+							  if(!this._checkEmailUpdatePhone()){
 									return;
 								}
+								
 								ajaxController
 									.ajax({
 										type : "post",
@@ -466,24 +476,22 @@ define("app/jsp/user/security/updateMobilePhone",
 												_emailUpDynamicodeBtn.val(updatePhoneJs.getOperationCode);
 												return;
 											}else{
-												if(data.data){
-													var step = 59;
-													_emailUpDynamicodeBtn.val(updatePhoneJs.resend60);
-										            var _res = setInterval(function(){
-										                _emailUpDynamicodeBtn.val(step+"S"+updatePhoneJs.resend);
-										                step-=1;
-										                if(step < 0){
-										                _emailUpDynamicodeBtn.removeAttr("disabled"); //移除disabled属性
-														_emailUpDynamicodeBtn.attr("class", "btn border-green border-sma radius btn-medium");
-										                _emailUpDynamicodeBtn.val(updatePhoneJs.inputOperationCode);
-										                clearInterval(_res);//清除setInterval
-										                }
-										            },1000);
-										            $("#emailUpdatePhoneErrMsg").hide();
-												}else{
-													_emailUpDynamicodeBtn.removeAttr("disabled");
-												}
+												 $("#emailUpdatePhoneErrMsg").hide();
 										  }
+										},
+										beforeSend: function(){
+											var step = 59;
+											_emailUpDynamicodeBtn.val(updatePhoneJs.resend60);
+								            _res = setInterval(function(){
+								                _emailUpDynamicodeBtn.val(step+"S"+updatePhoneJs.resend);
+								                step-=1;
+								                if(step < 0){
+								                _emailUpDynamicodeBtn.removeAttr("disabled"); //移除disabled属性
+												_emailUpDynamicodeBtn.attr("class", "btn border-green border-sma radius btn-medium");
+								                _emailUpDynamicodeBtn.val(updatePhoneJs.inputOperationCode);
+								                clearInterval(_res);//清除setInterval
+								                }
+								            },1000);
 										}
 									});
 							},

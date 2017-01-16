@@ -245,8 +245,8 @@ define("app/jsp/user/security/updateEmail",
 							}
 						  	btn.attr("class", "btn biu-btn radius btn-medium");
 							curCount = count;
-							ajaxController
-								.ajax({
+							var _res;
+							ajaxController.ajax({
 									type : "post",
 									processing : false,
 									message : updateEmailJs.saveingMsg,
@@ -257,34 +257,32 @@ define("app/jsp/user/security/updateEmail",
 									},
 									success : function(data) {
 										if(data.data==false){
-											//$("#dynamicode").show();
-											//$("#dynamicode").text(data.statusInfo);
-											showMsg(data.statusInfo);
+											$("#dynamicode").show();
+											$("#dynamicode").text(data.statusInfo);
+											//showMsg(data.statusInfo);
 											btn.attr("class", "btn border-green border-sma radius btn-medium");
 											$("#send_dynamicode_btn").removeAttr("disabled"); //移除disabled属性
 								            $('#send_dynamicode_btn').val(updateEmailJs.getOperationCode);
 											return;
 										}else{
-											if(data.data){
-												var step = 59;
-									            $('#send_dynamicode_btn').val(updateEmailJs.resend60);
-									            $("#send_dynamicode_btn").attr("disabled", true);
-									            var _res = setInterval(function(){
-									                $("#send_dynamicode_btn").attr("disabled", true);//设置disabled属性
-									                $('#send_dynamicode_btn').val(step+"S"+updateEmailJs.resend);
-									                step-=1;
-									                if(step < 0){
-													btn.attr("class", "btn border-green border-sma radius btn-medium");
-									                $("#send_dynamicode_btn").removeAttr("disabled"); //移除disabled属性
-									                $('#send_dynamicode_btn').val(updateEmailJs.getOperationCode);
-									                clearInterval(_res);//清除setInterval
-									                }
-									            },1000);
-									            $("#dynamicode").hide();
-											}else{
-												$("#send_dynamicode_btn").removeAttr("disabled");
-											}
-									  }
+								            $("#dynamicode").hide();
+										}
+									},
+									beforeSend: function(){
+										var step = 59;
+							            $('#send_dynamicode_btn').val(updateEmailJs.resend60);
+							            $("#send_dynamicode_btn").attr("disabled", true);
+							             _res = setInterval(function(){
+							                $("#send_dynamicode_btn").attr("disabled", true);//设置disabled属性
+							                $('#send_dynamicode_btn').val(step+"S"+updateEmailJs.resend);
+							                step-=1;
+							                if(step < 0){
+												btn.attr("class", "btn border-green border-sma radius btn-medium");
+								                $("#send_dynamicode_btn").removeAttr("disabled"); //移除disabled属性
+								                $('#send_dynamicode_btn').val(updateEmailJs.getOperationCode);
+								                clearInterval(_res);//清除setInterval
+							                }
+							            },1000);
 									}
 								});
 						},
