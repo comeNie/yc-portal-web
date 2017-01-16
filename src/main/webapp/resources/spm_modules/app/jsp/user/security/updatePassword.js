@@ -285,6 +285,7 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 			var btn = $("#send_dynamicode_btn");
 		    btn.attr("class", "btn biu-btn radius btn-medium");
 			btn.attr("disabled", true);
+			var _res;
 			ajaxController
 				.ajax({
 					type : "post",
@@ -297,32 +298,31 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 					},
 					success : function(data) {
 						if(data.data==false){
-							//$("#dynamicode").show();
-							//$("#dynamicode").text(data.statusInfo);
-							showMsg(data.statusInfo);
+							$("#dynamicode").show();
+							$("#dynamicode").text(data.statusInfo);
+							//showMsg(data.statusInfo);
+							clearInterval(_res);
 							btn.attr("class", "btn border-green border-sma radius btn-medium");
 							btn.removeAttr("disabled"); //移除disabled属性
 							btn.val(updatePasswordMsg.getDynamiCode);
 							return;
 						}else{
-							if(data.data){
-								var step = 59;
-								btn.val(updatePasswordMsg.resend60);
-					            var _res = setInterval(function(){
-					                btn.val(step+"S"+updatePasswordMsg.resend);
-					                step-=1;
-					                if(step < 0){
-										btn.attr("class", "btn border-green border-sma radius btn-medium");
-					                	btn.removeAttr("disabled"); //移除disabled属性
-					                	btn.val(updatePasswordMsg.getDynamiCode);
-					                clearInterval(_res);//清除setInterval
-					                }
-					            },1000);
-					            $("#dynamicode").hide();
-							}else{
-								btn.removeAttr("disabled");
-							}
+							$("#dynamicode").hide();
 					  }
+					},
+					beforeSend: function(){
+						var step = 59;
+						btn.val(updatePasswordMsg.resend60);
+			            _res = setInterval(function(){
+			                btn.val(step+"S"+updatePasswordMsg.resend);
+			                step-=1;
+			                if(step < 0){
+								btn.attr("class", "btn border-green border-sma radius btn-medium");
+			                	btn.removeAttr("disabled"); //移除disabled属性
+			                	btn.val(updatePasswordMsg.getDynamiCode);
+			                clearInterval(_res);//清除setInterval
+			                }
+			            },1000);
 					}
 				});
 			}

@@ -181,6 +181,7 @@ define("app/jsp/user/security/updateMobilePhone",
 								var _dynamicode_btn = $("#usend_dynamicode_btn");
 								_dynamicode_btn.attr("disabled", true);
 							  _dynamicode_btn.attr("class", "btn biu-btn radius btn-medium");
+							  var _res;
 								ajaxController
 									.ajax({
 										type : "post",
@@ -196,30 +197,30 @@ define("app/jsp/user/security/updateMobilePhone",
 												$("#uphoneErrMsg").show();
 												$("#uphoneErrMsg").text(data.statusInfo);
 												//showMsg(data.statusInfo);
+												 clearInterval(_res);
 												_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
 												_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
 												_dynamicode_btn.val(updatePhoneJs.getOperationCode);
 												return;
 											}else{
-												if(data.data){
-													var step = 59;
-													_dynamicode_btn.val(updatePhoneJs.resend60);
-										            var _res = setInterval(function(){
-										            	_dynamicode_btn.val(step+"S"+updatePhoneJs.resend);
-										                step-=1;
-										                if(step < 0){
-														_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
-														_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
-										                _dynamicode_btn.val(updatePhoneJs.getOperationCode);
-										                clearInterval(_res);//清除setInterval
-										                }
-										            },1000);
-										            $("#uphoneErrMsg").hide();
-												}else{
-													_dynamicode_btn.removeAttr("disabled");
-												}
+									            $("#uphoneErrMsg").hide();
 										  }
+										},
+										beforeSend: function(){
+											var step = 59;
+											_dynamicode_btn.val(updatePhoneJs.resend60);
+								             _res = setInterval(function(){
+								            	_dynamicode_btn.val(step+"S"+updatePhoneJs.resend);
+								                step-=1;
+								                if(step < 0){
+												_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
+												_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
+								                _dynamicode_btn.val(updatePhoneJs.getOperationCode);
+								                clearInterval(_res);//清除setInterval
+								                }
+								            },1000);
 										}
+									
 									});
 							
 						  }
@@ -230,6 +231,7 @@ define("app/jsp/user/security/updateMobilePhone",
 							var _dynamicode_btn = $("#send_dynamicode_btn");
 							_dynamicode_btn.attr("disabled", true);
 						    _dynamicode_btn.attr("class", "btn biu-btn radius btn-medium");
+						    var _res;
 							ajaxController
 								.ajax({
 									type : "post",
@@ -245,29 +247,29 @@ define("app/jsp/user/security/updateMobilePhone",
 											$("#dynamicode").show();
 											$("#dynamicode").text(data.statusInfo);
 											//showMsg(data.statusInfo);
+											clearInterval(_res);
 											_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
 											_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
 											_dynamicode_btn.val(updatePhoneJs.getOperationCode);
 											return;
 										}else{
-											if(data.data){
-												var step = 59;
-												_dynamicode_btn.val(updatePhoneJs.resend60);
-									            var _res = setInterval(function(){
-									            	_dynamicode_btn.val(step+"S"+updatePhoneJs.resend);
-									                step-=1;
-									                if(step < 0){
-									                _dynamicode_btn.removeAttr("disabled"); //移除disabled属性
-													_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
-									                _dynamicode_btn.val(updatePhoneJs.getOperationCode);
-									                clearInterval(_res);//清除setInterval
-									                }
-									            },1000);
-									            $("#dynamicode").hide();
-											}else{
-												_dynamicode_btn.removeAttr("disabled");
-											}
+											$("#dynamicode").hide();
 									  }
+									},
+									beforeSend: function(){
+										var step = 59;
+										_dynamicode_btn.val(updatePhoneJs.resend60);
+							            var _res = setInterval(function(){
+							            	_dynamicode_btn.val(step+"S"+updatePhoneJs.resend);
+							                step-=1;
+							                if(step < 0){
+							                _dynamicode_btn.removeAttr("disabled"); //移除disabled属性
+											_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
+							                _dynamicode_btn.val(updatePhoneJs.getOperationCode);
+							                clearInterval(_res);//清除setInterval
+							                }
+							            },1000);
+							            
 									}
 								});
 						},
@@ -443,9 +445,11 @@ define("app/jsp/user/security/updateMobilePhone",
 								var _emailUpDynamicodeBtn = $("#emailUpDynamicodeBtn");
 								_emailUpDynamicodeBtn.attr("disabled", true);
 							  _emailUpDynamicodeBtn.attr("class", "btn biu-btn radius btn-medium");
-								if(!this._checkEmailUpdatePhone()){
+							  var _res;
+							  if(!this._checkEmailUpdatePhone()){
 									return;
 								}
+								
 								ajaxController
 									.ajax({
 										type : "post",
@@ -461,29 +465,28 @@ define("app/jsp/user/security/updateMobilePhone",
 												$("#emailUpdatePhoneErrMsg").show();
 												$("#emailUpdatePhoneErrMsg").text(data.statusInfo);
 												//showMsg(data.statusInfo);
+												clearInterval(_res);
 												_emailUpDynamicodeBtn.removeAttr("disabled"); //移除disabled属性
 												_emailUpDynamicodeBtn.attr("class", "btn border-green border-sma radius btn-medium");
 												_emailUpDynamicodeBtn.val(updatePhoneJs.getOperationCode);
 												return;
 											}else{
-												if(data.data){
-													var step = 59;
-													_emailUpDynamicodeBtn.val(updatePhoneJs.resend60);
-										            var _res = setInterval(function(){
-										                _emailUpDynamicodeBtn.val(step+"S"+updatePhoneJs.resend);
-										                step-=1;
-										                if(step < 0){
-										                _emailUpDynamicodeBtn.removeAttr("disabled"); //移除disabled属性
-														_emailUpDynamicodeBtn.attr("class", "btn border-green border-sma radius btn-medium");
-										                _emailUpDynamicodeBtn.val(updatePhoneJs.inputOperationCode);
-										                clearInterval(_res);//清除setInterval
-										                }
-										            },1000);
-										            $("#emailUpdatePhoneErrMsg").hide();
-												}else{
-													_emailUpDynamicodeBtn.removeAttr("disabled");
-												}
+												 $("#emailUpdatePhoneErrMsg").hide();
 										  }
+										},
+										beforeSend: function(){
+											var step = 59;
+											_emailUpDynamicodeBtn.val(updatePhoneJs.resend60);
+								            _res = setInterval(function(){
+								                _emailUpDynamicodeBtn.val(step+"S"+updatePhoneJs.resend);
+								                step-=1;
+								                if(step < 0){
+								                _emailUpDynamicodeBtn.removeAttr("disabled"); //移除disabled属性
+												_emailUpDynamicodeBtn.attr("class", "btn border-green border-sma radius btn-medium");
+								                _emailUpDynamicodeBtn.val(updatePhoneJs.inputOperationCode);
+								                clearInterval(_res);//清除setInterval
+								                }
+								            },1000);
 										}
 									});
 							},
