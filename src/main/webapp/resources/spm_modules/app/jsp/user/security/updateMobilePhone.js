@@ -181,6 +181,7 @@ define("app/jsp/user/security/updateMobilePhone",
 								var _dynamicode_btn = $("#usend_dynamicode_btn");
 								_dynamicode_btn.attr("disabled", true);
 							  _dynamicode_btn.attr("class", "btn biu-btn radius btn-medium");
+							  var countryValue = $("#country2").find("option:selected").attr("value");
 							  var _res;
 								ajaxController
 									.ajax({
@@ -189,7 +190,7 @@ define("app/jsp/user/security/updateMobilePhone",
 										message : updatePhoneJs.saveingMsg,
 										url : _base + "/userCommon/sendSmsCode",
 										data : {
-											'phone' : $("#uPhone").val(),
+											'phone' : "+"+countryValue+$("#uPhone").val(),
 											'type':"2"
 										},
 										success : function(data) {
