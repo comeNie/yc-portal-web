@@ -52,9 +52,10 @@ catch(Exception e){
                                 </span>
                                 <%--<span>${balance}</span>--%>
                             </li>
-                            <% if(Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())&&Constants.Account.ACCOUNT_ENABLE.equals(accountEnable)){ %>
+                            <%--充值按钮--%>
+                            <%--<% if(Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())&&Constants.Account.ACCOUNT_ENABLE.equals(accountEnable)){ %>
                             <li class="c-bj-bule"><a href="${_base}/p/balance/depositFund"><spring:message code="account.recharge"/></a></li>
-                            <% } %>
+                            <% } %>--%>
                         </ul>
                         <ul class="word-li">
                             <li><spring:message code="account.claim"/></li>
@@ -198,7 +199,7 @@ catch(Exception e){
                 {{/if}}
                 {{:~liToYuan(totalAmount)}}
                 {{else }}
-                0
+
                 {{/if}}
             </td>
             <td class="green" >
@@ -211,7 +212,7 @@ catch(Exception e){
                 {{/if}}
                 {{:~liToYuan(-totalAmount)}}
                 {{else }}
-                    0
+
                 {{/if}}
             </td><%--{{:~liToYuan()}}--%>
             <td >
