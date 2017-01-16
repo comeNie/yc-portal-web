@@ -165,7 +165,7 @@
 						<input type="hidden" name="unit" value="{{:currencyUnit}}">
 						<input type="hidden" name="state" value="{{:state}}">
         <td class="text-l pl-5">
-            <div class="fy-sm"> {{:translateName}}</div>
+            <div class="fy-sm" orderId="{{:orderId}}"> {{:translateName}}</div>
         </td>
         <td>
             {{if  currencyUnit == '1'}}
