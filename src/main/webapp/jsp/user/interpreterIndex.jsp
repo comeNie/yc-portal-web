@@ -265,6 +265,13 @@
     	$('#order_list').delegate("input[name='trans']", 'click', function () {
     		 window.location.href="${_base}/p/trans/order/"+$(this).parents("tr").find("input[name='orderId']").val();
     	});
+
+        //订单主题
+        $('#order_list').delegate(".fy-sm", 'click', function () {
+            window.location.href="${_base}/p/trans/order/"+$(this).parents("tr").find("input[name='orderId']").val();
+        });
+
+
     })();
 	$(function(){
 		var securitylevel = "${securitylevel}";

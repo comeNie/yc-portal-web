@@ -234,10 +234,10 @@
                             	<!-- 其他  -->
                                 <p class="word"><spring:message code="myOrder.Others"/>:</p>
                                 <!-- 加急;需要排版 -->
-                                <p><c:if test="${OrderDetails.prod.isUrgent == '1'}">
+                                <p><c:if test="${OrderDetails.prod.isUrgent == 'Y'}">
                                 	<spring:message code="myOrder.Urgent"/>;
                                 	</c:if>
-                                	<c:if test="${OrderDetails.prod.isSetType == '1'}">
+                                	<c:if test="${OrderDetails.prod.isSetType == 'Y'}">
                                 	<spring:message code="myOrder.Layout"/>;
                                 	</c:if>
                                 	<c:if test="${not empty OrderDetails.prod.typeDesc}">
