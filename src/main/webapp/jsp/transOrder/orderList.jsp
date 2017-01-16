@@ -260,13 +260,11 @@
 							{{else state  == '50'}}
 							<!-- 待确认 -->
 							<td><spring:message code="myOrder.status.tobeConfirm"/></td>
-							<td>
-							</td>
+							<td></td>
 							{{else state  == '51'}}
 							<!-- 已确认 -->
 							<td><spring:message code="myOrder.status.confirmed"/></td>
-							<td>
-							</td>
+							<td></td>
 							{{else state  == '90'}}
 							<!-- 已完成 -->
 							<td><spring:message code="myOrder.status.Completed"/></td>
@@ -291,8 +289,7 @@
 							{{else state  == '92'}}
 							<!-- 已退款 -->
 							<td><spring:message code="myOrder.status.Refunded"/></td>
-							<td>
-							</td>
+							<td></td>
 							{{else }}
 							<td></td>
 							<td></td>

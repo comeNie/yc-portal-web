@@ -1,4 +1,5 @@
 <%@page import="com.ai.paas.ipaas.i18n.ZoneContextHolder"%>
+<%@ page import="com.ai.yc.protal.web.constants.OrderConstants" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -183,7 +184,10 @@
             <td>
                 <!-- <input type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="分 配"> -->
                 <!-- 翻 译 -->
+                <%--若是口译订单，暂时不显示操作--%>
+                {{if translateType != '<%=OrderConstants.TranslateType.ORAL%>'}}
                 <input name="trans" type="button"  class="btn biu-btn btn-auto-25 btn-green radius10"  value="<spring:message code="myOrder.Translate"/>">
+                {{/if}}
             </td>
             {{else state  == '221'}}
             <!-- 已分配 -->
@@ -196,7 +200,10 @@
             <td><spring:message code="myOrder.status.translating"/></td>
             <td>
                 <!-- 提交 -->
+                <%--若是口译订单，暂时不显示操作--%>
+                {{if translateType != '<%=OrderConstants.TranslateType.ORAL%>'}}
                 <input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="<spring:message code="myOrder.Submit"/>">
+                {{/if}}
             </td>
             {{else state  == '40'}}
             <!-- 待审核 -->
@@ -207,18 +214,15 @@
             {{else state  == '50'}}
             <!-- 待确认 -->
             <td><spring:message code="myOrder.status.tobeConfirm"/></td>
-            <td>
-            </td>
+            <td></td>
             {{else state  == '51'}}
             <!-- 已确认 -->
             <td><spring:message code="myOrder.status.confirmed"/></td>
-            <td>
-            </td>
+            <td></td>
             {{else state  == '90'}}
             <!-- 已完成 -->
             <td><spring:message code="myOrder.status.Completed"/></td>
-            <td>
-            </td>
+            <td></td>
             {{else state  == '53'}}
             <!-- 已评价 -->
             <td><spring:message code="myOrder.status.Evaluated"/></td>
@@ -230,13 +234,14 @@
             <td><spring:message code="myOrder.status.Modification"/></td>
             <td>
                 <!-- 提交 -->
+                {{if translateType != '<%=OrderConstants.TranslateType.ORAL%>'}}
                 <input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="<spring:message code="myOrder.Submit"/>">
+                {{/if}}
             </td>
             {{else state  == '92'}}
             <!-- 已退款 -->
             <td><spring:message code="myOrder.status.Refunded"/></td>
-            <td>
-            </td>
+            <td></td>
             {{else }}
             <td></td>
             <td></td>
