@@ -117,7 +117,7 @@
                             <!--  下单人-->
                             <!--  <th width="16.666%"><spring:message code="myOrder.Orderedby"/></th>-->
                             <!--  翻译语言-->
-                            <th width="16.666%"><spring:message code="myOrder.translatingContent"/></th>
+                            <th width="16.666%"><spring:message code="myOrder.Language"/></th>
                             <!--  金额（元）-->
                             <th width="16.666%"><spring:message code="myOrder.Amount"/></th>
                             <!--  状态 -->

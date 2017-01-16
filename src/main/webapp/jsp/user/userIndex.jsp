@@ -88,7 +88,7 @@
 								<tr>
 									<th width="16.666%"><spring:message code="myOrder.SubjectOrder"/></th>
 									<%--<th order_mode="hide" width="16.666%"><spring:message code="myOrder.Orderedby"/></th>--%>
-									<th width="16.666%"><spring:message code="myOrder.translatingContent"/></th>
+									<th width="16.666%"><spring:message code="myOrder.Language"/></th>
 									<th width="16.666%"><spring:message code="myOrder.Amount"/></th>
 									<th width="16.666%"><spring:message code="myOrder.Status"/></th>
 									<th width="16.666%"><spring:message code="myOrder.Operate"/></th>
