@@ -89,10 +89,10 @@
 	  							<span><input name="duad" type="checkbox" class="radio" value="${duad.duadId}" duadZh="${duad.sourceCn}→${duad.targetCn}" duadEn="${duad.sourceEn}→${duad.targetEn}"></span>
 	  							<c:choose>
 		  							<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">
-		  								<span name="${duad.duadId}">${duad.sourceCn}→${duad.targetCn}</span>
+		  								<span name="${duad.duadId}">${duad.sourceCn}${duad.targetCn}</span>
 		  							</c:when>
 		  							<c:otherwise> 
-		  								<span name="${duad.duadId}">${duad.sourceEn}→${duad.targetEn}</span>
+		  								<span name="${duad.duadId}">${duad.sourceEn}/${duad.targetEn}</span>
 		  							</c:otherwise>
 	  							</c:choose>
 	  						</p>
