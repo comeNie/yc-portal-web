@@ -190,8 +190,9 @@ define("app/jsp/user/security/updateMobilePhone",
 										message : updatePhoneJs.saveingMsg,
 										url : _base + "/userCommon/sendSmsCode",
 										data : {
-											'phone' : "+"+countryValue+$("#uPhone").val(),
-											'type':"2"
+											'phone' : $("#uPhone").val(),
+											'type':"2",
+											'countryValue':countryValue
 										},
 										success : function(data) {
 											if(data.data==false){
@@ -326,10 +327,10 @@ define("app/jsp/user/security/updateMobilePhone",
     		        			 type:"post",
 				    			 url:_base+"/p/security/updatePhone",
 				    			 data:{
-				    					phone:"+"+countryCode+$("#uPhone").val(),
+				    					phone:$("#uPhone").val(),
 				    					type:"2",
 				    					code:phoneDynamicode,
-				    					countryValue:countryValue
+				    					countryValue:countryValue,
 				    				},
 				    				success: function(json) {
 				    					if(!json.data){

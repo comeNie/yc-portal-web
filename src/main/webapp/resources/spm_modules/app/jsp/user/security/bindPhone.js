@@ -107,8 +107,9 @@ define("app/jsp/user/security/bindPhone",
 									message : phoneBindMsg.saveingMsg,
 									url : _base + "/userCommon/sendSmsCode",
 									data : {
-										'phone' : "+"+countryValue+$("#telephone").val(),
-										'type':"2"
+										'phone' : $("#telephone").val(),
+										'type':"2",
+										'countryValue':countryValue,
 									},
 									success : function(data) {
 										if(data.data==false){
@@ -256,8 +257,8 @@ define("app/jsp/user/security/bindPhone",
 								    			 data:{
 								    					phone:$("#telephone").val(),
 								    					type:"2",
-								    					code:phoneDynamicode,
-								    					countryValue:countryValue
+								    					countryValue:countryValue,
+								    					submitPhone:$("#telephone").val()
 								    				},
 								    				success: function(json) {
 								    					if(!json.data){
