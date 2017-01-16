@@ -255,28 +255,29 @@ public class CustomerOrderController {
         if(orderFeeInfo.getTotalFee().equals(0)){
             resultView = "order/orderOffer";
         }
+        //一阶段不支持余额支付，暂时隐藏
         //若是人民币,需要获取账户余额
-        else if(Constants.CURRENCTY_UNIT_RMB.equals(orderFeeInfo.getCurrencyUnit())){
-            AccountBalanceInfo balanceInfo = balanceService.queryOfUser(UserUtil.getUserId());
-            //账户余额信息
-            uiModel.addAttribute("balanceInfo",balanceInfo);
-            //是否显示待充值信息
-            uiModel.addAttribute("needPay",
-                    (balanceInfo!=null&&balanceInfo.getBalance()<orderFeeInfo.getTotalFee())?true:false);
-            //是否已设置支付密码
-            uiModel.addAttribute("payPassExist",
-                    (balanceInfo != null && StringUtils.isNotBlank(balanceInfo.getPayPassword()))?true:false);
-            //默认设置成1为开启，0为关闭
-            String accountEnable="1";
-            try{
-                accountEnable = CCSClientFactory.getDefaultConfigClient().get(Constants.Account.CCS_PATH_ACCOUNT_ENABLE);
-                LOGGER.info("The account enable is {}",accountEnable);
-            } catch(Exception e){
-                //获取配置出错，直接忽略，视为开启
-                LOGGER.error("获取配置信息{}错误，使用默认值{}",Constants.Account.CCS_PATH_ACCOUNT_ENABLE,accountEnable);
-            }
-            uiModel.addAttribute("accountEnable",accountEnable);
-        }
+//        else if(Constants.CURRENCTY_UNIT_RMB.equals(orderFeeInfo.getCurrencyUnit())){
+//            AccountBalanceInfo balanceInfo = balanceService.queryOfUser(UserUtil.getUserId());
+//            //账户余额信息
+//            uiModel.addAttribute("balanceInfo",balanceInfo);
+//            //是否显示待充值信息
+//            uiModel.addAttribute("needPay",
+//                    (balanceInfo!=null&&balanceInfo.getBalance()<orderFeeInfo.getTotalFee())?true:false);
+//            //是否已设置支付密码
+//            uiModel.addAttribute("payPassExist",
+//                    (balanceInfo != null && StringUtils.isNotBlank(balanceInfo.getPayPassword()))?true:false);
+//            //默认设置成1为开启，0为关闭
+//            String accountEnable="1";
+//            try{
+//                accountEnable = CCSClientFactory.getDefaultConfigClient().get(Constants.Account.CCS_PATH_ACCOUNT_ENABLE);
+//                LOGGER.info("The account enable is {}",accountEnable);
+//            } catch(Exception e){
+//                //获取配置出错，直接忽略，视为开启
+//                LOGGER.error("获取配置信息{}错误，使用默认值{}",Constants.Account.CCS_PATH_ACCOUNT_ENABLE,accountEnable);
+//            }
+//            uiModel.addAttribute("accountEnable",accountEnable);
+//        }
         //订单编号
         uiModel.addAttribute("orderId",orderId);
         //订单信息
