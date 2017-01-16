@@ -222,9 +222,9 @@
 .info-list  ul{width:760px;float:left;}
 .info-list  ul li{width:50%;float:left;margin-bottom:15px;}
 .info-list  ul li p{float:left}
-.info-list  ul li .word{width:90px;}
+.info-list  ul li .word{width:100px;}
 .info-list  ul .width-large{width:100%;}
-.info-list  ul .width-large .p-large{width:670px;}
+.info-list  ul .width-large .p-large{width:660px;}
 .info-list .red{color:#fe6b6b;line-height:20px;}
 .info-list .red b{font-size:24px;width:0;}
 .info-title  ul .width-small{width:490px;float:left;}
