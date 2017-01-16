@@ -374,6 +374,7 @@ define("app/jsp/user/security/updateMobilePhone",
 									ajaxController.ajax({
 										type : "post",
 										processing : false,
+										async:false,
 										message : updatePhoneJs.saveingMsg,
 										url : _base + "/reg/checkPhoneOrEmail",
 										data : {
