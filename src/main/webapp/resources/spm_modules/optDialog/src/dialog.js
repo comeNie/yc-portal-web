@@ -91,7 +91,7 @@ define(function (require) {
                 value: options.okValue,
                 callback: options.ok,
                 autofocus: true,
-                btnClass: 'btn btn-green btn-100 radius20'
+                btnClass: 'btn btn-green btn-100 btn-120-dialog radius20'
             });
         }
 
@@ -106,7 +106,7 @@ define(function (require) {
                 value: options.cancelValue,
                 callback: options.cancel,
                 display: options.cancelDisplay,
-                btnClass: 'btn border-green btn-100 radius20'
+                btnClass: 'btn border-green btn-100 btn-120-dialog radius20'
             });
         }
 
