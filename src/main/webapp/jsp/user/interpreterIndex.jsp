@@ -265,11 +265,13 @@
     	$('#order_list').delegate("input[name='trans']", 'click', function () {
     		 window.location.href="${_base}/p/trans/order/"+$(this).parents("tr").find("input[name='orderId']").val();
     	});
-    	//订单主题,跳转到订单详情页
-    	$('#order_list').delegate(".fy-sm","click",function () {
-    	    var orderId = $(this).attr("orderId");
-            window.location.href="${_base}/p/trans/order/"+orderId;
+
+        //订单主题
+        $('#order_list').delegate(".fy-sm", 'click', function () {
+            window.location.href="${_base}/p/trans/order/"+$(this).parents("tr").find("input[name='orderId']").val();
         });
+
+
     })();
 	$(function(){
 		var securitylevel = "${securitylevel}";
