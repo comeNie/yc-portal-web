@@ -1,5 +1,6 @@
 <%@page import="com.ai.yc.protal.web.utils.UserUtil"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 UserUtil.getUserPortraitImg();
@@ -15,12 +16,12 @@ UserUtil.getUserPortraitImg();
   				<li class="word">
   					<p id="left_username">
 						<c:choose>
-							<c:when test="${fn:length(user_session_key.username)>13}">
-								${fn:substring(user_session_key.username,0,13)}...
-							</c:when>
-							<c:otherwise>
-								${user_session_key.username}
-							</c:otherwise>
+						<c:when test="${fn:length(user_session_key.username)>=5}">
+							${fn:substring(user_session_key.username,0,5)}...
+						</c:when>
+						<c:otherwise>
+							${user_session_key.username}
+						</c:otherwise>
 						</c:choose>
 					</p>
   					<p class="vip1"></p>
