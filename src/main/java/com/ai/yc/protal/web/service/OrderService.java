@@ -86,7 +86,7 @@ public class OrderService {
         QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
         orderDetailsReq.setOrderId(Long.valueOf(orderId));
         orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
-        QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
+        QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails4Portal(orderDetailsReq);
         LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
         return OrderConstants.State.UN_PAID.equals(orderDetailsRes.getState());
     }

@@ -411,7 +411,7 @@ public class CustomerOrderController {
             orderDetailsReq.setOrderId(Long.valueOf(orderId));
             orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
 
-            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
+            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails4Portal(orderDetailsReq);
             ResponseHeader resHeader = orderDetailsRes==null?null:orderDetailsRes.getResponseHeader();
             LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
             //如果返回值为空,或返回信息中包含错误信息,返回失败

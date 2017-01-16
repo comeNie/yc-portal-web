@@ -130,7 +130,7 @@ public class TransOrderController {
         orderDetailsReq.setOrderId(Long.valueOf(orderId));
         orderDetailsReq.setChgStateFlag(null);
         //查询订单详情
-        QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
+        QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails4Portal(orderDetailsReq);
         ResponseHeader resHeader = orderDetailsRes.getResponseHeader();
         LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
         //如果返回值为空,或返回信息中包含错误信息,返回失败
@@ -193,7 +193,7 @@ public class TransOrderController {
         orderDetailsReq.setOrderId(orderId);
         orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
 
-        QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
+        QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails4Portal(orderDetailsReq);
         ResponseHeader resHeader = orderDetailsRes.getResponseHeader();
         LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
         //如果返回值为空,或返回信息中包含错误信息,返回失败
@@ -334,7 +334,7 @@ public class TransOrderController {
         orderDetailsReq.setOrderId(orderId);
         orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
 
-        QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
+        QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails4Portal(orderDetailsReq);
         List<ProdFileVo> prodFiles = orderDetailsRes.getProdFiles();
 
         //更新订单信息
@@ -391,7 +391,7 @@ public class TransOrderController {
             orderDetailsReq.setOrderId(Long.valueOf(orderId));
             orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
 
-            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
+            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails4Portal(orderDetailsReq);
             List<ProdFileVo> prodFiles = orderDetailsRes.getProdFiles();
             String fileId;
             boolean isUpload = false; //是否能上传
