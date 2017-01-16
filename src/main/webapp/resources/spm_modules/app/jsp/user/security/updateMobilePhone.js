@@ -323,11 +323,12 @@ define("app/jsp/user/security/updateMobilePhone",
 								 return false;
 							 }
 							 var countryValue = $("#country2").find("option:selected").attr("country_value");
+							 var countryCode = $("#country2").find("option:selected").attr("value");
 							 ajaxController.ajax({
     		        			 type:"post",
 				    			 url:_base+"/p/security/updatePhone",
 				    			 data:{
-				    					phone:$("#uPhone").val(),
+				    					phone:"+"+countryCode+$("#uPhone").val(),
 				    					type:"2",
 				    					code:phoneDynamicode,
 				    					countryValue:countryValue
