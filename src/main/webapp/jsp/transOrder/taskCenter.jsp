@@ -142,14 +142,14 @@
                                 <div class="table-thdiv">
                                     <p>{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',orderTime,'<%=ZoneContextHolder.getZone()%>')}}</p>
                                     <%--订单号--%>
-                                    <p><spring:message code="task.center.order.id"/><span>{{:orderId}}</span></p>
+                                    <p><spring:message code="task.center.order.id"/><span name="orderIdTh" orderId="{{:orderId}}">{{:orderId}}</span></p>
                                 </div>
                             </th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr class="width-16">
-                            <td class="text-l pl-20">{{:translateName}}</td>
+                            <td class="text-l pl-20" name="orderName" orderId="{{:orderId}}">{{:translateName}}</td>
                             <td>{{if <%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>}}{{:languagePairName}}{{else}}{{:languageNameEn}}{{/if}}</td>
                             <td>
                                 {{if currencyUnit == '1'}}
@@ -181,6 +181,17 @@
     var pager;
     var lspId="${lspId}";
     (function () {
+        //订单详情 点击订单标题
+        $('#orderInfoTable').delegate("td[name='orderName']", 'click', function () {
+            var orderId = $(this).attr('orderId');
+            window.location.href="${_base}/p/trans/order/"+orderId;
+        });
+
+        //订单详情 点击订单号
+        $('#orderInfoTable').delegate("span[name='orderIdTh']", 'click', function () {
+            var orderId = $(this).attr('orderId');
+            window.location.href="${_base}/p/trans/order/"+orderId;
+        });
         //订单领取
         $("#orderInfoTable").delegate("input[name='getOrder']", 'click', function () {
             var orderId = $(this).attr("orderId");
@@ -191,6 +202,7 @@
             pager.render();
         });
         $("input").placeholder();
+
     })();
     //时间变更处理
     function _changeStartDate() {
