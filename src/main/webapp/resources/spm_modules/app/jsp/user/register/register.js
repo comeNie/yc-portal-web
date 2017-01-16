@@ -456,7 +456,7 @@ define(
 											success : function(json) {
 												$("#send_dynamicode_btn").val(
 														registerMsg.getDynamiCode).removeClass(
-														"biu-btn").addClass("btn-green");
+														"btn-green").addClass("biu-btn").attr("style","color:#fff;");
 												_this._showCheckMsg(json.statusInfo);
 											},
 											beforeSend: function(){
