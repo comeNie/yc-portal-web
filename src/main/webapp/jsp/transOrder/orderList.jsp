@@ -342,7 +342,7 @@ var current = "orderList";
      });
 	   
      //订单详情 点击订单号
-	$('#searchOrderData').delegate("p[name='orderId']", 'click', function () {
+	$('#searchOrderData').delegate("p[name='orderId'] span", 'click', function () {
 		  window.location.href="${_base}/p/trans/order/"+$(this).parents("table").find("input[name='orderId']").val();
 	});
        
