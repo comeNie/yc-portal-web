@@ -260,7 +260,6 @@ define("app/jsp/user/security/updateEmail",
 											$("#dynamicode").show();
 											$("#dynamicode").text(data.statusInfo);
 											//showMsg(data.statusInfo);
-											clearInterval(_res);
 											btn.attr("class", "btn border-green border-sma radius btn-medium");
 											$("#send_dynamicode_btn").removeAttr("disabled"); //移除disabled属性
 								            $('#send_dynamicode_btn').val(updateEmailJs.getOperationCode);

@@ -307,7 +307,6 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 							$("#dynamicode").show();
 							$("#dynamicode").text(data.statusInfo);
 							//showMsg(data.statusInfo);
-							clearInterval(_res);
 							btn.attr("class", "btn border-green border-sma radius btn-medium");
 							btn.removeAttr("disabled"); //移除disabled属性
 							btn.val(updatePayPasswordMsg.getDynamiCode);

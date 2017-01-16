@@ -275,7 +275,6 @@ define("app/jsp/user/password/password",
 										$("#dynamicode").show();
 										$("#dynamicode").text(data.statusInfo)
 										//showMsg(data.statusInfo);
-										clearInterval(_res);
 										btn.removeAttr("disabled"); //移除disabled属性
 										btn.attr("class", "btn border-green border-sma radius btn-medium");
 										btn.val(passwordMsg.getDynamiCode);

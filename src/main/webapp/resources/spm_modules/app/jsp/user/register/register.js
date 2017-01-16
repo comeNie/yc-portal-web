@@ -454,7 +454,6 @@ define(
 												'type':'1'
 											},
 											success : function(json) {
-												window.clearInterval(smsObj);
 												$("#send_dynamicode_btn").val(
 														registerMsg.getDynamiCode).removeClass(
 														"biu-btn").addClass("btn-green");

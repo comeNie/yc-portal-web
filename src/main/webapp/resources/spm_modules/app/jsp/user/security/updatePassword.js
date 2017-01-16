@@ -301,7 +301,6 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 							$("#dynamicode").show();
 							$("#dynamicode").text(data.statusInfo);
 							//showMsg(data.statusInfo);
-							clearInterval(_res);
 							btn.attr("class", "btn border-green border-sma radius btn-medium");
 							btn.removeAttr("disabled"); //移除disabled属性
 							btn.val(updatePasswordMsg.getDynamiCode);
