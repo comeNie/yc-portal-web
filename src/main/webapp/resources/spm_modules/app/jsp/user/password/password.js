@@ -251,10 +251,7 @@ define("app/jsp/user/password/password",
                             error : function(){
                                 _this._refreshVerificationCode();
                             }
-
 						});
-						
-						
 				       },
 						/* 发送验证码 */
 					  _sendDynamiCode : function() {
@@ -262,8 +259,8 @@ define("app/jsp/user/password/password",
 						var btn = $("#send_dynamicode_btn");
 						btn.attr("disabled", true);
 					    btn.attr("class", "btn biu-btn radius btn-medium");
-			            ajaxController
-							.ajax({
+					    var _res;
+			            ajaxController.ajax({
 								type : "post",
 								processing : false,
 								message : "...",
@@ -275,15 +272,22 @@ define("app/jsp/user/password/password",
 								},
 								success : function(data) {
 									if(!data.data){
-										showMsg(data.statusInfo);
+										$("#dynamicode").show();
+										$("#dynamicode").text(data.statusInfo)
+										//showMsg(data.statusInfo);
+										clearInterval(_res);
 										btn.removeAttr("disabled"); //移除disabled属性
 										btn.attr("class", "btn border-green border-sma radius btn-medium");
 										btn.val(passwordMsg.getDynamiCode);
 										return;
 									}else{
-                                        var step = 59;
+										$("$dynamicode").hide();
+									}
+								},
+								beforeSend: function(){
+									 	var step = 59;
 										btn.val(passwordMsg.resend60);
-							            var _res = setInterval(function(){
+							            _res = setInterval(function(){
 							            	btn.attr("disabled", true);//设置disabled属性
 							            	btn.val(step+"S"+passwordMsg.resend);
 							                step-=1;
@@ -294,8 +298,8 @@ define("app/jsp/user/password/password",
 							                clearInterval(_res);//清除setInterval
 							                }
 							            },1000);
-							      }
-								}
+							    },
+
 							});
 						},
 						/**

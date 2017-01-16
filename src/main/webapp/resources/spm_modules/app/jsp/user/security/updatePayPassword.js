@@ -290,7 +290,8 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 			var _this = this;
 			var btn = $("#send_dynamicode_btn");
 			btn.attr("disabled", true);
-			  btn.attr("class", "btn biu-btn radius btn-medium");
+			btn.attr("class", "btn biu-btn radius btn-medium");
+			var _res;
 			ajaxController
 				.ajax({
 					type : "post",
@@ -306,29 +307,28 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 							$("#dynamicode").show();
 							$("#dynamicode").text(data.statusInfo);
 							//showMsg(data.statusInfo);
+							clearInterval(_res);
 							btn.attr("class", "btn border-green border-sma radius btn-medium");
 							btn.removeAttr("disabled"); //移除disabled属性
 							btn.val(updatePayPasswordMsg.getDynamiCode);
 							return;
 						}else{
-							if(data.data){
-								var step = 59;
-								btn.val(updatePayPasswordMsg.resend60);
-					            var _res = setInterval(function(){
-					                btn.val(step+"S"+updatePayPasswordMsg.resend);
-					                step-=1;
-					                if(step < 0){
-										btn.attr("class", "btn border-green border-sma radius btn-medium");
-					                	btn.removeAttr("disabled"); //移除disabled属性
-					                	btn.val(updatePayPasswordMsg.getDynamiCode);
-					                clearInterval(_res);//清除setInterval
-					                }
-					            },1000);
-					            //$("#dynamicode").hide();
-							}else{
-								btn.removeAttr("disabled");
-							}
-					  }
+							$("#dynamicode").hide();
+						}
+					},
+					beforeSend: function(){
+						var step = 59;
+						btn.val(updatePayPasswordMsg.resend60);
+			            _res = setInterval(function(){
+			                btn.val(step+"S"+updatePayPasswordMsg.resend);
+			                step-=1;
+			                if(step < 0){
+								btn.attr("class", "btn border-green border-sma radius btn-medium");
+			                	btn.removeAttr("disabled"); //移除disabled属性
+			                	btn.val(updatePayPasswordMsg.getDynamiCode);
+			                clearInterval(_res);//清除setInterval
+			                }
+			            },1000);
 					}
 				});
 			}

@@ -100,6 +100,7 @@ define("app/jsp/user/security/bindPhone",
 
 						  _dynamicode_btn.attr("disabled", true);
 						  var countryValue = $("#country").find("option:selected").attr("value");
+						  var _res;
 						  ajaxController.ajax({
 									type : "post",
 									processing : false,
@@ -111,32 +112,31 @@ define("app/jsp/user/security/bindPhone",
 									},
 									success : function(data) {
 										if(data.data==false){
-											$("#dynamicode1").show();
-											$("#dynamicode1").text(data.statusInfo);
+											$("#telephoneErrMsg").show();
+											$("#telephoneErrMsg").text(data.statusInfo);
 											//showMsg(data.statusInfo);
+											clearInterval(_res);
 											_dynamicode_btn.removeAttr("disabled"); //移除disabled属性
 											_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
 											_dynamicode_btn.val(phoneBindMsg.getOperationCode);
 											return;
 										}else{
-											if(data.data){
-												var step = 59;
-												_dynamicode_btn.val(phoneBindMsg.resend60);
-									            var _res = setInterval(function(){
-									            	_dynamicode_btn.val(step+"S"+phoneBindMsg.resend);
-									                step-=1;
-									                if(step < 0){
-									                _dynamicode_btn.removeAttr("disabled"); //移除disabled属性
-													_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
-									                _dynamicode_btn.val(phoneBindMsg.inputOperationCode);
-									                clearInterval(_res);//清除setInterval
-									                }
-									            },1000);
-									            
-											}else{
-												_dynamicode_btn.removeAttr("disabled");
-											}
-									  }
+											$("#dynamicode1").hide();
+										}
+									},
+									beforeSend:function(){
+										var step = 59;
+										_dynamicode_btn.val(phoneBindMsg.resend60);
+						                _res = setInterval(function(){
+						            	_dynamicode_btn.val(step+"S"+phoneBindMsg.resend);
+						                step-=1;
+						                if(step < 0){
+						                _dynamicode_btn.removeAttr("disabled"); //移除disabled属性
+										_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
+						                _dynamicode_btn.val(phoneBindMsg.inputOperationCode);
+						                clearInterval(_res);//清除setInterval
+						                }
+							           },1000);
 									}
 								});
 						},
