@@ -31,8 +31,8 @@
 				<label class="ml-70" id="passwordErrMsg" style="display: none;color: red"></label>
 			</li>
 			<li class="eject-btn">
-				<input type="button" id="modify-determine" class="btn btn-green btn-120 radius20" value="<spring:message code="ycaccountcenter.updatePassword.confirm"/>">
-				<input type="button" id="modify-close" class="btn border-green btn-120 radius20" value="<spring:message code="ycaccountcenter.updatePassword.cancel"/>">
+				<input type="button" id="modify-determine" class="btn btn-green btn-120 btn-120-dialog radius20" value="<spring:message code="ycaccountcenter.updatePassword.confirm"/>">
+				<input type="button" id="modify-close" class="btn border-green btn-120 btn-120-dialog radius20" value="<spring:message code="ycaccountcenter.updatePassword.cancel"/>">
 			</li>		
 			</ul>
 		</div>
@@ -61,8 +61,8 @@
 				<label class="ml-70" id="payPasswordErrMsg" style="display: none;color: red"></label>
 			</li>
 			<li class="eject-btn">
-				<input type="button" id="pay_modify-determine" class="btn btn-green btn-120 radius20" value="<spring:message code="ycaccountcenter.updatePassword.confirm"/>">
-				<input type="button" id="pay_modify-close" class="btn border-green btn-120 radius20" value="<spring:message code="ycaccountcenter.updatePassword.cancel"/>">
+				<input type="button" id="pay_modify-determine" class="btn btn-green btn-120 btn-120-dialog radius20" value="<spring:message code="ycaccountcenter.updatePassword.confirm"/>">
+				<input type="button" id="pay_modify-close" class="btn border-green btn-120 btn-120-dialog radius20" value="<spring:message code="ycaccountcenter.updatePassword.cancel"/>">
 			</li>		
 			</ul>
 		</div>
