@@ -84,29 +84,21 @@ define('app/jsp/order/createOralOrder', function (require, exports, module) {
         	
         _initValidate:function(){
         	var formValidator=$("#oralOrderForm").validate({
-				focusInvalid:true,
+				// focusInvalid:true,
 				onkeyup: false,
-        		errorPlacement: function(error, element) {
+                errorPlacement: function(error, element) {
 					if (element.is(":checkbox")) {
 						error.appendTo(element.parent().parent().parent());
 					} else {
 						error.insertAfter(element);
 					}
-						
+
 				},
 				highlight: function(element, errorClass) {
 				},
 				unhighlight: function(element, errorClass) {
 				} ,
 				errorClass:"x-label",
-				showErrors:function(errorMap,errorList) {
-					$('ul li p label').remove()//删除所有隐藏的li p label标签
-					this.defaultShowErrors();
-					$('ul li p label').each(function (index,element) {
-						if (index > 0)
-							element.remove();
-					});
-				},
     			rules: {
     				transSubject: {
     					required:true,
