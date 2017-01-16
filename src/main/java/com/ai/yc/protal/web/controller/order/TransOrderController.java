@@ -156,7 +156,7 @@ public class TransOrderController {
 
         uiModel.addAttribute("UUploadCount", uUploadCount);
         //若是待领取,则获取用户信息
-        if (OrderConstants.State.UN_RECEIVE.equals(orderDetailsRes.getDisplayFlag())){
+        if (OrderConstants.State.UN_RECEIVE.equals(orderDetailsRes.getState())){
             getUserInfo(uiModel);
         }
         uiModel.addAttribute("OrderDetails", orderDetailsRes);
