@@ -142,14 +142,14 @@
                                 <div class="table-thdiv">
                                     <p>{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',orderTime,'<%=ZoneContextHolder.getZone()%>')}}</p>
                                     <%--订单号--%>
-                                    <p><spring:message code="task.center.order.id"/><span name="orderIdTh" orderId="{{:orderId}}">{{:orderId}}</span></p>
+                                    <p><spring:message code="task.center.order.id"/><span name="orderIdTh" orderId="{{:orderId}}" style="cursor:pointer;">{{:orderId}}</span></p>
                                 </div>
                             </th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr class="width-16">
-                            <td class="text-l pl-20" name="orderName" orderId="{{:orderId}}">{{:translateName}}</td>
+                            <td class="text-l pl-20" name="orderName" orderId="{{:orderId}}" style="cursor:pointer;">{{:translateName}}</td>
                             <td>{{if <%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>}}{{:languagePairName}}{{else}}{{:languageNameEn}}{{/if}}</td>
                             <td>
                                 {{if currencyUnit == '1'}}

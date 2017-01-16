@@ -51,7 +51,7 @@
 .right-title-left-word .word-li li .red{color:#fe6b6b;}
 .right-title-right{float:right;margin:35px 0 0 70px;}
 .right-title-right p{width:90px;display:inline-block;text-align:center;}
-.right-title-right p span{width:100%;float:left;text-align:center;line-height:25px;}
+.right-title-right p span{width:100%;float:left;text-align:center;line-height:25px;cursor:pointer;}
 .right-title-right a {color:#9ba3af;}
 .right-title-right a b{color:#fe6b6b;font-weight: normal;margin-left:4px;}
 .right-title-right p .tp1{width:47px;height:40px;background: url(../../images/icon-big.png) no-repeat -457px -203px;margin-left:21px;}
@@ -73,9 +73,10 @@
 .right-list-table table .table-thdiv p{float:left;font-weight:normal;margin-right:40px;}
 .right-list-table table .table-thdiv p .ash-color{color:#bdbdbd}
 .right-list-table table .table-thdiv .right{float:right;color:#fe6b6b}
-.right-list-table table .table-thdiv  span{color:#2361ea;cursor:pointer;}
+.right-list-table table .table-thdiv  span{color:#2361ea;}
 .right-list-table table .table-thdiv  span a{color:#2361ea}
-.right-list-table table .text-l{cursor:pointer;}
+.right-list-table table .text-l{/*cursor:pointer;*/}
+.right-list-table table .text-l .order-number{cursor:pointer;}
 /**我的账户**/
 .user-account-title{width:600px;float:left;margin:16px 0 0 0px;}
 .user-account-title-word{width:100%;float:left;margin:0 0 0 20px;}

@@ -153,7 +153,7 @@
  		<th order_mode_colspan="hide" colspan="5" class="text-l">
  			<div class="table-thdiv">
 				<p><span class="ash-color">{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',orderTime,'<%=ZoneContextHolder.getZone()%>')}}</span></p>
-				<p name="orderId" style="cursor:pointer;"><span class="ash-color"><spring:message code="myOrder.Ordernumber"/>：</span><span><a href="javaScript:void(0);">{{:orderId}}</a></span></p>
+				<p name="orderId"><span class="ash-color"><spring:message code="myOrder.Ordernumber"/>：</span><span><a href="javaScript:void(0);">{{:orderId}}</a></span></p>
 				{{if  displayFlag == '11'}}
 				<!-- 剩余2天23小时59分钟  待支付-->
 				<p class="right"><spring:message
