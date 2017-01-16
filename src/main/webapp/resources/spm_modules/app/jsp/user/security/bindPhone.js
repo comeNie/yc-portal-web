@@ -99,14 +99,14 @@ define("app/jsp/user/security/bindPhone",
 						  _dynamicode_btn.attr("class", "btn biu-btn radius btn-medium");
 
 						  _dynamicode_btn.attr("disabled", true);
-							ajaxController
-								.ajax({
+						  var countryValue = $("#country").find("option:selected").attr("value");
+						  ajaxController.ajax({
 									type : "post",
 									processing : false,
 									message : phoneBindMsg.saveingMsg,
 									url : _base + "/userCommon/sendSmsCode",
 									data : {
-										'phone' : $("#telephone").val(),
+										'phone' : "+"+countryValue+$("#telephone").val(),
 										'type':"2"
 									},
 									success : function(data) {
