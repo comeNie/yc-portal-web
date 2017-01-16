@@ -177,9 +177,9 @@ define("app/jsp/user/security/updateMobilePhone",
 						},
 					  _sendUDynamiCode:function(){
 						  if (this._checkPhone()) {
-                                var _this = this;
-								var _dynamicode_btn = $("#usend_dynamicode_btn");
-								_dynamicode_btn.attr("disabled", true);
+                              var _this = this;
+							  var _dynamicode_btn = $("#usend_dynamicode_btn");
+							  _dynamicode_btn.attr("disabled", true);
 							  _dynamicode_btn.attr("class", "btn biu-btn radius btn-medium");
 							  var countryValue = $("#country2").find("option:selected").attr("value");
 							  var _res;
@@ -354,12 +354,13 @@ define("app/jsp/user/security/updateMobilePhone",
 							var reg = country.attr("reg");
 							var phone = $("#uPhone");
 							var phoneVal = phone.val();
+							var flag = true;
 							if ($.trim(phoneVal) == "") {
 								$("#uphoneErrMsg").show();
 								$("#uphoneErrMsg").html(updatePhoneJs.phoneNumCanNotEmpty);
 								//showMsg(updatePhoneJs.phoneNumCanNotEmpty);
 //								phone.focus();
-								return false;
+								flag = false;
 							}else{
 								$("#uphoneErrMsg").hide();
 								reg = eval('/' + reg + '/');
@@ -368,15 +369,15 @@ define("app/jsp/user/security/updateMobilePhone",
 									$("#uphoneErrMsg").html(updatePhoneJs.pleaseInputRightPhoneNum);
 									//showMsg(updatePhoneJs.pleaseInputRightPhoneNum);
 //									phone.focus();
-									return false;
+									flag = false;
 								}else{
 									$("#uphoneErrMsg").hide();
 									ajaxController.ajax({
 										type : "post",
 										processing : false,
-										async:false,
 										message : updatePhoneJs.saveingMsg,
 										url : _base + "/reg/checkPhoneOrEmail",
+										async:false,
 										data : {
 											'checkType' : "phone",
 											"checkVal" : $("#uPhone").val()
@@ -385,15 +386,17 @@ define("app/jsp/user/security/updateMobilePhone",
 											if (!json.data) {
 												$("#uphoneErrMsg").show();
 												$("#uphoneErrMsg").html(json.statusInfo);
+												flag = false;
 												//showMsg(json.statusInfo);
 											}else{
 												$("#uphoneErrMsg").hide();
+												flag = true;
 											}
 										}
 									});
 								}
 							}
-							return true;
+							return flag;
 						},
 						/**
 						 *  通过邮箱地址修改手机号 
