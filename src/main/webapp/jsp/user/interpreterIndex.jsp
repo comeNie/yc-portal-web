@@ -165,7 +165,7 @@
 						<input type="hidden" name="unit" value="{{:currencyUnit}}">
 						<input type="hidden" name="state" value="{{:state}}">
         <td class="text-l pl-5">
-            <div class="fy-sm"> {{:translateName}}</div>
+            <div class="fy-sm" orderId="{{:orderId}}"> {{:translateName}}</div>
         </td>
         <td>
             {{if  currencyUnit == '1'}}
@@ -265,6 +265,11 @@
     	$('#order_list').delegate("input[name='trans']", 'click', function () {
     		 window.location.href="${_base}/p/trans/order/"+$(this).parents("tr").find("input[name='orderId']").val();
     	});
+    	//订单主题,跳转到订单详情页
+    	$('#order_list').delegate(".fy-sm","click",function () {
+    	    var orderId = $(this).attr("orderId");
+            window.location.href="${_base}/p/trans/order/"+orderId;
+        });
     })();
 	$(function(){
 		var securitylevel = "${securitylevel}";
