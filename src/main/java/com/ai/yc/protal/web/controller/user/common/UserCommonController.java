@@ -236,6 +236,10 @@ public class UserCommonController {
 		    phone = request.getParameter("fullPhone");//+86格式
 		}
 		LOG.info("短信内容是====="+randomStr);
+		String countryValue = request.getParameter("countryValue");
+		if(!StringUtil.isBlank(countryValue)){
+			phone = "+"+countryValue+phone;
+		}
 		boolean sendOk = SmsSenderUtil.sendMessage(phone,req.getContent());
 		if (sendOk) {
 			// 最多发送次数超时时间
