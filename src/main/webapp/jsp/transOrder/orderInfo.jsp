@@ -451,7 +451,10 @@
 
 <script type="text/javascript">
 var pager, orderPager;
+//lspId
 var lspId="${lspId}";
+//lsp角色
+var lspRole = "${lspRole}";
 var orderId = "${OrderDetails.orderId}";
 var translateType = "${OrderDetails.translateType}";
 (function () {

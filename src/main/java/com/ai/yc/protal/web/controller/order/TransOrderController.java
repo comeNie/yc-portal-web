@@ -47,6 +47,7 @@ import java.util.Map;
 
 
 /**
+ * 译员订单处理
  * Created by liutong on 16/11/15.
  */
 @Controller
@@ -123,14 +124,12 @@ public class TransOrderController {
         if (StringUtils.isEmpty(orderId)) {
             return TRANS_ERROR_PAGE;
         }
-        
 
         IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
-
         QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
         orderDetailsReq.setOrderId(Long.valueOf(orderId));
         orderDetailsReq.setChgStateFlag(null);
-
+        //查询订单详情
         QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails(orderDetailsReq);
         ResponseHeader resHeader = orderDetailsRes.getResponseHeader();
         LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
@@ -157,7 +156,7 @@ public class TransOrderController {
 
         uiModel.addAttribute("UUploadCount", uUploadCount);
         //若是待领取,则获取用户信息
-        if ("20".equals(orderDetailsRes.getDisplayFlag())){
+        if (OrderConstants.State.UN_RECEIVE.equals(orderDetailsRes.getDisplayFlag())){
             getUserInfo(uiModel);
         }
         uiModel.addAttribute("OrderDetails", orderDetailsRes);

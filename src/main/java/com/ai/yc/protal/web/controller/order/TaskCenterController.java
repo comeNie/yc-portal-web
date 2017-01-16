@@ -193,7 +193,7 @@ public class TaskCenterController {
      */
     @RequestMapping("/claim")
     @ResponseBody
-    public ResponseData<String> claimOrder(Long orderId,String lspId,String translateType){
+    public ResponseData<String> claimOrder(Long orderId,String lspId,String lspRole,String translateType){
         ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         String userId = UserUtil.getUserId();
         //译员类型
@@ -201,19 +201,30 @@ public class TaskCenterController {
         OrderReceiveRequest receiveRequest = new OrderReceiveRequest();
         OrderReceiveBaseInfo baseInfo = new OrderReceiveBaseInfo();
         baseInfo.setOrderId(orderId);
-        if (OrderConstants.TranslateType.ORAL.equals(translateType)) {
-            baseInfo.setState(OrderConstants.State.TRANSLATING);//状态为固定的
-        } else {
-            baseInfo.setState(OrderConstants.State.RECEIVE);//状态为固定的
+        //译员类型
+        // 0:普通译员;
+        // 1:LSP
+        String interperType = "0";
+        //若当前译员为lsp管理员或项目经理，
+        if(TranslatorConstants.LSP_PM_ROLE.equals(lspRole)
+                || TranslatorConstants.LSP_ADMIN_ROLE.equals(lspRole)) {
+            interperType = "1";
+            baseInfo.setLspId(lspId);
         }
+        baseInfo.setInterperType(interperType);
+
+        //若订单为口译或为普通译员领单，则为翻译中
+        if (OrderConstants.TranslateType.ORAL.equals(translateType)
+                || "0".equals(interperType)) {
+            baseInfo.setState(OrderConstants.State.TRANSLATING);//状态为翻译中
+        } else {
+            baseInfo.setState(OrderConstants.State.RECEIVE);//状态为已领取
+        }
+
         //添加领单人的用户名
         OrderReceiveStateChgInfo stateChgInfo = new OrderReceiveStateChgInfo();
         stateChgInfo.setOperName(UserUtil.getUserName());
         baseInfo.setInterperId(userId);
-        //译员类型 0:普通译员 1:LSP
-        String interperType = StringUtils.isNotBlank(lspId)?"1":"0";
-        baseInfo.setInterperType(interperType);
-        baseInfo.setLspId(lspId);
         baseInfo.setLockTime(DateUtil.getSysDate());
         receiveRequest.setBaseInfo(baseInfo);
         receiveRequest.setStateChgInfo(stateChgInfo);

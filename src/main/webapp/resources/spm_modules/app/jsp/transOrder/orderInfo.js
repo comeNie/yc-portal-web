@@ -239,7 +239,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 						type: "post",
 						processing: true,
 						url: _base+"/p/taskcenter/claim",
-						data: {'orderId': orderId,"lspId":lspId,"translateType":translateType},
+						data: {'orderId': orderId,"lspId":lspId,"lspRole":lspRole,"translateType":translateType},
 						success: function(data){
 							//领取成功,刷新页面
 							if("1"===data.statusCode){
