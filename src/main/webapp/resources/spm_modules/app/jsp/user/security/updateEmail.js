@@ -149,12 +149,12 @@ define("app/jsp/user/security/updateEmail",
 										$("#sendEmailBtn").removeAttr("disabled"); //移除disabled属性
 										$("#sendEmailBtn").attr("class", "btn border-green border-sma radius btn-medium");
 									}else{
-										var step = 59;
+										var step = 119;
 										$('#sendEmailBtn').val(updateEmailJs.resend60);
 							            $("#sendEmailBtn").attr("disabled", true);
 							            var _res = setInterval(function(){
 							                $("#sendEmailBtn").attr("disabled", true);//设置disabled属性
-											$('#sendEmailBtn').val(step+"S"+updateEmailJs.resend);
+											$('#sendEmailBtn').val(step+"S "+updateEmailJs.resend);
 							                step-=1;
 							                if(step < 0){
 							                $("#sendEmailBtn").removeAttr("disabled"); //移除disabled属性
@@ -206,12 +206,12 @@ define("app/jsp/user/security/updateEmail",
 										$("#phone-send-email-btn").removeAttr("disabled"); //移除disabled属性
 										$("#phone-send-email-btn").attr("class", "btn border-green border-sma radius btn-medium");
 									}else{
-										var step = 59;
+										var step = 119;
 							            $('#phone-send-email-btn').val(updateEmailJs.resend60);
 							            $("#phone-send-email-btn").attr("disabled", true);
 							            var _res = setInterval(function(){
 							                $("#phone-send-email-btn").attr("disabled", true);//设置disabled属性
-							                $('#phone-send-email-btn').val(step+"S"+updateEmailJs.resend);
+							                $('#phone-send-email-btn').val(step+"S "+updateEmailJs.resend);
 							                step-=1;
 							                if(step < 0){
 											$("#phone-send-email-btn").attr("class", "btn border-green border-sma radius btn-medium");
@@ -269,12 +269,12 @@ define("app/jsp/user/security/updateEmail",
 										}
 									},
 									beforeSend: function(){
-										var step = 59;
+										var step = 119;
 							            $('#send_dynamicode_btn').val(updateEmailJs.resend60);
 							            $("#send_dynamicode_btn").attr("disabled", true);
 							             _res = setInterval(function(){
 							                $("#send_dynamicode_btn").attr("disabled", true);//设置disabled属性
-							                $('#send_dynamicode_btn').val(step+"S"+updateEmailJs.resend);
+							                $('#send_dynamicode_btn').val(step+"S "+updateEmailJs.resend);
 							                step-=1;
 							                if(step < 0){
 												btn.attr("class", "btn border-green border-sma radius btn-medium");
@@ -497,12 +497,12 @@ define("app/jsp/user/security/updateEmail",
 												return;
 											}else{
 												if(data.data){
-													var step = 59;
+													var step = 119;
 										            $('#email-sendCode-btn').val(updateEmailJs.resend60);
 										            $("#email-sendCode-btn").attr("disabled", true);
 										            var _res = setInterval(function(){
 										                $("#email-sendCode-btn").attr("disabled", true);//设置disabled属性
-										                $('#email-sendCode-btn').val(step+"S"+updateEmailJs.resend);
+										                $('#email-sendCode-btn').val(step+"S "+updateEmailJs.resend);
 										                step-=1;
 										                if(step < 0){
 														btn.attr("class", "btn border-green border-sma radius btn-medium");

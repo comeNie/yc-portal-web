@@ -263,10 +263,10 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 						//showMsg(updatePayPasswordMsg.sendMailError);
 						sendEmailBtn.attr("class", "btn border-green border-sma radius btn-medium");
 					}else{
-						var step = 59;
+						var step = 119;
 						sendEmailBtn.val(updatePayPasswordMsg.resend60);
 			            var _res = setInterval(function(){
-			            	sendEmailBtn.val(step+"S"+updatePayPasswordMsg.resend);
+			            	sendEmailBtn.val(step+"S "+updatePayPasswordMsg.resend);
 			                step-=1;
 			                if(step < 0){
 								sendEmailBtn.attr("class", "btn border-green border-sma radius btn-medium");
@@ -316,10 +316,10 @@ define("app/jsp/user/security/updatePayPassword", function(require, exports, mod
 						}
 					},
 					beforeSend: function(){
-						var step = 59;
+						var step = 119;
 						btn.val(updatePayPasswordMsg.resend60);
 			            _res = setInterval(function(){
-			                btn.val(step+"S"+updatePayPasswordMsg.resend);
+			                btn.val(step+"S "+updatePayPasswordMsg.resend);
 			                step-=1;
 			                if(step < 0){
 								btn.attr("class", "btn border-green border-sma radius btn-medium");
