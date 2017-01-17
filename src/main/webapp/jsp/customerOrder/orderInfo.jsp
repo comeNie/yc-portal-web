@@ -99,11 +99,11 @@
 
                             </ul>
 	                    </c:if>
-	                    
+
 	                   	<c:if test="${OrderDetails.translateType == '1'  && (OrderDetails.displayFlag=='50' || OrderDetails.displayFlag=='52' || OrderDetails.displayFlag=='90')}">
 		                   	<c:forEach items="${OrderDetails.prodFiles}" var="prodFile" varStatus="status">
                                 <c:if test="${not empty prodFile.fileTranslateName}">
-		                        <ul class="mt-30">
+		                        <ul <c:if test="${status.first}">class="mt-30"</c:if> >
 		                        	<!-- 译文 文档-->
 		                            <li class="title"><spring:message code="myOrder.Translatedtext"/>:</li>
 		                            	<!-- 文档类型翻译 文档list -->
