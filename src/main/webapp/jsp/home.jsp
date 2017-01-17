@@ -126,8 +126,8 @@
                 </div>
                 <div id="srcOld" class="int-before"  style="display: block;">
                     <textarea
-                            onkeyup="textCounter(this,'inputsLen',2000);" onkeydown="textCounter(this,'inputsLen',2000);"
-                            oninput="textCounter(this,'inputsLen',2000);"  onpropertychange="textCounter(this,'inputsLen',2000);"
+                            onkeyup="pager.textCounter(this,'inputsLen',2000);" onkeydown="pager.textCounter(this,'inputsLen',2000);"
+                            oninput="pager.textCounter(this,'inputsLen',2000);"  onpropertychange="pager.textCounter(this,'inputsLen',2000);"
                             class="int-before" id="int-before"></textarea>
                     <div class="already"><spring:message code="home.Alreadyinput" arguments="0,2000"/></div>
                  </div>
@@ -413,6 +413,8 @@
 <script type="text/javascript" src="${spmRes}/jquery-zclip-master/jquery.zclip.js"></script>
 <script type="text/javascript" src="${spmRes}/app/jsp/index.js"></script>
 <script type="text/javascript">
+    var pager;
+
     (function () {
         var _webProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
         //百度统计
@@ -429,7 +431,7 @@
             var purpose = $(this).attr('purpose');
             window.location.href="${_base}/order/create/text?selPurpose="+purpose;
         });
-        var pager;
+
         seajs.use('app/jsp/home', function(homePage) {
             pager = new homePage({element : document.body});
             pager.render();

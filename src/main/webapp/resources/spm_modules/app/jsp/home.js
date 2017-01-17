@@ -8,6 +8,7 @@ define('app/jsp/home', function (require, exports, module) {
     require("app/util/aiopt-validate-ext");
 	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
     var SendMessageUtil = require("app/util/sendMessage");
+	var CountWordsUtil = require("app/util/countWords");
 
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
@@ -71,6 +72,16 @@ define('app/jsp/home', function (require, exports, module) {
             });
         },
 
+		textCounter:function($this,desc,maxlimit) {
+			var totalWords =  CountWordsUtil.count( $($this).val());
+			// if (totalWords > maxlimit){
+			//     //如果元素区字符数大于最大字符数，按照最大字符数截断；
+			//     $($this).val($($this).val().substring(0, maxlimit));
+			// }
+			//在记数区文本框内显示剩余的字符数；
+			$("#"+desc).html(totalWords);
+		},
+
 
 		//人工翻译,跳转到笔译订单
        	_goTextOrder:function(){
@@ -85,6 +96,7 @@ define('app/jsp/home', function (require, exports, module) {
             $("#tgtOld").show();
             $("#tgtNew").hide();
             $(".post-cion").css("visibility","hidden");
+			$("#transError").html('');
         },
 
         //翻译
@@ -104,6 +116,11 @@ define('app/jsp/home', function (require, exports, module) {
 			}
 
             _this._resetMt();
+
+			if ( CountWordsUtil.count( $("#int-before").val()) > 2000) {
+				$("#transError").html($.i18n.prop("home.error.toolarge"));
+				return;
+			}
 
 			if (from == 'auto' || $("#int-before") == '') {
 				return
@@ -194,6 +211,12 @@ define('app/jsp/home', function (require, exports, module) {
 			// 		//在记数区文本框内显示剩余的字符数；
 			// 		$("#inputsLen").html(key_le);
 			// 	}
+
+				if ( CountWordsUtil.count( $("#int-before").val()) > 2000) {
+					$("#transError").html($.i18n.prop("home.error.toolarge"));
+					return;
+				}
+
 				//语言检测
 				ajaxController.ajax({
 					type: "post",

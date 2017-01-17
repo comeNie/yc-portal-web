@@ -251,9 +251,9 @@ public class CustomerOrderController {
         OrderFeeInfo orderFeeInfo = feeQueryResponse.getOrderFeeInfo();
         OrderFeeProdInfo orderPordInfo = feeQueryResponse.getOrderFeeProdInfo();
         //检查订单权限，如果不允许查看，则不显示
-//        if(!checkOrder()){
-//            return  "httpError/403";
-//        }
+        if(!checkOrder(feeQueryResponse.getUserInfo().getOperId())){
+            return  "httpError/403";
+        }
         //若订单金额等于0,则表示待报价
         if(orderFeeInfo.getTotalFee().equals(0)){
             resultView = "order/orderOffer";
