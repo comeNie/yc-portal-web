@@ -43,8 +43,8 @@
                 </p>
                 <div class="in-switch-hover" style="display: none;">
                     <ul>
-                        <li><a href="javaScript:void(0);" onclick="changeLang('zh_CN')">中文简体</a></li>
-                        <li class="border-none"><a href="javaScript:void(0);" onclick="changeLang('en_US')">English</a></li>
+                        <li><a href="javaScript:void(0);" onclick="changeLang('zh_CN')" style="display: block;width: 100%;height: 100%">中文简体</a></li>
+                        <li class="border-none"><a href="javaScript:void(0);" onclick="changeLang('en_US')" style="display: block;width: 100%;height: 100%">English</a></li>
                     </ul>
                 </div>
                 <%--<p class="none-border none-top">--%>
