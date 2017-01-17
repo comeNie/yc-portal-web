@@ -1,18 +1,11 @@
 package com.ai.yc.protal.web.controller;
 
-import com.ai.opt.sdk.components.sequence.util.SeqUtil;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.slp.balance.api.deposit.interfaces.IDepositSV;
 import com.ai.slp.balance.api.deposit.param.DepositParam;
 import com.ai.slp.balance.api.deposit.param.TransSummary;
-import com.ai.yc.order.api.orderpay.interfaces.IOrderPayProcessedResultSV;
-import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultBaseInfo;
-import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultFeeInfo;
-import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultProdInfo;
-import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultRequest;
 import com.ai.yc.protal.web.constants.Constants;
-import com.ai.yc.protal.web.constants.OrderConstants;
 import com.ai.yc.protal.web.model.pay.PayNotify;
 import com.ai.yc.protal.web.service.OrderService;
 import com.ai.yc.protal.web.utils.*;
@@ -27,16 +20,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by liutong on 16/11/10.
