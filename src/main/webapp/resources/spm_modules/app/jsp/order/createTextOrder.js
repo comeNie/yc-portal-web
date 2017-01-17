@@ -48,7 +48,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 checkAvailableLanguages: true,
 				language: currentLan
 			});
-			this._ie8palceholder();
+			// this._ie8palceholder();
 			var formValidator=this._initValidate();
 			$(":input").bind("focusout",function(){
 				formValidator.element(this);
@@ -397,7 +397,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 
 			//首页传过来的参数
 			var selPurpose = this.getUrlParam("selPurpose");
-			if (selPurpose != '' || selPurpose != undefined) {
+			if (selPurpose != '' && selPurpose != undefined ) {
 				$("#selectPurpose").val(selPurpose);
 			}
 
