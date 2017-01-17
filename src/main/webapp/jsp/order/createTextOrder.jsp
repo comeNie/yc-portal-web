@@ -109,9 +109,8 @@
 					<p>
 						<!--  翻译内容-->
 						<textarea id="translateContent"  name="translateContent"
-                                  oninput="pager.textCounter(this,'inputsLen',2000);pager._clearControl();"  onpropertychange="pager.textCounter(this,'inputsLen',2000);pager._clearControl();"
-                                  onkeyup="pager.textCounter(this,'inputsLen',2000);" onkeydown="pager.textCounter(this,'inputsLen',2000);"
-								  class="int-text textarea-xlarge-100 radius" placeholder="<spring:message code="order.transContent"/>">${fn:replace(order.productInfo.needTranslateInfo,'<br />', '')}</textarea>
+								  class="int-text textarea-xlarge-100 radius"
+								  placeholder="<spring:message code="order.transContent"/>">${fn:replace(order.productInfo.needTranslateInfo,'<br />', '')}</textarea>
 					</p>
 					<!-- 上传文档btn -->
 					<p class="right"><input type="button" class="btn border-blue radius20 btn-80"
@@ -363,9 +362,15 @@
 
         $('.attachment').delegate('ul li i','click',function(){
             $(this).parent().parent('ul').remove();
-
             var id = $(this).parent().parent('ul').find('li:first').attr("id");
          	pager._removeFile(id);
+        });
+        $("#translateContent").bind("keyup keydown",function () {
+            pager.textCounter($(this),'inputsLen',2000);
+        });
+        $("#translateContent").bind("input propertychange",function () {
+            pager.textCounter($(this),'inputsLen',2000);
+            pager._clearControl();
         });
         //IE8的输入框提示信息兼容
         $("input,textarea").placeholder();
@@ -380,7 +385,6 @@
 //            radioClass: 'iradio_flat-blue'
 //        });
 	})();
-
 	function uploadFile() {
         var file = $("input[type='file']");
         //文件上传使用h5方式
