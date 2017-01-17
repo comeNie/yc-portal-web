@@ -380,10 +380,10 @@
 	                                <p class="word"><spring:message code="myOrder.Gender"/>：</p>
 	                                <p>
 										<c:choose>
-											<c:when test="${OrderDetails.prod.interperGen == 0}">
+											<c:when test="${OrderDetails.prod.interperGen == '0'}">
 												<spring:message code="order.sex2"/>
 											</c:when>
-											<c:when test="${OrderDetails.prod.interperGen == 1}">
+											<c:when test="${OrderDetails.prod.interperGen == '1'}">
 												<spring:message code="order.sex3" />
 											</c:when>
 											<c:otherwise>
