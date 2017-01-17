@@ -48,7 +48,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 checkAvailableLanguages: true,
 				language: currentLan
 			});
-
+			this._ie8palceholder();
 			var formValidator=this._initValidate();
 			$(":input").bind("focusout",function(){
 				formValidator.element(this);
@@ -794,6 +794,15 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
         _removeFile:function (id) {
             var file = uploader.getFile(id);
             uploader.removeFile(file);
+        },
+        _ie8palceholder:function(){
+
+            $("#translateContent").trigger("focus");
+            $("#translateContent").trigger("blur");
+
+            //切换时将原有的文本清空
+            $("#translateContent").val("");
+
         }
 
     });
