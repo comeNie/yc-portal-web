@@ -250,7 +250,10 @@ public class CustomerOrderController {
         OrderFeeQueryResponse feeQueryResponse = iOrderFeeQuerySV.orderFeeQuery(feeQueryRequest);
         OrderFeeInfo orderFeeInfo = feeQueryResponse.getOrderFeeInfo();
         OrderFeeProdInfo orderPordInfo = feeQueryResponse.getOrderFeeProdInfo();
-
+        //检查订单权限，如果不允许查看，则不显示
+//        if(!checkOrder()){
+//            return  "httpError/403";
+//        }
         //若订单金额等于0,则表示待报价
         if(orderFeeInfo.getTotalFee().equals(0)){
             resultView = "order/orderOffer";
@@ -399,12 +402,12 @@ public class CustomerOrderController {
      */
     @RequestMapping("/{orderId}")
     public String orderInfoView(@PathVariable("orderId") String orderId, Model uiModel,HttpSession session){
-        
-        if (StringUtils.isEmpty(orderId)) {
-            return "customerOrder/orderError";
-        }
         LOGGER.info("customer order session "+session.getAttribute("USER_TIME_ZONE"));
+        String viewStr = "customerOrder/orderInfo";
         try {
+            if (StringUtils.isEmpty(orderId)) {
+                throw new BusinessException("","订单号为空："+orderId);
+            }
             IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
 
             QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
@@ -416,17 +419,19 @@ public class CustomerOrderController {
             LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
             //如果返回值为空,或返回信息中包含错误信息,返回失败
             if (orderDetailsRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-                return "customerOrder/orderError";
+                throw new BusinessException("","查询失败："+orderDetailsRes);
             }
-//  getProdLevels  返回的是id,前台把 id转成对应的 中英文文字。    
-//          ("100110", "陪同翻译");("100120", "交替传译");("100130", "同声翻译");
-//          ("100210", "标准级");("100220", "专业级");("100230", "出版级");
-            uiModel.addAttribute("OrderDetails", orderDetailsRes);
+            //检查订单权限，如果不为本人下单，则不允许查看
+            if(!checkOrder(orderDetailsRes.getUserId())){
+                viewStr = "httpError/403";
+            }else{
+                uiModel.addAttribute("OrderDetails", orderDetailsRes);
+            }
         } catch (Exception e) {
             LOGGER.error("查询订单详情失败:",e);
-            return "transOrder/orderError";
+            viewStr = "customerOrder/orderError";
         }
-        return "customerOrder/orderInfo";
+        return viewStr;
     }
     
     /**
@@ -463,5 +468,15 @@ public class CustomerOrderController {
         } catch (IOException e) {
            LOGGER.info("下载文件异常：", e);
         }
+    }
+
+    /**
+     * 判断用户是否查看订单的权限
+     * 目前统一方法，便于之后扩展
+     *
+     * @return 若允许，返回true，否则为false
+     */
+    private boolean checkOrder(String orderUserId){
+        return UserUtil.getUserId().equals(orderUserId);
     }
 }

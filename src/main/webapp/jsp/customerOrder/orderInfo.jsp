@@ -99,11 +99,11 @@
 
                             </ul>
 	                    </c:if>
-	                    
+
 	                   	<c:if test="${OrderDetails.translateType == '1'  && (OrderDetails.displayFlag=='50' || OrderDetails.displayFlag=='52' || OrderDetails.displayFlag=='90')}">
 		                   	<c:forEach items="${OrderDetails.prodFiles}" var="prodFile" varStatus="status">
                                 <c:if test="${not empty prodFile.fileTranslateName}">
-		                        <ul class="mt-30">
+		                        <ul <c:if test="${status.first}">class="mt-30"</c:if> >
 		                        	<!-- 译文 文档-->
 		                            <li class="title"><spring:message code="myOrder.Translatedtext"/>:</li>
 		                            	<!-- 文档类型翻译 文档list -->
@@ -234,7 +234,7 @@
                             	<!-- 其他  -->
                                 <p class="word"><spring:message code="myOrder.Others"/>:</p>
                                 <!-- 加急;需要排版 -->
-                                <p><c:if test="${OrderDetails.prod.isUrgent == 'Y'}">
+                                <p class="p-large"><c:if test="${OrderDetails.prod.isUrgent == 'Y'}">
                                 	<spring:message code="myOrder.Urgent"/>;
                                 	</c:if>
                                     <c:if test="${OrderDetails.prod.isUrgent == 'N'}">
@@ -337,10 +337,10 @@
                                 <p class="word"><spring:message code="myOrder.Gender"/>:</p>
                                 <p>
                                     <c:choose>
-                                        <c:when test="${OrderDetails.prod.interperGen == 0}">
+                                        <c:when test="${OrderDetails.prod.interperGen == '0'}">
                                             <spring:message code="order.sex2"/>
                                         </c:when>
-                                        <c:when test="${OrderDetails.prod.interperGen == 1}">
+                                        <c:when test="${OrderDetails.prod.interperGen == '1'}">
                                             <spring:message code="order.sex3" />
                                         </c:when>
                                         <c:otherwise>

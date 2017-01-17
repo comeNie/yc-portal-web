@@ -143,7 +143,7 @@
 
                                  <c:forEach items="${OrderDetails.prodFiles}" var="prodFile" varStatus="status">
                                     <c:if test="${not empty prodFile.fileTranslateId}">
-                                    <ul class="mt-30">
+                                    <ul  <c:if test="${status.first}">class="mt-30"</c:if> >
                                         <!-- 译文 文档-->
                                         <li class="title"><spring:message code="myOrder.Translatedtext"/>:</li>
                                             <!-- 文档类型翻译 文档list -->
@@ -321,15 +321,24 @@
 				  					<!-- 其他  -->
 		                            <p class="word"><spring:message code="myOrder.Others"/>：</p>
 		                            <!-- 加急;需要排版 -->
-		                            <p><c:if test="${OrderDetails.prod.isUrgent == 'Y'}">
-		                            	<spring:message code="myOrder.Urgent"/>;
-		                            	</c:if>
-		                            	<c:if test="${OrderDetails.prod.isSetType == 'Y'}">
-		                            	<spring:message code="myOrder.Layout"/>;
-		                            	</c:if>
-		                            	<c:if test="${not empty OrderDetails.prod.typeDesc}">
-		                            		<spring:message code="order.formatConv" />${OrderDetails.prod.typeDesc}
-		                            	</c:if>
+		                            <p class="p-large"><c:if test="${OrderDetails.prod.isUrgent == 'Y'}">
+										<spring:message code="myOrder.Urgent"/>;
+										</c:if>
+										<c:if test="${OrderDetails.prod.isUrgent == 'N'}">
+											<spring:message code="myOrder.noUrgent"/>;
+										</c:if>
+										<c:if test="${OrderDetails.prod.isSetType == 'Y'}">
+											<spring:message code="myOrder.Layout"/>;
+										</c:if>
+										<c:if test="${OrderDetails.prod.isSetType == 'N'}">
+											<spring:message code="myOrder.noLayout"/>;
+										</c:if>
+										<c:if test="${not empty OrderDetails.prod.typeDesc}">
+											<spring:message code="order.formatConv"/>:${OrderDetails.prod.typeDesc}
+										</c:if>
+										<c:if test="${empty OrderDetails.prod.typeDesc}">
+											<spring:message code="myOrder.noFormat"/>
+										</c:if>
 		                            </p>
 				  				</li>
 			  				</c:if>
@@ -371,10 +380,10 @@
 	                                <p class="word"><spring:message code="myOrder.Gender"/>：</p>
 	                                <p>
 										<c:choose>
-											<c:when test="${OrderDetails.prod.interperGen == 0}">
+											<c:when test="${OrderDetails.prod.interperGen == '0'}">
 												<spring:message code="order.sex2"/>
 											</c:when>
-											<c:when test="${OrderDetails.prod.interperGen == 1}">
+											<c:when test="${OrderDetails.prod.interperGen == '1'}">
 												<spring:message code="order.sex3" />
 											</c:when>
 											<c:otherwise>

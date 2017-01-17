@@ -23,6 +23,7 @@ import com.ai.yc.order.api.translatesave.param.SaveTranslateInfoRequest;
 import com.ai.yc.order.api.translatesave.param.TranslateFileVo;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.OrderConstants;
+import com.ai.yc.protal.web.constants.TranslatorConstants;
 import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.translator.api.translatorservice.interfaces.IYCTranslatorServiceSV;
@@ -137,9 +138,39 @@ public class TransOrderController {
         if (orderDetailsRes.getOrderId()==null|| (resHeader!=null && (!resHeader.isSuccess()))){
             return TRANS_ERROR_PAGE;
         }
-//  getProdLevels  返回的是id,前台把 id转成对应的 中英文文字。    
-//          ("100110", "陪同翻译");("100120", "交替传译");("100130", "同声翻译");
-//          ("100210", "标准级");("100220", "专业级");("100230", "出版级");
+        //如果订单为待领取之前状态或为关闭状态，则不能查看
+        if(OrderConstants.State.UN_RECEIVE.compareTo(orderDetailsRes.getState())>0
+                || OrderConstants.State.CLOSE.equals(orderDetailsRes.getState())){
+            return "httpError/403";
+        }
+        //查询译员信息
+        IYCTranslatorServiceSV translatorServiceSV = DubboConsumerFactory.getService(IYCTranslatorServiceSV.class);
+        SearchYCTranslatorSkillListRequest searchYCUserReq = new SearchYCTranslatorSkillListRequest();
+        searchYCUserReq.setUserId(UserUtil.getUserId());
+        YCTranslatorSkillListResponse userInfoResponse = translatorServiceSV.getTranslatorSkillList(searchYCUserReq);
+        //包括译员的等级,是否为LSP译员,LSP中的角色,支持的语言对
+        uiModel.addAttribute("lspId",userInfoResponse.getLspId());//lsp标识
+        uiModel.addAttribute("lspRole",userInfoResponse.getLspRole());//lsp角色
+        uiModel.addAttribute("vipLevel",userInfoResponse.getVipLevel());//译员等级
+
+        //若是LSP管理员，
+        if(TranslatorConstants.LSP_ADMIN_ROLE.equals(userInfoResponse.getLspRole())
+                || TranslatorConstants.LSP_PM_ROLE.equals(userInfoResponse.getLspRole())) {
+            //不是待领取，且不属于lsp订单
+            if (!OrderConstants.State.UN_RECEIVE.equals(orderDetailsRes.getState())
+                    && !userInfoResponse.getLspId().equals(orderDetailsRes.getLspId())) {
+                return "httpError/403";
+            }
+        }//不是LSP管理员，不是待领取，且不是本人订单
+        else if(!OrderConstants.State.UN_RECEIVE.equals(orderDetailsRes.getState())
+                && !UserUtil.getUserId().equals(orderDetailsRes.getInterperId())){
+            return "httpError/403";
+        }//不是LSP管理员，为待领取，但级别不够
+        else if (OrderConstants.State.UN_RECEIVE.equals(orderDetailsRes.getState())
+                && userInfoResponse.getVipLevel().compareTo(orderDetailsRes.getOrderLevel())<0){
+            return "httpError/403";
+        }
+
 
         List<ProdFileVo> prodFileVos = orderDetailsRes.getProdFiles();
         int uUploadCount = 0; //可以上传文件的数量
@@ -155,27 +186,13 @@ public class TransOrderController {
         }
 
         uiModel.addAttribute("UUploadCount", uUploadCount);
-        //若是待领取,则获取用户信息
-        if (OrderConstants.State.UN_RECEIVE.equals(orderDetailsRes.getState())){
-            getUserInfo(uiModel);
-        }
+
         uiModel.addAttribute("OrderDetails", orderDetailsRes);
         uiModel.addAttribute("FileSizeMap", fileSizeMap);
 
         return "transOrder/orderInfo";
     }
 
-    private void getUserInfo(Model uiModel){
-        IYCTranslatorServiceSV translatorServiceSV = DubboConsumerFactory.getService(IYCTranslatorServiceSV.class);
-        SearchYCTranslatorSkillListRequest searchYCUserReq = new SearchYCTranslatorSkillListRequest();
-        searchYCUserReq.setUserId(UserUtil.getUserId());
-        YCTranslatorSkillListResponse userInfoResponse = translatorServiceSV.getTranslatorSkillList(searchYCUserReq);
-        //包括译员的等级,是否为LSP译员,LSP中的角色,支持的语言对
-        uiModel.addAttribute("lspId",userInfoResponse.getLspId());//lsp标识
-        uiModel.addAttribute("lspRole",userInfoResponse.getLspRole());//lsp角色
-        uiModel.addAttribute("vipLevel",userInfoResponse.getVipLevel());//译员等级
-    }
-    
     /**
      * 译员提交订单
      * @param orderId
