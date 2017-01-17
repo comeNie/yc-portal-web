@@ -153,10 +153,10 @@ define("app/jsp/user/security/updateMobilePhone",
 										_sendEmailBtn.removeAttr("disabled"); //移除disabled属性
 										_sendEmailBtn.attr("class", "btn border-green border-sma radius btn-medium");
 									}else{
-										var step = 59;
+										var step = 119;
 										_sendEmailBtn.val(updatePhoneJs.resend60);
 							            var _res = setInterval(function(){
-							            	_sendEmailBtn.val(step+"S"+updatePhoneJs.resend);
+							            	_sendEmailBtn.val(step+"S "+updatePhoneJs.resend);
 							                step-=1;
 							                if(step < 0){
 							                _sendEmailBtn.removeAttr("disabled"); //移除disabled属性
@@ -208,10 +208,10 @@ define("app/jsp/user/security/updateMobilePhone",
 										  }
 										},
 										beforeSend: function(){
-											var step = 59;
+											var step = 119;
 											_dynamicode_btn.val(updatePhoneJs.resend60);
 								             _res = setInterval(function(){
-								            	_dynamicode_btn.val(step+"S"+updatePhoneJs.resend);
+								            	_dynamicode_btn.val(step+"S "+updatePhoneJs.resend);
 								                step-=1;
 								                if(step < 0){
 												_dynamicode_btn.attr("class", "btn border-green border-sma radius btn-medium");
@@ -257,10 +257,10 @@ define("app/jsp/user/security/updateMobilePhone",
 									  }
 									},
 									beforeSend: function(){
-										var step = 59;
+										var step = 119;
 										_dynamicode_btn.val(updatePhoneJs.resend60);
 							            var _res = setInterval(function(){
-							            	_dynamicode_btn.val(step+"S"+updatePhoneJs.resend);
+							            	_dynamicode_btn.val(step+"S "+updatePhoneJs.resend);
 							                step-=1;
 							                if(step < 0){
 							                _dynamicode_btn.removeAttr("disabled"); //移除disabled属性
@@ -481,10 +481,10 @@ define("app/jsp/user/security/updateMobilePhone",
 										  }
 										},
 										beforeSend: function(){
-											var step = 59;
+											var step = 119;
 											_emailUpDynamicodeBtn.val(updatePhoneJs.resend60);
 								            _res = setInterval(function(){
-								                _emailUpDynamicodeBtn.val(step+"S"+updatePhoneJs.resend);
+								                _emailUpDynamicodeBtn.val(step+"S "+updatePhoneJs.resend);
 								                step-=1;
 								                if(step < 0){
 								                _emailUpDynamicodeBtn.removeAttr("disabled"); //移除disabled属性

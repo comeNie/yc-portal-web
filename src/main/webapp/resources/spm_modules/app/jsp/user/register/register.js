@@ -460,7 +460,7 @@ define(
 												_this._showCheckMsg(json.statusInfo);
 											},
 											beforeSend: function(){
-												btn.val(curCount+"S"+registerMsg.resend)
+												btn.val(curCount+"S "+registerMsg.resend)
 												.removeClass("btn-green")
 												.addClass("biu-btn")
 												.attr("style","color:#fff;");
@@ -479,7 +479,7 @@ define(
 										"biu-btn").addClass("btn-green");
 							} else {
 								curCount = curCount - 1;
-								$("#send_dynamicode_btn").val(curCount+"S"+registerMsg.resend);
+								$("#send_dynamicode_btn").val(curCount+"S "+registerMsg.resend);
 							}
 						}
 					});

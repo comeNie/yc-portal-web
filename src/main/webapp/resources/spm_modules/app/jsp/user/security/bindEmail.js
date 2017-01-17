@@ -127,14 +127,14 @@ define("app/jsp/user/security/bindEmail",
 												return;
 											}else{
 												if(data.data){
-													var step = 59;
+													var step = 119;
 													$("#dynamicodeErrMsg").hide();
 													$("#email-sendCode-btn").attr("class", "btn biu-btn radius btn-medium");
 										            $('#email-sendCode-btn').val(emailBindMsg.resend60);
 										            $("#email-sendCode-btn").attr("disabled", true);
 										            var _res = setInterval(function(){
 										                $("#email-sendCode-btn").attr("disabled", true);//设置disabled属性
-										                $('#email-sendCode-btn').val(step+"S"+emailBindMsg.resend);
+										                $('#email-sendCode-btn').val(step+"S "+emailBindMsg.resend);
 										                step-=1;
 										                if(step < 0){
 										                $("#email-sendCode-btn").removeAttr("disabled"); //移除disabled属性
