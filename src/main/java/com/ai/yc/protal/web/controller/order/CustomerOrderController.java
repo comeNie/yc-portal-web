@@ -250,7 +250,10 @@ public class CustomerOrderController {
         OrderFeeQueryResponse feeQueryResponse = iOrderFeeQuerySV.orderFeeQuery(feeQueryRequest);
         OrderFeeInfo orderFeeInfo = feeQueryResponse.getOrderFeeInfo();
         OrderFeeProdInfo orderPordInfo = feeQueryResponse.getOrderFeeProdInfo();
-
+        //检查订单权限，如果不允许查看，则不显示
+//        if(!checkOrder()){
+//            return  "httpError/403";
+//        }
         //若订单金额等于0,则表示待报价
         if(orderFeeInfo.getTotalFee().equals(0)){
             resultView = "order/orderOffer";
@@ -419,7 +422,7 @@ public class CustomerOrderController {
                 throw new BusinessException("","查询失败："+orderDetailsRes);
             }
             //检查订单权限，如果不为本人下单，则不允许查看
-            if(!UserUtil.getUserId().equals(orderDetailsRes.getUserId())){
+            if(!checkOrder(orderDetailsRes.getUserId())){
                 viewStr = "httpError/403";
             }else{
                 uiModel.addAttribute("OrderDetails", orderDetailsRes);
@@ -465,5 +468,15 @@ public class CustomerOrderController {
         } catch (IOException e) {
            LOGGER.info("下载文件异常：", e);
         }
+    }
+
+    /**
+     * 判断用户是否查看订单的权限
+     * 目前统一方法，便于之后扩展
+     *
+     * @return 若允许，返回true，否则为false
+     */
+    private boolean checkOrder(String orderUserId){
+        return UserUtil.getUserId().equals(orderUserId);
     }
 }
