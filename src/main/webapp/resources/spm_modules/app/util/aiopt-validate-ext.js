@@ -196,6 +196,10 @@ $.validator.addMethod( "cnlength", function( value, element, param ) {
 $.validator.addMethod( "notNull", function( value, element, param ) {
 	if(param==false)return true;
 	/*如果参数值存在，则进行校验*/
+	// ie兼容性
+	if (value == $(element).attr('placeholder')) {
+		return false;
+	}
 	var empty = $.trim(value).length? true:false;
 	return empty;
 }, $.validator.format( "输入内容" ) );
