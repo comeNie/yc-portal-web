@@ -257,10 +257,10 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 						//$("#emailErrMsg").text("发送邮件失败");
 						showMsg(updatePasswordMsg.sendMailError);
 					}else{
-						var step = 59;
+						var step = 119;
 						sendEmailBtn.val(updatePasswordMsg.resend60);
 			            var _res = setInterval(function(){
-			            	sendEmailBtn.val(step+"S"+updatePasswordMsg.resend);
+			            	sendEmailBtn.val(step+"S "+updatePasswordMsg.resend);
 			                step-=1;
 			                if(step < 0){
 								sendEmailBtn.attr("class", "btn border-green border-sma radius btn-medium");
@@ -310,10 +310,10 @@ define("app/jsp/user/security/updatePassword", function(require, exports, module
 					  }
 					},
 					beforeSend: function(){
-						var step = 59;
+						var step = 119;
 						btn.val(updatePasswordMsg.resend60);
 			            _res = setInterval(function(){
-			                btn.val(step+"S"+updatePasswordMsg.resend);
+			                btn.val(step+"S "+updatePasswordMsg.resend);
 			                step-=1;
 			                if(step < 0){
 								btn.attr("class", "btn border-green border-sma radius btn-medium");

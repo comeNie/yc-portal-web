@@ -96,6 +96,7 @@ define('app/jsp/home', function (require, exports, module) {
             $("#tgtOld").show();
             $("#tgtNew").hide();
             $(".post-cion").css("visibility","hidden");
+			$("#transError").html('');
         },
 
         //翻译
