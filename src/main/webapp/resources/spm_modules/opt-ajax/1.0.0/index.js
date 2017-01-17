@@ -30,7 +30,7 @@ define('opt-ajax/1.0.0/index', function (require, exports, module) {
                 language: currentLan,
                 cache: true,
                 checkAvailableLanguages: true,
-                async: true
+                async: false
             });
 
         },
