@@ -90,6 +90,11 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
                     allSize += parseInt($(this).attr("fileSize"));
                 });
 
+				if (file.size == 0) {
+					_this._showWarn($.i18n.prop('order.upload.error.empty'));
+					return false;
+				}
+
 				if (file.size > 20*1024*1024) {
 					_this._showWarn($.i18n.prop('order.upload.error.fileSizeSingle'));
 					return false;
@@ -100,7 +105,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 					return false;
 				}
 
-				if ($.inArray(file.ext, FILE_TYPES)<0) {
+				if ($.inArray(file.ext.toLowerCase(), FILE_TYPES)<0) {
 					_this._showWarn($.i18n.prop('order.upload.error.type'));
 					return false;
 				}

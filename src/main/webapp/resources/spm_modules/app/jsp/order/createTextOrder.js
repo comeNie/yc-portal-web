@@ -427,7 +427,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 
         //语言对改变触发
         _chDuad:function () {
-			if ($.trim($("#translateContent").val()) != '') {
+			if ($.trim($("#translateContent").val()) != '' &&
+				$("#translateContent").val() != $("#translateContent").attr('placeholder')) {
 				//清除remote验证的缓存，重新验证
 				$("#translateContent").removeData("previousValue");
 				if ( $.trim($("#translateContent")!='' )) {
@@ -696,6 +697,11 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                     allSize += $(this).attr("size");
                 });
 
+                if (file.size == 0) {
+                    _this._showWarn($.i18n.prop('order.upload.error.empty'));
+                    return false;
+                }
+
 				if (file.size > 20*1024*1024) {
 					_this._showWarn($.i18n.prop('order.upload.error.fileSizeSingle'));
 					return false;
@@ -711,7 +717,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                     return false;
                 }
 
-                if ($.inArray(file.ext, FILE_TYPES)<0) {
+                if ($.inArray(file.ext.toLowerCase(), FILE_TYPES)<0) {
 					_this._showWarn($.i18n.prop('order.upload.error.type'));
                     return false;
                 }
