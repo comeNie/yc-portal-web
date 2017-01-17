@@ -21,44 +21,7 @@
 			width:178px;height:48px;border-radius:30px;
 			cursor:pointer;text-align:center;outline:none;font-size:18px;}
 	</style>
-	<%@ include file="/inc/incJs.jsp" %>
-	<script type="text/javascript">
-        var pager;
-        (function () {
-            seajs.use(['app/jsp/order/createTextOrder'], function(textOrderAddPager) {
-                pager = new textOrderAddPager({element : document.body});
-                pager.render();
-            });
 
-            $('.attachment').delegate('ul li i','click',function(){
-                $(this).parent().parent('ul').remove();
-                var id = $(this).parent().parent('ul').find('li:first').attr("id");
-                pager._removeFile(id);
-            });
-            //IE8的输入框提示信息兼容
-            $("input,textarea").placeholder();
-            //checkbox兼容ie8
-//        $('.urgent :checkbox').iCheck({
-//            checkboxClass: 'icheckbox_flat-blue',
-//            radioClass: 'iradio_flat-blue'
-//        });
-            //checkbox兼容ie8
-//        $('.recharge-btn :checkbox').iCheck({
-//            checkboxClass: 'icheckbox_flat-blue',
-//            radioClass: 'iradio_flat-blue'
-//        });
-        })();
-        function uploadFile() {
-            var file = $("input[type='file']");
-            //文件上传使用h5方式
-            if(file !=null && file.length > 0){
-                $("input[type='file'] :first").click()
-            }
-            pager._uploadFile();
-        }
-
-        //    $(document).bind("contextmenu",function(){return false;});
-	</script>
 </head>
 <body>
 	<input type="hidden" value="${transType}" id="transType">
@@ -393,4 +356,43 @@
 </body>
 <script type="text/javascript" src="${uedroot}/scripts/modular/drop-down.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
+
+<%@ include file="/inc/incJs.jsp" %>
+<script type="text/javascript">
+	var pager;
+	(function () {
+		seajs.use(['app/jsp/order/createTextOrder'], function(textOrderAddPager) {
+			pager = new textOrderAddPager({element : document.body});
+			pager.render();
+		});
+
+		$('.attachment').delegate('ul li i','click',function(){
+			$(this).parent().parent('ul').remove();
+			var id = $(this).parent().parent('ul').find('li:first').attr("id");
+			pager._removeFile(id);
+		});
+		//IE8的输入框提示信息兼容
+		$("input,textarea").placeholder();
+		//checkbox兼容ie8
+//        $('.urgent :checkbox').iCheck({
+//            checkboxClass: 'icheckbox_flat-blue',
+//            radioClass: 'iradio_flat-blue'
+//        });
+		//checkbox兼容ie8
+//        $('.recharge-btn :checkbox').iCheck({
+//            checkboxClass: 'icheckbox_flat-blue',
+//            radioClass: 'iradio_flat-blue'
+//        });
+	})();
+	function uploadFile() {
+		var file = $("input[type='file']");
+		//文件上传使用h5方式
+		if(file !=null && file.length > 0){
+			$("input[type='file'] :first").click()
+		}
+		pager._uploadFile();
+	}
+
+	//    $(document).bind("contextmenu",function(){return false;});
+</script>
 </html>
