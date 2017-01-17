@@ -427,7 +427,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 
         //语言对改变触发
         _chDuad:function () {
-			if ($.trim($("#translateContent").val()) != '') {
+			if ($.trim($("#translateContent").val()) != '' &&
+				$("#translateContent").val() != $("#translateContent").attr('placeholder')) {
 				//清除remote验证的缓存，重新验证
 				$("#translateContent").removeData("previousValue");
 				if ( $.trim($("#translateContent")!='' )) {
