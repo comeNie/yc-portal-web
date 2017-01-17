@@ -234,7 +234,7 @@
                             	<!-- 其他  -->
                                 <p class="word"><spring:message code="myOrder.Others"/>:</p>
                                 <!-- 加急;需要排版 -->
-                                <p><c:if test="${OrderDetails.prod.isUrgent == 'Y'}">
+                                <p class="p-large"><c:if test="${OrderDetails.prod.isUrgent == 'Y'}">
                                 	<spring:message code="myOrder.Urgent"/>;
                                 	</c:if>
                                     <c:if test="${OrderDetails.prod.isUrgent == 'N'}">
@@ -337,10 +337,10 @@
                                 <p class="word"><spring:message code="myOrder.Gender"/>:</p>
                                 <p>
                                     <c:choose>
-                                        <c:when test="${OrderDetails.prod.interperGen == 0}">
+                                        <c:when test="${OrderDetails.prod.interperGen == '0'}">
                                             <spring:message code="order.sex2"/>
                                         </c:when>
-                                        <c:when test="${OrderDetails.prod.interperGen == 1}">
+                                        <c:when test="${OrderDetails.prod.interperGen == '1'}">
                                             <spring:message code="order.sex3" />
                                         </c:when>
                                         <c:otherwise>
