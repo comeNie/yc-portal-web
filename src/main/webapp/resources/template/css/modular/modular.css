@@ -223,6 +223,7 @@
 .info-list  ul{width:760px;float:left;}
 .info-list  ul li{width:50%;float:left;margin-bottom:15px;}
 .info-list  ul li p{float:left}
+.info-list  ul .p-large{width:250px;}
 .info-list  ul li .word{width:100px;}
 .info-list  ul .width-large{width:100%;}
 .info-list  ul .width-large .p-large{width:660px;}

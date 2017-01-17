@@ -321,15 +321,24 @@
 				  					<!-- 其他  -->
 		                            <p class="word"><spring:message code="myOrder.Others"/>：</p>
 		                            <!-- 加急;需要排版 -->
-		                            <p><c:if test="${OrderDetails.prod.isUrgent == 'Y'}">
-		                            	<spring:message code="myOrder.Urgent"/>;
-		                            	</c:if>
-		                            	<c:if test="${OrderDetails.prod.isSetType == 'Y'}">
-		                            	<spring:message code="myOrder.Layout"/>;
-		                            	</c:if>
-		                            	<c:if test="${not empty OrderDetails.prod.typeDesc}">
-		                            		<spring:message code="order.formatConv" />${OrderDetails.prod.typeDesc}
-		                            	</c:if>
+		                            <p class="p-large"><c:if test="${OrderDetails.prod.isUrgent == 'Y'}">
+										<spring:message code="myOrder.Urgent"/>;
+										</c:if>
+										<c:if test="${OrderDetails.prod.isUrgent == 'N'}">
+											<spring:message code="myOrder.noUrgent"/>;
+										</c:if>
+										<c:if test="${OrderDetails.prod.isSetType == 'Y'}">
+											<spring:message code="myOrder.Layout"/>;
+										</c:if>
+										<c:if test="${OrderDetails.prod.isSetType == 'N'}">
+											<spring:message code="myOrder.noLayout"/>;
+										</c:if>
+										<c:if test="${not empty OrderDetails.prod.typeDesc}">
+											<spring:message code="order.formatConv"/>:${OrderDetails.prod.typeDesc}
+										</c:if>
+										<c:if test="${empty OrderDetails.prod.typeDesc}">
+											<spring:message code="myOrder.noFormat"/>
+										</c:if>
 		                            </p>
 				  				</li>
 			  				</c:if>
