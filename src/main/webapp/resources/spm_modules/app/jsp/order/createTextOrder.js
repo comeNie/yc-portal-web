@@ -15,6 +15,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
     var uploader = null;
+    //是否支持Placeholder属性
+    var supportPlaceholder = true;
     var textOrderAddPager = Widget.extend({
     	//属性，使用时由类的构造函数传入
     	attrs: {
@@ -48,7 +50,10 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 checkAvailableLanguages: true,
 				language: currentLan
 			});
-			// this._ie8palceholder();
+			supportPlaceholder='placeholder'in document.createElement('input');
+			if(!supportPlaceholder){
+                this._ie8palceholder();
+			}
 			var formValidator=this._initValidate();
 			$(":input").bind("focusout",function(){
 				formValidator.element(this);
@@ -61,6 +66,12 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
     	},
 
         textCounter:function($this,desc,maxlimit) {
+            var placeholderStr = $($this).attr("placeholder");
+            //若不支持属性，且当前内容等于提示信息，则不处理
+            if(!supportPlaceholder && $($this).val() === placeholderStr){
+				return;
+            }
+
             var totalWords =  CountWordsUtil.count( $($this).val());
             // if (totalWords > maxlimit){
             //     //如果元素区字符数大于最大字符数，按照最大字符数截断；
@@ -796,13 +807,8 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
             uploader.removeFile(file);
         },
         _ie8palceholder:function(){
-
             $("#translateContent").trigger("focus");
             $("#translateContent").trigger("blur");
-
-            //切换时将原有的文本清空
-            $("#translateContent").val("");
-
         }
 
     });
