@@ -67,4 +67,5 @@
  <!--底部-->
  <%@include file="/inc/indexFoot.jsp"%>
 </body>
+<%@include file="/inc/incJs.jsp"%>
 </html>
