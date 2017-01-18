@@ -687,7 +687,7 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 swf : _base+"/resources/spm_modules/webuploader/Uploader.swf",
                 server: _base+'/order/uploadFile',
                 auto : true,
-                pick : "#selectFile",
+                pick : {id: "#selectFile",  multiple: false},
                 dnd: '#fy2', //拖拽
                 accept: {
                     title: 'fileTypes',
