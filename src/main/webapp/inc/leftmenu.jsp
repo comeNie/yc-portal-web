@@ -32,21 +32,21 @@ UserUtil.getUserPortraitImg();
   			<ul>
   				<!-- 我的首页 -->
   				<li id="index" class="current">
-  					<a href="${_base}/p/security/index" style="display: block;width: 100%;height: 100%">
+  					<a href="${_base}/p/security/index">
   					  <span><i class="icon iconfont">&#xe645;</i></span>
   					  <span><spring:message code="ycleftmenu.mymainpage"/></span>
   					</a>
   				</li>
   				<!-- 我的订单 -->
   				<li id="orderList">
-  					<a href="${_base}/p/customer/order/list/view" style="display: block;width: 100%;height: 100%">
+  					<a href="${_base}/p/customer/order/list/view">
   					<span><i class="icon iconfont">&#xe64a;</i></span>
   					<span><spring:message code="ycleftmenu.myorder"/></span>
   					</a>
   				</li>
   				<!-- 我的账户 -->
 				<li id="myaccount">
-					<a href="${_base}/p/balance/account" style="display: block;width: 100%;height: 100%">
+					<a href="${_base}/p/balance/account">
 						<span><i class="icon iconfont">&#xe648;</i></span>
 						<span><spring:message code="ycleftmenu.myaccount"/></span>
 					</a>
@@ -90,7 +90,7 @@ UserUtil.getUserPortraitImg();
   				</li> --%>
   				<!-- 安全设置 -->
   				<li id="seccenterSettings">
-  					<a  href="${_base}/p/security/seccenter?source=user" style="display: block;width: 100%;height: 100%">
+  					<a  href="${_base}/p/security/seccenter?source=user">
   					<span><i class="icon iconfont">&#xe63f;</i></span>
   					<span><spring:message code="ycleftmenu.mysecurity"/></span>
   					</a>

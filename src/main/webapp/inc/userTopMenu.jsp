@@ -55,8 +55,8 @@
 					<div class="show-hover" style="height:100px;display:none;">
 						<ul>
 							<%-- <li><i class="icon-user"></i><a href="${_base}/p/interpreter/interpreterInfoPager?source=user"> <spring:message code="user.topMenu.perProfile"/></a></li> --%>
-							<li><i class="icon-lock"></i><a href="${_base}/p/security/seccenter?source=user"> <spring:message code="user.topMenu.secSetting"/></a></li>
-							<li><i class="icon-off"></i><a href="${_base}/ssologout"> <spring:message code="user.topMenu.exit"/></a></li>
+							<li><a href="${_base}/p/security/seccenter?source=user"><i class="icon-lock"></i><spring:message code="user.topMenu.secSetting"/></a></li>
+							<li><a href="${_base}/ssologout"><i class="icon-off"></i><spring:message code="user.topMenu.exit"/></a></li>
 						</ul>
 					</div>
   				</li>

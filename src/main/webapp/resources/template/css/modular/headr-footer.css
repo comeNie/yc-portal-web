@@ -20,7 +20,7 @@
 .cloud-breadcrumb ul .switch .switch-hover ul li{width:100%;float:left;height:44px;margin-left:0;text-align:center;line-height:42px;margin-top:0px;padding-top:0;}
 .cloud-breadcrumb ul .switch .switch-hover ul li:hover{background:#e6e6e6;}
 .cloud-breadcrumb ul .switch .switch-hover ul li:hover a{color:#2361ea;}
-.cloud-breadcrumb ul .switch .switch-hover ul li a{color:#6a6c6f;font-size:14px;}
+.cloud-breadcrumb ul .switch .switch-hover ul li a{width:100%;display:inline-block;color:#6a6c6f;font-size:14px;}
 .cloud-breadcrumb ul .switch .switch-hover ul li i{color:#2361ea;margin-right:10px;}
 .cloud-breadcrumb ul .switch .switch-hover ul .border-none{border-bottom:none;border-radius:0 0 5px 5px;}
 
@@ -35,7 +35,7 @@
 .cloud-breadcrumb ul .user .show-hover ul{width:100%;float:left}
 .cloud-breadcrumb ul .user .show-hover ul li{width:100%;float:left;height:46px;margin-left:0;line-height:46px;padding-left:32px;margin-top:0px;padding-top:0;}
 .cloud-breadcrumb ul .user .show-hover ul li:hover{background:#e6e6e6;}
-.cloud-breadcrumb ul .user .show-hover ul li a{color:#6a6c6f;font-size:14px;}
+.cloud-breadcrumb ul .user .show-hover ul li a{width:100%;display:inline-block;color:#6a6c6f;font-size:14px;}
 .cloud-breadcrumb ul .user .show-hover ul li:hover a{color:#2361ea;}
 .cloud-breadcrumb ul .user .show-hover ul li i{color:#2361ea;margin-right:10px;}
 .cloud-breadcrumb ul .user .show-hover ul .border-none{border-bottom:none}
@@ -66,7 +66,7 @@
 .placeorder-breadcrumb ul .right .in-switch-hover ul li{width:100%;float:left;height:33px;border-right:none;margin-left:0;padding-left:12px;line-height:33px;margin-top:0px;padding-top:0;}
 .placeorder-breadcrumb ul .right .in-switch-hover ul li:hover{background:#e6e6e6;}
 .placeorder-breadcrumb ul .right .in-switch-hover ul li:hover a{color:#2361ea;}
-.placeorder-breadcrumb ul .right .in-switch-hover ul li a{color:#6a6c6f;font-size:12px;}
+.placeorder-breadcrumb ul .right .in-switch-hover ul li a{width:100%;display:inline-block;color:#6a6c6f;font-size:12px;}
 .placeorder-breadcrumb ul .right .in-switch-hover ul li i{color:#2361ea;margin-right:10px;}
 .placeorder-breadcrumb ul .right .in-switch-hover ul .border-none{border-bottom:none;border-radius:0 0 5px 5px;}
 /**下单主导航**/

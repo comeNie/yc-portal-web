@@ -30,26 +30,26 @@ UserUtil.getUserPortraitImg();
 	<div class="left-list">
 		<ul>
 			<li id="index">
-				<a href="${_base}/p/security/interpreterIndex" style="display: block;width: 100%;height: 100%">
+				<a href="${_base}/p/security/interpreterIndex">
 					<span><i class="icon iconfont">&#xe645;</i></span>
 					<%--我的首页--%>
 					<span><spring:message code="ycleftmenu.mymainpage"/></span>
 				</a>
 			</li>
 			<li id="lookOrders">
-				<a href="javaScript:void(0);" style="display: block;width: 100%;height: 100%">
+				<a href="javaScript:void(0);">
 					<span><i class="icon iconfont">&#xe641;</i></span>
 					<%--发现订单--%>
 					<span><spring:message code="ycleftmenu.look.orders"/> </span>
 				</a>
 			</li>
 			<%--订单大厅--%>
-			<div class="list-p" id="taskCenter"><a href="${_base}/p/taskcenter/view" style="display: block;width: 100%;height: 100%"
+			<div class="list-p" id="taskCenter"><a href="${_base}/p/taskcenter/view"
 								   class=""><spring:message code="ycleftmenu.task.center"/><span><c:if test="${taskNum!=null}"> (${taskNum})</c:if></span></a></div>
 			<%--分配订单--%>
 			<%--<div class="list-p"><a href="#"><spring:message code="ycleftmenu.assign.orders"/><span> (7)</span></a></div>--%>
 			<li id="orderList">
-				<a href="${_base}/p/trans/order/list/view" style="display: block;width: 100%;height: 100%">
+				<a href="${_base}/p/trans/order/list/view">
 					<span><i class="icon iconfont">&#xe64a;</i></span>
 					<%--我的订单--%>
 					<span><spring:message code="ycleftmenu.myorder"/></span>
@@ -75,7 +75,7 @@ UserUtil.getUserPortraitImg();
 				</a>
 			</li> --%>
 			<li id="seccenterSettings">
-				<a  href="${_base}/p/security/seccenter?source=interpreter" style="display: block;width: 100%;height: 100%">
+				<a  href="${_base}/p/security/seccenter?source=interpreter">
 					<span><i class="icon iconfont">&#xe63f;</i></span>
 					<span><spring:message code="ycleftmenu.mysecurity"/></span>
 				</a>
