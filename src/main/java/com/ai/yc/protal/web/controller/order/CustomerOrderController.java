@@ -255,7 +255,7 @@ public class CustomerOrderController {
             return  "httpError/403";
         }
         //若订单金额等于0,则表示待报价
-        if(orderFeeInfo.getTotalFee().equals(0)){
+        if(new Long(0).equals(orderFeeInfo.getTotalFee())){
             resultView = "order/orderOffer";
         }
         //一阶段不支持余额支付，暂时隐藏
