@@ -117,6 +117,10 @@ define('app/jsp/home', function (require, exports, module) {
 
             _this._resetMt();
 
+			if (!$("#int-before").val()) {
+				return;
+			}
+
 			if ( CountWordsUtil.count( $("#int-before").val()) > 2000) {
 				$("#transError").html($.i18n.prop("home.error.toolarge"));
 				return;
@@ -301,7 +305,7 @@ define('app/jsp/home', function (require, exports, module) {
         			}
         		});
         	}
-        		
+
         	$(".selected").eq(0).attr('value', disValue);
         	$(".selected").eq(0).html(disText);
         	$(".selected").eq(1).attr('value', srcValue);
