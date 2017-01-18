@@ -701,9 +701,18 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
                 fileSizeLimit: 100 * 1024 * 1024,    // 100 M
             });
 
+
+			uploader.on("filesQueued", function (files) {
+				var allCount = $("#fileList ul").length + 1
+				if (allCount > 10) {
+					_this._showWarn($.i18n.prop('order.upload.error.fileNum'));
+					return false;
+				}
+			});
+
             uploader.on("beforeFileQueued", function (file) {
                 var allSize = file.size;
-                var allCount = $("#fileList ul").length + 1
+
                 $("#fileList ul li").each(function() {
                     allSize += $(this).attr("size");
                 });
@@ -720,11 +729,6 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 
                 if (allSize > 100*1024*1024) {
 					_this._showWarn($.i18n.prop('order.upload.error.fileSize'));
-                    return false;
-                }
-
-                if (allCount > 10) {
-					_this._showWarn($.i18n.prop('order.upload.error.fileNum'));
                     return false;
                 }
 
@@ -779,11 +783,11 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 				if(type == "F_DUPLICATE"){
 					_this._showWarn($.i18n.prop('order.upload.error.repeat'));
 				}else if(type == "Q_EXCEED_SIZE_LIMIT"){
-					_this._showWarn($.i18n.prop('order.upload.error.fileSize'));
+					//_this._showWarn($.i18n.prop('order.upload.error.fileSize'));
 				}else if(type == "Q_EXCEED_NUM_LIMIT"){
-					_this._showWarn($.i18n.prop('order.upload.error.fileNum'));
+					//_this._showWarn($.i18n.prop('order.upload.error.fileNum'));
 				}else if(type == "Q_TYPE_DENIED"){
-					_this._showWarn($.i18n.prop('order.upload.error.type'));
+					//_this._showWarn($.i18n.prop('order.upload.error.type'));
 				}
 
 			});

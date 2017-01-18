@@ -63,7 +63,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				swf : _base+"/resources/spm_modules/webuploader/Uploader.swf",
 				server: _base+'/p/trans/order/upload',
 				auto : true,
-				pick : "#selectFile",
+				pick : {id:"#selectFile", multiple: false},
 				accept: {
 					title: 'intoTypes',
 					extensions: 'rar,doc,docx,txt,pdf,jpg,png,gif',
