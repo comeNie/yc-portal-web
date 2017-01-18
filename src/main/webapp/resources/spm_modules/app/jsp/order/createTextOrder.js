@@ -603,27 +603,31 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		},
 
 		_showWarn:function(msg){
-			new Dialog({
-				content:msg,
-				icon:'warning',
-				okValue: $.i18n.prop("order.info.dialog.ok"),
-				title:  $.i18n.prop("order.info.dialog.prompt"),
-				ok:function(){
-					this.close();
-				}
-			}).showModal();
+			if ($("div[tabindex='-1']").size() == 0) {
+				new Dialog({
+					content: msg,
+					icon: 'warning',
+					okValue: $.i18n.prop("order.info.dialog.ok"),
+					title: $.i18n.prop("order.info.dialog.prompt"),
+					ok: function () {
+						this.close();
+					}
+				}).showModal();
+			}
 		},
 
 		_showFail:function(msg){
-			new Dialog({
-				title: $.i18n.prop("order.info.dialog.prompt"),
-				content:msg,
-				icon:'fail',
-				okValue: $.i18n.prop("order.info.dialog.ok"),
-				ok:function(){
-					this.close();
-				}
-			}).show();
+			if ($("div[tabindex='-1']").size() == 0) {
+				new Dialog({
+					title: $.i18n.prop("order.info.dialog.prompt"),
+					content:msg,
+					icon:'fail',
+					okValue: $.i18n.prop("order.info.dialog.ok"),
+					ok:function(){
+						this.close();
+					}
+				}).show();
+			}
 		},
 
 		//获取url中参数
