@@ -8,6 +8,10 @@ import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsResponse;
 import com.ai.yc.order.api.orderpay.interfaces.IOrderPayProcessedResultSV;
 import com.ai.yc.order.api.orderpay.param.*;
 import com.ai.yc.protal.web.constants.OrderConstants;
+import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
+import com.ai.yc.ucenter.api.members.param.get.UcMembersGetRequest;
+import com.ai.yc.ucenter.api.members.param.get.UcMembersGetResponse;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,8 +43,25 @@ public class OrderService {
         LOGGER.info("order pay process result,\r\n" +
                 "userId:{},orderId:{},orderType:{},paidFee:{},payStyle:{},outOrderId:{}",
                 userId,orderId,orderType,paidFee,payStyle,outOrderId);
+
         //TODO...若是企业订单,需要查询企业信息,一阶段暂不实现
         OrderPayProcessedResultRequest payResultReq = new OrderPayProcessedResultRequest();
+        //查询用户信息
+        IUcMembersSV ucmembersSV = DubboConsumerFactory.getService(IUcMembersSV.class);
+        UcMembersGetRequest request = new UcMembersGetRequest();
+        request.setUserId(userId);
+        request.setUsername("-1");//随意写，后场不处理
+        request.setGetmode("-1");//固定值
+        UcMembersGetResponse response = ucmembersSV.ucGetMember(request);
+        //查询成功 1成功 -1失败
+        if(response!=null && new Integer(1).equals(response.getCode().getCodeNumber())){
+            OrderPayProcessedResultStateChgInfo stateChgInfo = new OrderPayProcessedResultStateChgInfo();
+            stateChgInfo.setOperName((String) response.getDate().get("username"));//获取用户名
+            payResultReq.setStateChgInfo(stateChgInfo);
+        }else {
+            LOGGER.error("查询用户信息失败。{}", JSON.toJSONString(response));
+        }
+
         //基本信息
         OrderPayProcessedResultBaseInfo payResultReqBase = new OrderPayProcessedResultBaseInfo();
         payResultReq.setBaseInfo(payResultReqBase);
