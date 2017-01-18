@@ -18,6 +18,7 @@
   		<!--导航-->
   		<div class="cloud-breadcrumb">
   			<ul>
+				<%--语言切换--%>
                 <li class="switch" id="switch" >
                     <a href="javaScript:void(0);"><%= Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())? "中文简体":"English"%><i class="icon-caret-down dingw" ></i></a>
                     <div class="switch-hover" style="display:none;">
@@ -52,8 +53,8 @@
 					<div class="show-hover" style="height:100px;display:none;">
 						<ul>
 							<%-- <li><i class="icon-user"></i><a href="${_base}/p/interpreter/interpreterInfoPager?source=interpreter"> <spring:message code="user.topMenu.perProfile"/></a></li> --%>
-							<li><i class="icon-lock"></i><a href="${_base}/p/security/seccenter?source=interpreter"> <spring:message code="user.topMenu.secSetting"/></a></li>
-							<li><i class="icon-off"></i><a href="${_base}/ssologout"> <spring:message code="user.topMenu.exit"/></a></li>
+							<li><a href="${_base}/p/security/seccenter?source=interpreter"><i class="icon-lock"></i> <spring:message code="user.topMenu.secSetting"/></a></li>
+							<li><a href="${_base}/ssologout"><i class="icon-off"></i> <spring:message code="user.topMenu.exit"/></a></li>
 						</ul>
 					</div>
   				</li>

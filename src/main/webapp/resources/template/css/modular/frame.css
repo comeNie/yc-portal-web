@@ -20,7 +20,7 @@
 .left-list{width:230px;float:left;margin-top:10px;}
 .left-list ul{width:230px;float:left;}
 .left-list ul li{width:230px;padding-left:34px;height:50px;line-height:50px;}
-.left-list ul li a{color:#2361ea;font-size:16px;color:#2361ea}
+.left-list ul li a{width:100%;display:inline-block;color:#2361ea;font-size:16px;color:#2361ea}
 .left-list ul li a i{margin:0 20px 0 0;font-size:18px;padding-top:10px;}
 .left-list ul .current{background:#eff1f4;}
 .left-list ul li:hover{background:#eff1f4;}
