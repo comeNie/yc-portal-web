@@ -243,12 +243,28 @@ public class UserCommonController {
          * 如果countryValue为空表示是验证手机号
          * 如果countryValue不为空表示是修改或者是绑定手机号
          */
-        if(StringUtil.isBlank(countryValue)){
-        	 if(Locale.US.toString().equals(locale.toString())||country!=null&&!"86".equals(country.getCountryCode())&&Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())){
-             	_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
-             }
-        }else if(!"86".equals(countryValue)&&Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())){
+//        if(StringUtil.isBlank(countryValue)){
+//        	 if(Locale.US.toString().equals(locale.toString())||country!=null&&!"86".equals(country.getCountryCode())&&Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())){
+//             	_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
+//             }
+//        }else if(!"86".equals(countryValue)&&Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())){
+//        	_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
+//        }
+        
+        if(Locale.US.toString().equals(locale.toString())){
         	_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
+        }
+        if(Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())){
+        	if(null != country){
+        		if(!"86".equals(country.getCountryCode())){
+        			_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
+        		}
+        	}
+        	if(!StringUtil.isBlank(countryValue)){
+        		if(!"86".equals(countryValue)){
+        			_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
+        		}
+        	}
         }
 		req.setContent(MessageFormat.format(_template,randomStr));
 		// 手机注册特殊处理 请求ucenter  phone没有国家代码 
