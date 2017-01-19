@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.paas.ipaas.util.StringUtil;
+import com.ai.yc.common.api.cachekey.key.CacheKey;
 import com.ai.yc.common.api.country.param.CountryRequest;
 import com.ai.yc.common.api.country.param.CountryVo;
 import com.ai.yc.protal.web.constants.Constants;
@@ -226,9 +228,28 @@ public class UserCommonController {
 		Locale locale = rb.getDefaultLocale();
 		//默认中文模版
 		String _template = PhoneVerify.SMS_CODE_TEMPLATE_ZH_CN;
-		if (Locale.US.toString().equals(locale.toString())) {
-			_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
+		String countryValue = request.getParameter("countryValue");
+		//获取当前登录用户国家信息
+		CountryVo country = null;
+		if(UserUtil.getSsoUser()!=null){
+			String domainname = UserUtil.getSsoUser().getDomainname();
+			ICacheClient commonCacheClient = AiPassUitl.getCommonCacheClient();
+	    	String str = commonCacheClient.hget(CacheKey.COUNTRY_D_KEY,domainname);
+	        if(StringUtils.isNotBlank(str)) {
+	        	country = JSONObject.parseObject(str, CountryVo.class);
+	        }
 		}
+        /**
+         * 如果countryValue为空表示是验证手机号
+         * 如果countryValue不为空表示是修改或者是绑定手机号
+         */
+        if(StringUtil.isBlank(countryValue)){
+        	 if(Locale.US.toString().equals(locale.toString())||country!=null&&!"86".equals(country.getCountryCode())&&Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())){
+             	_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
+             }
+        }else if(!"86".equals(countryValue)&&Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())){
+        	_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
+        }
 		req.setContent(MessageFormat.format(_template,randomStr));
 		// 手机注册特殊处理 请求ucenter  phone没有国家代码 
 		if (UcenterOperation.OPERATION_TYPE_PHONE_ACTIVATE.equals(type)) {
@@ -236,11 +257,10 @@ public class UserCommonController {
 		    phone = request.getParameter("fullPhone");//+86格式
 		}
 		LOG.info("短信内容是====="+randomStr);
-		String countryValue = request.getParameter("countryValue");
 		if(!StringUtil.isBlank(countryValue)){
 			phone = "+"+countryValue+phone;
 		}
-		boolean sendOk = SmsSenderUtil.sendMessage(phone,req.getContent());
+		boolean sendOk = true;//SmsSenderUtil.sendMessage(phone,req.getContent());
 		if (sendOk) {
 			// 最多发送次数超时时间
 			int maxOverTimeCount = config.getIntValue(req

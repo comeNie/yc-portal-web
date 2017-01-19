@@ -180,8 +180,10 @@ define("app/jsp/user/security/bindPhone",
 						_checkPhone : function() {
 							var country = $("#country").find("option:selected");
 							var reg = country.attr("reg");
+							var countryCode = country.val();
 							var phone = $("#telephone");
 							var phoneVal = phone.val();
+							
 							if ($.trim(phoneVal) == "") {
 								$("#telephoneErrMsg").show();
 								$("#telephoneErrMsg").text(phoneBindMsg.phoneNumCanNotEmpty);
@@ -190,6 +192,7 @@ define("app/jsp/user/security/bindPhone",
 								return false;
 							}else{
 								reg = eval('/' + reg + '/');
+								phoneVal =countryCode+phoneVal;
 								if (!reg.test(phoneVal)) {
 									$("#telephoneErrMsg").show();
 									$("#telephoneErrMsg").text(phoneBindMsg.pleaseInputRightPhoneNum);
