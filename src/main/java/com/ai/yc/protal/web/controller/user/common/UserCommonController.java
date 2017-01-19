@@ -247,11 +247,12 @@ public class UserCommonController {
         	_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
         }
         if(Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())){
-        	if(null != country){
+        	if(null != country && StringUtil.isBlank(countryValue)){
         		if(!"86".equals(country.getCountryCode())){
         			_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
         		}
         	}
+        	// country 要在 countryValue前，因为在countryValue有值的情况下country是错误的
         	if(!StringUtil.isBlank(countryValue)){
         		if(!"86".equals(countryValue)){
         			_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
@@ -264,6 +265,11 @@ public class UserCommonController {
         	}
         	if("+86".equals(phone.substring(0, 3))){
         		_template =  PhoneVerify.SMS_CODE_TEMPLATE_ZH_CN;
+        	}
+        	if(StringUtil.isBlank(countryValue) && (null == country)){
+        		if(!"+86".equals(phone.substring(0, 3))){
+            		_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
+            	}
         	}
         }
 		req.setContent(MessageFormat.format(_template,randomStr));
