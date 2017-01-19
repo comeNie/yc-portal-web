@@ -125,9 +125,24 @@ public class RegisterController {
 					IYCUserServiceSV.class).insertYCUser(req);
 			ResponseHeader resHeader = res == null ? null : res
 					.getResponseHeader();
-			if (resHeader != null)
-				msg = resHeader.getResultMessage();
-
+			/**
+			 * 手机短信验证码输入错误
+			 */
+			if ("-1".equals(resHeader.getResultCode())){
+				msg = rb.getMessage("ycregisterMsg.phoneDynamicCodeError");
+			}
+			/**
+			 * 手机短信验证码失效
+			 */
+			if ("0".equals(resHeader.getResultCode())){
+				msg = rb.getMessage("ycregisterMsg.phoneDynamicCodeExpired");
+			}	
+			/**
+			 * 手机号注册，并且没有在页面点击获取动态码
+			 */
+			if(StringUtil.isBlank(req.getUserId())&&!StringUtil.isBlank(req.getMobilePhone())){
+				msg = rb.getMessage("ycregisterMsg.enterPhoneDynamicCode");
+			}
 			if (resHeader != null && resHeader.isSuccess()) {
 				String cacheKey = PictureVerify.VERIFY_IMAGE_KEY
 						+ request.getSession().getId();
