@@ -86,7 +86,7 @@ public final class Constants {
 		/** 手机验证码英文短信模版 */
 		public static final String SMS_CODE_TEMPLATE_EN_US ="[GTCOM] The dynamicode code sent by YeeCloud is: {0}, to secure your account, please don't reveal the code to others, thank you.";
 		/** 手机验证码中文短信模版 */
-		public static final String SMS_CODE_TEMPLATE_ZH_CN ="[中译语通]您在译云获取的手机动态码为：{0}，为保证账户安全，请勿向他们泄露，谢谢！";
+		public static final String SMS_CODE_TEMPLATE_ZH_CN ="[中译语通]您在译云获取的手机动态码为：{0}，为保证账户安全，请勿向他人泄露，谢谢！";
 		
 		/** 手机验证码长度 */
 		public static final int VERIFY_SIZE = 6;
