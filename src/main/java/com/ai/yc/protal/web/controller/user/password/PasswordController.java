@@ -82,7 +82,7 @@ public class PasswordController {
 				isOk = true;
 				resultMap.putAll(getResponse.getDate());
 				if(!"".equals(getResponse.getDate().get("mobilephone"))&&getResponse.getDate().get("mobilephone")!=null){
-					CountryVo country = cservice.getCountryByKey("CN");
+					CountryVo country = cservice.getCountryByKey((String)getResponse.getDate().get("domainName"));
 					String newMobilephone = "+"+country.getCountryCode()+getResponse.getDate().get("mobilephone");
 					resultMap.put("mobilephone", newMobilephone);
 				}
