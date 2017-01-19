@@ -243,14 +243,6 @@ public class UserCommonController {
          * 如果countryValue为空表示是验证手机号
          * 如果countryValue不为空表示是修改或者是绑定手机号
          */
-//        if(StringUtil.isBlank(countryValue)){
-//        	 if(Locale.US.toString().equals(locale.toString())||country!=null&&!"86".equals(country.getCountryCode())&&Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())){
-//             	_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
-//             }
-//        }else if(!"86".equals(countryValue)&&Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())){
-//        	_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
-//        }
-        
         if(Locale.US.toString().equals(locale.toString())){
         	_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
         }
@@ -265,6 +257,14 @@ public class UserCommonController {
         			_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
         		}
         	}
+        	if(!StringUtil.isBlank(countryValue)){
+        		if("86".equals(countryValue)){
+        			_template =  PhoneVerify.SMS_CODE_TEMPLATE_ZH_CN;
+        		}
+        	}
+        	if("+86".equals(phone.substring(0, 3))){
+        		_template =  PhoneVerify.SMS_CODE_TEMPLATE_ZH_CN;
+        	}
         }
 		req.setContent(MessageFormat.format(_template,randomStr));
 		// 手机注册特殊处理 请求ucenter  phone没有国家代码 
@@ -277,6 +277,7 @@ public class UserCommonController {
 			phone = "+"+countryValue+phone;
 		}
 		boolean sendOk = SmsSenderUtil.sendMessage(phone,req.getContent());
+		sendOk = true;
 		if (sendOk) {
 			// 最多发送次数超时时间
 			int maxOverTimeCount = config.getIntValue(req
