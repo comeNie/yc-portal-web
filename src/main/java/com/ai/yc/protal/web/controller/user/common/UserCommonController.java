@@ -256,11 +256,11 @@ public class UserCommonController {
 		    request.getSession().setAttribute(req.getCodeKey()+PhoneVerify.PHONE_CODE_REGISTER_UID, ucenterRes[3]);
 		    phone = request.getParameter("fullPhone");//+86格式
 		}
-		LOG.info("短信内容是====="+randomStr);
+		LOG.info("短信验证码是====="+randomStr+"短信内容是============"+req.getContent()+req.getContent());
 		if(!StringUtil.isBlank(countryValue)){
 			phone = "+"+countryValue+phone;
 		}
-		boolean sendOk = true;//SmsSenderUtil.sendMessage(phone,req.getContent());
+		boolean sendOk = SmsSenderUtil.sendMessage(phone,req.getContent());
 		if (sendOk) {
 			// 最多发送次数超时时间
 			int maxOverTimeCount = config.getIntValue(req
