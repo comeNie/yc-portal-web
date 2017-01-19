@@ -257,7 +257,7 @@ public class UserCommonController {
 		    phone = request.getParameter("fullPhone");//+86格式
 		}
 		LOG.info("短信验证码是====="+randomStr+"短信内容是============"+req.getContent());
-		if(!StringUtil.isBlank(countryValue)){
+		if(!StringUtil.isBlank(countryValue)&&!phone.contains("+")){
 			phone = "+"+countryValue+phone;
 		}
 		boolean sendOk = SmsSenderUtil.sendMessage(phone,req.getContent());
