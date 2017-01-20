@@ -1,5 +1,6 @@
 package com.ai.yc.protal.web.utils;
 
+import com.ai.paas.ipaas.util.StringUtil;
 import com.order.cc.sms.AccessType;
 import com.order.cc.sms.SmsSender;
 import com.order.cc.sms.entity.Body;
@@ -13,6 +14,9 @@ import org.slf4j.LoggerFactory;
 public class SmsSenderUtil {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SmsSenderUtil.class);
 	public static boolean sendMessage(String telephone,String text){
+		if(!StringUtil.isBlank(telephone)&&telephone.startsWith("+86")){
+			telephone=telephone.replace("+86", "");
+		}
 		SmsSender sender=new SmsSender();
 		Head head=new Head();
 		head.setRequestType("SEND");
