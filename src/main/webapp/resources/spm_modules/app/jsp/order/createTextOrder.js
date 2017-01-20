@@ -572,6 +572,9 @@ define('app/jsp/order/createTextOrder', function (require, exports, module) {
 		_clearControl:function() {
 			var variable = $("#translateContent").val();
 			if (variable !== '')  {
+				if(!supportPlaceholder && variable === $("#translateContent").attr("placeholder")){
+					return;
+				}
 				$("#clear-btn").show();
 
                 // var key_le = variable.length;
