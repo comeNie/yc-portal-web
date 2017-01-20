@@ -263,8 +263,12 @@ public class UserCommonController {
         			_template =  PhoneVerify.SMS_CODE_TEMPLATE_ZH_CN;
         		}
         	}
-        	if("+86".equals(phone.substring(0, 3))){
-        		_template =  PhoneVerify.SMS_CODE_TEMPLATE_ZH_CN;
+        	if("+".equals(phone.substring(0, 1))){
+        		if("+86".equals(phone.substring(0, 3))){
+            		_template =  PhoneVerify.SMS_CODE_TEMPLATE_ZH_CN;
+            	} else {
+            		_template =  PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
+            	}
         	}
         	if(StringUtil.isBlank(countryValue) && (null == country)){
         		if(!"+86".equals(phone.substring(0, 3))){
