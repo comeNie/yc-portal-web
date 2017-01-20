@@ -352,6 +352,7 @@ define("app/jsp/user/security/updateMobilePhone",
 						_checkPhone : function() {
 							var country = $("#country2").find("option:selected");
 							var reg = country.attr("reg");
+							var countryCode = country.val();
 							var phone = $("#uPhone");
 							var phoneVal = phone.val();
 							var flag = true;
@@ -363,6 +364,7 @@ define("app/jsp/user/security/updateMobilePhone",
 								flag = false;
 							}else{
 								$("#uphoneErrMsg").hide();
+								phoneVal =countryCode+phoneVal;
 								reg = eval('/' + reg + '/');
 								if (!reg.test(phoneVal)) {
 									$("#uphoneErrMsg").show();
