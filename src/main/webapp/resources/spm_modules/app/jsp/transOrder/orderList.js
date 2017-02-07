@@ -114,7 +114,8 @@ define('app/jsp/transOrder/orderList', function (require, exports, module) {
         _orderListByType:function(state) {
         	var reqdata = {'state': state,
         			'interperId': $("#interperId").val(),
-        			'lspId': $("#lspId").val()
+        			'lspId': $("#lspId").val(),
+					'lspRole': $("#lspRole").val()
         		};
         	$("#state").val(state);
         	this._getOrderList(reqdata);

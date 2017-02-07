@@ -45,6 +45,7 @@
 	 				<c:if test="${interperInfo.lspRole == '12' || interperInfo.lspRole == '11'}">
 	 					<input id="lspId"  name="lspId" type="hidden" value="${interperInfo.lspId}">
 	 				</c:if>
+						<input id="lspRole" type="hidden" name="lspRole" value="${interperInfo.lspRole}">
 	 				
 		 			<div class="oder-form-lable mt-20">
 		 				<ul>
