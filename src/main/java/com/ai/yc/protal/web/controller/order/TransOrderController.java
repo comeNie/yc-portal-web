@@ -93,7 +93,7 @@ public class TransOrderController {
         ordCountReq.setInterperId(userId);//设置译员编码
         //如果是LSP的管理员或项目经理
         if ("12".equals(ycRes.getLspRole()) || "11".equals(ycRes.getLspRole())) {
-            ordCountReq.setLspId((String) uiModel.asMap().get("lspId"));
+            ordCountReq.setLspId(ycRes.getLspId());
             ordCountReq.setInterperId(null);
         }
 
