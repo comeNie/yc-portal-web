@@ -60,8 +60,9 @@ define('app/jsp/transOrder/orderList', function (require, exports, module) {
 				data = reqdata;
 			}
 
+			var today = new Date();
 			$("#pagination-ul").runnerPagination({
-				url: _base+"/p/customer/order/orderList",
+				url: _base+"/p/customer/order/orderList?offset="+today.stdTimezoneOffset(),
 				method: "POST",
 				dataType: "json",
 				renderId:"searchOrderData",

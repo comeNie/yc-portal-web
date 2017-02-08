@@ -89,10 +89,11 @@ define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, mo
 						var userId = $("#userId").val();
 						sendData.interperId=userId;
 					}
-					
+
+					var today = new Date();
 					ajaxController.ajax({
 						 type:"post",
-		    				url:_base+"/p/customer/order/orderList",
+		    				url:_base+"/p/customer/order/orderList?offset="+today.stdTimezoneOffset(),
 		    				data:sendData,
 		    		        success: function(json) {
 		    		        	var data = json.data;

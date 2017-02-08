@@ -61,9 +61,10 @@ define("app/jsp/user/userIndex",function(require, exports, module) {
 				/* 获取订单 */
 				_queryOrder:function(){
 					var _this = this;
+					var today = new Date();
 					ajaxController.ajax({
 						 type:"post",
-		    				url:_base+"/p/customer/order/orderList",
+		    				url:_base+"/p/customer/order/orderList?offset="+today.stdTimezoneOffset(),
 		    				data:{
 		    					'pageSize':10,
 		    					'pageNo':1,

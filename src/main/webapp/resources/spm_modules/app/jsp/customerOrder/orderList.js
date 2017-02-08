@@ -96,8 +96,9 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
 				data = reqdatadf;
 			}
 
+			var today = new Date();
           	$("#pagination-ul").runnerPagination({
-	 			url: _base+"/p/customer/order/orderList",
+	 			url: _base+"/p/customer/order/orderList?offset="+today.stdTimezoneOffset(),
 	 			method: "POST",
 	 			dataType: "json",
 	 			renderId:"searchOrderData",
