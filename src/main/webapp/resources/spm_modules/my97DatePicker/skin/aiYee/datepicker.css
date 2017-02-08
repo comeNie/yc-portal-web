@@ -101,11 +101,13 @@
 
 .WdateDiv .invalidMenu{
 	color:#aaa;
+	background-color: #fff;
+	z-index: 999;
 }
 
 .WdateDiv .YMenu{
 	margin-top:20px;
-	
+	background-color: #fff;
 }
 
 .WdateDiv .MMenu{
