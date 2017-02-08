@@ -49,6 +49,7 @@
 
 
     </style>
+    <%@ include file="/inc/incJs.jsp" %>
     </head>
 
 <body class="homebody">
@@ -406,7 +407,7 @@
     <%@include file="/inc/indexFoot.jsp"%>
 </div>
 </body>
-<%@ include file="/inc/incJs.jsp" %>
+
 <script type="text/javascript" src="${uedroot}/scripts/modular/drop-down.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/index.js"></script>
 <script type="text/javascript" src="${uedroot}/scripts/modular/digital-scroll.js"></script>
