@@ -3,6 +3,7 @@ package com.ai.yc.protal.web.utils;
 import org.apache.poi.POIXMLTextExtractor;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.apache.poi.poifs.filesystem.DirectoryEntry;
+import org.apache.poi.poifs.filesystem.DocumentEntry;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -99,26 +100,30 @@ public class WordUtil {
 
     public final static void writeWord(String destFile, String fileCon) {
         try {
-            ByteArrayInputStream bais = new ByteArrayInputStream(fileCon.getBytes());
+//            fileCon =  new String(fileCon.getBytes("utf-8"), "ISO-8859-1");;
+            ByteArrayInputStream bs = new ByteArrayInputStream(fileCon.getBytes("GBK"));
+
             POIFSFileSystem fs = new POIFSFileSystem();
             DirectoryEntry directory = fs.getRoot();
-            directory.createDocument("WordDocument", bais);
-            FileOutputStream ostream = new FileOutputStream(destFile);
-            fs.writeFilesystem(ostream);
-            bais.close();
-            ostream.close();
+
+            DocumentEntry de = directory.createDocument("WordDocument", bs);
+
+            FileOutputStream ost = new FileOutputStream(destFile);
+            fs.writeFilesystem(ost);
+
+            bs.close();
+            ost.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
     public static void main(String[] args) {
 //       String text = readWord("e:\\WAP端原型-差异-验证结果.docx");
         String text = readWord("e:\\新建 Microsoft Word 97 - 2003 文档.doc");
 
         LOGGER.info(text);
-
-        writeWord("e:\\1.doc", text);
+        writeWord("e:\\打发打发打发的.doc", text);
     }
 
 }
