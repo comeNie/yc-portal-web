@@ -45,7 +45,8 @@
                 <input id="displayFlagP" name="displayFlagP" type="hidden" value="${displayFlag}">
   			<form id="orderQuery">
   			<input id="userId" name="userId" type="hidden" value="${userId}">
-  			<div class="oder-form-lable mt-20">
+				<%--查询条件--%>
+				<div class="oder-form-lable mt-20">
   				<ul>
   					<li>
   						<!-- 订单状态 -->
@@ -192,11 +193,12 @@
 					{{/if}}
 				{{/for}}
 			</td>
-
+			<%--待报价--%>
 			{{if displayFlag == '13'}}
 				<td>-</td>
 			{{else }}
            		 <td>
+					 <%--人民币--%>
 					{{if  currencyUnit == '1'}}
 						<spring:message code="myOrder.rmbSame" arguments="{{:~liToYuan(totalFee)}}" />
 					{{else }}
@@ -245,20 +247,19 @@
 				</td>
 				-->
 			{{else displayFlag == '90'}}
-				<!-- 完成  -->
+				<!-- 已完成  -->
 				<td><spring:message code="myOrder.status.Completed"/></td>
 				<td></td>
-				<!-- 
-				td>完成</td>
+				<!--
 				<td>
 					<input class="btn biu-btn btn-auto-25 btn-green radius10" type="button" value="评 价">
 				</td>
 				-->
 			{{else displayFlag == '91'}}	
-				<!-- 关闭  -->
+				<!-- 已取消  -->
 				<td><spring:message code="myOrder.status.Cancelled"/></td>
 				<td></td>
-			{{else }}
+			{{else displayFlag == '92'}}
 				<!-- 已退款  -->
 				<td><spring:message code="myOrder.status.Refunded"/></td>
 				<td></td>
