@@ -7,7 +7,7 @@ define('app/jsp/home', function (require, exports, module) {
     require("jquery-validation/1.15.1/jquery.validate");
     require("app/util/aiopt-validate-ext");
 	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
-    var SendMessageUtil = require("app/util/sendMessage");
+    require('webuploader/webuploader');
 	var CountWordsUtil = require("app/util/countWords");
 
     //实例化AJAX控制处理对象
@@ -15,6 +15,7 @@ define('app/jsp/home', function (require, exports, module) {
     var languageaudio;
 	var sourYiWen="";
 	var clip;
+    var uploader = null;
 	var homePage = Widget.extend({
         //属性，使用时由类的构造函数传入
         attrs: {
@@ -41,7 +42,7 @@ define('app/jsp/home', function (require, exports, module) {
 
         	//初始化国际化
 			$.i18n.properties({//加载资浏览器语言对应的资源文件
-				name: ["home"], //资源文件名称，可以是数组
+				name: ["home","commonRes"], //资源文件名称，可以是数组
 				path: _i18n_res, //资源文件路径
 				mode: 'both',
                 cache: true,
@@ -54,6 +55,12 @@ define('app/jsp/home', function (require, exports, module) {
             audiojs.events.ready(function() {
                 languageaudio = audiojs.createAll();
             });
+            if ( !WebUploader.Uploader.support() ) {
+                alert( 'Web Uploader 不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器');
+                throw new Error( 'WebUploader does not support the browser you are using.' );
+            }else if(uploader==null){
+                this._initUpdate();
+            }
         },
 
         _initPage:function () {
@@ -370,7 +377,6 @@ define('app/jsp/home', function (require, exports, module) {
 			$("#tgtOld").show();
         },
 
-
 		//截取原文 译文
 		_yiwenSpan:function(alignmentRaw,tgtTokenized,srcTokenized,int){
 			//译文
@@ -418,9 +424,134 @@ define('app/jsp/home', function (require, exports, module) {
 			$("#tgtNew").show();
 			$("#tgtNew").append(newTgt);
 
-		}
+		},
 
-        
+		//初始化文件上传
+        _initUpdate:function () {
+            var _this= this;
+            var FILE_TYPES=['doc','docx','txt'];
+            var from=$(".dropdown .selected").eq(0).attr("value");
+            var to=$(".dropdown .selected").eq(1).attr("value");
+            uploader = WebUploader.create({
+                swf : _base+"/resources/spm_modules/webuploader/Uploader.swf",
+                server: _base+'/mtUpload',
+                auto : true,
+                pick : {id: "#selectFile",  multiple: false},
+                // accept: {
+                //     title: 'fileTypes',
+                //     extensions: 'doc,docx,txt',
+                //     mimeTypes: 'application/msword'
+                // },
+                resize : false,
+                // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
+                disableGlobalDnd: true,
+                formData: {"from":from,"to":to},
+                fileNumLimit: 1,
+                fileSingleSizeLimit: 100 * 1024   // 100 K
+            });
+			//当文件被加入队列之前触发
+            uploader.on("beforeFileQueued", function (file) {
+            	//判断文件是否为空
+                if (file.size == 0) {
+                    _this._showWarn($.i18n.prop('home.upload.error.empty'));
+                    return false;
+                }
+				//判断文件是否小于100k
+                if (file.size > 10*1024) {
+                    _this._showWarn($.i18n.prop('home.upload.error.fileSizeSingle'));
+                    return false;
+                }
+				//判断文件是否允许的格式
+                if ($.inArray(file.ext.toLowerCase(), FILE_TYPES)<0) {
+                    _this._showWarn($.i18n.prop('home.upload.error.type'));
+                    return false;
+                }
+
+            });
+            //文件开始上传
+            uploader.on("uploadStart",function (file) {
+				new Dialog({
+                    closeIconShow:false,
+                    icon:"loading",
+                    //正在处理中，请稍后...
+                    content: $.i18n.prop('com.ajax.def.content')
+                }).showModal();
+            });
+			//显示上传进度
+            // uploader.on("uploadProgress",function(file,percentage){
+             //    var fileId = $("#"+file.id),
+             //        percent = fileId.find(".progress .progress-bar");
+             //    if(!percent.length){//避免重复创建
+             //        percent = $('<div class="progress progress-striped active"><div class="progress-bar" role="progressbar" style="width: 0%"></div></div>')
+             //            .appendTo(fileId).find('.progress-bar');
+             //    }
+             //    fileId.next().find('span').css('width',percentage*100+"%");
+             //    fileId.next().find('p[name="percent"]').text(parseInt(percentage*100)+"%");
+             //    percent.css( 'width', percentage * 100 + '%' );
+            //
+            // });
+			//上传成功后触发
+            uploader.on( 'uploadSuccess', function( file, responseData ) {
+                if(responseData.statusCode=="1"){
+                    //上传成功需要进行跳转
+					alert("OK");
+                }//上传失败
+                else{
+                    _this._showFail($.i18n.prop('home.upload.error.upload'));
+                    //删除文件
+                    var file = uploader.getFile(file.id);
+                    uploader.removeFile(file);
+                    return;
+                }
+            });
+
+            //  当validate不通过时，会以派送错误事件的形式通知调用者
+            uploader.on("error",function (type){
+                if(type == "F_DUPLICATE"){
+                    _this._showWarn($.i18n.prop('order.upload.error.repeat'));
+                }else if(type == "Q_EXCEED_SIZE_LIMIT"){
+                    //_this._showWarn($.i18n.prop('order.upload.error.fileSize'));
+                }else if(type == "Q_EXCEED_NUM_LIMIT"){
+                    //_this._showWarn($.i18n.prop('order.upload.error.fileNum'));
+                }else if(type == "Q_TYPE_DENIED"){
+                    //_this._showWarn($.i18n.prop('order.upload.error.type'));
+                }
+
+            });
+			//上传失败
+            uploader.on( 'uploadError', function( file, reason ) {
+                _this._showFail($.i18n.prop('home.upload.error.upload'));
+                var file = uploader.getFile(file.id);
+                uploader.removeFile(file);
+            });
+        },
+
+		//显示警告信息
+        _showWarn: function (msg) {
+            new Dialog({
+                content: msg,
+                icon: 'warning',
+                okValue: $.i18n.prop("com.ajax.def.okbtn"),
+                title: $.i18n.prop("com.info.dialog.prompt"),
+                ok: function () {
+                    this.close();
+                }
+            }).showModal();
+        },
+		//显示失败信息
+        _showFail:function(msg){
+            if ($("div[tabindex='-1']").size() == 0) {
+                new Dialog({
+                    title: $.i18n.prop("com.info.dialog.prompt"),
+                    content:msg,
+                    icon:'fail',
+                    okValue: $.i18n.prop("com.ajax.def.okbtn"),
+                    ok:function(){
+                        this.close();
+                    }
+                }).show();
+            }
+        }
     });
 
     module.exports = homePage;

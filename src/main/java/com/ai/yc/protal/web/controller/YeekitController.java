@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ai.opt.sdk.web.model.ResponseData;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 
 
@@ -80,6 +84,29 @@ public class YeekitController {
         //TODO
 //        resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
 //        resData.setData(lan);
+        return resData;
+    }
+
+    /**
+     * 首页文档机器翻译上传
+     * @param session
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/mtUpload")
+    public ResponseData<String> uploadFile(HttpSession session, HttpServletRequest request){
+        ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        MultipartHttpServletRequest multipartReq;
+        MultipartFile multipartFile;
+        if(request instanceof MultipartHttpServletRequest){
+            multipartFile = ((MultipartHttpServletRequest) request).getFile("file");
+        }
+        //获取源语言
+        String from = request.getParameter("from");
+        //获取目标语言
+        String to = request.getParameter("to");
+
         return resData;
     }
   
