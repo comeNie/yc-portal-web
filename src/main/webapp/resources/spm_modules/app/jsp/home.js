@@ -2,19 +2,24 @@ define('app/jsp/home', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
         Widget = require('arale-widget/1.2.0/widget'),
+        Dialog = require("optDialog/src/dialog"),
         AjaxController = require('opt-ajax/1.0.0/index');
     require("audio/audio.min");
     require("jquery-validation/1.15.1/jquery.validate");
     require("app/util/aiopt-validate-ext");
 	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
+	require('webuploader/webuploader');
     var SendMessageUtil = require("app/util/sendMessage");
 	var CountWordsUtil = require("app/util/countWords");
+
 
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
     var languageaudio;
 	var sourYiWen="";
 	var clip;
+
+	var uploader = null;
 	var homePage = Widget.extend({
         //属性，使用时由类的构造函数传入
         attrs: {
@@ -41,7 +46,7 @@ define('app/jsp/home', function (require, exports, module) {
 
         	//初始化国际化
 			$.i18n.properties({//加载资浏览器语言对应的资源文件
-				name: ["home"], //资源文件名称，可以是数组
+				name: ["home","orderInfo","commonRes"], //资源文件名称，可以是数组
 				path: _i18n_res, //资源文件路径
 				mode: 'both',
                 cache: true,
@@ -50,6 +55,7 @@ define('app/jsp/home', function (require, exports, module) {
 			});
 
 			this._initPage();
+            this._initUpdate();
 
             audiojs.events.ready(function() {
                 languageaudio = audiojs.createAll();
@@ -418,8 +424,98 @@ define('app/jsp/home', function (require, exports, module) {
 			$("#tgtNew").show();
 			$("#tgtNew").append(newTgt);
 
-		}
+		},
 
+		_initUpdate:function () {
+			var _this= this;
+			var FILE_TYPES=['doc','docx','txt'];
+			uploader = WebUploader.create({
+				swf : _base+"/resources/spm_modules/webuploader/Uploader.swf",
+				server: _base + "/docMt",
+				auto : true,
+				pick : {id:"#selectFile", multiple: false},
+				accept: {
+					title: 'intoTypes',
+					extensions: 'rar,doc,docx,txt,pdf,jpg,png,gif',
+					// mimeTypes: 'application/zip,application/msword,application/pdf,image/jpeg,image/png,image/gif'
+				},
+				formData: {
+					from: $(".dropdown .selected").eq(0).attr("value"),
+                    to: $(".dropdown .selected").eq(1).attr("value")
+				},
+				resize : false,
+				// 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
+				disableGlobalDnd: true,
+				// fileNumLimit: 10,
+				fileSizeLimit: 100 * 1024,    // 100 K
+			});
+
+			uploader.on("beforeFileQueued", function (file) {
+                if ('auto' == $(".dropdown .selected").eq(0).attr("value")) {
+                    _this._showWarn('请选择翻译语言');
+                    return false;
+                }
+
+				if (file.size == 0) {
+					_this._showWarn($.i18n.prop('order.upload.error.empty'));
+					return false;
+				}
+
+				if (file.size > 100*1024) {
+					_this._showWarn('文件大小不能超过100k');
+					return false;
+				}
+
+				if ($.inArray(file.ext.toLowerCase(), FILE_TYPES)<0) {
+					_this._showWarn("不支持该格式文件");
+					return false;
+				}
+			});
+
+			uploader.on( 'uploadSuccess', function( file, responseData ) {
+				if(responseData.statusCode=="1"){
+					window.location.reload();
+				}//上传失败
+				else{
+					_this._showFail($.i18n.prop('order.upload.error.upload'));
+					//删除文件
+					var file = uploader.getFile(file.id);
+					uploader.removeFile(file);
+					return;
+				}
+			});
+
+			uploader.on( 'uploadError', function( file, reason ) {
+				_this._showFail($.i18n.prop('order.upload.error.upload'));
+
+				//删除文件
+				var file = uploader.getFile(file.id);
+				uploader.removeFile(file);
+			});
+		},
+
+        _showWarn:function(msg){
+            new Dialog({
+                content:msg,
+                icon:'warning',
+                okValue: $.i18n.prop("order.info.dialog.ok"),
+                title:  $.i18n.prop("order.info.dialog.prompt"),
+                ok:function(){
+                    this.close();
+                }
+            }).showModal();
+        },
+        _showFail:function(msg){
+            new Dialog({
+                title: $.i18n.prop("order.info.dialog.prompt"),
+                content:msg,
+                icon:'fail',
+                okValue: $.i18n.prop("order.info.dialog.ok"),
+                ok:function(){
+                    this.close();
+                }
+            }).showModal();
+        }
         
     });
 

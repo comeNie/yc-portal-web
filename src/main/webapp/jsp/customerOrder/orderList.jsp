@@ -234,17 +234,16 @@
 					<!-- 延时确认-->
 					<!--<input name="lateConfirmOrder" class="btn biu-btn btn-auto-25 btn-red radius10" type="button" value="<spring:message code="myOrder.Delayed"/>">-->
 				</td>
-			{{else displayFlag == '52'}}
+			{{else displayFlag == '90'}}
 				<!-- 待评价  -->
 				<td><spring:message code="myOrder.status.tobeEvaluated"/></td>
-				<td></td>
-				<!-- 
-				<td>待评价</td>
-				<td>
-					<input class="btn biu-btn btn-auto-25 btn-green radius10" type="button" value="评 价">
-				</td>
-				-->
-			{{else displayFlag == '90'}}
+				<%--评价--%>
+				<td><input name="tobeEvaluated" class="btn biu-btn btn-auto-25 btn-green radius10" type="button" value="<spring:message code="myOrder.Evaluation"/>"></td>
+            {{else displayFlag == '53'}}
+                <!-- 已评价  -->
+                <td><spring:message code="myOrder.status.Evaluated"/></td>
+                <td><input name="checkEvaluated" class="btn biu-btn btn-auto-25 btn-green radius10" type="button" value="<spring:message code="myOrder.ViewEvaluation"/>"></td>
+            {{else displayFlag == '90'}}
 				<!-- 完成  -->
 				<td><spring:message code="myOrder.status.Completed"/></td>
 				<td></td>
@@ -314,6 +313,12 @@ var current = "orderList";
        <%-- 延迟确认订单 --%>
        //$("#confirmOrder").delegate("input[name='lateConfirmOrder']","click",function(){
        //});
+
+        <%-- 待评价 跳转评价--%>
+        $("#searchOrderData").delegate("input[name='tobeEvaluated']","click",function(){
+            window.location.href="${_base}/p/customer/order/evaluate/"+$(this).parents("table").find("input[name='orderId']").val();
+        });
+
     $("input").placeholder();
     //checkbox兼容ie8
 //    $('.recharge-btn input').iCheck({

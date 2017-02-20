@@ -22,22 +22,25 @@ public class WordUtil {
      * 读word文件
      * @param fileName
      */
-    public final static String readWord(String fileName){
+    public final static String readWord(String fileName, InputStream is){
         if (fileName.endsWith("doc") || fileName.endsWith("DOC")) {
-            return readWord2003(fileName);
+            return readWord2003(fileName, is);
         }else if (fileName.endsWith("docx") || fileName.endsWith("DOCX")) {
-            return readWord2007(fileName);
+            return readWord2007(fileName, is);
         }else {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return "";
         }
     }
 
-    private static String readWord2007(String fileName) {
+    private static String readWord2007(String fileName, InputStream is) {
         POIXMLTextExtractor ex = null;
         XWPFDocument xwpf = null;
-        InputStream is = null;
         try {
-            is = new FileInputStream(fileName);
             xwpf = new XWPFDocument(is);
             ex = new XWPFWordExtractor(xwpf);
             return ex.getText();
@@ -65,12 +68,10 @@ public class WordUtil {
         return null;
     }
 
-    private static String readWord2003(String fileName) {
+    private static String readWord2003(String fileName,   InputStream is) {
         WordExtractor wordExtractor = null;
-        InputStream fis = null;
         try {
-            fis = new FileInputStream(fileName);
-            wordExtractor = new WordExtractor(fis);
+            wordExtractor = new WordExtractor(is);
             String content = wordExtractor.getText();
             return content;
         } catch (FileNotFoundException e) {
@@ -84,7 +85,7 @@ public class WordUtil {
                 e.printStackTrace();
             }
             try {
-                fis.close();
+                is.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -120,10 +121,10 @@ public class WordUtil {
 
     public static void main(String[] args) {
 //       String text = readWord("e:\\WAP端原型-差异-验证结果.docx");
-        String text = readWord("e:\\新建 Microsoft Word 97 - 2003 文档.doc");
-
-        LOGGER.info(text);
-        writeWord("e:\\打发打发打发的.doc", text);
+//        String text = readWord("e:\\新建 Microsoft Word 97 - 2003 文档.doc");
+//
+//        LOGGER.info(text);
+//        writeWord("e:\\打发打发打发的.doc", text);
     }
 
 }

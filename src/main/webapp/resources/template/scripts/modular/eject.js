@@ -61,3 +61,14 @@ jQuery(document).ready(function($) {
 	$('#modify-password').slideUp(200);
 	})
 })
+//评价 
+jQuery(document).ready(function($) {
+	$('#evaluate-btn').click(function(){
+	$('#eject-mask').fadeIn(100);
+	$('#evaluate-password').slideDown(100);
+	})
+	$('#evaluate-determine').click(function(){
+	$('#eject-mask').fadeOut(200);
+	$('#evaluate-password').slideUp(200);
+	})
+})

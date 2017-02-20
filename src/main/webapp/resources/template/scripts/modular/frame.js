@@ -1,3 +1,4 @@
+
 $(function () {
     var st = 100;
     $('#user').mouseenter(function () {
@@ -548,3 +549,14 @@ function placeholderSupport() {
     return 'placeholder' in document.createElement('input');
 }
 
+$(document).ready(function(){
+　$("#table-da1 ul").each(function(){
+            var indx = $(this).index(); 
+            if((indx+0)%3 == 0){$("#table-da1 ul").eq(indx).css("margin-left","0px");} });
+  　$("#table-da2 ul").each(function(){
+            var indx = $(this).index(); 
+            if((indx+0)%3 == 0){$("#table-da2 ul").eq(indx).css("margin-left","0px");} });
+    $("#table-da3 ul").each(function(){
+            var indx = $(this).index(); 
+            if((indx+0)%3 == 0){$("#table-da3 ul").eq(indx).css("margin-left","0px");} });  
+});

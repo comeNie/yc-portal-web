@@ -472,6 +472,40 @@ public class CustomerOrderController {
     }
 
     /**
+     * 评价订单view
+     * @return
+     */
+    @RequestMapping("/evaluate/{orderId}")
+    public String evaluateView(Model uiModel,@PathVariable("orderId") String orderId, HttpSession session){
+        if (StringUtils.isEmpty(orderId)) {
+            throw new BusinessException("","订单号为空："+orderId);
+        }
+        uiModel.addAttribute("orderId", orderId);
+        return "customerOrder/orderEvaluate";
+    }
+
+    /**
+     * 查看评价订单view
+     * @return
+     */
+    @RequestMapping("/seeEvaluate/{orderId}")
+    public String seeEvaluateView(Model uiModel,@PathVariable("orderId") String orderId, HttpSession session){
+        if (StringUtils.isEmpty(orderId)) {
+            throw new BusinessException("","订单号为空："+orderId);
+        }
+        uiModel.addAttribute("orderId", orderId);
+        return "customerOrder/viewEvaluate";
+    }
+
+    @RequestMapping("/evaluateOrder")
+    @ResponseBody
+    public ResponseData<String> evaluateOrder(){
+        ResponseData<String> resData =  new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+
+        return resData;
+    }
+
+    /**
      * 判断用户是否查看订单的权限
      * 目前统一方法，便于之后扩展
      *
