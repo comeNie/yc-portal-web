@@ -191,9 +191,12 @@
         <div class="translate-file">
             <ul>
                 <li>
-                    <%--<p><input type="button" class="btn btn-blue btn-trans radius2" value="上传文档"><input type="file"  class="pop-file"></p>
-                    <p>（支持5000字以内的.doc（X）.TXT文件）</p>--%>
-                    
+                    <%--上传文档--%>
+                    <p><input type="button" class="btn btn-blue btn-trans radius2"
+                              value="<spring:message code="home.upload_file_btn"/>">
+                        <input type="file"  class="pop-file"></p>
+                        <%--支持100K以内的.doc（X）.TXT文件--%>
+                    <p>（<spring:message code="home.file_tips"/>）</p>
                 </li>
                 <li class="right">
                     <%--人工翻译--%>
