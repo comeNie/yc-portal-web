@@ -74,7 +74,7 @@ public class YeekitController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/docMt")
+    @RequestMapping(value = "/mtUpload")
     public ResponseData<String> docMt(String from, String to, HttpServletRequest request) {
         ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         try {
