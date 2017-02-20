@@ -55,38 +55,53 @@
                             <%--服务质量--%>
                             <p class="title"><spring:message code="myOrder.ServiceQuality"/>：</p>
                             <p>
-                                <span class="star"><img src="${uedroot}/images/xx-02.jpg"</span>
-                                <span><img src="${uedroot}/images/xx-01.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-01.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-02.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-02.jpg"></span>
+                                <c:forEach begin="0" end="4" step="1" varStatus="status">
+                                    <c:choose>
+                                        <c:when  test="${status.current < orderEvaluateInfo.serveQuality/8}">
+                                            <span><img src="${uedroot}/images/xx-01.jpg"></span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span><img src="${uedroot}/images/xx-02.jpg"></span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
                             </p>
                         </li>
                         <li>
                             <%--服务速度--%>
                             <p class="title"><spring:message code="myOrder.ServiceSpeed"/>：</p>
                             <p>
-                                <span><img src="${uedroot}/images/xx-01.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-01.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-01.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-02.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-02.jpg"></span>
+                                <c:forEach begin="0" end="4" step="1" varStatus="status">
+                                    <c:choose>
+                                        <c:when  test="${status.current < orderEvaluateInfo.serveSpeed/6}">
+                                            <span><img src="${uedroot}/images/xx-01.jpg"></span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span><img src="${uedroot}/images/xx-02.jpg"></span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
                             </p>
                         </li>
                         <li>
                             <%--服务态度--%>
                             <p class="title"><spring:message code="myOrder.ServiceAttitude"/>：</p>
                             <p>
-                                <span><img src="${uedroot}/images/xx-01.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-01.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-01.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-02.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-02.jpg"></span>
+                                <c:forEach begin="0" end="4" step="1" varStatus="status">
+                                    <c:choose>
+                                        <c:when  test="${status.current < orderEvaluateInfo.serveManner/6}">
+                                            <span><img src="${uedroot}/images/xx-01.jpg"></span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span><img src="${uedroot}/images/xx-02.jpg"></span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
                             </p>
                         </li>
                         <li>
                             <p class="title"><spring:message code="myOrder.EvaluationContent"/>：</p>
-                            <p class="word">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio.</p>
+                            <p class="word">${orderEvaluateInfo.evaluateContent}</p>
                         </li>
                     </ul>
                 </div>

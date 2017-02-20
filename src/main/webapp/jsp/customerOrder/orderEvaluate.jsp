@@ -8,6 +8,10 @@
     <%@ include file="/inc/inc.jsp" %>
     <!-- 评价订单 -->
     <title><spring:message code="myOrder.EvaluationOrder"/></title>
+
+    <style>
+        .star {cursor:pointer}
+    </style>
 </head>
 <body>
 <!--弹出-->
@@ -54,40 +58,40 @@
                         <li>
                             <%--服务质量--%>
                             <p class="title"><spring:message code="myOrder.ServiceQuality"/>：</p>
-                            <p>
-                                <span class="star"><img src="${uedroot}/images/xx-02.jpg"</span>
-                                <span><img src="${uedroot}/images/xx-01.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-01.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-02.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-02.jpg"></span>
+                            <p id="serviceQuality">
+                                <span><img class="star" name="star1" src="${uedroot}/images/xx-02.jpg"></span>
+                                <span><img class="star" name="star2" src="${uedroot}/images/xx-02.jpg"></span>
+                                <span><img class="star" name="star3" src="${uedroot}/images/xx-02.jpg"></span>
+                                <span><img class="star" name="star4" src="${uedroot}/images/xx-02.jpg"></span>
+                                <span><img class="star" name="star5" src="${uedroot}/images/xx-02.jpg"></span>
                             </p>
                         </li>
                         <li>
                             <%--服务速度--%>
                             <p class="title"><spring:message code="myOrder.ServiceSpeed"/>：</p>
-                            <p>
-                                <span><img src="${uedroot}/images/xx-01.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-01.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-01.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-02.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-02.jpg"></span>
+                            <p id="serviceSpeed">
+                                <span><img class="star" name="star1" src="${uedroot}/images/xx-02.jpg"></span>
+                                <span><img class="star" name="star2" src="${uedroot}/images/xx-02.jpg"></span>
+                                <span><img class="star" name="star3" src="${uedroot}/images/xx-02.jpg"></span>
+                                <span><img class="star" name="star4" src="${uedroot}/images/xx-02.jpg"></span>
+                                <span><img class="star" name="star5" src="${uedroot}/images/xx-02.jpg"></span>
                             </p>
                         </li>
                         <li>
                             <%--服务态度--%>
                             <p class="title"><spring:message code="myOrder.ServiceAttitude"/>：</p>
-                            <p>
-                                <span><img src="${uedroot}/images/xx-01.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-01.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-01.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-02.jpg"></span>
-                                <span><img src="${uedroot}/images/xx-02.jpg"></span>
+                            <p id="serviceAttitude">
+                                <span><img class="star" name="star1" src="${uedroot}/images/xx-02.jpg"></span>
+                                <span><img class="star" name="star2" src="${uedroot}/images/xx-02.jpg"></span>
+                                <span><img class="star" name="star3" src="${uedroot}/images/xx-02.jpg"></span>
+                                <span><img class="star" name="star4" src="${uedroot}/images/xx-02.jpg"></span>
+                                <span><img class="star" name="star5" src="${uedroot}/images/xx-02.jpg"></span>
                             </p>
                         </li>
                         <li>
                             <p class="title"><spring:message code="myOrder.EvaluationContent"/>：</p>
                             <p class="word">
-                                <textarea class="int-text textarea-big-xlarge"
+                                <textarea id="evaluateContent" class="int-text textarea-big-xlarge"
                                           onkeyup="textLimit(this,200);" onkeydown="textLimit(this,200);"
                                           oninput="textLimit(this,200);"  onpropertychange="textLimit(this,200);"
                                 ></textarea>
@@ -113,6 +117,18 @@
         seajs.use('app/jsp/customerOrder/orderEvaluate', function (orderInfoPage) {
             pager = new orderInfoPage({element: document.body});
             pager.render();
+        });
+
+        $("#serviceQuality img").click(function () {
+            pager._clickSatr(this);
+        });
+
+        $("#serviceSpeed img").click(function () {
+            pager._clickSatr(this);
+        });
+
+        $("#serviceAttitude img").click(function () {
+            pager._clickSatr(this);
         });
 
         //IE8的输入框提示信息兼容

@@ -21,6 +21,8 @@ import com.ai.slp.balance.api.deduct.interfaces.IDeductSV;
 import com.ai.slp.balance.api.deduct.param.DeductParam;
 import com.ai.slp.balance.api.deduct.param.DeductResponse;
 import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsRequest;
+import com.ai.yc.order.api.orderevaluation.interfaces.IOrderEvaluationSV;
+import com.ai.yc.order.api.orderevaluation.param.*;
 import com.ai.yc.order.api.orderfee.interfaces.IOrderFeeQuerySV;
 import com.ai.yc.order.api.orderfee.param.*;
 import com.ai.yc.protal.web.constants.Constants;
@@ -494,14 +496,50 @@ public class CustomerOrderController {
             throw new BusinessException("","订单号为空："+orderId);
         }
         uiModel.addAttribute("orderId", orderId);
+
+        /****** TODO 查询订单评价 暂时关闭
+        IOrderEvaluationSV iOrderEvaluationSV = DubboConsumerFactory.getService(IOrderEvaluationSV.class);
+
+        QueryOrdEvaluteRequest ordEvaluateReq = new QueryOrdEvaluteRequest();
+        ordEvaluateReq.setOrderId(Long.valueOf(orderId));
+        QueryOrdEvaluteResponse ordEvaluateRes = iOrderEvaluationSV.queryOrderEvalute(ordEvaluateReq);
+        **********/
+
+        QueryOrdEvaluteResponse ordEvaluateRes= new QueryOrdEvaluteResponse();
+        ordEvaluateRes.setOrderId(Long.valueOf(orderId));
+        ordEvaluateRes.setServeQuality("32");
+        ordEvaluateRes.setServeSpeed("24");
+        ordEvaluateRes.setServeManner("30");
+        ordEvaluateRes.setEvaluateContent("翻译的不错哦！");
+        uiModel.addAttribute("orderEvaluateInfo", ordEvaluateRes);
         return "customerOrder/viewEvaluate";
     }
 
+
     @RequestMapping("/evaluateOrder")
     @ResponseBody
-    public ResponseData<String> evaluateOrder(){
+    public ResponseData<String> evaluateOrder(HttpServletRequest request){
         ResponseData<String> resData =  new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
 
+        String orderId = request.getParameter("orderId");
+        String orderEvaluateInfoStr = request.getParameter("orderEvaluateInfo");
+
+        /*******************TODO 订单评价 暂时关闭***************************************
+        IOrderEvaluationSV iOrderEvaluationSV = DubboConsumerFactory.getService(IOrderEvaluationSV.class);
+
+        OrderEvaluationRequest evaluationRequest = new OrderEvaluationRequest();
+        //订单基本信息
+        OrderEvaluationBaseInfo orderBase = new OrderEvaluationBaseInfo();
+        orderBase.setOrderId(Long.valueOf(orderId));
+        evaluationRequest.setBaseInfo(orderBase);
+
+        //订单评价信息
+        OrderEvaluationExtendInfo orderEvaluateInfo = JSONObject.parseObject(orderEvaluateInfoStr, OrderEvaluationExtendInfo.class);
+        orderEvaluateInfo.setEvaluateTime(new Timestamp(System.currentTimeMillis()));
+        evaluationRequest.setExtendInfo(orderEvaluateInfo);
+
+        iOrderEvaluationSV.orderEvaluation(evaluationRequest);
+         ************/
         return resData;
     }
 

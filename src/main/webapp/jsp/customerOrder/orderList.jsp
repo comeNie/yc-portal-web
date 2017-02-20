@@ -234,7 +234,7 @@
 					<!-- 延时确认-->
 					<!--<input name="lateConfirmOrder" class="btn biu-btn btn-auto-25 btn-red radius10" type="button" value="<spring:message code="myOrder.Delayed"/>">-->
 				</td>
-			{{else displayFlag == '90'}}
+			{{else displayFlag == '52'}}
 				<!-- 待评价  -->
 				<td><spring:message code="myOrder.status.tobeEvaluated"/></td>
 				<%--评价--%>
@@ -318,6 +318,11 @@ var current = "orderList";
         $("#searchOrderData").delegate("input[name='tobeEvaluated']","click",function(){
             window.location.href="${_base}/p/customer/order/evaluate/"+$(this).parents("table").find("input[name='orderId']").val();
         });
+
+		<%-- 已评价 跳转评价--%>
+		$("#searchOrderData").delegate("input[name='checkEvaluated']","click",function(){
+			window.location.href="${_base}/p/customer/order/seeEvaluate/"+$(this).parents("table").find("input[name='orderId']").val();
+		});
 
     $("input").placeholder();
     //checkbox兼容ie8

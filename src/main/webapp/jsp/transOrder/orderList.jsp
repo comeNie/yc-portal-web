@@ -276,9 +276,11 @@
 							<td></td>
 							{{else state  == '53'}}
 							<!-- 已评价 -->
+							{{else displayFlag == '53'}}
+							<!-- 已评价  -->
 							<td><spring:message code="myOrder.status.Evaluated"/></td>
 							<td>
-								<!-- <input name="evaluated" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="已评价"> -->
+								<input name="checkEvaluated" class="btn biu-btn btn-auto-25 btn-green radius10" type="button" value="<spring:message code="myOrder.ViewEvaluation"/>">
 							</td>
 							{{else state  == '25'}}
 							<!-- 修改中 -->
@@ -352,6 +354,11 @@ var current = "orderList";
 	//翻译按钮
 	$('#searchOrderData').delegate("input[name='trans']", 'click', function () {
 		 window.location.href="${_base}/p/trans/order/"+$(this).parents("table").find("input[name='orderId']").val();
+	});
+
+	<%-- 已评价 跳转评价--%>
+	$("#searchOrderData").delegate("input[name='checkEvaluated']","click",function(){
+		window.location.href="${_base}/p/customer/order/seeEvaluate/"+$(this).parents("table").find("input[name='orderId']").val();
 	});
     $("input").placeholder();
 })();
