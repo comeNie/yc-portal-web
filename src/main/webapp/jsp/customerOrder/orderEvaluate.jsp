@@ -17,14 +17,17 @@
 <!--弹出-->
 <div class="eject-big">
     <div class="prompt-samll"  id="evaluate-password" style="display:none;">
-        <div class="prompt-samll-title">评价成功</div>
+        <%--评价成功--%>
+        <div class="prompt-samll-title"><spring:message code="order.evaluate.prompt.title.success"/></div>
         <!--确认删除-->
         <div class="prompt-samll-confirm">
             <ul class="pass-list">
-                <li>感谢您的评价！</li>
+                <%--感谢您的评价！--%>
+                <li><spring:message code="order.evaluate.prompt.msg.success"/></li>
                 <li class="eject-btn">
-                    <input type="button" id="evaluate-determine" class="btn btn-green btn-120 radius20" value="确 定">
-
+                    <%--确定--%>
+                    <input type="button" id="evaluate-determine" class="btn btn-green btn-120 radius20"
+                           value="<spring:message code="order.evaluate.prompt.okbtn"/> ">
                 </li>
             </ul>
         </div>
