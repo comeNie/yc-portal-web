@@ -479,11 +479,37 @@ public class CustomerOrderController {
      */
     @RequestMapping("/evaluate/{orderId}")
     public String evaluateView(Model uiModel,@PathVariable("orderId") String orderId, HttpSession session){
-        if (StringUtils.isEmpty(orderId)) {
-            throw new BusinessException("","订单号为空："+orderId);
+        String viewStr = "customerOrder/orderEvaluate";
+        //判断订单的状态和是否有权限
+        try {
+            if (StringUtils.isEmpty(orderId)) {
+                throw new BusinessException("","订单号为空："+orderId);
+            }
+            IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
+
+            QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
+            orderDetailsReq.setOrderId(Long.valueOf(orderId));
+            orderDetailsReq.setChgStateFlag(OrderConstants.STATECHG_FLAG);
+
+            QueryOrderDetailsResponse orderDetailsRes = iQueryOrderDetailsSV.queryOrderDetails4Portal(orderDetailsReq);
+            ResponseHeader resHeader = orderDetailsRes==null?null:orderDetailsRes.getResponseHeader();
+            LOGGER.info("订单详细信息 ：" + JSONObject.toJSONString(orderDetailsRes));
+            //如果返回值为空,或返回信息中包含错误信息,返回失败
+            if (orderDetailsRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
+                throw new BusinessException("","查询失败："+orderDetailsRes);
+            }
+            //检查订单权限，如果不为本人下单或不是待评价状态，则不允许查看
+            if(!OrderConstants.State.UN_EVALUATE.equals(orderDetailsRes.getState())
+                || !checkOrder(orderDetailsRes.getUserId())){
+                viewStr = "httpError/403";
+            }
+        } catch (Exception e) {
+            LOGGER.error("查询订单详情失败:",e);
+            viewStr = "customerOrder/orderError";
         }
+
         uiModel.addAttribute("orderId", orderId);
-        return "customerOrder/orderEvaluate";
+        return viewStr;
     }
 
     /**
