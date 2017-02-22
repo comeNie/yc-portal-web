@@ -143,7 +143,7 @@ dependencies {
     compile 'org.apache.xmlbeans:xmlbeans:2.3.0'
 
 	compile('org.apache.axis2:axis2-adb:1.5.1') {
-		exclude group: 'ordom4jg.apache.geronimo.specs'
+		exclude group: 'org.apache.geronimo.specs'
 	}
 	compile('org.apache.axis2:axis2-kernel:1.5.1') {
 		exclude group: 'org.apache.geronimo.specs'
