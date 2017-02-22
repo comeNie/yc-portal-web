@@ -86,10 +86,12 @@ define('opt-ajax/1.0.0/index', function (require, exports, module) {
 				} else if(status && status == AjaxController.AJAX_STATUS_LOGIN){
 					//取得当前页面地址
 					var winLocal = window.location.href;
-					var nowUrl = winLocal.substring(0,winLocal.indexOf('?'))
-						+".chk"+window.location.search;
-					var loginUrl = ssoLoginUrl+'?service='+ encodeURIComponent(nowUrl);
-					console.log(loginUrl);
+					// var nowUrl = winLocal.substring(0,winLocal.indexOf('?'))
+					// 	+".chk"+window.location.search;
+					// var loginUrl = ssoLoginUrl+'?service='+ encodeURIComponent(nowUrl);
+                    var loginUrl = ssoLoginUrl+'?service='+ encodeURIComponent(winLocal);
+					if(window.console)
+						console.log(loginUrl);
 					window.location = loginUrl;
 				}
 				else{

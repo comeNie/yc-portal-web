@@ -1,14 +1,22 @@
 package com.ai.yc.protal.web.controller;
 
 import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.base.vo.BaseResponse;
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.BeanUtils;
+import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.opt.sso.client.filter.SSOClientConstants;
 import com.ai.opt.sso.client.filter.SSOClientUtil;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.yc.common.api.cachekey.key.CacheKey;
 import com.ai.yc.common.api.cachekey.model.HomeDataConfig;
+import com.ai.yc.protal.web.constants.LoginConstants;
+import com.ai.yc.protal.web.model.user.UserCollectionTrans;
 import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.ai.yc.protal.web.utils.UserUtil;
+import com.ai.yc.user.api.usercollectiontranslation.interfaces.IYCUserCollectionSV;
+import com.ai.yc.user.api.usercollectiontranslation.param.UserCollectionInfoRequest;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -17,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -29,6 +38,10 @@ import java.util.Locale;
 @Controller
 public class IndexController {
     private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
+    /*
+        首页待收藏的译文，临时存放标记
+     */
+    private static final String USER_COLLECT_TEMP = "userCollectTemp";
     @Autowired
     ResWebBundle rb;
     /**
@@ -208,6 +221,42 @@ public class IndexController {
         return staticUrl() + "/service";
     }
 
+    /**
+     * 添加译文收藏
+     */
+    @RequestMapping("/collectTrans/add")
+    @ResponseBody
+    public ResponseData<String> addTranslation(UserCollectionTrans userCollectionTrans,HttpSession session){
+        ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        try{
+            //若用户没有登录，则进行临时保存收藏信息
+            if(UserUtil.getSsoUser() == null){
+                session.setAttribute(USER_COLLECT_TEMP,userCollectionTrans);
+                responseData = new ResponseData<String>(LoginConstants.AJAX_STATUS_LOGIN,"");
+            }else {
+                IYCUserCollectionSV userCollectionSV = DubboConsumerFactory.getService(IYCUserCollectionSV.class);
+                UserCollectionInfoRequest collectionInfoRequest = new UserCollectionInfoRequest();
+                BeanUtils.copyProperties(collectionInfoRequest, userCollectionTrans);
+                collectionInfoRequest.setCollectionId(null);
+                collectionInfoRequest.setUserId(UserUtil.getUserId());
+                //收藏译文
+                BaseResponse response = userCollectionSV.insertCollectionInfo(collectionInfoRequest);
+                if(!response.getResponseHeader().isSuccess()){
+                    throw new BusinessException(response.getResponseHeader().getResultCode()
+                            ,response.getResponseHeader().getResultMessage());
+                }else {//返回收藏记录的标识
+                    //TODO...
+//                    responseData.setData(response);
+                }
+            }
+        }catch (Exception e){
+            LOGGER.error("add collect translation fail.",e);
+            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE
+                    ,rb.getMessage("user.collect.add.fail"));
+        }
+
+        return responseData;
+    }
     private String staticUrl(){
         return Locale.SIMPLIFIED_CHINESE.equals(rb.getDefaultLocale())?"/static":"/staticEs";
     }

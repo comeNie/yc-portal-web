@@ -71,4 +71,7 @@
 					 interface="com.ai.slp.balance.api.deposit.interfaces.IDepositSV"/>
 	<dubbo:reference id="iYCTranslatorServiceSV" registry="ycRegistry"
 					 interface="com.ai.yc.translator.api.translatorservice.interfaces.IYCTranslatorServiceSV"/>
+	<!--用户收藏-->
+	<dubbo:reference id="iYCUserCollectionSV"
+					 interface="com.ai.yc.user.api.usercollectiontranslation.interfaces.IYCUserCollectionSV"/>
 </beans>
