@@ -61,8 +61,11 @@ public class CollectTransController {
                 List<String> collectionIdList = JSON.parseArray(collectionIds,String.class);
                 BaseResponse response = null;
                 if(!CollectionUtil.isEmpty(collectionIdList)){
+                    UserCollectionInfoRequest collectionInfoReq = new UserCollectionInfoRequest();
+                    collectionInfoReq.setCollectionIds(collectionIdList);
+                    collectionInfoReq.setUserId(UserUtil.getUserId());
                     //取消译文收藏
-                    response = userCollectionSV.deleteCollectionInfo(collectionIdList);
+                    response = userCollectionSV.deleteCollectionInfo(collectionInfoReq);
                 }
                 if(response != null && !response.getResponseHeader().isSuccess()){
                     LOGGER.error("del translation fail.\r\ncode={},message={}"
