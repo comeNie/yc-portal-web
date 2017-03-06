@@ -36,11 +36,13 @@
 							<img src="${uedroot}/images/appcode.png" />
 						</dt>
 						<dd>
-							<a class="android" target="_blank" href="http://android.myapp.com/myapp/detail.htm?apkName=cn.com.gtcom.ydt">
+							<a class="android" target="_blank" style="box-sizing:content-box;"
+							   href="http://android.myapp.com/myapp/detail.htm?apkName=cn.com.gtcom.ydt">
 								<span>for Android</span>
 								<font>立即下载</font>
 							</a> 
-							<a class="iphone" target="_blank" href="https://itunes.apple.com/cn/app/zhao-fan-yi-findyee/id1017302386?mt=8">
+							<a class="iphone" target="_blank" style="box-sizing:content-box;"
+							   href="https://itunes.apple.com/cn/app/zhao-fan-yi-findyee/id1017302386?mt=8">
 								<span>for iPhone</span>
 								<font>立即下载</font>
 							</a>
