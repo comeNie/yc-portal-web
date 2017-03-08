@@ -499,7 +499,7 @@ public class CustomerOrderController {
                 throw new BusinessException("","查询失败："+orderDetailsRes);
             }
             //检查订单权限，如果不为本人下单或不是待评价状态，则不允许查看
-            if(!OrderConstants.State.UN_EVALUATE.equals(orderDetailsRes.getState())
+            if(!OrderConstants.DisplayState.UN_EVALUATE.equals(orderDetailsRes.getDisplayFlag())
                 || !checkOrder(orderDetailsRes.getUserId())){
                 viewStr = "httpError/403";
             }

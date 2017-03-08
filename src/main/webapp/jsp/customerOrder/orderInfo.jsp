@@ -433,29 +433,41 @@
                 </div>
                 <!--按钮-->
                 <div class="recharge-btn order-btn">
-                	<c:choose>
-	                	<c:when test="${OrderDetails.displayFlag=='11'}">
-	                	<!-- 待支付 -->
-	                		<!-- 支付订单 -->
-	                		<input id="payOrder" type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="myOrder.btn.Payorder"/>">
-	                	</c:when>
-                		<c:when test="${OrderDetails.displayFlag=='13'}">
-                		<!-- 待报价 -->
-                			<%--<input  class="btn btn-ash btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.btn.tobeQuoted"/>">--%>
-                		</c:when>
-                		<c:when test="${OrderDetails.displayFlag=='23'}">
-                		<!-- 翻译中 -->
-                			<input class="btn btn-ash btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.btn.translating"/>">
-                		</c:when>
-                		<c:when test="${OrderDetails.displayFlag=='50'}">
-                		<!-- 待确认 -->
-                			<!-- 确认订单 -->
-                			<input id="confirmOrder" class="btn btn-green btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.confirmOrder"/>">
-                		</c:when>
-                		<c:otherwise>
-                		<!-- 已完成 已取消 已退款 待评价-->
-                		</c:otherwise>
-                	</c:choose>
+                    <c:choose>
+                        <%--待支付--%>
+                        <c:when test="${OrderDetails.displayFlag=='11'}">
+                            <!-- 支付订单 -->
+                            <input id="payOrder" type="button" id="recharge-popo"
+                                   class="btn btn-green btn-xxxlarge radius10"
+                                   value="<spring:message code="myOrder.btn.Payorder"/>">
+                        </c:when>
+                        <%--待报价--%>
+                        <c:when test="${OrderDetails.displayFlag=='13'}">
+
+                            <%--<input  class="btn btn-ash btn-xxxlarge radius10" type="button" value="<spring:message code="myOrder.btn.tobeQuoted"/>">--%>
+                        </c:when>
+                        <%--翻译中--%>
+                        <c:when test="${OrderDetails.displayFlag=='23'}">
+                            <!-- 翻译中 -->
+                            <input class="btn btn-ash btn-xxxlarge radius10" type="button"
+                                   value="<spring:message code="myOrder.btn.translating"/>">
+                        </c:when>
+                         <%--待确认 --%>
+                        <c:when test="${OrderDetails.displayFlag=='50'}">
+                            <!-- 确认订单 -->
+                            <input id="confirmOrder" class="btn btn-green btn-xxxlarge radius10" type="button"
+                                   value="<spring:message code="myOrder.confirmOrder"/>">
+                        </c:when>
+                        <%--待评价--%>
+                        <c:when test="${OrderDetails.displayFlag=='52'}">
+                            <input id="evaluationOrder" class="btn btn-green btn-xxxlarge radius10" type="button"
+                                   value="<spring:message code="myOrder.btn.evaluation"/>"
+                                   onclick="javascript:window.location.href='${_base}/p/customer/order/evaluate/${OrderDetails.orderId}'">
+                        </c:when>
+                        <c:otherwise>
+                            <!-- 已完成 已取消 已退款-->
+                        </c:otherwise>
+                    </c:choose>
                 </div>
 
             </div>
