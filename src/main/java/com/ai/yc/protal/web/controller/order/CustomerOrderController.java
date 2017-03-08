@@ -229,10 +229,10 @@ public class CustomerOrderController {
         cancelReq.setOperId(UserUtil.getUserId()); //操作员id 传入的是用户id
         cancelReq.setOperName(UserUtil.getUserName()); //操作员名，传入用户名称
         BaseResponse baseRes = iOrderCancelSV.handCancelNoPayOrder(cancelReq);
-        LOGGER.info("取消订单返回 ："+JSONObject.toJSONString(baseRes));
         //如果返回值为空,或返回信息中包含错误信息,返回失败
         if (!baseRes.getResponseHeader().isSuccess()){
-            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
+            LOGGER.warn("取消订单返回 ："+JSONObject.toJSONString(baseRes.getResponseHeader()));
+            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage("order.info.cancel.fail"));
         }
 
         return resData;
