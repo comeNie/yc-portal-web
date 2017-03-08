@@ -437,6 +437,7 @@
 <script type="text/javascript" src="${spmRes}/app/jsp/index.js"></script>
 <script type="text/javascript">
     var pager;
+    var ajaxPLogin = window.location.protocol+"//"+window.location.host+"${_base}/p/index";
 
     (function () {
         var _webProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
