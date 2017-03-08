@@ -1,3 +1,4 @@
+<%@ page import="com.ai.yc.protal.web.controller.IndexController" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -85,35 +86,50 @@
     <div class="translate">
         <div class="translate-title">
             <ul>
+                <c:set var="lgFrom" value=""/>
+                <c:set var="lgTo" value=""/>
+                <c:if test="${userCollectTemp!=null}">
+                    <c:set var="lgFrom" value="${userCollectTemp.sourceLanguage}"/>
+                    <c:set var="lgTo" value="${userCollectTemp.targetLanguage}"/>
+                </c:if>
                 <li>
                     <select tabindex="5" class="dropdown" id="showa" data-settings='{"cutOff": 12}'>
                         <%--自动检测--%>
-                        <option value="auto" selected = "selected"><spring:message code="home.trans_language_auto"/></option>
-                            <%--中文简体--%>
-                            <option value="zh"><spring:message code="home.trans_language_zh"/></option>
-                            <%--英语--%>
-                            <option value="en"><spring:message code="home.trans_language_en"/></option>
-                            <%--法语--%>
-                            <%--<option value="fr"><spring:message code="home.trans_language_fr"/></option>--%>
-                            <%--俄语--%>
-                            <option value="ru"><spring:message code="home.trans_language_ru"/></option>
-                            <%--葡萄牙语--%>
-                            <option value="pt"><spring:message code="home.trans_language_pt"/></option>
+                        <option value="auto" <c:if test="${lgFrom==''}">selected = "selected"</c:if>>
+                            <spring:message code="home.trans_language_auto"/></option>
+                        <%--中文简体--%>
+                        <option value="zh" <c:if test="${lgFrom=='zh'}">selected = "selected"</c:if>>
+                            <spring:message code="home.trans_language_zh"/></option>
+                        <%--英语--%>
+                        <option value="en" <c:if test="${lgFrom=='en'}">selected = "selected"</c:if>>
+                            <spring:message code="home.trans_language_en"/></option>
+                        <%--法语--%>
+                        <%--<option value="fr"><spring:message code="home.trans_language_fr"/></option>--%>
+                        <%--俄语--%>
+                        <option value="ru" <c:if test="${lgFrom=='ru'}">selected = "selected"</c:if>>
+                            <spring:message code="home.trans_language_ru"/></option>
+                        <%--葡萄牙语--%>
+                        <option value="pt" <c:if test="${lgFrom=='pt'}">selected = "selected"</c:if>>
+                            <spring:message code="home.trans_language_pt"/></option>
                     </select>
                 </li>
                 <li class="change"><a href="javaScript:void(0)"><i class="icon-exchange"></i></a></li>
                 <li>
                     <select tabindex="5" class="dropdown" id="showb" data-settings='{"cutOff": 12}'>
                         <%--中文简体--%>
-                        <option value="zh"><spring:message code="home.trans_language_zh"/></option>
+                        <option value="zh" <c:if test="${lgTo=='zh'}">selected = "selected"</c:if>>
+                            <spring:message code="home.trans_language_zh"/></option>
                         <%--英语--%>
-                        <option value="en"><spring:message code="home.trans_language_en"/></option>
+                        <option value="en" <c:if test="${lgTo=='en'}">selected = "selected"</c:if>>
+                            <spring:message code="home.trans_language_en"/></option>
                         <%--法语--%>
                         <%--<option value="fr"><spring:message code="home.trans_language_fr"/></option>--%>
                         <%--俄语--%>
-                        <option value="ru"><spring:message code="home.trans_language_ru"/></option>
+                        <option value="ru" <c:if test="${lgTo=='ru'}">selected = "selected"</c:if>>
+                            <spring:message code="home.trans_language_ru"/></option>
                         <%--葡萄牙语--%>
-                        <option value="pt"><spring:message code="home.trans_language_pt"/></option>
+                        <option value="pt" <c:if test="${lgTo=='pt'}">selected = "selected"</c:if>>
+                            <spring:message code="home.trans_language_pt"/></option>
                     </select>
                 </li>
                 <%--翻译--%>
@@ -130,7 +146,7 @@
                     <textarea
                             onkeyup="pager.textCounter(this,'inputsLen',2000);" onkeydown="pager.textCounter(this,'inputsLen',2000);"
                             oninput="pager.textCounter(this,'inputsLen',2000);"  onpropertychange="pager.textCounter(this,'inputsLen',2000);"
-                            class="int-before" id="int-before"></textarea>
+                            class="int-before" id="int-before"><c:if test="${userCollectTemp!=null}">${userCollectTemp.original}</c:if></textarea>
                     <div class="already"><spring:message code="home.Alreadyinput" arguments="0,2000"/></div>
                  </div>
 
@@ -138,9 +154,11 @@
             <div class="before-translation ml-20">
                 <div id="tgtNew" class="int-post tb_text" onmousemove="srcMove()" onmouseout="srcOut()"  style="display: none">
                 </div>
-                <div id="tgtOld" class="int-post"  style="display: block;">
-                    <textarea  class="int-post"  id="transRes" readonly="readonly"></textarea>
-                    <textarea  class="int-post"  id="transResBak" style="display: none"></textarea>
+                <div id="tgtOld" class="int-post" style="display: block;">
+                    <textarea class="int-post" id="transRes" readonly="readonly"><c:if
+                            test="${userCollectTemp!=null}">${userCollectTemp.translation}</c:if></textarea>
+                    <textarea class="int-post" id="transResBak" style="display: none"><c:if
+                            test="${userCollectTemp!=null}">${userCollectTemp.translation}</c:if></textarea>
                 </div>
                 <label id="transError"></label>
                 <div class="post-cion" style="visibility: hidden">
@@ -154,9 +172,9 @@
                             <!-- 朗诵译文-->
                             <span class="suspension2"><spring:message code="home.Readtrans"/></span>
                         </a>
-						 <!--<a id="sus-top3" href="javaScript:void(0)" class="stars-icon"><i class="icon iconfont">&#xe637;</i>
+                        <a id="sus-top3" href="javaScript:void(0)" class="stars-icon" collectId=""><i class="icon iconfont">&#xe637;</i>
 						    <span class="suspension3">收藏译文</span>
-						 </a>-->
+                        </a>
 					</p>
 					<p class="right" id="error">
 						<a href="javaScript:void(0)" class="edit-icon" id="sus-top">

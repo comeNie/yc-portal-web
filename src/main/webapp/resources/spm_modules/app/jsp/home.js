@@ -29,6 +29,7 @@ define('app/jsp/home', function (require, exports, module) {
 			"keyup #int-before": "_verifyLan",
             "click #trante": "_mt",
             "click #sus-top2": "_text2audio",
+			"click #sus-top3":"_collectTrans",
 			"click #humanTranBtn":"_goTextOrder",
 			"click .change": "_change",
 			"click #error-oc": "_saveText",
@@ -525,7 +526,26 @@ define('app/jsp/home', function (require, exports, module) {
                 uploader.removeFile(file);
             });
         },
-
+		//收藏译文
+		_collectTrans:function () {
+            ajaxController.ajax({
+                type: "post",
+                url: _base + "/collectTrans/add",
+                data: {
+                    sourceLanguage: $(".dropdown .selected").eq(0).attr("value"),
+                    targetLanguage: $(".dropdown .selected").eq(1).attr("value"),
+                    original: $("#int-before").val(),
+                    translation: $("#transRes").val()
+                },
+                success: function (data) {
+                    if("OK" === data.statusInfo) {
+                        //显示收藏ID，并将收藏按钮设置为取消收藏
+						alert("收藏成功");
+						$("#sus-top3").val(data.data);
+                    }
+                }
+            });
+        },
 		//显示警告信息
         _showWarn: function (msg) {
             new Dialog({

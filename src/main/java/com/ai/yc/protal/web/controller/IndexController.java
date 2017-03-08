@@ -41,7 +41,7 @@ public class IndexController {
     /*
         首页待收藏的译文，临时存放标记
      */
-    private static final String USER_COLLECT_TEMP = "userCollectTemp";
+    public static final String USER_COLLECT_TEMP = "userCollectTemp";
     @Autowired
     ResWebBundle rb;
     /**
@@ -248,6 +248,8 @@ public class IndexController {
                     //TODO...
 //                    responseData.setData(response);
                 }
+                //清除收藏译文的缓存
+                session.removeAttribute(USER_COLLECT_TEMP);
             }
         }catch (Exception e){
             LOGGER.error("add collect translation fail.",e);

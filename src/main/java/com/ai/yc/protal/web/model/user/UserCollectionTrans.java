@@ -1,10 +1,13 @@
 package com.ai.yc.protal.web.model.user;
 
+import java.io.Serializable;
+
 /**
  * 收藏译文
  * Created by liutong on 2017/2/22.
  */
-public class UserCollectionTrans {
+public class UserCollectionTrans implements Serializable{
+    private static final Long serialVersionUID = 1l;
     /**
      * 主键Id
      */
