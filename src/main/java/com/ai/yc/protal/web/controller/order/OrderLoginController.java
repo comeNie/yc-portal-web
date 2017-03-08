@@ -109,12 +109,13 @@ public class OrderLoginController {
             IOrderSubmissionSV orderSubmissionSV = DubboConsumerFactory.getService(IOrderSubmissionSV.class);
             OrderSubmissionRequest subReq;
             if ("2".equals(transType)) {
-                subReq  = (OrderSubmissionRequest) session.getAttribute("oralOrderInfo");
+                subReq  = (OrderSubmissionRequest) session.getAttribute(OrderController.SESSION_ORAL_ORDER_INFO);
             } else {
-                subReq  = (OrderSubmissionRequest) session.getAttribute("writeOrderInfo");
+                subReq  = (OrderSubmissionRequest) session.getAttribute(OrderController.SESSION_WRITE_ORDER_INFO);
             }
             LOGGER.info("订单信息: " + JSONObject.toJSONString(subReq));
-            subReq.setContactInfo(JSON.parseObject(contactInfoStr, ContactInfo.class));
+            ContactInfo contactInfo = JSON.parseObject(contactInfoStr, ContactInfo.class);
+            subReq.setContactInfo(contactInfo);
             subReq.getBaseInfo().setUserId(UserUtil.getUserId());
             StateChgInfo stateChgInfo = new StateChgInfo();
             stateChgInfo.setOperName(UserUtil.getUserName());
@@ -132,14 +133,15 @@ public class OrderLoginController {
                 resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, "");
             } else {
                 resData.setData(subRes.getOrderId()+"");//返回订单信息
+                //保存成功，清除会话中的 订单信息
+                session.removeAttribute(OrderController.SESSION_ORAL_ORDER_INFO);
+                session.removeAttribute(OrderController.SESSION_ORAL_ORDER_SUMMARY);
+                session.removeAttribute(OrderController.SESSION_WRITE_ORDER_INFO);
+                session.removeAttribute(OrderController.SESSION_WRITE_ORDER_SUMMARY);
+                session.removeAttribute(OrderController.SESSION_ORDER_FILE_LIST);
             }
 
-            //清楚会话中的 订单信息
-            session.removeAttribute("oralOrderInfo");
-            session.removeAttribute("oralOrderSummary");
-            session.removeAttribute("writeOrderInfo");
-            session.removeAttribute("writeOrderSummary");
-            session.removeAttribute("fileInfoList");
+
         } catch (Exception e) {
             LOGGER.error("提交订单失败:",e);
             resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE,"");

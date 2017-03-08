@@ -50,6 +50,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @RequestMapping("/order")
 public class OrderController {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
+    public static final String SESSION_WRITE_ORDER_INFO = "writeOrderInfo";
+    public static final String SESSION_WRITE_ORDER_SUMMARY = "writeOrderSummary";
+    public static final String SESSION_ORAL_ORDER_INFO = "oralOrderInfo";
+    public static final String SESSION_ORAL_ORDER_SUMMARY = "oralOrderSummary";
+    public static final String SESSION_ORDER_FILE_LIST = "fileInfoList";
     @Autowired
     private ResWebBundle rb;
     @Autowired
@@ -68,9 +73,9 @@ public class OrderController {
 
         String newFlag = StringUtils.isEmpty(flag) ? "": flag;
         if (!"return".equals(newFlag)) {
-            session.removeAttribute("writeOrderInfo");
-            session.removeAttribute("writeOrderSummary");
-            session.removeAttribute("fileInfoList");
+            session.removeAttribute(SESSION_WRITE_ORDER_INFO);
+            session.removeAttribute(SESSION_WRITE_ORDER_SUMMARY);
+            session.removeAttribute(SESSION_ORDER_FILE_LIST);
         }
 
         return "order/createTextOrder";
@@ -86,8 +91,8 @@ public class OrderController {
 
         String newFlag = StringUtils.isEmpty(flag) ? "": flag;
         if (!"return".equals(newFlag)) {
-            session.removeAttribute("oralOrderInfo");
-            session.removeAttribute("oralOrderSummary");
+            session.removeAttribute(SESSION_ORAL_ORDER_INFO);
+            session.removeAttribute(SESSION_ORAL_ORDER_SUMMARY);
         }
         return "order/createOralOrder";
     }
@@ -164,15 +169,15 @@ public class OrderController {
 
         //订单存到session中
         if (OrderConstants.TranslateType.ORAL.equals(subReq.getBaseInfo().getTranslateType())) {
-            session.setAttribute("oralOrderInfo", subReq);
-            session.setAttribute("oralOrderSummary", orderSummary);
+            session.setAttribute(SESSION_ORAL_ORDER_INFO, subReq);
+            session.setAttribute(SESSION_ORAL_ORDER_SUMMARY, orderSummary);
         } else {
-                session.setAttribute("writeOrderInfo", subReq);
-            session.setAttribute("writeOrderSummary", orderSummary);
+            session.setAttribute(SESSION_WRITE_ORDER_INFO, subReq);
+            session.setAttribute(SESSION_WRITE_ORDER_SUMMARY, orderSummary);
         }
 
         if (fileInfoList != null) {
-            session.setAttribute("fileInfoList", fileInfoList);
+            session.setAttribute(SESSION_ORDER_FILE_LIST, fileInfoList);
         }
         if (StringUtils.isEmpty(UserUtil.getUserId())) {
             resData.setData("-2");
