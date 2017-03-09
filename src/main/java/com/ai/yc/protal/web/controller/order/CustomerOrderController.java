@@ -474,7 +474,7 @@ public class CustomerOrderController {
     }
 
     /**
-     * 评价订单view
+     * 订单评价view
      * @return
      */
     @RequestMapping("/evaluate/{orderId}")
@@ -522,21 +522,17 @@ public class CustomerOrderController {
             throw new BusinessException("","订单号为空："+orderId);
         }
         uiModel.addAttribute("orderId", orderId);
-
-        /****** TODO 查询订单评价 暂时关闭
         IOrderEvaluationSV iOrderEvaluationSV = DubboConsumerFactory.getService(IOrderEvaluationSV.class);
-
         QueryOrdEvaluteRequest ordEvaluateReq = new QueryOrdEvaluteRequest();
         ordEvaluateReq.setOrderId(Long.valueOf(orderId));
         QueryOrdEvaluteResponse ordEvaluateRes = iOrderEvaluationSV.queryOrderEvalute(ordEvaluateReq);
-        **********/
 
-        QueryOrdEvaluteResponse ordEvaluateRes= new QueryOrdEvaluteResponse();
+        /*QueryOrdEvaluteResponse ordEvaluateRes= new QueryOrdEvaluteResponse();
         ordEvaluateRes.setOrderId(Long.valueOf(orderId));
         ordEvaluateRes.setServeQuality("32");
         ordEvaluateRes.setServeSpeed("24");
         ordEvaluateRes.setServeManner("30");
-        ordEvaluateRes.setEvaluateContent("翻译的不错哦！");
+        ordEvaluateRes.setEvaluateContent("翻译的不错哦！");*/
         uiModel.addAttribute("orderEvaluateInfo", ordEvaluateRes);
         return "customerOrder/viewEvaluate";
     }
@@ -546,13 +542,10 @@ public class CustomerOrderController {
     @ResponseBody
     public ResponseData<String> evaluateOrder(HttpServletRequest request){
         ResponseData<String> resData =  new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-
         String orderId = request.getParameter("orderId");
         String orderEvaluateInfoStr = request.getParameter("orderEvaluateInfo");
 
-        /*******************TODO 订单评价 暂时关闭***************************************
         IOrderEvaluationSV iOrderEvaluationSV = DubboConsumerFactory.getService(IOrderEvaluationSV.class);
-
         OrderEvaluationRequest evaluationRequest = new OrderEvaluationRequest();
         //订单基本信息
         OrderEvaluationBaseInfo orderBase = new OrderEvaluationBaseInfo();
@@ -565,7 +558,6 @@ public class CustomerOrderController {
         evaluationRequest.setExtendInfo(orderEvaluateInfo);
 
         iOrderEvaluationSV.orderEvaluation(evaluationRequest);
-         ************/
         return resData;
     }
 
