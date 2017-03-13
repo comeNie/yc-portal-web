@@ -144,8 +144,8 @@
                 </div>
                 <div id="srcOld" class="int-before"  style="display: block;">
                     <textarea
-                            onkeyup="pager.textCounter(this,'inputsLen',2000);" onkeydown="pager.textCounter(this,'inputsLen',2000);"
-                            oninput="pager.textCounter(this,'inputsLen',2000);"  onpropertychange="pager.textCounter(this,'inputsLen',2000);"
+                            onkeyup="pager.textCounter('inputsLen',2000);" onkeydown="pager.textCounter('inputsLen',2000);"
+                            oninput="pager.textCounter('inputsLen',2000);"  onpropertychange="pager.textCounter('inputsLen',2000);"
                             class="int-before" id="int-before"><c:if test="${userCollectTemp!=null}">${userCollectTemp.original}</c:if></textarea>
                     <div class="already"><spring:message code="home.Alreadyinput" arguments="0,2000"/></div>
                  </div>
@@ -161,7 +161,7 @@
                             test="${userCollectTemp!=null}">${userCollectTemp.translation}</c:if></textarea>
                 </div>
                 <label id="transError"></label>
-                <div class="post-cion" style="visibility: hidden">
+                <div class="post-cion" <c:if test="${empty userCollectTemp || empty userCollectTemp.translation}">style="visibility: hidden"</c:if>>
 
 					<p>
 						<a id="sus-top1" href="javaScript:void(0)" class="ord-icon"><i id="copy" class="icon iconfont">&#xe639;</i>
@@ -172,8 +172,9 @@
                             <!-- 朗诵译文-->
                             <span class="suspension2"><spring:message code="home.Readtrans"/></span>
                         </a>
+                        <%--收藏译文--%>
                         <a id="sus-top3" href="javaScript:void(0)" class="stars-icon" collectId=""><i class="icon iconfont">&#xe637;</i>
-						    <span class="suspension3">收藏译文</span>
+						    <span class="suspension3"><spring:message code="home.collect.title"/></span>
                         </a>
 					</p>
 					<p class="right" id="error">
@@ -437,7 +438,13 @@
 <script type="text/javascript" src="${spmRes}/app/jsp/index.js"></script>
 <script type="text/javascript">
     var pager;
+    //ajax的登录跳转地址
     var ajaxPLogin = window.location.protocol+"//"+window.location.host+"${_base}/p/index";
+    //是否需要触发译文收藏功能
+    var needCollect = false;
+    <c:if test="${userCollectTemp!=null && not empty userCollectTemp.translation}">
+        needCollect = true;
+    </c:if>
 
     (function () {
         var _webProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");

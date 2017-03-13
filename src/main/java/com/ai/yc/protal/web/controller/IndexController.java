@@ -4,6 +4,7 @@ import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.BeanUtils;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.opt.sso.client.filter.SSOClientConstants;
 import com.ai.opt.sso.client.filter.SSOClientUtil;
@@ -17,6 +18,7 @@ import com.ai.yc.protal.web.utils.AiPassUitl;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.user.api.usercollectiontranslation.interfaces.IYCUserCollectionSV;
 import com.ai.yc.user.api.usercollectiontranslation.param.UserCollectionInfoRequest;
+import com.ai.yc.user.api.usercollectiontranslation.param.UserCollectionInfoResponse;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -240,14 +243,14 @@ public class IndexController {
                 collectionInfoRequest.setCollectionId(null);
                 collectionInfoRequest.setUserId(UserUtil.getUserId());
                 //收藏译文
-                BaseResponse response = userCollectionSV.insertCollectionInfo(collectionInfoRequest);
+                UserCollectionInfoResponse response = userCollectionSV.insertCollectionInfo(collectionInfoRequest);
                 if(!response.getResponseHeader().isSuccess()){
                     throw new BusinessException(response.getResponseHeader().getResultCode()
                             ,response.getResponseHeader().getResultMessage());
                 }else {//返回收藏记录的标识
-                    //TODO...
-//                    responseData.setData(response);
+                    responseData.setData(response.getCollectionId());
                 }
+//                responseData.setData("123");
                 //清除收藏译文的缓存
                 session.removeAttribute(USER_COLLECT_TEMP);
             }
@@ -257,6 +260,46 @@ public class IndexController {
                     ,rb.getMessage("user.collect.add.fail"));
         }
 
+        return responseData;
+    }
+    /**
+     * 取消译文收藏
+     * @param collectionIds  id集合的json串
+     * @return
+     */
+    @RequestMapping("/collectTrans/del")
+    @ResponseBody
+    public ResponseData<String> delTranslation(String collectionIds){
+        ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        try{
+            //若用户没有登录，则进行临时保存收藏信息
+            if(UserUtil.getSsoUser() == null){
+                responseData = new ResponseData<String>(LoginConstants.AJAX_STATUS_LOGIN,"");
+            }//若译文ID不为空，则进行取消操作
+            else if(StringUtils.isNotBlank(collectionIds)) {
+                List<String> collectionIdList = JSON.parseArray(collectionIds,String.class);
+                IYCUserCollectionSV userCollectionSV = DubboConsumerFactory.getService(IYCUserCollectionSV.class);
+                BaseResponse response = null;
+                if(!CollectionUtil.isEmpty(collectionIdList)){
+                    UserCollectionInfoRequest collectionInfoReq = new UserCollectionInfoRequest();
+                    collectionInfoReq.setCollectionIds(collectionIdList);
+                    collectionInfoReq.setUserId(UserUtil.getUserId());
+                    //取消译文收藏
+                    response = userCollectionSV.deleteCollectionInfo(collectionInfoReq);
+                }
+                if(response != null && !response.getResponseHeader().isSuccess()){
+                    LOGGER.error("del translation fail.\r\ncode={},message={}"
+                            ,response.getResponseHeader().getResultCode()
+                            ,response.getResponseHeader().getResultMessage());
+                    throw new BusinessException(response.getResponseHeader().getResultCode()
+                            ,response.getResponseHeader().getResultMessage());
+                }
+            }
+        } catch (Exception e){
+            LOGGER.error("del collect translation fail.",e);
+            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE
+                    ,rb.getMessage("user.collect.del.fail"));
+        }
         return responseData;
     }
     private String staticUrl(){

@@ -62,6 +62,12 @@ define('app/jsp/home', function (require, exports, module) {
             }else if(uploader==null){
                 this._initUpdate();
             }
+
+            //若需要触发译文收藏
+            if(true == needCollect){
+                this.textCounter('inputsLen',2000);
+            	this._collectTrans();
+			}
         },
 
         _initPage:function () {
@@ -80,8 +86,8 @@ define('app/jsp/home', function (require, exports, module) {
             });
         },
 
-		textCounter:function($this,desc,maxlimit) {
-			var totalWords =  CountWordsUtil.count( $($this).val());
+		textCounter:function(desc,maxlimit) {
+			var totalWords =  CountWordsUtil.count($("#int-before").val());
 			// if (totalWords > maxlimit){
 			//     //如果元素区字符数大于最大字符数，按照最大字符数截断；
 			//     $($this).val($($this).val().substring(0, maxlimit));
@@ -89,7 +95,6 @@ define('app/jsp/home', function (require, exports, module) {
 			//在记数区文本框内显示剩余的字符数；
 			$("#"+desc).html(totalWords);
 		},
-
 
 		//人工翻译,跳转到笔译订单
        	_goTextOrder:function(){
@@ -192,6 +197,13 @@ define('app/jsp/home', function (require, exports, module) {
 									}
 								});
 							});
+						}
+                        var collectionId = array.collectionId;
+						if(collectionId!=null && collectionId!=""){
+                            //设置收藏ID，
+                            $("#sus-top3").attr("collectId",collectionId);
+                            //并将收藏按钮设置为取消收藏
+                            $("#sus-top3 span.suspension3").eq(0).text($.i18n.prop("home.collection.cancle.title"));
 						}
 					} else {
 						//图标隐藏
@@ -528,6 +540,12 @@ define('app/jsp/home', function (require, exports, module) {
         },
 		//收藏译文
 		_collectTrans:function () {
+			var collectId = $("#sus-top3").attr("collectId");
+			//若已经收藏，则进行取消收藏
+			if(collectId!=null && collectId!=""){
+				this._cancelCollectTrans();
+				return;
+			}
             ajaxController.ajax({
                 type: "post",
                 url: _base + "/collectTrans/add",
@@ -539,12 +557,36 @@ define('app/jsp/home', function (require, exports, module) {
                 },
                 success: function (data) {
                     if("OK" === data.statusInfo) {
-                        //显示收藏ID，并将收藏按钮设置为取消收藏
-						alert("收藏成功");
-						$("#sus-top3").val(data.data);
+                        //显示收藏成功
+                        $("#transError").html($.i18n.prop("home.collection.success"));
+                        //设置收藏ID，
+						$("#sus-top3").attr("collectId",data.data);
+						//并将收藏按钮设置为取消收藏
+                        $("#sus-top3 span.suspension3").eq(0).text($.i18n.prop("home.collection.cancle.title"));
                     }
                 }
             });
+        },
+		//取消译文收藏。
+		_cancelCollectTrans:function () {
+			var collectId = $("#sus-top3").attr("collectId");
+			if (collectId==null || collectId=="")
+				return;
+            ajaxController.ajax({
+                type: "post",
+                url: _base + "/collectTrans/del",
+                data: {collectionIds: "["+collectId+"]"},
+                success: function (data) {
+                    if("OK" === data.statusInfo) {
+                       	//收藏已取消
+                        $("#transError").html($.i18n.prop("home.collection.cancle.success"));
+                        $("#sus-top3").attr("collectId","");
+                        //收藏按钮显示收藏译文
+                        $("#sus-top3 span.suspension3").eq(0).text($.i18n.prop("home.collection.title"));
+                    }
+                }
+            });
+
         },
 		//显示警告信息
         _showWarn: function (msg) {

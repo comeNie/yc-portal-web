@@ -1,11 +1,22 @@
 package com.ai.yc.protal.web.controller;
 
+import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.sdk.components.dss.DSSClientFactory;
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.paas.ipaas.dss.base.interfaces.IDSSClient;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.yc.protal.web.constants.Constants;
+import com.ai.yc.protal.web.constants.LoginConstants;
 import com.ai.yc.protal.web.service.YeekitService;
+import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.protal.web.utils.WordUtil;
+import com.ai.yc.user.api.usercollectiontranslation.interfaces.IYCUserCollectionSV;
+import com.ai.yc.user.api.usercollectiontranslation.param.UserCollectionInfo;
+import com.ai.yc.user.api.usercollectiontranslation.param.UserCollectionInfoListResponse;
+import com.ai.yc.user.api.usercollectiontranslation.param.UserCollectionPageInfoRequest;
+import com.alibaba.dubbo.rpc.protocol.dubbo.DubboCodec;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.poifs.filesystem.DirectoryEntry;
 import org.apache.poi.poifs.filesystem.DocumentEntry;
@@ -59,12 +70,22 @@ public class YeekitController {
             if ("auto".equals(from)) {
                 fromTmp = yeekitService.detection(text);
             }
-            String result = yeekitService.dotranslate(fromTmp,to,text);
+            String result = null;
+            //若用户已登录,则查询译文信息
+            if(UserUtil.getSsoUser() != null){
+                result = queryCollection(from,to,text);
+            }
+            //若没查询都收藏译文，则进行机器翻译
+            if (StringUtils.isBlank(result)) {
+                result = yeekitService.dotranslate(fromTmp, to, text);
+            }
             if (result.startsWith("error:")) {
                 //机器返回错误
                 resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
             }
             resData.setData(result);
+            //若获取收藏译文，则返回收藏编码
+
         } catch (Exception e) {
             LOGGER.error("机器翻译失败：", e);
             resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, rb.getMessage(""));
@@ -192,6 +213,71 @@ public class YeekitController {
 //        resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
 //        resData.setData(lan);
         return resData;
+    }
+
+    /**
+     * 查询用户收藏译文
+     * @return
+     */
+    private String queryCollection(String from,String to,String text){
+        StringBuilder sb = new StringBuilder();
+        IYCUserCollectionSV userCollectionSV = DubboConsumerFactory.getService(IYCUserCollectionSV.class);
+        UserCollectionPageInfoRequest request = new UserCollectionPageInfoRequest();
+        request.setUserId(UserUtil.getUserId());
+        request.setSourceLanguage(from);
+        request.setTargetLanguage(to);
+        request.setOriginal(text);
+        request.setPageNo(1);
+        request.setPageSize(1);
+        UserCollectionInfoListResponse response = userCollectionSV.queryCollectionInfo(request);
+        PageInfo<UserCollectionInfo> pageInfo = response==null?null:response.getCollectionList();
+
+        if (pageInfo != null && !CollectionUtil.isEmpty(pageInfo.getResult())) {
+            UserCollectionInfo collectionInfo = pageInfo.getResult().get(0);
+
+            /* 返回信息示例
+            {
+            "translation": [
+                {
+                    "translated": [
+                        {
+                            "alignment-raw": [
+                                {
+                                    "src-start": 0,
+                                    "tgt-start": 0,
+                                    "src-end": 0,
+                                    "tgt-end": 0
+                                }
+                            ],
+                            "text": "China",
+                            "rank": 0,
+                            "tgt-tokenized": "China ",
+                            "score": -0.8170589804649353,
+                            "src-tokenized": "中国"
+                        }
+                    ],
+                    "translationId": "b68b0ab9f9ca44ce962b6d26a613eca6"
+                }
+            ],
+            "collectionId":"" //收藏记录标识
+            }
+             */
+
+            sb.append("{\"translation\": [{\"translated\":[{ ")
+                    .append("\"text\":\"").append(collectionInfo.getTranslation()).append("\",\"rank\": 0")
+                    .append(",\"score\": 1,").append("\"src-tokenized\":\"").append(text).append("\"")
+                    .append("}],")
+                    .append("\"translationId\": \"123\"").append("}]")
+                    .append("\"collectionId\":").append(collectionInfo.getId()).append("}");
+        }
+        //TODO... 模拟数据
+//        sb.append("{\"translation\": [{\"translated\":[{ ")
+//                .append("\"text\":\"").append("Hello main").append("\",\"rank\": 0").append(",\"score\": 1,")
+//                .append("\"src-tokenized\":\"").append(text).append("\"")
+//                .append("}],")
+//                .append("\"translationId\": \"123\"").append("}],")
+//                .append("\"collectionId\":").append("345345").append("}");
+        return sb.toString();
     }
   
 }

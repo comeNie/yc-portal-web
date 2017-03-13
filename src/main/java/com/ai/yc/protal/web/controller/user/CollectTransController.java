@@ -46,44 +46,6 @@ public class CollectTransController {
     }
 
     /**
-     * 取消译文收藏
-     * @param collectionIds  id集合的json串
-     * @return
-     */
-    @RequestMapping("/del")
-    @ResponseBody
-    public ResponseData<String> delTranslation(String collectionIds){
-        ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-        try{
-            //若译文ID不为空，则进行取消操作
-            if(StringUtils.isNotBlank(collectionIds)) {
-                IYCUserCollectionSV userCollectionSV = DubboConsumerFactory.getService(IYCUserCollectionSV.class);
-                List<String> collectionIdList = JSON.parseArray(collectionIds,String.class);
-                BaseResponse response = null;
-                if(!CollectionUtil.isEmpty(collectionIdList)){
-                    UserCollectionInfoRequest collectionInfoReq = new UserCollectionInfoRequest();
-                    collectionInfoReq.setCollectionIds(collectionIdList);
-                    collectionInfoReq.setUserId(UserUtil.getUserId());
-                    //取消译文收藏
-                    response = userCollectionSV.deleteCollectionInfo(collectionInfoReq);
-                }
-                if(response != null && !response.getResponseHeader().isSuccess()){
-                    LOGGER.error("del translation fail.\r\ncode={},message={}"
-                            ,response.getResponseHeader().getResultCode()
-                            ,response.getResponseHeader().getResultMessage());
-                    throw new BusinessException(response.getResponseHeader().getResultCode()
-                            ,response.getResponseHeader().getResultMessage());
-                }
-            }
-        } catch (Exception e){
-            LOGGER.error("del collect translation fail.",e);
-            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE
-                    ,rb.getMessage("user.collect.del.fail"));
-        }
-        return responseData;
-    }
-
-    /**
      * 更新收藏译文
      * @param userCollectionTrans
      * @return
