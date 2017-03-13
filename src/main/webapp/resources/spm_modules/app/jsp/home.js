@@ -32,7 +32,7 @@ define('app/jsp/home', function (require, exports, module) {
 			"click #sus-top3":"_collectTrans",
 			"click #humanTranBtn":"_goTextOrder",
 			"click .change": "_change",
-			"click #error-oc": "_saveText",
+			"click #preser-btn": "_saveText",
 			"click #preser-close": "_cancelSave",
 			"click #error": "_transError"
         },
@@ -85,7 +85,7 @@ define('app/jsp/home', function (require, exports, module) {
                 _this._mt();
             });
         },
-
+		//字数统计
 		textCounter:function(desc,maxlimit) {
 			var totalWords =  CountWordsUtil.count($("#int-before").val());
 			// if (totalWords > maxlimit){
@@ -361,15 +361,43 @@ define('app/jsp/home', function (require, exports, module) {
         //保存
         _saveText:function() {
         	$("#transRes").attr("readonly","readonly");
-			if ($.trim( $("#transRes").val())=='')
-                $(".post-cion").css("visibi lity","hidden");
-			else
-                $(".post-cion").css("visibility","visible");
+            var collectId = $("#sus-top3").attr("collectId");
+			if(collectId!=null && collectId!=""){
+				this._updateCollect(collectId);
+			}else{
+                if ($.trim( $("#transRes").val())=='')
+                    $(".post-cion").css("visibi lity","hidden");
+                else
+                    $(".post-cion").css("visibility","visible");
 
-			if ($.trim(sourYiWen) == $("#transRes").val()) {
-				$("#tgtOld").hide();
-				$("#tgtNew").show();
+                if ($.trim(sourYiWen) == $("#transRes").val()) {
+                    $("#tgtOld").hide();
+                    $("#tgtNew").show();
+                }
 			}
+        },
+		//更新收藏译文
+		_updateCollect:function (collectId) {
+            ajaxController.ajax({
+                type: "post",
+                url: _base + "/collectTrans/update/"+collectId,
+                data: {
+                    translation: $("#transRes").val()
+                },
+                success: function (data) {
+                    if("OK" === data.statusInfo) {
+                        if ($.trim( $("#transRes").val())=='')
+                            $(".post-cion").css("visibi lity","hidden");
+                        else
+                            $(".post-cion").css("visibility","visible");
+
+                        if ($.trim(sourYiWen) == $("#transRes").val()) {
+                            $("#tgtOld").hide();
+                            $("#tgtNew").show();
+                        }
+                    }
+                }
+            });
         },
         
         //取消

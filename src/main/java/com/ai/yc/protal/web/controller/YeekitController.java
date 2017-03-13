@@ -154,7 +154,6 @@ public class YeekitController {
     @RequestMapping("/downloadDoc")
     public void downloadDoc(String fileType, HttpServletRequest request,
                          HttpServletResponse response) {
-
         byte[] b;
         try {
             if ("doc" == fileType.toLowerCase()) {
@@ -189,7 +188,6 @@ public class YeekitController {
         }
     }
 
-    
     /**
      * 机器翻译语言检测
      * @param text 文本

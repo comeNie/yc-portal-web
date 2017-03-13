@@ -45,34 +45,4 @@ public class CollectTransController {
         return "";
     }
 
-    /**
-     * 更新收藏译文
-     * @param userCollectionTrans
-     * @return
-     */
-    @RequestMapping("/update")
-    @ResponseBody
-    public ResponseData<String> updateTranslation(UserCollectionTrans userCollectionTrans){
-        ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-        try{
-            IYCUserCollectionSV userCollectionSV = DubboConsumerFactory.getService(IYCUserCollectionSV.class);
-            UserCollectionInfoRequest collectionInfoRequest = new UserCollectionInfoRequest();
-            BeanUtils.copyProperties(collectionInfoRequest,userCollectionTrans);
-            collectionInfoRequest.setUserId(UserUtil.getUserId());
-            //更新收藏译文
-            BaseResponse response = userCollectionSV.updateCollectionInfo(collectionInfoRequest);
-            if(!response.getResponseHeader().isSuccess()){
-                LOGGER.error("del translation fail.\r\ncode={},message={}"
-                        ,response.getResponseHeader().getResultCode()
-                        ,response.getResponseHeader().getResultMessage());
-                throw new BusinessException(response.getResponseHeader().getResultCode()
-                        ,response.getResponseHeader().getResultMessage());
-            }
-        }catch (Exception e){
-            LOGGER.error("update collect translation fail.",e);
-            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE
-                    ,rb.getMessage("user.collect.update.fail"));
-        }
-        return responseData;
-    }
 }

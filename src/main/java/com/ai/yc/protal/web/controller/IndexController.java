@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -299,6 +300,42 @@ public class IndexController {
             LOGGER.error("del collect translation fail.",e);
             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE
                     ,rb.getMessage("user.collect.del.fail"));
+        }
+        return responseData;
+    }
+    /**
+     * 更新译文收藏
+     * @param collectionId  id集合的json串
+     * @param translation  译文
+     * @return
+     */
+    @RequestMapping("/collectTrans/update/{collectionId}")
+    @ResponseBody
+    public ResponseData<String> updateTranslation(
+            @PathVariable("collectionId") String collectionId, String translation){
+        ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        try{
+            //若用户没有登录，则进行临时保存收藏信息
+            if(UserUtil.getSsoUser() == null){
+                responseData = new ResponseData<String>(LoginConstants.AJAX_STATUS_LOGIN,"");
+            }//若译文ID和译文均不为空，则进行更新操作
+            else if(StringUtils.isNotBlank(collectionId) && StringUtils.isNotBlank(translation)) {
+                IYCUserCollectionSV userCollectionSV = DubboConsumerFactory.getService(IYCUserCollectionSV.class);
+                UserCollectionInfoRequest collectionInfoRequest = new UserCollectionInfoRequest();
+                collectionInfoRequest.setUserId(UserUtil.getUserId());//用户标识
+                collectionInfoRequest.setCollectionId(collectionId);//收藏标识
+                collectionInfoRequest.setTranslation(translation);//更新译文
+                BaseResponse response = userCollectionSV.updateCollectionInfo(collectionInfoRequest);
+                if(response != null && !response.getResponseHeader().isSuccess()){
+                    LOGGER.error("update translation fail.\r\nhead={}",JSON.toJSONString(response.getResponseHeader()));
+                    throw new BusinessException(response.getResponseHeader().getResultCode()
+                            ,response.getResponseHeader().getResultMessage());
+                }
+            }
+        } catch (Exception e){
+            LOGGER.error("update collect translation fail.",e);
+            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE
+                    ,rb.getMessage("user.collect.update.fail"));
         }
         return responseData;
     }
