@@ -6,24 +6,26 @@ $(function () {
     })
 		$(".in-switch-hover").click(function () {
                 $(this).hide(1);
-           });	
+           });
 		$('.placeorder-breadcrumb').mouseleave(function () {
         $('.in-switch-hover').hide(1);
         $('#in-switch a').children('i').removeClass("icon-caret-up");
-    });	
+    });
 });
+// 点击翻译输入框
 $(document).ready(function(){
   $("#int-before").click(function(){
-    $(".index-wrapper").animate({top:'100px'},300);
-    $(".banner").css({"height":"343px"});
+    $(".index-wrapper").animate({top:'100px'},400);
+    $(".banner").animate({"height":"343px"});
   });
 });
+// 点击箭头展开
 $(function () {
     $(".banner-hover p").click(function () {
 		$(this).children('i').toggleClass(" icon-angle-down icon-angle-up");
-		$(this).parents().parent().children('.banner-sm').slideToggle(50);
+		$(this).parents().parent().children('.banner-sm').slideToggle(450);
     });
-});	
+});
 //图标遮罩
 $(function(){
 	$(".item2").hover(
@@ -33,7 +35,7 @@ $(function(){
 				$(that).find('.caption').slideDown(300);
 				$(that).find('.item2-txt').fadeOut(200);
 			},100);
-			
+
 		},
 		function(){
 			var that=this;
@@ -66,7 +68,7 @@ $(function () {
     })
     	$('#sus-top').mouseleave(function () {
         $('.suspension').hide(1);
-   }); 
+   });
    $('.post-cion #sus-top1').mouseenter(function () {
 		$('.suspension1').show(1);
     })
@@ -85,9 +87,9 @@ $(function () {
 		$('#sus-top3').mouseleave(function () {
         $('.suspension3').hide(1);
    });
-    
+
   });
-  
+
 //
 $(function(){
   $("#img1").mouseenter(function(){

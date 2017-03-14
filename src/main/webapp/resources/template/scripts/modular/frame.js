@@ -7,11 +7,11 @@ $(function () {
     })
 		$("#user .show-hover").click(function () {
                 $(this).hide(1);
-           });	
+           });
 		$('#user').mouseleave(function () {
         $('#user .show-hover').hide(1);
         $('#user .yonh').children('i').removeClass("icon-caret-up");
-    });	
+    });
 });
 
 //切换语言1
@@ -23,11 +23,11 @@ $(function () {
     })
 		$("#switch .switch-hover").click(function () {
                 $(this).hide(1);
-           });	
+           });
 		$('#switch').mouseleave(function () {
         $('#switch .switch-hover').hide(1);
         $('#switch a').children('i').removeClass("icon-caret-up");
-    });	
+    });
 });
  //切换语言2
 $(function () {
@@ -38,35 +38,35 @@ $(function () {
     })
 		$(".in-switch-hover").click(function () {
                 $(this).hide(1);
-           });	
+           });
 		$('.placeorder-breadcrumb').mouseleave(function () {
         $('.in-switch-hover').hide(1);
         $('#in-switch a').children('i').removeClass("icon-caret-up");
-    });	
-}); 
+    });
+});
 //左侧菜单关闭
 $(function(){
 $(".left-tplist i").click(function () {
 	$(this).parent('.left-tplist').hide();
 	});
-	}); 
-	
+	});
+
 //我的订单 点击展开
 $(function () {
     $(".query-order ul .right p").click(function () {
 		$(this).children('i').toggleClass("icon-angle-down  icon-angle-up");
 		$(this).parent().parent().parent().parent().children('.order-hiddn').slideToggle(100);
     });
-});	
+});
 
 //我的订单 table
 $(function(){
 $(".oder-table ul li a").click(function () {
-                $(".oder-table ul li a").each(function () {
-                    $(this).removeClass("current");
-                });
-                $(this).addClass("current");
-            });
+    $(".oder-table ul li a").each(function () {
+        $(this).removeClass("current");
+    });
+    $(this).addClass("current");
+});
 $('.oder-table ul li a').click(function(){
   var index=$('.oder-table ul li a').index(this);
      if(index==0){
@@ -104,7 +104,7 @@ $('.oder-table ul li a').click(function(){
    $('#table-da1').hide();
    $('#table-da4').hide();
    }
-  }); 
+  });
 });
 
 //我的订单 table
@@ -125,7 +125,7 @@ $('.oder-table ul li a').click(function(){
    $('#translate2').show();
    $('#translate1').hide();
    }
-  }); 
+  });
 });
 
 //订单大厅
@@ -137,11 +137,11 @@ $(function () {
 		$(".table-show").click(function () {
                 $(this).hide(1);
             });
-			
+
 		$('.right-list-table').mouseleave(function () {
         $('.table-show').hide(1);
-    });	
- }); 
+    });
+ });
 
 //头像显示
 $(function(){
@@ -153,8 +153,8 @@ $(function(){
    $(".portrait-file").addClass("webuploader-element-invisible");
   });
   });
-  
- 
+
+
 //设置密码
 $(function(){
   $("#next-bt1").click(function(){
@@ -245,7 +245,7 @@ $(function(){
 //$("#tab-icon4").hide();
 //$("#tab-icon6").hide();
 //});
-//});  
+//});
 ////设置密码
 //$(function(){
 //$("#tab-icon13").click(function(){
@@ -272,7 +272,7 @@ $(function(){
 //$("#tab-icon14").hide();
 //$("#tab-icon10").hide();
 //});
-//});  
+//});
 //设置密码 table
 $(function(){
 $(".set-up a").click(function () {
@@ -291,7 +291,7 @@ $('.set-up a').click(function(){
    $('#set-table2').show();
    $('#set-table1').hide();
    }
-  }); 
+  });
 });
 //翻译 table
 $(function(){
@@ -318,7 +318,7 @@ $('.prompt-center-title ul li a').click(function(){
    $('#tran-tab2').hide();
    $('#tran-tab1').hide();
    }
-  }); 
+  });
 });
 
 /**翻译下单去掉最后的线条**/
@@ -330,8 +330,8 @@ $(function(){
 $(".attachment ul li i").click(function () {
 	$(this).parent().parent('ul').hide();
 	});
-	}); 
-	
+	});
+
 
 //协议tba
 $(function(){
@@ -463,7 +463,7 @@ $('.subnav-left ul li a').click(function(){
   	 $('#tab-xy8').hide();
   	 $('#tab-xy9').hide();
    }
-  }); 
+  });
 });
 
 
@@ -473,9 +473,9 @@ $(function () {
 		$(this).children('i').toggleClass("icon-angle-down  icon-angle-up");
 		$(this).toggleClass("color-blue");
 		$(this).parent().parent().parent().parent().children('.consultation-show').slideToggle(100);
-		
+
     });
-});	
+});
 
 //译者认证 table
 $(function(){
@@ -518,14 +518,14 @@ $('.static-tab ul li').click(function(){
    $('#renz-table2').hide();
    $('#renz-table1').hide();
    }
-  }); 
+  });
 });
 
 $(function () {
     $("#inselect-bj").click(function () {
 		$('#inselect-bj').css("background","#2361ea");
     });
-});	
+});
 
 //placeholder 在ie8不显示
 $(function(){
@@ -551,12 +551,21 @@ function placeholderSupport() {
 
 $(document).ready(function(){
 　$("#table-da1 ul").each(function(){
-            var indx = $(this).index(); 
+            var indx = $(this).index();
             if((indx+0)%3 == 0){$("#table-da1 ul").eq(indx).css("margin-left","0px");} });
   　$("#table-da2 ul").each(function(){
-            var indx = $(this).index(); 
+            var indx = $(this).index();
             if((indx+0)%3 == 0){$("#table-da2 ul").eq(indx).css("margin-left","0px");} });
     $("#table-da3 ul").each(function(){
-            var indx = $(this).index(); 
-            if((indx+0)%3 == 0){$("#table-da3 ul").eq(indx).css("margin-left","0px");} });  
+            var indx = $(this).index();
+            if((indx+0)%3 == 0){$("#table-da3 ul").eq(indx).css("margin-left","0px");} });
 });
+
+// tab切换
+$(document).on('click', '.tabs-anm li', function(){
+  var pos = $(this).position().left;
+  $(this).addClass('current').siblings().removeClass('current');
+  $(this).siblings('.line').animate({
+    "left" : pos
+  },300)
+})

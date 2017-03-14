@@ -158,3 +158,278 @@
 .dropdown li.focus:hover{background:#2965e6;position: relative;z-index: 3;color: #fff;}
 .dropdown li.active{color:#2965e6;font-weight:bold}
 .dropdown li.aa{color:#000;font-weight:bold}
+
+/*问题反馈*/
+.proposal-panel{
+  background: #fff;
+  line-height: 90px;
+  color: #2c3e50;
+  text-align: center;
+  max-width: 1400px;
+  margin: 20px auto;
+  font-size: 16px;
+}
+.proposal-panel span{
+  color: #4C76E4;
+}
+.question{
+  background: #F0F2F5;
+}
+.quesbox{
+  background: #fff;
+  max-width: 1400px;
+  margin: 0 auto;
+  text-align: center;
+  min-height: 610px;
+}
+.quesbox ul{
+  width: 520px;
+  margin: 0 auto;
+  padding: 40px 0;
+  font-size: 14px;
+}
+.quesbox li {
+  overflow: hidden;
+  line-height: 48px;
+  margin-bottom: 20px;
+}
+.quesbox li>label{
+  float: left;
+  margin: 0;
+  width: 90px;
+  color: #2c3e50;
+  text-align: left;
+  font-weight: normal;
+}
+.quesbox li>div{
+  float: left;
+}
+.quesbox select{
+  width: 230px;
+  height: 46px;
+}
+.quesbox input.form-control {
+  width: 428px;
+  height: 46px;
+}
+
+.quesbox .radio{
+  margin:0;
+  display: inline-block;
+  margin-right: 14px;
+}
+.quesbox .radio [type="radio"]{
+  position: static;
+  margin: 0;
+  margin-right: 5px;
+}
+.quesbox .texts{
+  float: left;
+  position: relative;
+}
+.quesbox .texts textarea{
+  resize: none;
+  width: 428px;
+  height: 150px;
+}
+.quesbox .tilps{
+  position: absolute;
+  top: 105px;
+  margin: 0;
+  right: 15px;
+}
+.quesbox .tilps span{
+  color: #fc6c6e;
+  padding: 0 5px;
+}
+.texts .notice{
+  margin: 0;
+  line-height: 20px;
+  margin-top: 15px;
+  text-align: left;
+  font-size: 12px;
+  color: #fc6c6e;
+}
+.quesbox .form-control.qrcode{
+  width: 290px;
+  float: left;
+}
+.quesbox .yzm{
+  float: right;
+  width: 115px;
+  height: 44px;
+}
+.submits .btn-medium{
+  border-radius: 22px;
+  width: 210px;
+  font-size: 18px;
+}
+.submit-sucess{
+  padding-top: 100px;
+}
+.submit-sucess p{
+  font-size: 16px;
+  color: #6a6c6f;
+  margin-top: 20px;
+}
+.submit-sucess p a{
+  color: #2965e6;
+  font-size: 16px;
+  padding: 0 5px;
+}
+.footers{
+  text-align: center;
+  font-size: 12px;
+  margin-top: 10px;
+}
+.footers img{
+  margin-left: 5px;
+}
+
+/*邀请好友积分*/
+.invitebox-panel{
+  max-width: 1200px;
+  background: #fff;
+  text-align: center;
+  height: 90px;
+  margin: 0 auto 20px;
+  font-size: 16px;
+  color: #2c3e50;
+  line-height: 90px;
+}
+.invitebox-panel span{
+  color: #2965e6;
+}
+.invitebox{
+  max-width: 1200px;
+  background: #fff;
+  text-align: center;
+  height: 400px;
+  margin: 0 auto;
+}
+.nologin{
+  padding-top: 130px;
+}
+.nologin .btn{
+  height: 50px;
+  line-height: 36px;
+  width: 210px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.rulebox{
+  height: 240px;
+  max-width: 1200px;
+  width: 1200px;
+  padding: 40px 375px 0;
+  margin: 20px auto 0;
+  background: #fff;
+  font-size: 14px;
+}
+.rules{
+  list-style: none;
+  font-size: 14px;
+  line-height: 26px;
+  margin-top: -5px;
+}
+.rulebox h4{
+  font-weight: normal;
+  color: #2361ea;
+  font-size: 14px;
+}
+.logined .links{
+  width: 450px;
+  margin: 0 auto;
+  padding-top: 80px;
+  text-align: left;
+}
+.logined .links li{
+  margin-bottom: 40px;
+}
+.logined .links p{
+  font-size: 14px;
+  color: #6a6c6f;
+}
+.logined .links input{
+  width: 300px;
+  float: left;
+  height: 44px;
+}
+.logined .links div{
+  overflow: hidden;
+}
+.btn-line-green{
+  float: right;
+  width: 80px;
+  height: 44px;
+  border:1px solid #43d4b0;
+  background: transparent;
+  color: #43d4b0;
+  border-radius: 7px;
+}
+
+/*文档翻译*/
+.translate-box {
+    width: 75%;
+    min-width: 560px;
+    height: 560px;
+    max-width: 1200px;
+    padding: 20px;
+    background: rgb(255, 255, 255);
+    margin: -480px auto 0px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(219, 219, 219);
+    border-image: initial;
+    overflow: auto;
+    border-radius: 5px;
+}
+.translate-box .trans-part {
+    float: left;
+    width: 50%;
+}
+.translate-box .trans-title {
+    height: 26px;
+    line-height: 26px;
+    color: rgb(44, 62, 80);
+}
+.pull-left {
+    float: left;
+}
+.translate-box .transed-box {
+    height: 482px;
+    color: rgb(106, 108, 111);
+    font-size: 14px;
+    line-height: 24px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 19;
+    -webkit-box-orient: vertical;
+    padding: 20px 30px;
+    overflow: hidden;
+}
+.translate-box .trans-part textarea {
+    resize: none;
+    width: 100%;
+    height: 440px;
+    color: rgb(106, 108, 111);
+    outline: none;
+}
+.translate-box .trans-title .btn {
+    line-height: 22px;
+    height: 26px;
+    width: 50px;
+    font-size: 12px;
+    margin-left: 5px;
+    border-radius: 0px;
+    padding: 0px;
+    border-width: 1px;
+}
+.show-more {
+    text-align: center;
+    line-height: 54px;
+    margin-bottom: 30px;
+    cursor: pointer;
+    font-size: 12px;
+}

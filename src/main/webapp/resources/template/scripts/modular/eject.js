@@ -72,3 +72,48 @@ jQuery(document).ready(function($) {
 	$('#evaluate-password').slideUp(200);
 	})
 })
+//提交
+jQuery(document).ready(function($) {
+	$('#submit-btn').click(function(){
+	$('#eject-mask').fadeIn(100);
+	$('#sub-order').slideDown(100);
+	})
+	$('#sub-determine').click(function(){
+	$('#eject-mask').fadeOut(200);
+	$('#sub-order').slideUp(200);
+	})
+	$('#sub-cancel').click(function(){
+	$('#eject-mask').fadeOut(200);
+	$('#sub-order').slideUp(200);
+	})
+})
+//新增联系方式弹出框 
+jQuery(document).ready(function($) {
+	$('#add-person').click(function(){
+	$('#eject-mask').fadeIn(100);
+	$('#add-msg').slideDown(100);
+	})
+	$('#add-determine').click(function(){
+	$('#eject-mask').fadeOut(200);
+	$('#add-msg').slideUp(200);
+	})
+	$('#add-cancel').click(function(){
+	$('#eject-mask').fadeOut(200);
+	$('#add-msg').slideUp(200);
+	})
+})
+//编辑联系方式弹出框 
+jQuery(document).ready(function($) {
+	$('[edit]').click(function(){
+	$('#eject-mask').fadeIn(100);
+	$('#add-msg').slideDown(100);
+	})
+	$('#add-determine').click(function(){
+	$('#eject-mask').fadeOut(200);
+	$('#add-msg').slideUp(200);
+	})
+	$('#add-cancel').click(function(){
+	$('#eject-mask').fadeOut(200);
+	$('#add-msg').slideUp(200);
+	})
+})

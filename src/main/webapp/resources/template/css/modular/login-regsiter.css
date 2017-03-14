@@ -10,7 +10,7 @@
 .login-title{width:100%;float:left;border-bottom:1px solid #2361ea;padding-bottom:20px;text-align:center;font-size:18px;color:#2361ea;font-weight:bold;}
 .login-form-title{width:100%;float:left;padding:30px 30px;*padding:30px 15px;}
 .login-form-title label{float:left;color:#fe6b6b;font-size:12px;}
-.login-form-title .right{float:right;font-size:12px;}
+.login-form-title .right{float:right;font-size:12px;cursor: pointer;color: #2361ea;}
 .login-form-title .right a{color:#9ba3af;font-size:12px;}
 .login-form-title .right a i{color:#2361ea;font-size:14px;margin-right:10px;margin-top:2px;float:left}
 .login-form-title .icon-mt a i{margin-top:4px;}
@@ -18,9 +18,10 @@
 
 .login-form{width:100%;float:left;padding:0 30px;*padding:0px 15px;display: inline;}
 .login-form ul,.login-form ul li{width:100%;float:left;}
-.login-form ul li{margin-bottom:20px;}
+.login-form ul li{margin-bottom:20px;transition:border .2s;}
 .login-form ul li p{float:left}
 .login-form ul .int-border{width:100%;height:44px;border:1px solid #e6e6e6}
+.login-form ul .int-border.error{border:1px solid #fe6b6b;}
 .login-form ul .int-border:hover{border:1px solid #52dc90;}
 .logon-int{width:280px;height:42px;border:none;background:#fff;line-height:42px;}
 .logon-int:hover{border:none}
@@ -29,7 +30,7 @@
 .login-form ul li a{color:#2361ea;font-size:12px;}
 .login-form ul li .right{float:right}
 .login-form ul li .line{width:233px;border-bottom:1px solid #e6e6e6;margin:10px 0 0 20px;}
-.login-form ul li .share{width:30px;height:30px;float:left;margin-right:20px;}
+.login-form ul li .share{width:30px;height:30px;float:left;margin-right:20px;cursor: pointer;}
 .login-form ul li .none-ma{margin-right:0;}
 .login-form ul li .share1{background:url(../../images/icon-big.png) no-repeat left -243px;float:left;padding: 0}
 .login-form ul li .share1:hover{background:url(../../images/icon-big.png) no-repeat left -285px;}
@@ -148,3 +149,52 @@
 .recharge-success ul .list{font-size:14px}
 .recharge-success ul .list a{color:#3292f8;font-size:14px}
 .recharge-success ul .word .red{font-size:36px;color:#39d5b0;margin:10px;}
+
+/*手机登录*/
+.login-form-wrap{
+  width: 400px;
+  overflow: hidden;
+  height: 388px;
+}
+.login-form-wrap .login-form{
+  width: 800px;
+  padding: 0;
+  transition:.5s;
+  /*transform:translateX(-400px);*/
+}
+.login-form ul{
+  float: left;
+  width: 50%;
+  padding: 0 30px;
+}
+.num-select.select{
+  width: 280px;
+  position: absolute;
+  padding-right: 15px;
+  padding-left: 0;
+  height: 42px;
+  line-height: 22px;
+  top: 0px;
+  left: 53px;
+  border: none;
+}
+.num-select.select option{
+  width: 280px;
+}
+.posr{
+  position: relative;
+}
+.btn-getcode{
+  width: 115px;
+  height: 44px;
+  border-radius: 5px;
+}
+.login-form ul li .iconfont{
+  color: #e6e6e6;
+}
+.login-form ul li .notice{
+  text-align: center;
+  line-height: 40px;
+  color: #9ba3af;
+  width: 100%;
+}

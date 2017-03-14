@@ -24,6 +24,15 @@ input[type="checkbox"] {
   margin-top:-2px;
   *background: none;
 }
+input[type="radio"]{
+  background: url(../../images/icon_radio.png);
+  outline: none;
+}
+input[type="radio"]:checked{
+  background: url(../../images/icon_radioed.png);
+}
+
+
 input[type="checkbox"]:checked {
   background:url(../../images/checkbox-chek.jpg);
 }
@@ -43,23 +52,31 @@ input[type="checkbox"][disabled] {
 input[type="checkbox"][disabled]:checked {
    background:url(../../images/checkbox.jpg);
 }
-.int-text::-webkit-input-placeholder { /* WebKit browsers */  
-    color:    #e6e6e6;  
-}  
-.int-text:-moz-placeholder { /* Mozilla Firefox 4 to 18 */  
-   color:    #e6e6e6;  
-   opacity:  1;  
-}  
-.int-text::-moz-placeholder { /* Mozilla Firefox 19+ */  
-   color:    #e6e6e6;  
-   opacity:  1;  
-}  
-.int-text:-ms-input-placeholder { /* Internet Explorer 10+ */  
-   color:    #e6e6e6;  
-}  
-.placeholder { /* Internet Explorer 8 */  
-   color:    #e6e6e6;  
-}  
+.icon-company{
+  border:1px solid #fe6b6b;
+  border-radius: 3px;
+  margin-left: 5px;
+  font-size: 12px;
+  padding: 2px 3px;
+  color: #fe6b6b!important;
+}
+.int-text::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #e6e6e6;
+}
+.int-text:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #e6e6e6;
+   opacity:  1;
+}
+.int-text::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #e6e6e6;
+   opacity:  1;
+}
+.int-text:-ms-input-placeholder { /* Internet Explorer 10+ */
+   color:    #e6e6e6;
+}
+.placeholder { /* Internet Explorer 8 */
+   color:    #e6e6e6;
+}
 
 /****/
 h1,h2,h3,h4,h5,h6{font-weight:200;line-height:1.1;color:inherit;font-family: "微软雅黑";}
@@ -121,7 +138,7 @@ h3{margin:20px 0;}
 .mt-40{margin-top:40px}/**距上40像素**/
 .mt-50{margin-top:50px}/**距上50像素**/
 .mt-170{margin-top: 170px;}
- 
+
 .mb-5{margin-bottom:5px}/**距下5像素**/
 .mb-10{margin-bottom:10px}/**距下10像素**/
 .mb-15{margin-bottom:15px}/**距下15像素**/
@@ -162,12 +179,12 @@ h3{margin:20px 0;}
 .pt-10{padding-top:10px}/**上填充10像素**/
 .pt-15{padding-top:15px}/**上填充15像素**/
 .pt-20{padding-top:20px}/**上填充20像素**/
- 
+
 .pb-5{padding-bottom:5px}/**下填充5像素**/
 .pb-10{padding-bottom:10px}/**下填充10像素**/
 .pb-15{padding-bottom:15px}/**下填充15像素**/
 .pb-20{padding-bottom:20px}/**下填充20像素**/
- 
+
 .pl-5{padding-left:5px}/**左填充5像素**/
 .pl-10{padding-left:10px}/**左填充10像素**/
 .pl-15{padding-left:15px}/**左填充15像素**/
@@ -180,7 +197,7 @@ h3{margin:20px 0;}
 .pr-20{padding-right:20px}/**右填充20像素**/
 .pr-25{padding-right:25px}/**右填充20像素**/
 .pr-30{padding-right:30px}/**右填充20像素**/
- 
+
 
 .pd-5{padding:5px}/**填充5像素**/
 .pd-10{padding:10px}/**填充10像素**/
@@ -278,7 +295,7 @@ pre ol.linenums li {
 	white-space: nowrap;
 	vertical-align: middle;
 	background-color: #f37b1d;
-	border-radius:4px;	
+	border-radius:4px;
 }
 /************************注意btn************************/
 .bj-color{background:#f5f5f5;border:1px solid #ddd;border-radius:5px;}
@@ -331,7 +348,7 @@ pre ol.linenums li {
 /**带横向分割线**/
 .table-border{border-top:1px solid #e3e6ed}
 .table-border th,.table-border td{border-bottom:1px solid #e3e6ed}
- 
+
 /**th带背景**/
 .table-bg .bj{background-color:#f6f8fa;height:40px;}
 .table-bg .bj:hover{background-color:#f6f8fa}
@@ -366,7 +383,7 @@ pre ol.linenums li {
 .table tr .red{color:#fe6b6b}
 .table tr .green{color:#39d5b0}
 /************************按钮************************/
-.btn{cursor:pointer;text-align:center;outline:none;font-size:14px;}
+.btn{cursor:pointer;text-align:center;outline:none;font-size:14px;transition:.3s;}
 /*默认——灰色 通常用于取消*/
 .biu-btn{display:inline-block;cursor:pointer;text-align:center; font-weight:400;white-space:nowrap; outline:none;background:#e6e6e6;color:#6a6c6f}
 /*颜色 蓝色*/
@@ -424,7 +441,7 @@ pre ol.linenums li {
 .btn-small{width:80px;height:32px;}
 .btn-medium{width:124px;height:44px;}
 .btn-large{width:178px;height:48px;font-size:18px;}
-
+.btn-line{line-height: 32px;font-size: 14px;color: #2361ea;border:2px solid #2361ea;border-radius: 22px;background: transparent;}
 .btn-xlarge{width:140px;height:44px;}
 .btn-xxlarge{width:160px;height:44px;}
 .btn-xxxlarge{width:210px;height:45px;font-weight:bold;font-size:18px}
@@ -550,3 +567,30 @@ select::-ms-expand { display: none; }
 .int-verysmall{width:60px;height:28px;border:1px solid #e3e6ed;font-size:12px;text-align:center;}
 .biu-paging ul .taiz a{color:#2361ea}
 .biu-paging ul .taiz a:hover{background:none;color:#2361ea}
+
+/************************tabs************************/
+.tabs{float: left;width: 100%;}
+
+.tabs-anm{
+  float: left;
+  width: 100%;
+  position: relative;
+}
+.tabs-anm li{
+  float: left;
+  padding: 0 10px 10px 10px;
+  font-size: 16px;
+  color: #2c3e50;
+  cursor: pointer;
+}
+.tabs-anm li.line{
+  width: 84px;
+  height: 2px;
+  border-bottom: 2px solid #2361ea;
+  position: absolute;
+  top: 20px;
+  left: 0px;
+}
+.tabs-anm li.current{
+  color: #2361ea;
+}
