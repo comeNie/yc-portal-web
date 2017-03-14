@@ -24,6 +24,19 @@
     <link rel="stylesheet" type="text/css" href="${_base}/resources/spm_modules/webuploader/webuploader.css">
 
     <style type="text/css">
+        /**弹出框**/
+        .prompt-samll{ width:350px; background:#fff; position:fixed;top:50%;left:50%;margin-top:-200px;margin-left:-175px;z-index:999;border-radius:5px;display:none;padding-bottom:10px;}
+        .prompt-samll-title{ width:100%; float:left;height:50px;background:#39d5b0;border-radius:5px 5px 0 0;text-align:center;line-height:50px;color:#fff;font-size:16px}
+        .prompt-samll-confirm{ width:100%;float:left; margin-top:25px;padding:0 40px;}
+        .prompt-samll-confirm ul{ width:100%;float:left; }
+        .prompt-samll-confirm ul li{ text-align:center;margin-bottom: 10px;font-size:14px;}
+        .prompt-samll-confirm ul .eject-btn{margin-top: 28px;text-align: center;}
+        .prompt-samll-confirm ul .eject-btn .btn{margin-left:10px;}
+        .prompt-samll-confirm .pass-list li{width:100%;float:left}
+        .prompt-samll-confirm ul  p{float:left;line-height:40px;}
+        .prompt-samll-confirm ul .word{width:80px;float:left;text-align: right;}
+        .mask{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;opacity:0.4;filter:alpha(opacity=40);z-index:199;display:none;}
+
         /*分词高亮*/
         .before-translation span.b_cur {background: #fff444 none repeat scroll 0 0;}
 
@@ -49,7 +62,7 @@
         .audiojs div{display:none;}
         .audiojs .error-message{display:none;}
 
-        .uploadDiv { width:80px;  height: 26px;}
+        .uploadDiv { width:80px;  height: 26px; float: left;}
 
         .uploadDiv .webuploader-pick{
             border:2px;
@@ -63,6 +76,7 @@
             outline:none;
             font-size:14px;
             transition:.3s;
+            padding:0;
         }
     </style>
     <%@ include file="/inc/incJs.jsp" %>

@@ -2,6 +2,7 @@ define('app/jsp/home', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
         Widget = require('arale-widget/1.2.0/widget'),
+        Dialog = require("optDialog/src/dialog"),
         AjaxController = require('opt-ajax/1.0.0/index');
     require("audio/audio.min");
     require("jquery-validation/1.15.1/jquery.validate");
@@ -16,6 +17,12 @@ define('app/jsp/home', function (require, exports, module) {
 	var sourYiWen="";
 	var clip;
     var uploader = null;
+    var uploaderDialog = new Dialog({
+        closeIconShow:false,
+        icon:"loading",
+        //正在处理中，请稍后...
+        content: $.i18n.prop('com.ajax.def.content')
+    });
 	var homePage = Widget.extend({
         //属性，使用时由类的构造函数传入
         attrs: {
@@ -486,7 +493,7 @@ define('app/jsp/home', function (require, exports, module) {
                 resize : false,
                 // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
                 disableGlobalDnd: true,
-                formData: {"from":from,"to":to},
+                // formData: {"from":from,"to":to},
                 fileNumLimit: 1,
                 fileSingleSizeLimit: 100 * 1024   // 100 K
             });
@@ -498,7 +505,7 @@ define('app/jsp/home', function (require, exports, module) {
                     return false;
                 }
 				//判断文件是否小于100k
-                if (file.size > 10*1024) {
+                if (file.size > 100*1024) {
                     _this._showWarn($.i18n.prop('home.upload.error.fileSizeSingle'));
                     return false;
                 }
@@ -510,16 +517,14 @@ define('app/jsp/home', function (require, exports, module) {
                 //获得原语言和目标语言。
 				from=$(".dropdown .selected").eq(0).attr("value");
                 to=$(".dropdown .selected").eq(1).attr("value");
-
+				if(window.console){
+                    console.log("from="+from+",to="+to);
+				}
+                uploader.option( 'formData', {"from":from,"to":to});
             });
             //文件开始上传
             uploader.on("uploadStart",function (file) {
-				new Dialog({
-                    closeIconShow:false,
-                    icon:"loading",
-                    //正在处理中，请稍后...
-                    content: $.i18n.prop('com.ajax.def.content')
-                }).showModal();
+                uploaderDialog.showModal();
             });
 			//显示上传进度
             // uploader.on("uploadProgress",function(file,percentage){
@@ -536,17 +541,16 @@ define('app/jsp/home', function (require, exports, module) {
             // });
 			//上传成功后触发
             uploader.on( 'uploadSuccess', function( file, responseData ) {
-                if(responseData.statusCode=="1"){
+            	if(responseData.statusCode=="1"){
                     //上传成功需要进行跳转
 					alert("OK");
                 }//上传失败
                 else{
                     _this._showFail($.i18n.prop('home.upload.error.upload'));
-                    //删除文件
-                    var file = uploader.getFile(file.id);
-                    uploader.removeFile(file);
-                    return;
                 }
+                uploader.removeFile(file);
+                uploaderDialog.close();
+                //处理成功后进行跳转
             });
 
             //  当validate不通过时，会以派送错误事件的形式通知调用者
