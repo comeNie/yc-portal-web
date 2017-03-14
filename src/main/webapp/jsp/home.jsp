@@ -1,4 +1,3 @@
-<%@ page import="com.ai.yc.protal.web.controller.IndexController" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -451,7 +450,7 @@
             </ul>
         </div>
     </div>
-    <!--底部-->
+    <!--底部 是否显示公安备案号-->
     <c:set var="showTb" value="true"/>
     <%@include file="/inc/indexFoot.jsp"%>
 </div>

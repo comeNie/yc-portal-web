@@ -504,16 +504,17 @@ define('app/jsp/home', function (require, exports, module) {
                     _this._showWarn($.i18n.prop('home.upload.error.empty'));
                     return false;
                 }
-				//判断文件是否小于100k
-                if (file.size > 100*1024) {
-                    _this._showWarn($.i18n.prop('home.upload.error.fileSizeSingle'));
-                    return false;
-                }
-				//判断文件是否允许的格式
+                //判断文件是否允许的格式
                 if ($.inArray(file.ext.toLowerCase(), FILE_TYPES)<0) {
                     _this._showWarn($.i18n.prop('home.upload.error.type'));
                     return false;
                 }
+                //判断文件是否小于100k
+                if (file.size > 100*1024) {
+                    _this._showWarn($.i18n.prop('home.upload.error.fileSizeSingle'));
+                    return false;
+                }
+
                 //获得原语言和目标语言。
 				from=$(".dropdown .selected").eq(0).attr("value");
                 to=$(".dropdown .selected").eq(1).attr("value");
@@ -526,24 +527,14 @@ define('app/jsp/home', function (require, exports, module) {
             uploader.on("uploadStart",function (file) {
                 uploaderDialog.showModal();
             });
-			//显示上传进度
-            // uploader.on("uploadProgress",function(file,percentage){
-             //    var fileId = $("#"+file.id),
-             //        percent = fileId.find(".progress .progress-bar");
-             //    if(!percent.length){//避免重复创建
-             //        percent = $('<div class="progress progress-striped active"><div class="progress-bar" role="progressbar" style="width: 0%"></div></div>')
-             //            .appendTo(fileId).find('.progress-bar');
-             //    }
-             //    fileId.next().find('span').css('width',percentage*100+"%");
-             //    fileId.next().find('p[name="percent"]').text(parseInt(percentage*100)+"%");
-             //    percent.css( 'width', percentage * 100 + '%' );
-            //
-            // });
 			//上传成功后触发
             uploader.on( 'uploadSuccess', function( file, responseData ) {
             	if(responseData.statusCode=="1"){
                     //上传成功需要进行跳转
-					alert("OK");
+                    if(window.console){
+                        console.log("upload is success");
+                    }
+                    window.location.href= _base+"/docMt";
                 }//上传失败
                 else{
                     _this._showFail($.i18n.prop('home.upload.error.upload'));
@@ -571,6 +562,7 @@ define('app/jsp/home', function (require, exports, module) {
                 _this._showFail($.i18n.prop('home.upload.error.upload'));
                 var file = uploader.getFile(file.id);
                 uploader.removeFile(file);
+                uploaderDialog.close();
             });
         },
 		//收藏译文

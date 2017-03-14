@@ -8,6 +8,7 @@ import com.ai.paas.ipaas.dss.base.interfaces.IDSSClient;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.LoginConstants;
+import com.ai.yc.protal.web.model.DocParagraphTrans;
 import com.ai.yc.protal.web.service.YeekitService;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.protal.web.utils.WordUtil;
@@ -21,6 +22,10 @@ import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.poifs.filesystem.DirectoryEntry;
 import org.apache.poi.poifs.filesystem.DocumentEntry;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +39,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.util.LinkedList;
+import java.util.List;
 
 import static com.ai.yc.protal.web.utils.WordUtil.readWord;
 import static org.apache.hadoop.io.WritableUtils.toByteArray;
@@ -46,12 +54,12 @@ import static org.apache.hadoop.io.WritableUtils.toByteArray;
 @Controller
 public class YeekitController {
     private static final Logger LOGGER = LoggerFactory.getLogger(YeekitController.class);
+    private static final String SESSION_DOC_TRANS = "docTrans";
 
     @Autowired
     YeekitService yeekitService;
     @Autowired
     ResWebBundle rb;
-    private String textContent;
 
     /**
      * 机器翻译
@@ -103,7 +111,7 @@ public class YeekitController {
      */
     @ResponseBody
     @RequestMapping(value = "/mtUpload")
-    public ResponseData<String> docMt(String from, String to, MultipartFile file) {
+    public ResponseData<String> docMt(String from, String to, MultipartFile file,HttpSession session) {
         ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         try {
             //txt 文件
@@ -149,6 +157,16 @@ public class YeekitController {
             }*/
 
 //            resData.setData(textContent);
+            //TODO... 模拟数据
+            List<DocParagraphTrans> paragraphTransList = new LinkedList();
+            for(int i = 0;i<5;i++){
+                DocParagraphTrans paragraphTrans = new DocParagraphTrans();
+                paragraphTrans.setSourceLen(10);
+                paragraphTrans.setSourceText("aas你哈"+i);
+                paragraphTrans.setTranslation("hello word"+i);
+                paragraphTransList.add(paragraphTrans);
+            }
+            session.setAttribute(SESSION_DOC_TRANS,paragraphTransList);
         } catch (Exception e) {
             resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"");
             LOGGER.error("文档翻译失败:", e.getMessage());
@@ -157,33 +175,31 @@ public class YeekitController {
     }
 
     /**
+     * 显示文档机器翻译结果
+     * @return
+     */
+    @RequestMapping(value = "/docMt")
+    public String showDocMt(){
+        return "docTrans";
+    }
+    /**
      * 文档机器翻译，译文下载
      * @param fileType
-     * @param request
      * @param response
      */
     @RequestMapping("/downloadDoc")
-    public void downloadDoc(String fileType, HttpServletRequest request,
-                         HttpServletResponse response) {
+    public void downloadDoc(String fileType, HttpSession session,HttpServletResponse response) {
         byte[] b;
         try {
+            List<DocParagraphTrans> paragraphTransList =
+                    (List<DocParagraphTrans>)session.getAttribute(SESSION_DOC_TRANS);
+            //若没有译文信息，不做任何操作。
+            if(CollectionUtil.isEmpty(paragraphTransList))
+                return;
             if ("doc" == fileType.toLowerCase()) {
-
-                ByteArrayInputStream bs = new ByteArrayInputStream(textContent.getBytes("utf-8"));
-                POIFSFileSystem fs = new POIFSFileSystem();
-                DirectoryEntry directory = fs.getRoot();
-
-                directory.createDocument("WordDocument", bs);
-
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-                fs.writeFilesystem(baos);
-                b = baos.toByteArray();
-
-                baos.close();
-                bs.close();
+                b = genDoc(paragraphTransList);
             } else {
-                b = textContent.getBytes("utf-8");
+                b = genTxt(paragraphTransList);
             }
 
             OutputStream os = response.getOutputStream();
@@ -288,5 +304,42 @@ public class YeekitController {
 //                .append("\"collectionId\":").append("345345").append("}");
         return sb.toString();
     }
-  
+
+    /**
+     * 返回txt格式的byte[]
+     * @param transList
+     * @return
+     */
+    private byte[] genTxt(List<DocParagraphTrans> transList) throws UnsupportedEncodingException {
+        StringBuilder sb = new StringBuilder();
+        for (DocParagraphTrans paragraphTran:transList){
+            //首行缩进
+            sb.append("    "+paragraphTran.getTranslation()+"\r\n");
+        }
+        return sb.toString().getBytes("utf-8");
+    }
+    /**
+     * 返回doc格式的byte[]
+     * @param transList
+     * @return
+     */
+    private byte[] genDoc(List<DocParagraphTrans> transList) throws IOException {
+        XWPFDocument doc = new XWPFDocument();
+        XWPFParagraph para;
+        XWPFRun run;
+        for (DocParagraphTrans paragraphTran:transList){
+            para = doc.createParagraph();
+            para.setAlignment(ParagraphAlignment.LEFT);//设置左对齐
+            para.setIndentationFirstLine(450);//设置首行缩进
+            run = para.createRun();
+            run.setFontFamily("仿宋");
+            run.setFontSize(13);
+            run.setText(paragraphTran.getTranslation());
+        }
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        doc.write(baos);
+        byte[] b = baos.toByteArray();
+        baos.close();
+        return b;
+    }
 }
