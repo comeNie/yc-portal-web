@@ -94,19 +94,22 @@ public class YeekitController {
         return resData;
     }
 
+    /**
+     * 文档机器翻译，上传文件
+     * @param from
+     * @param to
+     * @param file
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/mtUpload")
-    public ResponseData<String> docMt(String from, String to, HttpServletRequest request) {
+    public ResponseData<String> docMt(String from, String to, MultipartFile file) {
         ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         try {
-            MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest) request;
-            // 获取请求的参数
-            MultipartFile mFile = mRequest.getFile("file");
-
             //txt 文件
             String text = "";
-            if (mFile.getName().toLowerCase().endsWith("txt")) {
-                byte[] mFileBytes = mFile.getBytes();
+            if (file.getName().toLowerCase().endsWith("txt")) {
+                byte[] mFileBytes = file.getBytes();
                 //判断txt文件编码
                 byte[] head = new byte[3];
                 System.arraycopy(mFileBytes, 0, head, 0, 3);
@@ -119,13 +122,15 @@ public class YeekitController {
                     code = "UTF-8";
                 text = new String(mFileBytes, code);
             } else {
-                InputStream sbs = new ByteArrayInputStream(mFile.getBytes());
-                text = WordUtil.readWord(mFile.getOriginalFilename(), sbs);
+                InputStream sbs = new ByteArrayInputStream(file.getBytes());
+                text = WordUtil.readWord(file.getOriginalFilename(), sbs);
             }
-            LOGGER.info(text);
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.info(text);
+            }
 
             //分段翻译
-            textContent = "";
+            /*textContent = "";
             int len = text.length();
             int offfset = 2000;
             int alreadyLen = 0;
@@ -141,9 +146,9 @@ public class YeekitController {
                     tempStr = text.substring(alreadyLen);
                 }
                 textContent += yeekitService.dotranslate(from, to, tempStr);
-            }
+            }*/
 
-            resData.setData(textContent);
+//            resData.setData(textContent);
         } catch (Exception e) {
             resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"");
             LOGGER.error("文档翻译失败:", e.getMessage());
@@ -151,6 +156,12 @@ public class YeekitController {
         return resData;
     }
 
+    /**
+     * 文档机器翻译，译文下载
+     * @param fileType
+     * @param request
+     * @param response
+     */
     @RequestMapping("/downloadDoc")
     public void downloadDoc(String fileType, HttpServletRequest request,
                          HttpServletResponse response) {

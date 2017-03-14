@@ -507,6 +507,9 @@ define('app/jsp/home', function (require, exports, module) {
                     _this._showWarn($.i18n.prop('home.upload.error.type'));
                     return false;
                 }
+                //获得原语言和目标语言。
+				from=$(".dropdown .selected").eq(0).attr("value");
+                to=$(".dropdown .selected").eq(1).attr("value");
 
             });
             //文件开始上传

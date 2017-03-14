@@ -21,7 +21,7 @@
     <link href="${uedroot}/css/modular/global.css" rel="stylesheet" type="text/css"/>
     <link href="${uedroot}/css/modular/headr-footer.css" rel="stylesheet" type="text/css"/>
     <link href="${uedroot}/css/modular/index.css" rel="stylesheet" type="text/css"/>
-
+    <link rel="stylesheet" type="text/css" href="${_base}/resources/spm_modules/webuploader/webuploader.css">
 
     <style type="text/css">
         /*分词高亮*/
@@ -49,7 +49,21 @@
         .audiojs div{display:none;}
         .audiojs .error-message{display:none;}
 
+        .uploadDiv { width:80px;  height: 26px;}
 
+        .uploadDiv .webuploader-pick{
+            border:2px;
+            background-color:#2361ea;
+            color:#fff;
+            width:80px;height:26px;
+            border-radius:2px;
+            font-weight: normal;
+            cursor:pointer;
+            text-align:center;
+            outline:none;
+            font-size:14px;
+            transition:.3s;
+        }
     </style>
     <%@ include file="/inc/incJs.jsp" %>
     </head>
@@ -211,11 +225,9 @@
             <ul>
                 <li>
                     <%--上传文档--%>
-                    <p><input type="button" class="btn btn-blue btn-trans radius2"
-                              value="<spring:message code="home.upload_file_btn"/>">
-                        <input type="file"  class="pop-file"></p>
-                        <%--支持100K以内的.doc（X）.TXT文件--%>
-                    <p>（<spring:message code="home.file_tips"/>）</p>
+                    <div id="selectFile" class="uploadDiv"><spring:message code="home.upload_file_btn"/></div>
+                    <%--支持100K以内的.doc（X）.TXT文件--%>
+                    （<spring:message code="home.file_tips"/>）
                 </li>
                 <li class="right">
                     <%--人工翻译--%>
