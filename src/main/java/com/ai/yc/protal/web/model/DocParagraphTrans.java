@@ -11,7 +11,7 @@ public class DocParagraphTrans implements Serializable{
     //原文
     private String sourceText;
     //译文
-    private String Translation;
+    private String translation;
     //原文长度，
     private int sourceLen;
 
@@ -24,18 +24,15 @@ public class DocParagraphTrans implements Serializable{
     }
 
     public String getTranslation() {
-        return Translation;
+        return translation;
     }
 
     public void setTranslation(String translation) {
-        Translation = translation;
+        this.translation = translation;
     }
 
     public int getSourceLen() {
-        return sourceLen;
+        return (sourceText!=null)?sourceText.length():0;
     }
 
-    public void setSourceLen(int sourceLen) {
-        this.sourceLen = sourceLen;
-    }
 }

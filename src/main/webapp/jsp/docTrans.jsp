@@ -36,7 +36,7 @@
 			<li><img src="${uedroot}/images/index-logo${lTag}.png" /></li>
 			<li class="right">
 				<!-- 首页 -->
-				<p><a href="${_base}/" ><spring:message code="home.nav.bar.home"/></a></p>
+				<p><a href="${_base}/" class="current"><spring:message code="home.nav.bar.home"/></a></p>
 				<%--笔译--%>
 				<p><a href="${_base}/written"><spring:message code="home.nav.bar.written"/></a></p>
 				<%--口译--%>
@@ -49,39 +49,27 @@
 		</ul>
 	</div>
 	<div class="translate-box">
-		<div class="trans-part">
-			<div class="trans-title">
-				<div class="pull-left"><spring:message code="doc.trans.source.title"/></div>
-			</div>
-			<div class="transed-box">
-          <textarea name="" id="" class="form-control">译云是中译语通科技（北京）有限公司基于语言大数据和云计算技术的智慧语言服务综合平台，透过译云商业平台、译库工具平台及译云社区互动平台等全方位的语言服务平台作为入口，译云在电话端、PC互联网、移动互联网端都能高效地为商业用户、专业译者和语言服务商提供一体化智能语言服务[1]  。
-  “译云”是新一代语言服务智慧应用平台，代表着语言服务业未来发展的趋势，为中华文化走出去项目的实施、提升中华文化国际传播能力提供了以现代技术为支撑的便捷工具平台。译云是中译语通科技（北京）有限公司基于语言大数据和云计算技术的智慧语言服务综合平台，透过译云商业平台、译库工具平台及译云社区互动平台等全方位的语言服务平台作为入口，译云在电话端、PC互联网、移动互联网端都能高效地为商业用户、专业译者和语言服务商提供一体化智能语言服务[1]  。
-  “译云”是新一代语言服务智慧应用平台，代表着语言服务业未来发展的趋势，为中华文化走出去项目的实施、提升中华文化国际传播能力提供了以现代技术为支撑的便捷工具平台。</textarea>
+		<div class="translate-title nofloat">
+			<div class="pull-left"><span><spring:message code="doc.trans.source.title"/></span></div>
+			<div class="pull-right">
+				<span class="pull-left text-left"><spring:message code="doc.trans.translation.title"/></span>
+				<span><spring:message code="doc.trans.down.title"/>:</span>
+				<button class="btn btn-line" id="downDoc">doc</button>
+				<button class="btn btn-line" id="downTxt">txt</button>
 			</div>
 		</div>
-		<div class="trans-part">
-			<div class="trans-title">
-				<div class="pull-left"><spring:message code="doc.trans.translation.title"/></div>
-				<div class="pull-right">
-					<span><spring:message code="doc.trans.down.title"/>:</span>
-					<button class="btn btn-line" id="downDoc">doc</button>
-					<button class="btn btn-line" id="downTxt">txt</button>
-				</div>
-			</div>
-			<div class="transed-box">
-				The annual Symposium on Principles of Programming Languages is a forum for the discussion of all aspects
-				of programming languages and programming systems. Both theoretical and experimental papers are welcome,
-				on topics ranging from formal frameworks to experience reports. Papers discussing new ideas and new
-				areas are encouraged, as are papers (often called “pearls”) that elucidate existing concepts in ways
-				that yield new insights. We are looking for any submission with the potential to make enduring
-				contributions to the theory, design, implementation or application of programming languages.The annual
-				Symposium on Principles of Programming Languages is a forum for the discussion of all aspects of
-				programming languages and programming systems. Both theoretical and experimental papers are welcome, on
-				topics ranging from formal frameworks to experience reports. Papers discussing new ideas and new areas
-				are encouraged, as are papers (often called “pearls”) that elucidate existing concepts in ways that
-				yield new insights. We are looking for any submission with the potential to make enduring contributions
-				to the theory, design, implementation or application of programming languages.
-			</div>
+		<div class="translate-table-wrap">
+			<table class="translate-table">
+				<tbody>
+				<%--从session取出翻译结果 docTrans--%>
+				<c:forEach var="transInfo" items="${docTrans}">
+					<tr>
+						<td>${transInfo.sourceText}</td>
+						<td>${transInfo.translation}</td>
+					</tr>
+				</c:forEach>
+				</tbody>
+			</table>
 		</div>
 	</div>
 	<%--加载更多--%>

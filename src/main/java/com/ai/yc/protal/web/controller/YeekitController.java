@@ -114,27 +114,11 @@ public class YeekitController {
     public ResponseData<String> docMt(String from, String to, MultipartFile file,HttpSession session) {
         ResponseData<String> resData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         try {
-            //txt 文件
-            String text = "";
-            if (file.getName().toLowerCase().endsWith("txt")) {
-                byte[] mFileBytes = file.getBytes();
-                //判断txt文件编码
-                byte[] head = new byte[3];
-                System.arraycopy(mFileBytes, 0, head, 0, 3);
-                String code = "gb2312";
-                if (head[0] == -1 && head[1] == -2 )
-                    code = "UTF-16";
-                if (head[0] == -2 && head[1] == -1 )
-                    code = "Unicode";
-                if(head[0]==-17 && head[1]==-69 && head[2] ==-65)
-                    code = "UTF-8";
-                text = new String(mFileBytes, code);
+            List<DocParagraphTrans> paragraphTransList;
+            if (file.getOriginalFilename().toLowerCase().endsWith("txt")) {
+                paragraphTransList = readTxt(file);
             } else {
-                InputStream sbs = new ByteArrayInputStream(file.getBytes());
-                text = WordUtil.readWord(file.getOriginalFilename(), sbs);
-            }
-            if(LOGGER.isDebugEnabled()) {
-                LOGGER.info(text);
+                paragraphTransList = readDoc(file);
             }
 
             //分段翻译
@@ -158,14 +142,12 @@ public class YeekitController {
 
 //            resData.setData(textContent);
             //TODO... 模拟数据
-            List<DocParagraphTrans> paragraphTransList = new LinkedList();
-            for(int i = 0;i<5;i++){
-                DocParagraphTrans paragraphTrans = new DocParagraphTrans();
-                paragraphTrans.setSourceLen(10);
-                paragraphTrans.setSourceText("aas你哈"+i);
-                paragraphTrans.setTranslation("hello word"+i);
-                paragraphTransList.add(paragraphTrans);
+            if (!CollectionUtil.isEmpty(paragraphTransList)) {
+                for (DocParagraphTrans paragraphTrans:paragraphTransList) {
+                    paragraphTrans.setTranslation("hello word" +System.currentTimeMillis());
+                }
             }
+
             session.setAttribute(SESSION_DOC_TRANS,paragraphTransList);
         } catch (Exception e) {
             resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"");
@@ -305,6 +287,69 @@ public class YeekitController {
         return sb.toString();
     }
 
+    /**
+     * 将上传txt文件进行分段读取
+     * @param file
+     * @return
+     */
+    private List<DocParagraphTrans> readTxt(MultipartFile file) throws IOException {
+        List<DocParagraphTrans> paragraphTransList = new LinkedList<>();
+        byte[] mFileBytes = file.getBytes();
+        //判断txt文件编码
+        byte[] head = new byte[3];
+        System.arraycopy(mFileBytes, 0, head, 0, 3);
+        String charset = "GBK";
+        if (head[0] == -1 && head[1] == -2 ) {
+            charset = "UTF-16";
+        }else if (head[0] == -2 && head[1] == -1 ) {
+            charset = "Unicode";
+        }else if(head[0]==-17 && head[1]==-69 && head[2] ==-65) {
+            charset = "UTF-8";
+        }
+
+        InputStreamReader isr = null;
+        BufferedReader br = null;
+        try {
+            StringBuilder sb = new StringBuilder();// 拼接读取的内容
+            isr = new InputStreamReader(file.getInputStream(), charset);
+            br = new BufferedReader(isr);
+            String temp;
+            while ((temp = br.readLine()) != null) {
+                sb.append(temp.trim() + "\n");
+            }
+            // \s A whitespace character: [ \t\n\x0B\f\r]
+            String p[] = sb.toString().split("\\s*\n");
+            for (String string : p) {
+                DocParagraphTrans paragraphTrans = new DocParagraphTrans();
+                paragraphTrans.setSourceText(string.replaceAll("\\s*", ""));
+                paragraphTransList.add(paragraphTrans);
+            }
+        } catch (IOException e) {
+            LOGGER.error("Failed to read TXT file.",e);
+            e.printStackTrace();
+        } finally {
+            if (br != null)
+                br.close();
+            if (isr != null)
+                isr.close();
+        }
+
+        return paragraphTransList;
+    }
+
+    /**
+     * 将上传word文档进行分段读取
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    private List<DocParagraphTrans> readDoc(MultipartFile file) throws IOException {
+        List<DocParagraphTrans> paragraphTransList = new LinkedList<>();
+        byte[] mFileBytes = file.getBytes();
+        InputStream sbs = new ByteArrayInputStream(file.getBytes());
+        WordUtil.readWord(file.getOriginalFilename(), sbs);
+        return paragraphTransList;
+    }
     /**
      * 返回txt格式的byte[]
      * @param transList

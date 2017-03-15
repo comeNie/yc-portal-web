@@ -119,12 +119,22 @@ public class WordUtil {
         }
     }
 
-    public static void main(String[] args) {
-//       String text = readWord("e:\\WAP端原型-差异-验证结果.docx");
+    public static void main(String[] args) throws IOException {
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(new File(""));
+//            String text = readWord("e:\\WAP端原型-差异-验证结果.docx");
 //        String text = readWord("e:\\新建 Microsoft Word 97 - 2003 文档.doc");
 //
-//        LOGGER.info(text);
+//            LOGGER.info(text);
 //        writeWord("e:\\打发打发打发的.doc", text);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis!=null){
+                fis.close();
+            }
+        }
     }
 
 }
