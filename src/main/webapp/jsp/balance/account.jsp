@@ -10,6 +10,13 @@
     <%--我的帐户--%>
     <%@ include file="/inc/inc.jsp" %>
     <title><spring:message code="account.my.account"/></title>
+    <style>
+        .query-order ul .aright{float:right;}
+        .query-order ul .aright p{margin-left:35px;display:inline;}
+        .query-order ul .aright p a{color:#2361ea}
+        .query-order ul .aright p i{color:#2361ea}
+        .query-order ul .aright p i{margin-left:12px;}
+    </style>
 </head>
 <%
     //默认设置成1为开启，0为关闭
@@ -77,7 +84,7 @@
                                 <p><a href="#" id="threeMonth" onclick="todate(this,threeMonth)"><spring:message code="account.three.months"/></a></p>
                                 <p><a href="#" id="oneyear" onclick="todate(this,oneyear)"><spring:message code="account.one.year"/></a></p>
                             </li>
-                            <li class="right">
+                            <li class="aright">
                                 <p><spring:message code="account.income"/>:<span id="income" style="font-size: 12px;line-height: 25px"></span></p>
                                 <%--
                                                             <p id="income" val=""></p>
@@ -282,6 +289,8 @@
             $("#saixuan").children("span").text(account.screening);
             $("#saixuan").children("i").attr("class","icon-angle-down");
         }
+        $("#saixuan").children('i').toggleClass("icon-angle-down  icon-angle-up");
+        $("#saixuan").parent().parent().parent().parent().children('.order-hiddn').slideToggle(100);
     }
     //选择结束时间触发
     function endtime() {
