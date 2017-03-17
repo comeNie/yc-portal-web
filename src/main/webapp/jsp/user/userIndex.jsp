@@ -18,9 +18,9 @@
 	<!--外侧背景-->
 	<div class="cloud-container">
 		<!--内侧内容区域-->
-		<div class="cloud-wrapper">
+		<div class="translate-cloud-wrapper">
 			<!--左侧菜单-->
-			<div class="left-subnav">
+			<div class="left-subnav interpreter-subanav">
 				<%@ include file="/inc/leftmenu.jsp"%>
 			</div>
 			<!--右侧内容-->
