@@ -261,6 +261,13 @@
             pager.render();
         });
     })();
+
+    $(function () {
+        $(".query-order ul .right p a").click(function () {
+            $(this).children('i').toggleClass("icon-angle-down  icon-angle-up");
+            $(this).parent().parent().parent().parent().parent().children('.order-hiddn').slideToggle(100);
+        });
+    });
     var account = {
         screening	: '<spring:message code="account.advanced.screening"/>',
         roll : '<spring:message code="account.advanced.roll"/>'
