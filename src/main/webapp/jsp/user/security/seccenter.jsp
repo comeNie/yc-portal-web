@@ -115,7 +115,16 @@
   				<div  id="sec-level-info"  class="security-word">
   					<ul>
   						<li ><spring:message code="ycaccountcenter.accountleveltip"/></li>
-  						<li id="sec-level-info-account-level" class="red"><spring:message code="ycaccountcenter.acc.level.danger"/></li>
+  						<c:if test="${securitylevel=='100'}">
+  							<li id="sec-level-info-account-level" class="red" style="color: #39d5b0">
+  								<spring:message code="ycaccountcenter.acc.level.danger"/>
+  							</li>
+  						</c:if>
+  						<c:if test="${securitylevel!='100'} ">
+  							<li id="sec-level-info-account-level" class="red">
+  								<spring:message code="ycaccountcenter.acc.level.danger"/>
+  							</li>
+  						</c:if>
   						<li id="sec-level-info-account-warn" class="ash"><spring:message code="ycaccountcenter.acc.level.danger.warning"/></li>
   					</ul>
   				</div>
