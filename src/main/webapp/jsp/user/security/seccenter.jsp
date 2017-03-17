@@ -126,7 +126,7 @@
   								<spring:message code="ycaccountcenter.acc.level.danger"/>
   							</li>
   						</c:if>
-  						<c:if test="${securitylevel!='100'} ">
+  						<c:if test="${securitylevel!='100'}">
   							<li id="sec-level-info-account-level" class="red">
   								<spring:message code="ycaccountcenter.acc.level.danger"/>
   							</li>
