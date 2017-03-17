@@ -258,7 +258,7 @@ public class SecurityController {
 			securitylevel=100;
 		}
 		// sec level
-		model.put("securitylevel", securitylevel);
+		model.put("securitylevel", "33");
 		model.put("source", source);
 		ModelAndView modelView = new ModelAndView(INIT, model);
 		return modelView;
