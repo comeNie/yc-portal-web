@@ -41,7 +41,7 @@
 							   href="http://android.myapp.com/myapp/detail.htm?apkName=cn.com.gtcom.ydt">
 								<span>for Android</span>
 								<font>Download</font>
-							</a> 
+							</a>
 							<a class="iphone" target="_blank" style="box-sizing:content-box;"
 							   href="https://itunes.apple.com/cn/app/zhao-fan-yi-findyee/id1017302386?mt=8">
 								<span>for iPhone</span>
