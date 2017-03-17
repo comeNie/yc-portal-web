@@ -37,7 +37,7 @@ public class CompanyController {
 	@Autowired
 	ResWebBundle rb;
 	
-	@RequestMapping("/companyFirstPager")
+	@RequestMapping("/companyPager")
 	public ModelAndView toCompanyFirstPager(HttpServletRequest request){
 		String source = request.getParameter("source");
 		Map<String, Object> model = new HashMap<String, Object>();
