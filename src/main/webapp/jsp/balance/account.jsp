@@ -289,8 +289,8 @@
             $("#saixuan").children("span").text(account.screening);
             $("#saixuan").children("i").attr("class","icon-angle-down");
         }
-        $("#saixuan").children('i').toggleClass("icon-angle-down  icon-angle-up");
-        $("#saixuan").parent().parent().parent().parent().children('.order-hiddn').slideToggle(100);
+        $("#saixuan").parent().children('i').toggleClass("icon-angle-down  icon-angle-up");
+        $("#saixuan").parent().parent().parent().parent().parent().children('.order-hiddn').slideToggle(100);
     }
     //选择结束时间触发
     function endtime() {
