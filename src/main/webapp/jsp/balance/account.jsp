@@ -65,9 +65,10 @@
                 <div class="user-title-right"><img src="${uedroot}/images/user-bj.jpg" /></div>
             </div>
             <!--右侧第二块-->
-            <form id="accountQuery" action="">
+
 
                 <div class="right-list">
+                    <form id="accountQuery" action="">
                     <div class="query-order" id="dates">
                         <ul>
                             <li class="left">
@@ -118,8 +119,8 @@
                             </li>
                         </ul>
                     </div>
-
-                    <div class="right-list-table">
+                    </form>
+                    <div class="right-list-table mb-20">
                         <table class="table table-bg  table-striped-even table-height50">
                             <thead>
                             <tr>
@@ -172,7 +173,6 @@
                     </div>
                     <!--分页结束-->
                 </div>
-            </form>
         </div>
     </div>
 </div>
