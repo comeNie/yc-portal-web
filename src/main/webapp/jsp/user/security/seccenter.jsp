@@ -81,16 +81,22 @@
   <!--外侧背景-->
   <div class="cloud-container">
   <!--内侧内容区域-->
+  <c:if test="${source=='user'}">
   <div class="cloud-wrapper">
   	<!--左侧菜单-->
   	<div class="left-subnav">
-  	 <c:if test="${source=='user'}">
+  	 
   	<%@ include file="/inc/leftmenu.jsp"%>
-  	</c:if>
-  <c:if test="${source=='interpreter'}">
-  <%@ include file="/inc/transLeftmenu.jsp"%>
-  </c:if>
   	</div>
+  	</c:if>
+ <c:if test="${source=='interpreter'}">
+  	<div class="translate-cloud-wrapper">
+  	<!--左侧菜单-->
+  	<div class="left-subnav interpreter-subanav">
+  <%@ include file="/inc/transLeftmenu.jsp"%>
+ 
+  	</div>
+  	 </c:if>
   	<!--右侧内容-->
   	<!--右侧大块-->
   	<div class="right-wrapper">
@@ -120,7 +126,7 @@
   								<spring:message code="ycaccountcenter.acc.level.danger"/>
   							</li>
   						</c:if>
-  						<c:if test="${securitylevel!='100'} ">
+  						<c:if test="${securitylevel!='100'}">
   							<li id="sec-level-info-account-level" class="red">
   								<spring:message code="ycaccountcenter.acc.level.danger"/>
   							</li>
