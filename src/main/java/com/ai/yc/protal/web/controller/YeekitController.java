@@ -294,24 +294,11 @@ public class YeekitController {
      */
     private List<DocParagraphTrans> readTxt(MultipartFile file) throws IOException {
         List<DocParagraphTrans> paragraphTransList = new LinkedList<>();
-        byte[] mFileBytes = file.getBytes();
-        //判断txt文件编码
-        byte[] head = new byte[3];
-        System.arraycopy(mFileBytes, 0, head, 0, 3);
-        String charset = "GBK";
-        if (head[0] == -1 && head[1] == -2 ) {
-            charset = "UTF-16";
-        }else if (head[0] == -2 && head[1] == -1 ) {
-            charset = "Unicode";
-        }else if(head[0]==-17 && head[1]==-69 && head[2] ==-65) {
-            charset = "UTF-8";
-        }
-
         InputStreamReader isr = null;
         BufferedReader br = null;
         try {
             StringBuilder sb = new StringBuilder();// 拼接读取的内容
-            isr = new InputStreamReader(file.getInputStream(), charset);
+            isr = new InputStreamReader(file.getInputStream());
             br = new BufferedReader(isr);
             String temp;
             while ((temp = br.readLine()) != null) {
