@@ -305,7 +305,8 @@ public class YeekitController {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             byte[] buffer = new byte[1024];
             int len;
-            while ((len = file.getInputStream().read(buffer)) > -1 ) {
+            InputStream inputStream = file.getInputStream();
+            while ((len = inputStream.read(buffer)) > -1 ) {
                 baos.write(buffer, 0, len);
             }
             baos.flush();
