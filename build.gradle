@@ -46,6 +46,7 @@ sourceSets {
 }
 // 设置依赖
 dependencies {
+    compile files('lib/chardet-1.1.jar')
     compile "jstl:jstl:1.2"
     compile "org.springframework:spring-web:4.1.7.RELEASE"
     compile "org.springframework:spring-webmvc:4.1.7.RELEASE"

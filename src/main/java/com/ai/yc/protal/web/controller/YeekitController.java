@@ -10,6 +10,7 @@ import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.LoginConstants;
 import com.ai.yc.protal.web.model.DocParagraphTrans;
 import com.ai.yc.protal.web.service.YeekitService;
+import com.ai.yc.protal.web.utils.ChardetUtil;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.protal.web.utils.WordUtil;
 import com.ai.yc.user.api.usercollectiontranslation.interfaces.IYCUserCollectionSV;
@@ -26,6 +27,8 @@ import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.mozilla.intl.chardet.nsDetector;
+import org.mozilla.intl.chardet.nsICharsetDetectionObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +44,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -297,8 +301,20 @@ public class YeekitController {
         InputStreamReader isr = null;
         BufferedReader br = null;
         try {
+            //做数据流拷贝
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = file.getInputStream().read(buffer)) > -1 ) {
+                baos.write(buffer, 0, len);
+            }
+            baos.flush();
+
+            ChardetUtil chardetUtil = new ChardetUtil();
+            String chart = chardetUtil.detectAllCharset(new ByteArrayInputStream(baos.toByteArray()));
+
             StringBuilder sb = new StringBuilder();// 拼接读取的内容
-            isr = new InputStreamReader(file.getInputStream());
+            isr = new InputStreamReader(new ByteArrayInputStream(baos.toByteArray()),chart);
             br = new BufferedReader(isr);
             String temp;
             while ((temp = br.readLine()) != null) {
