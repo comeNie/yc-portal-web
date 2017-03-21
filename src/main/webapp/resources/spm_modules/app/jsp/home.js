@@ -537,10 +537,10 @@ define('app/jsp/home', function (require, exports, module) {
                     window.location.href= _base+"/docMt";
                 }//上传失败
                 else{
-                    _this._showFail($.i18n.prop('home.upload.error.upload'));
+                    uploaderDialog.close();
+                    _this._showWarn($.i18n.prop('home.upload.error.upload'));
                 }
                 uploader.removeFile(file);
-                // uploaderDialog.close();
                 //处理成功后进行跳转
             });
 
