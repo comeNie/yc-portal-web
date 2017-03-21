@@ -1,3 +1,4 @@
+.undis{display:none;}
 .homebody{background:#fff;}
 /**banner**/
 .banner{width:100%;height:609px;text-align: center;background-image:url(../../images/index-banner.jpg);background-position:center; background-repeat:no-repeat;min-width:1200px;padding:125px 0 0 0;}
@@ -15,7 +16,7 @@
 /**内容框架**/
 .index-wrapper{width:100%;height:200px;position:absolute;top:365px;left;z-index:99;min-width:1200px;}
 /**翻译板块**/
-.translate{width:1200px;margin:0 auto;background:#f0f5fb;height:355px;border-radius:8px;padding:20px;}
+.translate{width:1200px;margin:0 auto;background:#f0f5fb;height:355px;border-radius:4px;padding:20px;}
 .translate-title{width:100%;float:left;}
 .translate-title ul{width:100%;float:left}
 .translate-title ul li{float:left;margin-right:10px;}
@@ -23,25 +24,27 @@
 /**翻译内容**/
 .translate-wapper{width:100%;float:left;margin-top:20px;}
 .before-translation{width:570px;height:210px;float:left;word-break:break-all;border:1px solid #dbdbdb;background:#fff;padding:5px 0 5px 15px;position:relative;}
+.before-translation-r{background:#fafafa;}
 .post-cion{width: 100%;float:left;}
 .post-cion p{float:left;}
 .post-cion p a{color:#2965e6;float:left;margin-right:20px;}
 .post-cion p a:hover{color:#2361ea}
 .post-cion p i{}
 .post-cion p .radio-icon{}
-.post-cion p .radio-icon i{font-size:24px;}
+.post-cion p .radio-icon i{font-size:28px;}
 .post-cion p .ord-icon{}
-.post-cion p .ord-icon i{font-size:24px;}
-.post-cion p .stars-icon i{font-size:24px;}
-.post-cion p .edit-icon i{font-size:20px;}
+.post-cion p .ord-icon i{font-size:28px;}
+.post-cion p .stars-icon i{font-size:28px;}
+.post-cion p .edit-icon i{font-size:28px;}
 .post-cion .right{float:right;margin-top:3px;/*margin-right:15px;*/}
 .post-cion .right a{overflow:auto;}
-.post-cion .right span{float:left;margin-left:10px;}
+.post-cion .right span{height:28px;line-height:28px;display:inline-block;vertical-align:top;}
 .translate-file{width:100%;float:left;margin-top:20px;}
 .translate-file ul{}
 .translate-file ul li{float:left;line-height:26px;color:#34383e;font-size:12px;}
 .translate-file ul li p{float:left;position:relative;}
 .translate-file ul .right{float:right}
+.translate-file ul .right .border-blue-b{background:#f0f5fb;}
 .translate-file ul li p .pop-file{width:80px;height:26px;position:absolute;top:0;left:0; opacity: 0;filter:alpha(opacity=0);-moz-opacity:0;-khtml-opacity:0;}
 .post-cion #error-oc i{font-size:18px;}
 .before-translation label{position:absolute;bottom:-44px;right:90px;font-size:12px;}
@@ -51,7 +54,7 @@
 .post-cion .suspension2{width:65px;height:32px;background:url(../../images/suspension-bj.png) no-repeat;position:absolute;left:-21px;bottom:32px;border-radius:5px;text-align:center;line-height:28px;color:#666;font-size:12px;display:none;}
 .post-cion .suspension3{width:65px;height:32px;background:url(../../images/suspension-bj.png) no-repeat;position:absolute;left:-21px;bottom:32px;border-radius:5px;text-align:center;line-height:28px;color:#666;font-size:12px;display:none;}
 /**已输入文字**/
-.already{width:100%;float:left;font-size:14px;color:#e6e6e6}
+.already{width:100%;float:left;font-size:14px;color:#b5b5b6;}
 .already span{color:#fe6b6b}
 
 
@@ -458,7 +461,7 @@
 .translate-title .text-left{
   text-align: left;
 }
-.translate-title .btn {
+.translate-title.doc .btn {
     line-height: 22px;
     height: 26px;
     width: 50px;

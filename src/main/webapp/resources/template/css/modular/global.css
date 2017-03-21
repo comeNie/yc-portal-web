@@ -506,7 +506,7 @@ pre ol.linenums li {
 .int-in-250{width:250px;height:44px;padding:0 20px;line-height:44px;position:relative;}
 .int-in-300{width:250px;height:44px;padding:0 20px;line-height:44px;}
 .int-before{width:100%;height:166px;outline:none;line-height:22px;color:#666;word-break:break-all;font-size:14px;border-radius:3px;resize:none;padding-right:15px;}
-.int-post{width:100%;height:166px;outline:none;line-height:22px;color:#666;word-break:break-all;font-size:14px;border-radius:3px;resize:none;padding-right:15px;}
+.int-post{width:100%;height:166px;outline:none;line-height:22px;color:#666;word-break:break-all;font-size:14px;border-radius:3px;resize:none;padding-right:15px;background:#fafafa;}
 .text-150{width:100%;height:150px;padding:0 10px 0 10px;line-height:28px;}
 .in-x{width:210px;height:26px;padding:0 30px 0 20px;margin-left:20px;}
 /************************checkbox************************/
@@ -594,3 +594,26 @@ select::-ms-expand { display: none; }
 .tabs-anm li.current{
   color: #2361ea;
 }
+
+/*下拉框*/
+.select-wrap{position:relative;}
+.select-wrap .drop-down{padding-left:12px;padding-right:12px;width:230px;height:46px;line-height:26px;cursor:pointer;text-align: left;}
+.select-wrap .select-con{width:230px;height:auto;border:1px solid #e6e6e6;border-radius:5px;background:#fff;position:absolute;top:50px;left:0;z-index:999;overflow:hidden;}
+.select-wrap .select-con li{margin:0 !important;line-height:38px;border-bottom:1px solid #e6e6e6;}
+.quesbox .quesbox-wrap .select-con ul{width:230px;padding:0;margin-bottom:-1px;overflow:hidden;}
+.quesbox .quesbox-wrap .select-con ul li{text-align: left;}
+.quesbox .quesbox-wrap .select-con ul li a{padding:4px 12px;display:block;color:#6a6c6f;font-size:14px;}
+.quesbox .quesbox-wrap .select-con ul li a:hover{background-color:#e6e6e6;color:#2361ea;}
+.quesbox .quesbox-wrap li:after{clear:both;content:"";height:0;display:block;}
+.quesbox .quesbox-wrap li{overflow:inherit;}
+
+
+
+
+
+
+
+
+
+
+

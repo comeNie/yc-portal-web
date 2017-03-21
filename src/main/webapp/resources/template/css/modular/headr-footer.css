@@ -17,7 +17,7 @@
 .cloud-breadcrumb ul .switch a{font-size:14px;color:#fff;line-height:35px;}
 .cloud-breadcrumb ul .switch a #icon2{margin-left:10px;float:left}
 .cloud-breadcrumb ul .switch .switch-hover{width:100px;height:90px;background:#fff;border:1px solid #e3e6ed;position:absolute;right:-6px;top:60px;border-radius:5px;z-index: 99;}
-.cloud-breadcrumb ul .switch .switch-hover ul li{width:100%;float:left;height:44px;margin-left:0;text-align:center;line-height:42px;margin-top:0px;padding-top:0;}
+.cloud-breadcrumb ul .switch .switch-hover ul li{border-bottom:1px solid #e3e6ed;width:100%;float:left;height:44px;margin-left:0;text-align:center;line-height:42px;margin-top:0px;padding-top:0;}
 .cloud-breadcrumb ul .switch .switch-hover ul li:hover{background:#e6e6e6;}
 .cloud-breadcrumb ul .switch .switch-hover ul li:hover a{color:#2361ea;}
 .cloud-breadcrumb ul .switch .switch-hover ul li a{width:100%;display:inline-block;color:#6a6c6f;font-size:14px;}

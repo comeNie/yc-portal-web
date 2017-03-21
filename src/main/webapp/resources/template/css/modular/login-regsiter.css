@@ -12,8 +12,8 @@
 .login-form-title label{float:left;color:#fe6b6b;font-size:12px;}
 .login-form-title .right{float:right;font-size:12px;cursor: pointer;color: #2361ea;}
 .login-form-title .right a{color:#9ba3af;font-size:12px;}
-.login-form-title .right a i{color:#2361ea;font-size:14px;margin-right:10px;margin-top:2px;float:left}
-.login-form-title .icon-mt a i{margin-top:4px;}
+.login-form-title .right a i{color:#2361ea;font-size:16px;margin-right:10px;margin-top:2px;float:left}
+.login-form-title .icon-mt a i{margin-top:0px;}
 
 
 .login-form{width:100%;float:left;padding:0 30px;*padding:0px 15px;display: inline;}

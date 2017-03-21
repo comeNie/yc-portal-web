@@ -44,6 +44,32 @@ $(function () {
         $('#in-switch a').children('i').removeClass("icon-caret-up");
     });
 });
+
+//选择下拉框
+$(function () {
+  $('[drop-down]').click(function(){
+    if($('.select-con').hasClass('undis')){
+       $(this).siblings().removeClass('undis');
+     }else{
+        $(this).siblings().addClass('undis');
+     }
+    return false;
+  });
+  $('.select-con ul li').click(function(){
+    var text = $(this).text();
+    $('[drop-down]').text(text);
+    $('.select-con').addClass('undis');
+    return false;
+  });
+
+  $('html').click(function(){
+    if(!$('.select-con').hasClass('undis')){
+      $('.select-con').addClass('undis')
+    }
+  });
+    
+});
+
 //左侧菜单关闭
 $(function(){
 $(".left-tplist i").click(function () {
