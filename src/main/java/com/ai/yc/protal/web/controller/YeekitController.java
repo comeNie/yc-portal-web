@@ -125,37 +125,51 @@ public class YeekitController {
                 paragraphTransList = readDoc(file);
             }
 
-            //分段翻译
-            /*textContent = "";
-            int len = text.length();
+            /*分段翻译*/
+            //机器翻译单次传输的最大长度
             int offfset = 2000;
-            int alreadyLen = 0;
-
-            while (len > 0 ) {
-                String tempStr;
-                if (len >= offfset) {
-                    tempStr = text.substring(alreadyLen, offfset);
-                    alreadyLen += offfset;
-                    len -= offfset;
-                } else {
-                    len = 0;
-                    tempStr = text.substring(alreadyLen);
+            String fromTmp = from;
+            String sourceText;
+            StringBuilder sb;
+            for (DocParagraphTrans paragraphTrans:paragraphTransList){
+                sourceText = paragraphTrans.getSourceText();
+                //若是"自动检测",则进行语言检测
+                if ("auto".equals(from)) {
+                    fromTmp = yeekitService.detection(sourceText);
                 }
-                textContent += yeekitService.dotranslate(from, to, tempStr);
-            }*/
-
-//            resData.setData(textContent);
-            //TODO... 模拟数据
-            if (!CollectionUtil.isEmpty(paragraphTransList)) {
-                for (DocParagraphTrans paragraphTrans:paragraphTransList) {
-                    paragraphTrans.setTranslation("hello word" +System.currentTimeMillis());
+                //若源语言和目标语言一致，则不进行翻译
+                if(fromTmp.equals(to)){
+                    paragraphTrans.setTranslation(paragraphTrans.getSourceText());
+                    continue;
                 }
+                //默认一段调用机器翻译的次数
+                int transNum = 1;
+                int sourceLen = paragraphTrans.getSourceLen();
+                //若原文长度超过单次长度限制，则分多次进行调用
+                if (sourceLen>offfset){
+                    transNum = sourceLen/offfset;
+                    if(sourceLen%offfset>0){
+                        transNum += 1;
+                    }
+                }
+                sb = new StringBuilder();
+                for (int i = 0; i <transNum ; i++) {
+                    sb.append(yeekitService.doTranslateNoFormat(fromTmp, to, sourceText));
+                }
+                paragraphTrans.setTranslation(sb.toString());
             }
+
+            //TODO... 模拟数据
+//            if (!CollectionUtil.isEmpty(paragraphTransList)) {
+//                for (DocParagraphTrans paragraphTrans:paragraphTransList) {
+//                    paragraphTrans.setTranslation("hello word" +System.currentTimeMillis());
+//                }
+//            }
 
             session.setAttribute(SESSION_DOC_TRANS,paragraphTransList);
         } catch (Exception e) {
             resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"");
-            LOGGER.error("文档翻译失败:", e.getMessage());
+            LOGGER.error("文档翻译失败:", e);
         }
         return resData;
     }
@@ -310,11 +324,11 @@ public class YeekitController {
                 baos.write(buffer, 0, len);
             }
             baos.flush();
-
+            //检测文件编码
             ChardetUtil chardetUtil = new ChardetUtil();
             String chart = chardetUtil.detectAllCharset(new ByteArrayInputStream(baos.toByteArray()));
-
-            StringBuilder sb = new StringBuilder();// 拼接读取的内容
+            // 拼接读取的内容
+            StringBuilder sb = new StringBuilder();
             isr = new InputStreamReader(new ByteArrayInputStream(baos.toByteArray()),chart);
             br = new BufferedReader(isr);
             String temp;
@@ -348,10 +362,8 @@ public class YeekitController {
      * @throws IOException
      */
     private List<DocParagraphTrans> readDoc(MultipartFile file) throws IOException {
-        List<DocParagraphTrans> paragraphTransList = new LinkedList<>();
-        byte[] mFileBytes = file.getBytes();
-        InputStream sbs = new ByteArrayInputStream(file.getBytes());
-        WordUtil.readWord(file.getOriginalFilename(), sbs);
+        List<DocParagraphTrans> paragraphTransList =
+                WordUtil.getTextByParagraph(file.getOriginalFilename(),file.getInputStream());
         return paragraphTransList;
     }
     /**

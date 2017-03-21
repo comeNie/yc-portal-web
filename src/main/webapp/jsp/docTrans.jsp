@@ -49,10 +49,13 @@
 		</ul>
 	</div>
 	<div class="translate-box">
-		<div class="translate-title nofloat">
+		<div class="translate-title nofloat doc">
+			<%--原文--%>
 			<div class="pull-left"><span><spring:message code="doc.trans.source.title"/></span></div>
 			<div class="pull-right">
+				<%--译文--%>
 				<span class="pull-left text-left"><spring:message code="doc.trans.translation.title"/></span>
+				<%--下载--%>
 				<span><spring:message code="doc.trans.down.title"/>:</span>
 				<button class="btn btn-line" id="downDoc">doc</button>
 				<button class="btn btn-line" id="downTxt">txt</button>

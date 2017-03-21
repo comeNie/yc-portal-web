@@ -1,16 +1,25 @@
 package com.ai.yc.protal.web.utils;
 
+import com.ai.yc.protal.web.model.DocParagraphTrans;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.POIXMLTextExtractor;
+import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
+import org.apache.poi.hwpf.usermodel.Paragraph;
+import org.apache.poi.hwpf.usermodel.Range;
 import org.apache.poi.poifs.filesystem.DirectoryEntry;
 import org.apache.poi.poifs.filesystem.DocumentEntry;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by mimw on 2017/2/9.
@@ -35,6 +44,55 @@ public class WordUtil {
             }
             return "";
         }
+    }
+
+    // 按段获取文本(仅对doc文件有效)
+    public static List<DocParagraphTrans> getTextByParagraph(String fileName,InputStream is) {
+        List<DocParagraphTrans> paragraphTransList = new LinkedList<>();
+        try {
+            //doc，2003
+            if (StringUtils.isNotBlank(fileName) && fileName.toLowerCase().endsWith("doc")) {
+                WordExtractor wordExtractor = new WordExtractor(is);
+                // 获取段文本
+                String[] strArray = wordExtractor.getParagraphText();
+                for (int i = 0; i < strArray.length; i++) {
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("第{}段：{}", (i + 1), strArray[i]);
+                    }
+                    //忽略空行
+                    if(StringUtils.isBlank(strArray[i])) {
+                        continue;
+                    }
+                    DocParagraphTrans paragraphTrans = new DocParagraphTrans();
+                    paragraphTrans.setSourceText(strArray[i]);
+                    paragraphTransList.add(paragraphTrans);
+                }
+
+            } else if (StringUtils.isNotBlank(fileName) && fileName.toLowerCase().endsWith("docx")) {
+                // 这个构造函数从InputStream中加载Word文档
+                XWPFDocument doc = new XWPFDocument(is);
+                Iterator<XWPFParagraph> iterator = doc.getParagraphsIterator();
+                int i = 0;
+                while (iterator.hasNext()){
+                    i++;
+                    XWPFParagraph paragraph = iterator.next();
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("第{}段：{}", i, paragraph.getParagraphText());
+                    }
+                    //忽略空行
+                    if(StringUtils.isBlank(paragraph.getParagraphText())) {
+                        continue;
+                    }
+                    DocParagraphTrans paragraphTrans = new DocParagraphTrans();
+                    paragraphTrans.setSourceText(paragraph.getParagraphText());
+                    paragraphTransList.add(paragraphTrans);
+                }
+            }
+            LOGGER.debug("一共{}段", paragraphTransList.size());
+        } catch (IOException e) {
+            LOGGER.error("分段读取失败。",e);
+        }
+        return paragraphTransList;
     }
 
     private static String readWord2007(String fileName, InputStream is) {

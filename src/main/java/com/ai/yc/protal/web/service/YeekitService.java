@@ -4,6 +4,7 @@ import com.ai.opt.base.exception.BusinessException;
 import com.ai.yc.protal.web.exception.HttpStatusException;
 import com.ai.yc.protal.web.utils.HttpUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.slf4j.Logger;
@@ -75,26 +76,39 @@ public class YeekitService {
             LOGGER.info("dotranslate result:{}", resultStr);
 
 //            //失败 解析为json异常
-//            if(resultStr.startsWith("error:")) {
-//                LOGGER.error("机器翻译失败:", resultStr);
-//                throw new BusinessException(TRAINNS_FAIL,"The detection is fail.");
-//            }
+            if(resultStr.startsWith("error:")) {
+                LOGGER.error("机器翻译失败:", resultStr);
+                throw new BusinessException(TRAINNS_FAIL,"The detection is fail.");
+            }
         }  catch (Exception e) {
             LOGGER.error("机器翻译失败:", e);
             throw new BusinessException(TRAINNS_FAIL,"The detection is fail.");
         }
 
-//        JSONArray translateds = JSON.parseObject(resultStr).getJSONArray("translation")
-//                .getJSONObject(0).getJSONArray("translated");
-//        StringBuffer sb = new StringBuffer();
-//        for (int i = 0; i < translateds.size(); i++) {
-//            JSONObject jsonObject = translateds.getJSONObject(i);
-//            sb.append(jsonObject.getString("text").replaceAll("\\s*", ""));
-//        }
-//        LOGGER.info("response:\r\n" + sb.toString());
         return resultStr;
 
 //            return  URLDecoder.decode(resultStr, "UTF-8");
+    }
+
+    /**
+     * 进行机器翻译，直接返回译文新
+     * @param from
+     * @param to
+     * @param text
+     * @return
+     */
+    public String doTranslateNoFormat(String from, String to, String text)
+            throws IOException, HttpStatusException {
+        String resultStr = dotranslate(from, to, text);
+        JSONArray translateds = JSON.parseObject(resultStr).getJSONArray("translation")
+                .getJSONObject(0).getJSONArray("translated");
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < translateds.size(); i++) {
+            JSONObject jsonObject = translateds.getJSONObject(i);
+            sb.append(jsonObject.getString("text"));
+        }
+        LOGGER.info("response:\r\n" + sb.toString());
+        return sb.toString();
     }
 
     /**
