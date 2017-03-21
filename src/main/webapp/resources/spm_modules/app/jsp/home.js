@@ -540,7 +540,7 @@ define('app/jsp/home', function (require, exports, module) {
                     _this._showFail($.i18n.prop('home.upload.error.upload'));
                 }
                 uploader.removeFile(file);
-                uploaderDialog.close();
+                // uploaderDialog.close();
                 //处理成功后进行跳转
             });
 

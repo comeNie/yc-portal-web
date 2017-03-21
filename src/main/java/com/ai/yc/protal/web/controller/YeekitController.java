@@ -138,8 +138,8 @@ public class YeekitController {
                     fromTmp = yeekitService.detection(sourceText);
                 }
                 //若源语言和目标语言一致，则不进行翻译
-                if(fromTmp.equals(to)){
-                    paragraphTrans.setTranslation(paragraphTrans.getSourceText());
+                if(fromTmp.equals(to) || StringUtils.isBlank(sourceText)){
+                    paragraphTrans.setTranslation(sourceText);
                     continue;
                 }
                 //默认一段调用机器翻译的次数
@@ -168,7 +168,8 @@ public class YeekitController {
 
             session.setAttribute(SESSION_DOC_TRANS,paragraphTransList);
         } catch (Exception e) {
-            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,"");
+            resData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
+                    rb.getMessage("home.trans.fail"));
             LOGGER.error("文档翻译失败:", e);
         }
         return resData;

@@ -57,7 +57,7 @@ public class YeekitService {
      * @return
      */
     public String dotranslate(String from, String to, String text)
-            throws IOException, HttpStatusException {
+            throws BusinessException,IOException, HttpStatusException {
         Map<String, Object>  postParams =new HashMap();
 //        postParams.put("srcl", from);// 源语言
 //        postParams.put("tgtl", to);// 目标语言
@@ -73,11 +73,14 @@ public class YeekitService {
             LOGGER.info("机器翻译入参:", JSONObject.toJSONString(postParams));
 //            resultStr = HttpsUtil.HttpsPost(SERVER_URL, postParams.toString(), "UTF-8");
             resultStr = HttpUtil.doPost(client, SERVER_URL, postParams);
+            if(resultStr!=null) {
+                resultStr = resultStr.replaceAll("\\s*\r\n","").trim();
+            }
             LOGGER.info("dotranslate result:{}", resultStr);
 
 //            //失败 解析为json异常
-            if(resultStr.startsWith("error:")) {
-                LOGGER.error("机器翻译失败:", resultStr);
+            if(resultStr.substring(1).startsWith("error")) {
+                LOGGER.error("机器翻译失败");
                 throw new BusinessException(TRAINNS_FAIL,"The detection is fail.");
             }
         }  catch (Exception e) {
@@ -99,15 +102,23 @@ public class YeekitService {
      */
     public String doTranslateNoFormat(String from, String to, String text)
             throws IOException, HttpStatusException {
-        String resultStr = dotranslate(from, to, text);
-        JSONArray translateds = JSON.parseObject(resultStr).getJSONArray("translation")
-                .getJSONObject(0).getJSONArray("translated");
         StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < translateds.size(); i++) {
-            JSONObject jsonObject = translateds.getJSONObject(i);
-            sb.append(jsonObject.getString("text"));
+        try {
+            String resultStr = dotranslate(from, to, text);
+            JSONArray translateds = JSON.parseObject(resultStr).getJSONArray("translation")
+                    .getJSONObject(0).getJSONArray("translated");
+            for (int i = 0; i < translateds.size(); i++) {
+                JSONObject jsonObject = translateds.getJSONObject(i);
+                sb.append(jsonObject.getString("text"));
+            }
+            LOGGER.info("response:\r\n" + sb.toString());
+        } catch (BusinessException e){
+            if("zh".equals(from)){
+                sb.append("****翻译失败");
+            }else {
+                sb.append("****"+doTranslateNoFormat("zh",to,"翻译失败"));
+            }
         }
-        LOGGER.info("response:\r\n" + sb.toString());
         return sb.toString();
     }
 
