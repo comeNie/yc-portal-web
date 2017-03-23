@@ -32,13 +32,15 @@ public class OrderService {
      * @param accountId 账号ID,可为空
      * @param orderId 订单ID
      * @param orderType 订单类型 企业/个人
-     * @param paidFee 订单金额
+     * @param totalPay 订单总费用
+     * @param discountFee 总优惠费用
+     * @param paidFee 订单支付金额
      * @param payStyle 支付方式,对应支付机构
      * @param outOrderId 支付流水号
      * @param notifyTime 支付时间
      */
     public void orderPayProcessResult(
-            String userId,Long accountId,long orderId,String orderType,long paidFee,
+            String userId,Long accountId,long orderId,String orderType,long totalPay,long discountFee,long paidFee,
             String payStyle,String outOrderId,Timestamp notifyTime){
         LOGGER.info("order pay process result,\r\n" +
                 "userId:{},orderId:{},orderType:{},paidFee:{},payStyle:{},outOrderId:{}",
@@ -81,7 +83,8 @@ public class OrderService {
         OrderPayProcessedResultFeeInfo payResultFeeInfo = new OrderPayProcessedResultFeeInfo();
         payResultReq.setFeeInfo(payResultFeeInfo);
         payResultFeeInfo.setPayStyle(payStyle);//支付机构
-        payResultFeeInfo.setTotalFee(paidFee);
+        payResultFeeInfo.setTotalFee(totalPay);//订单总金额
+        payResultFeeInfo.setDiscountFee(discountFee);//总优惠费用
         payResultFeeInfo.setPaidFee(paidFee);//实际支付金额
         payResultFeeInfo.setExternalId(outOrderId);
         payResultFeeInfo.setPayTime(notifyTime);

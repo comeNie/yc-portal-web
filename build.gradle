@@ -129,6 +129,8 @@ dependencies {
     compile 'com.ai.slp.balance:incomeoutquery:1.0-SNAPSHOT'
     //余额扣减服务
     compile 'com.ai.slp.balance:deduct:1.0-SNAPSHOT'
+    //优惠券
+    compile 'com.ai.slp.balance:sendcoupon:1.0-SNAPSHOT'
 
 	compile 'com.ai.yc.ucenter:members:1.1.1-SNAPSHOT'
 	compile 'com.ai.yc.common:country:1.0-SNAPSHOT'

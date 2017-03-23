@@ -1,10 +1,16 @@
 package com.ai.yc.protal.web.model.pay;
 
+import java.math.BigDecimal;
+
 /**
  * 账户余额信息
  * Created by liutong on 16/11/14.
  */
 public class AccountBalanceInfo {
+    /*
+    主体标识，用户ID或企业ID
+    */
+    private String objId;
     /*
     账户ID
      */
@@ -25,6 +31,18 @@ public class AccountBalanceInfo {
     币种
      */
     private String currencyUnit;
+    /**
+     * 结算方式  1：预付费2：后付费
+     */
+    private String accountType;
+    /**
+     * 折扣,传小数,例如88折,返回0.88
+     */
+    private BigDecimal discount;
+    /**
+     * 折扣字符，如0.88,显示8.8折，0.8,显示8折
+     */
+    private String discountStr;
 
     public String getCurrencyUnit() {
         return currencyUnit;
@@ -65,5 +83,36 @@ public class AccountBalanceInfo {
 	public void setPayPassword(String payPassword) {
 		this.payPassword = payPassword;
 	}
-    
+
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+    }
+
+    public String getDiscountStr() {
+        return discountStr;
+    }
+
+    public void setDiscountStr(String discountStr) {
+        this.discountStr = discountStr;
+    }
+
+    public String getObjId() {
+        return objId;
+    }
+
+    public void setObjId(String objId) {
+        this.objId = objId;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
 }

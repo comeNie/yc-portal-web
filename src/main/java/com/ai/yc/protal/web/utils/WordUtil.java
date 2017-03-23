@@ -7,6 +7,7 @@ import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.apache.poi.hwpf.usermodel.Paragraph;
 import org.apache.poi.hwpf.usermodel.Range;
+import org.apache.poi.hwpf.usermodel.Section;
 import org.apache.poi.poifs.filesystem.DirectoryEntry;
 import org.apache.poi.poifs.filesystem.DocumentEntry;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
@@ -52,22 +53,28 @@ public class WordUtil {
         try {
             //doc，2003
             if (StringUtils.isNotBlank(fileName) && fileName.toLowerCase().endsWith("doc")) {
-                WordExtractor wordExtractor = new WordExtractor(is);
+                HWPFDocument doc = new HWPFDocument(is);
                 // 获取段文本
-                String[] strArray = wordExtractor.getParagraphText();
-                for (int i = 0; i < strArray.length; i++) {
+                //得到整个doc文档的Range，可以理解为文档对象
+                Range r = doc.getRange();
+                Section section = r.getSection(r.numSections() - 1);
+                String text;
+                //循环得到每一段落的文字。这个跟Range.text()是不同的。
+                for (int np = 0; np < section.numParagraphs(); np++) {
+                    Paragraph para = section.getParagraph(np);
+                    //得到该段落的文字
+                    text = para.text();
                     if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("第{}段：{}", (i + 1), strArray[i]);
+                        LOGGER.debug("第{}段：{}", (np + 1), text);
                     }
                     //忽略空行
-                    if(StringUtils.isBlank(strArray[i])) {
+                    if(StringUtils.isBlank(text)) {
                         continue;
                     }
                     DocParagraphTrans paragraphTrans = new DocParagraphTrans();
-                    paragraphTrans.setSourceText(strArray[i]);
+                    paragraphTrans.setSourceText(text);
                     paragraphTransList.add(paragraphTrans);
                 }
-
             } else if (StringUtils.isNotBlank(fileName) && fileName.toLowerCase().endsWith("docx")) {
                 // 这个构造函数从InputStream中加载Word文档
                 XWPFDocument doc = new XWPFDocument(is);

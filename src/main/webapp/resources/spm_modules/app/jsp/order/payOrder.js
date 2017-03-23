@@ -35,6 +35,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
                 checkAvailableLanguages: true,
 				async: false
 			});
+			this._changeOrderType();
     	},
 		//检查订单是否已经支付，
 		_isPay:function () {
@@ -57,6 +58,87 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 				}
 			});
 		},
+		//订单类型变更时，重新计算费用
+        _changeOrderType:function () {
+			//查看是否企业用户
+			var orderType = $("#orderType").val();
+			if('2' == orderType){
+                //企业账户优惠金额
+                comDisFee = totalFee - totalFee * discount;
+                $("#orderAmount").val(orderPayFee);
+			}
+			//查询可用优惠券
+            this._queryCoupon();
+        },
+		//查询可用优惠券
+		_queryCoupon:function () {
+    		var _this = this;
+            $("#couponSelect").empty();
+            ajaxController.ajax({
+                type: "post",
+                processing:true,
+                url: _base+"/p/balance/query/coupon",
+                data: $("#yePayForm").serializeArray(),
+                success: function(data){
+                    //判断是否有可用优惠券
+					var couponArry = eval(data.data);
+					var currencyUnit = $("currencyUnit").val();
+					//若存在可用优惠券
+					if(couponArry==null || couponArry.length<1){
+                        $("#couponSelect").append("<option value='' faceVal='0'>"+noCoupon+"</option>");
+                        //优惠码可输入
+						$("#conponCode").removeAttr("disabled");
+					}else {
+                        $("#conponCode").attr("disabled","disabled");
+                        $.each( couponArry, function(i, n){
+                        	var couponOpt = $.i18n.prop('pay.order.rmb.coupon.option',
+                                _this.liToYuan(n.faceValue),
+                                _this.timestampToDate("yyyy-MM-dd",n.effectiveEndTime));
+                        	//若是美元
+                        	if(""==currencyUnit){
+                                couponOpt = $.i18n.prop('pay.order.usd.coupon.option',
+                                    _this.liToYuan(n.faceValue),
+                                    _this.timestampToDate("yyyy-MM-dd",n.effectiveEndTime));
+							}
+                            $("#couponSelect").append("<option value='"+
+								n.couponId+"' faceVal='"+n.faceValue+"'>"+couponOpt+"</option>");
+                        });
+                        //添加不使用优惠券信息
+                        $("#couponSelect").append("<option value='' faceVal='0'>"+
+							$.i18n.prop("pay.order.not.coupon.option")+"</option>");
+					}
+					_this._changeCoupon();
+                },
+                failure:function () {
+                    $("#couponSelect").append("<option value='' faceVal='0'>"+noCoupon+"</option>");
+                    //优惠码可输入
+                    $("#conponCode").removeAttr("disabled");
+                    _this._changeCoupon();
+                },
+				error:function () {
+                    $("#couponSelect").append("<option value='' faceVal='0'>"+noCoupon+"</option>");
+                    //优惠码可输入
+                    $("#conponCode").removeAttr("disabled");
+                    _this._changeCoupon();
+                }
+            });
+        },
+		//优惠券变更时，重新计算优惠信息
+		_changeCoupon:function () {
+    		//获取优惠面值
+			var faceVal = $("#couponSelect").find("option:selected").attr("faceVal");
+            couponDisFee = Number(faceVal);
+            orderPayFee = totalFee - comDisFee - couponDisFee;
+            this._changePayFee();
+        },
+		//优惠变更时，变更显示
+		_changePayFee:function () {
+			//优惠金额变更
+			$("#discounted").html(this.liToYuan(comDisFee + couponDisFee));
+			//应付金额变更
+			$("#payable").html(this.liToYuan(orderPayFee));
+			$("#orderAmount").val(orderPayFee);
+        },
 		//支付订单
 		_payOrder:function(){
 			//获取支付方式
@@ -209,7 +291,32 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
                     this.close();
                 }
             }).showModal();
-        }
+        },
+        liToYuan:function(li){
+            var result = '0.00';
+            if(isNaN(li) || !li){
+                return result;
+            }
+            return this.fmoney(parseInt(li)/1000, 2);
+        },
+        fmoney: function (s, n) {
+            n = n > 0 && n <= 20 ? n : 2;
+            s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
+            var l = s.split(".")[0].split("").reverse(),
+                r = s.split(".")[1];
+            var t = "", i = 0;
+            for (i = 0; i < l.length; i++) {
+                t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
+            }
+            return t.split("").reverse().join("") + "." + r;
+        },
+        timestampToDate: function (format, timestamp) {
+            if (timestamp != null) {
+                return (new Date(parseFloat(timestamp))).format(format);
+            } else {
+                return null;
+            }
+    	}
 		
     });
     

@@ -16,6 +16,8 @@ import com.ai.slp.balance.api.incomeoutquery.param.FundBookQueryResponse;
 import com.ai.slp.balance.api.incomeoutquery.param.IncomeDetail;
 import com.ai.slp.balance.api.incomeoutquery.param.IncomeQueryRequest;
 
+import com.ai.slp.balance.api.sendcoupon.interfaces.ISendCouponSV;
+import com.ai.slp.balance.api.sendcoupon.param.DeductionCouponResponse;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
 import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
@@ -206,5 +208,25 @@ public class BalanceController {
 //        response.getWriter().flush();
         return "gotoPay";
     }
+
+
+    /**
+     * 根据币种和金额查询符合条件的优惠券
+     * @param currenctyUnit 币种
+     * @param orderAmount 金额
+     * @return
+     */
+    @RequestMapping(value = "/query/coupon")
+    @ResponseBody
+    public ResponseData<List<DeductionCouponResponse>> queryCoupon(String currenctyUnit, Long orderAmount){
+        ResponseData<List<DeductionCouponResponse>> responseData =
+                new ResponseData<List<DeductionCouponResponse>>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        ISendCouponSV sendCouponSV = DubboConsumerFactory.getService(ISendCouponSV.class);
+        //TODO...
+        List<DeductionCouponResponse> couponList = new ArrayList<>();
+        responseData.setData(couponList);
+        return responseData;
+    }
+    //查询优惠劵或优惠码的状态
 
 }

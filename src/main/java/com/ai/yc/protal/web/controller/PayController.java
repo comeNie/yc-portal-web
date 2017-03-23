@@ -73,7 +73,7 @@ public class PayController {
         //支付费用
         Double totalFee = Double.valueOf(payNotify.getOrderAmount())*1000;
         orderService.orderPayProcessResult(userId,null,Long.parseLong(payNotify.getOrderId()),orderType,
-                totalFee.longValue(),payNotify.getPayOrgCode(),payNotify.getOutOrderId(),notifyTime);
+                totalFee.longValue(),0,totalFee.longValue(),payNotify.getPayOrgCode(),payNotify.getOutOrderId(),notifyTime);
         return "OK";
     }
     /**

@@ -11,4 +11,12 @@ public final class BalanceConstants {
     public static final String PAY_CHECK_TRUE= "1";
     //支付不需要验证密码
     public static final String PAY_CHECK_FALSE="0";
+    /**
+     * 1：预付费
+     */
+    public static final String ACCOUNT_TYPE_PRE = "1";
+    /**
+     * 2：预付费
+     */
+    public static final String ACCOUNT_TYPE_AFTER = "2";
 }

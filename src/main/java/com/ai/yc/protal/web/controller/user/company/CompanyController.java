@@ -66,7 +66,7 @@ public class CompanyController {
 				companyInfo.setEntpAttacid(idpsEntpId);
 			}
 			companyInfo.setLicenseAttacid(idpsLicenseId);
-			companyInfo.setAdminUserId(UserUtil.getUserId());
+			companyInfo.setUserId(UserUtil.getUserId());
 			IYCUserCompanySV companySV = DubboConsumerFactory.getService(IYCUserCompanySV.class);
 			companySV.insertCompanyInfo(companyInfo);
 			IYCUserServiceSV userServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);

@@ -79,14 +79,23 @@
   				</div>
 				<form id="toPayForm" method="post" action="${_base}/p/customer/order/gotoPay" target="_blank">
 					<input type="hidden" id="orderId" name="orderId" value="${orderId}">
-					<input type="hidden" name="orderAmount" value="${orderFee.totalFee}">
-					<input type="hidden" name="currencyUnit" value="${orderFee.currencyUnit}">
+					<input type="hidden" name="totalFee" value="${orderFee.totalFee}">
+					<%--应付金额--%>
+					<input type="hidden" id="orderAmount" name="orderAmount" value="${orderFee.totalFee}">
+					<input type="hidden" id="currencyUnit" name="currencyUnit" value="${orderFee.currencyUnit}">
 					<input type="hidden" name="translateName" value="${translateName}">
 					<input type="hidden" id="payType" name="payOrgCode">
 					<%--当前地址--%>
 					<input type="hidden" id="merchantUrl" name="merchantUrl">
-					<%--订单类型 目前只支持用户--%>
-					<input type="hidden" name="orderType" value="1">
+					<%--订单类型 默认为个人用户--%>
+					<c:set var="orderType" value="1"/>
+					<%--若属于企业，则默认为企业用户--%>
+					<c:if test="${comBalanceInfo!=null}">
+						<c:set var="orderType" value="2"/>
+					</c:if>
+					<input id="orderType" type="hidden" name="orderType" value="${orderType}">
+					<%--优惠券ID或优惠码--%>
+					<input type="hidden" name="couponId">
 				</form>
 
   				<div class="selection-select single-select mt-20">
@@ -96,18 +105,39 @@
 							<p class="word"><spring:message code="pay.order.order.id"/></p>
 							<p class="line-40">${orderId}</p>
 						</li>
-						<%--<li>--%>
-							<%--<p class="word">订单性质</p>--%>
-							<%--<p><select class="select select-250 radius"><option>企业订单（8折）</option></select></p>--%>
-						<%--</li>--%>
-						<%--<li>--%>
-							<%--<p class="word">优惠券</p>--%>
-							<%--<p><select class="select select-300 radius"><option>50元优惠券；有效期至2016-11-04</option></select></p>--%>
-						<%--</li>--%>
-						<%--<li>--%>
-							<%--<p class="word">会场数量</p>--%>
-							<%--<p><input type="text" class="int-text int-in-300 radius" placeholder="请输入会场数量"></p>--%>
-						<%--</li>--%>
+						<%--若是企业用户，则选择企业用户--%>
+						<c:if test="${comBalanceInfo!=null}">
+						<li>
+							<%--订单性质--%>
+							<p class="word"><spring:message code="pay.order.order.nature"/></p>
+							<p>
+								<select class="select select-250 radius" id="orderTypeSelect">
+									<%--企业订单--%>
+									<option value="2"><spring:message code="pay.order.ent.order.title"
+																	  arguments="${comBalanceInfo.discountStr}"/></option>
+									<%--个人订单--%>
+									<option value="1"><spring:message code="pay.order.individual.order.title"/></option>
+								</select>
+							</p>
+						</li>
+						</c:if>
+						<li>
+							<%--优惠券--%>
+							<p class="word"><spring:message code="pay.order.coupon.title"/></p>
+							<p>
+								<select class="select select-300 radius" id="couponSelect">
+									<option value="" faceVal=""><spring:message
+											code="pay.order.no.coupon.option"/></option>
+								</select>
+							</p>
+						</li>
+						<li>
+							<%--优惠码--%>
+							<p class="word"><spring:message code="pay.order.coupon.code.title"/></p>
+								<%--请输入优惠码--%>
+							<p><input type="text" class="int-text int-in-300 radius" id="conponCode"
+									  placeholder='<spring:message code="pay.order.coupon.code.placeholder"/>'></p>
+						</li>
 					</ul>
 					<c:set var="isEn" value="<%=Locale.US.equals(response.getLocale())%>"/>
 					<ul>
@@ -121,16 +151,22 @@
 									value="${orderFee.totalFee/1000}" pattern="#,##0.00"/><c:if
 									test="${orderFee.currencyUnit == '1' && isEn!=true}">元</c:if></p>
 						</li>
-						<%--<li class="line-none line-20">--%>
-						<%--<p class="word">&nbsp;</p>--%>
-						<%--<p>已优惠：50.00元</p>--%>
-						<%--</li>--%>
+						<li class="line-none line-20">
+							<p class="word">&nbsp;</p>
+							<%--已优惠--%>
+							<p><spring:message code="pay.order.discounted.title"/>：<c:if
+									test="${orderFee.currencyUnit == '2'}">$</c:if><c:if
+									test="${orderFee.currencyUnit == '1' && isEn==true}">¥</c:if><font
+									id="discounted">0.00</font><c:if
+									test="${orderFee.currencyUnit == '1' && isEn!=true}">元</c:if></p>
+						</li>
 						<li class="ml-100 line-none">
 							<p class="word">&nbsp;</p>
 							<%--应付金额--%>
 							<p><spring:message code="pay.order.payable.order"/>：<c:if
 									test="${orderFee.currencyUnit == '2'}">$</c:if><c:if
-									test="${orderFee.currencyUnit == '1' && isEn==true}">¥</c:if><span><fmt:formatNumber
+									test="${orderFee.currencyUnit == '1' && isEn==true}">¥</c:if><span
+									id="payable"><fmt:formatNumber
 									value="${orderFee.totalFee/1000}" pattern="#,##0.00"/></span><c:if
 									test="${orderFee.currencyUnit == '1'&& isEn!=true}">元</c:if></p>
 						</li>
@@ -143,6 +179,14 @@
 					<p><spring:message code="pay.order.pay.method"/></p>
   				</div>
   				<div id="payment-method" class="payment-method mt-30">
+					<%--企业用户，且支持翻译后付费--%>
+					<c:if test="${comBalanceInfo!=null && '2'==comBalanceInfo.accountType}">
+					<ul payType="HF" class="current">
+						<%--翻译后付费--%>
+						<li><spring:message code="pay.order.pay.after.trans"/></li>
+						<label><i class="icon iconfont">&#xe617;</i></label>
+					</ul>
+					</c:if>
 					<c:choose>
 						<%--人民币--%>
 						<c:when test="${orderFee.currencyUnit == '1'}">
@@ -218,10 +262,7 @@
 								<label><i class="icon iconfont">&#xe617;</i></label>
 							</ul>
 						</c:when>
-						<%--<ul class="current">--%>
-						<%--<li>翻译后付费</li>--%>
-						<%--<label><i class="icon iconfont">&#xe617;</i></label>--%>
-						<%--</ul>--%>
+
 					</c:choose>
   				</div>
   			</div>
@@ -237,16 +278,35 @@
 </body>
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
+	//订单总金额
+	var totalFee = ${orderFee.totalFee};
+
+    //待支付金额，目前为总金额
+    var orderPayFee = ${orderFee.totalFee};
 	//是否需要校验密码
 	var needPayPass = "${balanceInfo.payCheck}";
 	//是否需要充值
 	var needRecharge = ${needPay!=null?needPay:true};
-	//待支付金额，目前为总金额
-	var orderPayFee = ${orderFee.totalFee};
-	//账户余额
+
+	//个人账户余额
 	var acctBalance = ${balanceInfo!=null?balanceInfo.balance:0};
 	//是否已设置支付密码
 	var payPassExist = ${payPassExist!=null?payPassExist:false};
+
+	//企业账户信息
+	var compayId = "${comBalanceInfo!=null?comBalanceInfo.objId:null}";
+	//企业折扣
+	var discount = ${comBalanceInfo!=null?comBalanceInfo.discount:1};
+	//企业账户余额
+	var compayBalance = ${comBalanceInfo!=null?comBalanceInfo.balance:0};
+	//是否允许后付费，适用于企业账户
+	var allowAfter = ${comBalanceInfo!=null&&"2"==comBalanceInfo.accountType?true:false};
+    //企业优惠金额
+    var comDisFee = 0;
+	//无可用优惠券
+	var noCoupon = "<spring:message code="pay.order.no.coupon.option"/>";
+	//优惠券优惠金额
+    var couponDisFee = 0;
 	(function () {
 		var pager;
 		seajs.use('app/jsp/order/payOrder', function(payOrderPager) {
