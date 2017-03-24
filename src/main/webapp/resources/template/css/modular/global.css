@@ -600,7 +600,7 @@ select::-ms-expand { display: none; }
 .select-wrap .drop-down{padding-left:12px;padding-right:12px;width:230px;height:46px;line-height:26px;cursor:pointer;text-align: left;}
 .select-wrap .select-con{width:230px;height:auto;border:1px solid #e6e6e6;border-radius:5px;background:#fff;position:absolute;top:50px;left:0;z-index:999;overflow:hidden;}
 .select-wrap .select-con li{margin:0 !important;line-height:38px;border-bottom:1px solid #e6e6e6;}
-.quesbox .quesbox-wrap .select-con ul{width:230px;padding:0;margin-bottom:-1px;overflow:hidden;}
+.quesbox .quesbox-wrap .select-con ul{width:230px;padding:0;margin-bottom:-1px;overflow:hidden;max-height:190px;overflow-y:auto;}
 .quesbox .quesbox-wrap .select-con ul li{text-align: left;}
 .quesbox .quesbox-wrap .select-con ul li a{padding:4px 12px;display:block;color:#6a6c6f;font-size:14px;}
 .quesbox .quesbox-wrap .select-con ul li a:hover{background-color:#e6e6e6;color:#2361ea;}

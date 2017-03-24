@@ -47,8 +47,10 @@ $(function () {
 
 //选择下拉框
 $(function () {
+
   $('[drop-down]').click(function(){
-    if($('.select-con').hasClass('undis')){
+    $(this).parents().siblings().find('.select-con').addClass('undis');
+    if($(this).siblings('.select-con').hasClass('undis')){
        $(this).siblings().removeClass('undis');
      }else{
         $(this).siblings().addClass('undis');
@@ -57,14 +59,20 @@ $(function () {
   });
   $('.select-con ul li').click(function(){
     var text = $(this).text();
-    $('[drop-down]').text(text);
-    $('.select-con').addClass('undis');
+    $(this).parents('.select-con').siblings('[drop-down]').text(text);
+    $(this).parents('.select-con').addClass('undis');
     return false;
   });
 
   $('html').click(function(){
     if(!$('.select-con').hasClass('undis')){
       $('.select-con').addClass('undis')
+    }
+  });
+
+  $('.prompt-samll').click(function(){
+    if(!$(this).find('.select-con').hasClass('undis')){
+      $(this).find('.select-con').addClass('undis')
     }
   });
     
