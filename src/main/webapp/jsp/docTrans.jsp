@@ -88,10 +88,24 @@
 <script type="text/javascript" src="${uedroot}/scripts/modular/digital-scroll.js"></script>
 <script type="text/javascript">
     var pager;
+    var winHeight = $(window).height();
+    var tableHeight = $('.translate-table').height();
+    var more = 0;
+    var shouldHeight = (winHeight - 480) >340? (winHeight - 480) : 340;
     (function () {
         seajs.use('app/jsp/docTrans', function(docTrans) {
             pager = new docTrans({element : document.body});
             pager.render();
+        });
+		// 如果不够一屏隐藏点击按钮
+        if(tableHeight<=340){
+            $('#loadmore').fadeOut();
+        }
+
+        // 初始化限制高度
+        $('.translate-table-wrap').css({
+            height : shouldHeight,
+            overflow:'hidden'
         });
     })();
 </script>

@@ -21,7 +21,7 @@ define('app/jsp/docTrans', function (require, exports, module) {
         events: {
             "click #downDoc":"_downDoc",
             "click #downTxt":"_downTxt",
-            "click #loadMore":""
+            "click #loadMore":"_showMore"
         },
 
         //重写父类
@@ -38,8 +38,30 @@ define('app/jsp/docTrans', function (require, exports, module) {
                 checkAvailableLanguages: true
 			});
 
-        },
 
+        },
+        //显示更多
+        _showMore:function () {
+            more++;
+            var height = shouldHeight + more*300;
+            if(window.console){
+                console.log('h',height);
+                console.log('tabh', tableHeight);
+            }
+            if(height<=tableHeight){
+                height = height;
+            }else{
+                height = 'auto';
+                $('#loadMore').hide();
+                $('.translate-box').css({
+                    'margin-bottom' : 84
+                })
+            }
+            $('.translate-table-wrap').css({
+                height : height,
+                overflow:'hidden'
+            });
+        },
         //下载doc
 		_downDoc:function () {
             window.open(_base +"/downloadDoc?fileType=doc");
