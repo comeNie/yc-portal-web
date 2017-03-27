@@ -206,12 +206,18 @@ define('app/jsp/home', function (require, exports, module) {
 							});
 						}
                         var collectionId = array.collectionId;
+						//若为收藏译文，则显示"取消收藏"按钮，
 						if(collectionId!=null && collectionId!=""){
                             //设置收藏ID，
                             $("#sus-top3").attr("collectId",collectionId);
                             //并将收藏按钮设置为取消收藏
                             $("#sus-top3 span.suspension3").eq(0).text($.i18n.prop("home.collection.cancle.title"));
-						}
+						}else {
+                            //设置收藏ID，
+                            $("#sus-top3").attr("collectId","");
+                            //并将收藏按钮设置为取消收藏
+                            $("#sus-top3 span.suspension3").eq(0).text($.i18n.prop("home.collection.title"));
+                        }
 					} else {
 						//图标隐藏
                         $(".post-cion").css("visibility","hidden");
