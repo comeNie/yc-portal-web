@@ -2,11 +2,14 @@ package com.ai.yc.protal.web.controller;
 
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.DateUtil;
+import com.ai.opt.sdk.util.StringUtil;
+import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.slp.balance.api.deposit.interfaces.IDepositSV;
 import com.ai.slp.balance.api.deposit.param.DepositParam;
 import com.ai.slp.balance.api.deposit.param.TransSummary;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.model.pay.PayNotify;
+import com.ai.yc.protal.web.service.BalanceService;
 import com.ai.yc.protal.web.service.OrderService;
 import com.ai.yc.protal.web.utils.*;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
@@ -36,6 +39,10 @@ public class PayController {
     private static final Logger LOG = LoggerFactory.getLogger(PayController.class);
     @Autowired
     OrderService orderService;
+    @Autowired
+    private BalanceService balanceService;
+    @Autowired
+    private ResWebBundle rb;
 
     /**
      * 订单支付结果
@@ -68,9 +75,15 @@ public class PayController {
     @ResponseBody
     public String orderPayResult(
             @PathVariable("orderType")String orderType, @PathVariable("userId")String userId,
-            Long totalPay, @RequestParam(required = false) String companyId,
+            Long totalPay,String currencyUnit,@RequestParam(required = false) String companyId,
             @RequestParam(required = false) String couponId,PayNotify payNotify){
         LOG.info("The pay result.orderType:{},\r\n{}", orderType,JSON.toJSONString(payNotify));
+        //若优惠券不为空，则将优惠券设置为已使用
+        if(!StringUtil.isBlank(couponId)) {
+            balanceService.deductionCoupon(UserUtil.getUserId(), couponId,
+                    Long.parseLong(payNotify.getOrderId()), totalPay,
+                    currencyUnit, rb.getDefaultLocale());
+        }
         //若哈希验证不通过或支付失败,则表示支付结果有问题
         if (!verifyData(payNotify)
                 || !PayNotify.PAY_STATES_SUCCESS.equals(payNotify.getPayStates())){

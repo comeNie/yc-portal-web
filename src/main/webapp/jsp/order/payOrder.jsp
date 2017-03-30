@@ -137,7 +137,7 @@
 							<%--优惠码--%>
 							<p class="word"><spring:message code="pay.order.coupon.code.title"/></p>
 								<%--请输入优惠码--%>
-							<p><input type="text" class="int-text int-in-300 radius" id="conponCode"
+							<p><input type="text" class="int-text int-in-300 radius" id="conponCode" maxlength="16"
 									  placeholder='<spring:message code="pay.order.coupon.code.placeholder"/>'></p>
 						</li>
 					</ul>
@@ -188,7 +188,7 @@
 				<%--余额支付--%>
 				<form id="yePayForm" method="post" action="${_base}/p/customer/order/payOrder/balance">
 					<input type="hidden" name="externalId" value="${orderId}">
-					<input type="hidden" name="accountId" value="${balanceInfo.accountId}">
+					<input type="hidden" id="accountId" name="accountId" value="${balanceInfo.accountId}">
 					<input type="hidden" id="balancePass" name="password" />
 					<input type="hidden" id="yeTotalAmount" name="totalAmount" value="${orderFee.totalFee}">
 					<input type="hidden" name="currencyUnit" value="${orderFee.currencyUnit}">
@@ -286,10 +286,13 @@
 
 	//个人账户余额
 	var acctBalance = ${balanceInfo!=null?balanceInfo.balance:0};
+	//账户id
+	var acctoundId = "${balanceInfo.accountId}";
 	//是否已设置支付密码
 	var payPassExist = ${payPassExist!=null?payPassExist:false};
 
 	//企业账户信息
+	var comAccountId = "${comBalanceInfo.accountId}";
 	var compayId = "${comBalanceInfo!=null?comBalanceInfo.objId:null}";
 	//企业折扣
 	var discount = ${comBalanceInfo!=null?comBalanceInfo.discount:1};

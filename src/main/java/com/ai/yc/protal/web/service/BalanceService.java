@@ -4,6 +4,7 @@ import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.BeanUtils;
+import com.ai.opt.sdk.util.StringUtil;
 import com.ai.slp.balance.api.accountquery.interfaces.IAccountQuerySV;
 import com.ai.slp.balance.api.fundquery.param.AccountIdParam;
 import com.ai.slp.balance.api.accountquery.param.AccountInfoVo;
@@ -48,7 +49,7 @@ public class BalanceService {
         AccountBalanceInfo accountBalanceInfo = null;
         //若账户信息不为空，则查询账户信息
         if (userInfoResponse != null && userInfoResponse.getAccountId() != null){
-            accountBalanceInfo = queryByAccount(userInfoResponse.getAccountId());
+            accountBalanceInfo = queryByAccount(userInfoResponse.getAccountId(),null);
         }
         if(accountBalanceInfo!=null){
             accountBalanceInfo.setObjId(userId);
@@ -70,7 +71,9 @@ public class BalanceService {
         UserCompanyInfoResponse response = userCompanySV.queryCompanyInfo(request);
         AccountBalanceInfo accountBalanceInfo = null;
         if(response != null && response.getAccountId() != null){
-            accountBalanceInfo = queryByAccount(response.getAccountId());
+            //TODO... 模拟数据
+//            accountBalanceInfo = queryByAccount(12727l,"00000025");
+            accountBalanceInfo = queryByAccount(response.getAccountId(),response.getCompanyId());
             if(accountBalanceInfo!=null){
                 accountBalanceInfo.setObjId(response.getCompanyId());
             }
@@ -97,7 +100,7 @@ public class BalanceService {
      * @param accountId
      * @return
      */
-    private AccountBalanceInfo queryByAccount(long accountId){
+    private AccountBalanceInfo queryByAccount(long accountId,String userId){
         AccountBalanceInfo accountBalanceInfo = null;
 
         //查询用户余额
@@ -105,6 +108,7 @@ public class BalanceService {
         AccountIdParam accountIdParam = new AccountIdParam();
         accountIdParam.setTenantId(Constants.DEFAULT_TENANT_ID);
         accountIdParam.setAccountId(accountId);
+        accountIdParam.setUserID(userId);
         FundInfo fundInfo = fundQuerySV.queryUsableFund(accountIdParam);
 
         //查询账号设置
@@ -139,6 +143,9 @@ public class BalanceService {
      */
     public void deductionCoupon(String userId, String couponId, Long orderId, Long totalFee,
                                 String currencyUnit, Locale locale) throws BusinessException {
+        //若优惠券为空，则不进行处理。
+        if(StringUtil.isBlank(couponId))
+            return;
         ISendCouponSV sendCouponSV = DubboConsumerFactory.getService(ISendCouponSV.class);
         DeductionCouponRequest request = new DeductionCouponRequest();
         request.setUserId(userId);

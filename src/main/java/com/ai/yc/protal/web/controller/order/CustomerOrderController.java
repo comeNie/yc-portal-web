@@ -378,7 +378,8 @@ public class CustomerOrderController {
         String tenantId= ConfigUtil.getProperty("TENANT_ID");
         //服务异步通知地址
         String notifyUrl= ConfigUtil.getProperty("NOTIFY_URL")+"/"+orderPay.getOrderType()+"/"+ UserUtil.getUserId()+
-                "?totalPay="+orderPay.getTotalFee()+"&companyId="+orderPay.getCouponId()+"&couponId="+orderPay.getCouponId();
+                "?totalPay="+orderPay.getTotalFee()+"&currencyUnit="+orderPay.getCurrencyUnit()+
+                "&companyId="+orderPay.getCouponId()+"&couponId="+orderPay.getCouponId();
 
         //异步通知地址,默认为用户
         //将订单金额直接转换为小数点后两位

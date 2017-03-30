@@ -80,13 +80,20 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
             balance = acctBalance;
             //默认为个人账户，此时需要密码
             needPayPass = "1";
+            $("#accountId").val(acctoundId);
 			if(payOrderPager.ORDER_TYPE_COM == orderType){
                 orderPayFee = totalFee * discount;
+                var tmp = orderPayFee%10;
+                orderPayFee -= tmp;
+                if(tmp>4){
+                    orderPayFee += 10;
+                }
                 //企业账户优惠金额
                 comDisFee = totalFee - orderPayFee;
                 //设置不需要校验密码
                 needPayPass = "0";
                 balance = compayBalance;
+                $("#accountId").val(comAccountId);
                 $("#corporaId").val(compayId);
 			}
             $("#orderAmount").val(orderPayFee);
@@ -320,7 +327,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
                     this._showWarn($.i18n.prop('pay.dialog.recharge'));
                 }//为企业账户，需要支付密码、支付密码不存在
                 else if(payOrderPager.ORDER_TYPE_COM == orderType
-                    && needPayPass==="1"
+                    && needPayPass == "1"
                     && payPassExist == false){
                     this._showToSetPass();
                 }//余额支付,需要密码
@@ -419,7 +426,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 		_YEPaySubmit:function () {
 			var _this= this;
 			//订单类型
-            var orderType = $("#orderType").var();
+            var orderType = $("#orderType").val();
             //应收费用
             $("#yeTotalAmount").val(orderPayFee);
             //订单类型
