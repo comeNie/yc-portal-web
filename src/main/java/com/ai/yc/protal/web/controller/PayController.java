@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Timestamp;
@@ -52,15 +53,23 @@ public class PayController {
         uiModel.addAttribute("payResult",PayNotify.PAY_STATES_SUCCESS.equals(payNotify.getPayStates()));
         return "order/orderPayResult";
     }
+
     /**
      * 订单支付结果
+     * @param orderType
+     * @param userId
+     * @param totalPay
+     * @param companyId
+     * @param couponId
+     * @param payNotify
      * @return
      */
     @RequestMapping("/payResult/{orderType}/{userId}")
     @ResponseBody
     public String orderPayResult(
             @PathVariable("orderType")String orderType, @PathVariable("userId")String userId,
-            PayNotify payNotify){
+            Long totalPay, @RequestParam(required = false) String companyId,
+            @RequestParam(required = false) String couponId,PayNotify payNotify){
         LOG.info("The pay result.orderType:{},\r\n{}", orderType,JSON.toJSONString(payNotify));
         //若哈希验证不通过或支付失败,则表示支付结果有问题
         if (!verifyData(payNotify)
@@ -71,9 +80,12 @@ public class PayController {
         //获取交易时间 20161111181026
         Timestamp notifyTime = DateUtil.getTimestamp(payNotify.getNotifyTime(),"yyyyMMddHHmmss");
         //支付费用
-        Double totalFee = Double.valueOf(payNotify.getOrderAmount())*1000;
+        Double orderAmount = Double.valueOf(payNotify.getOrderAmount())*1000;
+        Long paidFee = orderAmount.longValue();
+        Long discountFee = totalPay - paidFee;
         orderService.orderPayProcessResult(userId,null,Long.parseLong(payNotify.getOrderId()),orderType,
-                totalFee.longValue(),0,totalFee.longValue(),payNotify.getPayOrgCode(),payNotify.getOutOrderId(),notifyTime);
+                totalPay,discountFee>0?discountFee:0,paidFee,payNotify.getPayOrgCode(),
+                payNotify.getOutOrderId(),notifyTime,companyId);
         return "OK";
     }
     /**

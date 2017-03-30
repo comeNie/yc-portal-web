@@ -1,11 +1,18 @@
 package com.ai.yc.protal.web.controller.balance;
 
+import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.base.exception.SystemException;
+import com.ai.opt.base.vo.BaseListResponse;
+import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.util.BeanUtils;
+import com.ai.opt.sdk.util.CollectionUtil;
+import com.ai.opt.sdk.util.DateUtil;
 import com.ai.opt.sdk.util.UUIDUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 
+import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.slp.balance.api.accountquery.interfaces.IAccountQuerySV;
 import com.ai.slp.balance.api.accountquery.param.AccountInfoVo;
 import com.ai.slp.balance.api.fundquery.interfaces.IFundQuerySV;
@@ -17,7 +24,11 @@ import com.ai.slp.balance.api.incomeoutquery.param.IncomeDetail;
 import com.ai.slp.balance.api.incomeoutquery.param.IncomeQueryRequest;
 
 import com.ai.slp.balance.api.sendcoupon.interfaces.ISendCouponSV;
+import com.ai.slp.balance.api.sendcoupon.param.DeductionCouponRequest;
 import com.ai.slp.balance.api.sendcoupon.param.DeductionCouponResponse;
+import com.ai.slp.balance.api.sendcoupon.param.FreezeCouponRequest;
+import com.ai.slp.balance.api.sendcoupon.param.FunDiscountCouponResponse;
+import com.ai.yc.protal.web.constants.BalanceConstants;
 import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
 import com.ai.yc.protal.web.model.sso.GeneralSSOClientUser;
@@ -36,6 +47,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -49,6 +61,8 @@ public class BalanceController {
     private static final Logger LOGGER = LoggerFactory.getLogger(BalanceController.class);
     @Autowired
     BalanceService balanceService;
+    @Autowired
+    ResWebBundle rb;
 
     /**
      * 显示我的帐户页面
@@ -212,21 +226,118 @@ public class BalanceController {
 
     /**
      * 根据币种和金额查询符合条件的优惠券
-     * @param currenctyUnit 币种
+     * @param currencyUnit 币种
      * @param orderAmount 金额
      * @return
      */
     @RequestMapping(value = "/query/coupon")
     @ResponseBody
-    public ResponseData<List<DeductionCouponResponse>> queryCoupon(String currenctyUnit, Long orderAmount){
+    public ResponseData<List<DeductionCouponResponse>> queryCoupon(String currencyUnit, Long orderAmount){
         ResponseData<List<DeductionCouponResponse>> responseData =
                 new ResponseData<List<DeductionCouponResponse>>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         ISendCouponSV sendCouponSV = DubboConsumerFactory.getService(ISendCouponSV.class);
-        //TODO...
-        List<DeductionCouponResponse> couponList = new ArrayList<>();
+        DeductionCouponRequest couponRequest = new DeductionCouponRequest();
+        couponRequest.setCurrencyUnit(currencyUnit);//币种
+        couponRequest.setUserId(UserUtil.getUserId());//用户
+        couponRequest.setTotalFee(orderAmount);//金额
+        //传递适用站点
+        couponRequest.setUsedScene(Locale.CHINA.equals(rb.getDefaultLocale()) ?
+                BalanceConstants.USED_SCENE_PC_CN : BalanceConstants.USED_SCENE_PC_EN);
+        BaseListResponse<DeductionCouponResponse> couponResponse =
+                sendCouponSV.queryDisCountCoupon(couponRequest);
+        List<DeductionCouponResponse> couponList = null;
+        if(couponResponse!=null && couponResponse.getResponseHeader().isSuccess()){
+            couponList = couponResponse.getResult();
+        }
+        //TODO... 模拟数据
+        /*if(CollectionUtil.isEmpty(couponList)) {
+            couponList = new ArrayList<>();
+        }
+        DeductionCouponResponse coupon = new DeductionCouponResponse();
+        coupon.setCouponId("asdf8wer8293adfasdf");
+        coupon.setCouponName("50元测试");
+        coupon.setFaceValue(50000);
+        coupon.setEffectiveEndTime(DateUtil.getSysDate());
+        couponList.add(coupon);
+        DeductionCouponResponse coupon1 = new DeductionCouponResponse();
+        coupon1.setCouponId("asdf8wer8293adfasdf");
+        coupon1.setCouponName("10元测试");
+        coupon1.setFaceValue(10000);
+        coupon1.setEffectiveEndTime(DateUtil.getSysDate());
+        couponList.add(coupon1);*/
+
+        if (CollectionUtil.isEmpty(couponList)){
+            couponList = Collections.emptyList();
+        }
         responseData.setData(couponList);
         return responseData;
     }
-    //查询优惠劵或优惠码的状态
 
+    /**
+     * 冻结优惠券
+     * @param orderId
+     * @param couponId
+     * @return
+     */
+    @RequestMapping("/coupon/freeze")
+    @ResponseBody
+    public ResponseData<String> freezeCoupon(Long orderId,String couponId){
+        ResponseData<String> responseData =
+                new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        FreezeCouponRequest request = new FreezeCouponRequest();
+        request.setCouponId(couponId);
+        request.setOrderId(orderId);
+        try {
+            ISendCouponSV sendCouponSV = DubboConsumerFactory.getService(ISendCouponSV.class);
+            BaseResponse response = sendCouponSV.updateStateFreeze(request);
+            //若冻结失败
+            if(response!=null && !response.getResponseHeader().isSuccess()){
+                throw new BusinessException(response.getResponseHeader().getResultCode()
+                        ,response.getResponseHeader().getResultMessage());
+            }
+        } catch (BusinessException|SystemException e) {
+            LOGGER.error("锁定优惠券/优惠码失败。",e);
+            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
+                    rb.getMessage("coupon.freeze.fail.msg"));
+        }
+        return responseData;
+    }
+
+    /**
+     * 验证优惠券有效性
+     * @param currencyUnit
+     * @param orderAmount
+     * @param couponId
+     * @return
+     */
+    @RequestMapping("/coupon/verify")
+    @ResponseBody
+    public ResponseData<DeductionCouponResponse> verifyCoupon(String currencyUnit, Long orderAmount, String couponId){
+        ResponseData<DeductionCouponResponse> responseData =
+                new ResponseData<DeductionCouponResponse>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        try {
+            ISendCouponSV sendCouponSV = DubboConsumerFactory.getService(ISendCouponSV.class);
+            DeductionCouponRequest couponRequest = new DeductionCouponRequest();
+            couponRequest.setCurrencyUnit(currencyUnit);//币种
+            couponRequest.setCouponId(couponId);//优惠券/优惠码
+            couponRequest.setTotalFee(orderAmount);//金额
+            //传递适用站点
+            couponRequest.setUsedScene(Locale.CHINA.equals(rb.getDefaultLocale()) ?
+                    BalanceConstants.USED_SCENE_PC_CN : BalanceConstants.USED_SCENE_PC_EN);
+            BaseListResponse<DeductionCouponResponse> couponResponse =
+                    sendCouponSV.queryDisCountCoupon(couponRequest);
+            if(couponResponse==null || !couponResponse.getResponseHeader().isSuccess()
+                    || CollectionUtil.isEmpty(couponResponse.getResult())){
+                throw new BusinessException(couponResponse.getResponseHeader().getResultCode()
+                        ,couponResponse.getResponseHeader().getResultMessage());
+            }
+            DeductionCouponResponse coupon = couponResponse.getResult().get(0);
+            responseData.setData(coupon);
+        } catch (BusinessException|SystemException e) {
+            LOGGER.error("锁定优惠券/优惠码失败。",e);
+            responseData = new ResponseData<DeductionCouponResponse>(ResponseData.AJAX_STATUS_FAILURE,
+                    rb.getMessage("coupon.freeze.fail.msg"));
+        }
+        return responseData;
+    }
 }

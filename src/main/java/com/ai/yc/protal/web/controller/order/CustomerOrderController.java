@@ -30,6 +30,8 @@ import com.ai.yc.protal.web.constants.ErrorCode;
 import com.ai.yc.protal.web.constants.OrderConstants;
 import com.ai.yc.protal.web.constants.YEPayResultConstants;
 import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
+import com.ai.yc.protal.web.model.pay.OrderPay;
+import com.ai.yc.protal.web.model.pay.PayNotify;
 import com.ai.yc.protal.web.model.pay.YEPayResult;
 import com.ai.yc.protal.web.service.BalanceService;
 import com.ai.yc.protal.web.service.OrderService;
@@ -268,6 +270,7 @@ public class CustomerOrderController {
             AccountBalanceInfo comBalance = balanceService.queryOfCompanyByUserId(UserUtil.getUserId());
             //企业账户余额信息
             uiModel.addAttribute("comBalanceInfo",comBalance);
+
             //查询个人账户信息
             AccountBalanceInfo balanceInfo = balanceService.queryOfUser(UserUtil.getUserId());
             //个人账户余额信息
@@ -278,6 +281,7 @@ public class CustomerOrderController {
             //是否已设置支付密码
             uiModel.addAttribute("payPassExist",
                     (balanceInfo != null && StringUtils.isNotBlank(balanceInfo.getPayPassword()))?true:false);
+
             //默认设置成1为开启，0为关闭
             String accountEnable="1";
             try{
@@ -304,7 +308,8 @@ public class CustomerOrderController {
      */
     @RequestMapping("/payOrder/balance")
     @ResponseBody
-    public ResponseData<YEPayResult> balancePay(DeductParam deductParam,String orderType,Model uiModel){
+    public ResponseData<YEPayResult> balancePay(
+            DeductParam deductParam,String orderType,String corporaId,String couponId,Long totalPay){
         YEPayResult yePayResult = new YEPayResult();
         yePayResult.setOrderId(deductParam.getExternalId());
         ResponseData<YEPayResult> responseData = new ResponseData<YEPayResult>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
@@ -325,6 +330,10 @@ public class CustomerOrderController {
         deductParam.setPassword(PasswordMD5Util.Md5Utils.md5(deductParam.getPassword()));
         IDeductSV deductSV = DubboConsumerFactory.getService(IDeductSV.class);
         try {
+            //使用优惠券
+            balanceService.deductionCoupon(UserUtil.getUserId(),couponId,
+                    Long.parseLong(deductParam.getExternalId()),deductParam.getTotalAmount(),
+                    deductParam.getCurrencyUnit(),rb.getDefaultLocale());
             DeductResponse deductResponse = deductSV.deductFund(deductParam);
             ResponseHeader responseHeader = deductResponse.getResponseHeader();
             //支付结果,默认为失败
@@ -336,8 +345,10 @@ public class CustomerOrderController {
                     && YEPayResultConstants.RESULT_SUCCESS.equals(responseHeader.getResultCode())){
                 long payFee = Long.parseLong(deductParam.getExternalId());
                 orderService.orderPayProcessResult(userId,deductParam.getAccountId(),
-                        Long.parseLong(deductParam.getExternalId()),orderType,deductParam.getTotalAmount(),0,
-                        deductParam.getTotalAmount(),"YE",deductResponse.getSerialNo(), DateUtil.getSysDate());
+                        Long.parseLong(deductParam.getExternalId()),orderType,totalPay,
+                        (totalPay-deductParam.getTotalAmount()),deductParam.getTotalAmount(),
+                        "YE",deductResponse.getSerialNo(),
+                        DateUtil.getSysDate(),corporaId);
             }
             //返回指定的的状态码
             yePayResult.setPayResultCode(responseHeader.getResultCode());
@@ -352,39 +363,38 @@ public class CustomerOrderController {
     }
      /**
      * 跳转支付页面,需要登录后才能进行支付
-     * @param orderId
-     * @param orderAmount
+      * @param orderPay
      * @throws Exception
      */
     @RequestMapping(value = "/gotoPay")
-    public String gotoPay(
-            String orderId,Long orderAmount,String currencyUnit,String merchantUrl,String payOrgCode,
-            String orderType,String translateName, Model uiModel)
+    public String gotoPay(OrderPay orderPay, Model uiModel)
             throws Exception {
+        String orderId = Long.toString(orderPay.getOrderId());
         //若订单不是未支付状态，则跳转到系统异常
-        if(!orderService.isUnPay(orderId)){
+        if(!orderService.isUnPay(Long.toString(orderPay.getOrderId()))){
             return "sysError";
         }
         //租户
         String tenantId= ConfigUtil.getProperty("TENANT_ID");
         //服务异步通知地址
-        String notifyUrl= ConfigUtil.getProperty("NOTIFY_URL")+"/"+orderType+"/"+ UserUtil.getUserId();
+        String notifyUrl= ConfigUtil.getProperty("NOTIFY_URL")+"/"+orderPay.getOrderType()+"/"+ UserUtil.getUserId()+
+                "?totalPay="+orderPay.getTotalFee()+"&companyId="+orderPay.getCouponId()+"&couponId="+orderPay.getCouponId();
 
         //异步通知地址,默认为用户
         //将订单金额直接转换为小数点后两位
         java.text.DecimalFormat df =new java.text.DecimalFormat("#0.00");
-        String amount = String.valueOf(df.format(AmountUtil.changeLiToYuan(orderAmount)));
+        String amount = String.valueOf(df.format(AmountUtil.changeLiToYuan(orderPay.getOrderAmount())));
         Map<String, String> map = new HashMap<>();
         map.put("tenantId", tenantId);//租户ID
-        map.put("orderId", orderId);//请求单号
+        map.put("orderId", Long.toString(orderPay.getOrderId()));//请求单号
         map.put("returnUrl", ConfigUtil.getProperty("RETURN_URL"));//页面跳转地址
         map.put("notifyUrl", notifyUrl);//服务异步通知地址
-        map.put("merchantUrl",merchantUrl);//用户付款中途退出返回商户的地址
+        map.put("merchantUrl",orderPay.getMerchantUrl());//用户付款中途退出返回商户的地址
         map.put("requestSource", Constants.SELF_SOURCE);//终端来源
-        map.put("currencyUnit",currencyUnit);//币种
-        map.put("orderAmount", amount);//金额
-        map.put("subject", translateName);//订单名称
-        map.put("payOrgCode",payOrgCode);
+        map.put("currencyUnit",orderPay.getCurrencyUnit());//币种
+        map.put("orderAmount", amount);//应付金额
+        map.put("subject", orderPay.getTranslateName());//订单名称
+        map.put("payOrgCode",orderPay.getPayOrgCode());
         // 加密
         String infoStr = orderId+ VerifyUtil.SEPARATOR
                 + amount + VerifyUtil.SEPARATOR
@@ -401,6 +411,33 @@ public class CustomerOrderController {
 //        response.getWriter().write(htmlStr);
 //        response.getWriter().flush();
         return "gotoPay";
+    }
+
+    /**
+     * 不使用任何支付方式，在应付金额为0，或选择翻译后付费时使用此方法
+     * @return
+     */
+    @RequestMapping("/pay/noorg")
+    public String payOrderNoOrg(OrderPay orderPay,Model uiModel){
+        try {
+            //使用优惠券
+            balanceService.deductionCoupon(UserUtil.getUserId(),orderPay.getCouponId(),
+                    orderPay.getOrderId(),orderPay.getTotalFee(),orderPay.getCurrencyUnit(),rb.getDefaultLocale());
+            //调用订单支付
+            orderService.orderPayProcessResult(UserUtil.getUserId(),null,orderPay.getOrderId(),
+                    orderPay.getOrderType(),orderPay.getTotalFee(),(orderPay.getTotalFee()-orderPay.getOrderAmount()),
+                    orderPay.getOrderAmount(),orderPay.getPayOrgCode(),null,
+                    DateUtil.getSysDate(),orderPay.getCorporaId());
+            //订单号
+            uiModel.addAttribute("orderId",orderPay.getOrderId());
+            //支付结果
+            uiModel.addAttribute("payResult",true);
+        } catch (BusinessException e) {
+            LOGGER.error("订单支付失败。",e);
+            //支付结果
+            uiModel.addAttribute("payResult",false);
+        }
+        return "order/orderPayResult";
     }
 
     /**

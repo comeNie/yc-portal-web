@@ -34,7 +34,7 @@ define('app/jsp/customerOrder/orderInfo', function (require, exports, module) {
 				data: {
 					orderId: $("#orderId").val(),
 					state: "90",
-					displayFlag: "90",
+					displayFlag: "90"
 				},
 				success: function (data) {
 					if ("1" === data.statusCode) {

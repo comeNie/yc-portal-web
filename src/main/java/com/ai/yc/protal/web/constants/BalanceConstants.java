@@ -19,4 +19,13 @@ public final class BalanceConstants {
      * 2：预付费
      */
     public static final String ACCOUNT_TYPE_AFTER = "2";
+    /**
+     * 译云PC中文站
+     */
+    public static final String USED_SCENE_PC_CN = "1";
+
+    /**
+     * 译云PC英文站
+     */
+    public static final String USED_SCENE_PC_EN = "2";
 }

@@ -5,16 +5,27 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 	    Widget = require('arale-widget/1.2.0/widget'),
 		AjaxController = require('opt-ajax/1.0.0/index');
 
+    require("jsviews/jsrender.min");
+    require("jsviews/jsviews.min");
+    require("app/util/jsviews-ext");
 	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
 	//实例化AJAX控制处理对象
 	var ajaxController = new AjaxController();
     var payOrderPager = Widget.extend({
-    	
+        Statics: {
+            ORDER_TYPE_PERSON: "1",//个人
+            ORDER_TYPE_COM: "2",//公司
+            CURRENCY_UNIT_RMB:"1",//人民币
+            CURRENCY_UNIT_USD:"2"//美元
+        },
     	//事件代理
     	events: {
-			"click #recharge-popo":"_payOrder",
+			"click #recharge-popo":"_freezeCoupon",
 			"click #payment-method ul":"_changePayType",
 			"click #depositBtn":"_toDeposit",
+            "change #couponSelect":"_changeCoupon",
+            "change #orderTypeSelect":"_changeOrderType",
+            "change #conponCode":"_inputCouponCode",//输入优惠码
 			"click #completed":"_submitYEpay",//余额支付确认
 			"click #close-completed":"_closeCompleted"//余额支付取消
            	},
@@ -58,15 +69,28 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 				}
 			});
 		},
+
 		//订单类型变更时，重新计算费用
         _changeOrderType:function () {
 			//查看是否企业用户
-			var orderType = $("#orderType").val();
-			if('2' == orderType){
+			var orderType = $("#orderTypeSelect").val();
+            comDisFee = 0;
+            orderPayFee = totalFee;
+            //默认为个人账户
+            balance = acctBalance;
+            //默认为个人账户，此时需要密码
+            needPayPass = "1";
+			if(payOrderPager.ORDER_TYPE_COM == orderType){
+                orderPayFee = totalFee * discount;
                 //企业账户优惠金额
-                comDisFee = totalFee - totalFee * discount;
-                $("#orderAmount").val(orderPayFee);
+                comDisFee = totalFee - orderPayFee;
+                //设置不需要校验密码
+                needPayPass = "0";
+                balance = compayBalance;
+                $("#corporaId").val(compayId);
 			}
+            $("#orderAmount").val(orderPayFee);
+			$("#orderType").val(orderType);
 			//查询可用优惠券
             this._queryCoupon();
         },
@@ -78,7 +102,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
                 type: "post",
                 processing:true,
                 url: _base+"/p/balance/query/coupon",
-                data: $("#yePayForm").serializeArray(),
+                data: $("#toPayForm").serializeArray(),
                 success: function(data){
                     //判断是否有可用优惠券
 					var couponArry = eval(data.data);
@@ -129,15 +153,148 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 			var faceVal = $("#couponSelect").find("option:selected").attr("faceVal");
             couponDisFee = Number(faceVal);
             orderPayFee = totalFee - comDisFee - couponDisFee;
+            //若应付金额小于0，则按0执行
+            if(orderPayFee<0){
+                orderPayFee = 0;
+
+            }
+
             this._changePayFee();
+            //若优惠券金额为0，则允许输入优惠码
+            if(couponDisFee == 0){
+                //优惠码可输入
+                $("#conponCode").removeAttr("disabled");
+            }
+            //重新变更支付方式
+            this._changeShowPayType();
         },
-		//优惠变更时，变更显示
+		//优惠变更时，变更金额显示
 		_changePayFee:function () {
+            var discounted = comDisFee + couponDisFee;
+            //若优惠金额大于订单金额，则优惠金额为订单金额
+            if(discounted>totalFee){
+                discounted = totalFee;
+            }
 			//优惠金额变更
-			$("#discounted").html(this.liToYuan(comDisFee + couponDisFee));
+			$("#discounted").html(this.liToYuan(discounted));
 			//应付金额变更
 			$("#payable").html(this.liToYuan(orderPayFee));
+
 			$("#orderAmount").val(orderPayFee);
+        },
+        //输入优惠券时
+        _inputCouponCode:function () {
+            var _this = this;
+            var code = $("#conponCode").val();
+            //优惠券
+            var coupon = $("#couponSelect").val();
+            //若优惠券为空，则优惠金额为0
+            if(coupon==null || coupon=="")
+                couponDisFee = 0;
+            //若优惠券不为空，优惠码为空或不等于16位，则不做任何处理
+            if((coupon !=null && coupon!="")
+                || code==null
+                || code.length!=16){
+                return;
+            }
+            //查询优惠码的金额及有效性
+            ajaxController.ajax({
+                type: "post",
+                processing:true,
+                url: _base+"/p/balance/coupon/verify",
+                data: {"currencyUnit":currencyUnit,"orderAmount":orderPayFee,"couponId":couponId},
+                success: function(data){
+                    var coupon = eval(data.data);
+                    couponDisFee = Number(coupon.faceValue);
+                    orderPayFee = totalFee - comDisFee - couponDisFee;
+                    //若应付金额小于0，则按0执行
+                    if(orderPayFee<0){
+                        orderPayFee = 0;
+
+                    }
+                    //变更金额显示
+                    _this._changePayFee();
+                    //重新变更支付方式
+                    _this._changeShowPayType();
+                }
+            });
+        },
+        //变更支付方式显示
+        _changeShowPayType:function () {
+            var orderType = $("#orderTypeSelect").val();
+            var balanceTmp = acctBalance;
+            var showPayAfter = false;
+            //若为企业账户
+            if(payOrderPager.ORDER_TYPE_COM == orderType){
+                balanceTmp = compayBalance;
+                //允许后付费
+                if(allowAfter){
+                    showPayAfter = true;
+                }
+            }
+            //币种
+            var currencyUnit = $("#currencyUnit").val();
+            //若允许后付费，则使用1，默认使用3
+            var current = showPayAfter?1:3;
+            //如果为人民币，
+            if(payOrderPager.CURRENCY_UNIT_RMB == currencyUnit){
+                //支付金额为0，或支付金额小于等于余额且不支持后付费
+                if(orderPayFee == 0 || (orderPayFee<=balanceTmp && !showPayAfter)){
+                    current = 2;
+                }
+            }
+            //若支持后付费，则
+            var currentData = {"current":current};
+
+            //是否显示翻译后付费
+            var payTemp = showPayAfter?$.templates("#hfPayTemp").render(currentData):"";
+            //其他支付方式
+            var otherPayTemp = $.templates("#otherPayTemp").render(currentData);
+            //若是人民币，则显示余额信息
+            if(payOrderPager.CURRENCY_UNIT_RMB == currencyUnit){
+                var yeObj = {"balance":balanceTmp,"current":current};
+                //余额
+                var yePayTemp = $.templates("#yePayTemp").render(yeObj);
+                //若余额不足，则放在最后
+                if(orderPayFee>balanceTmp){
+                    payTemp = payTemp+otherPayTemp+yePayTemp;
+                }//若余额充足，则放在第一位
+                else {
+                    payTemp = payTemp+yePayTemp+otherPayTemp;
+                }
+            }
+            else {
+                payTemp += otherPayTemp;
+            }
+            $("#payment-method").html(payTemp);
+
+        },
+        //冻结优惠码或优惠券
+        _freezeCoupon:function () {
+            var _this = this;
+            //订单号
+            var orderId = $("#orderId").val();
+            //优惠券
+            var couponId = $("#couponSelect").val();
+            //若优惠券不存在，则获取优惠码
+            if(couponId==null || couponId==""){
+                couponId = $("#conponCode").val();
+            }
+            $("#couponId").val(couponId);
+            //若优惠券和优惠码均不存在，则直接进行订单支付
+            if(couponId==null || couponId==""){
+                this._payOrder();
+            }
+            ajaxController.ajax({
+                type: "post",
+                processing:true,
+                url: _base+"/p/balance/coupon/freeze",
+                data: {"orderId":orderId,"couponId":couponId},
+                success: function(data){
+                    //绑定成功，直接进行订单支付
+                    _this._payOrder();
+                }
+            });
         },
 		//支付订单
 		_payOrder:function(){
@@ -146,41 +303,28 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 			//当前地址
 			var merchantUrl = "";
 			$("#payType").val(payType);
-			//若不为余额支付
-			if("YE" != payType){
-				$("#merchantUrl").val(window.location.href);
-				if(window.console){
-					console.info("content:"+$.i18n.prop('pay.msg.tip'));
-					console.info("okValue:"+$.i18n.prop('pay.completed.btn'));
-					console.log("cancelVal:"+$.i18n.prop('pay.error.btn'));
-					console.log("title:"+$.i18n.prop('pay.result.title'))
-				}
-				//提交
-				new Dialog({
-                    content:$.i18n.prop('pay.msg.tip'),
-                    okValue: $.i18n.prop('pay.completed.btn'),
-                    cancelValue: $.i18n.prop('pay.error.btn'),
-                    title: $.i18n.prop('pay.result.title'),
-                    ok:function(){
-                        //跳转到我的订单
-						window.location.href=_base+"/p/customer/order/list/view";
-                    },
-                	cancel:function(){
-						//跳转到常见问题
-                        window.location.href=_base+"/faq";
-					}
-				}).showModal();
-				$("#toPayForm").submit();
-			}//使用余额支付
-			else {
-				//判断余额是否足够
-				if(acctBalance<orderPayFee){
-					this._showWarn($.i18n.prop('pay.dialog.recharge'));
-				}//未设置支付密码
-				else if(payPassExist == false){
-					this._showToSetPass();
-				}//余额支付,需要密码
-             	else if(needPayPass==="1"){
+			var path = _base+"/p/customer/order/pay/noorg";
+            //若支付金额为0，则直接为优惠券支付
+			if(orderPayFee <= 0 ){
+                $("#payType").val("YHQ");
+                $('#toPayForm').attr("action", path).submit();
+            }//若为翻译后付费，则直接提交订单
+            else if("HF" == payType ){
+                $('#toPayForm').attr("action", path).submit();
+            }
+            //若为余额支付
+            else if("YE" == payType){
+                var orderType = $("#orderTypeSelect").val();
+                //判断余额是否足够
+                if(balance<orderPayFee){
+                    this._showWarn($.i18n.prop('pay.dialog.recharge'));
+                }//为企业账户，需要支付密码、支付密码不存在
+                else if(payOrderPager.ORDER_TYPE_COM == orderType
+                    && needPayPass==="1"
+                    && payPassExist == false){
+                    this._showToSetPass();
+                }//余额支付,需要密码
+                else if(needPayPass==="1"){
                     $("#payPass").val("");
                     $('#eject-mask').fadeIn(100);
                     $('#rechargepop').slideDown(100);
@@ -188,6 +332,31 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
                 else{
                     this._YEPaySubmit();
                 }
+			}//第三方支付
+			else {
+                $("#merchantUrl").val(window.location.href);
+                if(window.console){
+                    console.info("content:"+$.i18n.prop('pay.msg.tip'));
+                    console.info("okValue:"+$.i18n.prop('pay.completed.btn'));
+                    console.log("cancelVal:"+$.i18n.prop('pay.error.btn'));
+                    console.log("title:"+$.i18n.prop('pay.result.title'))
+                }
+                //提交
+                new Dialog({
+                    content:$.i18n.prop('pay.msg.tip'),
+                    okValue: $.i18n.prop('pay.completed.btn'),
+                    cancelValue: $.i18n.prop('pay.error.btn'),
+                    title: $.i18n.prop('pay.result.title'),
+                    ok:function(){
+                        //跳转到我的订单
+                        window.location.href=_base+"/p/customer/order/list/view";
+                    },
+                    cancel:function(){
+                        //跳转到常见问题
+                        window.location.href=_base+"/faq";
+                    }
+                }).showModal();
+                $("#toPayForm").submit();
 			}
 
 		},
@@ -226,9 +395,39 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 			//提交
 			this._YEPaySubmit();
 		},
+        //验证优惠码/优惠券是否有效
+        _verifyCoupon:function () {
+		    var currencyUnit = $("#currencyUnit").val();
+            //优惠券
+            var couponId = $("#couponSelect").val();
+            //若优惠券不存在，则获取优惠码
+            if(couponId==null || couponId==""){
+                couponId = $("#conponCode").val();
+            }
+
+            ajaxController.ajax({
+                type: "post",
+                processing:true,
+                url: _base+"/p/balance/coupon/verify",
+                data: {"currencyUnit":currencyUnit,"orderAmount":orderPayFee,"couponId":couponId},
+                success: function(data){
+
+                }
+            });
+        },
 		//余额支付
 		_YEPaySubmit:function () {
 			var _this= this;
+			//订单类型
+            var orderType = $("#orderType").var();
+            //应收费用
+            $("#yeTotalAmount").val(orderPayFee);
+            //订单类型
+            $("#yeOrderType").val(orderType);
+            //企业标识
+            $("#yeCorporaId").val($("#corporaId").val());
+            //优惠券
+            $("#yeCouponId").val($("#couponId").val());
             ajaxController.ajax({
                 type: "post",
                 processing:true,

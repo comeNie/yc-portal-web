@@ -38,15 +38,14 @@ public class OrderService {
      * @param payStyle 支付方式,对应支付机构
      * @param outOrderId 支付流水号
      * @param notifyTime 支付时间
+     * @param companyId 企业ID
      */
     public void orderPayProcessResult(
-            String userId,Long accountId,long orderId,String orderType,long totalPay,long discountFee,long paidFee,
-            String payStyle,String outOrderId,Timestamp notifyTime){
+            String userId,Long accountId,Long orderId,String orderType,long totalPay,long discountFee,long paidFee,
+            String payStyle,String outOrderId,Timestamp notifyTime,String companyId){
         LOGGER.info("order pay process result,\r\n" +
                 "userId:{},orderId:{},orderType:{},paidFee:{},payStyle:{},outOrderId:{}",
                 userId,orderId,orderType,paidFee,payStyle,outOrderId);
-
-        //TODO...若是企业订单,需要查询企业信息,一阶段暂不实现
         OrderPayProcessedResultRequest payResultReq = new OrderPayProcessedResultRequest();
         //查询用户信息
         IUcMembersSV ucmembersSV = DubboConsumerFactory.getService(IUcMembersSV.class);
@@ -74,10 +73,10 @@ public class OrderService {
         //用户类型
         if (OrderConstants.ORDER_TYPE_PERSON.equals(orderType)) {
             payResultReqBase.setUserType(OrderConstants.USER_TYPE_PERSON);
-        }//TODO... 缺少代理人的检查,后续二阶段实现
+        }
         else if (OrderConstants.ORDER_TYPE_ENTERPRISE.equals(orderType)){
             payResultReqBase.setUserType(OrderConstants.USER_TYPE_ENTERPRISE);
-            //添加企业ID
+            payResultReqBase.setCorporaId(companyId);//添加企业ID
         }
         //费用信息
         OrderPayProcessedResultFeeInfo payResultFeeInfo = new OrderPayProcessedResultFeeInfo();

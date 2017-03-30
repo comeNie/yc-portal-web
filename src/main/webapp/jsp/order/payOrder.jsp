@@ -94,8 +94,10 @@
 						<c:set var="orderType" value="2"/>
 					</c:if>
 					<input id="orderType" type="hidden" name="orderType" value="${orderType}">
+					<%--企业标识--%>
+					<input id="" type="hidden" name="corporaId" value="corporaId">
 					<%--优惠券ID或优惠码--%>
-					<input type="hidden" name="couponId">
+					<input type="hidden" id="couponId" name="couponId">
 				</form>
 
   				<div class="selection-select single-select mt-20">
@@ -179,98 +181,91 @@
 					<p><spring:message code="pay.order.pay.method"/></p>
   				</div>
   				<div id="payment-method" class="payment-method mt-30">
-					<%--企业用户，且支持翻译后付费--%>
-					<c:if test="${comBalanceInfo!=null && '2'==comBalanceInfo.accountType}">
-					<ul payType="HF" class="current">
-						<%--翻译后付费--%>
-						<li><spring:message code="pay.order.pay.after.trans"/></li>
-						<label><i class="icon iconfont">&#xe617;</i></label>
-					</ul>
-					</c:if>
-					<c:choose>
-						<%--人民币--%>
-						<c:when test="${orderFee.currencyUnit == '1'}">
-							<%--使用余额 余额大于等于订单金额--%>
-							<c:if test="${balanceInfo!=null && needPay==false}">
-								<ul payType="YE" class="none-ml" >
-										<%--账户余额--%>
-									<li class="payment-balance">
-											<%--账户余额--%>
-										<p><spring:message code="pay.order.account.balance"/></p>
-											<%--支付余额--%>
-										<p class="word"><spring:message code="pay.order.pay.balance"/>：<c:if
-												test="${isEn==true}">¥</c:if><fmt:formatNumber
-												value="${balanceInfo.balance/1000}" pattern="#,##0.00#"/><c:if
-												test="${isEn!=true}">元</c:if></p>
-											<%--充值--%>
-										<c:if test="${accountEnable=='1'}">
-											<p><input type="button" id="depositBtn" class="btn radius20 border-blue btn-80 ml-10"
-													  value="<spring:message code="pay.order.balance.recharge"/>"></p>
-										</c:if>
-
-									</li>
-								</ul>
-							</c:if>
-							<%--银联--%>
-							<ul payType="YL">
-								<li class="union"></li>
-								<label><i class="icon iconfont">&#xe617;</i></label>
-							</ul>
-							<%--支付宝--%>
-							<ul payType="ZFB">
-								<li class="zhifb"></li>
-							</ul>
-							<%--使用余额 余额小于订单金额--%>
-							<c:if test="${balanceInfo!=null && needPay==true}">
-								<ul payType="YE" class="none-ml" >
-									<%--账户余额--%>
-									<li class="payment-balance">
-											<%--账户余额--%>
-										<p><spring:message code="pay.order.account.balance"/></p>
-											<%--支付余额--%>
-										<p class="word"><spring:message code="pay.order.pay.balance"/>：<c:if
-												test="${isEn==true}">¥</c:if><fmt:formatNumber
-												value="${balanceInfo.balance/1000}" pattern="#,##0.00#"/><c:if
-												test="${isEn!=true}">元</c:if></p>
-											<%--充值--%>
-												<c:if test="${accountEnable=='1'}">
-													<p><input type="button" id="depositBtn" class="btn radius20 border-blue btn-80 ml-10"
-															  value="<spring:message code="pay.order.balance.recharge"/>"></p>
-												</c:if>
-
-									</li>
-								</ul>
-							</c:if>
-							<c:if test="${balanceInfo!=null}">
-								<%--余额支付--%>
-								<form id="yePayForm" method="post" action="${_base}/p/customer/order/payOrder/balance">
-									<input type="hidden" name="externalId" value="${orderId}">
-									<input type="hidden" name="accountId" value="${balanceInfo.accountId}">
-									<input type="hidden" id="balancePass" name="password" />
-									<input type="hidden" name="totalAmount" value="${orderFee.totalFee}">
-									<input type="hidden" name="currencyUnit" value="${orderFee.currencyUnit}">
-										<%--订单类型 目前只支持用户--%>
-									<input type="hidden" name="orderType" value="1">
-								</form>
-							</c:if>
-						</c:when>
-						<%--美元--%>
-						<c:when test="${orderFee.currencyUnit == '2'}">
-							<%--paypal--%>
-							<ul payType="PP">
-								<li class="paypal"></li>
-								<label><i class="icon iconfont">&#xe617;</i></label>
-							</ul>
-						</c:when>
-
-					</c:choose>
   				</div>
   			</div>
+			<%--若是人民币--%>
+			<c:if test="${orderFee.currencyUnit == '1'}">
+				<%--余额支付--%>
+				<form id="yePayForm" method="post" action="${_base}/p/customer/order/payOrder/balance">
+					<input type="hidden" name="externalId" value="${orderId}">
+					<input type="hidden" name="accountId" value="${balanceInfo.accountId}">
+					<input type="hidden" id="balancePass" name="password" />
+					<input type="hidden" id="yeTotalAmount" name="totalAmount" value="${orderFee.totalFee}">
+					<input type="hidden" name="currencyUnit" value="${orderFee.currencyUnit}">
+					<%--订单总费用--%>
+					<input type="hidden" name="totalPay" value="${orderFee.totalFee}">
+						<%--订单类型--%>
+					<input id="yeOrderType" type="hidden" name="orderType" value="1">
+						<%--企业标识--%>
+					<input id="yeCorporaId" type="hidden" name="corporaId" value="corporaId">
+						<%--优惠券ID或优惠码--%>
+					<input id="yeCouponId" type="hidden" name="couponId">
+				</form>
+			</c:if>
 			<div class="recharge-btn order-btn placeorder-btn ml-0">
 				<%--支 付--%>
  				<input type="button" id="recharge-popo" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="pay.order.payment"/>">
  			</div>
+			<%--翻译后付费--%>
+			<script id="hfPayTemp" type="text/template">
+				<ul payType="HF" {{if current == 1}} class="current" {{/if}} >
+					<%--翻译后付费--%>
+					<li><spring:message code="pay.order.pay.after.trans"/></li>
+				{{if current == 1}}
+				<label><i class="icon iconfont">&#xe617;</i></label>
+				{{/if}}
+				</ul>
+			</script>
+			<%--余额支付--%>
+			<script id="yePayTemp" type="text/template">
+				<ul payType="YE" class="none-ml {{if current == 2}}current{{/if}}" >
+					<%--账户余额--%>
+					<li class="payment-balance">
+						<%--账户余额--%>
+						<p><spring:message code="pay.order.account.balance"/></p>
+						<%--支付余额--%>
+						<p class="word"><spring:message code="pay.order.pay.balance"/>：<c:if
+								test="${isEn==true}">¥</c:if>{{:~liToYuan(balance)}}<c:if
+								test="${isEn!=true}">元</c:if></p>
+						<%--充值--%>
+						<c:if test="${accountEnable=='1'}">
+							<p><input type="button" id="depositBtn" class="btn radius20 border-blue btn-80 ml-10"
+									  value="<spring:message code="pay.order.balance.recharge"/>"></p>
+						</c:if>
+					</li>
+						{{if current == 2}}
+						<label><i class="icon iconfont">&#xe617;</i></label>
+						{{/if}}
+				</ul>
+			</script>
 
+			<script id="otherPayTemp" type="text/template">
+				<c:choose>
+					<%--人民币--%>
+					<c:when test="${orderFee.currencyUnit == '1'}">
+						<%--银联--%>
+						<ul payType="YL" {{if current == 3}}class="current"{{/if}} >
+							<li class="union"></li>
+						{{if current == 3}}
+							<label><i class="icon iconfont">&#xe617;</i></label>
+						{{/if}}
+						</ul>
+						<%--支付宝--%>
+						<ul payType="ZFB">
+							<li class="zhifb"></li>
+						</ul>
+					</c:when>
+					<%--美元--%>
+					<c:when test="${orderFee.currencyUnit == '2'}">
+						<%--paypal--%>
+						<ul payType="PP" {{if current == 3}}class="current"{{/if}} >
+							<li class="paypal"></li>
+							<label><i class="icon iconfont">&#xe617;</i></label>
+						</ul>
+					</c:when>
+
+				</c:choose>
+			</script>
 		</div>
 		</div>
 <!--底部-->
@@ -280,13 +275,14 @@
 <script type="text/javascript">
 	//订单总金额
 	var totalFee = ${orderFee.totalFee};
-
+    //是否需要充值
+    var needRecharge = ${needPay!=null?needPay:true};
+    //账户余额，若为个人用户则为个人账户余额，否则为企业账户余额
+    var balance = 0;
     //待支付金额，目前为总金额
     var orderPayFee = ${orderFee.totalFee};
 	//是否需要校验密码
 	var needPayPass = "${balanceInfo.payCheck}";
-	//是否需要充值
-	var needRecharge = ${needPay!=null?needPay:true};
 
 	//个人账户余额
 	var acctBalance = ${balanceInfo!=null?balanceInfo.balance:0};
@@ -303,7 +299,8 @@
 	var allowAfter = ${comBalanceInfo!=null&&"2"==comBalanceInfo.accountType?true:false};
     //企业优惠金额
     var comDisFee = 0;
-	//无可用优惠券
+
+    //无可用优惠券
 	var noCoupon = "<spring:message code="pay.order.no.coupon.option"/>";
 	//优惠券优惠金额
     var couponDisFee = 0;
