@@ -36,6 +36,9 @@ import com.ai.yc.protal.web.model.pay.YEPayResult;
 import com.ai.yc.protal.web.service.BalanceService;
 import com.ai.yc.protal.web.service.OrderService;
 import com.ai.yc.protal.web.utils.*;
+import com.ai.yc.user.api.usercompany.interfaces.IYCUserCompanySV;
+import com.ai.yc.user.api.usercompany.param.UserCompanyInfoRequest;
+import com.ai.yc.user.api.usercompany.param.UserCompanyInfoResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -113,10 +116,20 @@ public class CustomerOrderController {
         uiModel.addAttribute("UnConfirmCount", stateCount.get(OrderConstants.DisplayState.UN_CONFIRM));
         //待评价
         uiModel.addAttribute("UnEvaluateCount", stateCount.get(OrderConstants.DisplayState.UN_EVALUATE));
-
+        //用户ID
         uiModel.addAttribute("userId", UserUtil.getUserId());
         uiModel.addAttribute("displayFlag", displayFlag);
 
+        //查询当前用户是否为企业管理员
+        IYCUserCompanySV userCompanySV = DubboConsumerFactory.getService(IYCUserCompanySV.class);
+        UserCompanyInfoRequest request = new UserCompanyInfoRequest();
+        request.setUserId(userId);
+        //只能查询到已认证企业
+        UserCompanyInfoResponse response = userCompanySV.queryCompanyInfo(request);
+        //是否为管理员
+        if(response != null ){
+            uiModel.addAttribute("isManager",UserUtil.getUserId().equals(response.getAdminUserId()));
+        }
         return "customerOrder/orderList";
     }
     

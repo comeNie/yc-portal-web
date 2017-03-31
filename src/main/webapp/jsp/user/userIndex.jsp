@@ -86,12 +86,27 @@
 						<table class="table table-hover table-bg">
 							<thead>
 								<tr>
-									<th width="16.666%"><spring:message code="myOrder.SubjectOrder"/></th>
-									<%--<th order_mode="hide" width="16.666%"><spring:message code="myOrder.Orderedby"/></th>--%>
-									<th width="16.666%"><spring:message code="myOrder.Language"/></th>
-									<th width="16.666%"><spring:message code="myOrder.Amount"/></th>
-									<th width="16.666%"><spring:message code="myOrder.Status"/></th>
-									<th width="16.666%"><spring:message code="myOrder.Operate"/></th>
+									<th width="22%"><spring:message code="myOrder.SubjectOrder"/></th>
+									<c:choose>
+										<c:when test="${isManager == true}">
+											<th width="15%"><spring:message code="myOrder.Orderedby"/></th>
+											<!--  翻译语言-->
+											<th width="15%"><spring:message code="myOrder.Language"/></th>
+											<!--  金额（元）-->
+											<th width="15%"><spring:message code="myOrder.Amount"/></th>
+											<!--  状态 -->
+											<th width="15%"><spring:message code="myOrder.Status"/></th>
+										</c:when>
+										<c:otherwise>
+											<!--  翻译语言-->
+											<th width="16.66%"><spring:message code="myOrder.Language"/></th>
+											<!--  金额（元）-->
+											<th width="16.66%"><spring:message code="myOrder.Amount"/></th>
+											<!--  状态 -->
+											<th width="16.66%"><spring:message code="myOrder.Status"/></th>
+										</c:otherwise>
+									</c:choose>
+									<th width="18%"><spring:message code="myOrder.Operate"/></th>
 								</tr>
 							</thead>
 						</table>
@@ -149,8 +164,12 @@
 	<script id="orderTemple1" type="text/template">
 				<table class="table  table-bg tb-border mb-20">
 	<thead>
+	<c:set var="thClos" value="5"/>
+	<c:if test="${isManager == true}">
+		<c:set var="thClos" value="6"/>
+	</c:if>
 	<tr>
- 		<th order_mode_colspan="hide" colspan="5" class="text-l">
+ 		<th order_mode_colspan="hide" colspan="${thClos}" class="text-l">
  			<div class="table-thdiv">
 				<p><span class="ash-color">{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',orderTime,'<%=ZoneContextHolder.getZone()%>')}}</span></p>
 				<p name="orderId"><span class="ash-color"><spring:message code="myOrder.Ordernumber"/>：</span><span><a href="javaScript:void(0);">{{:orderId}}</a></span></p>
@@ -175,6 +194,10 @@
 		<tr class="width-16" displayFlag="{{:displayFlag}}">
             <td class="text-l  pl-20"name="translateName" orderId="{{:orderId}}">{{:translateName}}</td>
             <%--<td order_mode="hide">{{:userName}}</td>--%>
+			<%--当前为企业管理员时，显示下单人--%>
+			<c:if test="${isManager == true}">
+				<td>{{:userName}}</td>
+			</c:if>
   			<td>
 			  	{{for ordProdExtendList}}
 					{{if #parent.parent.data.currentLan == 'zh_CN'}}

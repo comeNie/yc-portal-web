@@ -37,7 +37,7 @@
   					<!-- 待确认 -->
   					<li><a href="javaScript:void(0);" name="displayFlagA" value="50"><spring:message code="myOrder.status.tobeConfirm"/>(${UnConfirmCount})</a></li>
   					<!-- 待评价 -->
-  					<!--  <li><a href="javaScript:void(0);" name="displayFlagA" value="52"><spring:message code="myOrder.status.tobeEvaluated"/>(${UnEvaluateCount})</a></li>-->	
+  					<li><a href="javaScript:void(0);" name="displayFlagA" value="52"><spring:message code="myOrder.status.tobeEvaluated"/>(${UnEvaluateCount})</a></li>
   				</ul>
   			</div>
   			<div id="table-da1">
@@ -121,17 +121,28 @@
                     <thead>
                        <tr>
                        		<!-- 订单主题 -->
-                            <th width="16.666%"><spring:message code="myOrder.SubjectOrder"/></th>
-                            <!--  下单人-->
-                            <!--  <th width="16.666%"><spring:message code="myOrder.Orderedby"/></th>-->
-                            <!--  翻译语言-->
-                            <th width="16.666%"><spring:message code="myOrder.Language"/></th>
-                            <!--  金额（元）-->
-                            <th width="16.666%"><spring:message code="myOrder.Amount"/></th>
-                            <!--  状态 -->
-                            <th width="16.666%"><spring:message code="myOrder.Status"/></th>
+                            <th width="22%"><spring:message code="myOrder.SubjectOrder"/></th>
+						   <c:choose>
+							   <c:when test="${isManager == true}">
+								   <th width="15%"><spring:message code="myOrder.Orderedby"/></th>
+							   <!--  翻译语言-->
+							   <th width="15%"><spring:message code="myOrder.Language"/></th>
+							   <!--  金额（元）-->
+							   <th width="15%"><spring:message code="myOrder.Amount"/></th>
+							   <!--  状态 -->
+							   <th width="15%"><spring:message code="myOrder.Status"/></th>
+							   </c:when>
+							   <c:otherwise>
+								   <!--  翻译语言-->
+								   <th width="16.66%"><spring:message code="myOrder.Language"/></th>
+								   <!--  金额（元）-->
+								   <th width="16.66%"><spring:message code="myOrder.Amount"/></th>
+								   <!--  状态 -->
+								   <th width="16.66%"><spring:message code="myOrder.Status"/></th>
+							   </c:otherwise>
+						   </c:choose>
                              <!--  操作 -->
-                            <th width="16.666%"><spring:message code="myOrder.Operate"/></th>
+                            <th width="18%"><spring:message code="myOrder.Operate"/></th>
                       </tr>
                		</thead>
             	</table>
@@ -157,23 +168,33 @@
 <script id="searchOrderTemple" type="text/template">
 <table class="table  table-bg tb-border mb-20">
 	<thead>
+	<c:set var="thClos" value="5"/>
+	<c:if test="${isManager == true}">
+		<c:set var="thClos" value="6"/>
+	</c:if>
 	<tr>
- 		<th colspan="5" class="text-l">
- 			<div class="table-thdiv">
-				<p><span class="ash-color">{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',orderTime,'<%=ZoneContextHolder.getZone()%>')}}</span></p>
- 				<p name="orderId"><span class="ash-color"><spring:message code="myOrder.Ordernumber"/>：</span><span><a href="javaScript:void(0);">{{:orderId}}</a></span></p>
-				{{if  displayFlag == '11'}}
-					<!-- 剩余2天23小时59分钟  待支付-->
-    				<p class="right"><spring:message
-                                    code="myOrder.Remaining" arguments="{{:payTakeDays}},{{:payTakeHours}},{{:payTakeMinutes}}"/></p>
+		<th colspan="${thClos}" class="text-l">
+			<div class="table-thdiv">
+				<p><span
+						class="ash-color">{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',orderTime,'<%=ZoneContextHolder.getZone()%>')}}</span>
+				</p>
+				<p name="orderId"><span class="ash-color"><spring:message code="myOrder.Ordernumber"/>：</span><span><a
+						href="javaScript:void(0);">{{:orderId}}</a></span>{{if orderType == '2'}}<span
+						class="icon-company"><spring:message code="order.list.company.tag"/></span>{{/if}}</p>
+				{{if displayFlag == '11'}}
+				<!-- 剩余2天23小时59分钟  待支付-->
+				<p class="right"><spring:message
+						code="myOrder.Remaining"
+						arguments="{{:payTakeDays}},{{:payTakeHours}},{{:payTakeMinutes}}"/></p>
 				{{/if}}
-				{{if  displayFlag == '50'}}
-					<!-- 剩余2天23小时59分钟   待确认-->
-    				<p class="right"><spring:message
-                                    code="myOrder.Remaining" arguments="{{:confirmTakeDays}},{{:confirmTakeHours}},{{:confirmTakeMinutes}}"/></p>
+				{{if displayFlag == '50'}}
+				<!-- 剩余2天23小时59分钟   待确认-->
+				<p class="right"><spring:message
+						code="myOrder.Remaining"
+						arguments="{{:confirmTakeDays}},{{:confirmTakeHours}},{{:confirmTakeMinutes}}"/></p>
 				{{/if}}
-      		</div>
-    	</th>
+			</div>
+		</th>
 	</tr>
     </thead>
     <tbody>
@@ -182,7 +203,10 @@
 		<input type="hidden" name="displayFlag" value="{{:displayFlag}}">
 		<tr class="width-16" displayFlag="{{:displayFlag}}">
             <td name="translateName" orderId="{{:orderId}}" class="text-l pl-20" style="cursor: pointer;">{{:translateName}}</td>
-           <!-- <td>{{:userName}}</td>-->
+			<%--当前为企业管理员时，显示下单人--%>
+			<c:if test="${isManager == true}">
+			<td>{{:userName}}</td>
+			</c:if>
   			<td>
 			  	{{for ordProdExtendList}}
 					{{if #parent.parent.data.currentLan == 'zh_CN'}}

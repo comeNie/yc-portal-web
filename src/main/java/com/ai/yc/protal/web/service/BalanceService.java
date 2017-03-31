@@ -71,8 +71,6 @@ public class BalanceService {
         UserCompanyInfoResponse response = userCompanySV.queryCompanyInfo(request);
         AccountBalanceInfo accountBalanceInfo = null;
         if(response != null && response.getAccountId() != null){
-            //TODO... 模拟数据
-//            accountBalanceInfo = queryByAccount(12727l,"00000025");
             accountBalanceInfo = queryByAccount(response.getAccountId(),response.getCompanyId());
             if(accountBalanceInfo!=null){
                 accountBalanceInfo.setObjId(response.getCompanyId());

@@ -5,11 +5,15 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.ai.yc.user.api.usercompany.interfaces.IYCUserCompanySV;
+import com.ai.yc.user.api.usercompany.param.UserCompanyInfoRequest;
+import com.ai.yc.user.api.usercompany.param.UserCompanyInfoResponse;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -143,9 +147,14 @@ public class SecurityController {
 		
 		return new ResponseData<Object>(status, msg, data);
 	}
+
+	/**
+	 * 显示客户首页
+	 * @return
+	 */
 	@RequestMapping("/index")
 	@ResponseBody
-	public ModelAndView toIndex() {
+	public ModelAndView toIndex(Model uiModel) {
 		ModelAndView modelView = new ModelAndView(INDEX);
 		long balance = 0;
 		AccountBalanceInfo balanceInfo = queryBalanceInfo();
@@ -153,7 +162,16 @@ public class SecurityController {
 			balance = balanceInfo.getBalance();
 		}
 		modelView.addObject("balance", balance);
-		
+		//查询当前用户是否为企业管理员
+		IYCUserCompanySV userCompanySV = DubboConsumerFactory.getService(IYCUserCompanySV.class);
+		UserCompanyInfoRequest request = new UserCompanyInfoRequest();
+		request.setUserId(UserUtil.getUserId());
+		//只能查询到已认证企业
+		UserCompanyInfoResponse response = userCompanySV.queryCompanyInfo(request);
+		//是否为管理员
+		if(response != null ){
+			uiModel.addAttribute("isManager",UserUtil.getUserId().equals(response.getAdminUserId()));
+		}
         // sec level
 		modelView.addObject("securitylevel", UserUtil.getUserSecurityLevel());
 		return modelView;
