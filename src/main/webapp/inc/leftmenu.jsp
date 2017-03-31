@@ -51,12 +51,13 @@ UserUtil.getUserPortraitImg();
 						<span><spring:message code="ycleftmenu.myaccount"/></span>
 					</a>
 				</li>
-  				<%--<li>--%>
-  					<%--<a href="优惠卷.html">--%>
-  					<%--<span><i class="icon iconfont">&#xe644;</i></span>--%>
-  					<%--<span><spring:message code="ycleftmenu.discount"/></span>--%>
-  					<%--</a>--%>
-  				<%--</li>--%>
+				<!-- 优惠券 -->
+  				<li>
+  					<a href="${_base}/p/coupon/list/view">
+  					<span><i class="icon iconfont">&#xe644;</i></span>
+  					<span><spring:message code="ycleftmenu.discount"/></span>
+  					</a>
+  				</li>
   				<!-- <li>
   					<a href="我的级别.html">
   					<span><i class="icon iconfont">&#xe647;</i></span>
