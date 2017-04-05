@@ -82,7 +82,7 @@ public class PayController {
         if(!StringUtil.isBlank(couponId)) {
             balanceService.deductionCoupon(UserUtil.getUserId(), couponId,
                     Long.parseLong(payNotify.getOrderId()), totalPay,
-                    currencyUnit, rb.getDefaultLocale());
+                    currencyUnit, rb.getDefaultLocale(),orderType);
         }
         //若哈希验证不通过或支付失败,则表示支付结果有问题
         if (!verifyData(payNotify)
