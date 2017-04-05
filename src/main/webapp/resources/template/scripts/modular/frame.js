@@ -75,6 +75,11 @@ $(function () {
       $(this).find('.select-con').addClass('undis')
     }
   });
+  $(document).on('click', '.prompt-big', function(){
+    if(!$(this).children('.select-con').hasClass('undis')){
+      $(this).find('.select-con').addClass('undis')
+    }
+  });
     
 });
 
