@@ -170,7 +170,10 @@ public class SecurityController {
 		UserCompanyInfoResponse response = userCompanySV.queryCompanyInfo(request);
 		//是否为管理员
 		if(response != null ){
-			uiModel.addAttribute("isManager",UserUtil.getUserId().equals(response.getAdminUserId()));
+			//是否为管理员
+			boolean isManager = UserUtil.getUserId().equals(response.getAdminUserId());
+			uiModel.addAttribute("isManager",isManager);
+			uiModel.addAttribute("corporaId",isManager?response.getCompanyId():"");
 		}
         // sec level
 		modelView.addObject("securitylevel", UserUtil.getUserSecurityLevel());

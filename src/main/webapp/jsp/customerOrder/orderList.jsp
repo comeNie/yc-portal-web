@@ -45,27 +45,28 @@
                 <input id="displayFlagP" name="displayFlagP" type="hidden" value="${displayFlag}">
   			<form id="orderQuery">
   			<input id="userId" name="userId" type="hidden" value="${userId}">
+				<input  type="hidden" name="corporaId" value="${corporaId}">
   			<div class="oder-form-lable mt-20">
   				<ul>
-  					<li>
+  					<li class="mb-20">
   						<!-- 订单状态 -->
   						<p class="none-left"><spring:message code="myOrder.orderStatus"/></p>
   						<p>
 	  						<select class="select select-small radius" name="displayFlag" id="displayFlag">
 	  							<!-- 全部 -->
 	  							<option value="" selected="selected"><spring:message code="myOrder.allOrder"/></option>
-	  							<!-- 待支付 -->
-	  							<option value="11"><spring:message code="myOrder.status.tobePay"/></option>
   								<!--待报价 -->
 	  							<option value="13"><spring:message code="myOrder.status.tobeQuoted"/></option>
+								<!-- 待支付 -->
+								<option value="11"><spring:message code="myOrder.status.tobePay"/></option>
 	  							<!-- 翻译中 -->
 	  							<option value="23"><spring:message code="myOrder.status.translating"/></option>
 	  							<!-- 待确认 -->
 	  							<option value="50"><spring:message code="myOrder.status.tobeConfirm"/></option>
-	  							<!-- 待评价 -->
-	  							<!--  <option value="52"><spring:message code="myOrder.status.tobeEvaluated"/></option>-->
 	  							<!-- 完成 -->
 	  							<option value="90"><spring:message code="myOrder.status.Completed"/></option>
+								<!-- 待评价 -->
+								<option value="53"><spring:message code="myOrder.status.Evaluated"/></option>
 	  							<!-- 已取消-->
 	  							<option value="91"><spring:message code="myOrder.status.Cancelled"/></option>
 	  							<!-- 已退款 -->
@@ -101,16 +102,25 @@
   							</select>
   						</p>
   						<p class="iocn-oder">
-							<input id="translateName" name="translateName" type="text" maxlength='50' class="int-text int-medium radius pr-30" placeholder="<spring:message code="myOrder.inputContent"/>">
+							<input id="translateName" name="translateName" type="text" maxlength='50'
+								   class="int-text int-medium radius pr-30"
+								   placeholder="<spring:message code="myOrder.inputContent"/>">
   							<i id="submitQuery" href="javaScript:void(0)" class=" icon-search"></i>
   						</p>
   					</li>
-  					<!--  暂时只有个人
+					<c:if test="${isManager == true}">
+					<input type="hidden" name="isManager" value="true"/>
   					<li>
-  						<p class="none-left"><input type="checkbox" class="checkbox-n" checked="checked">个人</p>
-  						<p><input type="checkbox" class="checkbox-n">企业</p>
+						<%--个人--%>
+  						<p class="none-left"><input id="individualCheck" name="individualCheck"
+								type="checkbox" class="checkbox-n" checked="checked"><spring:message
+								code="myOrder.list.individual.title"/></p>
+							<%--企业--%>
+  						<p><input type="checkbox" id="enterpriseCheck" name="enterpriseCheck"
+								  class="checkbox-n" checked="checked"><spring:message
+								code="myOrder.list.enterprise.title"/></p>
   					</li>
-  					-->
+					</c:if>
   				</ul>
   			</div>
   			</form>

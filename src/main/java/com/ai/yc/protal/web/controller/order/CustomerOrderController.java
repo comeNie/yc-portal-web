@@ -3,10 +3,7 @@ package com.ai.yc.protal.web.controller.order;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -128,7 +125,10 @@ public class CustomerOrderController {
         UserCompanyInfoResponse response = userCompanySV.queryCompanyInfo(request);
         //是否为管理员
         if(response != null ){
-            uiModel.addAttribute("isManager",UserUtil.getUserId().equals(response.getAdminUserId()));
+            //是否为管理员
+            boolean isManager = UserUtil.getUserId().equals(response.getAdminUserId());
+            uiModel.addAttribute("isManager",isManager);
+            uiModel.addAttribute("corporaId",isManager?response.getCompanyId():"");
         }
         return "customerOrder/orderList";
     }
@@ -141,7 +141,9 @@ public class CustomerOrderController {
      */
     @RequestMapping("/orderList")
     @ResponseBody
-    public ResponseData<PageInfo<OrdOrderVo> > orderList(HttpServletRequest request,  QueryOrderRequest orderReq){
+    public ResponseData<PageInfo<OrdOrderVo> > orderList(HttpServletRequest request,
+             @RequestParam(required = false) Boolean isManager,
+             Boolean individualCheck, Boolean enterpriseCheck, QueryOrderRequest orderReq){
         ResponseData<PageInfo<OrdOrderVo>> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
 
         String orderTimeStart = request.getParameter("orderTimeStartStr");  //订单查询开始时间
@@ -162,6 +164,13 @@ public class CustomerOrderController {
             else {
                 orderReq.setLspId(null);
             }
+            if(Boolean.TRUE.equals(isManager) && !Boolean.TRUE.equals(individualCheck)){
+                orderReq.setUserId(null);
+            }
+            //不等于TRUE，则取消企业表示
+            if(!Boolean.TRUE.equals(enterpriseCheck)){
+                orderReq.setCorporaId(null);
+            }
 
             //获取当前用户所处时区
             TimeZone timeZone = TimeZone.getTimeZone(ZoneContextHolder.getZone());
@@ -181,18 +190,28 @@ public class CustomerOrderController {
                 orderReq.setStateList(states);
             }
             LOGGER.info("订单列表查询数据：" +JSONObject.toJSONString(orderReq));
-            
-            IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
-            QueryOrderRsponse orderRes = iOrderQuerySV.queryOrder(orderReq);
-            ResponseHeader resHeader = orderRes==null?null:orderRes.getResponseHeader();
-            LOGGER.info("订单列表查询 ：" + JSONObject.toJSONString(orderRes));
-            //如果返回值为空,或返回信息中包含错误信息,返回失败
-            if (orderRes==null|| (resHeader!=null && (!resHeader.isSuccess()))){
-                resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
-            } else {
-                PageInfo<OrdOrderVo> pageInfo = orderRes.getPageInfo();
+            if(StringUtils.isBlank(orderReq.getUserId()) && StringUtils.isBlank(orderReq.getCorporaId())){
+                PageInfo<OrdOrderVo> pageInfo = new PageInfo<>();
+                pageInfo.setResult(new ArrayList<OrdOrderVo>());
+                pageInfo.setCount(0);
+                pageInfo.setPageCount(0);
+                pageInfo.setPageNo(1);
+                pageInfo.setPageSize(10);
                 //返回订单分页信息
                 resData.setData(pageInfo);
+            }else {
+                IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
+                QueryOrderRsponse orderRes = iOrderQuerySV.queryOrder(orderReq);
+                ResponseHeader resHeader = orderRes == null ? null : orderRes.getResponseHeader();
+                LOGGER.info("订单列表查询 ：" + JSONObject.toJSONString(orderRes));
+                //如果返回值为空,或返回信息中包含错误信息,返回失败
+                if (orderRes == null || (resHeader != null && (!resHeader.isSuccess()))) {
+                    resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
+                } else {
+                    PageInfo<OrdOrderVo> pageInfo = orderRes.getPageInfo();
+                    //返回订单分页信息
+                    resData.setData(pageInfo);
+                }
             }
         } catch (Exception e) {
             LOGGER.error("查询订单分页失败:",e);
@@ -346,7 +365,7 @@ public class CustomerOrderController {
             //使用优惠券
             balanceService.deductionCoupon(UserUtil.getUserId(),couponId,
                     Long.parseLong(deductParam.getExternalId()),deductParam.getTotalAmount(),
-                    deductParam.getCurrencyUnit(),rb.getDefaultLocale());
+                    deductParam.getCurrencyUnit(),rb.getDefaultLocale(),orderType);
             DeductResponse deductResponse = deductSV.deductFund(deductParam);
             ResponseHeader responseHeader = deductResponse.getResponseHeader();
             //支付结果,默认为失败
@@ -356,9 +375,9 @@ public class CustomerOrderController {
             }//余额支付成功
             else if(responseHeader.isSuccess()
                     && YEPayResultConstants.RESULT_SUCCESS.equals(responseHeader.getResultCode())){
-                long payFee = Long.parseLong(deductParam.getExternalId());
+                long orderId = Long.parseLong(deductParam.getExternalId());
                 orderService.orderPayProcessResult(userId,deductParam.getAccountId(),
-                        Long.parseLong(deductParam.getExternalId()),orderType,totalPay,
+                        orderId,orderType,totalPay,
                         (totalPay-deductParam.getTotalAmount()),deductParam.getTotalAmount(),
                         "YE",deductResponse.getSerialNo(),
                         DateUtil.getSysDate(),corporaId);
@@ -392,7 +411,7 @@ public class CustomerOrderController {
         //服务异步通知地址
         String notifyUrl= ConfigUtil.getProperty("NOTIFY_URL")+"/"+orderPay.getOrderType()+"/"+ UserUtil.getUserId()+
                 "?totalPay="+orderPay.getTotalFee()+"&currencyUnit="+orderPay.getCurrencyUnit()+
-                "&companyId="+orderPay.getCouponId()+"&couponId="+orderPay.getCouponId();
+                "&companyId="+orderPay.getCorporaId()+"&couponId="+orderPay.getCouponId();
 
         //异步通知地址,默认为用户
         //将订单金额直接转换为小数点后两位
@@ -436,7 +455,8 @@ public class CustomerOrderController {
         try {
             //使用优惠券
             balanceService.deductionCoupon(UserUtil.getUserId(),orderPay.getCouponId(),
-                    orderPay.getOrderId(),orderPay.getTotalFee(),orderPay.getCurrencyUnit(),rb.getDefaultLocale());
+                    orderPay.getOrderId(),orderPay.getTotalFee(),orderPay.getCurrencyUnit(),rb.getDefaultLocale(),
+                    orderPay.getOrderType());
             //调用订单支付
             orderService.orderPayProcessResult(UserUtil.getUserId(),null,orderPay.getOrderId(),
                     orderPay.getOrderType(),orderPay.getTotalFee(),(orderPay.getTotalFee()-orderPay.getOrderAmount()),

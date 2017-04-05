@@ -284,7 +284,7 @@
 	</script>
 	<script type="text/javascript">
 	var userId ="${user_session_key.userId}";
-	
+	var corporaId = "${corporaId}";
 	var pager, orderPager;
 	var current ="index";
 	(function() {

@@ -27,7 +27,9 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
     	events: {
 			"click #submitQuery":"_orderList",
 			"change #displayFlag":"_change",
-			"change #translateType":"_orderList"
+			"change #translateType":"_orderList",
+			"change #individualCheck":"_orderList",
+			"change #enterpriseCheck":"_orderList"
     	},
     	
       	//重写父类

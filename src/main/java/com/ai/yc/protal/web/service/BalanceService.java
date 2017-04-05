@@ -138,9 +138,10 @@ public class BalanceService {
      * @param orderId
      * @param totalFee
      * @param currencyUnit
+     * @param orderType
      */
     public void deductionCoupon(String userId, String couponId, Long orderId, Long totalFee,
-                                String currencyUnit, Locale locale) throws BusinessException {
+                                String currencyUnit, Locale locale, String orderType) throws BusinessException {
         //若优惠券为空，则不进行处理。
         if(StringUtil.isBlank(couponId))
             return;

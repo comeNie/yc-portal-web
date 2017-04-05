@@ -68,7 +68,8 @@ define("app/jsp/user/userIndex",function(require, exports, module) {
 		    				data:{
 		    					'pageSize':10,
 		    					'pageNo':1,
-		    					'userId':userId
+		    					'userId':userId,
+								'corporaId':corporaId
 		    					},
 		    		        success: function(json) {
 		    		        	var data = json.data;
