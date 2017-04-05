@@ -378,24 +378,33 @@
                                 	</c:otherwise>
                                 </c:choose>
                             </li>
-                            <!--  
                             <li class="width-large">
-                                <p class="word">折扣:</p>
-                                <p>9.0折</p>
+                                <%--折扣--%>
+                                <p class="word"><spring:message code="order.discount"/>:</p>
+                                <p><c:choose><c:when test="${OrderDetails.orderFee.discountSum != null}"><spring:message
+                                        code="order.discount.num" arguments="${OrderDetails.orderFee.discountSum*10}"/></c:when><c:otherwise>-</c:otherwise></c:choose></p>
                             </li>
                             <li class="width-large">
-                                <p class="word">优惠码:</p>
-                                <p>-</p>
+                                <!-- 优惠券 -->
+                                <p class="word"><spring:message code="myOrder.Coupons"/>:</p>
+                                <p>
+                                    <%--若为空，则显示---%>
+                                    <c:choose>
+                                        <c:when test="${OrderDetails.orderFee.couponFee == null}">-</c:when>
+                                        <c:otherwise>
+                                            <c:set var="couponFee"><fmt:formatNumber
+                                                    value="${OrderDetails.orderFee.couponFee/1000}"
+                                                    pattern="#,##0.00#"/></c:set>
+                                            <c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message
+                                                    code="myOrder.rmb" argumentSeparator="@"
+                                                    arguments="${couponFee}"/></c:if>
+                                            <c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message
+                                                    code="myOrder.dollar" argumentSeparator="@"
+                                                    arguments="${couponFee}"/></c:if>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </p>
                             </li>
-                            -->
-                            <%--<li class="width-large">--%>
-                                <%--<!-- 优惠券 -->--%>
-                                <%--<p class="word"><spring:message code="myOrder.Coupons"/>:</p>--%>
-                                <%--<p>--%>
-                                	<%--<c:set var="discountFee"><fmt:formatNumber value="${OrderDetails.orderFee.discountFee/1000}" pattern="#,##0.00#"/></c:set>--%>
-                               		<%--<c:if test="${OrderDetails.orderFee.currencyUnit =='1'}"><spring:message code="myOrder.rmb" argumentSeparator="@" arguments="${discountFee}"/></c:if>--%>
-                               		<%--<c:if test="${OrderDetails.orderFee.currencyUnit =='2'}"><spring:message code="myOrder.dollar" argumentSeparator="@" arguments="${discountFee}"/></c:if></p>--%>
-                            <%--</li>--%>
                             <c:if test="${OrderDetails.displayFlag!='13'}">
                             <li class="width-large red">
                             	<!-- 实付金额 -->

@@ -37,6 +37,9 @@
 		interface="com.ai.yc.order.api.translatesave.interfaces.ITranslateSaveSV" />
 	<dubbo:reference id="IOrderEvaluationSV" registry="ycRegistry"
 					 interface="com.ai.yc.order.api.orderevaluation.interfaces.IOrderEvaluationSV" />
+	<!--订单延时-->
+	<dubbo:reference id="iOrderDeplaySV" registry="ycRegistry"
+					 interface="com.ai.yc.order.api.orderdeplay.interfaces.IOrderDeplaySV"/>
 	<!-- 注册 -->
 	<dubbo:reference id="iYCUserServiceSV" registry="ycRegistry"
 		interface="com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV" />

@@ -17,6 +17,8 @@ import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.slp.balance.api.deduct.interfaces.IDeductSV;
 import com.ai.slp.balance.api.deduct.param.DeductParam;
 import com.ai.slp.balance.api.deduct.param.DeductResponse;
+import com.ai.yc.order.api.orderdeplay.interfaces.IOrderDeplaySV;
+import com.ai.yc.order.api.orderdeplay.param.OrderDeplayRequest;
 import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsRequest;
 import com.ai.yc.order.api.orderevaluation.interfaces.IOrderEvaluationSV;
 import com.ai.yc.order.api.orderevaluation.param.*;
@@ -36,6 +38,7 @@ import com.ai.yc.protal.web.utils.*;
 import com.ai.yc.user.api.usercompany.interfaces.IYCUserCompanySV;
 import com.ai.yc.user.api.usercompany.param.UserCompanyInfoRequest;
 import com.ai.yc.user.api.usercompany.param.UserCompanyInfoResponse;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -638,6 +641,30 @@ public class CustomerOrderController {
         return resData;
     }
 
+    /**
+     * 延时确认订单
+     * @param orderId
+     * @return
+     */
+    @RequestMapping("/delayed")
+    @ResponseBody
+    public ResponseData<String> delayedConfirmOrder(Long orderId){
+        ResponseData<String> response = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        IOrderDeplaySV orderDeplaySV = DubboConsumerFactory.getService(IOrderDeplaySV.class);
+        OrderDeplayRequest svRequest = new OrderDeplayRequest();
+        svRequest.setOrderId(orderId);
+        svRequest.setOperId(UserUtil.getUserId());
+        svRequest.setOperName(UserUtil.getUserName());
+        //延迟3天
+        svRequest.setEndChgTime(DateUtils.afterNow(3*24*60*60));
+        BaseResponse svResponse = orderDeplaySV.orderDeplay(svRequest);
+        if (svResponse!=null && !svResponse.getResponseHeader().isSuccess()){
+            LOGGER.warn("订单延时失败，订单号：{}，返回信息：{}",orderId, JSON.toJSONString(svResponse));
+            response = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
+                    rb.getMessage("order.info.delayed.fail"));
+        }
+        return response;
+    }
     /**
      * 判断用户是否查看订单的权限
      * 目前统一方法，便于之后扩展

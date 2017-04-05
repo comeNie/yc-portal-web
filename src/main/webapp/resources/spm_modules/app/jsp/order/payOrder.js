@@ -96,6 +96,9 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
                 $("#accountId").val(comAccountId);
                 $("#corporaId").val(compayId);
 			}
+			if(window.console){
+			    console.log("_changeOrderType="+$("#accountId").val()+","+$("#corporaId").val());
+            }
             $("#orderAmount").val(orderPayFee);
 			$("#orderType").val(orderType);
 			//查询可用优惠券
@@ -291,6 +294,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
             //若优惠券和优惠码均不存在，则直接进行订单支付
             if(couponId==null || couponId==""){
                 this._payOrder();
+                return;
             }
             ajaxController.ajax({
                 type: "post",
@@ -435,6 +439,10 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
             $("#yeCorporaId").val($("#corporaId").val());
             //优惠券
             $("#yeCouponId").val($("#couponId").val());
+            if(window.console){
+                console.log($("#corporaId").val()+":"+$("#couponId").val());
+                console.log($("#yeCorporaId").val()+","+$("#yeCouponId").val());
+            }
             ajaxController.ajax({
                 type: "post",
                 processing:true,

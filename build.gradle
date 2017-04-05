@@ -109,6 +109,8 @@ dependencies {
     compile 'com.ai.yc.order:orderstate:1.0-SNAPSHOT'
     //订单评价
     compile 'com.ai.yc.order:orderevaluation:1.0-SNAPSHOT'
+    //延时确认
+    compile 'com.ai.yc.order:orderdeplay:1.0-SNAPSHOT'
     //充值服务
     compile 'com.ai.slp.balance:deposit:1.0.1-SNAPSHOT'
 

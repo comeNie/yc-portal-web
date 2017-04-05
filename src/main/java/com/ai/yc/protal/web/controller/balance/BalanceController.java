@@ -228,11 +228,13 @@ public class BalanceController {
      * 根据币种和金额查询符合条件的优惠券
      * @param currencyUnit 币种
      * @param orderAmount 金额
+     * @param orderType 订单类型
      * @return
      */
     @RequestMapping(value = "/query/coupon")
     @ResponseBody
-    public ResponseData<List<DeductionCouponResponse>> queryCoupon(String currencyUnit, Long orderAmount){
+    public ResponseData<List<DeductionCouponResponse>> queryCoupon(
+            String currencyUnit, Long orderAmount,String orderType){
         ResponseData<List<DeductionCouponResponse>> responseData =
                 new ResponseData<List<DeductionCouponResponse>>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         ISendCouponSV sendCouponSV = DubboConsumerFactory.getService(ISendCouponSV.class);
@@ -240,6 +242,7 @@ public class BalanceController {
         couponRequest.setCurrencyUnit(currencyUnit);//币种
         couponRequest.setUserId(UserUtil.getUserId());//用户
         couponRequest.setTotalFee(orderAmount);//金额
+        couponRequest.setOrderType(orderType);
         //传递适用站点
         couponRequest.setUsedScene(Locale.CHINA.equals(rb.getDefaultLocale()) ?
                 BalanceConstants.USED_SCENE_PC_CN : BalanceConstants.USED_SCENE_PC_EN);
