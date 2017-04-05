@@ -81,6 +81,9 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
             //默认为个人账户，此时需要密码
             needPayPass = "1";
             $("#accountId").val(acctoundId);
+            $("#corporaId").val("");
+
+            $("#discountSum").val("");
 			if(payOrderPager.ORDER_TYPE_COM == orderType){
                 orderPayFee = totalFee * discount;
                 var tmp = orderPayFee%10;
@@ -95,6 +98,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
                 balance = compayBalance;
                 $("#accountId").val(comAccountId);
                 $("#corporaId").val(compayId);
+                $("#discountSum").val(discount);
 			}
 			if(window.console){
 			    console.log("_changeOrderType="+$("#accountId").val()+","+$("#corporaId").val());
@@ -161,12 +165,16 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 		_changeCoupon:function () {
     		//获取优惠面值
 			var faceVal = $("#couponSelect").find("option:selected").attr("faceVal");
-            couponDisFee = Number(faceVal);
+            this._changeCouponOrCode(Number(faceVal));
+        },
+        //优惠券或优惠码变更时
+        _changeCouponOrCode:function (faceVal) {
+            $("#couponFee").val("");
+            couponDisFee = faceVal;
             orderPayFee = totalFee - comDisFee - couponDisFee;
             //若应付金额小于0，则按0执行
             if(orderPayFee<0){
                 orderPayFee = 0;
-
             }
 
             this._changePayFee();
@@ -174,6 +182,10 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
             if(couponDisFee == 0){
                 //优惠码可输入
                 $("#conponCode").removeAttr("disabled");
+            }//优惠券金额大于0，
+            else if(couponDisFee>0 && couponDisFee>totalFee){
+                var tem = couponDisFee>totalFee?totalFee:couponDisFee;
+                $("#couponFee").val(tem);
             }
             //重新变更支付方式
             this._changeShowPayType();
@@ -215,17 +227,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
                 data: {"currencyUnit":currencyUnit,"orderAmount":orderPayFee,"couponId":couponId},
                 success: function(data){
                     var coupon = eval(data.data);
-                    couponDisFee = Number(coupon.faceValue);
-                    orderPayFee = totalFee - comDisFee - couponDisFee;
-                    //若应付金额小于0，则按0执行
-                    if(orderPayFee<0){
-                        orderPayFee = 0;
-
-                    }
-                    //变更金额显示
-                    _this._changePayFee();
-                    //重新变更支付方式
-                    _this._changeShowPayType();
+                    _this._changeCouponOrCode(Number(coupon.faceValue));
                 }
             });
         },
@@ -415,7 +417,10 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
             if(couponId==null || couponId==""){
                 couponId = $("#conponCode").val();
             }
-
+            //若优惠券和优惠码均不存在
+            if(couponId==null || couponId==""){
+                return;
+            }
             ajaxController.ajax({
                 type: "post",
                 processing:true,
@@ -437,6 +442,10 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
             $("#yeOrderType").val(orderType);
             //企业标识
             $("#yeCorporaId").val($("#corporaId").val());
+            //折扣
+            $("#yeDiscountSum").val($("#discountSum").val());
+            //优惠金额
+            $("#yeCouponFee").val($("#couponFee").val());
             //优惠券
             $("#yeCouponId").val($("#couponId").val());
             if(window.console){

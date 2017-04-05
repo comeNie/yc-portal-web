@@ -339,11 +339,18 @@ public class CustomerOrderController {
 
     /**
      * 余额支付
+     * @param discountSum 折扣
+     * @param couponFee 优惠券优惠金额
+     * @param orderType 订单类型
+     * @param corporaId  企业id
+     * @param couponId 优惠券id或优惠码
+     * @param deductParam
+     * @param totalPay 总金额
      * @return
      */
     @RequestMapping("/payOrder/balance")
     @ResponseBody
-    public ResponseData<YEPayResult> balancePay(
+    public ResponseData<YEPayResult> balancePay(Double discountSum,Long couponFee,
             DeductParam deductParam,String orderType,String corporaId,String couponId,Long totalPay){
         YEPayResult yePayResult = new YEPayResult();
         yePayResult.setOrderId(deductParam.getExternalId());

@@ -100,8 +100,6 @@
 					<input id="discountSum" type="hidden" name="discountSum">
 					<%--优惠券金额--%>
 					<input id="couponFee" type="hidden" name="couponFee">
-					<%--优惠码金额--%>
-					<input id="couponCodeFee" type="hidden" name="couponCodeFee">
 					<%--优惠券ID或优惠码--%>
 					<input type="hidden" id="couponId" name="couponId">
 				</form>
@@ -208,8 +206,6 @@
 					<input id="yeDiscountSum" type="hidden" name="discountSum">
 						<%--优惠券金额--%>
 					<input id="yeCouponFee" type="hidden" name="couponFee">
-						<%--优惠码金额--%>
-					<input id="yeCouponCodeFee" type="hidden" name="couponCodeFee">
 						<%--优惠券ID或优惠码--%>
 					<input id="yeCouponId" type="hidden" name="couponId">
 				</form>
