@@ -249,7 +249,7 @@ public class BalanceController {
         BaseListResponse<DeductionCouponResponse> couponResponse =
                 sendCouponSV.queryDisCountCoupon(couponRequest);
         List<DeductionCouponResponse> couponList = null;
-        if(couponResponse!=null && couponResponse.getResponseHeader().isSuccess()){
+        if(couponResponse!=null){
             couponList = couponResponse.getResult();
         }
         //TODO... 模拟数据

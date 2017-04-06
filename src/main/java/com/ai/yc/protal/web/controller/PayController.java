@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,8 @@ public class PayController {
      * @param companyId
      * @param couponId
      * @param payNotify
+     * @param discountSum 折扣
+     * @param couponFee 优惠券或优惠码优惠金额
      * @return
      */
     @RequestMapping("/payResult/{orderType}/{userId}")
@@ -76,7 +79,7 @@ public class PayController {
     public String orderPayResult(
             @PathVariable("orderType")String orderType, @PathVariable("userId")String userId,
             Long totalPay,String currencyUnit,@RequestParam(required = false) String companyId,
-            @RequestParam(required = false) String couponId,PayNotify payNotify){
+            @RequestParam(required = false) String couponId,PayNotify payNotify,Long discountSum,Long couponFee){
         LOG.info("The pay result.orderType:{},\r\n{}", orderType,JSON.toJSONString(payNotify));
         //若优惠券不为空，则将优惠券设置为已使用
         if(!StringUtil.isBlank(couponId)) {
@@ -96,9 +99,10 @@ public class PayController {
         Double orderAmount = Double.valueOf(payNotify.getOrderAmount())*1000;
         Long paidFee = orderAmount.longValue();
         Long discountFee = totalPay - paidFee;
+        BigDecimal discountBig = discountSum==null?null:new BigDecimal(discountSum/10000);
         orderService.orderPayProcessResult(userId,null,Long.parseLong(payNotify.getOrderId()),orderType,
                 totalPay,discountFee>0?discountFee:0,paidFee,payNotify.getPayOrgCode(),
-                payNotify.getOutOrderId(),notifyTime,companyId);
+                payNotify.getOutOrderId(),notifyTime,companyId,discountBig,couponFee);
         return "OK";
     }
     /**

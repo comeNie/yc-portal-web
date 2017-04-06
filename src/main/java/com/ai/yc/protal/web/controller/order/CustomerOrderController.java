@@ -2,12 +2,14 @@ package com.ai.yc.protal.web.controller.order;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.Null;
 
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
@@ -350,7 +352,7 @@ public class CustomerOrderController {
      */
     @RequestMapping("/payOrder/balance")
     @ResponseBody
-    public ResponseData<YEPayResult> balancePay(Double discountSum,Long couponFee,
+    public ResponseData<YEPayResult> balancePay(BigDecimal discountSum,Long couponFee,
             DeductParam deductParam,String orderType,String corporaId,String couponId,Long totalPay){
         YEPayResult yePayResult = new YEPayResult();
         yePayResult.setOrderId(deductParam.getExternalId());
@@ -390,7 +392,7 @@ public class CustomerOrderController {
                         orderId,orderType,totalPay,
                         (totalPay-deductParam.getTotalAmount()),deductParam.getTotalAmount(),
                         "YE",deductResponse.getSerialNo(),
-                        DateUtil.getSysDate(),corporaId);
+                        DateUtil.getSysDate(),corporaId,discountSum,couponFee);
             }
             //返回指定的的状态码
             yePayResult.setPayResultCode(responseHeader.getResultCode());
@@ -409,7 +411,7 @@ public class CustomerOrderController {
      * @throws Exception
      */
     @RequestMapping(value = "/gotoPay")
-    public String gotoPay(OrderPay orderPay, Model uiModel)
+    public String gotoPay(OrderPay orderPay,BigDecimal discountSum, Model uiModel)
             throws Exception {
         String orderId = Long.toString(orderPay.getOrderId());
         //若订单不是未支付状态，则跳转到系统异常
@@ -418,10 +420,16 @@ public class CustomerOrderController {
         }
         //租户
         String tenantId= ConfigUtil.getProperty("TENANT_ID");
+        //防止传递错误，将折扣乘以10000.
+        Integer discount = null;
+        if(orderPay.getDiscount()!= null){
+            discount = discountSum.multiply(new BigDecimal(10000)).intValue();
+        }
         //服务异步通知地址
         String notifyUrl= ConfigUtil.getProperty("NOTIFY_URL")+"/"+orderPay.getOrderType()+"/"+ UserUtil.getUserId()+
                 "?totalPay="+orderPay.getTotalFee()+"&currencyUnit="+orderPay.getCurrencyUnit()+
-                "&companyId="+orderPay.getCorporaId()+"&couponId="+orderPay.getCouponId();
+                "&companyId="+orderPay.getCorporaId()+"&couponId="+orderPay.getCouponId()+
+                "&discountSum="+discount+"&couponFee="+orderPay.getCouponFee();
 
         //异步通知地址,默认为用户
         //将订单金额直接转换为小数点后两位
@@ -461,8 +469,9 @@ public class CustomerOrderController {
      * @return
      */
     @RequestMapping("/pay/noorg")
-    public String payOrderNoOrg(OrderPay orderPay,Model uiModel){
+    public String payOrderNoOrg(OrderPay orderPay,BigDecimal discountSum,Model uiModel){
         try {
+            orderPay.setDiscount(discountSum);
             //使用优惠券
             balanceService.deductionCoupon(UserUtil.getUserId(),orderPay.getCouponId(),
                     orderPay.getOrderId(),orderPay.getTotalFee(),orderPay.getCurrencyUnit(),rb.getDefaultLocale(),
@@ -471,7 +480,7 @@ public class CustomerOrderController {
             orderService.orderPayProcessResult(UserUtil.getUserId(),null,orderPay.getOrderId(),
                     orderPay.getOrderType(),orderPay.getTotalFee(),(orderPay.getTotalFee()-orderPay.getOrderAmount()),
                     orderPay.getOrderAmount(),orderPay.getPayOrgCode(),null,
-                    DateUtil.getSysDate(),orderPay.getCorporaId());
+                    DateUtil.getSysDate(),orderPay.getCorporaId(),orderPay.getDiscount(),orderPay.getCouponFee());
             //订单号
             uiModel.addAttribute("orderId",orderPay.getOrderId());
             //支付结果

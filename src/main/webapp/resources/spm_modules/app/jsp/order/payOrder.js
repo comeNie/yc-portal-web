@@ -331,9 +331,8 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
                 //判断余额是否足够
                 if(balance<orderPayFee){
                     this._showWarn($.i18n.prop('pay.dialog.recharge'));
-                }//为企业账户，需要支付密码、支付密码不存在
-                else if(payOrderPager.ORDER_TYPE_COM == orderType
-                    && needPayPass == "1"
+                }//需要支付密码、支付密码不存在
+                else if( needPayPass == "1"
                     && payPassExist == false){
                     this._showToSetPass();
                 }//余额支付,需要密码
