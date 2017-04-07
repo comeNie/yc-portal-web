@@ -53,7 +53,7 @@ UserUtil.getUserPortraitImg();
 				</li>
 				<!-- 优惠券 -->
   				<li>
-  					<a href="${_base}/p/coupon/list/view">
+  					<a href="${_base}/p/coupon/couponList">
   					<span><i class="icon iconfont">&#xe644;</i></span>
   					<span><spring:message code="ycleftmenu.discount"/></span>
   					</a>
