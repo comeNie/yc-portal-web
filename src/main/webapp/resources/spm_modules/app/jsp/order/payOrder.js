@@ -183,9 +183,12 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
                 //优惠码可输入
                 $("#conponCode").removeAttr("disabled");
             }//优惠券金额大于0，
-            else if(couponDisFee>0 && couponDisFee>totalFee){
+            else if(couponDisFee>0){
                 var tem = couponDisFee>totalFee?totalFee:couponDisFee;
                 $("#couponFee").val(tem);
+            }
+            if(window.console){
+                console.log("couponFee:"+$("#couponFee").val());
             }
             //重新变更支付方式
             this._changeShowPayType();
@@ -321,8 +324,10 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 			if(orderPayFee <= 0 ){
                 $("#payType").val("YHQ");
                 $('#toPayForm').attr("action", path).submit();
+                $('#toPayForm').removeAttr("target");
             }//若为翻译后付费，则直接提交订单
             else if("HF" == payType ){
+                $('#toPayForm').removeAttr("target");
                 $('#toPayForm').attr("action", path).submit();
             }
             //若为余额支付

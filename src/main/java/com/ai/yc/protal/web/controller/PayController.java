@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,12 +80,12 @@ public class PayController {
     public String orderPayResult(
             @PathVariable("orderType")String orderType, @PathVariable("userId")String userId,
             Long totalPay,String currencyUnit,@RequestParam(required = false) String companyId,
-            @RequestParam(required = false) String couponId,PayNotify payNotify,Long discountSum,Long couponFee){
+            @RequestParam(required = false) String couponId,PayNotify payNotify,Double discountSum,Long couponFee){
         LOG.info("The pay result.orderType:{},\r\n{}", orderType,JSON.toJSONString(payNotify));
         //若优惠券不为空，则将优惠券设置为已使用
         if(!StringUtil.isBlank(couponId)) {
-            balanceService.deductionCoupon(UserUtil.getUserId(), couponId,
-                    Long.parseLong(payNotify.getOrderId()), totalPay,
+            balanceService.deductionCoupon(userId, couponId,
+                    Long.parseLong(payNotify.getOrderId()), 201560l,
                     currencyUnit, rb.getDefaultLocale(),orderType);
         }
         //若哈希验证不通过或支付失败,则表示支付结果有问题
@@ -99,7 +100,8 @@ public class PayController {
         Double orderAmount = Double.valueOf(payNotify.getOrderAmount())*1000;
         Long paidFee = orderAmount.longValue();
         Long discountFee = totalPay - paidFee;
-        BigDecimal discountBig = discountSum==null?null:new BigDecimal(discountSum/10000);
+        BigDecimal discountBig =
+                discountSum==null?null:new BigDecimal(discountSum/10000).setScale(4, RoundingMode.HALF_UP);
         orderService.orderPayProcessResult(userId,null,Long.parseLong(payNotify.getOrderId()),orderType,
                 totalPay,discountFee>0?discountFee:0,paidFee,payNotify.getPayOrgCode(),
                 payNotify.getOutOrderId(),notifyTime,companyId,discountBig,couponFee);

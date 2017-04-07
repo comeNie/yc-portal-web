@@ -97,7 +97,7 @@
 					<%--企业标识--%>
 					<input id="corporaId" type="hidden" name="corporaId" >
 					<%--订单折扣--%>
-					<input id="discountSum" type="hidden" name="discountSum">
+					<input id="discountSum" type="hidden" name="discount">
 					<%--优惠券金额--%>
 					<input id="couponFee" type="hidden" name="couponFee">
 					<%--优惠券ID或优惠码--%>

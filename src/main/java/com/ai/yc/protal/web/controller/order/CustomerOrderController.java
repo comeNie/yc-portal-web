@@ -411,7 +411,7 @@ public class CustomerOrderController {
      * @throws Exception
      */
     @RequestMapping(value = "/gotoPay")
-    public String gotoPay(OrderPay orderPay,BigDecimal discountSum, Model uiModel)
+    public String gotoPay(OrderPay orderPay, Model uiModel)
             throws Exception {
         String orderId = Long.toString(orderPay.getOrderId());
         //若订单不是未支付状态，则跳转到系统异常
@@ -421,15 +421,17 @@ public class CustomerOrderController {
         //租户
         String tenantId= ConfigUtil.getProperty("TENANT_ID");
         //防止传递错误，将折扣乘以10000.
-        Integer discount = null;
+        BigDecimal discountInt = null;
         if(orderPay.getDiscount()!= null){
-            discount = discountSum.multiply(new BigDecimal(10000)).intValue();
+            discountInt = orderPay.getDiscount().multiply(new BigDecimal(10000));
         }
         //服务异步通知地址
         String notifyUrl= ConfigUtil.getProperty("NOTIFY_URL")+"/"+orderPay.getOrderType()+"/"+ UserUtil.getUserId()+
                 "?totalPay="+orderPay.getTotalFee()+"&currencyUnit="+orderPay.getCurrencyUnit()+
-                "&companyId="+orderPay.getCorporaId()+"&couponId="+orderPay.getCouponId()+
-                "&discountSum="+discount+"&couponFee="+orderPay.getCouponFee();
+                "&companyId="+(orderPay.getCorporaId()==null?"":orderPay.getCorporaId())+
+                "&couponId="+(orderPay.getCouponId()==null?"":orderPay.getCouponId())+
+                "&discountSum="+(discountInt==null?"":discountInt.intValue())+
+                "&couponFee="+(orderPay.getCouponFee()==null?"":orderPay.getCouponFee());
 
         //异步通知地址,默认为用户
         //将订单金额直接转换为小数点后两位

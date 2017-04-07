@@ -155,6 +155,7 @@ public class BalanceService {
         request.setTotalFee(totalFee);
         request.setCouponId(couponId);
         request.setCurrencyUnit(currencyUnit);
+        request.setOrderType(orderType);
         request.setUsedScene(
                 Locale.CHINA.equals(locale) ? BalanceConstants.USED_SCENE_PC_CN : BalanceConstants.USED_SCENE_PC_EN);
         BaseResponse response = sendCouponSV.deducionCoupon(request);

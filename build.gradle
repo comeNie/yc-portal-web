@@ -113,6 +113,8 @@ dependencies {
     compile 'com.ai.yc.order:orderdeplay:1.0-SNAPSHOT'
     //充值服务
     compile 'com.ai.slp.balance:deposit:1.0.1-SNAPSHOT'
+    //分配订单
+    compile 'com.ai.yc.order:orderallocation:1.0-SNAPSHOT'
 
 	//用户服务
 	compile 'com.ai.yc.user:userservice:1.0-SNAPSHOT'
