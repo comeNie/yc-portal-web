@@ -55,6 +55,15 @@ UserUtil.getUserPortraitImg();
 					<span><spring:message code="ycleftmenu.myorder"/></span>
 				</a>
 			</li>
+			<li class="side-bar">
+				<a href="#" class="side-title">
+					<span><i class="icon iconfont">&#xe646;</i></span>
+					<span>LSP管理</span>
+				</a>
+				<ul>
+					<li class="list-p" id="lspBill"><a href="${_base}/p/lspbill/toLspBill">LSP账单</a></li>
+				</ul>
+			</li>
 			<!-- <li>
 				<a href="#">
 					<span><i class="icon iconfont">&#xe647;</i></span>
