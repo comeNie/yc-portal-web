@@ -785,7 +785,7 @@ opacity:0;filter:alpha(opacity=0); -moz-opacity:0; -khtml-opacity:0;}
 
 /**优惠卷**/
 .coupon{width:100%;float:left;margin-top:20px;}
-.coupon ul{margin-bottom:20px;margin-left:19px;}
+.coupon ul{margin-bottom:20px;margin-left:10px;}
 /**蓝色**/
 .coupon .blue{width:280px;height:155px;float:left;padding:8px 0 0;background:#f1f8ff;border-radius:5px;-webkit-box-shadow: #c7c7c7 0px 0px 12px;-moz-box-shadow: #c7c7c7 0px 0px 12px;box-shadow: #c7c7c7 0px 0px 12px;}
 .coupon .blue:hover{-webkit-box-shadow: #3292f8 0px 0px 12px;-moz-box-shadow: #3292f8 0px 0px 12px;box-shadow: #3292f8 0px 0px 12px;}
