@@ -14,6 +14,7 @@ import javax.validation.constraints.Null;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.sdk.components.ccs.CCSClientFactory;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.slp.balance.api.deduct.interfaces.IDeductSV;
@@ -21,6 +22,7 @@ import com.ai.slp.balance.api.deduct.param.DeductParam;
 import com.ai.slp.balance.api.deduct.param.DeductResponse;
 import com.ai.yc.order.api.orderdeplay.interfaces.IOrderDeplaySV;
 import com.ai.yc.order.api.orderdeplay.param.OrderDeplayRequest;
+import com.ai.yc.order.api.orderdetails.param.PersonInfoVo;
 import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsRequest;
 import com.ai.yc.order.api.orderevaluation.interfaces.IOrderEvaluationSV;
 import com.ai.yc.order.api.orderevaluation.param.*;
@@ -526,6 +528,13 @@ public class CustomerOrderController {
             if(!checkOrder(orderDetailsRes.getUserId())){
                 viewStr = "httpError/403";
             }else{
+                //若是口译订单，且已分配
+                if (OrderConstants.TranslateType.ORAL.equals(orderDetailsRes.getTranslateType())
+                        && OrderConstants.State.ASSIGNED.equals(orderDetailsRes.getState())) {
+                    List<PersonInfoVo> personList = CollectionUtil.isEmpty(orderDetailsRes.getFollowInfoes()) ?
+                            orderDetailsRes.getFollowInfoes().get(0).getPersonInfos():Collections.<PersonInfoVo>emptyList();
+                    uiModel.addAttribute("personList",personList);
+                }
                 uiModel.addAttribute("OrderDetails", orderDetailsRes);
             }
         } catch (Exception e) {

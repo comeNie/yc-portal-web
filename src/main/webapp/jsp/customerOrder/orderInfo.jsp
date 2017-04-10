@@ -264,6 +264,26 @@
                 	</c:if>
                 	
                 	<c:if test="${OrderDetails.translateType == '2'}">
+                        <c:if test="${personList!=null && personList.size()>0}">
+                        <%--译员联系信息--%>
+                        <div class="info-list info-list-pb">
+                            <%--译员信息--%>
+                        <span><spring:message code="myOrder.translator.title"/></span>
+                        <ul>
+                            <c:forEach var="personInfo" items="${personList}">
+                                <li>
+                                    <%--姓名--%>
+                                    <p class="word"><spring:message code="myOrder.translator.name.title"/>:</p>
+                                    <p>${personInfo.interperName}</p>
+                                </li>
+                                <li>
+                                    <p class="word"><spring:message code="myOrder.translator.tel.title"/>:</p>
+                                    <p>${personInfo.tel}</p>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                        </div>
+                        </c:if>
                 	<div class="info-list">
                     	<!-- 口译 订单信息-->
                         <span><spring:message code="myOrder.Orderinformation"/></span>
