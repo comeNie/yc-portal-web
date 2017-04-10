@@ -134,6 +134,35 @@ define('app/jsp/customerOrder/orderList', function (require, exports, module) {
 	            }
     		});
         },
+		//延时确认订单
+		_lateConfirmOrder:function (orderId) {
+            new Dialog({
+                content:$.i18n.prop('order.list.late.dialog.msg'),
+                icon:'prompt',
+                okValue: $.i18n.prop('order.info.dialog.ok'),
+                cancelValue:$.i18n.prop('order.info.dialog.cancel'),
+                title: $.i18n.prop('order.list.late.dialog.title'),
+                ok:function(){
+                    ajaxController.ajax({
+                        type: "post",
+                        processing: true,
+                        url: _base + "/p/customer/order/delayed",
+                        data: {
+                            orderId: orderId
+                        },
+                        success: function (data) {
+                            if ("1" === data.statusCode) {
+                                //提交成功
+                                window.location.reload();
+                            }
+                        }
+                    });
+                },
+                cancel:function(){
+                    this.close();
+                }
+            }).showModal();
+        },
         
         //把毫秒数转为 x天x小时x分钟x秒
         ftimeDHS:function(ts) {

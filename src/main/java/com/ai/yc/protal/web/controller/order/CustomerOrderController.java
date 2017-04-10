@@ -2,21 +2,27 @@ package com.ai.yc.protal.web.controller.order;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.Null;
 
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.sdk.components.ccs.CCSClientFactory;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.slp.balance.api.deduct.interfaces.IDeductSV;
 import com.ai.slp.balance.api.deduct.param.DeductParam;
 import com.ai.slp.balance.api.deduct.param.DeductResponse;
+import com.ai.yc.order.api.orderdeplay.interfaces.IOrderDeplaySV;
+import com.ai.yc.order.api.orderdeplay.param.OrderDeplayRequest;
+import com.ai.yc.order.api.orderdetails.param.PersonInfoVo;
 import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsRequest;
 import com.ai.yc.order.api.orderevaluation.interfaces.IOrderEvaluationSV;
 import com.ai.yc.order.api.orderevaluation.param.*;
@@ -36,6 +42,7 @@ import com.ai.yc.protal.web.utils.*;
 import com.ai.yc.user.api.usercompany.interfaces.IYCUserCompanySV;
 import com.ai.yc.user.api.usercompany.param.UserCompanyInfoRequest;
 import com.ai.yc.user.api.usercompany.param.UserCompanyInfoResponse;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -336,11 +343,18 @@ public class CustomerOrderController {
 
     /**
      * 余额支付
+     * @param discountSum 折扣
+     * @param couponFee 优惠券优惠金额
+     * @param orderType 订单类型
+     * @param corporaId  企业id
+     * @param couponId 优惠券id或优惠码
+     * @param deductParam
+     * @param totalPay 总金额
      * @return
      */
     @RequestMapping("/payOrder/balance")
     @ResponseBody
-    public ResponseData<YEPayResult> balancePay(
+    public ResponseData<YEPayResult> balancePay(BigDecimal discountSum,Long couponFee,
             DeductParam deductParam,String orderType,String corporaId,String couponId,Long totalPay){
         YEPayResult yePayResult = new YEPayResult();
         yePayResult.setOrderId(deductParam.getExternalId());
@@ -380,7 +394,7 @@ public class CustomerOrderController {
                         orderId,orderType,totalPay,
                         (totalPay-deductParam.getTotalAmount()),deductParam.getTotalAmount(),
                         "YE",deductResponse.getSerialNo(),
-                        DateUtil.getSysDate(),corporaId);
+                        DateUtil.getSysDate(),corporaId,discountSum,couponFee);
             }
             //返回指定的的状态码
             yePayResult.setPayResultCode(responseHeader.getResultCode());
@@ -408,10 +422,18 @@ public class CustomerOrderController {
         }
         //租户
         String tenantId= ConfigUtil.getProperty("TENANT_ID");
+        //防止传递错误，将折扣乘以10000.
+        BigDecimal discountInt = null;
+        if(orderPay.getDiscount()!= null){
+            discountInt = orderPay.getDiscount().multiply(new BigDecimal(10000));
+        }
         //服务异步通知地址
         String notifyUrl= ConfigUtil.getProperty("NOTIFY_URL")+"/"+orderPay.getOrderType()+"/"+ UserUtil.getUserId()+
                 "?totalPay="+orderPay.getTotalFee()+"&currencyUnit="+orderPay.getCurrencyUnit()+
-                "&companyId="+orderPay.getCorporaId()+"&couponId="+orderPay.getCouponId();
+                "&companyId="+(orderPay.getCorporaId()==null?"":orderPay.getCorporaId())+
+                "&couponId="+(orderPay.getCouponId()==null?"":orderPay.getCouponId())+
+                "&discountSum="+(discountInt==null?"":discountInt.intValue())+
+                "&couponFee="+(orderPay.getCouponFee()==null?"":orderPay.getCouponFee());
 
         //异步通知地址,默认为用户
         //将订单金额直接转换为小数点后两位
@@ -451,8 +473,9 @@ public class CustomerOrderController {
      * @return
      */
     @RequestMapping("/pay/noorg")
-    public String payOrderNoOrg(OrderPay orderPay,Model uiModel){
+    public String payOrderNoOrg(OrderPay orderPay,BigDecimal discountSum,Model uiModel){
         try {
+            orderPay.setDiscount(discountSum);
             //使用优惠券
             balanceService.deductionCoupon(UserUtil.getUserId(),orderPay.getCouponId(),
                     orderPay.getOrderId(),orderPay.getTotalFee(),orderPay.getCurrencyUnit(),rb.getDefaultLocale(),
@@ -461,7 +484,7 @@ public class CustomerOrderController {
             orderService.orderPayProcessResult(UserUtil.getUserId(),null,orderPay.getOrderId(),
                     orderPay.getOrderType(),orderPay.getTotalFee(),(orderPay.getTotalFee()-orderPay.getOrderAmount()),
                     orderPay.getOrderAmount(),orderPay.getPayOrgCode(),null,
-                    DateUtil.getSysDate(),orderPay.getCorporaId());
+                    DateUtil.getSysDate(),orderPay.getCorporaId(),orderPay.getDiscount(),orderPay.getCouponFee());
             //订单号
             uiModel.addAttribute("orderId",orderPay.getOrderId());
             //支付结果
@@ -505,6 +528,13 @@ public class CustomerOrderController {
             if(!checkOrder(orderDetailsRes.getUserId())){
                 viewStr = "httpError/403";
             }else{
+                //若是口译订单，且已分配
+                if (OrderConstants.TranslateType.ORAL.equals(orderDetailsRes.getTranslateType())
+                        && OrderConstants.State.ASSIGNED.equals(orderDetailsRes.getState())) {
+                    List<PersonInfoVo> personList = CollectionUtil.isEmpty(orderDetailsRes.getFollowInfoes()) ?
+                            orderDetailsRes.getFollowInfoes().get(0).getPersonInfos():Collections.<PersonInfoVo>emptyList();
+                    uiModel.addAttribute("personList",personList);
+                }
                 uiModel.addAttribute("OrderDetails", orderDetailsRes);
             }
         } catch (Exception e) {
@@ -638,6 +668,30 @@ public class CustomerOrderController {
         return resData;
     }
 
+    /**
+     * 延时确认订单
+     * @param orderId
+     * @return
+     */
+    @RequestMapping("/delayed")
+    @ResponseBody
+    public ResponseData<String> delayedConfirmOrder(Long orderId){
+        ResponseData<String> response = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        IOrderDeplaySV orderDeplaySV = DubboConsumerFactory.getService(IOrderDeplaySV.class);
+        OrderDeplayRequest svRequest = new OrderDeplayRequest();
+        svRequest.setOrderId(orderId);
+        svRequest.setOperId(UserUtil.getUserId());
+        svRequest.setOperName(UserUtil.getUserName());
+        //延迟3天
+        svRequest.setEndChgTime(DateUtils.afterNow(3*24*60*60));
+        BaseResponse svResponse = orderDeplaySV.orderDeplay(svRequest);
+        if (svResponse!=null && !svResponse.getResponseHeader().isSuccess()){
+            LOGGER.warn("订单延时失败，订单号：{}，返回信息：{}",orderId, JSON.toJSONString(svResponse));
+            response = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
+                    rb.getMessage("order.info.delayed.fail"));
+        }
+        return response;
+    }
     /**
      * 判断用户是否查看订单的权限
      * 目前统一方法，便于之后扩展

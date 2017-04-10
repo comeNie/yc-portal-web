@@ -21,6 +21,8 @@ import com.ai.yc.user.api.usercompany.param.UserCompanyInfoResponse;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
 import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -33,6 +35,7 @@ import java.util.Locale;
  */
 @Service
 public class BalanceService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BalanceService.class);
 
     /**
      * 查询当前登录用户的余额信息
@@ -152,12 +155,15 @@ public class BalanceService {
         request.setTotalFee(totalFee);
         request.setCouponId(couponId);
         request.setCurrencyUnit(currencyUnit);
+        request.setOrderType(orderType);
         request.setUsedScene(
                 Locale.CHINA.equals(locale) ? BalanceConstants.USED_SCENE_PC_CN : BalanceConstants.USED_SCENE_PC_EN);
         BaseResponse response = sendCouponSV.deducionCoupon(request);
         //若操作不成功，则抛出异常
         if(response==null || !response.getResponseHeader().isSuccess()
-                || Constants.SUCCESS_CODE.equals(response.getResponseHeader().getResultCode())){
+                || !Constants.SUCCESS_CODE.equals(response.getResponseHeader().getResultCode())){
+            LOGGER.warn("抵扣优惠券失败，错误码：{}，错误信息：{}",response.getResponseHeader().getResultCode(),
+                    response.getResponseHeader().getResultMessage());
             throw new BusinessException(response.getResponseHeader().getResultCode(),
                     response.getResponseHeader().getResultMessage());
         }

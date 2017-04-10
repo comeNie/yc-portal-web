@@ -44,10 +44,13 @@ UserUtil.getUserPortraitImg();
 				</a>
 			</li>
 			<%--订单大厅--%>
-			<div class="list-p" id="taskCenter"><a href="${_base}/p/taskcenter/view"
-								   class=""><spring:message code="ycleftmenu.task.center"/><span><c:if test="${taskNum!=null}"> (${taskNum})</c:if></span></a></div>
+			<div class="list-p" id="taskCenter"><a href="${_base}/p/taskcenter/view"><spring:message
+					code="ycleftmenu.task.center"/><span><c:if test="${taskNum!=null}"> (${taskNum})</c:if></span></a>
+			</div>
 			<%--分配订单--%>
-			<%--<div class="list-p"><a href="#"><spring:message code="ycleftmenu.assign.orders"/><span> (7)</span></a></div>--%>
+			<div class="list-p" id="assignTask"><a href="${_base}/p/assigntask/view"><spring:message
+					code="ycleftmenu.assign.orders"/><span><c:if test="${assignNum!=null}"> (${assignNum})</c:if></span></a>
+			</div>
 			<li id="orderList">
 				<a href="${_base}/p/trans/order/list/view">
 					<span><i class="icon iconfont">&#xe64a;</i></span>

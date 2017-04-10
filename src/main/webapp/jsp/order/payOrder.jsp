@@ -95,7 +95,11 @@
 					</c:if>
 					<input id="orderType" type="hidden" name="orderType" value="${orderType}">
 					<%--企业标识--%>
-					<input id="" type="hidden" name="corporaId" value="corporaId">
+					<input id="corporaId" type="hidden" name="corporaId" >
+					<%--订单折扣--%>
+					<input id="discountSum" type="hidden" name="discount">
+					<%--优惠券金额--%>
+					<input id="couponFee" type="hidden" name="couponFee">
 					<%--优惠券ID或优惠码--%>
 					<input type="hidden" id="couponId" name="couponId">
 				</form>
@@ -197,7 +201,11 @@
 						<%--订单类型--%>
 					<input id="yeOrderType" type="hidden" name="orderType" value="1">
 						<%--企业标识--%>
-					<input id="yeCorporaId" type="hidden" name="corporaId" value="corporaId">
+					<input id="yeCorporaId" type="hidden" name="corporaId" >
+						<%--订单折扣--%>
+					<input id="yeDiscountSum" type="hidden" name="discountSum">
+						<%--优惠券金额--%>
+					<input id="yeCouponFee" type="hidden" name="couponFee">
 						<%--优惠券ID或优惠码--%>
 					<input id="yeCouponId" type="hidden" name="couponId">
 				</form>

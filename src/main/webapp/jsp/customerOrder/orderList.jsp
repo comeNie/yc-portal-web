@@ -266,7 +266,7 @@
 					<!-- 确认 -->
 					<input name="confirmOrder" class="btn biu-btn btn-auto-25 btn-green radius10" type="button" value="<spring:message code="myOrder.confirm"/>">
 					<!-- 延时确认-->
-					<!--<input name="lateConfirmOrder" class="btn biu-btn btn-auto-25 btn-red radius10" type="button" value="<spring:message code="myOrder.Delayed"/>">-->
+					<input name="lateConfirmOrder" class="btn biu-btn btn-auto-25 btn-red radius10" type="button" value="<spring:message code="myOrder.Delayed"/>">
 				</td>
 			{{else displayFlag == '52'}}
 				<!-- 待评价  -->
@@ -345,8 +345,10 @@ var current = "orderList";
            window.location.href="${_base}/p/customer/order/"+$(this).parents("table").find("input[name='orderId']").val();
        });
        <%-- 延迟确认订单 --%>
-       //$("#confirmOrder").delegate("input[name='lateConfirmOrder']","click",function(){
-       //});
+       $("#searchOrderData").delegate("input[name='lateConfirmOrder']","click",function(){
+           var orderId = $(this).parents("table").find("input[name='orderId']").val();
+           pager._lateConfirmOrder(orderId);
+       });
 
         <%-- 待评价 跳转评价--%>
         $("#searchOrderData").delegate("input[name='tobeEvaluated']","click",function(){

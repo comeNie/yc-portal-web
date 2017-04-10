@@ -1,5 +1,7 @@
 package com.ai.yc.protal.web.model.pay;
 
+import java.math.BigDecimal;
+
 /**
  * 订单支付
  * Created by liutong on 2017/3/28.
@@ -45,6 +47,14 @@ public class OrderPay {
      * 优惠券/优惠码
      */
     private String couponId;
+    /**
+     * 折扣,传小数,例如88折,返回0.88
+     */
+    private BigDecimal discount;
+    /**
+     * 优惠券或优惠码金额
+     */
+    private Long couponFee;
 
     public Long getOrderId() {
         return orderId;
@@ -124,5 +134,21 @@ public class OrderPay {
 
     public void setCouponId(String couponId) {
         this.couponId = couponId;
+    }
+
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+    }
+
+    public Long getCouponFee() {
+        return couponFee;
+    }
+
+    public void setCouponFee(Long couponFee) {
+        this.couponFee = couponFee;
     }
 }

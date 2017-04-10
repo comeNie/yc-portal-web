@@ -228,11 +228,13 @@ public class BalanceController {
      * 根据币种和金额查询符合条件的优惠券
      * @param currencyUnit 币种
      * @param orderAmount 金额
+     * @param orderType 订单类型
      * @return
      */
     @RequestMapping(value = "/query/coupon")
     @ResponseBody
-    public ResponseData<List<DeductionCouponResponse>> queryCoupon(String currencyUnit, Long orderAmount){
+    public ResponseData<List<DeductionCouponResponse>> queryCoupon(
+            String currencyUnit, Long orderAmount,String orderType){
         ResponseData<List<DeductionCouponResponse>> responseData =
                 new ResponseData<List<DeductionCouponResponse>>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         ISendCouponSV sendCouponSV = DubboConsumerFactory.getService(ISendCouponSV.class);
@@ -240,31 +242,32 @@ public class BalanceController {
         couponRequest.setCurrencyUnit(currencyUnit);//币种
         couponRequest.setUserId(UserUtil.getUserId());//用户
         couponRequest.setTotalFee(orderAmount);//金额
+        couponRequest.setOrderType(orderType);
         //传递适用站点
         couponRequest.setUsedScene(Locale.CHINA.equals(rb.getDefaultLocale()) ?
                 BalanceConstants.USED_SCENE_PC_CN : BalanceConstants.USED_SCENE_PC_EN);
         BaseListResponse<DeductionCouponResponse> couponResponse =
                 sendCouponSV.queryDisCountCoupon(couponRequest);
         List<DeductionCouponResponse> couponList = null;
-        if(couponResponse!=null && couponResponse.getResponseHeader().isSuccess()){
+        if(couponResponse!=null){
             couponList = couponResponse.getResult();
         }
         //TODO... 模拟数据
-        /*if(CollectionUtil.isEmpty(couponList)) {
+        if(CollectionUtil.isEmpty(couponList)) {
             couponList = new ArrayList<>();
         }
         DeductionCouponResponse coupon = new DeductionCouponResponse();
-        coupon.setCouponId("asdf8wer8293adfasdf");
-        coupon.setCouponName("50元测试");
-        coupon.setFaceValue(50000);
-        coupon.setEffectiveEndTime(DateUtil.getSysDate());
+        coupon.setCouponId("62");
+        coupon.setCouponName("注册测试");
+        coupon.setFaceValue(1000);
+        coupon.setEffectiveEndTime(DateUtils.afterNow(3*24*60*60*1000));
         couponList.add(coupon);
-        DeductionCouponResponse coupon1 = new DeductionCouponResponse();
-        coupon1.setCouponId("asdf8wer8293adfasdf");
-        coupon1.setCouponName("10元测试");
-        coupon1.setFaceValue(10000);
-        coupon1.setEffectiveEndTime(DateUtil.getSysDate());
-        couponList.add(coupon1);*/
+//        DeductionCouponResponse coupon1 = new DeductionCouponResponse();
+//        coupon1.setCouponId("asdf8wer8293adfasdf");
+//        coupon1.setCouponName("10元测试");
+//        coupon1.setFaceValue(10000);
+//        coupon1.setEffectiveEndTime(DateUtil.getSysDate());
+//        couponList.add(coupon1);
 
         if (CollectionUtil.isEmpty(couponList)){
             couponList = Collections.emptyList();

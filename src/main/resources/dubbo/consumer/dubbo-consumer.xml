@@ -37,6 +37,9 @@
 		interface="com.ai.yc.order.api.translatesave.interfaces.ITranslateSaveSV" />
 	<dubbo:reference id="IOrderEvaluationSV" registry="ycRegistry"
 					 interface="com.ai.yc.order.api.orderevaluation.interfaces.IOrderEvaluationSV" />
+	<!--订单延时-->
+	<dubbo:reference id="iOrderDeplaySV" registry="ycRegistry"
+					 interface="com.ai.yc.order.api.orderdeplay.interfaces.IOrderDeplaySV"/>
 	<!-- 注册 -->
 	<dubbo:reference id="iYCUserServiceSV" registry="ycRegistry"
 		interface="com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV" />
@@ -79,7 +82,11 @@
 					 interface="com.ai.yc.user.api.usercompany.interfaces.IYCUserCompanySV"/>
 	<!--优惠券-->
 	<dubbo:reference id="iSendCouponSV" interface="com.ai.slp.balance.api.sendcoupon.interfaces.ISendCouponSV"/>
+	<!--分配订单-->
+	<dubbo:reference id="iOrderAllocationSV"
+					 interface="com.ai.yc.order.api.orderallocation.interfaces.IOrderAllocationSV"/>
+
 	<!--优惠券使用规则-->
 	<dubbo:reference id="iCouponUseRuleSV" interface="com.ai.slp.balance.api.couponuserule.interfaces.ICouponUseRuleSV"/>
-	
+
 </beans>

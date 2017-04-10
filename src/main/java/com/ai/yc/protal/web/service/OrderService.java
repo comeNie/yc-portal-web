@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
@@ -42,7 +43,7 @@ public class OrderService {
      */
     public void orderPayProcessResult(
             String userId,Long accountId,Long orderId,String orderType,long totalPay,long discountFee,long paidFee,
-            String payStyle,String outOrderId,Timestamp notifyTime,String companyId){
+            String payStyle,String outOrderId,Timestamp notifyTime,String companyId,BigDecimal discountSum,Long couponFee){
         LOGGER.info("order pay process result,\r\n" +
                 "userId:{},orderId:{},orderType:{},paidFee:{},payStyle:{},outOrderId:{}",
                 userId,orderId,orderType,paidFee,payStyle,outOrderId);
@@ -86,6 +87,8 @@ public class OrderService {
         payResultFeeInfo.setDiscountFee(discountFee);//总优惠费用
         payResultFeeInfo.setPaidFee(paidFee);//实际支付金额
         payResultFeeInfo.setExternalId(outOrderId);
+        payResultFeeInfo.setDiscountSum(discountSum);
+        payResultFeeInfo.setCouponFee(couponFee);
         payResultFeeInfo.setPayTime(notifyTime);
         //产品信息
         OrderPayProcessedResultProdInfo payResultProdInfo = new OrderPayProcessedResultProdInfo();
