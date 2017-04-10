@@ -37,9 +37,8 @@
   			</div>
   			<div>
 				<!-- 优惠券列表 -->
-					<table>
-			  			<tbody id="searchCouponData"></tbody>
-		  			</table>
+					<div class="coupon" id="searchCouponData">
+		  			</div>
 	  			<!-- 优惠券列表结束 -->
   			<div id="showMessageDiv"></div>
 			<!-- 分页开始 -->
@@ -57,15 +56,14 @@
 </body>
 <%@ include file="/inc/incJs.jsp" %>
 <script id="searchCouponTemple" type="text/template">
-	<div class="coupon" id="coupon" id="searchCouponData">
-		<ul class="blue">
+		<ul class="red">
 				<li>
 					<p class="money">
 					{{if  currencyUnit == '1'}}
 		 			¥
 		  			{{else currencyUnit == '2'}}
 		  			$
-		  			{{/if}}<span>{{:faceValue}}</span>
+		  			{{/if}}<span>{{:faceValue/1000}}</span>
 					</p>
 					<p><a hrel="#">马上下单</a></p>
 				</li>
@@ -80,7 +78,7 @@
 		  				$
 		  				{{/if}}
 						<span>
-							{{:couponUserId}}
+							{{:couponUserId/1000}}
 						</span>
 						可用
 		  			{{/if}}
@@ -111,7 +109,7 @@
 					{{:~timestampToDate('yyyy/MM-dd', effectiveStartTime)}}—{{:~timestampToDate('yyyy/MM/dd', effectiveEndTime)}}
 				</li>
 		</ul>
-	</div>
+	
 </script>
 <script type="text/javascript">
 var pager, orderPager;
