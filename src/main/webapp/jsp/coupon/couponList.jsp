@@ -62,8 +62,8 @@
 </body>
 <%@ include file="/inc/incJs.jsp"%>
 <script id="searchCouponTemple" type="text/template">
-{{if  faceValue/1000 >= '100' && faceValue/1000 <= '1000'}}
-		<ul class="red">
+{{if  faceValue/1000 >= '100' && faceValue/1000 <= '1000' && status != '6' && status != '2'}}
+		<ul class="red" style="margin-left:10px;">
 				<li>
 					<p class="money">
 					{{if  currencyUnit == '1'}}
@@ -116,8 +116,8 @@
 					{{:~timestampToDate('yyyy/MM-dd', effectiveStartTime)}}-{{:~timestampToDate('yyyy/MM/dd', effectiveEndTime)}}
 				</li>
 		</ul>
-	{{else faceValue/1000 <= '100'}}
-			<ul class="blue">
+	{{else faceValue/1000 <= '100' && status != '6' && status != '2'}}
+			<ul class="blue" style="margin-left:10px;">
 				<li>
 					<p class="money">
 					{{if  currencyUnit == '1'}}
@@ -170,8 +170,62 @@
 					{{:~timestampToDate('yyyy/MM-dd', effectiveStartTime)}}-{{:~timestampToDate('yyyy/MM/dd', effectiveEndTime)}}
 				</li>
 		</ul>
-	{{else faceValue/1000 >= '1000'}}
-			<ul class="yellow">
+	{{else faceValue/1000 >= '1000' && status != '6' && status != '2'}}
+			<ul class="yellow" style="margin-left:10px;">
+				<li>
+					<p class="money">
+					{{if  currencyUnit == '1'}}
+		 			¥
+		  			{{else currencyUnit == '2'}}
+		  			$
+		  			{{/if}}<span>{{:faceValue/1000}}</span>
+					</p>
+					<p><a hrel="#"><spring:message code="coupon.order.now"/></a></p>
+				</li>
+				<li>
+					 {{if  couponUserId == '0'}}
+		  				全额抵用
+		  			{{else}}
+						满
+						{{if  currencyUnit == '1'}}
+		 				¥
+		  				{{else currencyUnit == '2'}}
+		  				$
+		  				{{/if}}
+						<span>
+							{{:couponUserId/1000}}
+						</span>
+						可用
+		  			{{/if}}
+				</li>
+				<li style="margin-bottom:5px;">
+					仅可在
+				 	{{if  usedScene == '1'}}
+		     		译云-中文站
+		  			{{else usedScene == '2'}}
+		    		译云-英文站
+		  			{{else usedScene == '3'}}
+		     		百度
+		  			{{else usedScene == '4'}}
+		     		金山
+		  			{{else usedScene == '5'}}
+		  			wap-中文
+		  			{{else usedScene == '6'}}
+		  			wap-英文
+		  			{{else usedScene == '7'}}
+		    		 找翻译
+		  			{{else usedScene == '8'}}
+		      		微信助手
+		  			{{/if}}
+					服务中使用
+				</li>
+				<li class="bj">
+					<spring:message code="coupon.valid.until"/>:
+					{{:~timestampToDate('yyyy/MM-dd', effectiveStartTime)}}-{{:~timestampToDate('yyyy/MM/dd', effectiveEndTime)}}
+				</li>
+		</ul>
+	{{else status == '6' || status == '2'}}
+			<ul class="ash" style="margin-left:10px;">
 				<li>
 					<p class="money">
 					{{if  currencyUnit == '1'}}
