@@ -218,18 +218,22 @@
 							<!-- 已领取 -->
 							<td><spring:message code="myOrder.status.Claimed"/></td>
 							<td>
-								<!-- <input type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="分 配"> -->
+								<%--分配--%>
+								<input name="assigne" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10"
+								value="<spring:message code='myOrder.Assign'/>">
 								<!-- 翻 译 -->
 								<%--若是口译订单，暂时不显示操作--%>
 								{{if translateType != '<%=OrderConstants.TranslateType.ORAL%>'}}
-								<input name="trans" type="button"  class="btn biu-btn btn-auto-25 btn-green radius10"  value="<spring:message code="myOrder.Translate"/>">
+								<input name="trans" type="button"  class="btn biu-btn btn-auto-25 btn-green radius10"
+									   value="<spring:message code="myOrder.Translate"/>">
 								{{/if}}
 							</td>
 							{{else state  == '221'}}
 							<!-- 已分配 -->
 							<td><spring:message code="myOrder.status.Assigned"/></td>
 							<td>
-								<!-- <input name="assigne" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="分 配"> -->
+								<input name="assigne" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10"
+									   value="<spring:message code='myOrder.Assign'/>">
 							</td>
 							{{else state  == '23'}}
 							<!-- 翻译中 -->
@@ -237,7 +241,8 @@
 							<td>
 								<!-- 提交 -->
 								{{if translateType != '2'}}
-								<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10" value="<spring:message code="myOrder.Submit"/>">
+								<input name="submit" type="button"  class="btn biu-btn btn-auto-25 btn-yellow radius10"
+									   value="<spring:message code="myOrder.Submit"/>">
 								{{/if}}
 							</td>
 							{{else state  == '24'}}
@@ -355,7 +360,11 @@ var current = "orderList";
 	$('#searchOrderData').delegate("input[name='trans']", 'click', function () {
 		 window.location.href="${_base}/p/trans/order/"+$(this).parents("table").find("input[name='orderId']").val();
 	});
-
+	//分配按钮
+    $('#searchOrderData').delegate("input[name='assigne']", 'click', function () {
+        window.location.href="${_base}/p/trans/order/"+$(this).parents("table").find("input[name='orderId']").val()+
+			"?operType=1";
+    });
 	<%-- 已评价 跳转评价--%>
 	$("#searchOrderData").delegate("input[name='checkEvaluated']","click",function(){
 		window.location.href="${_base}/p/customer/order/seeEvaluate/"+$(this).parents("table").find("input[name='orderId']").val();

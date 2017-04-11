@@ -208,4 +208,40 @@ public final class OrderConstants {
          */
         public static final String REFUNDED = "92";
     }
+
+    /**
+     * 订单步骤的完成状态
+     */
+    public static class FollowVoFinishState{
+        private FollowVoFinishState(){}
+
+        /**
+         * 未开始
+         */
+        public static final String  NOT_START = "0";
+        /**
+         * 进行中
+         */
+        public static final String  IN_PROGRESS = "1";
+        /**
+         * 已完成
+         */
+        public static final String FINISH = "2";
+    }
+
+    /**
+     * 订单步骤领取状态
+     */
+    public static class FollowVoReceiveState{
+        private FollowVoReceiveState(){}
+
+        /**
+         * 未领取
+         */
+        public static final String UNCLAIMED = "0";
+        /**
+         * 已领取
+         */
+        public static final String RECEIVE = "1";
+    }
 }

@@ -4,13 +4,12 @@ import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.components.dss.DSSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.dss.base.interfaces.IDSSClient;
 import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.yc.order.api.orderdetails.interfaces.IQueryOrderDetailsSV;
-import com.ai.yc.order.api.orderdetails.param.ProdFileVo;
-import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsRequest;
-import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsResponse;
+import com.ai.yc.order.api.orderdetails.param.*;
 import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
 import com.ai.yc.order.api.orderquery.param.QueryOrdCountRequest;
 import com.ai.yc.order.api.orderquery.param.QueryOrdCountResponse;
@@ -116,12 +115,14 @@ public class TransOrderController {
     
     /**
      * 译员订单 显示订单详情
+     * @param operType 操作类型
      * @param orderId
      * @param uiModel
      * @return
      */
     @RequestMapping("/{orderId}")
-    public String orderInfoView(@PathVariable("orderId") String orderId, Model uiModel){
+    public String orderInfoView(@RequestParam(value = "operType",required = false)Integer operType,
+            @PathVariable("orderId") String orderId, Model uiModel){
         if (StringUtils.isEmpty(orderId)) {
             return TRANS_ERROR_PAGE;
         }
@@ -152,23 +153,33 @@ public class TransOrderController {
         uiModel.addAttribute("lspId",userInfoResponse.getLspId());//lsp标识
         uiModel.addAttribute("lspRole",userInfoResponse.getLspRole());//lsp角色
         uiModel.addAttribute("vipLevel",userInfoResponse.getVipLevel());//译员等级
-
-        //若是LSP管理员，
-        if(TranslatorConstants.LSP_ADMIN_ROLE.equals(userInfoResponse.getLspRole())
-                || TranslatorConstants.LSP_PM_ROLE.equals(userInfoResponse.getLspRole())) {
-            //不是待领取，且不属于lsp订单
-            if (!OrderConstants.State.UN_RECEIVE.equals(orderDetailsRes.getState())
-                    && !userInfoResponse.getLspId().equals(orderDetailsRes.getLspId())) {
+        //是否为lsp管理员
+        boolean isLspAdmin = (TranslatorConstants.LSP_ADMIN_ROLE.equals(userInfoResponse.getLspRole())
+                || TranslatorConstants.LSP_PM_ROLE.equals(userInfoResponse.getLspRole()))?true:false;
+        //若是口译订单，但不是LSP管理员或项目经理，则不允许查看
+        if(OrderConstants.TranslateType.ORAL.equals(orderDetailsRes.getTranslateType()) && !isLspAdmin){
+            return "httpError/403";
+        }
+        //若为待领取，但译员级别不够
+        if(OrderConstants.State.UN_RECEIVE.equals(orderDetailsRes.getState())
+                && userInfoResponse.getVipLevel().compareTo(orderDetailsRes.getOrderLevel()) < 0){
+            return "httpError/403";
+        }
+        //若订单为"待领取"之后，则进行权限检查
+        if(OrderConstants.State.UN_RECEIVE.compareTo(orderDetailsRes.getState())<0) {
+            //若不是LSP订单，且不是本人订单，则不允许查看
+            if(StringUtils.isBlank(orderDetailsRes.getLspId())
+                    && !UserUtil.getUserId().equals(orderDetailsRes.getInterperId())){
                 return "httpError/403";
             }
-        }//不是LSP管理员，不是待领取，且不是本人订单
-        else if(!OrderConstants.State.UN_RECEIVE.equals(orderDetailsRes.getState())
-                && !UserUtil.getUserId().equals(orderDetailsRes.getInterperId())){
-            return "httpError/403";
-        }//不是LSP管理员，为待领取，但级别不够
-        else if (OrderConstants.State.UN_RECEIVE.equals(orderDetailsRes.getState())
-                && userInfoResponse.getVipLevel().compareTo(orderDetailsRes.getOrderLevel())<0){
-            return "httpError/403";
+            //若是LSP管理员，但不属于lsp订单
+            if (isLspAdmin && !userInfoResponse.getLspId().equals(orderDetailsRes.getLspId())) {
+                return "httpError/403";
+            }
+            //不是LSP管理员，且不是本人订单
+            else if (!isLspAdmin && !allowUserOrderView(orderDetailsRes)) {
+                return "httpError/403";
+            }
         }
 
 
@@ -184,7 +195,7 @@ public class TransOrderController {
                 fileSizeMap.put(transId, client.getFileSize(transId));
             }
         }
-
+        uiModel.addAttribute("operType", operType);
         uiModel.addAttribute("UUploadCount", uUploadCount);
 
         uiModel.addAttribute("OrderDetails", orderDetailsRes);
@@ -470,6 +481,49 @@ public class TransOrderController {
         }
         retRes = JSONObject.toJSONString(resData);
         return retRes;
+    }
+
+    /**
+     * 是否允许非管理员/项目经理译员查看订单
+     * @param orderDetailsRes
+     * @return
+     */
+    private boolean allowUserOrderView(QueryOrderDetailsResponse orderDetailsRes){
+        boolean isAllow = false;
+        //若订单为LSP订单
+        if (StringUtils.isNotBlank(orderDetailsRes.getLspId())){
+            if(!CollectionUtil.isEmpty(orderDetailsRes.getFollowInfoes())){
+                //获取订单的当前步骤,待领取状态
+                OrderFollowVo nowFollow = null;
+                //订单当前步骤
+                for(OrderFollowVo followVo: orderDetailsRes.getFollowInfoes()){
+                    if(followVo.getReceiveFollowId().equals(orderDetailsRes.getCurrentReceiveFollowId())){
+                        nowFollow = followVo;
+                        break;
+                    }
+                }
+                //若当前步骤不为空，已领取，且领取人和当前用户一直
+                if(nowFollow!=null
+                        && OrderConstants.FollowVoReceiveState.RECEIVE.equals(nowFollow.getReceiveState())
+                        && UserUtil.getUserId().equals(nowFollow.getReceiveInfos().getInterperId())){
+                    isAllow = true;
+                }else if(nowFollow!=null
+                        && OrderConstants.FollowVoReceiveState.UNCLAIMED.equals(nowFollow.getReceiveState())
+                        && !CollectionUtil.isEmpty(nowFollow.getPersonInfos())){
+                    for (PersonInfoVo personInfoVo:nowFollow.getPersonInfos()){
+                        if (personInfoVo.getInterperId().equals(UserUtil.getUserId())){
+                            isAllow = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+        }
+        else if(UserUtil.getUserId().equals(orderDetailsRes.getInterperId())){
+            isAllow = true;
+        }
+        return isAllow;
     }
     
 }
