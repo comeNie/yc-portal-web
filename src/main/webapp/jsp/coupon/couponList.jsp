@@ -282,6 +282,7 @@
 </script>
 <script type="text/javascript">
 	var pager, orderPager;
+    var current = "coupon";
 	(function() {
 		seajs.use('app/jsp/coupon/couponList', function(couponListPage) {
 			pager = new couponListPage({
