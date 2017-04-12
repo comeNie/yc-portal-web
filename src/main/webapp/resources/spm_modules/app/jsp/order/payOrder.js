@@ -166,6 +166,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
     		//获取优惠面值
 			var faceVal = $("#couponSelect").find("option:selected").attr("faceVal");
             this._changeCouponOrCode(Number(faceVal));
+            $("#conponCode").val("");
         },
         //优惠券或优惠码变更时
         _changeCouponOrCode:function (faceVal) {
@@ -207,7 +208,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 
 			$("#orderAmount").val(orderPayFee);
         },
-        //输入优惠券时
+        //输入优惠码时
         _inputCouponCode:function () {
             var _this = this;
             var code = $("#conponCode").val();
