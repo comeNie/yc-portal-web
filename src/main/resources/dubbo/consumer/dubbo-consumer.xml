@@ -70,6 +70,8 @@
 			interface="com.ai.yc.order.api.orderreceivesearch.interfaces.IOrderWaitReceiveSV"/>
 	<dubbo:reference id="IOrderReceiveSV" registry="ycRegistry"
 			interface="com.ai.yc.order.api.orderreceive.interfaces.IOrderReceiveSV"/>
+	<dubbo:reference id="iOrderReviewSV" registry="ycRegistry"
+			interface="com.ai.yc.order.api.orderreview.interfaces.IOrderReviewSV"/>
 	<dubbo:reference id="iDepositSV" registry="ycRegistry"
 					 interface="com.ai.slp.balance.api.deposit.interfaces.IDepositSV"/>
 	<dubbo:reference id="iYCTranslatorServiceSV" registry="ycRegistry"

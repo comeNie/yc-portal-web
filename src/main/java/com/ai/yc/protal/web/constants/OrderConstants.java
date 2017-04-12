@@ -125,6 +125,10 @@ public final class OrderConstants {
          * 审核失败
          */
         public static final String CHECK_FAIL = "42";
+        /**
+         * lsp待审核
+         */
+        public static final String UN_CHECK_LSP = "43";
         
         /**
          * 待确认

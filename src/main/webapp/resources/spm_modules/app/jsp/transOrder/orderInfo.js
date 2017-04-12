@@ -18,6 +18,8 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 			"click #trans": "_trans",
 			//译员确认领取
 			"click #claim":"_claim",
+			//lsp审核
+			"click #approvalBtn":"_approval",
 			"click #editText": "_editText",
 			//领取订单
 			"click #received":"_getOrder"
@@ -239,7 +241,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				data: {
 					orderId: $("#orderId").val(),
 					state: "23",
-					displayFlag: "23",
+					displayFlag: "23"
 				},
 				success: function (data) {
 					if ("1" === data.statusCode) {
@@ -278,7 +280,24 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				}
 			}).showModal();
 		},
-
+		//lsp审核
+        _approval:function () {
+            ajaxController.ajax({
+                type: "post",
+                processing: true,
+                url: _base + "/p/trans/order/approval",
+                data: {
+                    orderId: orderId
+                },
+                success: function (data) {
+                    if ("1" === data.statusCode) {
+                        //成功
+                        //刷新页面
+                        window.location.reload();
+                    }
+                }
+            });
+        },
 		_showWarn:function(msg){
 			new Dialog({
 				content:msg,

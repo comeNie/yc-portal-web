@@ -103,6 +103,8 @@ dependencies {
     compile 'com.ai.yc.order:orderreceivesearch:1.0-SNAPSHOT'
     //订单领取
     compile 'com.ai.yc.order:orderreceive:1.0-SNAPSHOT'
+    //lsp内部审核
+    compile 'com.ai.yc.order:orderreview:1.0.1-SNAPSHOT'
     //更新订单信息
     compile 'com.ai.yc.order:translatesave:1.0-SNAPSHOT'
     //更新订单状态

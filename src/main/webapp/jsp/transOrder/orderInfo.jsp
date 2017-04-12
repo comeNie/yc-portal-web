@@ -683,6 +683,12 @@
                             <input name="submit" class="btn btn-green btn-xxxlarge radius10" type="button"
                                    value="<spring:message code="myOrder.btn.Submit"/>">
                         </c:when>
+                        <%--lsp待审核 且当前用户为管理员--%>
+                        <c:when test="${orderDetails.state =='43' && isLspAdmin == true}">
+                            <%--若是管理员，则显示审核按钮--%>
+                            <input id="approvalBtn" class="btn btn-yellow btn-xxxlarge radius10"
+                                   type="button" value="<spring:message code="myOrder.approval"/>">
+                        </c:when>
                         <c:otherwise>
                             <!-- 翻译中无译文 待确认 已完成 已退款 -->
                         </c:otherwise>

@@ -13,6 +13,8 @@ import com.ai.yc.order.api.orderdetails.param.*;
 import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
 import com.ai.yc.order.api.orderquery.param.QueryOrdCountRequest;
 import com.ai.yc.order.api.orderquery.param.QueryOrdCountResponse;
+import com.ai.yc.order.api.orderreview.interfaces.IOrderReviewSV;
+import com.ai.yc.order.api.orderreview.param.OrderLspReviewRequest;
 import com.ai.yc.order.api.orderstate.interfaces.IOrderStateUpdateSV;
 import com.ai.yc.order.api.orderstate.param.OrderStateUpdateRequest;
 import com.ai.yc.order.api.orderstate.param.OrderStateUpdateResponse;
@@ -28,6 +30,7 @@ import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.translator.api.translatorservice.interfaces.IYCTranslatorServiceSV;
 import com.ai.yc.translator.api.translatorservice.param.SearchYCTranslatorSkillListRequest;
 import com.ai.yc.translator.api.translatorservice.param.YCTranslatorSkillListResponse;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -491,6 +494,30 @@ public class TransOrderController {
         }
         retRes = JSONObject.toJSONString(resData);
         return retRes;
+    }
+
+    /**
+     * lsp内部审核订单
+     * @param orderId
+     * @return
+     */
+    @RequestMapping("/approval")
+    @ResponseBody
+    public ResponseData<String> approvalOrder(Long orderId){
+        ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "OK");
+        IOrderReviewSV reviewSV = DubboConsumerFactory.getService(IOrderReviewSV.class);
+        OrderLspReviewRequest svRequest = new OrderLspReviewRequest();
+        svRequest.setOperId(UserUtil.getUserId());
+        svRequest.setOperName(UserUtil.getUserName());
+        svRequest.setOrderId(orderId);
+        svRequest.setState("41");//只有审核通过
+        BaseResponse svResponse = reviewSV.handLspReviewOrder(svRequest);
+        if(svResponse!=null && !svResponse.getResponseHeader().isSuccess()){
+            LOGGER.error("lsp内部审核失败,请求：{}，返回：{}",
+                    JSON.toJSONString(svRequest), JSON.toJSONString(svResponse));
+            new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage("order.info.approval.fail"));
+        }
+        return resData;
     }
 
     /**
