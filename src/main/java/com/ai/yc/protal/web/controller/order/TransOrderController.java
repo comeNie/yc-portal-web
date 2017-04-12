@@ -181,8 +181,18 @@ public class TransOrderController {
                 return "httpError/403";
             }
         }
-
-
+        boolean allowAssign = false;
+        //判断所有步骤是否已经领取
+        for (OrderFollowVo followVo:orderDetailsRes.getFollowInfoes()){
+            if (OrderConstants.FollowVoReceiveState.UNCLAIMED.equals(followVo.getReceiveState())){
+                allowAssign = true;
+                break;
+            }
+        }
+        //是否允许重新分配
+        uiModel.addAttribute("allowAssign",allowAssign);
+        //是否为lsp管理员
+        uiModel.addAttribute("isLspAdmin",isLspAdmin);
         List<ProdFileVo> prodFileVos = orderDetailsRes.getProdFiles();
         int uUploadCount = 0; //可以上传文件的数量
         IDSSClient client = DSSClientFactory.getDSSClient(Constants.IPAAS_ORDER_FILE_DSS);
@@ -198,8 +208,8 @@ public class TransOrderController {
         uiModel.addAttribute("operType", operType);
         uiModel.addAttribute("UUploadCount", uUploadCount);
 
-        uiModel.addAttribute("OrderDetails", orderDetailsRes);
-        uiModel.addAttribute("FileSizeMap", fileSizeMap);
+        uiModel.addAttribute("orderDetails", orderDetailsRes);
+        uiModel.addAttribute("fileSizeMap", fileSizeMap);
 
         return "transOrder/orderInfo";
     }

@@ -164,19 +164,20 @@ public class AssignTaskController {
      */
     @RequestMapping("/claim")
     @ResponseBody
-    public ResponseData<String> claimOrder(Long orderId,String lspId,String lspRole,String translateType){
+    public ResponseData<String> claimOrder(Long orderId,String step){
         ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         try {
             OrderAlloReceiveRequest receiveRequest = new OrderAlloReceiveRequest();
             receiveRequest.setOrderId(orderId);
             receiveRequest.setOperName(UserUtil.getUserName());
-//            receiveRequest.setPersonId(UserUtil.getUserId());
+            receiveRequest.setStep(step);
+            receiveRequest.setInterperId(UserUtil.getUserId());
             IOrderReceiveSV iOrderReceiveSV = DubboConsumerFactory.getService(IOrderReceiveSV.class);
             OrderReceiveResponse receiveResponse = iOrderReceiveSV.orderAlloReceive(receiveRequest);
             ResponseHeader header =receiveResponse==null?null:receiveResponse.getResponseHeader();
             //出现错误
             if(header!=null && !header.isSuccess()){
-                LOGGER.error("receiveOrder fail,head status:{},head info:{}",
+                LOGGER.error("claim order fail,head status:{},head info:{}",
                         header==null?"null":header.getIsSuccess(),header==null?"null":header.getResultMessage());
                 //订单领取达到上限
                 if (OrderConstants.ErrorCode.NUM_MAX_LIMIT.equals(header.getResultCode())){

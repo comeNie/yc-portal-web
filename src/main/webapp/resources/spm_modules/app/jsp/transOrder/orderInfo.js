@@ -16,6 +16,8 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
     	events: {
 			"click #textSave":"_textSave",
 			"click #trans": "_trans",
+			//译员确认领取
+			"click #claim":"_claim",
 			"click #editText": "_editText",
 			//领取订单
 			"click #received":"_getOrder"
@@ -209,7 +211,25 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
     		$("#editText").parent().parent().next("ul").show();
     		$("#editText").parent().next().next().show();
     	},
-
+		//lsp译员领取订单
+        _claim:function () {
+            ajaxController.ajax({
+                type: "post",
+                processing: true,
+                url: _base + "/p/assigntask/claim",
+                data: {
+                    orderId: $("#orderId").val(),
+                    step: followId
+                },
+                success: function (data) {
+                    if ("1" === data.statusCode) {
+                        //成功
+                        //刷新页面
+                        window.location.reload();
+                    }
+                }
+            });
+        },
     	//从已领取到翻译状态
     	_trans:function() {
     		ajaxController.ajax({
