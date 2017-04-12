@@ -65,7 +65,7 @@ public class CacheServcie {
     }
 
     /**
-     * 查询指定语言下的作用集合
+     * 查询指定语言下的用途集合
      * @return
      */
     public List<SysPurpose> getAllPurpose(Locale locale){
