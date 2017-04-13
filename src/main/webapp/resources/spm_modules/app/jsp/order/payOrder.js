@@ -292,9 +292,12 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
             var orderId = $("#orderId").val();
             //优惠券
             var couponId = $("#couponSelect").val();
+            var codeTmp = $("#conponCode").val();
             //若优惠券不存在，则获取优惠码
-            if(couponId==null || couponId==""){
-                couponId = $("#conponCode").val();
+            if((couponId==null || couponId=="")
+                && codeTmp!=null
+                && codeTmp.length == 16){
+                couponId = codeTmp;
             }
             $("#couponId").val(couponId);
             //若优惠券和优惠码均不存在，则直接进行订单支付

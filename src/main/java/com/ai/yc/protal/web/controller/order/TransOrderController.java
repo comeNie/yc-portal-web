@@ -515,7 +515,8 @@ public class TransOrderController {
         if(svResponse!=null && !svResponse.getResponseHeader().isSuccess()){
             LOGGER.error("lsp内部审核失败,请求：{}，返回：{}",
                     JSON.toJSONString(svRequest), JSON.toJSONString(svResponse));
-            new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage("order.info.approval.fail"));
+            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE,
+                    rb.getMessage("order.info.approval.fail"));
         }
         return resData;
     }
