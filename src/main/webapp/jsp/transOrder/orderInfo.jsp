@@ -39,10 +39,10 @@
         <div class="prompt-center">
             <div class="prompt-center-title">
                 <ul>
-                    <li><a href="#" class="current">翻译</a></li>
-                    <li><a href="#">审校</a></li>
-                    <li><a href="#">审校1</a></li>
-                    <p><a href="#"><i class="icon iconfont">&#xe633;</i>添加步骤</a></p>
+                    <li><a href="javaScript:void(0);" class="current">翻译</a></li>
+                    <li><a href="javaScript:void(0);">审校</a></li>
+                    <li><a href="javaScript:void(0);">审校1</a></li>
+                    <p><a href="javaScript:void(0);"><i class="icon iconfont">&#xe633;</i>添加步骤</a></p>
                 </ul>
             </div>
             <div id="tran-tab1">

@@ -1,6 +1,7 @@
 package com.ai.yc.protal.web.controller.order;
 
 import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.base.vo.BaseListResponse;
 import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
@@ -11,6 +12,11 @@ import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.i18n.ZoneContextHolder;
 import com.ai.yc.order.api.orderallocation.interfaces.IOrderAllocationSV;
 import com.ai.yc.order.api.orderallocation.param.*;
+import com.ai.yc.order.api.orderdetails.interfaces.IQueryOrderDetailsSV;
+import com.ai.yc.order.api.orderdetails.param.OrderFollowVo;
+import com.ai.yc.order.api.orderdetails.param.ProdExtendVo;
+import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsRequest;
+import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsResponse;
 import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
 import com.ai.yc.order.api.orderquery.param.QueryOrdCountRequest;
 import com.ai.yc.order.api.orderquery.param.QueryOrdCountResponse;
@@ -27,10 +33,10 @@ import com.ai.yc.protal.web.constants.TranslatorConstants;
 import com.ai.yc.protal.web.service.CacheServcie;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.translator.api.translatorservice.interfaces.IYCTranslatorServiceSV;
-import com.ai.yc.translator.api.translatorservice.param.SearchYCTranslatorSkillListRequest;
-import com.ai.yc.translator.api.translatorservice.param.UsrLanguageMessage;
-import com.ai.yc.translator.api.translatorservice.param.YCTranslatorSkillListResponse;
+import com.ai.yc.translator.api.translatorservice.param.*;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
+import org.apache.regexp.RE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -197,6 +203,83 @@ public class AssignTaskController {
             //领取失败
             responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
                     rb.getMessage("common.res.sys.error",new String[]{ErrorCode.SYSTEM_ERROR}));
+        }
+        return responseData;
+    }
+
+    /**
+     * 获取订单当前的分配步骤
+     * @param orderId
+     */
+    @RequestMapping("/quereyfollowinfo")
+    @ResponseBody
+    public ResponseData<List<OrderFollowVo>> queryFollowInfo(Long orderId){
+        ResponseData<List<OrderFollowVo>> responseData =
+                new ResponseData<List<OrderFollowVo>>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
+        QueryOrderDetailsRequest orderDetailsReq = new QueryOrderDetailsRequest();
+        orderDetailsReq.setOrderId(Long.valueOf(orderId));
+        orderDetailsReq.setChgStateFlag(null);
+        //查询订单详情
+        QueryOrderDetailsResponse svResponse = iQueryOrderDetailsSV.queryOrderDetails4Portal(orderDetailsReq);
+        if(svResponse!=null && !svResponse.getResponseHeader().isSuccess()){
+            LOGGER.error("lsp内部审核失败,请求：{}，返回：{}",
+                    JSON.toJSONString(orderDetailsReq), JSON.toJSONString(svResponse));
+            responseData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage("order.info.approval.fail"));
+        }else {
+            responseData.setData(svResponse.getFollowInfoes());
+        }
+
+        return responseData;
+    }
+
+    /**
+     * 查询指定lsp下相关语言对已经验证通过的译员
+     * @param lspId
+     * @param languagePairId
+     * @return
+     */
+    @RequestMapping("/quereyTrans")
+    @ResponseBody
+    public ResponseData<List<LspTranslatorInfo>> queryLspTrans(String lspId,String languagePairId){
+        ResponseData<List<LspTranslatorInfo>> transListResData =
+                new ResponseData<List<LspTranslatorInfo>>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        IYCTranslatorServiceSV translatorServiceSV = DubboConsumerFactory.getService(IYCTranslatorServiceSV.class);
+        SearchYCTranslatorRequest svRequest = new SearchYCTranslatorRequest();
+        svRequest.setLspId(lspId);
+        svRequest.setLanguagePairId(languagePairId);
+        BaseListResponse<LspTranslatorInfo> svResponse =  translatorServiceSV.getTranslatorsByLSPLanguageId(svRequest);
+
+        return transListResData;
+    }
+
+    /**
+     * 保存分配步骤
+     * @param followInfoStr
+     * @return
+     */
+    @RequestMapping("/updatefollow")
+    @ResponseBody
+    public ResponseData<String> saveOrderFollow(Long orderId,String followInfoStr){
+        ResponseData<String> responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        List<OrderAllocationReceiveFollowInfo> followInfoList =
+                JSON.parseArray(JSON.toJSONString(followInfoStr),OrderAllocationReceiveFollowInfo.class);
+        IOrderAllocationSV allocationSV = DubboConsumerFactory.getService(IOrderAllocationSV.class);
+        OrderAllocationRequest svRequest = new OrderAllocationRequest();
+        //订单基本信息
+        OrderAllocationBaseInfo orderAllocationBaseInfo = new OrderAllocationBaseInfo();
+        orderAllocationBaseInfo.setOrderId(orderId);
+        orderAllocationBaseInfo.setOperName(UserUtil.getUserName());
+        orderAllocationBaseInfo.setUserId(UserUtil.getUserId());
+        svRequest.setOrderAllocationBaseInfo(orderAllocationBaseInfo);
+        svRequest.setOrderAllocationReceiveFollowList(followInfoList);
+        //订单步骤信息
+        OrderAllocationResponse svResponse = allocationSV.orderAllocation(svRequest);
+        if (svResponse!=null && !svResponse.getResponseHeader().isSuccess()){
+            LOGGER.error("更新订单步骤信息失败，\r\n订单基本信息：{},\r\n步骤信息：{}，\r\n返回信息:{}",
+                    JSON.toJSONString(orderAllocationBaseInfo),followInfoStr,JSON.toJSONString(svResponse));
+            responseData = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
+                    rb.getMessage("order.info.follow.fail"));
         }
         return responseData;
     }
