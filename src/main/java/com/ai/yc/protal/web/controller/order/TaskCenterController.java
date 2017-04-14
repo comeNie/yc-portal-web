@@ -212,14 +212,7 @@ public class TaskCenterController {
             baseInfo.setLspId(lspId);
         }
         baseInfo.setInterperType(interperType);
-
-        //若订单为口译或为普通译员领单，则为翻译中
-        if (OrderConstants.TranslateType.ORAL.equals(translateType)
-                || "0".equals(interperType)) {
-            baseInfo.setState(OrderConstants.State.TRANSLATING);//状态为翻译中
-        } else {
-            baseInfo.setState(OrderConstants.State.RECEIVE);//状态为已领取
-        }
+        baseInfo.setState(OrderConstants.State.RECEIVE);//状态为已领取
 
         //添加领单人的用户名
         OrderReceiveStateChgInfo stateChgInfo = new OrderReceiveStateChgInfo();
