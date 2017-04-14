@@ -849,10 +849,14 @@
                 var name = inObj.attr("name");
                 transInfo[name] = inObj.val();
             });
-            //判断名称是否为空，手机号是否为11位
-            if(transInfo.name == null || transInfo.name == ""
-                || transInfo.number == null || transInfo.number == ""){
-                alert();
+            var ex = /^\d+$/;
+            //判断名称是否为空，手机号是否为11位数字
+            if(transInfo.name == null || transInfo.name == ""){
+                alert("<spring:message code="myOrder.name.null"/>");
+                return;
+            }else if(transInfo.number == null || transInfo.number.length!=11
+                || !ex.test(transInfo.number)){
+                alert("<spring:message code="myOrder.tel.error"/>");
                 return;
             }
             $(this).parent().parent().parent().html(pager._saveInter(transInfo));

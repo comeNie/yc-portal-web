@@ -74,6 +74,9 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
         _changeOrderType:function () {
 			//查看是否企业用户
 			var orderType = $("#orderTypeSelect").val();
+			if(orderType==null || orderType==""){
+			    orderType = $("#orderType").val();
+            }
             comDisFee = 0;
             orderPayFee = totalFee;
             //默认为个人账户

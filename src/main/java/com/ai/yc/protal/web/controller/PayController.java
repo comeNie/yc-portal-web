@@ -79,8 +79,11 @@ public class PayController {
     @ResponseBody
     public String orderPayResult(
             @PathVariable("orderType")String orderType, @PathVariable("userId")String userId,
-            Long totalPay,String currencyUnit,@RequestParam(required = false) String companyId,
-            @RequestParam(required = false) String couponId,PayNotify payNotify,Double discountSum,Long couponFee){
+            Long totalPay,String currencyUnit,PayNotify payNotify,
+            @RequestParam(required = false) String companyId,
+            @RequestParam(required = false) String couponId,
+            @RequestParam(required = false)Double discountSum,
+            @RequestParam(required = false)Long couponFee){
         LOG.info("The pay result.orderType:{},\r\n{}", orderType,JSON.toJSONString(payNotify));
         //若优惠券不为空，则将优惠券设置为已使用
         if(!StringUtil.isBlank(couponId)) {
