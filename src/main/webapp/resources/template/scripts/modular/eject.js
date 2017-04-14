@@ -206,3 +206,35 @@ jQuery(document).ready(function($) {
 	$('#confirm-step2-empty').slideUp(200);
 	})
 })
+
+//分配译员弹窗
+jQuery(document).ready(function($) {
+	$('[assign-popo]').click(function(){
+	$('#eject-mask').fadeIn(100);
+	$('[assign-tran-dialog]').slideDown(100);
+	})
+	$('#tran-determine').click(function(){
+	$('#eject-mask').fadeOut(200);
+	$('[assign-tran-dialog]').slideUp(200);
+	})
+	$('#tran-close').click(function(){
+	$('#eject-mask').fadeOut(200);
+	$('[assign-tran-dialog]').slideUp(200);
+	})
+})
+
+//添加语言弹窗
+jQuery(document).ready(function($) {
+	$('[add-language]').click(function(){
+	$('#eject-mask').fadeIn(100);
+	$('[add-language-dialog]').slideDown(100);
+	})
+	$('#tran-determine').click(function(){
+	$('#eject-mask').fadeOut(200);
+	$('[add-language-dialog]').slideUp(200);
+	})
+	$('#tran-close').click(function(){
+	$('#eject-mask').fadeOut(200);
+	$('[add-language-dialog]').slideUp(200);
+	})
+})

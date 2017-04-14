@@ -267,8 +267,9 @@
 .form-lable ul li .rightword{width:310px;}
 .form-lable ul li  a{color:#2361ea;font-size:14px;}
 .form-lable ul .toux{line-height:100px;position:relative;}
-.form-lable ul li .portrait{width:100px;height:100px;float:left;}
-.form-lable ul li .portrait img{width:100px;height:100px;border:1px solid #0a5dd2;border-radius:50%}
+.form-lable ul li .portrait{position:relative;width:100px;height:100px;float:left;border-radius:50%;border:1px solid #0a5dd2;overflow:hidden;cursor:pointer;}
+.form-lable ul li .portrait img{width:100px;height:100px;}
+.form-lable ul li .portrait .header-mask{position:absolute;float:left;width:100px;height:100px;top:0;left:0;background:rgba(0,0,0,.7);color:#fff;text-align:center;font-size:14px;}
 .form-lable ul .toux .portrait-file{width:98px;height:98px;float:left;background:#000;position:absolute;top:2px;left:121px;border-radius:50%;text-align:center;color:#fff;
 opacity:0.8;filter:alpha(opacity=80); -moz-opacity:80; -khtml-opacity:80;display:none;}
 .form-lable ul .toux .portrait-file a{color:#fff}
@@ -276,6 +277,22 @@ opacity:0.8;filter:alpha(opacity=80); -moz-opacity:80; -khtml-opacity:80;display
 opacity:0;filter:alpha(opacity=0); -moz-opacity:0; -khtml-opacity:0;}
 .form-lable ul li label{color:#fe6b6b}
 .form-lable ul li .x-label{position:absolute;top:-32px;left:200px;font-size:12px;color:#fe6b6b}
+.add-language-dialog{padding:0;width:528px;min-height:400px;margin-left:-264px;margin-top:-200px;}
+.add-language-dialog .prompt-center{width:528px;margin:0;}
+.add-language-dialog .form{padding:40px 80px 30px;}
+.add-language-dialog .form .item:after{clear:both;display:block;content:"";height:0;}
+.add-language-dialog .form .item{margin-bottom:20px;}
+.add-language-dialog .form .item .key{float:left;padding-right:20px;height:46px;line-height:46px;}
+.add-language-dialog .form .item .int-xlarge{float:left;width:220px;padding:0 18px;}
+.add-language-dialog .form .item .unit{float:left;height:46px;line-height:46px;padding-left:20px;color:#6a6c6f;}
+.add-language-dialog .select-wrap{float:left;}
+.add-language-dialog .select-wrap .drop-down{float:left;padding:10px 18px;width:220px;height:46px;border:1px solid #e6e6e6;border-radius:4px;}
+.add-language-dialog .form .select-wrap .select-con{width:220px;}
+.add-language-dialog .form .select-wrap .select-con li{height:46px;line-height:46px;}
+.add-language-dialog .form .select-wrap .select-con a{display:block;padding:0 18px;font-size:14px;color:#6a6c6f;}
+.add-language-dialog .form .select-wrap .select-con a:hover{background-color:#e6e6e6;color:#2361ea;}
+.add-language-dialog .prompt-mt{margin-top:0;}
+.add-language-dialog .prompt-samll-confirm ul .eject-btn{margin:0;}
 
 /**译员订单**/
 .table .yellow-td-icon i{color:#ffc600}
@@ -992,6 +1009,7 @@ opacity:0;filter:alpha(opacity=0); -moz-opacity:0; -khtml-opacity:0;}
 .order-detail-undistribute .confirmation-table .trace-info-list li:after{content:" ";height:0;clear:both;display:block;}
 .order-detail-undistribute .confirmation-table .trace-info-list li span{float:left;}
 .order-detail-undistribute .confirmation-table .trace-info-list li span.key{padding-left:20px;width:205px;color:#2c3e50;}
+.order-detail-undistribute .info-list-pb{padding-bottom:10px;}
 
 .undistribute-dlog .select-wrap .drop-down{width:120px;}
 .undistribute-dlog .select-wrap .select-con{width:120px;}
@@ -1048,7 +1066,7 @@ opacity:0;filter:alpha(opacity=0); -moz-opacity:0; -khtml-opacity:0;}
 .translate-collect .translate-box .collect-con .translate-tit .time{float:left;}
 .translate-collect .translate-box .collect-con .translate-tit .edit{margin-right:20px;width:19px;height:30px;background:url(../../images/icon-edit.png) no-repeat center center;display:block;float:right;cursor:pointer;}
 .translate-collect .translate-box .collect-con .translate-tit .delete{margin-right:20px;width:19px;height:30px;background:url(../../images/icon-delete.png) no-repeat center center;display:block;float:right;cursor:pointer;}
-.translate-collect-dialog .pass-list{padding:80px 100px 0;} 
+.translate-collect-dialog .pass-list{padding:80px 100px 0;}
 .translate-collect-dialog .pass-list li{line-height:34px;}
 .translate-collect-dialog .pass-list li p{padding-bottom:15px;}
 .translate-collect-dialog .pass-list li textarea{padding:15px;width:470px;height:136px;}
@@ -1353,3 +1371,22 @@ opacity:0;filter:alpha(opacity=0); -moz-opacity:0; -khtml-opacity:0;}
 .document-translating-dialog .btn-translating button:hover{border:2px solid #2361ea;background:#2361ea;color:#fff;}
 .document-translating-dialog .btn-translating button strong{font-size:20px;}
 .document-translating-dialog .red-txt{color:#fe6b6b;}
+
+/*订单详细-口译-已领取*/
+.assign-tran-dialog{width:512px;margin-left:-256px;}
+.assign-tran-dialog .prompt-center{width:420px;margin:16px 46px 0;}
+.assign-tran-dialog .text-l .name{padding-left:18px;}
+.assign-tran-dialog .number{padding-left:18px;}
+.assign-tran-dialog .text-l .in-con{padding:10px 18px;width:130px;height:45px;line-height:45px;border:1px solid #e6e6e6;border-radius:4px;}
+.assign-tran-dialog ul .eject-btn .btn-100{margin:0;width:100px;height:37px;line-height:37px;padding:0;}
+.assign-tran-dialog ul .eject-btn .ml-50{margin-left:35px;}
+.assign-tran-dialog .add-toicon .iconfont{margin-right:10px;}
+.int-text.init-small{
+  width: 96px;
+  margin-right: 10px;
+}
+
+
+
+
+

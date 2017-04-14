@@ -607,6 +607,9 @@ select::-ms-expand { display: none; }
 .quesbox .quesbox-wrap li:after{clear:both;content:"";height:0;display:block;}
 .quesbox .quesbox-wrap li{overflow:inherit;}
 
+/*清除浮动*/
+.clearfix:after{clear:both;height:0;content:"";display:block;}
+
 
 
 
