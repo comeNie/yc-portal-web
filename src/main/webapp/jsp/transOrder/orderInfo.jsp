@@ -32,7 +32,67 @@
     </style>
 </head>
 <body>
-<!--弹出-->
+<c:choose>
+    <c:when test="${orderDetails.translateType == '2'}">
+        <script id="tranEdit" type="text/template">
+                    <%--输入姓名--%>
+                <td class="text-l"><input class="in-con" type="text" name="name" maxlength="50"
+                                          oldVal="{{:name}}" value="{{:name}}"
+                                          placeholder="<spring:message code="myOrder.enter.name"/>"/></td>
+                    <%--输入联系方式--%>
+                <td class="text-l"><input class="in-con" type="text" name="number" maxlength="11"
+                                          oldVal="{{:number}}" value="{{:number}}"
+                                          placeholder="<spring:message code="myOrder.enter.contact.info"/>"/></td>
+                <td class="operate">
+                        <%--保存--%>
+                    <A href="javaScript:void(0);" class="blue-icon"><i class="finished-img"></i></A>
+                        <%--取消--%>
+                    <A href="javaScript:void(0);" class="red-icon"><i op="{{:opType}}" class="close-img"></i></A>
+                </td>
+        </script>
+        <script id="tranView" type="text/template">
+                <td class="text-l"><span class="name" name="name">{{:name}}</span></td>
+                <td><span class="number" name="number">{{:number}}</span></td>
+                <td class="operate">
+                    <A href="javaScript:void(0);" class="blue-icon"><i class="edit-img"></i></A>
+                    <A href="javaScript:void(0);" class="red-icon"><i class="delete-img"></i></A>
+                </td>
+        </script>
+<!--口译分配弹出-->
+<div class="eject-big undistribute-dlog" >
+    <div class="prompt-big assign-tran-dialog" id="tran" assign-tran-dialog>
+        <%--分配译员--%>
+        <div class="prompt-big-title"><spring:message code="myOrder.assign.interpreter"/></div>
+        <div class="prompt-center">
+            <div id="tran-tab1" class="clearfix">
+                <div class="prompt-center-table">
+                    <table class="table table-bg  table-height60">
+                        <tbody id="oralTrans">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="add-toicon">
+                        <%--添加译员--%>
+                    <a href="javaScript:void(0);" id="addInterpreter"><i class="icon iconfont">&#xe633;</i><spring:message
+                            code="myOrder.add.translator"/></a>
+                </div>
+            </div>
+            <div class="prompt-samll-confirm prompt-mt">
+                <ul>
+                    <li class="eject-btn">
+                        <input type="button" id="tran-determine" class="btn btn-green btn-100 radius20" value="确定">
+                        <input type="button" id="tran-close" class="btn border-green btn-100 radius20 ml-50" value="取消">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="mask" id="eject-mask"></div>
+</div>
+        <!--口译分配弹出结束-->
+    </c:when>
+    <c:otherwise>
+<!--笔译分配弹出-->
 <div class="eject-big undistribute-dlog">
     <div class="prompt-big" id="tran">
         <div class="prompt-big-title">分配任务</div>
@@ -85,7 +145,8 @@
                     </table>
                 </div>
                 <div class="add-toicon">
-                    <a href="#"><i class="icon iconfont">&#xe633;</i>添加译员</a>
+                    <%--添加译员--%>
+                    <a href="#"><i class="icon iconfont">&#xe633;</i><spring:message code="myOrder.add.translator"/></a>
                 </div>
             </div>
             <div id="tran-tab2" style="display:none;">
@@ -186,6 +247,8 @@
     </div>
     <div class="mask" id="eject-mask"></div>
 </div>
+    </c:otherwise>
+</c:choose>
 <!--/弹出结束-->
 <!--头部-->
 <%@include file="/inc/transTopMenu.jsp" %>
@@ -227,7 +290,7 @@
                 </div>
                 <%--翻译内容--%>
                 <div id="translate1">
-                    <!-- 文本类型 -->
+                     <%--文本类型--%>
                     <c:if test="${orderDetails.translateType == '0'}">
                         <div class="confirmation-list">
                             <ul>
@@ -248,18 +311,18 @@
                             </ul>
 
                             <c:choose>
-                                <!-- 有译文的情况 -->
+                                <%--有译文的情况--%>
                                 <c:when test="${not empty orderDetails.prod.translateInfo}">
                                     <ul>
-                                        <!-- 译文  -->
+                                        <%--译文--%>
                                         <li class="title"><spring:message code="myOrder.Translatedtext"/>:
-                                            <!-- 修改 -->
+                                             <%--修改 --%>
                                             <c:if test="${orderDetails.state =='23' || orderDetails.state =='25' }">
                                                 <input id="editText" class="btn border-blue-small btn-auto radius20"
                                                        type="button" value="<spring:message code="myOrder.modify"/>">
                                             </c:if>
                                         </li>
-                                        <!-- 更多 -->
+                                         <%--更多--%>
                                         <c:choose>
                                             <c:when test="${fn:length(orderDetails.prod.translateInfo) <=150}">
                                                 <li class="word">${orderDetails.prod.translateInfo}</li>
@@ -285,7 +348,7 @@
                                         </li>
                                     </ul>
                                 </c:when>
-                                <!-- 无译文的情况 -->
+                                 <%--无译文的情况 --%>
                                 <c:otherwise>
                                     <!-- 翻译中 修改中 -->
                                     <c:if test="${orderDetails.state =='23' || orderDetails.state =='25' }">
@@ -662,7 +725,7 @@
                                     <input id="recharge-popo" class="btn btn-yellow btn-xxxlarge radius10"
                                            type="button" value="<spring:message code="myOrder.Assign"/>">
                                 </c:when>
-                                <!-- 文本 有译文-->
+                                 <%--文本 有译文 --%>
                                 <c:when test="${not empty orderDetails.prod.translateInfo}">
                                     <!-- 提交 -->
                                     <input id="submit" name="submit" class="btn btn-green btn-xxxlarge radius10" type="button"
@@ -671,13 +734,13 @@
                                 </c:when>
                                 <c:when test="${orderDetails.translateType == '1' && UUploadCount < fn:length(orderDetails.prodFiles)}">
                                     <!-- 提交 -->
-                                    <input id="recharge-popo" name="submit" class="btn btn-green btn-xxxlarge radius10"
+                                    <input id="submit" name="submit" class="btn btn-green btn-xxxlarge radius10"
                                            type="button" value="<spring:message code="myOrder.btn.Submit"/>">
                                     <!--<input id="tran-popo" class="btn btn-yellow btn-xxxlarge radius10 ml-20" type="button" value="CAT翻译">-->
                                 </c:when>
                             </c:choose>
                         </c:when>
-                        <!-- 修改中 -->
+                         <%--修改中 --%>
                         <c:when test="${orderDetails.state =='25'}">
                             <!-- 提交 -->
                             <input name="submit" class="btn btn-green btn-xxxlarge radius10" type="button"
@@ -719,7 +782,10 @@
     //lsp角色
     var lspRole = "${lspRole}";
     var orderId = "${orderDetails.orderId}";
+    //订单类型
     var translateType = "${orderDetails.translateType}";
+    //订单状态
+    var orderState= "${orderDetails.state}";
     //当前步骤
     var followId = "${orderDetails.currentReceiveFollowId}";
     (function () {
@@ -756,8 +822,60 @@
         $("input[name='submit']").click(function () {
             orderPager._orderSubmit($("#orderId").val());
         });
-
-
+        //口译分配，编辑按钮
+        $('#oralTrans').delegate('tr td a i.edit-img','click',function(){
+            var transInfo = {};
+            //获取输入内容，
+            var tdObj = $(this).parent().parent().parent().children("td:not(.operate)");
+            tdObj.each(function () {
+                var inObj = $(this).children("span").eq(0);
+                var name = inObj.attr("name");
+                transInfo[name] = inObj.text();
+            });
+            transInfo["opType"]="edit";
+            $(this).parent().parent().parent().html(pager._editInter(transInfo));
+        });
+        //口译分配，删除按钮
+        $('#oralTrans').delegate('tr td a i.delete-img','click',function(){
+            $(this).parent().parent().parent().remove();
+        });
+        //口译分配，保存按钮
+        $('#oralTrans').delegate('tr td a i.finished-img','click',function(){
+            var transInfo = {};
+            //获取输入内容，
+            var tdObj = $(this).parent().parent().parent().children(".text-l");
+            tdObj.each(function () {
+                var inObj = $(this).children("input").eq(0);
+                var name = inObj.attr("name");
+                transInfo[name] = inObj.val();
+            });
+            //判断名称是否为空，手机号是否为11位
+            if(transInfo.name == null || transInfo.name == ""
+                || transInfo.number == null || transInfo.number == ""){
+                alert();
+                return;
+            }
+            $(this).parent().parent().parent().html(pager._saveInter(transInfo));
+        });
+        //口译分配，取消按钮
+        $('#oralTrans').delegate('tr td a i.close-img','click',function(){
+            var opType = $(this).attr("op");
+            //若是编辑取消，则需要返回原来内容
+            if("edit" == opType){
+                var transInfo = {};
+                //获取输入内容，
+                var tdObj = $(this).parent().parent().parent().children(".text-l");
+                tdObj.each(function () {
+                    var inObj = $(this).children("input").eq(0);
+                    var name = inObj.attr("name");
+                    transInfo[name] = inObj.attr("oldVal");
+                });
+                $(this).parent().parent().parent().html(pager._saveInter(transInfo));
+            }//若是添加取消，则直接删除
+            else {
+                $(this).parent().parent().parent().remove();
+            }
+        });
     })();
 
 </script>

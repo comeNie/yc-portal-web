@@ -4,6 +4,9 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 	    Widget = require('arale-widget/1.2.0/widget'),
 		Dialog = require("optDialog/src/dialog"),
 	    AjaxController = require('opt-ajax/1.0.0/index');
+    require("jsviews/jsrender.min");
+    require("jsviews/jsviews.min");
+    require("app/util/jsviews-ext");
 	require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
 	require('webuploader/webuploader');
     //实例化AJAX控制处理对象
@@ -16,13 +19,19 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
     	events: {
 			"click #textSave":"_textSave",
 			"click #trans": "_trans",
+			//点击分配
+			"click #recharge-popo":"_allocation",
+			//添加口译人员
+			"click #addInterpreter":"_addInter",
 			//译员确认领取
 			"click #claim":"_claim",
 			//lsp审核
 			"click #approvalBtn":"_approval",
 			"click #editText": "_editText",
 			//领取订单
-			"click #received":"_getOrder"
+			"click #received":"_getOrder",
+			//关闭分配窗口
+			"click #tran-close":"_closeTran"
     	},
 		//重写父类
 		setup: function () {
@@ -213,6 +222,33 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
     		$("#editText").parent().parent().next("ul").show();
     		$("#editText").parent().next().next().show();
     	},
+		//分配按钮触发事件
+        _allocation:function () {
+			//若是待领取的口译订单，则直接显示分配
+			if(translateType == "2" && orderState == "21"){
+                this._openTran();
+			}//若是待领取的笔译订单，则直接显示笔译分配
+			else if(translateType == "1" && orderState == "21"){
+
+			}
+			//若是笔译，且不是待领取，则从后台获取数据。
+        },
+		//添加口译译员信息
+        _addInter:function () {
+    		var data = {"name":"","number":"","opType":""};
+            var htmlOutput = "<tr>"+this._editInter(data)+"</tr>";
+            $("#oralTrans").append(htmlOutput);
+        },
+		//保存口译分配译员信息
+		_saveInter:function (interInfo) {
+            var template = $.templates("#tranView");
+            return template.render(interInfo);
+        },
+		//编辑口译分配译员信息
+		_editInter:function (interInfo) {
+            var template = $.templates("#tranEdit");
+            return template.render(interInfo);
+        },
 		//lsp译员领取订单
         _claim:function () {
             ajaxController.ajax({
@@ -252,7 +288,6 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				}
 			});
     	},
-
 		//领取订单
 		_getOrder:function(){
 			new Dialog({
@@ -297,6 +332,16 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
                     }
                 }
             });
+        },
+		//打开分配窗口
+		_openTran:function () {
+            $('#eject-mask').fadeIn(100);
+            $('[assign-tran-dialog]').slideDown(100);
+        },
+		//关闭分配窗口
+        _closeTran:function () {
+            $('#eject-mask').fadeOut(200);
+            $('[assign-tran-dialog]').slideUp(200);
         },
 		_showWarn:function(msg){
 			new Dialog({
