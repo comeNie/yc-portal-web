@@ -256,12 +256,12 @@ public class BalanceController {
         if(CollectionUtil.isEmpty(couponList)) {
             couponList = new ArrayList<>();
         }
-        DeductionCouponResponse coupon = new DeductionCouponResponse();
-        coupon.setCouponId("62");
-        coupon.setCouponName("注册测试");
-        coupon.setFaceValue(1000);
-        coupon.setEffectiveEndTime(DateUtils.afterNow(3*24*60*60*1000));
-        couponList.add(coupon);
+//        DeductionCouponResponse coupon = new DeductionCouponResponse();
+//        coupon.setCouponId("62");
+//        coupon.setCouponName("注册测试");
+//        coupon.setFaceValue(1000);
+//        coupon.setEffectiveEndTime(DateUtils.afterNow(3*24*60*60*1000));
+//        couponList.add(coupon);
 //        DeductionCouponResponse coupon1 = new DeductionCouponResponse();
 //        coupon1.setCouponId("asdf8wer8293adfasdf");
 //        coupon1.setCouponName("10元测试");

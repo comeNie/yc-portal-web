@@ -386,7 +386,7 @@ define('app/jsp/order/payOrder', function (require, exports, module) {
 			var _this = this;
 			$("#payment-method ul").each(function () {
                 var type = $(this).attr("payType");
-                if("YE" == type && acctBalance<orderPayFee){
+                if("YE" == type && balance<orderPayFee){
                     return;
                 }
 				$(this).click(function () {
