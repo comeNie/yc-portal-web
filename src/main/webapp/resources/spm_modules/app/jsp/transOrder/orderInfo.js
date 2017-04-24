@@ -30,6 +30,8 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 			"click #editText": "_editText",
 			//领取订单
 			"click #received":"_getOrder",
+			//确定分配人员
+			"click #tran-determine":"_confirmAssign",
 			//关闭分配窗口
 			"click #tran-close":"_closeTran"
     	},
@@ -337,6 +339,23 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 		_openTran:function () {
             $('#eject-mask').fadeIn(100);
             $('[assign-tran-dialog]').slideDown(100);
+        },
+		//保存分配人员信息
+        _confirmAssign:function () {
+            //若是待领取的口译订单，则直接显示分配
+            if(translateType == "2"){
+
+            }//若是待领取的笔译订单，则直接显示笔译分配
+            else if(translateType == "1" && orderState == "21"){
+
+            }
+        },
+		//确认口译分配人员
+		_confirmOralAssign:function () {
+			//检查是否有未保存译员信息。
+            $("#oralTrans").children().each(function () {
+
+            })
         },
 		//关闭分配窗口
         _closeTran:function () {

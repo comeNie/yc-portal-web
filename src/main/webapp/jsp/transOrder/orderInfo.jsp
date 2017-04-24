@@ -80,8 +80,10 @@
             <div class="prompt-samll-confirm prompt-mt">
                 <ul>
                     <li class="eject-btn">
-                        <input type="button" id="tran-determine" class="btn btn-green btn-100 radius20" value="确定">
-                        <input type="button" id="tran-close" class="btn border-green btn-100 radius20 ml-50" value="取消">
+                        <input type="button" id="tran-determine" class="btn btn-green btn-100 radius20"
+                               value="<spring:message code="myOrder.confirm"/>">
+                        <input type="button" id="tran-close" class="btn border-green btn-100 radius20 ml-50"
+                               value="<spring:message code="myOrder.Cancell"/>">
                     </li>
                 </ul>
             </div>
@@ -238,8 +240,10 @@
             <div class="prompt-samll-confirm prompt-mt">
                 <ul>
                     <li class="eject-btn">
-                        <input type="button" id="tran-determine" class="btn btn-green btn-120 radius20" value="确定">
-                        <input type="button" id="tran-close" class="btn border-green btn-120 radius20" value="取消">
+                        <input type="button" id="tran-determine" class="btn btn-green btn-120 radius20"
+                               value="<spring:message code="myOrder.confirm"/>">
+                        <input type="button" id="tran-close" class="btn border-green btn-120 radius20"
+                               value="<spring:message code="myOrder.Cancell"/>">
                     </li>
                 </ul>
             </div>
@@ -852,11 +856,11 @@
             var ex = /^\d+$/;
             //判断名称是否为空，手机号是否为11位数字
             if(transInfo.name == null || transInfo.name == ""){
-                alert("<spring:message code="myOrder.name.null"/>");
+                pager._showWarn("<spring:message code="myOrder.name.null"/>");
                 return;
             }else if(transInfo.number == null || transInfo.number.length!=11
                 || !ex.test(transInfo.number)){
-                alert("<spring:message code="myOrder.tel.error"/>");
+                pager._showWarn("<spring:message code="myOrder.tel.error"/>");
                 return;
             }
             $(this).parent().parent().parent().html(pager._saveInter(transInfo));
