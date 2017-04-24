@@ -90,5 +90,10 @@
 
 	<!--优惠券使用规则-->
 	<dubbo:reference id="iCouponUseRuleSV" interface="com.ai.slp.balance.api.couponuserule.interfaces.ICouponUseRuleSV"/>
-
+	<!-- 查询语言对 -->
+	<dubbo:reference id="iQuerySysDuadSV" interface="com.ai.yc.common.api.sysduad.interfaces.IQuerySysDuadSV"/>
+	<!-- 用途、领域 -->
+	<dubbo:reference id="iYCUsrExtendValueSV" interface="com.ai.yc.translator.api.usrextend.interfaces.IYCUsrExtendValueSV"/>
+	<!-- 母语 -->
+	<dubbo:reference id="iYCParentLanguageSV" interface="com.ai.yc.translator.api.parentlanguage.interfaces.IYCParentLanguageSV"/>
 </beans>
