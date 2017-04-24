@@ -158,6 +158,13 @@ dependencies {
     compile 'org.apache.poi:ooxml-schemas:1.1'
     compile 'org.apache.xmlbeans:xmlbeans:2.3.0'
 
+	//common 查询语言对
+	compile 'com.ai.yc.common:sysduad:1.0-SNAPSHOT'
+	//译员用途、领域
+	compile 'com.ai.yc.translator:usrextend:2.0-SNAPSHOT'
+  	//母语
+  	compile 'com.ai.yc.translator:parentlanguage:2.0-SNAPSHOT'
+
 	compile('org.apache.axis2:axis2-adb:1.5.1') {
 		exclude group: 'org.apache.geronimo.specs'
 	}
