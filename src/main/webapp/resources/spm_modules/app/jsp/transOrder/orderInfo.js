@@ -33,7 +33,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 			//确定分配人员
 			"click #tran-determine":"_confirmAssign",
 			//关闭分配窗口
-			"click #tran-close":"_closeTran"
+			"click #tran-close":"_closeTran",
     	},
 		//重写父类
 		setup: function () {
@@ -226,13 +226,15 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
     	},
 		//分配按钮触发事件
         _allocation:function () {
+        	var _this = this;
 			//若是待领取的口译订单，则直接显示分配
 			if(translateType == "2" && orderState == "21"){
-                this._openTran();
+				_this._openTran();
 			}//若是待领取的笔译订单，则直接显示笔译分配
 			else if(translateType == "1" && orderState == "21"){
-
+				_this._openTran();
 			}
+			_this._openTran();
 			//若是笔译，且不是待领取，则从后台获取数据。
         },
 		//添加口译译员信息
@@ -342,20 +344,68 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
         },
 		//保存分配人员信息
         _confirmAssign:function () {
+        	var _this=this;
             //若是待领取的口译订单，则直接显示分配
             if(translateType == "2"){
-
+            	//判断确认口译分配人员
+            	_this._confirmOralAssign();
+            	//分配
+            	
             }//若是待领取的笔译订单，则直接显示笔译分配
             else if(translateType == "1" && orderState == "21"){
 
             }
         },
+        //口译订单分配保存
+        _alloOral:function (param) {
+        	if(null==param || ""==param){
+        		alert("译员信息不能为空");
+        		return false;
+        	}
+        	var orderId = $("#orderId").val();
+            ajaxController.ajax({
+                type: "post",
+                processing: true,
+                dataType : "json",
+                url: _base + "/p/customer/order/alloOrder",
+                data: {
+                	orderId:orderId,
+                	personInfo:JSON.stringify(param)
+                },
+                success: function (data) {
+                    if ("1" === data.statusCode) {
+                        //成功
+                        //刷新页面
+                        window.location.reload();
+                    }
+                }
+            });
+        },
 		//确认口译分配人员
 		_confirmOralAssign:function () {
 			//检查是否有未保存译员信息。
-            $("#oralTrans").children().each(function () {
-
+			var _this=this;
+			var param = {};
+			var personList=[];
+            $("#oralTrans").children().each(function (i) {
+            	//判断input选项是否存在
+            	var inObj = $(this).children().children("input").eq(0).val();
+            	var dataname = $(this).children().children("span").eq(0).text() ;
+            	var datanumber = $(this).children().children("span").eq(1).text() ;
+            	var person = {};
+            	person.interperName = dataname;
+            	person.tel = datanumber;
+            	personList.push(person);
+            	if(undefined!=inObj){
+            		if(inObj==null || ""==inObj){
+                		alert("有未保存的译员数据");
+                		return false;
+                	}
+            	}
             })
+            //调用分配操作
+            param.personList=personList;
+            _this._alloOral(param);
         },
 		//关闭分配窗口
         _closeTran:function () {

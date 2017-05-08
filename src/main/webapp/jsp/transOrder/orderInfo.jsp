@@ -96,7 +96,7 @@
     <c:otherwise>
 <!--笔译分配弹出-->
 <div class="eject-big undistribute-dlog">
-    <div class="prompt-big" id="tran">
+    <div class="prompt-big" id="assign-tran-dialog" assign-tran-dialog>
         <div class="prompt-big-title">分配任务</div>
         <div class="prompt-center">
             <div class="prompt-center-title">

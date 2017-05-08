@@ -4,45 +4,17 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.Null;
 
-import com.ai.opt.base.exception.BusinessException;
-import com.ai.opt.base.exception.SystemException;
-import com.ai.opt.sdk.components.ccs.CCSClientFactory;
-import com.ai.opt.sdk.util.CollectionUtil;
-import com.ai.opt.sdk.util.DateUtil;
-import com.ai.paas.ipaas.i18n.ResWebBundle;
-import com.ai.slp.balance.api.deduct.interfaces.IDeductSV;
-import com.ai.slp.balance.api.deduct.param.DeductParam;
-import com.ai.slp.balance.api.deduct.param.DeductResponse;
-import com.ai.yc.order.api.orderdeplay.interfaces.IOrderDeplaySV;
-import com.ai.yc.order.api.orderdeplay.param.OrderDeplayRequest;
-import com.ai.yc.order.api.orderdetails.param.PersonInfoVo;
-import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsRequest;
-import com.ai.yc.order.api.orderevaluation.interfaces.IOrderEvaluationSV;
-import com.ai.yc.order.api.orderevaluation.param.*;
-import com.ai.yc.order.api.orderfee.interfaces.IOrderFeeQuerySV;
-import com.ai.yc.order.api.orderfee.param.*;
-import com.ai.yc.protal.web.constants.Constants;
-import com.ai.yc.protal.web.constants.ErrorCode;
-import com.ai.yc.protal.web.constants.OrderConstants;
-import com.ai.yc.protal.web.constants.YEPayResultConstants;
-import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
-import com.ai.yc.protal.web.model.pay.OrderPay;
-import com.ai.yc.protal.web.model.pay.PayNotify;
-import com.ai.yc.protal.web.model.pay.YEPayResult;
-import com.ai.yc.protal.web.service.BalanceService;
-import com.ai.yc.protal.web.service.OrderService;
-import com.ai.yc.protal.web.utils.*;
-import com.ai.yc.user.api.usercompany.interfaces.IYCUserCompanySV;
-import com.ai.yc.user.api.usercompany.param.UserCompanyInfoRequest;
-import com.ai.yc.user.api.usercompany.param.UserCompanyInfoResponse;
-import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,19 +26,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.base.vo.ResponseHeader;
+import com.ai.opt.sdk.components.ccs.CCSClientFactory;
 import com.ai.opt.sdk.components.dss.DSSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.CollectionUtil;
+import com.ai.opt.sdk.util.DateUtil;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.dss.base.interfaces.IDSSClient;
+import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.i18n.ZoneContextHolder;
+import com.ai.slp.balance.api.deduct.interfaces.IDeductSV;
+import com.ai.slp.balance.api.deduct.param.DeductParam;
+import com.ai.slp.balance.api.deduct.param.DeductResponse;
+import com.ai.yc.order.api.orderallocation.interfaces.IOrderAllocationSV;
+import com.ai.yc.order.api.orderallocation.param.OrdAllocationPersonInfo;
+import com.ai.yc.order.api.orderallocation.param.OrderAllocationBaseInfo;
+import com.ai.yc.order.api.orderallocation.param.OrderAllocationReceiveFollowInfo;
+import com.ai.yc.order.api.orderallocation.param.OrderAllocationRequest;
 import com.ai.yc.order.api.orderclose.interfaces.IOrderCancelSV;
 import com.ai.yc.order.api.orderclose.param.OrderCancelRequest;
+import com.ai.yc.order.api.orderdeplay.interfaces.IOrderDeplaySV;
+import com.ai.yc.order.api.orderdeplay.param.OrderDeplayRequest;
 import com.ai.yc.order.api.orderdetails.interfaces.IQueryOrderDetailsSV;
+import com.ai.yc.order.api.orderdetails.param.PersonInfoVo;
+import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsRequest;
 import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsResponse;
+import com.ai.yc.order.api.orderevaluation.interfaces.IOrderEvaluationSV;
+import com.ai.yc.order.api.orderevaluation.param.OrderEvaluationBaseInfo;
+import com.ai.yc.order.api.orderevaluation.param.OrderEvaluationExtendInfo;
+import com.ai.yc.order.api.orderevaluation.param.OrderEvaluationRequest;
+import com.ai.yc.order.api.orderevaluation.param.QueryOrdEvaluteRequest;
+import com.ai.yc.order.api.orderevaluation.param.QueryOrdEvaluteResponse;
+import com.ai.yc.order.api.orderfee.interfaces.IOrderFeeQuerySV;
 import com.ai.yc.order.api.orderfee.param.OrderFeeInfo;
+import com.ai.yc.order.api.orderfee.param.OrderFeeProdInfo;
+import com.ai.yc.order.api.orderfee.param.OrderFeeQueryRequest;
 import com.ai.yc.order.api.orderfee.param.OrderFeeQueryResponse;
 import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
 import com.ai.yc.order.api.orderquery.param.OrdOrderVo;
@@ -74,7 +72,30 @@ import com.ai.yc.order.api.orderquery.param.QueryOrdCountRequest;
 import com.ai.yc.order.api.orderquery.param.QueryOrdCountResponse;
 import com.ai.yc.order.api.orderquery.param.QueryOrderRequest;
 import com.ai.yc.order.api.orderquery.param.QueryOrderRsponse;
+import com.ai.yc.protal.web.constants.Constants;
+import com.ai.yc.protal.web.constants.ErrorCode;
+import com.ai.yc.protal.web.constants.OrderConstants;
+import com.ai.yc.protal.web.constants.YEPayResultConstants;
+import com.ai.yc.protal.web.model.PersonInfo;
+import com.ai.yc.protal.web.model.PersonListInfo;
+import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
+import com.ai.yc.protal.web.model.pay.OrderPay;
+import com.ai.yc.protal.web.model.pay.YEPayResult;
+import com.ai.yc.protal.web.service.BalanceService;
+import com.ai.yc.protal.web.service.OrderService;
+import com.ai.yc.protal.web.utils.AmountUtil;
+import com.ai.yc.protal.web.utils.ConfigUtil;
+import com.ai.yc.protal.web.utils.DateUtils;
+import com.ai.yc.protal.web.utils.PasswordMD5Util;
+import com.ai.yc.protal.web.utils.PaymentUtil;
+import com.ai.yc.protal.web.utils.UserUtil;
+import com.ai.yc.protal.web.utils.VerifyUtil;
+import com.ai.yc.user.api.usercompany.interfaces.IYCUserCompanySV;
+import com.ai.yc.user.api.usercompany.param.UserCompanyInfoRequest;
+import com.ai.yc.user.api.usercompany.param.UserCompanyInfoResponse;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import net.sf.json.*;
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -197,7 +218,7 @@ public class CustomerOrderController {
                 orderReq.setStateList(states);
             }
             LOGGER.info("订单列表查询数据：" +JSONObject.toJSONString(orderReq));
-            if(StringUtils.isBlank(orderReq.getUserId()) && StringUtils.isBlank(orderReq.getCorporaId())){
+            /*if(StringUtils.isBlank(orderReq.getUserId()) && StringUtils.isBlank(orderReq.getCorporaId())){
                 PageInfo<OrdOrderVo> pageInfo = new PageInfo<>();
                 pageInfo.setResult(new ArrayList<OrdOrderVo>());
                 pageInfo.setCount(0);
@@ -206,7 +227,7 @@ public class CustomerOrderController {
                 pageInfo.setPageSize(10);
                 //返回订单分页信息
                 resData.setData(pageInfo);
-            }else {
+            }else {*/
                 IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
                 QueryOrderRsponse orderRes = iOrderQuerySV.queryOrder(orderReq);
                 ResponseHeader resHeader = orderRes == null ? null : orderRes.getResponseHeader();
@@ -219,7 +240,7 @@ public class CustomerOrderController {
                     //返回订单分页信息
                     resData.setData(pageInfo);
                 }
-            }
+            //}
         } catch (Exception e) {
             LOGGER.error("查询订单分页失败:",e);
             resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage(""));
@@ -700,5 +721,48 @@ public class CustomerOrderController {
      */
     private boolean checkOrder(String orderUserId){
         return UserUtil.getUserId().equals(orderUserId);
+    }
+    /**
+     * 口译订单分配
+     * @param orderId
+     * @return
+     */
+    @RequestMapping("/alloOrder")
+    @ResponseBody
+    public ResponseData<String> alloOrder(String orderId,String  personInfo){
+        ResponseData<String> response = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
+        IOrderAllocationSV orderAllocationSV = DubboConsumerFactory.getService(IOrderAllocationSV.class);
+        List<OrdAllocationPersonInfo>  personList = new ArrayList<OrdAllocationPersonInfo>();
+        PersonListInfo info =  JSON.parseObject(personInfo,PersonListInfo.class);
+        List<PersonInfo> list = info.getPersonList();
+        if(!CollectionUtil.isEmpty(list)){
+        	for(PersonInfo person:list){
+        		OrdAllocationPersonInfo ordPerson = new OrdAllocationPersonInfo();
+        		ordPerson.setInterperName(person.getInterperName());
+        		ordPerson.setTel(person.getTel());
+        		personList.add(ordPerson);
+        	}
+        }
+        OrderAllocationRequest alloRequest = new OrderAllocationRequest();
+        OrderAllocationBaseInfo baseInfo = new OrderAllocationBaseInfo();
+        List<OrderAllocationReceiveFollowInfo> orderAllocationList = new ArrayList<OrderAllocationReceiveFollowInfo>();
+        OrderAllocationReceiveFollowInfo follow = new OrderAllocationReceiveFollowInfo();
+        follow.setFinishState("2");
+        follow.setStep("1");
+        follow.setReceiveState("1");
+        follow.setOrdAllocationPersonInfoList(personList);
+        orderAllocationList.add(follow);
+        baseInfo.setOrderId(Long.valueOf(orderId));
+        baseInfo.setUserId(UserUtil.getUserId());
+        baseInfo.setOperName(UserUtil.getUserName());
+        alloRequest.setOrderAllocationBaseInfo(baseInfo);
+        alloRequest.setOrderAllocationReceiveFollowList(orderAllocationList);
+        BaseResponse svResponse = orderAllocationSV.orderAllocation(alloRequest);
+        if (svResponse!=null && !svResponse.getResponseHeader().isSuccess()){
+            LOGGER.warn("订单分配失败，订单号：{}，返回信息：{}",orderId, JSON.toJSONString(svResponse));
+            response = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
+                    rb.getMessage("order.info.delayed.fail"));
+        }
+        return response;
     }
 }
