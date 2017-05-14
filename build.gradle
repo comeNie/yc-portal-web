@@ -164,7 +164,8 @@ dependencies {
 	compile 'com.ai.yc.translator:usrextend:2.0-SNAPSHOT'
   	//母语
   	compile 'com.ai.yc.translator:parentlanguage:2.0-SNAPSHOT'
-
+	//联系人
+	compile 'com.ai.yc.user:usercontact:2.0-SNAPSHOT'
 	compile('org.apache.axis2:axis2-adb:1.5.1') {
 		exclude group: 'org.apache.geronimo.specs'
 	}
