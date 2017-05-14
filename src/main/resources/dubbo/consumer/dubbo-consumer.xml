@@ -96,4 +96,7 @@
 	<dubbo:reference id="iYCUsrExtendValueSV" interface="com.ai.yc.translator.api.usrextend.interfaces.IYCUsrExtendValueSV"/>
 	<!-- 母语 -->
 	<dubbo:reference id="iYCParentLanguageSV" interface="com.ai.yc.translator.api.parentlanguage.interfaces.IYCParentLanguageSV"/>
+	<!-- 联系方式 -->
+	<!-- 母语 -->
+	<dubbo:reference id="iYCUserContactSV" interface="com.ai.yc.user.api.usercontact.interfaces.IYCUserContactSV"/>
 </beans>
