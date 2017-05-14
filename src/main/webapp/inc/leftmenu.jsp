@@ -96,6 +96,13 @@ UserUtil.getUserPortraitImg();
   					<span><spring:message code="ycleftmenu.mysecurity"/></span>
   					</a>
   				</li>
+  				<!-- 联系方式 -->
+  				<li id="contactway">
+  					<a  href="${_base}/p/contactway/contactwayPager?source=user">
+  					<span><i class="icon iconfont">&#xe63f;</i></span>
+  					<span><spring:message code="yccontactway.contactway"/></span>
+  					</a>
+  				</li>
   			</ul>
   		</div>
 		<!--定位-->
