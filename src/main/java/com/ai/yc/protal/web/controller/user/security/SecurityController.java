@@ -671,6 +671,10 @@ public class SecurityController {
 			integralsResponse = iIntegralsSV.queryIntegrals(userId);
 			if(true==integralsResponse.getResponseHeader().isSuccess()){
 				map.put("integration", integralsResponse.getNowIntegral());
+			}else if("0001".equals(integralsResponse.getResponseHeader().getResultCode())){
+				map.put("integration",0);
+			}else{
+				map.put("integration",0);
 			}
 		} catch (Exception e) {
 			LOG.error("查询积分失败:", e);

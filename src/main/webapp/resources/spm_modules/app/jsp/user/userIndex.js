@@ -42,8 +42,7 @@ define("app/jsp/user/userIndex",function(require, exports, module) {
 		    				url:_base+"/p/security/getIntegration",
 		    				data:{},
 		    		        success: function(data) {
-		    		        	
-		    		        	
+		    		        	$("#integrationId").html(data['integration']);
 		    		        }
 		    		});
 				},

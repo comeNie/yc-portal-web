@@ -48,8 +48,8 @@
 											value="${balance/1000}" pattern="#,##0.00#"/></p>
 								</li>
 								<li>
-									<p><spring:message code="ycaccountcenter.userIndex.balance"/>:</p>
-									<p id=""></p>
+									<p><spring:message code="ycaccountcenter.userIndex.integration"/>:</p>
+									<p class="red" id="integrationId"></p>
 								</li>
 								<li style="display: none;">
 									<p>:</p>
