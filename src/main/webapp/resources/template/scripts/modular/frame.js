@@ -83,6 +83,34 @@ $(function () {
     
 });
 
+//tab切换的下拉框
+$(function(){
+
+  $(document).on('click', '[select-down]', function(){
+    $(this).parents().siblings().find('.down-con').addClass('undis');
+    if($(this).siblings('.down-con').hasClass('undis')){
+      $(this).siblings('.down-con').removeClass('undis');
+    }else{
+      $(this).siblings('.down-con').addClass('undis');
+    }
+    return false;
+  });
+  $(document).on('click', '[con]', function(){
+    var conText = $(this).text();
+    var html = conText + '<i class="img-down"></i>';
+    $(this).parents('.down-con').siblings('[select-down]').html(html);
+    $(this).parents('.down-con').siblings('[select-down]').addClass('current');
+    $(this).parents('.down-con').addClass('undis');
+
+    return false;
+  });
+  $(document).on('click', '.prompt-big', function(){
+    if(!$(this).children('.down-con').hasClass('undis')){
+      $(this).find('.down-con').addClass('undis')
+    }
+  });
+});
+
 //左侧菜单关闭
 $(function(){
 $(".left-tplist i").click(function () {
@@ -193,6 +221,11 @@ $(function(){
   });
   });
 
+//动态设置分配弹窗位置
+$(function(){
+  var dlogH =$('.prompt-big').height()/2;
+  $('.prompt-big').css('margin-top', -dlogH);
+});
 
 //设置密码
 $(function(){

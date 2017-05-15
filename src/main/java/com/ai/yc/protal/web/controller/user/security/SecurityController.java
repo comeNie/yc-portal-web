@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import com.ai.yc.user.api.usercompany.interfaces.IYCUserCompanySV;
 import com.ai.yc.user.api.usercompany.param.UserCompanyInfoRequest;
 import com.ai.yc.user.api.usercompany.param.UserCompanyInfoResponse;
+import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
+import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
+import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +32,8 @@ import com.ai.paas.ipaas.i18n.ResWebBundle;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.slp.balance.api.accountmaintain.interfaces.IAccountMaintainSV;
 import com.ai.slp.balance.api.accountmaintain.param.AccountUpdateParam;
+import com.ai.slp.balance.api.integrals.interfaces.IIntegralsSV;
+import com.ai.slp.balance.api.integrals.param.IntegralsResponse;
 import com.ai.yc.common.api.cachekey.key.CacheKey;
 import com.ai.yc.common.api.country.param.CountryVo;
 import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
@@ -616,5 +622,51 @@ public class SecurityController {
 			msg = responseCode.getCodeMessage();
 		}
 		return new Object[] { falg, msg };
+	}
+	@RequestMapping("/userLevel")
+	@ResponseBody
+	public Map<String, String> userLevel(HttpServletRequest request) {
+		YCUserInfoResponse userInfoResponse = null;
+		Map<String, String> map = new HashMap<String,String>();
+		try {
+			String userId = UserUtil.getUserId();
+			IYCUserServiceSV userServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
+			SearchYCUserRequest userReq = new SearchYCUserRequest();
+			userReq.setUserId(userId);
+			userInfoResponse = userServiceSV.searchYCUserInfo(userReq);
+			if(true==userInfoResponse.getResponseHeader().isSuccess()){
+				map.put("ZH", userInfoResponse.getGriwthLevelZH());
+				map.put("EN", userInfoResponse.getGriwthLevelEN());
+			}
+		} catch (Exception e) {
+			LOG.error("查询会员级别失败:", e);
+			if (userInfoResponse != null) {
+				LOG.error("查询会员级别失败:", JSON.toJSONString(userInfoResponse));
+			}
+		}
+		return map;
+	}
+	/**
+	 * 获取积分
+	 */
+	@RequestMapping("/getIntegration")
+	@ResponseBody
+	public Map<String, Integer> getIntegration(HttpServletRequest request) {
+		IntegralsResponse integralsResponse = null;
+		Map<String, Integer> map = new HashMap<String,Integer>();
+		try {
+			String userId = UserUtil.getUserId();
+			IIntegralsSV iIntegralsSV = DubboConsumerFactory.getService(IIntegralsSV.class);
+			integralsResponse = iIntegralsSV.queryIntegrals(userId);
+			if(true==integralsResponse.getResponseHeader().isSuccess()){
+				map.put("integration", integralsResponse.getNowIntegral());
+			}
+		} catch (Exception e) {
+			LOG.error("查询积分失败:", e);
+			if (integralsResponse != null) {
+				LOG.error("查询积分失败:", JSON.toJSONString(integralsResponse));
+			}
+		}
+		return map;
 	}
 }

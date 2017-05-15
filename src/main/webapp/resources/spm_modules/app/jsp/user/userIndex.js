@@ -20,6 +20,8 @@ define("app/jsp/user/userIndex",function(require, exports, module) {
 					this._orderStatusCount();
 					this._queryOrder();
 					//this._queryBalanceInfo();
+					this._queryUserInfo();
+					this._queryIntegration();
 				},
 
 				/*查询余额*/
@@ -29,6 +31,47 @@ define("app/jsp/user/userIndex",function(require, exports, module) {
 		    				url:_base+"/p/security/queryBalanceInfo",
 		    				data:{},
 		    		        success: function(data) {
+		    		        	
+		    		        }
+		    		});
+				},
+				//获取积分
+				_queryIntegration:function(){
+					ajaxController.ajax({
+						 type:"post",
+		    				url:_base+"/p/security/getIntegration",
+		    				data:{},
+		    		        success: function(data) {
+		    		        	
+		    		        	
+		    		        }
+		    		});
+				},
+				//获取会员级别
+				_queryUserInfo:function(){
+					ajaxController.ajax({
+						 type:"post",
+		    				url:_base+"/p/security/userLevel",
+		    				data:{},
+		    		        success: function(data) {
+		    		        	if("zh_CN"==currentLan){
+		    		        		if("普通会员"==data['ZH']){
+			    		        		$("#userLevel").removeClass();
+			    		        		$("#userLevel").addClass("vip1");
+			    		        	}
+			    		        	if("VIP会员"==data['ZH']){
+			    		        		$("#userLevel").removeClass();
+			    		        		$("#userLevel").addClass("vip2");
+			    		        	}
+			    		        	if("SVIP会员"==data['ZH']){
+			    		        		$("#userLevel").removeClass();
+			    		        		$("#userLevel").addClass("vip3");
+			    		        	}
+			    		        	if("SVIP白金会员"==data['ZH']){
+			    		        		$("#userLevel").removeClass();
+			    		        		$("#userLevel").addClass("vip4");
+			    		        	}
+		    		        	}
 		    		        	
 		    		        }
 		    		});

@@ -24,7 +24,7 @@ UserUtil.getUserPortraitImg();
 						</c:otherwise>
 						</c:choose>
 					</p>
-  					<p class="vip1"></p>
+  					<p class="vip1" id="userLevel"></p>
   				</li>
   			</ul>
   		</div>

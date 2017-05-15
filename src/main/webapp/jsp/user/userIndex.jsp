@@ -38,13 +38,18 @@
 								<li class="c-red" style="cursor:pointer;" onclick="location.href='${_base}/p/security/seccenter?source=user'" id="accLevelInfo"></li>
 							</ul>
 							<ul>
-								<li class="bule"></li>
+								<li class="bule">
+								</li>
 							</ul>
 							<ul class="word-li">
 								<li>
 									<p><spring:message code="ycaccountcenter.userIndex.balance"/>:</p>
 									<p class="red" style="cursor:pointer;" onclick="location.href='${_base}/p/balance/account'"><fmt:formatNumber
 											value="${balance/1000}" pattern="#,##0.00#"/></p>
+								</li>
+								<li>
+									<p><spring:message code="ycaccountcenter.userIndex.balance"/>:</p>
+									<p id=""></p>
 								</li>
 								<li style="display: none;">
 									<p>:</p>

@@ -1931,7 +1931,7 @@ th {
 	/*margin-bottom: 20px*/
 }
 .table>thead>tr>th, .table>thead>tr>td, .table>tbody>tr>th, .table>tbody>tr>td, .table>tfoot>tr>th, .table>tfoot>tr>td {
-	
+
 	line-height: 1.428571429;
 	vertical-align: top;
 	border-top: 1px solid #ddd
@@ -2018,7 +2018,7 @@ table td[class*="col-"], table th[class*="col-"] {
 	margin-bottom: 15px;
 	overflow-y: hidden;
 	-ms-overflow-style: -ms-autohiding-scrollbar;
-	
+
 }
 .table-responsive>.table {
 	margin-bottom: 0
@@ -2103,16 +2103,16 @@ output {
 	color: #555;
 	background-color: #fff;
 	background-image: none;
-	border: 1px solid #ccc;
+	border: 1px solid #e6e6e6;
 	border-radius: 4px;
-	box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,0.025);
 	-webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 	transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s
 }
 .form-control:focus {
-	border-color: #66afe9;
+	border-color: #52dc90;
 	outline: 0;
-	box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 8px rgba(102,175,233,0.6)
+	box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 8px rgba(75,209,135,0.6)
 }
 .form-control::-moz-placeholder {
 color:#999;
