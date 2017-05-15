@@ -64,12 +64,13 @@ UserUtil.getUserPortraitImg();
   					<span><spring:message code="ycleftmenu.mylevel"/></span>
   					</a>
   				</li> -->
-  				<%--<li>--%>
-  					<%--<a href="我的积分.html">--%>
-  					<%--<span><i class="icon iconfont">&#xe605;</i></span>--%>
-  					<%--<span><spring:message code="ycleftmenu.mycredit"/></span>--%>
-  					<%--</a>--%>
-  				<%--</li>--%>
+				<%--我的积分--%>
+  				<li>
+  					<a href="${_base}/p/integral/myIntegral">
+  					<span><i class="icon iconfont">&#xe605;</i></span>
+  					<span><spring:message code="ycleftmenu.mycredit"/></span>
+  					</a>
+  				</li>
   				<%--<li>--%>
   					<%--<a href="发票管理.html">--%>
   					<%--<span><i class="icon iconfont">&#xe643;</i></span>--%>
