@@ -65,7 +65,7 @@ UserUtil.getUserPortraitImg();
   					</a>
   				</li> -->
 				<%--我的积分--%>
-  				<li>
+  				<li id="integrals">
   					<a href="${_base}/p/integral/myIntegral">
   					<span><i class="icon iconfont">&#xe605;</i></span>
   					<span><spring:message code="ycleftmenu.mycredit"/></span>

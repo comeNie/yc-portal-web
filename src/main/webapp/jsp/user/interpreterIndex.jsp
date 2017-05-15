@@ -49,7 +49,7 @@
                                             value="${balance/1000}" pattern="#,##0.00#"/></p>
                                 <%--积分--%>
                                 <p><spring:message code="ycaccountcenter.userIndex.integration"/>:</p>
-                                <p class="red" style="cursor:pointer;" onclick="location.href='${_base}/p/balance/account'"><fmt:formatNumber
+                                <p class="red" style="cursor:pointer;" onclick="location.href='${_base}/p/integral/myIntegral'"><fmt:formatNumber
                                         value="${integration}"/></p>
                             </li>
                             <li style="display: none;">
