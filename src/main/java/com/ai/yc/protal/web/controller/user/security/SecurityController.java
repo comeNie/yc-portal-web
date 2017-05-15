@@ -106,6 +106,17 @@ public class SecurityController {
 		modelView.addObject("balance", balance);
         String userId = UserUtil.getUserId();
         modelView.addObject("userId", userId);
+		//查询积分信息
+		IntegralsResponse integralsResponse = null;
+		IIntegralsSV iIntegralsSV = DubboConsumerFactory.getService(IIntegralsSV.class);
+		integralsResponse = iIntegralsSV.queryIntegrals(userId);
+		Integer nowIntegral = 0;
+		if(true==integralsResponse.getResponseHeader().isSuccess()){
+			modelView.addObject("integration", integralsResponse.getNowIntegral());
+		}
+		if ("0001".equals(integralsResponse.getResponseHeader().getResultCode())){
+			modelView.addObject("integration", nowIntegral);
+		}
 		// 查询译员信息
         IYCTranslatorServiceSV iycTranslatorServiceSV = DubboConsumerFactory
 				.getService(IYCTranslatorServiceSV.class);
