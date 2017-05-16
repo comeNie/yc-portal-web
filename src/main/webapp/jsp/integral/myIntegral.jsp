@@ -10,13 +10,6 @@
     <%@ include file="/inc/inc.jsp" %>
     <%--我的积分--%>
     <title><spring:message code="account.my.account"/></title>
-    <style>
-        .query-order ul .aright{float:right;}
-        .query-order ul .aright p{margin-left:35px;display:inline;}
-        .query-order ul .aright p a{color:#2361ea}
-        .query-order ul .aright p i{color:#2361ea}
-        .query-order ul .aright p i{margin-left:12px;}
-    </style>
 </head>
 <%
     //默认设置成1为开启，0为关闭
@@ -43,19 +36,22 @@
         <div class="right-wrapper">
             <!--右侧第一块-->
             <div class="toptitle">
-                <span>可用积分:</span><span class="text-danger">90207102</span>
+                <span>可用积分:</span><span class="text-danger">${integration}</span>
                 <button class="btn-line btn-medium">邀请好友送积分</button>
             </div>
             <!--右侧第二块-->
             <div class="right-list">
+                <form id="accountQuery" action="">
                 <div class="tabs">
                     <ul class="tabs-anm">
-                        <li class="current">积分明细</li>
-                        <li>收入积分</li>
-                        <li>支出积分</li>
+                        <input type="hidden" id="flag" name="flag" value=""/>
+                        <li class="current" id="detai" onclick="incomeOut(detai)">积分明细</li>
+                        <li id="income" onclick="incomeOut(income)">收入积分</li>
+                        <li id="out" onclick="incomeOut(out)">支出积分</li>
                         <li class="line"></li>
                     </ul>
                 </div>
+                </form>
                 <div class="right-list-table">
                     <table class="table table-bg  table-striped-even table-height50">
                         <thead>
@@ -65,129 +61,56 @@
                             <th>详细说明</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td>1987-11-04 08:18:08</td>
-                            <td class="red">+$23.00</td>
-                            <td>注册译云账户，赠送积分（注册时间：2015-04-07 09:53:51）</td>
-                        </tr>
-                        <tr>
-                            <td>1987-11-04 08:18:08</td>
-                            <td class="green">+$23.00</td>
-                            <td>注册译云账户，赠送积分（注册时间：2015-04-07 09:53:51）</td>
-                        </tr>
-                        </tbody>
+                        <tbody id="searchIntegralData"></tbody>
                     </table>
                 </div>
+                <div id="showIntegralDiv"></div>
+                <!--分页-->
                 <div class="biu-paging paging-large jifen">
-                    <ul>
-                        <li class="prev-up"><a href="#"><</a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">6</a></li>
-                        <li><a href="#">……</a></li>
-                        <li><a href="#">100</a></li>
-                        <li class="next-down"><a href="#">></a></li>
-                        <p>
-                            <span>到</span>
-                            <span><input type="text" class="int-verysmall radius"></span>
-                            <span>页</span>
-                        </p>
-                        <p class="taiz"><a href="#">跳转</a></p>
+                    <ul id="pagination-ul">
                     </ul>
                 </div>
+                <!--分页结束-->
             </div>
         </div>
     </div>
 </div>
-
 <%@include file="/inc/userFoot.jsp"%>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
-<script type="text/javascript" src="${_base}/resources/template/scripts/modular/jquery-1.11.1.min.js"></script>
-<%--<script type="text/javascript" src="${_base}/resources/template/scripts/modular/frame.js"></script>--%>
-<script src="${_base}/resources/spm_modules/my97DatePicker/WdatePicker.js"></script>
-<script id="searchAccountTemple" type="text/template">
-    <%--<tbody>--%>
-    <%--<input type="hidden" name="unit" value="{{:incomeFlag}}">
-    <input type="hidden" name="unit" value="{{:optType}}">--%>
+<script id="searchIntegralTemple" type="text/template">
     <tr>
-        <td >{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',payTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
-        <td class="red" >
-            {{if  incomeFlag == '1'}}
-            +
-            {{if  currencyUnit == '1'}}
-            ¥
-            {{else currencyUnit == '2'}}
-            $
-            {{/if}}
-            {{:~liToYuan(totalAmount)}}
-            {{else }}
-
-            {{/if}}
-        </td>
-        <td class="green" >
-            {{if  incomeFlag == '0'}}
-            -
-            {{if  currencyUnit == '1'}}
-            ¥
-            {{else currencyUnit == '2'}}
-            $
-            {{/if}}
-            {{:~liToYuan(-totalAmount)}}
-            {{else }}
-
-            {{/if}}
-        </td><%--{{:~liToYuan()}}--%>
-        <td >
-            {{if  currencyUnit == '1'}}
-            ¥
-            {{else currencyUnit == '2'}}
-            $
-            {{/if}}
-            {{:~liToYuan(balancePre)}}
+        <td>{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',logTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
+        <td class="red">
+            {{:integralValue}}
         </td>
         <td>
-            {{if  optType == '1'}}
-            <spring:message code="account.recharge"/>
-            {{else optType == '2'}}
-            <spring:message code="account.place.order"/>
-            {{else optType == '3'}}
-            <spring:message code="account.withdraw.cash"/>
-            {{else optType == '4'}}
-            <spring:message code="account.refund"/>
-            {{/if}}
-        </td>
-        <td>
-            {{if channel!=null && channel.length > 8}}
-            {{:~subStr(8,channel)}}
-            {{else}}
-            {{:channel}}
-            {{/if}}
-        </td>
-        <td>
-            {{if remark!=null && remark.length > 8}}
-            {{:~subStr(8,remark)}}
-            {{else}}
-            {{:remark}}
-            {{/if}}
+            {{:integralSource}}
         </td>
     </tr>
-    <%--</tbody>--%>
 </script>
 
 <script type="text/javascript">
     var pager;
     var current = "integrals";
     (function () {
-        seajs.use('app/jsp/balance/account', function(accountListPage) {
-            pager = new accountListPage({element : document.body});
+        seajs.use('app/jsp/integral/integral', function(integralListPage) {
+            pager = new integralListPage({element : document.body});
             pager.render();
         });
     })();
+    //收支
+    function incomeOut(id) {
+        if (id==detai){
+            $("#flag").val("");
+        }
+        if(id==income){
+            $("#flag").val("0");
+        }
+        if(id==out) {
+            $("#flag").val("1");
+        }
+    }
 </script>
 </html>
 
