@@ -309,6 +309,8 @@ define(
 										.attr("register_type");
 								if ("phone" == register_type) {
 									$("#email").val("");
+									countryValue = $("#country").find("option:selected").attr("country_value");
+									$("#countryHiddenValue").val(countryValue);
 								} else if ("email" == register_type) {
 									$("#phone").val("");
 								}
@@ -327,14 +329,12 @@ define(
 														"biu-btn").addClass(
 														"btn-blue");
 												if (!json.data) {
-													_this
-															._showCheckMsg(json.statusInfo);
+													_this._showCheckMsg(json.statusInfo);
 												} else {
 													if ("email" == register_type) {
-														location.href = _base
-																+ "/reg/toEmail?email="+ $("#email").val();
+														location.href = _base+ "/reg/toEmail?email="+ $("#email").val();
 													} else {
-														location.href = _base+ "/reg/toSuccess";
+														location.href = _base+ "/reg/toSuccess?userId="+json.statusCode;
 													}
 												}
 											}
@@ -384,6 +384,7 @@ define(
 							var checkVal = '';
 							var checkType = '';
 							var checkFalg = true;
+							var countryValue ="";
 							if ("email" == register_type) {// 邮箱校验
 								checkVal = $("#email").val();
 								checkType = "email";
@@ -392,11 +393,12 @@ define(
 								checkVal = $("#phone").val();
 								checkType = "phone";
 								checkFalg = this._checkPhone();
+								countryValue = $("#country").find("option:selected").attr("country_value");
 							}
 							if (!checkFalg) {
 								return;
 							}
-
+							
 							var _this = this;
 							ajaxController.ajax({
 								type : "post",
@@ -405,7 +407,8 @@ define(
 								url : _base + "/reg/checkPhoneOrEmail",
 								data : {
 									'checkType' : checkType,
-									"checkVal" : checkVal
+									"checkVal" : checkVal,
+									"domain_name":countryValue
 								},
 								success : function(json) {
 									if (!json.data) {
