@@ -284,7 +284,7 @@ public class InterpreterController {
 			/**
 			 * 查询国家地址库
 			 */
-	        ICacheClient cacheClient= MCSClientFactory.getCacheClient("com.ai.yc.common.default.cache");;
+	        ICacheClient cacheClient= MCSClientFactory.getCacheClient("com.ai.yc.common.default.cache");
 	        Set<String> countryCodes = cacheClient.smembers(RegionCacheKey.GN_REGION_COUNTRY_KEY);
 	        List<String> infoList = new ArrayList<String>();
 	        if (!CollectionUtil.isEmpty(countryCodes)){
