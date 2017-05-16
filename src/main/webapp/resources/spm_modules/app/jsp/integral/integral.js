@@ -41,6 +41,15 @@ define('app/jsp/integral/integral', function (require, exports, module) {
 
     		this._incomeList();
     	},
+
+		_getSearchParams:function(){
+			var flag="";
+			flag = $('#flag').val();
+			return {
+				"flag":flag,
+			}
+		},
+    	
         //表单查询收支列表
 		_incomeList:function() {
         	var _this = this;
@@ -50,13 +59,14 @@ define('app/jsp/integral/integral', function (require, exports, module) {
         //查询收支列表
 		_getIncomerList:function() {
         	var _this = this;
+			var queryData = this._getSearchParams();
 			$("#pagination-ul").runnerPagination({
 	 			url: _base+"/p/integral/integralsList",
 	 			method: "POST",
 	 			dataType: "json",
 	 			renderId:"searchIntegralData",
 	 			messageId:"showIntegralDiv",
-	 			data: $("#accountQuery").serializeArray(),
+	 			data: queryData,
 	           	pageSize: integralListPage.DEFAULT_PAGE_SIZE,
 	           	visiblePages:5,
 	            render: function (data) {

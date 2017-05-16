@@ -41,7 +41,6 @@
             </div>
             <!--右侧第二块-->
             <div class="right-list">
-                <form id="accountQuery" action="">
                 <div class="tabs">
                     <ul class="tabs-anm">
                         <input type="hidden" id="flag" name="flag" value=""/>
@@ -51,7 +50,6 @@
                         <li class="line"></li>
                     </ul>
                 </div>
-                </form>
                 <div class="right-list-table">
                     <table class="table table-bg  table-striped-even table-height50">
                         <thead>

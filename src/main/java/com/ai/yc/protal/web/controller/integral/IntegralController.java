@@ -81,14 +81,15 @@ public class IntegralController {
 
     @RequestMapping("/integralsList")
     @ResponseBody
-    public ResponseData<PageInfo<IntegralsDetail>> integralsList(@RequestParam(value = "incomeFlag")IncomeQueryIntegralsRequest incomeQueryIntegralsRequest,
+    public ResponseData<PageInfo<IntegralsDetail>> integralsList(@RequestParam(value = "flag") String flag,
                                                                  @RequestParam(value = "pageNo")int pageNO,
                                                                  @RequestParam(value = "pageSize")int pageSize){
         ResponseData<PageInfo<IntegralsDetail>> resData =null;
+        IncomeQueryIntegralsRequest incomeQueryIntegralsRequest = new IncomeQueryIntegralsRequest();
         String userId = UserUtil.getUserId();
         incomeQueryIntegralsRequest.setUserId(userId);
-        if (!StringUtils.isBlank(incomeQueryIntegralsRequest.getFlag())){
-            incomeQueryIntegralsRequest.setFlag(incomeQueryIntegralsRequest.getFlag());
+        if (!StringUtils.isBlank(flag)){
+            incomeQueryIntegralsRequest.setFlag(flag);
         }
         IIntegralsSV iIntegralsSV = DubboConsumerFactory.getService(IIntegralsSV.class);
         try {
