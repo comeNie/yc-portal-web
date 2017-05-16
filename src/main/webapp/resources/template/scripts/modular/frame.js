@@ -48,21 +48,7 @@ $(function () {
 //选择下拉框
 $(function () {
 
-  $('[drop-down]').click(function(){
-    $(this).parents().siblings().find('.select-con').addClass('undis');
-    if($(this).siblings('.select-con').hasClass('undis')){
-       $(this).siblings().removeClass('undis');
-     }else{
-        $(this).siblings().addClass('undis');
-     }
-    return false;
-  });
-  $('.select-con ul li').click(function(){
-    var text = $(this).text();
-    $(this).parents('.select-con').siblings('[drop-down]').text(text);
-    $(this).parents('.select-con').addClass('undis');
-    return false;
-  });
+
 
   $('html').click(function(){
     if(!$('.select-con').hasClass('undis')){
@@ -80,36 +66,10 @@ $(function () {
       $(this).find('.select-con').addClass('undis')
     }
   });
-    
+
 });
 
-//tab切换的下拉框
-$(function(){
 
-  $(document).on('click', '[select-down]', function(){
-    $(this).parents().siblings().find('.down-con').addClass('undis');
-    if($(this).siblings('.down-con').hasClass('undis')){
-      $(this).siblings('.down-con').removeClass('undis');
-    }else{
-      $(this).siblings('.down-con').addClass('undis');
-    }
-    return false;
-  });
-  $(document).on('click', '[con]', function(){
-    var conText = $(this).text();
-    var html = conText + '<i class="img-down"></i>';
-    $(this).parents('.down-con').siblings('[select-down]').html(html);
-    $(this).parents('.down-con').siblings('[select-down]').addClass('current');
-    $(this).parents('.down-con').addClass('undis');
-
-    return false;
-  });
-  $(document).on('click', '.prompt-big', function(){
-    if(!$(this).children('.down-con').hasClass('undis')){
-      $(this).find('.down-con').addClass('undis')
-    }
-  });
-});
 
 //左侧菜单关闭
 $(function(){

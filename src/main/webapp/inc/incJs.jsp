@@ -27,8 +27,11 @@
 <script src="${_base}/resources/template/scripts/modular/placeholder.min.js"></script>
 <script src="${_base}/resources/template/scripts/modular/icheck.js"></script>
 <script src="${_base}/resources/template/scripts/modular/jqueryrotate.2.3.js"></script>
+<script src="${_base}/resources/template/scripts/modular/jquery-1.11.1.min.js" type="text/javascript" ></script>
 <script src="${_base}/resources/template/scripts/modular/frame.js"></script>
-
+<script src="${_base}/resources/template/scripts/modular/eject.js" type="text/javascript"></script>
+<script src="${_base}/resources/template/scripts/modular/alignment.js"  type="text/javascript"></script>
+<script src="${_base}/resources/template/scripts/modular/confirm-step2.js" type="text/javascript" ></script>
 <script>
     
     Date.prototype.stdTimezoneOffset = function() {

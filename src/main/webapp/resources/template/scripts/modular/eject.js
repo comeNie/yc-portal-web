@@ -1,24 +1,25 @@
-//提示弹出框 
+//提示弹出框
 jQuery(document).ready(function($) {
 	$('#recharge-popo').click(function(){
-	$('#eject-mask').fadeIn(100);
-	$('#rechargepop').slideDown(100);
+		$('#eject-mask').fadeIn(100);
+		$('#rechargepop').slideDown(100);
 	})
 	$('#completed').click(function(){
-	$('#eject-mask').fadeOut(200);
-	$('#rechargepop').slideUp(200);
+		$('#eject-mask').fadeOut(200);
+		$('#rechargepop').slideUp(200);
 	})
 	$('#close-completed').click(function(){
-	$('#eject-mask').fadeOut(200);
-	$('#rechargepop').slideUp(200);
+		$('#eject-mask').fadeOut(200);
+		$('#rechargepop').slideUp(200);
 	})
 })
 
-//译员弹出框 
+//译员弹出框
+
 jQuery(document).ready(function($) {
 	$('#tran-popo').click(function(){
-	$('#eject-mask').fadeIn(100);
-	$('#tran').slideDown(100);
+		$('#eject-mask').fadeIn(100);
+		$('#tran').slideDown(100);
 	})
 	$('#tran-determine').click(function(){
 	$('#eject-mask').fadeOut(200);
@@ -30,7 +31,7 @@ jQuery(document).ready(function($) {
 	})
 })
 
-//订单大厅弹出框 
+//订单大厅弹出框
 jQuery(document).ready(function($) {
 	$('#receive-btn').click(function(){
 	$('#eject-mask').fadeIn(100);
@@ -46,7 +47,7 @@ jQuery(document).ready(function($) {
 	})
 })
 
-//安全设置有 
+//安全设置有
 jQuery(document).ready(function($) {
 	$('#password-btn').click(function(){
 	$('#eject-mask').fadeIn(100);
@@ -61,7 +62,7 @@ jQuery(document).ready(function($) {
 	$('#modify-password').slideUp(200);
 	})
 })
-//评价 
+//评价
 jQuery(document).ready(function($) {
 	$('#evaluate-btn').click(function(){
 	$('#eject-mask').fadeIn(100);
@@ -87,7 +88,7 @@ jQuery(document).ready(function($) {
 	$('#sub-order').slideUp(200);
 	})
 })
-//新增联系方式弹出框 
+//新增联系方式弹出框
 jQuery(document).ready(function($) {
 	$('#add-person').click(function(){
 	$('#eject-mask').fadeIn(100);
@@ -102,7 +103,7 @@ jQuery(document).ready(function($) {
 	$('#add-msg').slideUp(200);
 	})
 })
-//编辑联系方式弹出框 
+//编辑联系方式弹出框
 jQuery(document).ready(function($) {
 	$('[edit]').click(function(){
 	$('[eject-mask]').fadeIn(100);
@@ -118,7 +119,7 @@ jQuery(document).ready(function($) {
 	})
 })
 
-//删除弹出框 
+//删除弹出框
 jQuery(document).ready(function($) {
 	$('[delete-btn]').click(function(){
 	$('[eject-mask]').fadeIn(100);
