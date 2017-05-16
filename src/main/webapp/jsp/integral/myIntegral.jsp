@@ -9,7 +9,7 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <%@ include file="/inc/inc.jsp" %>
     <%--我的积分--%>
-    <title><spring:message code="account.my.account"/></title>
+    <title><spring:message code="integral.credits"/></title>
 </head>
 <%
     //默认设置成1为开启，0为关闭
@@ -36,17 +36,22 @@
         <div class="right-wrapper">
             <!--右侧第一块-->
             <div class="toptitle">
-                <span>可用积分:</span><span class="text-danger">${integration}</span>
-                <button class="btn-line btn-medium">邀请好友送积分</button>
+                <%--可用积分--%>
+                <span><spring:message code="integral.credits"/>:</span><span class="text-danger">${integration}</span>
+                <%--邀请好友送积分--%>
+                <button class="btn-line btn-medium"><spring:message code="integral.sendCredits"/></button>
             </div>
             <!--右侧第二块-->
             <div class="right-list">
                 <div class="tabs">
                     <ul class="tabs-anm">
                         <input type="hidden" id="flag" name="flag" value=""/>
-                        <li class="current" id="detai" onclick="incomeOut(detai)">积分明细</li>
-                        <li id="income" onclick="incomeOut(income)">收入积分</li>
-                        <li id="out" onclick="incomeOut(out)">支出积分</li>
+                        <%--积分明细--%>
+                        <li class="current" id="detai" onclick="incomeOut(detai)"><spring:message code="integral.detail"/></li>
+                        <%--收入积分--%>
+                        <li id="income" onclick="incomeOut(income)"><spring:message code="integral.incomeCredit"/></li>
+                        <%--支出积分--%>
+                        <li id="out" onclick="incomeOut(out)"><spring:message code="integral.outCredit"/></li>
                         <li class="line"></li>
                     </ul>
                 </div>
@@ -54,9 +59,12 @@
                     <table class="table table-bg  table-striped-even table-height50">
                         <thead>
                         <tr>
+                            <%--时间--%>
                             <th>时间</th>
-                            <th>收入/支出</th>
-                            <th>详细说明</th>
+                            <%--收入/支出--%>
+                            <th><spring:message code="integral.incomeOut"/></th>
+                            <%--详细说明--%>
+                            <th><spring:message code="integral.detailExplain"/></th>
                         </tr>
                         </thead>
                         <tbody id="searchIntegralData"></tbody>
