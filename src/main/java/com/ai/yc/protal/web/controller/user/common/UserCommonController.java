@@ -287,7 +287,6 @@ public class UserCommonController {
 			phone = "+"+countryValue+phone;
 		}
 		boolean sendOk = SmsSenderUtil.sendMessage(phone,req.getContent());
-		sendOk = true;
 		if (sendOk) {
 			// 最多发送次数超时时间
 			int maxOverTimeCount = config.getIntValue(req
