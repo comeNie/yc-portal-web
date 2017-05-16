@@ -49,7 +49,8 @@
 									<spring:message code="ycregister.phone" />
 								</p>
 								<p>
-									<select id="country" class="select select-in radius"></select>
+									<select id="country" class="select select-in radius" name="country"></select>
+									<input type="hidden" name="countryHiddenValue" id="countryHiddenValue"/>
 								</p>
 								<p class="ml-20">
 									<input id="phone" name="phone" maxlength="100" type="text"
