@@ -49,7 +49,7 @@
 								</li>
 								<li>
 									<p><spring:message code="ycaccountcenter.userIndex.integration"/>:</p>
-									<p class="red" id="integrationId"></p>
+									<p class="red" id="integrationId" style="cursor:pointer;" onclick="location.href='${_base}/p/integral/myIntegral'">></p>
 								</li>
 								<li style="display: none;">
 									<p>:</p>
