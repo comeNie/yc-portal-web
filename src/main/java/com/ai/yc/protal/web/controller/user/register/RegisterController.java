@@ -109,10 +109,10 @@ public class RegisterController {
 		 boolean isPhone = false;
 		if (!StringUtil.isBlank(req.getMobilePhone())) {
 			isPhone = true;
-			checkResult =checkPhoneOrEmail(Register.CHECK_TYPE_PHONE,req.getMobilePhone());
+			checkResult =checkPhoneOrEmail(Register.CHECK_TYPE_PHONE,req.getMobilePhone(),request.getParameter("countryHiddenValue"));
 		}
 		if (!StringUtil.isBlank(req.getEmail())) {
-			checkResult =checkPhoneOrEmail(Register.CHECK_TYPE_EMAIL, req.getEmail());
+			checkResult =checkPhoneOrEmail(Register.CHECK_TYPE_EMAIL, req.getEmail(),"");
 			
 		}
 		if(!CollectionUtil.isEmpty(checkResult)&&!(boolean)checkResult[0]){
@@ -151,11 +151,9 @@ public class RegisterController {
 					VerifyUtil.delRedisValue( PhoneVerify.REGISTER_PHONE_CODE + req.getMobilePhone());//清除验证码
 				}
 				sendRegisterEmaial(req,res);
-				return new ResponseData<Boolean>(
-						ResponseData.AJAX_STATUS_SUCCESS, msg, true);
+				return new ResponseData<Boolean>(res.getUserId(), msg, true);
 			}
-			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
-					msg, false);
+			return new ResponseData<Boolean>(res.getUserId(),msg, false);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
@@ -173,7 +171,8 @@ public class RegisterController {
 		try {
 			String checkType = request.getParameter("checkType");
 			String checkVal = request.getParameter("checkVal");
-			Object[] result = checkPhoneOrEmail(checkType, checkVal);
+			String domain_name = request.getParameter("domain_name");
+			Object[] result = checkPhoneOrEmail(checkType, checkVal,domain_name);
 			Boolean canUse = (Boolean) result[0];
 			String msg =  (String) result[1];
 			return new ResponseData<Boolean>(ResponseData.AJAX_STATUS_SUCCESS,
@@ -215,7 +214,7 @@ public class RegisterController {
 	/**
 	 * 校验手机或邮箱可用
 	 */
-	private Object[] checkPhoneOrEmail(String checkType, String checkVal) {
+	private Object[] checkPhoneOrEmail(String checkType, String checkVal, String domain_name) {
 		UcMembersResponse res = null;
 		try {
 			IUcMembersSV sv = DubboConsumerFactory
@@ -231,6 +230,7 @@ public class RegisterController {
 				UcMembersCheckeMobileRequest phoneReq = new UcMembersCheckeMobileRequest();
 				phoneReq.setTenantId(Constants.DEFAULT_TENANT_ID);
 				phoneReq.setMobilephone(checkVal);
+				phoneReq.setDomain_name(domain_name);
 				res = sv.ucCheckeMobilephone(phoneReq);
 				LOG.info("校验手机返回：" + JSON.toJSONString(res));
 			}
