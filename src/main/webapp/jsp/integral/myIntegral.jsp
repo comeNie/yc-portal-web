@@ -60,7 +60,7 @@
                         <thead>
                         <tr>
                             <%--时间--%>
-                            <th>时间</th>
+                            <th><spring:message code="integral.time"/></th>
                             <%--收入/支出--%>
                             <th><spring:message code="integral.incomeOut"/></th>
                             <%--详细说明--%>
