@@ -40,6 +40,10 @@
 	<!--订单延时-->
 	<dubbo:reference id="iOrderDeplaySV" registry="ycRegistry"
 					 interface="com.ai.yc.order.api.orderdeplay.interfaces.IOrderDeplaySV"/>
+	
+	<!-- 修改订单 -->
+	<dubbo:reference id="iUpdateOrderSV" registry="ycRegistry"
+		interface="com.ai.yc.order.api.updateorder.interfaces.IUpdateOrderSV" />
 	<!-- 注册 -->
 	<dubbo:reference id="iYCUserServiceSV" registry="ycRegistry"
 		interface="com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV" />

@@ -21,7 +21,7 @@ public final class OrderConstants {
 
     //前台查询订单轨迹flag
     public static final String STATECHG_FLAG = "0";
-
+    public static final String IPAAS_ORDER_FILE_DSS = "order-file-dss";
     public static class ErrorCode{
         private ErrorCode(){}
 
