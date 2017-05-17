@@ -21,7 +21,6 @@ define("app/jsp/user/userIndex",function(require, exports, module) {
 					this._queryOrder();
 					//this._queryBalanceInfo();
 					this._queryUserInfo();
-					this._queryIntegration();
 				},
 
 				/*查询余额*/
@@ -32,17 +31,6 @@ define("app/jsp/user/userIndex",function(require, exports, module) {
 		    				data:{},
 		    		        success: function(data) {
 		    		        	
-		    		        }
-		    		});
-				},
-				//获取积分
-				_queryIntegration:function(){
-					ajaxController.ajax({
-						 type:"post",
-		    				url:_base+"/p/security/getIntegration",
-		    				data:{},
-		    		        success: function(data) {
-		    		        	$("#integrationId").html(data['integration']);
 		    		        }
 		    		});
 				},

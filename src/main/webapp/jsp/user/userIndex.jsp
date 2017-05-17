@@ -48,8 +48,9 @@
 											value="${balance/1000}" pattern="#,##0.00#"/></p>
 								</li>
 								<li>
-									<p><spring:message code="ycaccountcenter.userIndex.integration"/>:</p>
-									<p class="red" id="integrationId" style="cursor:pointer;" onclick="location.href='${_base}/p/integral/myIntegral'">></p>
+									 <p><spring:message code="ycaccountcenter.userIndex.credicts"/>:</p>
+									<p class="red" style="cursor:pointer;" onclick="location.href='${_base}/p/integral/myIntegral'"><fmt:formatNumber
+                                        value="${integration}"/></p>
 								</li>
 								<li style="display: none;">
 									<p>:</p>
