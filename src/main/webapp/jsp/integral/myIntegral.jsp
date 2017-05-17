@@ -88,7 +88,11 @@
     <tr>
         <td>{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',logTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
         <td class="red">
+            {{if  integralValue > 0}}
+            +{{:integralValue}}
+            {{else}}
             {{:integralValue}}
+            {{/if}}
         </td>
         <td>
             {{:integralSource}}
