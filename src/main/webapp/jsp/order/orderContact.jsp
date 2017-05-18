@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,8 +24,91 @@
     <%@ include file="/inc/topHead.jsp" %>
     <%@ include file="/inc/topMenu.jsp" %>
     <!--主体-->
+    <!--新增信息弹窗--> 
+		<div class="eject-big">
+		  <div class="prompt-samll add-msg" id="add-msg">
+		    <div class="prompt-samll-title"><spring:message code="yccontactway.addinfo" /></div>
+		    <div class="prompt-samll-confirm">
+		      <ul>
+		        <li class="form-lable">
+		               <ul>
+		              <li>
+		                <p class="word"><spring:message code="yccontactway.username" />:</p>
+		                <p><input type="text" class="int-text int-xlarge radius" placeholder="<spring:message code="yccontactway.placeholder.username" />" id="userNameAdd" onblur="checkUserName('userNameAdd','userNameAddErrMsg','userNameAddErrorText')"/></p>
+		              	<label id="userNameAddErrMsg" style="display: none;"><span class="ash" id="userNameAddErrorText"></span></label>
+		              </li>
+		              <li>
+		                <p class="word"><spring:message code="yccontactway.mobilePhone" />:</p>
+		                <p>
+		                  <div class="select-wrap pull-left mr-20 contact-select">
+		                    <select id="country-add" class="select select-in"></select>
+		                  </div>
+		                  <input type="text" class="int-text int-in-bi radius pull-left" placeholder="<spring:message code="yccontactway.placeholder.mobilePhone" />" id="telephoneAdd" onblur="checkphone('telephoneAdd','telephoneAddErrMsg','telephoneAddErrorText','country-add')"/>
+		               	 <label id="telephoneAddErrMsg" style="display: none;"><span class="ash" id="telephoneAddErrorText"></span></label>
+		                </p>
+		                
+		              </li>
+		              <li>
+		                <p class="word"><spring:message code="yccontactway.email" />:</p>
+		                <p><input type="text" class="int-text int-xlarge radius" placeholder="<spring:message code="yccontactway.placeholder.email" />" id="emailAdd" onblur="checkUserEmail('emailAdd','emailAddErrMsg','emailAddErrorText')"/></p>
+		              	<label id="emailAddErrMsg" style="display: none;"><span class="ash" id="emailAddErrorText"></span></label>
+		              </li>
+		            </ul>
+		        </li>
+		        <li class="eject-btn">
+		          <input type="button" id="saveButton" class="btn btn-green btn-100 radius20" value="<spring:message code="yccontactway.js.showOkValueMsg" />" >
+		          <input type="button" id="add-cancel" class="btn border-green btn-100 radius20" value="<spring:message code="yccontactway.js.cancel" />">
+		        </li>   
+		      </ul>
+		    </div>
+		  </div>  
+		  <div class="mask" id="eject-mask"></div>
+		</div>
+<!--编辑信息弹出框-->	
+	<div class="eject-big">
+	  <div class="prompt-samll add-msg" edit-msg>
+	    <div class="prompt-samll-title"><spring:message code="yccontactway.editinfo" /></div>
+	    <div class="prompt-samll-confirm">
+	      <ul>
+	        <li class="form-lable">
+	            <ul>
+	              <li>
+	                <p class="word"><spring:message code="yccontactway.username" />:</p>
+	                <p><input type="text" class="int-text int-xlarge radius" id="contactUserName" placeholder="<spring:message code="yccontactway.placeholder.username" />" onblur="checkUserName('contactUserName','userNameErrMsg','userNameErrorText')"/></p>
+	              	<label id="userNameErrMsg" style="display: none;"><span class="ash" id="userNameErrorText"></span></label>
+	              </li>
+	              <li>
+	                <p class="word"><spring:message code="yccontactway.mobilePhone" />:</p>
+	                <p>
+	                  <div class="select-wrap pull-left mr-20 contact-select">
+	                    <select id="country-edit" class="select select-in"></select>
+	                  </div>
+	                  <input type="text" class="int-text int-in-bi radius pull-left" id="telephone" placeholder="<spring:message code="yccontactway.placeholder.mobilePhone" />号" onblur="checkphone('telephone','telephoneErrMsg','telephoneErrorText','country-edit')"/>
+	                  <label id="telephoneErrMsg" style="display: none;"><span class="ash" id="telephoneErrorText"></span></label>
+	                </p>
+	              </li>
+	              <li>
+	                <p class="word"><spring:message code="yccontactway.email" />:</p>
+	                <p>
+	                	<input type="text" class="int-text int-xlarge radius" id="email" placeholder="<spring:message code="yccontactway.placeholder.email" />" onblur="checkUserEmail('email','emailErrMsg','emailErrorText')"/>
+	                	<input type="hidden" id="isDefaultEdit"/>
+	                </p>
+	             	 <label id="emailErrMsg" style="display: none;"><span class="ash" id="emailErrorText"></span></label>
+	              </li>
+	            </ul>
+	        </li>
+	        <li class="eject-btn">
+	          <input type="button" class="btn btn-green btn-100 radius20" value="<spring:message code="yccontactway.js.showOkValueMsg" />"  onclick="confirmEdit()">
+	          <input type="button" class="btn border-green btn-100 radius20" value="<spring:message code="yccontactway.js.cancel" />" edit-cancel>
+	        </li>   
+	      </ul>
+	    </div>
+	  </div>  
+	  <div class="mask" eject-mask></div>
+	</div>	
+<!--/弹出结束-->
     <!-- 联系人 -->
-    <div class="placeorder-container" id="contactPage">
+    <div class="placeorder-container contact-interpret" id="contactPage">
         <div class="placeorder-wrapper">
             <!--步骤-->
             <div class="place-bj">
@@ -63,34 +145,37 @@
                 <div class="right-list-title pl-20 none-border">
                     <p><spring:message code="order.ContactInfo"/></p>
                 </div>
-
                 <input type="hidden"  name="gnCountryId" value="${Contact.gnCountryId}" />
-                <form id="contactForm">
-                <div class="oral-form" id="saveContactDiv">
-                    <ul>
-                        <li>
-                            <input type="hidden" name="contactId" value="${Contact.contactId}"/>
-                            <p><input id="userName" name="userName" value="${Contact.userName}" maxlength="10" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterName"/>"></p>
-                            <p><select id="globalRome" name="gnCountryId" class="select select-in radius"></select></p>
-                            <p><input id="mobilePhone" name="mobilePhone"  value="${Contact.mobilePhone}" pattern="^1\d{10}$" type="text" class="int-text int-in-bi radius" placeholder="<spring:message code="order.EnterPhone"/>"></p>
-                            <p class="mr-0"><input id="email" name="email" value="${Contact.email}"  maxlength="64" type="text" class="int-text int-large-mail radius" placeholder="<spring:message code="order.EnterEmail"/>"></p>
-                        </li>
-                        <li class="right-btn"><input id="saveContact" maxlength="18" type="button" class="btn radius20 border-blue btn-50" value="<spring:message code="order.Save"/>"></li>
-
-                    </ul>
-                </div>
-                </form>
-
-                <div class="oral-form" id="editContactDiv" style="display: none;">
-                    <ul>
-                        <li>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p class="right"><a href="javaScript:void(0);" id="editContact"><i class="icon-edit"></i></a></p>
-                        </li>
-                    </ul>
-                </div>
+            	<div class="oral-form">
+				     <ul>
+				        <c:forEach items="${contactList}" var="contactInfo">
+					         <li contact-way>
+				                  <c:if test="${contactInfo.isDefault==1}">
+				                  	  <p><input type="radio" name="checkContect" value="${contactInfo.userName},${contactInfo.gnCountryId},${contactInfo.mobilePhone},${contactInfo.email}" checked></p>
+				                  	  <p>${contactInfo.userName}</p>
+							          <p>${contactInfo.mobilePhone}</p>
+							          <p>${contactInfo.email}</p>
+							          <a class="right-btn mr-20 undis" edit onclick="editContact('${contactInfo.contactId}')">编辑</a>
+				                  </c:if>
+				                  <c:if test="${contactInfo.isDefault==0}">
+					                  <div style="display:none;" name="moreConcats">
+					                  		 <p><input type="radio" name="checkContect" value="${contactInfo.userName},${contactInfo.gnCountryId},${contactInfo.mobilePhone},${contactInfo.email}"></p>
+					                  		 <p>${contactInfo.userName}</p>
+									          <p>${contactInfo.mobilePhone}</p>
+									          <p>${contactInfo.email}</p>
+								              <a class="right-btn undis" onclick="setDefaultValue('${contactInfo.contactId}')">设为默认的地址</a>
+											  <a class="right-btn mr-20 undis" edit onclick="editContact('${contactInfo.contactId}')">编辑</a>
+					                  </div>
+				                  </c:if>
+					           </li>
+				         </c:forEach>
+				       </ul>
+			         	<div class="operate">
+				                <a href="javascript:void(0)" class="opera-green mr-10"  id="upContect" onclick="upConcats()" style="display:none;" up >收起</a>
+				                <a href="javascript:void(0)" class="opera-green mr-10"  id="moreButId" onclick="moreConcats()" >更多</a>
+								<a href="javascript:void(0)" class="opera-green" id="add-person">新增</a>
+			           </div>
+			  	</div>
             </div>
             <!--白色背景-->
             <div class="white-bj">
@@ -187,8 +272,6 @@
                     </ul>
                 </div>
             </div>
-
-
             <div class="recharge-btn order-btn placeorder-btn">
                 <input type="button" id="toCreateOrder" skip="${skip}" class="btn btn-yellow btn-xxxlarge radius10" value="<spring:message code="order.Back"/>">
                 <input type="button" id="submitOrder" class="btn btn-green btn-xxxlarge radius10" value="<spring:message code="order.SubmitOrder"/>">
@@ -200,17 +283,34 @@
     <%@include file="/inc/indexFoot.jsp"%>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
+<script type="text/javascript" src="${_base}/resources/template/scripts/modular/contact.js"></script>
 <script type="text/javascript">
-    (function () {
-        var pager;
-        seajs.use(['app/jsp/order/orderContact'], function(orderContactPage) {
-            pager = new orderContactPage({element : document.body});
-            pager.render();
-        });
-        //IE8的输入框提示信息兼容
-        $("input,textarea").placeholder();
-    })();
-
+var countryCode = "";
+var provinceCode ="";
+var cnCityCode ="";
+var contactInfoMsg ={
+		"userNameEmptyError" : '<spring:message code="yccontactway.username.empty"/>',
+		"userNameExistError" : '<spring:message code="yccontactway.username.exist"/>',
+		"emailEmptyError" : '<spring:message code="yccontactway.email.empty"/>',
+		"emailExistError" : '<spring:message code="yccontactway.email.exist"/>',
+		"emailOKError" : '<spring:message code="yccontactway.email.OK"/>',
+		"phoneEmptyError" : '<spring:message code="yccontactway.mobilephone.empty"/>',
+		"phoneExistError" : '<spring:message code="yccontactway.mobilephone.exist"/>',
+		"phoneOKError" : '<spring:message code="yccontactway.mobilephone.OK"/>',
+		"showOK" : '<spring:message code="yccontactway.js.showOkValueMsg"/>',
+		"showCancal" : '<spring:message code="yccontactway.js.cancel"/>',
+		"saveDataFail" : '<spring:message code="yccontactway.save.error.msg"/>',
+};
+(function () {
+   var pager;
+   seajs.use(['app/jsp/order/orderContact'], function(orderContactPage) {
+       pager = new orderContactPage({element : document.body});
+       pager.render();
+   });
+   //IE8的输入框提示信息兼容
+  // $("input,textarea").placeholder();
+})();
+	
     function textLimit(field, maxlimit) {
         // 函数，3个参数，表单名字，表单域元素名，限制字符；
         if (field.value.length > maxlimit){

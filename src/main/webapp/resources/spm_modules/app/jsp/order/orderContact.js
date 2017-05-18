@@ -1,18 +1,46 @@
 define('app/jsp/order/orderContact', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
-        Widget = require('arale-widget/1.2.0/widget'),
-        AjaxController = require('opt-ajax/1.0.0/index');
+    Widget = require('arale-widget/1.2.0/widget'),
+    Dialog = require("optDialog/src/dialog"),
+    AjaxController = require('opt-ajax/1.0.0/index');
     require("jsviews/jsrender.min");
-
+   
     require("jquery-validation/1.15.1/jquery.validate");
     require("app/util/aiopt-validate-ext");
-    require('jquery-i18n/1.2.2/jquery.i18n.properties.min');
+   
     var CountWordsUtil = require("app/util/countWords");
-
+    require('webuploader/webuploader');
 
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
+    var uploader = null;
+    $(".portrait-file").addClass("webuploader-element-invisible");
+    var showMsg = function(msg){
+    	var d = Dialog({
+			content:msg,
+			icon:'fail',
+			okValue:contactInfoMsg.showOK,
+			title: "提示",
+			ok:function(){
+				d.close();
+			}
+		});
+		d.showModal();
+    };
+    var showMsg2 = function(msg){
+    	var d = Dialog({
+			content:msg,
+			icon:'success',
+			okValue: companyInfoMsg.showOkValueMsg,
+			title: companyInfoMsg.showTitleMsg,
+			ok:function(){
+				d.close();
+			}
+		});
+		d.showModal();
+    };
+    loadCountry("","country-add");
     var orderContactPager = Widget.extend({
         //属性，使用时由类的构造函数传入
         attrs: {
@@ -22,189 +50,63 @@ define('app/jsp/order/orderContact', function (require, exports, module) {
 
         //事件代理
         events: {
-            "click #saveContact":"_saveContact",
-            "click #editContact":"_editContactDiv",
-            "click #globalRome": "_setPattern",
             "click #submitOrder":"_addTextOrder",
-            "click #toCreateOrder": "_toCreateOrder"
+            "click #toCreateOrder": "_toCreateOrder",
+            "click #deleteId": "_deleteClss",
+            "click [id='saveButton']":"_saveContactInfo"
         },
 
 
         //重写父类
         setup: function () {
             orderContactPager.superclass.setup.call(this);
-            //初始化国际化
-            $.i18n.properties({//加载资浏览器语言对应的资源文件
-                name: ["orderInfo"], //资源文件名称，可以是数组
-                path: _i18n_res, //资源文件路径
-                mode: 'both',
-                cache: true,
-                checkAvailableLanguages: true,
-                language: currentLan
-            });
-            this._globalRome();
-
-            var formValidator=this._initValidate();
-            // $(":input").bind("focusout",function(){
-            //     formValidator.element(this);
-            // });
-
-
         },
-
-        _initValidate:function(){
-            var formValidator=$("#contactForm").validate({
-                focusInvalid:true,
-                onfocusout: function(element){
-                    $(element).valid();
-                },
-                errorPlacement: function(error, element) {
-                    if (element.is(":checkbox")) {
-                        error.appendTo(element.parent().parent().parent());
-                    } else {
-                        error.insertAfter(element);
-                    }
-
-                },
-                highlight: function(element, errorClass) {
-
-                },
-                unhighlight: function(element, errorClass) {
-
-                } ,
-                errorClass:"x-label",
-                showErrors:function(errorMap,errorList) {
-                    $('ul li p label').remove()//删除所有隐藏的li p label标签
-                    this.defaultShowErrors();
-                    $('ul li p label').each(function (index,element) {
-                        if (index > 0) {
-                            var _parentElement = element.parentNode;
-                            if(_parentElement){
-                                _parentElement.removeChild(element);
-                            }
-                            // element.remove();
-                        }
-
-                    });
-                },
-                rules: {
-                    userName: {
-                        required:true,
-                    },
-                    mobilePhone: {
-                        required:true,
-                    },
-                    email: {
-                        required:true,
-                        email:true
-                    }
-                },
-                messages: {
-                    userName: {
-                        required: $.i18n.prop('order.place.error.name')//"请输入姓名",
-                    },
-                    mobilePhone: {
-                        required: $.i18n.prop('order.place.error.phone'),//"请输入手机号",
-                        pattern: $.i18n.prop('order.place.error.phone1')//"请输入正确的手机号"
-                    },
-                    email: {
-                        required: $.i18n.prop('order.place.error.email'),//"请输入邮箱",
-                        email: $.i18n.prop('order.place.error.email1')//"请输入正确的邮箱"
-                    }
-                }
-            });
-
-            return formValidator;
+        
+        _deleteClss:function(){
+        	$("#deleteeject-mask").show();
         },
-
         //保存联系人
-        _saveContact:function() {
-            var _this= this;
-            var formValidator=_this._initValidate();
-            formValidator.form();
-            if(!$("#contactForm").valid()){
-                //alert('验证不通过！！！！！');
-               return;
-            }
-
-            //发请求保存联系人
-            ajaxController.ajax({
-                type: "post",
-                url: _base + "/p/order/saveContact",
-                data: $("#contactForm").serializeArray(),
-                success: function (data) {
-                    if ("1" === data.statusCode) {
-                        //成功
-                        $("#saveContactDiv").hide();
-                        $("#editContactDiv").find('p').eq(0).html($("#userName").val());
-                        $("#editContactDiv").find('p').eq(1).html("+"+$("#globalRome").find('option:selected').attr('code')+$("#mobilePhone").val());
-                        $("#editContactDiv").find('p').eq(2).html($("#email").val());
-                        $("#editContactDiv").show();
-                    }
-                }
-            });
-
-
-        },
-
-        //编辑联系人
-        _editContactDiv:function() {
-            $("#saveContactDiv").show();
-            $("#editContactDiv").hide();
-        },
-
-        //国际编码
-        _globalRome:function() {
-            var gnCountryId = $("input[name='gnCountryId']").val();
-            $.getJSON(_base + "/resources/spm_modules/app/jsp/order/globalRome.json",function(data){
-                $.each(data.row,function(rowIndex,row){
-                    var selObj = $("#globalRome");
-                    var text;
-                    if (currentLan.indexOf("zh") >= 0) {
-                        text = row["COUNTRY_NAME_CN"];
-                    } else {
-                        text = row["COUNTRY_NAME_EN"];
-                    }
-
-                    if (gnCountryId == row["ID"]) {
-                        selObj.append("<option selected='selected' value='"+row["ID"]+"' code='"+row["COUNTRY_CODE"]+"' exp='" +row["REGULAR_EXPRESSION"]+"'>"+text+"   +"+row["COUNTRY_CODE"]+"</option>");
-                        $("#mobilePhone").attr('pattern', row["REGULAR_EXPRESSION"]);
-                    } else {
-                        selObj.append("<option value='"+row["ID"]+"' code='"+row["COUNTRY_CODE"]+"' exp='" +row["REGULAR_EXPRESSION"]+"'>"+text+"   +"+row["COUNTRY_CODE"]+"</option>");
-                    }
-                });
-            });
-
-            // if (gnCountryId != '') {
-            //     $("#globalRome").val("18");
-            //     this._setPattern();
-            // }
-        },
-
-
-        //根据国家设置号码匹配规则
-        _setPattern:function() {
-            var pattern = $("#saveContactDiv").find('option:selected').attr('exp');
-            $("#mobilePhone").attr('pattern',pattern);
-        },
-
+    	_saveContactInfo:function (){
+    		var checkphoneflag = checkphone('telephoneAdd','telephoneAddErrMsg','telephoneAddErrorText','country-add');
+    		var checkemailflag = checkUserEmail('emailAdd','emailAddErrMsg','emailAddErrorText');
+    		var checkusernameflag = checkUserName('userNameAdd','userNameAddErrMsg','userNameAddErrorText');
+    		if(checkphoneflag&&checkemailflag&&checkusernameflag){
+    			$.ajax({
+    				type : "post",
+    				processing : false,
+    				message : "保存",
+    				url : _base + "/p/contactway/saveContactInfo",
+    				data : {
+    					'gnCountryId':$("#country-add").val(),
+    					'userName':$("#userNameAdd").val(),
+    					'email':$("#emailAdd").val(),
+    					'mobilePhone':$("#telephoneAdd").val(),
+    				},
+    				success : function(json) {
+    					if (json.statusCode=="000000") {
+    						window.location.href =  _base + "/p/order/contact?skip=-1";
+    					}else if(json.statusCode=="400001"){
+    						showMsg(json.statusInfo);
+    					}else{
+    						showMsg(contactInfoMsg.saveDataFail);
+    					}
+    				}
+    			})
+    		}
+    	},
+        
         //提交订单
         _addTextOrder:function(){
             var _this= this;
-            var formValidator=_this._initValidate();
-            formValidator.form();
-            if(!$("#contactForm").valid()){
-                //alert('验证不通过！！！！！');
-                return formValidator.focusInvalid();
-            }
-
             var translateType = $("#transType").val();
             var contactInfo = {};
             $("#saveContactDiv").hide();
-            contactInfo.contactName=$("#userName").val();
-            contactInfo.contactTel="+"+$("#globalRome").find('option:selected').attr('code')+" "+$("#mobilePhone").val();
-            contactInfo.contactEmail=$("#email").val();
-
+            //获取联系方式信息
+           var info =  $('input[name=checkContect]:checked').val(); 
+           var contactList = info.split(",");
+            contactInfo.contactName=contactList[0];
+            contactInfo.contactTel="+"+contactList[1]+" "+contactList[2];
+            contactInfo.contactEmail=contactList[3];
             ajaxController.ajax({
                 type: "post",
                 processing: true,
@@ -253,3 +155,265 @@ define('app/jsp/order/orderContact', function (require, exports, module) {
 
     module.exports = orderContactPager;
 });
+var contactId="0";
+function loadCountry(countryCode,countryId){
+	$.ajax({
+		type : "post",
+		processing : false,
+		message : "ssss",
+		url : _base + "/userCommon/loadCountry",
+		data : {},
+		success : function(json) {
+			var data = json.data;
+			if (json.statusCode == "1" && data) {
+				var html = [];
+				for (var i = 0; i < data.length; i++) {
+					var t = data[i];
+					var _code = t.countryCode;
+					var name = t.countryNameCn;
+					if ("zh_CN" != currentLan) {
+						name = t.countryNameEn;
+					}
+					if(_code==countryCode){
+						html.push('<option  selected = "selected"  country_value="'+t.countryValue+'" reg="'
+								+ t.regularExpression
+								+ '" value="' + _code
+								+ '" >' +name + '+'
+								+  _code + '</option>');
+					}else{
+						html.push('<option country_value="'+t.countryValue+'" reg="'
+								+ t.regularExpression
+								+ '" value="' + _code
+								+ '" >' +name + '+'
+								+  _code + '</option>');
+					}
+				}
+				$("#"+countryId).html(html.join(""));
+			}
+		}
+	});
+}
+function checkphone(inputId,labelId,spanId,countryId){
+	var telephone  = $("#"+inputId).val();
+	var flag = true;
+	if($.trim(telephone)==null||$.trim(telephone)==""){
+		$("#"+labelId).show();
+		$("#"+spanId).text(contactInfoMsg.phoneEmptyError);
+		flag = false; 
+	}else{
+		var country = $("#"+countryId).find("option:selected");
+		var reg = country.attr("reg");
+		var countryCode = country.val();
+		reg = eval('/' + reg + '/');
+		phoneVal =countryCode+telephone;
+		if (!reg.test(phoneVal)) {
+			$("#"+labelId).show();
+			$("#"+spanId).text(contactInfoMsg.phoneOKError);
+			flag = false;
+		}else{
+			$.ajax({
+				type : "post",
+				processing : false,
+				async:false,
+				url : _base + "/p/contactway/checkUserPhone",
+				data : {
+					"telephone" :telephone,
+					'contactId':contactId
+				},
+				success : function(json) {
+					if (json.statusCode!="000000") {
+						$("#"+labelId).show();
+						$("#"+spanId).text(contactInfoMsg.phoneExistError);
+					}else{
+						$("#"+labelId).hide();
+					}
+				}
+			});
+		}
+	}
+	return flag;
+}
+function checkUserEmail(inputId,labelId,spanId){
+	var email  = $("#"+inputId).val();
+	var flag = true;
+	if(email==null||email==""){
+		$("#"+labelId).show();
+		$("#"+spanId).text(contactInfoMsg.emailEmptyError);
+		flag = false; 
+	}else{
+		if (!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
+				.test(email)) {
+			$("#"+labelId).show();
+			$("#"+spanId).text(contactInfoMsg.emailOKError);
+			flag = false; 
+		}else{
+			$.ajax({
+				type : "post",
+				processing : false,
+				message : "sss",
+				url : _base + "/p/contactway/checkUserEmail",
+				data : {
+					'userEmail' : email,
+					'contactId':contactId
+				},
+				success : function(json) {
+					if (json.statusCode!="000000") {
+						$("#"+labelId).show();
+						$("#"+spanId).text(contactInfoMsg.phoneExistError);
+						flag = false; 
+					}else{
+						$("#"+labelId).hide();
+						flag = true;
+					}
+				}
+			})
+		}
+	}
+	return flag;
+}
+function delContact(id){
+	contactId = id;	
+}
+//删除联系人
+function confirmDel(){
+	$.ajax({
+		type : "post",
+		processing : false,
+		message : "删除",
+		url : _base + "/p/contactway/delcontactway",
+		data : {
+			'contactId' : contactId
+		},
+		success : function(json) {
+			if (json.statusCode=="000000") {
+				window.location.href =  _base + "/p/order/contact?skip=-1";
+			}else{
+				alert("失败")
+			}
+		}
+	})
+}
+//关闭删除弹出框时关闭遮罩层
+function closeDilog(){
+	$("#deleteeject-mask").hide();
+}
+function checkUserName(inputId,labelId,spanId){
+	var userName  = $("#"+inputId).val();
+	var flag = true;
+	if(userName==null||userName==""){
+		$("#"+labelId).show();
+		$("#"+spanId).text(contactInfoMsg.userNameEmptyError);
+		flag = false; 
+	}else{
+		$.ajax({
+			type : "post",
+			processing : false,
+			message : "sss",
+			url : _base + "/p/contactway/checkUserName",
+			data : {
+				'userName' : userName,
+				'contactId':contactId
+			},
+			success : function(json) {
+				if (json.statusCode!="000000") {
+					$("#"+labelId).show();
+					$("#"+spanId).text(contactInfoMsg.userNameExistError);
+					flag = false; 
+				}else{
+					$("#"+labelId).hide();
+					flag = true;
+				}
+			}
+		})
+	}
+	return flag;
+}
+//编辑联系人
+function editContact(id){
+	contactId = id;
+	$.ajax({
+		type : "post",
+		processing : false,
+		message : "sss",
+		url : _base + "/p/contactway/editContactway",
+		data : {
+			'contactId' : contactId
+		},
+		success : function(json) {
+			if (json.statusCode) {
+				loadCountry(json.data.gnCountryId,"country-edit");
+				$("#contactUserName").val(json.data.userName);
+				$("#email").val(json.data.email);
+				$("#telephone").val(json.data.mobilePhone);
+				$("#isDefaultEdit").val(json.data.isDefault);
+			}else{
+				alert("失败")
+			}
+		}
+	})
+}
+function confirmEdit(){
+	var checkphoneflag = checkphone('telephone','telephoneErrMsg','telephoneErrorText','country-edit');
+	var checkemailflag = checkUserEmail('email','emailErrMsg','emailErrorText');
+	var checkusernameflag = checkUserName('contactUserName','userNameErrMsg','userNameErrorText');
+	if(checkphoneflag&&checkemailflag&&checkusernameflag){
+		$.ajax({
+			type : "post",
+			processing : false,
+			message : "",
+			url : _base + "/p/contactway/updatecontactway",
+			data : {
+				'contactId' : contactId,
+				'gnCountryId':$("#country-edit").val(),
+				'userName':$("#contactUserName").val(),
+				'email':$("email").val(),
+				'mobilePhone':$("#telephone").val(),
+				'isDefault':$("#isDefaultEdit").val()
+			},
+			success : function(json) {
+				if (json.statusCode) {
+					window.location.href =  _base + "/p/order/contact?skip=-1";
+				}else{
+					alert("失败")
+				}
+			}
+		})
+	}
+	
+}
+function setDefaultValue(id){
+	var isdefault = 1;
+	$.ajax({
+		type : "post",
+		processing : false,
+		message : "删除",
+		url : _base + "/p/contactway/setDefault",
+		data : {
+			'contactId' : id,
+			'isDefault':isdefault
+		},
+		success : function(json) {
+			if (json.statusCode=="000000") {
+				window.location.href =  _base + "/p/order/contact?skip=-1";
+			}else{
+				alert("失败")
+			}
+		}
+	})
+}
+function moreConcats(){
+	$('div[name=moreConcats]').each(function(){
+		$(this).show();
+	});
+	//将收起按钮展示，更多按钮隐藏
+	$("#moreButId").hide();
+	$("#upContect").show();
+}
+function upConcats(){
+	$('div[name=moreConcats]').each(function(){
+		$(this).hide();
+	});
+	//将收起按钮展示，更多按钮隐藏
+	$("#moreButId").show();
+	$("#upContect").hide();
+}
