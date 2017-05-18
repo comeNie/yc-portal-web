@@ -126,7 +126,7 @@ dependencies {
     //用户收藏
     compile 'com.ai.yc.user:usercollectiontranslation:2.0-SNAPSHOT'
     //译员服务
-    compile 'com.ai.yc.translator:translatorservice:1.1-SNAPSHOT'
+    compile 'com.ai.yc.translator:translatorservice:2.0-SNAPSHOT'
 	//企业
 	 compile 'com.ai.yc.user:usercompany:2.0-SNAPSHOT'
 
