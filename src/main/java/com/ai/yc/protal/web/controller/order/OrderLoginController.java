@@ -53,7 +53,7 @@ public class OrderLoginController {
             contactReq.setUserId(UserUtil.getUserId());
             YCContactInfoResponse contactRes = iYCUserServiceSV.searchYCContactInfo(contactReq);
             if (!CollectionUtil.isEmpty(contactRes.getUsrContactList())) {
-                uiModel.addAttribute("Contact", contactRes.getUsrContactList());
+                uiModel.addAttribute("contactList", contactRes.getUsrContactList());
             }
             uiModel.addAttribute("TransType", transType);
 
