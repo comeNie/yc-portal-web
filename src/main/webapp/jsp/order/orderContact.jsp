@@ -151,18 +151,18 @@
 				        <c:forEach items="${contactList}" var="contactInfo">
 					         <li contact-way>
 				                  <c:if test="${contactInfo.isDefault==1}">
-				                  	  <p><input type="radio" name="checkContect" value="${contactInfo.userName},${contactInfo.gnCountryId},${contactInfo.mobilePhone},${contactInfo.email}" checked></p>
-				                  	  <p>${contactInfo.userName}</p>
-							          <p>${contactInfo.mobilePhone}</p>
-							          <p>${contactInfo.email}</p>
+				                  	  <p style="width:5%"><input type="radio" name="checkContect" value="${contactInfo.userName},${contactInfo.gnCountryId},${contactInfo.mobilePhone},${contactInfo.email}" checked></p>
+				                  	  <p style="width:10%">${contactInfo.userName}</p>
+							          <p style="width:10%">${contactInfo.mobilePhone}</p>
+							          <p style="width:20%">${contactInfo.email}</p>
 							          <a class="right-btn mr-20 undis" edit onclick="editContact('${contactInfo.contactId}')">编辑</a>
 				                  </c:if>
 				                  <c:if test="${contactInfo.isDefault==0}">
 					                  <div style="display:none;" name="moreConcats">
-					                  		 <p><input type="radio" name="checkContect" value="${contactInfo.userName},${contactInfo.gnCountryId},${contactInfo.mobilePhone},${contactInfo.email}"></p>
-					                  		 <p>${contactInfo.userName}</p>
-									          <p>${contactInfo.mobilePhone}</p>
-									          <p>${contactInfo.email}</p>
+					                  		 <p style="width:5%"><input type="radio" name="checkContect" value="${contactInfo.userName},${contactInfo.gnCountryId},${contactInfo.mobilePhone},${contactInfo.email}"></p>
+					                  		 <p style="width:10%">${contactInfo.userName}</p>
+									          <p style="width:10%">${contactInfo.mobilePhone}</p>
+									          <p style="width:20%">${contactInfo.email}</p>
 								              <a class="right-btn undis" onclick="setDefaultValue('${contactInfo.contactId}')">设为默认的地址</a>
 											  <a class="right-btn mr-20 undis" edit onclick="editContact('${contactInfo.contactId}')">编辑</a>
 					                  </div>

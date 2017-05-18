@@ -84,7 +84,7 @@ define('app/jsp/order/orderContact', function (require, exports, module) {
     				},
     				success : function(json) {
     					if (json.statusCode=="000000") {
-    						window.location.href =  _base + "/p/order/contact?skip=-1";
+    						window.location.reload();
     					}else if(json.statusCode=="400001"){
     						showMsg(json.statusInfo);
     					}else{
@@ -274,29 +274,7 @@ function checkUserEmail(inputId,labelId,spanId){
 function delContact(id){
 	contactId = id;	
 }
-//删除联系人
-function confirmDel(){
-	$.ajax({
-		type : "post",
-		processing : false,
-		message : "删除",
-		url : _base + "/p/contactway/delcontactway",
-		data : {
-			'contactId' : contactId
-		},
-		success : function(json) {
-			if (json.statusCode=="000000") {
-				window.location.href =  _base + "/p/order/contact?skip=-1";
-			}else{
-				alert("失败")
-			}
-		}
-	})
-}
-//关闭删除弹出框时关闭遮罩层
-function closeDilog(){
-	$("#deleteeject-mask").hide();
-}
+
 function checkUserName(inputId,labelId,spanId){
 	var userName  = $("#"+inputId).val();
 	var flag = true;
@@ -366,13 +344,13 @@ function confirmEdit(){
 				'contactId' : contactId,
 				'gnCountryId':$("#country-edit").val(),
 				'userName':$("#contactUserName").val(),
-				'email':$("email").val(),
+				'email':$("#email").val(),
 				'mobilePhone':$("#telephone").val(),
 				'isDefault':$("#isDefaultEdit").val()
 			},
 			success : function(json) {
 				if (json.statusCode) {
-					window.location.href =  _base + "/p/order/contact?skip=-1";
+					 window.location.reload();
 				}else{
 					alert("失败")
 				}
@@ -394,7 +372,7 @@ function setDefaultValue(id){
 		},
 		success : function(json) {
 			if (json.statusCode=="000000") {
-				window.location.href =  _base + "/p/order/contact?skip=-1";
+				 window.location.reload();
 			}else{
 				alert("失败")
 			}
