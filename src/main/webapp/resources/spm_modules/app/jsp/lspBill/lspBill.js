@@ -1,4 +1,4 @@
-define('app/jsp/balance/account', function (require, exports, module) {
+define('app/jsp/lspBill/lspBill', function (require, exports, module) {
     'use strict';
     var $=require('jquery'),
 	    Widget = require('arale-widget/1.2.0/widget'),
@@ -64,7 +64,7 @@ define('app/jsp/balance/account', function (require, exports, module) {
 		_getIncomerList:function() {
         	var _this = this;
           	$("#pagination-ul").runnerPagination({
-	 			url: _base+"/p/balance/accountList",
+	 			url: _base+"/p/lspbill/lspBillList",
 	 			method: "POST",
 	 			dataType: "json",
 	 			renderId:"searchAccountData",

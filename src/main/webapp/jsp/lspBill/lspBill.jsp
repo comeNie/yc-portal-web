@@ -28,6 +28,7 @@
                 <div class="right-list-title pb-10 pl-20">
                     <p>工作记录</p>
                 </div>
+            <form id="accountQuery" action="">
                 <div class="query-order" id="dates">
                     <ul>
                         <li class="left">
@@ -41,8 +42,8 @@
                             <p><a href="#" id="oneyear" onclick="todate(this,oneyear)"><spring:message code="account.one.year"/></a></p>
                         </li>
                         <li class="right">
-                            <span class="total-balance">收入:1244.28CNY</span>
-                            <span class="total-balance">支出:122.33USD</span>
+                            <p><spring:message code="account.income"/>:<span id="income" style="font-size: 12px;line-height: 25px"></span></p>
+                            <p><spring:message code="account.expenditure"/>:<span id="out" style="font-size: 12px;line-height: 25px"></span></p>
                             <p><a href="#" class="is" id="screen-a">高级筛选</a><a href="#" class="is" id="screen-b" style="display:none;">收起筛选</a><i class="icon-angle-down"></i></p>
                         </li>
                     </ul>
@@ -57,7 +58,8 @@
                             <p><input style="width: 140px" id="endDate" name="endDate" type="text" value="${endTime}" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',readOnly:true,dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'beginDate\')}',maxDate:'%y-%M-%d',onpicked:function(dp){endtime();}})"></p>
                         </li>
                         <li class="left li-xlarge" id="incomes">
-                            <%--收支--%>
+                            <input type="hidden" id="incomeFlag" name="incomeFlag" value=""/>
+                        <%--收支--%>
                             <p><spring:message code="account.income.expense"/>:</p>
                             <%--全部--%>
                             <p class="current"> <a id="all" aval="" href="#" onclick="shouzhi(this)"> <spring:message code="account.all"/> </a></p>
@@ -67,21 +69,23 @@
                             <p><a href="#" id="zhichu" aval="0" onclick="shouzhi(this)"><spring:message code="account.expenditure"/></a></p>
                         </li>
                         <li class="left li-xlarge" id="types">
-                            <%--类型--%>
+                            <input type="hidden" id="optType" name="optType" value=""/>
+                        <%--类型--%>
                             <p><spring:message code="account.type"/>:</p>
                                 <%--全部--%>
                             <p class="current"><a href="#" id="allType" aval="" onclick="totype(this)"><spring:message code="account.all"/> </a></p>
                                 <%--接单--%>
-                            <p><a href="#" id="jiedan" aval="1" onclick="totype(this)">接单</a></p>
+                            <p><a href="#" id="jiedan" aval="5" onclick="totype(this)">接单</a></p>
                                 <%--退款--%>
-                            <p><a href="#" id="tuikuan" aval="3" onclick="totype(this)">退款</a></p>
+                            <p><a href="#" id="tuikuan" aval="4" onclick="totype(this)">退款</a></p>
                                 <%--译员支出--%>
-                            <p><a href="#" id="transFee" aval="2" onclick="totype(this)">译员支出</a></p>
+                            <p><a href="#" id="transFee" aval="6" onclick="totype(this)">译员支出</a></p>
                                 <%--平台佣金--%>
-                            <p><a href="#" id="platFee" aval="4" onclick="totype(this)">平台佣金</a></p>
+                            <p><a href="#" id="platFee" aval="7" onclick="totype(this)">平台佣金</a></p>
                         </li>
                     </ul>
                 </div>
+            </form>
                 <div class="right-list-table">
                     <table class="table table-bg  table-striped-even table-height50">
                         <thead>
@@ -93,76 +97,94 @@
                             <th>详细说明</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td>1987-11-04 08:18:08</td>
-                            <td class="red">+$23.00</td>
-                            <td class="green">-$1000.00</td>
-                            <td>充值</td>
-                            <td>翻译订单，订单号：2838719</td>
-                        </tr>
-                        <tr>
-                            <td>1987-11-04 08:18:08</td>
-                            <td class="red">+$23.00</td>
-                            <td class="green">-$1000.00</td>
-                            <td>退单</td>
-                            <td>订单退款，订单号：472919</td>
-                        </tr>
-                        <tr>
-                            <td>1987-11-04 08:18:08</td>
-                            <td class="red">+$23.00</td>
-                            <td class="green">-$1000.00</td>
-                            <td>译员支出</td>
-                            <td>译员翻译订单支出，订单号：183749</td>
-                        </tr>
-                        <tr>
-                            <td>1987-11-04 08:18:08</td>
-                            <td class="red">+$23.00</td>
-                            <td class="green">-$1000.00</td>
-                            <td>平台佣金</td>
-                            <td>向平台支付订单佣金，订单号：3817819</td>
-                        </tr>
-                        <tr>
-                            <td>1987-11-04 08:18:08</td>
-                            <td class="red">+$23.00</td>
-                            <td class="green">-$1000.00</td>
-                            <td>充值</td>
-                            <td>成功充值</td>
-                        </tr>
-                        </tbody>
+                        <tbody id="searchAccountData"></tbody>
                     </table>
                 </div>
+                <!-- 订单列表结束 -->
+                <div id="showAccountDiv"></div>
                 <div class="biu-paging paging-large jifen">
-                    <ul>
-                        <li class="prev-up"><a href="#"><</a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">6</a></li>
-                        <li><a href="#">……</a></li>
-                        <li><a href="#">100</a></li>
-                        <li class="next-down"><a href="#">></a></li>
-                        <p>
-                            <span>到</span>
-                            <span><input type="text" class="int-verysmall radius"></span>
-                            <span>页</span>
-                        </p>
-                        <p class="taiz"><a href="#">跳转</a></p>
+                    <ul id="pagination-ul">
                     </ul>
                 </div>
             </div>
 
-        </div>    </div>
+        </div>
+    </div>
 </div>
 
 <%@include file="/inc/userFoot.jsp"%>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
-<script type="text/javascript" src="${_base}/resources/template/scripts/modular/jquery-1.11.1.min.js"></script>
 <script src="${_base}/resources/spm_modules/my97DatePicker/WdatePicker.js"></script>
+
+<script id="searchAccountTemple" type="text/template">
+    <tr>
+        <td >{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',payTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
+        <td class="red" >
+            {{if  incomeFlag == '1'}}
+            +
+            {{if  currencyUnit == '1'}}
+            ¥
+            {{else currencyUnit == '2'}}
+            $
+            {{/if}}
+            {{:~liToYuan(totalAmount)}}
+            {{else }}
+
+            {{/if}}
+        </td>
+        <td class="green" >
+            {{if  incomeFlag == '0'}}
+            -
+            {{if  currencyUnit == '1'}}
+            ¥
+            {{else currencyUnit == '2'}}
+            $
+            {{/if}}
+            {{:~liToYuan(-totalAmount)}}
+            {{else }}
+
+            {{/if}}
+        </td><%--{{:~liToYuan()}}--%>
+        <td>
+            {{if  optType == '5'}}
+            接单
+            {{else optType == '6'}}
+            译员支出
+            {{else optType == '7'}}
+            平台佣金
+            {{else optType == '4'}}
+            退款
+            {{/if}}
+        </td>
+        <td>
+            {{if remark!=null && remark.length > 8}}
+            {{:~subStr(8,remark)}}
+            {{else}}
+            {{:remark}}
+            {{/if}}
+        </td>
+    </tr>
+    <%--</tbody>--%>
+</script>
 <script style="text/javascript">
+    var pager;
+    var current = "lspBill";
+    (function () {
+        seajs.use('app/jsp/lspBill/lspBill', function(accountListPage) {
+            pager = new accountListPage({element : document.body});
+            pager.render();
+        });
+    })();
+    //选择结束时间触发
+    function endtime() {
+        pager._incomeList();
+    }
+    //选择开始时间触发
+    function begintime() {
+        pager._incomeList();
+    }
+
     function todate(target,id) {
         var cc = $(target).parent().attr("class");
         if (cc!=null){
@@ -256,7 +278,7 @@
             $("#platFee").parent().attr("class",null);
             $("#transFee").parent().attr("class",null);
         }
-//        pager._incomeList();
+        pager._incomeList();
     }
     //类型切换
     function totype(target) {

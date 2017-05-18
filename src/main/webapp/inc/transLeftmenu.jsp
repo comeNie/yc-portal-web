@@ -58,7 +58,7 @@ UserUtil.getUserPortraitImg();
 					<span><spring:message code="ycleftmenu.myorder"/></span>
 				</a>
 			</li>
-			<li class="side-bar">
+			<li class="side-bar" >
 				<a href="#" class="side-title">
 					<span><i class="icon iconfont">&#xe646;</i></span>
 					<span>LSP管理</span>

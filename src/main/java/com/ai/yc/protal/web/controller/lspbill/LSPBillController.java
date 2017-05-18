@@ -68,7 +68,8 @@ public class LSPBillController {
                 new ResponseData<PageInfo<IncomeDetail>>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         AccountBalanceInfo balanceInfo =  balanceService.queryOfUser(UserUtil.getUserId());
         IncomeOutQuerySV incomeOutQuerySV =  DubboConsumerFactory.getService(IncomeOutQuerySV.class);
-        incomeQueryRequest.setAccountId(balanceInfo.getAccountId());
+        incomeQueryRequest.setAccountId(12781);//TODO 调用lsp帐户即可
+
         incomeQueryRequest.setTenantId(Constants.DEFAULT_TENANT_ID);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try
