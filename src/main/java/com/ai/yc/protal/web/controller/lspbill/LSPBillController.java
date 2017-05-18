@@ -13,6 +13,11 @@ import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
 import com.ai.yc.protal.web.service.BalanceService;
 import com.ai.yc.protal.web.utils.*;
+import com.ai.yc.translator.api.translatorservice.interfaces.IYCUserTranslatorSV;
+import com.ai.yc.translator.api.translatorservice.param.LspTranslatorInfo;
+import com.ai.yc.translator.api.translatorservice.param.UsrLspMessageResponse;
+import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,16 +69,27 @@ public class LSPBillController {
     public ResponseData<PageInfo<IncomeDetail>> lspBillList(IncomeQueryRequest incomeQueryRequest,
                                                             @RequestParam(value = "pageNo")int pageNO,
                                                             @RequestParam(value = "pageSize")int pageSize){
+        LOGGER.info("LSP账单查询开始:============传入参数incomeQueryRequest="+JSON.toJSON(incomeQueryRequest));
         ResponseData<PageInfo<IncomeDetail>> resData =
                 new ResponseData<PageInfo<IncomeDetail>>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
         AccountBalanceInfo balanceInfo =  balanceService.queryOfUser(UserUtil.getUserId());
         IncomeOutQuerySV incomeOutQuerySV =  DubboConsumerFactory.getService(IncomeOutQuerySV.class);
-        incomeQueryRequest.setAccountId(12781);//TODO 调用lsp帐户即可
-
+        IYCUserTranslatorSV userTranslatorSV = DubboConsumerFactory
+                .getService(IYCUserTranslatorSV.class);
         incomeQueryRequest.setTenantId(Constants.DEFAULT_TENANT_ID);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try
         {
+            LspTranslatorInfo lspTranslatorInfo = new LspTranslatorInfo();
+            lspTranslatorInfo.setTranslatorId(UserUtil.getUserId());
+            LOGGER.info("======译员信息:id="+JSON.toJSONString(lspTranslatorInfo));
+            UsrLspMessageResponse usrLspMessageResponse = userTranslatorSV.queryLspAccountInfo(lspTranslatorInfo);
+            if (true==usrLspMessageResponse.getResponseHeader().getIsSuccess()){
+                incomeQueryRequest.setAccountId(usrLspMessageResponse.getAccountId());
+            }else {
+                LOGGER.error("lsp帐户信息查询失败:","======译员信息:id="+JSON.toJSONString(usrLspMessageResponse));
+                return new ResponseData<PageInfo<IncomeDetail>>(ResponseData.AJAX_STATUS_FAILURE, "查询收支失败");
+            }
             if(StringUtils.isBlank(incomeQueryRequest.getBeginDate())){
                 Date beginDate = new Date();
                 beginDate.setMonth(beginDate.getMonth()-1);
