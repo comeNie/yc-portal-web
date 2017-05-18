@@ -133,7 +133,40 @@ define('app/jsp/customerOrder/order', function (require, exports, module) {
             fileName=encodeURIComponent(encodeURIComponent(fileName));
             window.open(_base +"/p/customer/order/download?fileId="+fileId+"&fileName="+fileName);
         },
-
+      //cat待文件上传
+    	_catUpload:function(fileId,fileName) {
+			fileName = window.encodeURI(window.encodeURI(fileName));
+			//获取领域、翻译语言
+			var langungeId = $("#langungeIdCat").val();
+			var fieldId = $("#fieldCat").val();
+			var prodFileId = $("#prodFileId").val();
+			ajaxController.ajax({
+				type: "post",
+				url: _base + "/p/customer/order/catLine",
+				data: {
+					fileId: fileId,
+					languageId:langungeId,
+					prodFileId:$("#prodFileId").val(),
+					fieldId:fieldId
+				},
+				success: function (data) {
+					if ("1" === data.statusCode) {
+						//调用客户地址
+						var fielId = data.statusInfo;
+						var lan = currentLan;
+						if("zh_CN"==lan){
+							lan ="zh";
+						}else{
+							lan ="en";
+						}
+						var channelType ="yeecloud";
+						window.open(_base +"https://cat.yeekit.com/to-editor?fileId="+fileId+"&channelType="+channelType
+								+"&locale="+lan
+						);
+					}
+				}
+			});
+    	}
 
     });
     module.exports = orderPage;

@@ -22,6 +22,8 @@ public final class OrderConstants {
     //前台查询订单轨迹flag
     public static final String STATECHG_FLAG = "0";
     public static final String IPAAS_ORDER_FILE_DSS = "order-file-dss";
+    //cat鏈接地址
+    public static final String CAT_UP_ADRESS = "https://cat.yeekit.com/api/v1/abutment/upload";
     public static class ErrorCode{
         private ErrorCode(){}
 

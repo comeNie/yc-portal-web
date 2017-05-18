@@ -92,7 +92,7 @@ dependencies {
     //订单查询
     compile 'com.ai.yc.order:orderquery:1.0-SNAPSHOT'
     //订单查询 我的订单
-    compile 'com.ai.yc.order:orderdetails:1.0-SNAPSHOT'
+    compile 'com.ai.yc.order:orderdetails:1.0.1-SNAPSHOT'
     //订单费用查询
     compile 'com.ai.yc.order:orderfee:1.0-SNAPSHOT'
     //手动关闭未支付订单
