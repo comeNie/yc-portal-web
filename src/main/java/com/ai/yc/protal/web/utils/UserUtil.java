@@ -172,7 +172,7 @@ public class UserUtil {
                     .getService(IYCUserCompanyRelationSV.class);
             ManagerResponse userIsManager = iycUserCompanyRelationSV.getUserIsManager(UserUtil.getUserId());
             System.err.print(UserUtil.getUserId());
-            if (null==userIsManager){
+            if (null==userIsManager.getCompanyId()){
                 isManagement="error";
             }else {
                 isManagement = userIsManager.getIsManagement().toString();
