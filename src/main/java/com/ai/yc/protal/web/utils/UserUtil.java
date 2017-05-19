@@ -143,6 +143,9 @@ public class UserUtil {
             SearchYCTranslatorSkillListRequest searchYCTranslatorSkillListRequest = new SearchYCTranslatorSkillListRequest();
             searchYCTranslatorSkillListRequest.setUserId(UserUtil.getUserId());
             YCTranslatorSkillListResponse translatorSkillList = userTranslatorSV.getTranslatorSkillList(searchYCTranslatorSkillListRequest);
+            if (null==translatorSkillList){
+                lspAdmin="error";
+            }
             lspAdmin = translatorSkillList.getLspRole();
 
         } catch (Exception e) {
