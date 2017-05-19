@@ -102,26 +102,33 @@ function checkUserName(inputId,labelId,spanId){
 		$("#"+spanId).text(contactInfoMsg.userNameEmptyError);
 		flag = false; 
 	}else{
-		$.ajax({
-			type : "post",
-			processing : false,
-			message : "sss",
-			url : _base + "/p/contactway/checkUserName",
-			data : {
-				'userName' : userName,
-				'contactId':contactId
-			},
-			success : function(json) {
-				if (json.statusCode!="000000") {
-					$("#"+labelId).show();
-					$("#"+spanId).text(contactInfoMsg.userNameExistError);
-					flag = false; 
-				}else{
-					$("#"+labelId).hide();
-					flag = true;
+		if(userName.length>50){
+			$("#"+labelId).show();
+			$("#"+spanId).text(contactInfoMsg.userNameLength);
+			flag = false; 
+		}else{
+			$.ajax({
+				type : "post",
+				processing : false,
+				message : "sss",
+				url : _base + "/p/contactway/checkUserName",
+				data : {
+					'userName' : userName,
+					'contactId':contactId
+				},
+				success : function(json) {
+					if (json.statusCode!="000000") {
+						$("#"+labelId).show();
+						$("#"+spanId).text(contactInfoMsg.userNameExistError);
+						flag = false; 
+					}else{
+						$("#"+labelId).hide();
+						flag = true;
+					}
 				}
-			}
-		})
+			})
+		}
+		
 	}
 	return flag;
 }
@@ -140,26 +147,7 @@ function checkUserEmail(inputId,labelId,spanId){
 			$("#"+spanId).text(contactInfoMsg.emailOKError);
 			flag = false; 
 		}else{
-			$.ajax({
-				type : "post",
-				processing : false,
-				message : "sss",
-				url : _base + "/p/contactway/checkUserEmail",
-				data : {
-					'userEmail' : email,
-					'contactId':contactId
-				},
-				success : function(json) {
-					if (json.statusCode!="000000") {
-						$("#"+labelId).show();
-						$("#"+spanId).text(contactInfoMsg.phoneExistError);
-						flag = false; 
-					}else{
-						$("#"+labelId).hide();
-						flag = true;
-					}
-				}
-			})
+			$("#"+labelId).hide();
 		}
 	}
 	return flag;
@@ -182,24 +170,7 @@ function checkphone(inputId,labelId,spanId,countryId){
 			$("#"+spanId).text(contactInfoMsg.phoneOKError);
 			flag = false;
 		}else{
-			$.ajax({
-				type : "post",
-				processing : false,
-				async:false,
-				url : _base + "/p/contactway/checkUserPhone",
-				data : {
-					"telephone" :telephone,
-					'contactId':contactId
-				},
-				success : function(json) {
-					if (json.statusCode!="000000") {
-						$("#"+labelId).show();
-						$("#"+spanId).text(contactInfoMsg.phoneExistError);
-					}else{
-						$("#"+labelId).hide();
-					}
-				}
-			});
+			$("#"+labelId).hide();
 		}
 	}
 	return flag;
