@@ -212,6 +212,7 @@ $(function(){
     		"showOK" : '<spring:message code="yccontactway.js.showOkValueMsg"/>',
     		"showCancal" : '<spring:message code="yccontactway.js.cancel"/>',
     		"saveDataFail" : '<spring:message code="yccontactway.save.error.msg"/>',
+    		"userNameLength" : '<spring:message code="yccontactway.placeholder.username.length"/>',
     		
     };
 	var pager;
