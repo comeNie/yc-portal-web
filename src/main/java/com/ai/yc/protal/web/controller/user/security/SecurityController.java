@@ -192,6 +192,17 @@ public class SecurityController {
 			uiModel.addAttribute("isManager",isManager);
 			uiModel.addAttribute("corporaId",isManager?response.getCompanyId():"");
 		}
+		//查询积分信息
+		IntegralsResponse integralsResponse = null;
+		IIntegralsSV iIntegralsSV = DubboConsumerFactory.getService(IIntegralsSV.class);
+		integralsResponse = iIntegralsSV.queryIntegrals(UserUtil.getUserId());
+		Integer nowIntegral = 0;
+		if(true==integralsResponse.getResponseHeader().isSuccess()){
+			modelView.addObject("integration", integralsResponse.getNowIntegral());
+		}
+		if ("0001".equals(integralsResponse.getResponseHeader().getResultCode())){
+			modelView.addObject("integration", nowIntegral);
+		}
         // sec level
 		modelView.addObject("securitylevel", UserUtil.getUserSecurityLevel());
 		return modelView;
