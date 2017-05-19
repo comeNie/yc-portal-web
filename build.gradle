@@ -129,6 +129,8 @@ dependencies {
     compile 'com.ai.yc.translator:translatorservice:2.0-SNAPSHOT'
 	//企业
 	 compile 'com.ai.yc.user:usercompany:2.0-SNAPSHOT'
+    //用户是否为企业管理员
+    compile 'com.ai.yc.user:usercompanyrelation:2.0-SNAPSHOT'
 
     //余额服务
     compile 'com.ai.slp.balance:fundquery:1.0-SNAPSHOT'
