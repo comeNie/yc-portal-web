@@ -41,7 +41,7 @@ public class CompanyController {
 	public ModelAndView toCompanyFirstPager(HttpServletRequest request){
 		String source = request.getParameter("source");
 		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("source", "user");
+		model.put("source", source);
 		return new ModelAndView("/user/company/create_company_info",model);
 	}
 	
