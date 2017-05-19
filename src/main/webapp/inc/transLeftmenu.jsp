@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 UserUtil.getUserPortraitImg();
+UserUtil.getLspAdmin();
 %>
 <c:set var="uedroot" value="${pageContext.request.contextPath}/resources/template"/>
 <c:set var="_base" value="${pageContext.request.contextPath}"/>
@@ -58,15 +59,22 @@ UserUtil.getUserPortraitImg();
 					<span><spring:message code="ycleftmenu.myorder"/></span>
 				</a>
 			</li>
-			<li class="side-bar" >
-				<a href="#" class="side-title">
-					<span><i class="icon iconfont">&#xe646;</i></span>
-					<span>LSP管理</span>
-				</a>
-				<ul>
-					<li class="list-p" id="lspBill"><a href="${_base}/p/lspbill/toLspBill">LSP账单</a></li>
-				</ul>
-			</li>
+			<c:choose>
+				<c:when test="${lspAdmin=='12'}">
+					<li class="side-bar" >
+						<a href="#" class="side-title">
+							<span><i class="icon iconfont">&#xe646;</i></span>
+							<span>LSP管理</span>
+						</a>
+						<ul>
+							<li class="list-p" id="lspBill"><a href="${_base}/p/lspbill/toLspBill">LSP账单</a></li>
+						</ul>
+					</li>
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
+
 			<!-- <li>
 				<a href="#">
 					<span><i class="icon iconfont">&#xe647;</i></span>
