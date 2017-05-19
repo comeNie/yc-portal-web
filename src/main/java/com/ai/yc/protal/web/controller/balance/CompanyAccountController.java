@@ -23,6 +23,13 @@ import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
 import com.ai.yc.protal.web.service.BalanceService;
 import com.ai.yc.protal.web.utils.*;
+import com.ai.yc.user.api.usercompany.interfaces.IYCUserCompanySV;
+import com.ai.yc.user.api.usercompany.param.UserCompanyInfoRequest;
+import com.ai.yc.user.api.usercompany.param.UserCompanyInfoResponse;
+import com.ai.yc.user.api.usercompany.param.UsrCompanyInfo;
+import com.ai.yc.user.api.usercompanyrelation.interfaces.IYCUserCompanyRelationSV;
+import com.ai.yc.user.api.usercompanyrelation.param.ManagerResponse;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,9 +87,31 @@ public class CompanyAccountController {
                                                             @RequestParam(value = "pageSize")int pageSize){
         ResponseData<PageInfo<IncomeDetail>> resData =
                 new ResponseData<PageInfo<IncomeDetail>>(ResponseData.AJAX_STATUS_SUCCESS,"OK");
-        AccountBalanceInfo balanceInfo =  balanceService.queryOfUser(UserUtil.getUserId());
+        //通过用户id查询企业id
+        IYCUserCompanyRelationSV iycUserCompanyRelationSV = DubboConsumerFactory
+                .getService(IYCUserCompanyRelationSV.class);
+        ManagerResponse userIsManager = iycUserCompanyRelationSV.getUserIsManager(UserUtil.getUserId());
+        //如果返回值为空,或返回信息中包含错误信息,则抛出异常
+        if (userIsManager==null||(userIsManager.getResponseHeader()!=null && (!userIsManager.getResponseHeader().isSuccess()))||
+                ("0001".equals(userIsManager.getResponseHeader().getResultCode()))){
+            LOGGER.info("该用户不是企业管理员=====用户id:"+UserUtil.getUserId());
+            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE,"FAIL");
+        }
+        //如果用户是管理员,通过企业id查询帐户id
+        UserCompanyInfoResponse userCompanyInfoResponse =null;
+        if (userIsManager.getIsManagement()==1){
+            IYCUserCompanySV iycUserCompanySV = DubboConsumerFactory.getService(IYCUserCompanySV.class);
+            UserCompanyInfoRequest usrCompanyInfoRequest = new UserCompanyInfoRequest();
+            usrCompanyInfoRequest.setCompanyId(userIsManager.getCompanyId());
+            userCompanyInfoResponse = iycUserCompanySV.queryCompanyInfo(usrCompanyInfoRequest);
+        }
+        if (null==userCompanyInfoResponse||(userCompanyInfoResponse.getResponseHeader()!=null&&
+                (!userCompanyInfoResponse.getResponseHeader().getIsSuccess()))){
+            LOGGER.info("企业帐户查询失败++++++++++++企业id:"+userCompanyInfoResponse.getCompanyId());
+            resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE,"FAIL");
+        }
         IncomeOutQuerySV incomeOutQuerySV =  DubboConsumerFactory.getService(IncomeOutQuerySV.class);
-        incomeQueryRequest.setAccountId(balanceInfo.getAccountId());
+        incomeQueryRequest.setAccountId(userCompanyInfoResponse.getAccountId());
         incomeQueryRequest.setTenantId(Constants.DEFAULT_TENANT_ID);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try
