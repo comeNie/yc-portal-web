@@ -137,7 +137,7 @@
   	<div class="right-wrapper">
   		<!--右侧第一块-->
   		<!--右侧第二块-->
-  		<div class="right-wrapper contact-way">
+  		<div class="right-wrapper contact-way" >
   		<!--右侧第一块-->
 	
   		<!--右侧第二块-->
@@ -145,7 +145,7 @@
   			 <h2 class="title"><spring:message code="yccontactway.contactway" /></h2>
          <ul class="cont-list">
          <c:forEach items="${contactList}" var="contactInfo">
-         	<li class="pull-left cont-people current" cont-people>
+         	<li class="pull-left cont-people current" cont-people style="width: 420px">
               <p>
                 <span class="key"><spring:message code="yccontactway.username" />:</span>
                 <span class="value">${contactInfo.userName}</span>
@@ -183,13 +183,16 @@
          </div>
   		</div>	
   		</div>
+  		
   	</div>
   </div>
   </div>
 </body>
 <%@ include file="/inc/incJs.jsp" %>
-<script type="text/javascript" src="${_base}/resources/template/scripts/modular/alignment.js"></script>
 <script type="text/javascript" src="${_base}/resources/template/scripts/modular/eject.js"></script>
+<script type="text/javascript" src="${_base}/resources/template/scripts/modular/jqueryrotate.2.3.js"></script>
+<script type="text/javascript" src="${_base}/resources/template/scripts/modular/alignment.js"></script>
+<script type="text/javascript" src="${_base}/resources/template/scripts/modular/icheck.js"></script>
 <script type="text/javascript">
 $(function(){
 	  $('.operate .checkbox').iCheck({
