@@ -71,11 +71,17 @@
 	                        <ul>
 	                        	<!-- 原文 文档类型-->
 	                            <li class="title"><spring:message code="myOrder.Originaltext"/>:</li>
+	                            	<input type="hidden" id="prodFileId" value="${prodFile.prodFileId}">
 	                            	<!-- 文档类型翻译 -->
 	                            		<c:if test="${not empty prodFile.fileName}">
 	                            			<li>${prodFile.fileName}</li>
-		  									<li class="right mr-5">
-		  									<input name="download" fileId="${prodFile.fileSaveId}" fileName="${prodFile.fileName}" type="button" class="btn border-blue-small btn-auto radius20" value="<spring:message code="myOrder.downLoad"/>"></li>
+		  									<li class="right mr-3">
+		  										<input name="download" fileId="${prodFile.fileSaveId}" fileName="${prodFile.fileName}" type="button" class="btn border-blue-small btn-auto radius20" value="<spring:message code="myOrder.downLoad"/>">
+		  									</li>
+		  									<!-- cat链接 -->
+		  									<li class="right mr-2">
+		  										<input name="catLine"  fileId="${prodFile.fileSaveId}" fileName="${prodFile.fileName}" type="button" class="btn border-blue-small btn-auto radius20" value="cat翻译">
+		  									</li>
 		  								</c:if>
 	                        </ul>
 		                    </c:forEach>
@@ -164,6 +170,8 @@
                                 <p class="word"><spring:message code="myOrder.Language"/>:</p>
                                 <p>
                                 	<c:forEach items="${OrderDetails.prodExtends}" var="prodExtends">
+                                		<input type="hidden" id="langungeNameEn" value="${prodExtends.langungeNameEn}">
+                                		<input type="hidden" id="langungeIdCat" value="${prodExtends.langungePair}">
                                 		<c:choose>
 											<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${prodExtends.langungePairName}</c:when>
 											<c:otherwise>${prodExtends.langungeNameEn}</c:otherwise>
@@ -196,6 +204,7 @@
                             <li>
                             	<!-- 领域-->
                                 <p class="word"><spring:message code="myOrder.Field"/>:</p>
+                                 <input type="hidden" id="fieldCat" value="${OrderDetails.prod.fieldCode}">
                                 <p>
                                 	<c:choose>
 										<c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${OrderDetails.prod.fieldCn}</c:when>
@@ -539,7 +548,10 @@ $("a[name='more']").click(function() {
 	 $("input[name='download']").click(function(){
 		 pager._downLoad($(this).attr('fileId'), $(this).attr('fileName'));
      });
-
+	//cat链接
+	 $("input[name='catLine']").click(function(){
+		 pager._catUpload($(this).attr('fileId'), $(this).attr('fileName'));
+     });
     //支付
     $("#payOrder").click(function () {
         pager._orderPay($("#orderId").val(), $("#unit").val());

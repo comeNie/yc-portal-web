@@ -92,7 +92,7 @@ dependencies {
     //订单查询
     compile 'com.ai.yc.order:orderquery:1.0-SNAPSHOT'
     //订单查询 我的订单
-    compile 'com.ai.yc.order:orderdetails:1.0-SNAPSHOT'
+    compile 'com.ai.yc.order:orderdetails:1.0.1-SNAPSHOT'
     //订单费用查询
     compile 'com.ai.yc.order:orderfee:1.0-SNAPSHOT'
     //手动关闭未支付订单
@@ -117,13 +117,16 @@ dependencies {
     compile 'com.ai.slp.balance:deposit:1.0.1-SNAPSHOT'
     //分配订单
     compile 'com.ai.yc.order:orderallocation:1.0-SNAPSHOT'
+    //更新订单产品明细
+      compile 'com.ai.yc.order:updateorder:1.0.1-SNAPSHOT'
+    
 
 	//用户服务
 	compile 'com.ai.yc.user:userservice:1.0-SNAPSHOT'
     //用户收藏
     compile 'com.ai.yc.user:usercollectiontranslation:2.0-SNAPSHOT'
     //译员服务
-    compile 'com.ai.yc.translator:translatorservice:1.1-SNAPSHOT'
+    compile 'com.ai.yc.translator:translatorservice:2.0-SNAPSHOT'
 	//企业
 	 compile 'com.ai.yc.user:usercompany:2.0-SNAPSHOT'
 

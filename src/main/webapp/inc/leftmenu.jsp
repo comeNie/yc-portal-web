@@ -104,6 +104,13 @@ UserUtil.getUserPortraitImg();
   					<span><spring:message code="yccontactway.contactway"/></span>
   					</a>
   				</li>
+				<!-- 企业帐户 -->
+				<li id="companyAccount">
+					<a href="${_base}/p/companybalance/companyAccount">
+						<span><i class="icon iconfont">&#xe648;</i></span>
+						<span>企业帐户</span>
+					</a>
+				</li>
   			</ul>
   		</div>
 		<!--定位-->

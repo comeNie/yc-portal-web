@@ -3,6 +3,12 @@ package com.ai.yc.protal.web.utils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.ai.yc.translator.api.translatorservice.interfaces.IYCTranslatorServiceSV;
+import com.ai.yc.translator.api.translatorservice.interfaces.IYCUserTranslatorSV;
+import com.ai.yc.translator.api.translatorservice.param.SearchYCTranslatorRequest;
+import com.ai.yc.translator.api.translatorservice.param.SearchYCTranslatorSkillListRequest;
+import com.ai.yc.translator.api.translatorservice.param.YCTranslatorInfoResponse;
+import com.ai.yc.translator.api.translatorservice.param.YCTranslatorSkillListResponse;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -109,9 +115,37 @@ public class UserUtil {
 			if(!StringUtil.isBlank(portraitId)){
 				userPortraitImg = im.getImageUrl(portraitId, ".jpg", "100x100");
 			}
-		   } catch (Exception e) {
+
+        } catch (Exception e) {
 		 }
         session.setAttribute("userPortraitImg",userPortraitImg);
         return userPortraitImg;
+    }
+
+    /**
+     * 判断用户是否为lspadmin
+     * @return
+     */
+    public static String getLspAdmin(){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session =request.getSession();
+
+        String lspAdmin = (String)session.getAttribute("lspAdmin");
+        if(!StringUtil.isBlank(lspAdmin)){
+            return lspAdmin;
+        }
+        try {
+            //判断译员是否为lsp管理员
+            IYCTranslatorServiceSV userTranslatorSV = DubboConsumerFactory
+                    .getService(IYCTranslatorServiceSV.class);
+            SearchYCTranslatorSkillListRequest searchYCTranslatorSkillListRequest = new SearchYCTranslatorSkillListRequest();
+            searchYCTranslatorSkillListRequest.setUserId(UserUtil.getUserId());
+            YCTranslatorSkillListResponse translatorSkillList = userTranslatorSV.getTranslatorSkillList(searchYCTranslatorSkillListRequest);
+            lspAdmin = translatorSkillList.getLspRole();
+
+        } catch (Exception e) {
+        }
+        session.setAttribute("lspAdmin",lspAdmin);
+        return lspAdmin;
     }
 }

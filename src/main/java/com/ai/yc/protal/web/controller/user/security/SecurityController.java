@@ -657,31 +657,5 @@ public class SecurityController {
 		}
 		return map;
 	}
-	/**
-	 * 获取积分
-	 */
-	@RequestMapping("/getIntegration")
-	@ResponseBody
-	public Map<String, Integer> getIntegration(HttpServletRequest request) {
-		IntegralsResponse integralsResponse = null;
-		Map<String, Integer> map = new HashMap<String,Integer>();
-		try {
-			String userId = UserUtil.getUserId();
-			IIntegralsSV iIntegralsSV = DubboConsumerFactory.getService(IIntegralsSV.class);
-			integralsResponse = iIntegralsSV.queryIntegrals(userId);
-			if(true==integralsResponse.getResponseHeader().isSuccess()){
-				map.put("integration", integralsResponse.getNowIntegral());
-			}else if("0001".equals(integralsResponse.getResponseHeader().getResultCode())){
-				map.put("integration",0);
-			}else{
-				map.put("integration",0);
-			}
-		} catch (Exception e) {
-			LOG.error("查询积分失败:", e);
-			if (integralsResponse != null) {
-				LOG.error("查询积分失败:", JSON.toJSONString(integralsResponse));
-			}
-		}
-		return map;
-	}
+	
 }
