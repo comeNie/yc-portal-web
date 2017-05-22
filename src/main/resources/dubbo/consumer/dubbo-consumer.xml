@@ -102,9 +102,13 @@
 	<dubbo:reference id="iIntegralsSV"
 					 interface="com.ai.slp.balance.api.integrals.interfaces.IIntegralsSV"/>
 	
-	<!--用户级别-->
+	<!--用户成长值-->
 	<dubbo:reference id="iYCUserGriwthValueSV"
 					 interface="com.ai.yc.user.api.usergriwthvalue.interfaces.IYCUserGriwthValueSV"/>
+
+	<!--用户级别-->
+	<dubbo:reference id="iYCUserLevelChangeSV"
+					 interface="com.ai.yc.user.api.userlevelchange.interfaces.IYCUserLevelChangeSV"/>
 	<!--优惠券使用规则-->
 	<dubbo:reference id="iCouponUseRuleSV" interface="com.ai.slp.balance.api.couponuserule.interfaces.ICouponUseRuleSV"/>
 	<!-- 查询语言对 -->

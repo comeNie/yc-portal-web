@@ -120,8 +120,10 @@ dependencies {
     //更新订单产品明细
       compile 'com.ai.yc.order:updateorder:1.0.1-SNAPSHOT'
 
-//  //用户级别
+//  //用户成长值
     compile 'com.ai.yc.user:usergriwthvalue:2.1-SNAPSHOT'
+    //用户级别
+    compile 'com.ai.yc.user:userlevelchange:2.0-SNAPSHOT'
 	//用户服务
 	compile 'com.ai.yc.user:userservice:1.0-SNAPSHOT'
     //用户收藏
