@@ -98,11 +98,13 @@
 					 interface="com.ai.yc.order.api.orderallocation.interfaces.IOrderAllocationSV"/>
 
 
-<!-- 积分查询 -->
+	<!-- 积分查询 -->
 	<dubbo:reference id="iIntegralsSV"
 					 interface="com.ai.slp.balance.api.integrals.interfaces.IIntegralsSV"/>
 	
-
+	<!--用户级别-->
+	<dubbo:reference id="iYCUserGriwthValueSV"
+					 interface="com.ai.yc.user.api.usergriwthvalue.interfaces.IYCUserGriwthValueSV"/>
 	<!--优惠券使用规则-->
 	<dubbo:reference id="iCouponUseRuleSV" interface="com.ai.slp.balance.api.couponuserule.interfaces.ICouponUseRuleSV"/>
 	<!-- 查询语言对 -->
