@@ -53,10 +53,12 @@
 						</c:otherwise>
 					</c:choose>
 				</span><i class="icon-caret-down btg" id="icon2"></i></a>
-					<div class="show-hover" style="height:100px;display:none;">
+					<div class="show-hover" style="display:none;">
 						<ul>
-							<%-- <li><i class="icon-user"></i><a href="${_base}/p/interpreter/interpreterInfoPager?source=user"> <spring:message code="user.topMenu.perProfile"/></a></li> --%>
-							<li><a href="${_base}/p/security/seccenter?source=user"><i class="icon-lock"></i><spring:message code="user.topMenu.secSetting"/></a></li>
+							<li><a href="${_base}/p/interpreter/interpreterInfoPager?source=user"><i
+									class="icon-user"></i><spring:message code="user.topMenu.perProfile"/></a></li>
+							<li><a href="${_base}/p/security/seccenter?source=user"><i
+									class="icon-lock"></i><spring:message code="user.topMenu.secSetting"/></a></li>
 							<li><a href="${_base}/ssologout"><i class="icon-off"></i><spring:message code="user.topMenu.exit"/></a></li>
 						</ul>
 					</div>
