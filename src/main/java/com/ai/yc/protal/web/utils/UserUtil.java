@@ -143,10 +143,10 @@ public class UserUtil {
             SearchYCTranslatorSkillListRequest searchYCTranslatorSkillListRequest = new SearchYCTranslatorSkillListRequest();
             searchYCTranslatorSkillListRequest.setUserId(UserUtil.getUserId());
             YCTranslatorSkillListResponse translatorSkillList = userTranslatorSV.getTranslatorSkillList(searchYCTranslatorSkillListRequest);
-            if (null==translatorSkillList){
+            lspAdmin = translatorSkillList.getLspRole();
+            if (null==translatorSkillList||null==lspAdmin){
                 lspAdmin="error";
             }
-            lspAdmin = translatorSkillList.getLspRole();
 
         } catch (Exception e) {
         }
