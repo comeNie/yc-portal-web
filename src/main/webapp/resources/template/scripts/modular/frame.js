@@ -601,3 +601,38 @@ $(document).on('click', '.tabs-anm li', function(){
     "left" : pos
   },300)
 })
+//下拉框-选择内容
+  $(document).on('click','[drop-down]',function(){
+     $(this).parent('.select-wrap').siblings().find('.select-con').addClass('undis');
+     $(this).parents().siblings().find('.select-con').addClass('undis');
+     if($(this).siblings('.select-con').hasClass('undis')){
+         $(this).siblings().removeClass('undis');
+     }else{
+        $(this).siblings().addClass('undis');
+     }
+      return false; 
+  });
+
+  $(document).on('click','.select-con ul li',function(){
+      var text = $(this).text();
+      $(this).parents('.select-con').siblings('[drop-down]').text(text);
+      $(this).parents('.select-con').addClass('undis');
+      return false;
+  });
+
+  $(document).on('click','body',function(){
+     // if(!$('.select-con').hasClass('undis')){
+        $('.select-con').addClass('undis')
+      // }
+  });
+  //更改语言名称的dataValue值 触发点击事件selectA1
+  $(document).on('click','[selectA1]',function(){
+    // $('.LanguageType').attr('')
+    var val=$(this).attr('dataValue')//拿到a标签的dataValue值
+    $('.LanguageType').attr('dataValue',val);
+  })
+     //更改翻译方式的dataValue值 触发事件selecA2
+  $(document).on('click','[selectA2]',function(){
+    var val=$(this).attr('dataValue')//拿到a标签的dataValue值
+    $('.selectType').attr('dataValue',val);
+  })

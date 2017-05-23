@@ -39,13 +39,43 @@ define("app/jsp/user/interpreter/interpreterIndex",function(require, exports, mo
 						this._orderStatusCount();
 						this._queryOrder();
 						this._queryLspInfo();
+						this._queryInterperInfo();
 					}else{
 						 showMsg();
 						 $("#no_rz_container").show();
  	            	}
 					
 				},
-
+				//获取客户会员级别
+				_queryInterperInfo:function(){
+					ajaxController.ajax({
+						 type:"post",
+		    				url:_base+"/p/security/interperLevel",
+		    				data:{},
+		    		        success: function(data) {
+		    		        		if("1"==data['ZH']){
+			    		        		$("#interperLevel").removeClass();
+			    		        		$("#interperLevel").addClass("level level1");
+			    		        		$("#interperLevel").text(interperMsg.interpervip1);
+			    		        	}
+			    		        	if("2"==data['ZH']){
+			    		        		$("#interperLevel").removeClass();
+			    		        		$("#interperLevel").addClass("level level2");
+			    		        		$("#interperLevel").text(interperMsg.interpervip2);
+			    		        	}
+			    		        	if("3"==data['ZH']){
+			    		        		$("#interperLevel").removeClass();
+			    		        		$("#interperLevel").addClass("level level3");
+			    		        		$("#interperLevel").text(interperMsg.interpervip3);
+			    		        	}
+			    		        	if("4"==data['ZH']){
+			    		        		$("#interperLevel").removeClass();
+			    		        		$("#interperLevel").addClass("level level4");
+			    		        		$("#interperLevel").text(interperMsg.interpervip4);
+			    		        	}
+		    		        }
+		    		});
+				},
 				/* 获取订单数量 */
 				_orderStatusCount:function(){
 					ajaxController.ajax({

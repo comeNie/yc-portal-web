@@ -661,9 +661,31 @@ public class SecurityController {
 				map.put("EN", userInfoResponse.getGriwthLevelEN());
 			}
 		} catch (Exception e) {
-			LOG.error("查询会员级别失败:", e);
+			LOG.error("查询客户会员级别失败:", e);
 			if (userInfoResponse != null) {
-				LOG.error("查询会员级别失败:", JSON.toJSONString(userInfoResponse));
+				LOG.error("查询客户会员级别失败:", JSON.toJSONString(userInfoResponse));
+			}
+		}
+		return map;
+	}
+	@RequestMapping("/interperLevel")
+	@ResponseBody
+	public Map<String, String> interperLevel(HttpServletRequest request) {
+		YCTranslatorInfoResponse userInfoResponse = null;
+		Map<String, String> map = new HashMap<String,String>();
+		try {
+			String userId = UserUtil.getUserId();
+			IYCTranslatorServiceSV translatorServiceSV = DubboConsumerFactory.getService(IYCTranslatorServiceSV.class);
+			SearchYCTranslatorRequest userReq = new SearchYCTranslatorRequest();
+			userReq.setUserId(userId);
+			userInfoResponse = translatorServiceSV.searchYCTranslatorInfo(userReq);
+			if(true==userInfoResponse.getResponseHeader().isSuccess()){
+				map.put("ZH", userInfoResponse.getVipLevel());
+			}
+		} catch (Exception e) {
+			LOG.error("查询译员会员级别失败:", e);
+			if (userInfoResponse != null) {
+				LOG.error("查询译员会员级别失败:", JSON.toJSONString(userInfoResponse));
 			}
 		}
 		return map;

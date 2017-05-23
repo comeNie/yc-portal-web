@@ -34,31 +34,33 @@ define("app/jsp/user/userIndex",function(require, exports, module) {
 		    		        }
 		    		});
 				},
-				//获取会员级别
+				//获取客户会员级别
 				_queryUserInfo:function(){
 					ajaxController.ajax({
 						 type:"post",
 		    				url:_base+"/p/security/userLevel",
 		    				data:{},
 		    		        success: function(data) {
-		    		        	if("zh_CN"==currentLan){
 		    		        		if("普通会员"==data['ZH']){
 			    		        		$("#userLevel").removeClass();
-			    		        		$("#userLevel").addClass("vip1");
+			    		        		$("#userLevel").addClass("level level1");
+			    		        		$("#userLevel").text(userLevelMsg.uservip1);
 			    		        	}
 			    		        	if("VIP会员"==data['ZH']){
 			    		        		$("#userLevel").removeClass();
-			    		        		$("#userLevel").addClass("vip2");
+			    		        		$("#userLevel").addClass("level level2");
+			    		        		$("#userLevel").text(userLevelMsg.uservip2);
 			    		        	}
 			    		        	if("SVIP会员"==data['ZH']){
 			    		        		$("#userLevel").removeClass();
-			    		        		$("#userLevel").addClass("vip3");
+			    		        		$("#userLevel").addClass("level level3");
+			    		        		$("#userLevel").text(userLevelMsg.uservip3);
 			    		        	}
 			    		        	if("SVIP白金会员"==data['ZH']){
 			    		        		$("#userLevel").removeClass();
-			    		        		$("#userLevel").addClass("vip4");
+			    		        		$("#userLevel").addClass("level level4");
+			    		        		$("#userLevel").text(userLevelMsg.uservip4);
 			    		        	}
-		    		        	}
 		    		        	
 		    		        }
 		    		});

@@ -25,7 +25,7 @@ UserUtil.getCompanyAdmin();
 						</c:otherwise>
 						</c:choose>
 					</p>
-  					<p class="vip1" id="userLevel"></p>
+  					<p class="level level1" id="userLevel"></p>
   				</li>
   			</ul>
   		</div>
@@ -134,6 +134,13 @@ UserUtil.getCompanyAdmin();
 		</div>
   	</div>
   	<script type="text/javascript">
+  	var userLevelMsg={
+  			"uservip1" : '<spring:message code="order.user.vip1"/>',
+  			"uservip2" : '<spring:message code="order.user.vip2"/>',
+  			"uservip3" : '<spring:message code="order.user.vip3"/>',
+  			"uservip4" : '<spring:message code="order.user.vip4"/>',
+  			
+  	};
   	  $(function(){
   		var currentEle = $("#"+current);
     	  if(current!=""&&currentEle){

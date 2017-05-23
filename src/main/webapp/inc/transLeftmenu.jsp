@@ -24,7 +24,7 @@ UserUtil.getLspAdmin();
 						</c:otherwise>
 					</c:choose>
 				</p>
-				<p class="vip1"></p>
+				<p class="level level1" id="interperLevel"></p>
 			</li>
 		</ul>
 	</div>
@@ -122,6 +122,13 @@ UserUtil.getLspAdmin();
 	</div>
 </div>
 <script type="text/javascript">
+var interperMsg={
+		"interpervip1" : '<spring:message code="order.interper.vip1"/>',
+		"interpervip2" : '<spring:message code="order.interper.vip2"/>',
+		"interpervip3" : '<spring:message code="order.interper.vip3"/>',
+		"interpervip4" : '<spring:message code="order.interper.vip4"/>',
+		
+};
     $(function () {
         //一级菜单定位
         var currentEle = $("#" + current);

@@ -1257,7 +1257,7 @@ opacity:0;filter:alpha(opacity=0); -moz-opacity:0; -khtml-opacity:0;}
 .translater-confirm-step2 .confirm-content ul li .key .important{margin-right:5px;color:#fe6b6b;}
 .translater-confirm-step2 .confirm-content ul li .value{width:780px;float:left;}
 .translater-confirm-step2 .confirm-content ul li .value {border-top:1px solid #e6e6e6;}
-.translater-confirm-step2 .confirm-content ul li .textarea{margin-bottom:50px;padding:15px;width:780px;height:128px;float:left;}
+.translater-confirm-step2 .confirm-content ul li .textarea{margin-bottom:0px;padding:15px;width:780px;height:128px;float:left;}
 .translater-confirm-step2 .confirm-content ul li .value  p{line-height:60px;border-bottom:1px solid #e6e6e6;*zoom:1;}
 .translater-confirm-step2 .confirm-content ul li .value  p:after{content:" ";height:0;clear:both;display:block;}
 .translater-confirm-step2 .confirm-content ul li .value  p span{float:left;}
@@ -1284,7 +1284,7 @@ opacity:0;filter:alpha(opacity=0); -moz-opacity:0; -khtml-opacity:0;}
 .translater-confirm-step2 .confirm-content ul li .value .edit .edit-chose span{width:35px;height:46px;display:inline-block;cursor:pointer;}
 .translater-confirm-step2 .confirm-content ul li .value .edit .edit-chose span.txt4{background:url(../../images/icon-edit-finished.png) no-repeat center center;}
 .translater-confirm-step2 .confirm-content ul li .value .edit .edit-chose span.txt5{background:url(../../images/icon-edit-close.png) no-repeat center center;}
-.translater-confirm-step2 .confirm-content ul li .value .educate{padding:8px 0;border-bottom:1px solid #e6e6e6;*zoom:1;}
+.translater-confirm-step2 .confirm-content ul li .value .educate{padding:40px 0;border-bottom:1px solid #e6e6e6;*zoom:1;}
 .translater-confirm-step2 .confirm-content ul li .value .educate:after{content:" ";height:0;clear:both;display:block;}
 .translater-confirm-step2 .confirm-content ul li .value .educate li{position:relative;}
 .translater-confirm-step2 .confirm-content ul li .value .educate li.mb10{margin-bottom:10px;}
@@ -1373,7 +1373,21 @@ opacity:0;filter:alpha(opacity=0); -moz-opacity:0; -khtml-opacity:0;}
 .third-testing .tab-con .big-con .tran-answer:hover{border:1px solid #52dc90;}
 .third-testing .confirm-btn{margin:40px 0 26px 0;}
 .undis{display:none;}
-
+.third-testing .prompt-modal{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;z-index:1;opacity: 0.6;display:none;}
+.third-testing .step-big{background-color:#fff;position:relative;z-index:2}
+.third-testing .prompt-box{background-color: #fff;z-index:3;opacity:1;position:absolute;top:380px;left:425px;width:390px;height:270px;border-radius:5px;-webkit-border-radius:0.35em;display:none;}
+.third-testing .prompt-box .prompt-header{height:50px;background-color:#39d5b0;text-align:center;display: flex;justify-content: center;align-items: center;border-radius:0.35em 0.35em 0 0;}
+.third-testing .prompt-box .prompt-header span{display:inline-block;font-size: 16px;font-family: "Microsoft YaHei";color: rgb( 255, 255, 255 );}
+.third-testing .prompt-box .prompt-content{padding:0 55px;height:150px;text-align:center;display: flex;justify-content:center;align-items:center;}
+.third-testing .prompt-box .prompt-content p{font-size: 14px;line-height:2;;font-family: "Microsoft YaHei";color: rgb( 106, 108, 111 );}
+.third-testing .prompt-box .prompt-footer{height:70px;text-align:center;}
+.confirm{margin-right:22px;width: 100px;height: 37px;background-color: rgb( 57, 213, 176 );font-size:14px;font-family:"Microsoft YaHei";color:rgb( 255, 255, 255 );border-radius:25px;-webkit-border-radius:25px;}
+.cancel{margin-left:22px;width: 100px;height: 37px;background-color:#fff;border:2px solid rgb( 57, 213, 176 );font-size:14px;font-family:"Microsoft YaHei";color:rgb( 57, 213, 176 );border-radius:25px;-webkit-border-radius:25px;}
+.third-testing .overtime-box{background-color: #fff;z-index:3;opacity:1;position:absolute;top:670px;left:425px;width:350px;height:220px;border-radius:5px;-webkit-border-radius:0.35em;display:none;}
+.third-testing .overtime-box .overtime-header{height:50px;background-color:#39d5b0;text-align:center;display: flex;justify-content: center;align-items: center;border-radius:0.35em 0.35em 0 0;}
+.third-testing .overtime-box .overtime-content{height:95px;text-align:center;display: flex;justify-content:center;align-items:center;}
+.third-testing .overtime-box .overtime-content p{font-size: 14px;line-height:2;;font-family: "Microsoft YaHei";color: rgb( 106, 108, 111 );}
+.third-testing .overtime-box .overtime-footer{height:70px;text-align:center;}
 /*下拉框样式*/
 .contact-select .drop-down{width:166px;height:44px;padding:0 20px;line-height: 44px;}
 .contact-select .select-con{width:166px;}
@@ -1442,6 +1456,135 @@ opacity:0;filter:alpha(opacity=0); -moz-opacity:0; -khtml-opacity:0;}
   margin: 0 auto;
 }
 
+/*人员管理*/
+.member-manage .toptitle{height:auto;*zoom:1;}
+.member-manage .toptitle:after{content:" ";height:0;clear:both;display:block;}
+.member-manage .toptitle .btn-line{margin-top:40px;}
+.member-manage .info{padding:40px 0 40px 0;float:left;}
+.member-manage .info p{line-height:20px;font-size:14px;color:#2c3e50;}
+.member-manage .right-list .table .blue{color:#2361ea;}
+.member-manage .right-list .table span{width:70px;display:inline-block;cursor:pointer;}
+.member-manage .right-list .table span.del{width:30px;margin-right:20px;}
+
+/*邀请新成员*/
+.invite-new-member .right-list{margin-top:0;}
+.invite-new-member .right-list .info-tit{padding:0 0 15px 20px;line-height:25px;font-size:16px;color:#2c3e50;border-bottom:1px solid #e3e6ed;}
+.invite-new-member .right-list .link-box p{text-align:center;line-height:20px;font-size:14px;color:#6a6c6f;}
+.invite-new-member .right-list .link-box .link-tit{padding:80px 0 40px;}
+.invite-new-member .right-list .link-box .link-input{padding-top:20px;text-align:center;}
+.invite-new-member .right-list .link-box .link-input.pb50{padding-bottom:50px;}
+.invite-new-member .right-list .link-box .link-input input{width:360px;margin-right:10px;}
+.invite-new-member .right-list .link-box .btn-line-green{width:80px;height:44px;border:1px solid #43d4b0;background:#fff;color:#43d4b0;border-radius:7px;}
+
+/*接受邀请*/
+.mt-0{margin-top:0;}
+.receive-invite{width:100%;float:left;display: block;}
+.receive-invite-success{width:100%;float:left;}
+.receive-invite-success ul{width:100%;float:left;}
+.receive-invite-success ul li{text-align: center;}
+.receive-invite-success ul .word-invite{font-size:16px;margin-top:10px;}
+.receive-invite-success ul .wordline-head{font-size:14px;margin-top:30px;}
+.receive-invite-success ul .wordline{font-size:14px;margin-top:10px;}
+.receive-invite-success ul .wordline a{font-size: 14px;}
+.receive-invite-success ul .wordline.blue{color:#ffffff;}
+
+/*移交账号*/
+.right-wrapper-business{width:920px;height:1050px;float:left;margin:20px 0 0 20px;}
+.right-list-account{width:100%;float:left;border:1px solid #e3e6ed;background:#fff;padding:20px;min-height:1050px;}
+.account-exchange{width:100%;float:left;}
+.account-exchange ul{width:100%;float:left;margin-top:70px;}
+.account-exchange ul li{text-align: center;}
+.account-exchange ul .word-invite{font-size:16px;margin-top:10px;}
+.account-exchange ul .wordline-head{font-size:16px;margin-top:5px;}
+.account-exchange ul .wordline{font-size:16px;margin-top:40px;}
+.account-exchange ul .wordline div{margin-top: 50px;}
+.account-exchange ul .wordline div input{ margin:0 20px 0 20px;}
 
 
+/*各种链接失效*/
+.linkInvalidation-body{background:#f0f2f5;}
+.linkInvalidation-wrapper-big{width: 1200px;margin:0 auto;}
+.linkInvalidation-wrapper{width:1200px;float:left;margin-top:20px;min-height:420px;margin-bottom:20px;background-color: #ffffff;}
+.link-warning{width: 1200px;margin-top: 205px;text-align: center;}
+.link-warning p img{margin-top: -2px;}
+.link-warning p .link_phoneNumber{color: #547ee9;margin-left: 2px;}
+.link-footer-list{width:100%;float:left;margin-top:20px;}
+.link-footer-list ul li{text-align: center;line-height:30px;font-size:12px;}
+.link-footer-list ul li img{margin-left:10px;}
 
+/*企业账户*/
+.right-list-business{width:100%;float:left;border:1px solid #e3e6ed;background:#fff;margin-top:20px;padding:20px;min-height:1050px;}
+
+/*企业账单*/
+
+.text-sucess{
+  color: #4dd8b6;
+  font-size: 18px;
+  padding: 0 5px;
+}
+/*textarea下方提示信息*/
+.textarea-tips{ padding-left: 90px;font-size: 12px}
+
+/*发票管理*/
+.invoice-notice{padding-left:20px;width:920px;height:225px;border:1px solid #e3e6ed;background:#fff;}
+.invoice-notice h3{font-size: 14px;font-family: "Microsoft YaHei";color: rgb( 254, 107, 107 );line-height: 1.286;}
+.invoice-notice ul li{font-size: 14px;font-family: "Microsoft YaHei";color: rgb( 106, 108, 111 );line-height: 1.714;}
+.select-order{padding:0 20px;width:920px;height:998px;border:1px solid #e3e6ed;background:#fff;}
+.select-order h4{margin:0;display:block;height:68px;line-height:68px;font-size: 14px;font-family: "Microsoft YaHei";color: rgb( 44, 62, 80 );font-weight:600;}
+.select-order .table td{height:50px;}
+.select-order .save-btn{margin:0px;}
+.table-bg thead{background-color:#f5f5f6;}
+.stripe tr:nth-child(even){background-color:#f5f5f6;}
+.select-order table .select-check{width:50px;height:50px;font-size:16px;color:#3292f8;font-style:italic;background:url(../../images/checkbox-unselect.png) no-repeat 20px center;float:left;cursor:pointer;}
+.select-order table .select-check.active{background:url(../../images/checkbox.png) no-repeat 20px center;}
+.selecter{background-color:#e0ecff !important;}
+.table-bottom{padding:20px 0 0 20px;width:880px;height:100px;float:left;border-top:1px solid #f5f5f6;}
+.table-bottom label{font-size: 14px;font-family: "Microsoft YaHei";color: rgb( 106, 108, 111 );line-height: 1.714;}
+.table-bottom .remark{margin-left:28px;}
+.table-bottom .remark input{padding-left:20px;width:784px;height:46px;border: 1px solid rgb( 230, 230, 230 );font-size: 14px;font-family: "Microsoft YaHei";color: rgb( 230, 230, 230 );border-radius: 5px;}
+.invoice-info h4{margin:0px;display:block;height:68px;font-size: 14px;font-family: "Microsoft YaHei";color: rgb( 44, 62, 80 );font-weight:600}
+.invoice-info{position:relative;float: left;}
+.invoice-info ul{display: block;width:900px;}
+.invoice-info .pull-left{float: left;}
+.invoice-info .invoice-card{margin: 0 28px 28px 0;padding: 10px 20px;border: 1px solid #eaecf2;border-radius: 3px;float: left;position: relative;}
+.invoice-info .current{box-shadow: 0 0px 4px 2px rgba(212, 224, 251,1);}
+.invoice-info .invoice-card p{height: 32px;line-height: 32px;display: block;}
+.invoice-info .invoice-card p span{line-height: 32px;}
+.invoice-info .invoice-card p .cut{display: block;width: 310px;float: left;}
+.invoice-info .invoice-card .operate a{display:block;font-size: 14px;font-family: "Microsoft YaHei";color: rgb( 44, 103, 235 );line-height: 1.714;text-align: left;}
+.invoice-info .invoice-card .operate .delete{margin-right: 10px;width: 19px;height: 30px;background: url(../../images/icon-delete.png) no-repeat center center;display: block;float: right;cursor:pointer;}
+.invoice-info .invoice-card .operate .edit{margin-right: 20px;width: 19px;height: 30px;background: url(../../images/icon-edit.png) no-repeat center center;display: block;float: right;cursor: pointer;}
+.invoice-info .current label{display:block;width: 23px;height: 23px;position:absolute;top:-12px;left:406px;font-size:16px;background: url(../../images/icon-big.png) no-repeat left -2189px;}
+.invoice-info .add-invoice{margin-left:17px;padding-left: 32px;line-height: 24px;background: url(../../images/icon-add.png) no-repeat 5px 2px;font-size: 13px;color: #39d5b0;display: inline-block;cursor: pointer;font-weight: bold;}
+.invoice-info .limit{margin:0 10px;display:inline-block;font-size: 14px;font-family: "Microsoft YaHei";color: rgb( 106, 108, 111 );}
+/*已测试*/
+.third-testing .testing-table .finished-test{display:block;height: 980px}
+.third-testing .testing-table .finished-test p{text-align: center;position:relative;top:250px}
+/*textarea下方提示信息*/
+.textarea-tips{ padding-left: 90px;font-size: 12px}
+/*修改译员认证信息-标题*/
+.editing-title{
+  font-size: 16px;
+  font-family: "MicrosoftYaHei";
+  color: rgb(44, 62, 80);
+  line-height: 1.125;
+}
+.editing-title p{
+  padding-bottom: 15px;
+  margin-bottom: 40px;
+  border-bottom:solid 1px rgb(227, 230, 237)
+}
+/*译员语言认证测试标题*/
+.testLang-title{
+  font-size: 16px;
+  font-family: "MicrosoftYaHei";
+  color: rgb(44, 62, 80);
+  line-height: 1.125;
+}
+.testLang-title p{
+  padding-left: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  border-bottom:solid 1px rgb(227, 230, 237)
+}
