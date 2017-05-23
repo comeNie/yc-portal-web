@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.ai.yc.order.api.orderevaluation.param.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,11 +60,6 @@ import com.ai.yc.order.api.orderdetails.param.PersonInfoVo;
 import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsRequest;
 import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsResponse;
 import com.ai.yc.order.api.orderevaluation.interfaces.IOrderEvaluationSV;
-import com.ai.yc.order.api.orderevaluation.param.OrderEvaluationBaseInfo;
-import com.ai.yc.order.api.orderevaluation.param.OrderEvaluationExtendInfo;
-import com.ai.yc.order.api.orderevaluation.param.OrderEvaluationRequest;
-import com.ai.yc.order.api.orderevaluation.param.QueryOrdEvaluteRequest;
-import com.ai.yc.order.api.orderevaluation.param.QueryOrdEvaluteResponse;
 import com.ai.yc.order.api.orderfee.interfaces.IOrderFeeQuerySV;
 import com.ai.yc.order.api.orderfee.param.OrderFeeInfo;
 import com.ai.yc.order.api.orderfee.param.OrderFeeProdInfo;
@@ -684,6 +680,11 @@ public class CustomerOrderController {
 		return "customerOrder/viewEvaluate";
 	}
 
+	/**
+	 * 提交订单评价
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/evaluateOrder")
 	@ResponseBody
 	public ResponseData<String> evaluateOrder(HttpServletRequest request) {
@@ -696,15 +697,23 @@ public class CustomerOrderController {
 		// 订单基本信息
 		OrderEvaluationBaseInfo orderBase = new OrderEvaluationBaseInfo();
 		orderBase.setOrderId(Long.valueOf(orderId));
+		orderBase.setUserId(UserUtil.getUserId());
+		orderBase.setOperName(UserUtil.getUserName());
+		orderBase.setState(OrderConstants.State.EVALUATED);
 		evaluationRequest.setBaseInfo(orderBase);
 
 		// 订单评价信息
 		OrderEvaluationExtendInfo orderEvaluateInfo = JSONObject.parseObject(orderEvaluateInfoStr,
 				OrderEvaluationExtendInfo.class);
+		orderEvaluateInfo.setState("0");//固定值
 		orderEvaluateInfo.setEvaluateTime(new Timestamp(System.currentTimeMillis()));
 		evaluationRequest.setExtendInfo(orderEvaluateInfo);
 
-		iOrderEvaluationSV.orderEvaluation(evaluationRequest);
+		OrderEvaluationResponse response = iOrderEvaluationSV.orderEvaluation(evaluationRequest);
+		if (response.getOrderId() == null){
+			LOGGER.error("评价订单错误",JSON.toJSONString(response));
+			resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE, rb.getMessage("order.evaluation.error"));
+		}
 		return resData;
 	}
 
