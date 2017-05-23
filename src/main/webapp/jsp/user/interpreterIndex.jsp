@@ -47,6 +47,8 @@
                                 <p class="red" style="cursor:pointer;" onclick="location.href='${_base}/p/balance/account'">
                                     <fmt:formatNumber
                                             value="${balance/1000}" pattern="#,##0.00#"/></p>
+                            </li>
+                            <li>
                                 <%--积分--%>
                                 <p><spring:message code="ycaccountcenter.userIndex.credicts"/>:</p>
                                 <p class="red" style="cursor:pointer;" onclick="location.href='${_base}/p/integral/myIntegral'"><fmt:formatNumber
