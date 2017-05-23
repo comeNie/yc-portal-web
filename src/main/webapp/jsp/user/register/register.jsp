@@ -127,23 +127,7 @@
 </body>
 <%@ include file="/inc/incJs.jsp" %>
 <script type="text/javascript">
-	var pager;
-	(function() {
-		seajs.use('app/jsp/user/register/register', function(registerPager) {
-			pager = new registerPager({
-				element : document.body
-			});
-			pager.render();
-		});
-        $("input").placeholder();
-        $("#regsiterMsg").html("");
-        //checkbox兼容ie8
-//        $('.regsiter-form :checkbox').iCheck({
-//            checkboxClass: 'icheckbox_flat-blue',
-//            radioClass: 'iradio_flat-blue'
-//        });
-	})();
-	var registerMsg = {
+var registerMsg = {
 		"account_phone_empty" : '<spring:message code="ycregisterMsg.accountPhoneEmpty" />',
 		"account_email_empty" : '<spring:message code="ycregisterMsg.accountEmailEmpty" />',
 		"account_phone_error" : '<spring:message code="ycregisterMsg.accountPhoneError" />',
@@ -163,6 +147,23 @@
 		"getDynamiCode":'<spring:message code="ycregister.getDynamiCode"/>',
 		"resend":'<spring:message code="ycregisterMsg.resend"/>'
 	};
+	var pager;
+	(function() {
+		seajs.use('app/jsp/user/register/register', function(registerPager) {
+			pager = new registerPager({
+				element : document.body
+			});
+			pager.render();
+		});
+        $("input").placeholder();
+        $("#regsiterMsg").html("");
+        //checkbox兼容ie8
+//        $('.regsiter-form :checkbox').iCheck({
+//            checkboxClass: 'icheckbox_flat-blue',
+//            radioClass: 'iradio_flat-blue'
+//        });
+	})();
+	
 </script>
 
 </html>
