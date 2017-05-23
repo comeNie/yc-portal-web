@@ -87,13 +87,17 @@
 <script id="searchIntegralTemple" type="text/template">
     <tr>
         <td>{{:~timestampToDate('yyyy-MM-dd hh:mm:ss',logTime,'<%=ZoneContextHolder.getZone()%>')}}</td>
-        <td class="red">
-            {{if  integralValue > 0}}
-            +{{:integralValue}}
-            {{else}}
-            {{:integralValue}}
-            {{/if}}
-        </td>
+
+        {{if  integralValue > 0}}
+            <td class="red">
+                +{{:integralValue}}
+            </td>
+                {{else}}
+            <td class="green">
+                {{:integralValue}}
+            </td>
+        {{/if}}
+
         <td>
             {{:integralSource}}
         </td>
