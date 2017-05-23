@@ -96,7 +96,9 @@
 	<!--分配订单-->
 	<dubbo:reference id="iOrderAllocationSV"
 					 interface="com.ai.yc.order.api.orderallocation.interfaces.IOrderAllocationSV"/>
-
+<!-- 查询lsp下译员信息 -->
+<dubbo:reference id="iYCAlloTranslatorServiceSV"
+					 interface="com.ai.yc.translator.api.allointerper.intefaces.IYCAlloTranslatorServiceSV"/>
 
 	<!-- 积分查询 -->
 	<dubbo:reference id="iIntegralsSV"

@@ -30,6 +30,8 @@
             height: auto;
         }
     </style>
+    <input type="hidden" id="interperFee" value="${orderDetails.orderFee.interperFee}">
+    <input type="hidden" id="lspId" value="${orderDetails.lspId}">
 </head>
 <body>
 <c:choose>
@@ -58,6 +60,8 @@
                     <A href="javaScript:void(0);" class="red-icon"><i class="delete-img"></i></A>
                 </td>
         </script>
+        
+
 <!--口译分配弹出-->
 <div class="eject-big undistribute-dlog" >
     <div class="prompt-big assign-tran-dialog" id="tran" assign-tran-dialog>
@@ -74,7 +78,7 @@
                 <div class="add-toicon">
                         <%--添加译员--%>
                     <a href="javaScript:void(0);" id="addInterpreter"><i class="icon iconfont">&#xe633;</i><spring:message
-                            code="myOrder.add.translator"/></a>
+                            code="order.allocation.addinterper"/></a>
                 </div>
             </div>
             <div class="prompt-samll-confirm prompt-mt">
@@ -94,163 +98,51 @@
         <!--口译分配弹出结束-->
     </c:when>
     <c:otherwise>
-<!--笔译分配弹出-->
-<div class="eject-big undistribute-dlog">
-    <div class="prompt-big" id="assign-tran-dialog" assign-tran-dialog>
-        <div class="prompt-big-title">分配任务</div>
-        <div class="prompt-center">
-            <div class="prompt-center-title">
-                <ul>
-                    <li><a href="javaScript:void(0);" class="current">翻译</a></li>
-                    <li><a href="javaScript:void(0);">审校</a></li>
-                    <li><a href="javaScript:void(0);">审校1</a></li>
-                    <p><a href="javaScript:void(0);"><i class="icon iconfont">&#xe633;</i>添加步骤</a></p>
-                </ul>
-            </div>
-            <div id="tran-tab1">
-                <div class="prompt-center-table">
-                    <table class="table table-bg  table-height60">
-                        <tbody>
-                        <tr>
-                            <td class="text-l"><span class="name">李菁菁</span></td>
-                            <td>500元/千字</td>
-                            <td class="text-center">2300字</td>
-                            <td class="text-center">共<span class="money">12487</span>元</td>
-                            <td class="operate"><A href="#" class="blue-icon"><i  class="edit-img"></i></A><A href="#"  class="red-icon"><i  class="delete-img"></i></A></td>
-                        </tr>
-                        <tr>
-                            <td class="text-l"><span class="name">李菁菁</span></td>
-                            <td>500元/千字</td>
-                            <td class="text-center">2300字</td>
-                            <td class="text-center">共<span class="money">12487</span>元</td>
-                            <td class="operate"><A href="#" class="blue-icon"><i  class="edit-img"></i></A><A href="#"  class="red-icon"><i  class="delete-img"></i></A></td>
-                        </tr>
-                        <tr>
-                            <td class="text-l">
-                                <div class="select-wrap">
-                                    <div class="select radius drop-down" drop-down>咩咩咩</i></div>
-                                    <div class="select-con undis">
-                                        <ul>
-                                            <li><a href="javascript:;">咩</a></li>
-                                            <li><a href="javascript:;">咩咩</a></li>
-                                            <li><a href="javascript:;">咩咩咩</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>500元/千字</td>
-                            <td class="text-center">2300字</td>
-                            <td class="text-center">共<input type="text" class="in-money" value="500" />元</td>
-                            <td class="operate"><A href="#" class="blue-icon"><i  class="finished-img"></i></A><A href="#"  class="red-icon"><i  class="close-img"></i></A></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="add-toicon">
-                    <%--添加译员--%>
-                    <a href="#"><i class="icon iconfont">&#xe633;</i><spring:message code="myOrder.add.translator"/></a>
-                </div>
-            </div>
-            <div id="tran-tab2" style="display:none;">
-                <div class="prompt-center-table">
-                    <table class="table table-bg  table-height60">
-                        <tbody>
-                        <tr>
-                            <td class="text-l"><span class="name">李菁菁</span></td>
-                            <td>500元/千字</td>
-                            <td class="text-center">2300字</td>
-                            <td class="text-center">共<span class="money">12487</span>元</td>
-                            <td class="operate"><A href="#" class="blue-icon"><i  class="edit-img"></i></A><A href="#"  class="red-icon"><i  class="delete-img"></i></A></td>
-                        </tr>
-                        <tr>
-                            <td class="text-l"><span class="name">李菁菁</span></td>
-                            <td>500元/千字</td>
-                            <td class="text-center">2300字</td>
-                            <td class="text-center">共<span class="money">12487</span>元</td>
-                            <td class="operate"><A href="#" class="blue-icon"><i  class="edit-img"></i></A><A href="#"  class="red-icon"><i  class="delete-img"></i></A></td>
-                        </tr>
-                        <tr>
-                            <td class="text-l">
-                                <div class="select-wrap">
-                                    <div class="select radius drop-down" drop-down>咩咩咩</i></div>
-                                    <div class="select-con undis">
-                                        <ul>
-                                            <li><a href="javascript:;">咩</a></li>
-                                            <li><a href="javascript:;">咩咩</a></li>
-                                            <li><a href="javascript:;">咩咩咩</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>500元/千字</td>
-                            <td class="text-center">2300字</td>
-                            <td class="text-center">共<input type="text" class="in-money" value="500" />元</td>
-                            <td class="operate"><A href="#" class="blue-icon"><i  class="finished-img"></i></A><A href="#"  class="red-icon"><i  class="close-img"></i></A></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="add-toicon">
-                    <a href="#"><i class="icon iconfont">&#xe633;</i>添加译员</a>
-                </div>
-            </div>
-            <div id="tran-tab3" style="display:none;">
-                <div class="prompt-center-table">
-                    <table class="table table-bg  table-height60">
-                        <tbody>
-                        <tr>
-                            <td class="text-l"><span class="name">李菁菁</span></td>
-                            <td>500元/千字</td>
-                            <td class="text-center">2300字</td>
-                            <td class="text-center">共<span class="money">12487</span>元</td>
-                            <td class="operate"><A href="#" class="blue-icon"><i  class="edit-img"></i></A><A href="#"  class="red-icon"><i  class="delete-img"></i></A></td>
-                        </tr>
-                        <tr>
-                            <td class="text-l"><span class="name">李菁菁</span></td>
-                            <td>500元/千字</td>
-                            <td class="text-center">2300字</td>
-                            <td class="text-center">共<span class="money">12487</span>元</td>
-                            <td class="operate"><A href="#" class="blue-icon"><i  class="edit-img"></i></A><A href="#"  class="red-icon"><i  class="delete-img"></i></A></td>
-                        </tr>
-                        <tr>
-                            <td class="text-l">
-                                <div class="select-wrap">
-                                    <div class="select radius drop-down" drop-down>咩咩咩</i></div>
-                                    <div class="select-con undis">
-                                        <ul>
-                                            <li><a href="javascript:;">咩</a></li>
-                                            <li><a href="javascript:;">咩咩</a></li>
-                                            <li><a href="javascript:;">咩咩咩</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>500元/千字</td>
-                            <td class="text-center">2300字</td>
-                            <td class="text-center">共<input type="text" class="in-money" value="500" />元</td>
-                            <td class="operate"><A href="#" class="blue-icon"><i  class="finished-img"></i></A><A href="#"  class="red-icon"><i  class="close-img"></i></A></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="add-toicon">
-                    <a href="#"><i class="icon iconfont">&#xe633;</i>添加译员</a>
-                </div>
-            </div>
-            <div class="prompt-samll-confirm prompt-mt">
-                <ul>
-                    <li class="eject-btn">
-                        <input type="button" id="tran-determine" class="btn btn-green btn-120 radius20"
-                               value="<spring:message code="myOrder.confirm"/>">
-                        <input type="button" id="tran-close" class="btn border-green btn-120 radius20"
-                               value="<spring:message code="myOrder.Cancell"/>">
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="mask" id="eject-mask"></div>
-</div>
+		<!--笔译分配弹出-->
+		 <div class="eject-big undistribute-dlog">
+		    <div class="prompt-big" id="fenpei">
+		    <div class="prompt-big-title"><spring:message code="order.allocation.allotask"/></div>
+		      <div class="prompt-center" id="penDilogId">
+		        <div class="prompt-center-title">
+		          <ul id="steps" tabs>
+		            <li class="tab-item current">
+		              <a href="#" ><span setActive>翻译</span><i class="img-down" select-type-down></i><i class="img-delete"delete-tab></i></a>
+		              <div class="down-con clearfix undis" select-type>
+		                <ul>
+		                    <li><a href="javascript:;" select-type-item>审校</a></li>
+		                    <li><a href="javascript:;" select-type-item>翻译</a></li>
+		                </ul>
+		              </div>
+		            </li>
+		          </ul>
+		          <div class="addStep"><a href="#"><i class="icon iconfont">&#xe633;</i><spring:message code="order.allocation.addstep"/></a></div>
+		        </div>
+		        <div id="tran-tab1" class="isediting tran-tabs active" >
+		          <div class="prompt-center-table">
+		            <table class="table table-bg  table-height60" table1>
+		              <tbody>
+		
+		              </tbody>
+		            </table>
+		          </div>
+		          <div class="add-toicon" index="0" id="penAdd">
+		            <a href="#"><i class="icon iconfont">&#xe633;</i><spring:message
+                            code="myOrder.add.translator"/></a>
+		          </div>
+		        </div>
+		        <div class="prompt-samll-confirm prompt-mt" btns>
+		          <ul>
+		            <li class="eject-btn">
+		              <input type="button" id="confirmfenpei" class="btn btn-green btn-120 radius20" value="<spring:message code="order.allocation.okbtn"/>">
+		              <input type="button" id="tran-close" class="btn border-green btn-120 radius20" value="<spring:message code="order.allocation.cancelbtn"/>">
+		            </li>
+		          </ul>
+		        </div>
+		      </div>
+		    </div>
+		    <div class="mask" id="eject-mask"></div>
+		  </div>
+		  <!--/弹出结束-->
     </c:otherwise>
 </c:choose>
 <!--/弹出结束-->
@@ -531,6 +423,7 @@
                                 <p class="word"><spring:message code="myOrder.Language"/>：</p>
                                 <p>
                                     <c:forEach items="${orderDetails.prodExtends}" var="prodExtends">
+                                    	<input type="hidden" id="langugeId" value="${prodExtends.langungePair}">
                                         <c:choose>
                                             <c:when test="<%=Locale.SIMPLIFIED_CHINESE.equals(response.getLocale())%>">${prodExtends.langungePairName}</c:when>
                                             <c:otherwise>${prodExtends.langungeNameEn}</c:otherwise>
@@ -693,7 +586,7 @@
                             <%--若不是口译订单，则显示翻译--%>
                             <c:if test="${orderDetails.translateType!='2'}">
                                 <!-- 翻译-->
-                                <input id="trans" name="trans" class="btn btn-green btn-xxxlarge radius10" type="button"
+                                 <input id="trans" name="trans" class="btn btn-green btn-xxxlarge radius10" type="button"
                                        value="<spring:message code="myOrder.btn.Translate"/>">
                             </c:if>
                             <%--若是管理员，则显示分配按钮--%>
@@ -774,12 +667,25 @@
 
 <%--底部--%>
 <%@include file="/inc/userFoot.jsp" %>
+<%@include file="/inc/allo.jsp" %>
 </body>
-<%@ include file="/inc/incJs.jsp" %>
-<script type="text/javascript" src="${uedroot}/scripts/modular/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="${uedroot}/scripts/modular/frame.js"></script>
-
+<%-- <script src="${_base}/resources/template/scripts/modular/pages.js"></script> --%>
+<script src="${_base}/resources/spm_modules/app/jsp/transOrder/pages.js"></script>
 <script type="text/javascript">
+var userList;
+var alloPenMsg ={
+		"atlastInterperError" : '<spring:message code="order.allocation.atlastinterper"/>',
+		"moreStepError" : '<spring:message code="order.allocation.morestep"/>',
+		"moreInterperError" : '<spring:message code="order.allocation.moreinterper"/>',
+		"notFinishError" : '<spring:message code="order.allocation.nofinish"/>',
+		"waitFinishError" : '<spring:message code="order.allocation.waitfinish"/>',
+		"showOK" : '<spring:message code="order.allocation.okbtn"/>',
+		"showCancal" : '<spring:message code="order.allocation.cancelbtn"/>',
+		"saveDataFail" : '<spring:message code="order.allocation.save.error.msg"/>',
+		"priceError": '<spring:message code="order.allocation.interperprice.error"/>',
+		"interperNotEmptyError": '<spring:message code="order.allocation.interpernotempty.error"/>',
+		"moreMouthInterperError" : '<spring:message code="order.allocation.moremouthinterper"/>',
+};
     var pager, orderPager;
     //lspId
     var lspId = "${lspId}";
@@ -792,6 +698,7 @@
     var orderState= "${orderDetails.state}";
     //当前步骤
     var followId = "${orderDetails.currentReceiveFollowId}";
+   
     (function () {
         seajs.use(['app/jsp/transOrder/orderInfo', 'app/jsp/customerOrder/order'], function (orderInfoPage, orderPage) {
             pager = new orderInfoPage({element: document.body});
@@ -884,6 +791,7 @@
                 $(this).parent().parent().parent().remove();
             }
         });
+        
     })();
 
 </script>

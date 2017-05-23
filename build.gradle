@@ -118,7 +118,7 @@ dependencies {
     //分配订单
     compile 'com.ai.yc.order:orderallocation:1.0-SNAPSHOT'
     //更新订单产品明细
-      compile 'com.ai.yc.order:updateorder:1.0.1-SNAPSHOT'
+    compile 'com.ai.yc.order:updateorder:1.0.2-SNAPSHOT'
 
 //  //用户成长值
     compile 'com.ai.yc.user:usergriwthvalue:2.1-SNAPSHOT'
@@ -160,7 +160,8 @@ dependencies {
 	
 	compile 'org.dom4j:dom4j:2.0.0'
 	compile 'com.ai.yc.sms:focusSmsSDK:1.0'
-
+//查询lsp下译员服务
+      compile 'com.ai.yc.translator:allointerper:2.0-SNAPSHOT'
     //poi
     compile 'org.apache.poi:poi:3.13'
     compile 'org.apache.poi:poi-scratchpad:3.13'

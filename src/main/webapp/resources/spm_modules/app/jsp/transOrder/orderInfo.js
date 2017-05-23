@@ -11,6 +11,7 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 	require('webuploader/webuploader');
     //实例化AJAX控制处理对象
     var ajaxController = new AjaxController();
+    
 	var processingDialog;
 	var uploader = null;
     var orderInfoPage = Widget.extend({
@@ -61,7 +62,18 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 				this._initUpdate();
 			}
 		},
-
+		 showMsg :function(msg){
+	    	var d = Dialog({
+				content:msg,
+				icon:'fail',
+				okValue:alloPenMsg.showOK,
+				title: "提示",
+				ok:function(){
+					d.close();
+				}
+			});
+			d.showModal();
+	    },
 		_initUpdate:function () {
             if(processingDialog==null){
                 processingDialog = new Dialog({
@@ -231,14 +243,22 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 			if(translateType == "2" && orderState == "21"){
 				_this._openTran();
 			}//若是待领取的笔译订单，则直接显示笔译分配
-			else if(translateType == "1" && orderState == "21"){
-				_this._openTran();
+			else if(translateType!="2"){
+				_this._openPenTran();
 			}
-			_this._openTran();
+			//_this._openPenTran();
 			//若是笔译，且不是待领取，则从后台获取数据。
         },
 		//添加口译译员信息
         _addInter:function () {
+        	//校验译员最多有10项
+        	var ss = $("#oralTrans").find("tr").length;
+        	var interperNum = parseInt(ss)+1;
+        	if(interperNum>10){
+        		//alert("最多4个译员");
+        		this.showMsg(alloPenMsg.moreMouthInterperError);
+        		return false;
+        	}
     		var data = {"name":"","number":"","opType":""};
             var htmlOutput = "<tr>"+this._editInter(data)+"</tr>";
             $("#oralTrans").append(htmlOutput);
@@ -337,10 +357,16 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
                 }
             });
         },
-		//打开分配窗口
+		//打开口译分配窗口
 		_openTran:function () {
             $('#eject-mask').fadeIn(100);
             $('[assign-tran-dialog]').slideDown(100);
+        },
+        //打开笔译分配窗口
+        _openPenTran:function () {
+            $('#eject-mask').fadeIn(100);
+            $('#fenpei').slideDown(100);
+           // this._bindInterperSelect();
         },
 		//保存分配人员信息
         _confirmAssign:function () {
@@ -350,16 +376,13 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
             	//判断确认口译分配人员
             	_this._confirmOralAssign();
             	//分配
-            	
-            }//若是待领取的笔译订单，则直接显示笔译分配
-            else if(translateType == "1" && orderState == "21"){
-
             }
         },
         //口译订单分配保存
         _alloOral:function (param) {
         	if(null==param || ""==param){
-        		alert("译员信息不能为空");
+        		//alert("译员信息不能为空");
+        		this.showMsg(alloPenMsg.interperNotEmptyError);
         		return false;
         	}
         	var orderId = $("#orderId").val();
@@ -398,16 +421,23 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
             	personList.push(person);
             	if(undefined!=inObj){
             		if(inObj==null || ""==inObj){
-                		alert("有未保存的译员数据");
+                		//alert("有未保存的译员数据");
+                		this.showMsg(alloPenMsg.notFinishError);
                 		return false;
                 	}
             	}
             })
-            //调用分配操作
-            param.personList=personList;
-            _this._alloOral(param);
+            if(null==personList || ""==personList){
+            	alert("译员不能为空");
+            	return false;
+            }else{
+            	 //调用分配操作
+                param.personList=personList;
+                _this._alloOral(param);
+            }
+           
         },
-		//关闭分配窗口
+		//关闭口译分配窗口
         _closeTran:function () {
             $('#eject-mask').fadeOut(200);
             $('[assign-tran-dialog]').slideUp(200);
@@ -433,8 +463,47 @@ define('app/jsp/transOrder/orderInfo', function (require, exports, module) {
 					this.close();
 				}
 			}).showModal();
+		},
+		//查询笔译分配人员
+		_bindInterperSelect : function() {
+			var this_=this;
+			$.ajax({
+				type : "post",
+				processing : false,
+				url : _base+ "/p/customer/order/getInterperSelect",
+				dataType : "json",
+				data : {
+					lspId:$("#lspId").val(),
+					duadId:$("#langugeId").val()
+				},
+				message : "正在加载数据..",
+				success : function(data) {
+					if(null!=data.data){
+						userList=data.data;
+					}else{
+						alert("分配译员查询错误");
+					}
+				}
+			});
 		}
 
     });
     module.exports = orderInfoPage;
 });
+//笔译订单分配
+function alloPen(param,orderId){
+	$.ajax({
+		type : "post",
+		processing : false,
+		message : "删除",
+		url: _base + "/p/customer/order/alloPenOrder",
+        data: {
+        	orderId:orderId,
+        	personInfo:JSON.stringify(param)
+        },
+		success : function(json) {
+			//刷新页面
+            window.location.reload();
+		}
+	})
+}

@@ -75,9 +75,12 @@ import com.ai.yc.protal.web.constants.Constants;
 import com.ai.yc.protal.web.constants.ErrorCode;
 import com.ai.yc.protal.web.constants.OrderConstants;
 import com.ai.yc.protal.web.constants.YEPayResultConstants;
+import com.ai.yc.protal.web.model.AllocationInfo;
 import com.ai.yc.protal.web.model.CatLine;
+import com.ai.yc.protal.web.model.InterperInfo;
 import com.ai.yc.protal.web.model.PersonInfo;
 import com.ai.yc.protal.web.model.PersonListInfo;
+import com.ai.yc.protal.web.model.StepInfo;
 import com.ai.yc.protal.web.model.pay.AccountBalanceInfo;
 import com.ai.yc.protal.web.model.pay.OrderPay;
 import com.ai.yc.protal.web.model.pay.YEPayResult;
@@ -90,6 +93,10 @@ import com.ai.yc.protal.web.utils.PasswordMD5Util;
 import com.ai.yc.protal.web.utils.PaymentUtil;
 import com.ai.yc.protal.web.utils.UserUtil;
 import com.ai.yc.protal.web.utils.VerifyUtil;
+import com.ai.yc.translator.api.allointerper.intefaces.IYCAlloTranslatorServiceSV;
+import com.ai.yc.translator.api.allointerper.param.AlloTranslatorInfo;
+import com.ai.yc.translator.api.allointerper.param.AlloTranslatorRequest;
+import com.ai.yc.translator.api.allointerper.param.AlloTranslatorResponse;
 import com.ai.yc.user.api.usercompany.interfaces.IYCUserCompanySV;
 import com.ai.yc.user.api.usercompany.param.UserCompanyInfoRequest;
 import com.ai.yc.user.api.usercompany.param.UserCompanyInfoResponse;
@@ -796,7 +803,87 @@ public class CustomerOrderController {
 		}
 		return response;
 	}
-
+	/**
+	 * 获取分配译员信息
+     */
+    @RequestMapping("/getInterperSelect")
+    @ResponseBody
+    public ResponseData<List<AlloTranslatorInfo>> getSelect(HttpServletRequest request,AlloTranslatorRequest req) {
+        ResponseData<List<AlloTranslatorInfo>> responseData=null;
+        try{
+        	IYCAlloTranslatorServiceSV translatorServiceSV = DubboConsumerFactory.getService(IYCAlloTranslatorServiceSV.class);
+        	AlloTranslatorResponse response = translatorServiceSV.queryAlloTranslator(req);
+        	List<AlloTranslatorInfo> translatorList = response.getTranslatorList();
+        	AlloTranslatorInfo info1 = new AlloTranslatorInfo();
+        	info1.setInterperId("001");
+        	info1.setInterperName("张三岁");
+        	info1.setReferencePrice(200l);
+        	AlloTranslatorInfo info2 = new AlloTranslatorInfo();
+        	info1.setInterperId("002");
+        	info1.setInterperName("李四");
+        	info1.setReferencePrice(209l);
+        	translatorList.set(0, info1);
+        	translatorList.set(1, info2);
+            responseData=new ResponseData<List<AlloTranslatorInfo>>(ResponseData.AJAX_STATUS_SUCCESS,"获取数据成功",translatorList);
+        }catch(Exception e){
+            responseData=new ResponseData<List<AlloTranslatorInfo>>(ResponseData.AJAX_STATUS_FAILURE,"获取数据失败",null);
+        }
+        return responseData;
+    }
+	
+	/**
+	 * 笔译订单分配
+	 * 
+	 * @param orderId
+	 * @return
+	 */
+	@RequestMapping("/alloPenOrder")
+	@ResponseBody
+	public ResponseData<String> alloPenOrder(String orderId, String personInfo) {
+		ResponseData<String> response = new ResponseData<String>(ResponseData.AJAX_STATUS_SUCCESS, "OK");
+		OrderAllocationRequest alloRequest = new OrderAllocationRequest();
+		IOrderAllocationSV orderAllocationSV = DubboConsumerFactory.getService(IOrderAllocationSV.class);
+		AllocationInfo info = JSON.parseObject(personInfo, AllocationInfo.class);
+		List<InterperInfo> interperList = info.getInterperInfoList();
+		List<StepInfo> stepList = info.getStepInfoList();
+		List<OrderAllocationReceiveFollowInfo> orderAllocationReceiveFollowList=new ArrayList<OrderAllocationReceiveFollowInfo>();
+		OrderAllocationBaseInfo baseInfo = new OrderAllocationBaseInfo();
+		for(int i=0;i<stepList.size();i++){
+			OrderAllocationReceiveFollowInfo follow = new OrderAllocationReceiveFollowInfo();
+			List<OrdAllocationPersonInfo> personList = new ArrayList<OrdAllocationPersonInfo>();
+			follow.setStep(stepList.get(i).getNo());
+			follow.setOperType(stepList.get(i).getType());
+			//未领取
+			follow.setReceiveState("0");
+			follow.setFinishState("0");
+			//获取该步骤下的译员信息
+			for (InterperInfo person : interperList) {
+				if(person.getNo().equals(stepList.get(i).getNo())){
+					OrdAllocationPersonInfo ordPerson = new OrdAllocationPersonInfo();
+					ordPerson.setInterperName(person.getUserName());
+					ordPerson.setInterperId(person.getUserId());
+					ordPerson.setInterperFee(Long.valueOf(person.getPrice()));
+					personList.add(ordPerson);
+				}else{
+					continue;
+				}
+			}
+			follow.setOrdAllocationPersonInfoList(personList);
+			orderAllocationReceiveFollowList.add(follow);
+		}
+		baseInfo.setOrderId(Long.valueOf(orderId));
+		baseInfo.setUserId(UserUtil.getUserId());
+		baseInfo.setOperName(UserUtil.getUserName());
+		alloRequest.setOrderAllocationBaseInfo(baseInfo);
+		alloRequest.setOrderAllocationReceiveFollowList(orderAllocationReceiveFollowList);
+		BaseResponse svResponse = orderAllocationSV.orderAllocation(alloRequest);
+		if (svResponse != null && !svResponse.getResponseHeader().isSuccess()) {
+			LOGGER.warn("订单分配失败，订单号：{}，返回信息：{}", orderId, JSON.toJSONString(svResponse));
+			response = new ResponseData<String>(ResponseData.AJAX_STATUS_FAILURE,
+					rb.getMessage(""));
+		}
+		return response;
+	}
 	@RequestMapping("/catLine")
 	@ResponseBody
 	public ResponseData<String> catLine(CatLine catline) {
