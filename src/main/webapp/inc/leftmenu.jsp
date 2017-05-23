@@ -59,12 +59,13 @@ UserUtil.getCompanyAdmin();
   					<span><spring:message code="ycleftmenu.discount"/></span>
   					</a>
   				</li>
-  				<!-- <li>
-  					<a href="我的级别.html">
+				<%--我的级别--%>
+				<li id="mylevel">
+  					<a href="${_base}/p/level/myLevel">
   					<span><i class="icon iconfont">&#xe647;</i></span>
   					<span><spring:message code="ycleftmenu.mylevel"/></span>
   					</a>
-  				</li> -->
+  				</li>
 				<%--我的积分--%>
   				<li id="integrals">
   					<a href="${_base}/p/integral/myIntegral">
