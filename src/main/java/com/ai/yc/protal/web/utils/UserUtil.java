@@ -9,6 +9,8 @@ import com.ai.yc.translator.api.translatorservice.param.SearchYCTranslatorReques
 import com.ai.yc.translator.api.translatorservice.param.SearchYCTranslatorSkillListRequest;
 import com.ai.yc.translator.api.translatorservice.param.YCTranslatorInfoResponse;
 import com.ai.yc.translator.api.translatorservice.param.YCTranslatorSkillListResponse;
+import com.ai.yc.user.api.usercompanyrelation.interfaces.IYCUserCompanyRelationSV;
+import com.ai.yc.user.api.usercompanyrelation.param.ManagerResponse;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -142,10 +144,43 @@ public class UserUtil {
             searchYCTranslatorSkillListRequest.setUserId(UserUtil.getUserId());
             YCTranslatorSkillListResponse translatorSkillList = userTranslatorSV.getTranslatorSkillList(searchYCTranslatorSkillListRequest);
             lspAdmin = translatorSkillList.getLspRole();
+            if (null==translatorSkillList||null==lspAdmin){
+                lspAdmin="error";
+            }
 
         } catch (Exception e) {
         }
         session.setAttribute("lspAdmin",lspAdmin);
         return lspAdmin;
+    }
+
+    /**
+     * 判断客户是否为具有企业管理员权限
+     * @return
+     */
+    public static String getCompanyAdmin(){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session =request.getSession();
+
+        String isManagement = (String) session.getAttribute("isManagement");
+        if(!StringUtil.isBlank(isManagement)){
+            return isManagement;
+        }
+        try {
+            //判断译员是否为企业管理员
+            IYCUserCompanyRelationSV iycUserCompanyRelationSV = DubboConsumerFactory
+                    .getService(IYCUserCompanyRelationSV.class);
+            ManagerResponse userIsManager = iycUserCompanyRelationSV.getUserIsManager(UserUtil.getUserId());
+            System.err.print(UserUtil.getUserId());
+            if (null==userIsManager.getCompanyId()){
+                isManagement="error";
+            }else {
+                isManagement = userIsManager.getIsManagement().toString();
+            }
+
+        } catch (Exception e) {
+        }
+        session.setAttribute("isManagement",isManagement);
+        return isManagement;
     }
 }

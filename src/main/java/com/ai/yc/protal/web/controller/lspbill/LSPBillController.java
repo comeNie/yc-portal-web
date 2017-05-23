@@ -88,7 +88,7 @@ public class LSPBillController {
                 incomeQueryRequest.setAccountId(usrLspMessageResponse.getAccountId());
             }else {
                 LOGGER.error("lsp帐户信息查询失败:","======译员信息:id="+JSON.toJSONString(usrLspMessageResponse));
-                return new ResponseData<PageInfo<IncomeDetail>>(ResponseData.AJAX_STATUS_FAILURE, "查询收支失败");
+                return resData = new ResponseData<>(ResponseData.AJAX_STATUS_FAILURE,"FAIL");
             }
             if(StringUtils.isBlank(incomeQueryRequest.getBeginDate())){
                 Date beginDate = new Date();

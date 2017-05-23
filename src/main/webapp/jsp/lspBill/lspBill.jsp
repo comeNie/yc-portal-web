@@ -44,7 +44,7 @@
                         <li class="right">
                             <p><spring:message code="account.income"/>:<span id="income" style="font-size: 12px;line-height: 25px"></span></p>
                             <p><spring:message code="account.expenditure"/>:<span id="out" style="font-size: 12px;line-height: 25px"></span></p>
-                            <p><a href="#" class="is" id="screen-a">高级筛选</a><a href="#" class="is" id="screen-b" style="display:none;">收起筛选</a><i class="icon-angle-down"></i></p>
+                            <p><a href="#" class="is" id="screen-a"><spring:message code="account.advanced.screening"/></a><a href="#" class="is" id="screen-b" style="display:none;"><spring:message code="account.advanced.roll"/></a><i class="icon-angle-down"></i></p>
                         </li>
                     </ul>
                 </div>
@@ -52,7 +52,7 @@
                     <ul>
                         <li class="left li-xlarge li-xlarge-ml">
                             <%--起止时间--%>
-                            <p><a href="#">起止时间</a></p>
+                            <p><a href="#"><spring:message code="account.starting.endingtime"/></a></p>
                             <p><input style="width: 140px" id="beginDate" name="beginDate" type="text" value="${beginTime}" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}',onpicked:function(dp){begintime();}})"></p>
                             <p>~</p>
                             <p><input style="width: 140px" id="endDate" name="endDate" type="text" value="${endTime}" class="int-text int-small radius" onClick="WdatePicker({lang:'${my97Lang}',readOnly:true,dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'beginDate\')}',maxDate:'%y-%M-%d',onpicked:function(dp){endtime();}})"></p>

@@ -88,6 +88,9 @@
 	<!--企业用户-->
 	<dubbo:reference id="iYCUserCompanySV"
 					 interface="com.ai.yc.user.api.usercompany.interfaces.IYCUserCompanySV"/>
+	<!--判断企业用户是否为企业管理员-->
+	<dubbo:reference id="iYCUserCompanyRelationSV"
+					 interface="com.ai.yc.user.api.usercompanyrelation.interfaces.IYCUserCompanyRelationSV"/>
 	<!--优惠券-->
 	<dubbo:reference id="iSendCouponSV" interface="com.ai.slp.balance.api.sendcoupon.interfaces.ISendCouponSV"/>
 	<!--分配订单-->
@@ -95,11 +98,17 @@
 					 interface="com.ai.yc.order.api.orderallocation.interfaces.IOrderAllocationSV"/>
 
 
-<!-- 积分查询 -->
+	<!-- 积分查询 -->
 	<dubbo:reference id="iIntegralsSV"
 					 interface="com.ai.slp.balance.api.integrals.interfaces.IIntegralsSV"/>
 	
+	<!--用户成长值-->
+	<dubbo:reference id="iYCUserGriwthValueSV"
+					 interface="com.ai.yc.user.api.usergriwthvalue.interfaces.IYCUserGriwthValueSV"/>
 
+	<!--用户级别-->
+	<dubbo:reference id="iYCUserLevelChangeSV"
+					 interface="com.ai.yc.user.api.userlevelchange.interfaces.IYCUserLevelChangeSV"/>
 	<!--优惠券使用规则-->
 	<dubbo:reference id="iCouponUseRuleSV" interface="com.ai.slp.balance.api.couponuserule.interfaces.ICouponUseRuleSV"/>
 	<!-- 查询语言对 -->

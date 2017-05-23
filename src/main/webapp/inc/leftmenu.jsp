@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 UserUtil.getUserPortraitImg();
+UserUtil.getCompanyAdmin();
 %>
 <script src="${_base}/resources/spm_modules/jquery/1.9.1/jquery.min.js"></script>
    <!--二级主体-->
@@ -105,12 +106,18 @@ UserUtil.getUserPortraitImg();
   					</a>
   				</li>
 				<!-- 企业帐户 -->
+			<c:choose>
+			<c:when test="${isManagement=='1'}">
 				<li id="companyAccount">
 					<a href="${_base}/p/companybalance/companyAccount">
 						<span><i class="icon iconfont">&#xe648;</i></span>
 						<span>企业帐户</span>
 					</a>
 				</li>
+			</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
   			</ul>
   		</div>
 		<!--定位-->

@@ -117,7 +117,7 @@ public class CustomerOrderController {
 
 	/**
 	 * 我的订单,订单列表
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping("/list/view")
@@ -166,7 +166,7 @@ public class CustomerOrderController {
 
 	/**
 	 * 查询订单列表
-	 * 
+	 *
 	 * @param request
 	 * @return
 	 * @author mimw
@@ -254,7 +254,7 @@ public class CustomerOrderController {
 
 	/**
 	 * 待报价页面
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping("/orderOffer")
@@ -264,7 +264,7 @@ public class CustomerOrderController {
 
 	/**
 	 * 查询订单是否未支付，未支付返回成功
-	 * 
+	 *
 	 * @param orderId
 	 * @return
 	 * @author mimw
@@ -282,7 +282,7 @@ public class CustomerOrderController {
 
 	/**
 	 * 取消订单，在未支付的情况下取消
-	 * 
+	 *
 	 * @param orderId
 	 * @return
 	 * @author mimw
@@ -309,7 +309,7 @@ public class CustomerOrderController {
 
 	/**
 	 * 支付页面
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping("/payOrder/{orderId}")
@@ -372,7 +372,7 @@ public class CustomerOrderController {
 
 	/**
 	 * 余额支付
-	 * 
+	 *
 	 * @param discountSum
 	 *            折扣
 	 * @param couponFee
@@ -443,7 +443,7 @@ public class CustomerOrderController {
 
 	/**
 	 * 跳转支付页面,需要登录后才能进行支付
-	 * 
+	 *
 	 * @param orderPay
 	 * @throws Exception
 	 */
@@ -503,7 +503,7 @@ public class CustomerOrderController {
 
 	/**
 	 * 不使用任何支付方式，在应付金额为0，或选择翻译后付费时使用此方法
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping("/pay/noorg")
@@ -533,7 +533,7 @@ public class CustomerOrderController {
 
 	/**
 	 * 显示订单详情
-	 * 
+	 *
 	 * @param orderId
 	 * @param uiModel
 	 * @return
@@ -582,7 +582,7 @@ public class CustomerOrderController {
 
 	/**
 	 * 文档订单详细页面 下载文件
-	 * 
+	 *
 	 * @param fileId
 	 * @param request
 	 * @param response
@@ -617,7 +617,7 @@ public class CustomerOrderController {
 
 	/**
 	 * 订单评价view
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping("/evaluate/{orderId}")
@@ -657,7 +657,7 @@ public class CustomerOrderController {
 
 	/**
 	 * 查看评价订单view
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping("/seeEvaluate/{orderId}")
@@ -710,7 +710,7 @@ public class CustomerOrderController {
 
 	/**
 	 * 延时确认订单
-	 * 
+	 *
 	 * @param orderId
 	 * @return
 	 */
@@ -745,7 +745,7 @@ public class CustomerOrderController {
 
 	/**
 	 * 口译订单分配
-	 * 
+	 *
 	 * @param orderId
 	 * @return
 	 */
@@ -792,7 +792,7 @@ public class CustomerOrderController {
 	@ResponseBody
 	public ResponseData<String> catLine(CatLine catline) {
 		// 根据语言对Id进行查询
-		ResponseData<String> response = null; 
+		ResponseData<String> response = null;
 		try {
 			IQuerySysDuadSV querySysDuadSV = DubboConsumerFactory.getService(IQuerySysDuadSV.class);
 			QuerySysDuadDetailsRes duadres = querySysDuadSV.querySysDuadDetails(catline.getLanguageId());
@@ -833,5 +833,5 @@ public class CustomerOrderController {
 		LOGGER.info("待译文件上传请求成功");
 		return response;
 	}
-	
+
 }
