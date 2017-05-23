@@ -122,6 +122,8 @@ dependencies {
 
 //  //用户成长值
     compile 'com.ai.yc.user:usergriwthvalue:2.1-SNAPSHOT'
+    //用户成长值范围
+    compile 'com.ai.yc.common:sysconfig:1.0-SNAPSHOT'
     //用户级别
     compile 'com.ai.yc.user:userlevelchange:2.0-SNAPSHOT'
 	//用户服务
