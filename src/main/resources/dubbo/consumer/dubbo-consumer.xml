@@ -109,6 +109,9 @@
 	<!--用户级别-->
 	<dubbo:reference id="iYCUserLevelChangeSV"
 					 interface="com.ai.yc.user.api.userlevelchange.interfaces.IYCUserLevelChangeSV"/>
+	<!--用户成长值范围-->
+	<dubbo:reference id="iQuerySysConfigSV"
+					 interface="com.ai.yc.common.api.sysconfig.interfaces.IQuerySysConfigSV"/>
 	<!--优惠券使用规则-->
 	<dubbo:reference id="iCouponUseRuleSV" interface="com.ai.slp.balance.api.couponuserule.interfaces.ICouponUseRuleSV"/>
 	<!-- 查询语言对 -->
