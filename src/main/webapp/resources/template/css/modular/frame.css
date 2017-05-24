@@ -31,7 +31,7 @@
 .left-list ul li a i{margin:0 20px 0 0;font-size:18px;padding-top:10px;}
 /*.left-list ul .current{background:#eff1f4;}*/
 .left-list ul li .side-title:hover{background:#eff1f4;}
-.locationaaa{width:230px;position:absolute;bottom:15px;left:0;}
+.locationaaa{width:230px;bottom:15px;left:0;}
 /*.locationaaa{width:230px;}*/
 .left-phone{width:230px;float:left;margin-top:40px;padding-left:30px;}
 .left-phone p{float:left}

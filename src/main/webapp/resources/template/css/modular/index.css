@@ -488,3 +488,12 @@
 .translate-table{
   width: 100%;
 }
+
+/*意见反馈*/
+.sugbox{
+  background: #fff;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  min-height: 500px;
+}

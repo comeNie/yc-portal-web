@@ -69,7 +69,7 @@
         <div class="prompt-big-title"><spring:message code="myOrder.assign.interpreter"/></div>
         <div class="prompt-center">
             <div id="tran-tab1" class="clearfix">
-                <div class="prompt-center-table">
+                <div class="prompt-center-table table-current">
                     <table class="table table-bg  table-height60">
                         <tbody id="oralTrans">
                         </tbody>

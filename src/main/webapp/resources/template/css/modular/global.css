@@ -440,9 +440,11 @@ pre ol.linenums li {
 /**按钮尺寸大小**/
 .btn-mini{width:50px;height:25px;}
 .btn-small{width:80px;height:32px;}
+.btn-xs{width:100px;height:30px;}
 .btn-medium{width:124px;height:44px;}
 .btn-large{width:178px;height:48px;font-size:18px;}
 .btn-line{line-height: 32px;font-size: 14px;color: #2361ea;border:2px solid #2361ea;border-radius: 22px;background: transparent;}
+.btn-xs-line{line-height:28px;font-size: 14px;color: #2361ea;border:2px solid #2361ea;border-radius: 22px;background: transparent;}
 .btn-xlarge{width:140px;height:44px;}
 .btn-xxlarge{width:160px;height:44px;}
 .btn-xxxlarge{width:210px;height:45px;font-weight:bold;font-size:18px}
@@ -486,6 +488,7 @@ pre ol.linenums li {
 .int-xlarge-mail{width:400px;height:44px;padding:0 20px;line-height:44px;}
 .int-xxlarge{width:500px;height:44px;padding:0 20px;line-height:44px;}
 .int-xxxlarge{width:700px;height:44px;padding:0 20px;line-height:44px;}
+.int-largeInput{width:710px;height:44px;padding:0 20px;line-height:44px;margin:20px 120px 0px 120px;}
 .textarea-xlarge{width:350px;height:80px;padding:0 20px;}
 .textarea-big-xlarge{width:700px;height:160px;padding:0 20px;line-height:44px;}
 .int-in-big{width:395px;height:44px;padding:0 20px;line-height:44px;}
@@ -525,6 +528,7 @@ select::-ms-expand { display: none; }
 .select-small{width:110px;height:26px;padding-left:4px;padding:0px 4px;}
 .select-medium{width:190px;height:44px;}
 
+.select-in-large{width:223px;height:44px;}
 .select-in-small{width:120px;height:44px;}
 .select-in{width:164px;height:44px;overflow:hidden;text-overflow: ellipsis; white-space: nowrap; }
 .select-in  option[selected]{ font-weight:bold}
