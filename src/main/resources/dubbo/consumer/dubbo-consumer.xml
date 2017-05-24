@@ -127,4 +127,5 @@
 	<dubbo:reference id="iYCUserContactSV" interface="com.ai.yc.user.api.usercontact.interfaces.IYCUserContactSV"/>
 	<!-- 保存语言对 -->
 	<dubbo:reference id="iYCUserLanguageSV" interface="com.ai.yc.translator.api.userlanguage.interfaces.IYCUserLanguageSV"/>
+	<dubbo:reference id="iQuerySysQuestionsSV" interface="com.ai.yc.common.api.sysquestions.interfaces.IQuerySysQuestionsSV"/>
 </beans>

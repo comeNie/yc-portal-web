@@ -181,7 +181,10 @@ dependencies {
 	compile 'com.ai.yc.user:usercontact:2.0-SNAPSHOT'
 	//保存语言对
 	compile 'com.ai.yc.translator:userlanguage:2.0-SNAPSHOT'
-	
+	//题库
+	compile 'com.ai.yc.common:sysquestions:1.0.1-SNAPSHOT'
+	//题目
+	compile 'com.ai.yc.common:sysitembank:1.0-SNAPSHOT'
 	compile('org.apache.axis2:axis2-adb:1.5.1') {
 		exclude group: 'org.apache.geronimo.specs'
 	}

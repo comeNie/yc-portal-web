@@ -64,7 +64,8 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 			"blur [id='provinceInfo']":"_checkProvinceValue",
 			"blur [id='cnCityInfo']":"_checkCnCityValue",
 			"blur [id='address']":"_checkAddressValue",
-			"change [id='uploadImg']":"_uploadFile"
+			"change [id='uploadImg']":"_uploadFile",
+			"click [id='translatorCertification']":"_toTranslatorCertificationPager",
         },
         //重写父类
     	setup: function () {
@@ -508,6 +509,10 @@ define('app/jsp/user/interpreter/interpreterInfo', function (require, exports, m
 		        	 }
 		          }
 				});
+    	},
+    	_toTranslatorCertificationPager:function(){
+    		alert("dfefe");
+    		window.location.href = _base+"/p/translator/translatorpager?source=interpreter"
     	},
     	_getCnCityValue:function(){
     		ajaxController.ajax({
